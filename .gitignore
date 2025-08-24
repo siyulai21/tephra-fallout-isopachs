@@ -13,6 +13,8 @@ env/
 .conda/
 conda-env/
 .mamba/
+.env
+*.env
 
 # IDE
 .idea/
@@ -24,3 +26,11 @@ conda-env/
 # Optional: notebooks, data scratch
 *.log
 *.tmp
+
+# Tool caches & test artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
