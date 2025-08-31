@@ -31,7 +31,6 @@ def prepare_inputs_from_csv(csv_path: str, lon_col: str, lat_col: str, thickness
     lat = df[lat_col].to_numpy(dtype=float)
     t_cm = df[thickness_cm_col].to_numpy(dtype=float)
     x_km, y_km = fwd.transform(lon, lat)
-    # t_km = t_cm / 100000
     t_km = t_cm
     meta = {
         "vent_lon": vent_lon,
