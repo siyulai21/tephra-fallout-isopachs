@@ -39,12 +39,6 @@ def prepare_inputs_from_csv(csv_path: str, lon_col: str, lat_col: str, thickness
         "transform_fwd": fwd,
         "transform_inv": inv,
         "n_points": len(t_km),
+        "vent": (vent_lon, vent_lat)
     }
     return x_km, y_km, t_km, meta
-
-
-def suggested_knot_spacing(x_km: np.ndarray, y_km: np.ndarray):
-    Lx = np.max(x_km) - np.min(x_km)
-    Ly = np.max(y_km) - np.min(y_km)
-    spacing = np.sqrt(Lx * Ly / len(x_km)) *2
-    return spacing

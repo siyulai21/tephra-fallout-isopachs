@@ -1,8 +1,8 @@
-
+import matplotlib.pyplot as plt
 import numpy as np
-import math
 from scipy.spatial import cKDTree
-from dataclasses import dataclass
+import matplotlib as mpl
+from mpl_toolkits.basemap import Basemap
 
 try:
     import scipy.linalg as _spl
@@ -30,42 +30,60 @@ class LsfBsplines2d:
     def fit(self):
         self.fit_bsplines2d()
 
-    def graph_contour(self, nxg=100, nyg=100):
-        import matplotlib.pyplot as plt
-
+    def graph_contour(self, vent, nxg=100, nyg=100):
         Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
-        plt.figure(figsize=(6.5, 6.5))
-        plt.title(f"Fitted surface (rou={self.rou:.2f}, tau={self.tau:.2f})")
-        levels = [4, 8, 16, 32]
-        X = np.linspace(self.xmin, self.xmax, nxg, endpoint=False);
-        Y = np.linspace(self.ymin, self.ymax, nyg, endpoint=False)
-        CS = plt.contour(X, Y, Z_fit, levels=levels, colors='k', linewidths=1)
-        plt.clabel(CS, inline=True, fontsize=8, fmt="%g")
+        levels = [2, 4, 8, 16, 32]
+
+        height = max(abs(self.ymin), abs(self.ymax))*2
+        width = max(abs(self.xmin), abs(self.xmax))*2
+        offset_x = width / 2
+        offset_y = height / 2
+        X = np.linspace(self.xmin, self.xmax, nxg, endpoint=False)+offset_x
+        Y = np.linspace(self.ymin, self.ymax, nyg, endpoint=False)+offset_y
+
+        lon_0, lat_0 = vent
+        m = Basemap(resolution='l', projection='laea',
+                    height=height*1000,width=width*1000,
+                    lat_0=lat_0, lon_0=lon_0)
+        m.fillcontinents()
+        ax = plt.gca()
+        fig = plt.gcf()
+        ax.set_title(f"Fitted surface (rou={self.rou:.2f}, tau={self.tau:.2f})")
+        CS = ax.contour(X*1000, Y*1000, Z_fit, levels=levels, colors='k', linewidths=1)
+        ax.clabel(CS, inline=True, fontsize=8, fmt="%g")
 
         masks = [
             ('t > 32 cm', self.fd > np.log(32)),
             ('16 < t ≤ 32 cm', (self.fd > np.log(16)) & (self.fd <= np.log(32))),
             ('8 < t ≤ 16 cm', (self.fd > np.log(8)) & (self.fd <= np.log(16))),
             ('4 < t ≤ 8 cm', (self.fd > np.log(4)) & (self.fd <= np.log(8))),
-            ('t ≤ 4 cm', self.fd <= np.log(4)),
+            ('2 < t ≤ 4 cm', (self.fd > np.log(2)) & (self.fd <= np.log(4))),
+            ('0.1 < t ≤ 2 cm', (self.fd > np.log(0.1)) & (self.fd <= np.log(2))),
+            ('Unidentified', (self.fd <= np.log(0.1))),
         ]
-        colors = plt.get_cmap('tab10').colors  # take first 5
+        colors = mpl.colormaps['tab10'].colors  # take first 5
         for i, (label, m) in enumerate(masks):
-            plt.scatter(self.xd[m], self.yd[m], label=label, s=20,
+            x = self.xd[m]+offset_x
+            y= self.yd[m]+offset_y
+            ax.scatter(x*1000, y*1000, label=label, s=20,
                         color=colors[i], edgecolor="k", alpha=0.65)
-        plt.xlabel("X")
-        plt.ylabel("Y")
-        plt.tight_layout()
-        plt.legend(title="Thickness range", fontsize="small", title_fontsize="small",
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        left_x, right_x = (self.xmin + offset_x)*1000, (self.xmax+offset_x)*1000
+        bottom_y, top_y = (self.ymin + offset_y) * 1000, (self.ymax + offset_y) * 1000
+        ax.set_xlim(left_x, right_x)
+        ax.set_ylim(bottom_y, top_y)
+        fig.tight_layout()
+        ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
         plt.close()
-        return CS
+        return
 
     def eval_surface_grid(self, nx=100, ny=100):
-        xs = np.linspace(self.xmin, self.xmax, nx, endpoint=False);
+        xs = np.linspace(self.xmin, self.xmax, nx, endpoint=False)
         ys = np.linspace(self.ymin, self.ymax, ny, endpoint=False)
-        Z = np.zeros((ny, nx))
+        Z = np.zeros((ny, nx)) # type: np.ndarray
         for j, y in enumerate(ys):
             for i, x in enumerate(xs):
                 Z[j, i] = np.exp(self.eval_cubic_bspline_surface(x, y))
@@ -75,7 +93,7 @@ class LsfBsplines2d:
         mx = self.mx0 * (2 ** self.n2)
         my = self.my0 * (2 ** self.n2)
         nx = mx + 3
-        hx = (self.xmax - self.xmin) / mx;
+        hx = (self.xmax - self.xmin) / mx
         hy = (self.ymax - self.ymin) / my
         x = np.minimum(np.maximum(x, self.xmin), np.nextafter(self.xmax, self.xmin))
         y = np.minimum(np.maximum(y, self.ymin), np.nextafter(self.ymax, self.ymin))
@@ -87,10 +105,10 @@ class LsfBsplines2d:
         ry = (y - self.ymin) / hy - (jp - 1)
         rx = 0.0 if rx < 0.0 else (1.0 if rx > 1.0 else rx)
         ry = 0.0 if ry < 0.0 else (1.0 if ry > 1.0 else ry)
-        bx = np.zeros(4);
-        by = np.zeros(4);
-        BSP3(float(rx), float(hx), 0, bx);
-        BSP3(float(ry), float(hy), 0, by)
+        bx = np.zeros(4)
+        by = np.zeros(4)
+        BSP3(float(rx), float(hx), 0, bx) # type: np.ndarray
+        BSP3(float(ry), float(hy), 0, by) # type: np.ndarray
         s = 0.0
         for j1 in range(0, 4):
             for i1 in range(0, 4):
@@ -98,7 +116,6 @@ class LsfBsplines2d:
         return s
 
     def fit_bsplines2d(self, nit=200, omg=1.2, use_scipy=True, seed=None):
-
         A_band, b, KA, NEQ = self._assemble_coarse()
         sol = None
         if use_scipy and _HAVE_SCIPY:
@@ -495,8 +512,3 @@ def MCHLBA_exact(A, KA, NEQ, NB, B):
         for JB in range(2, NB + 1):
             if I + JB - 1 <= NEQ:
                 B[I-1] -= Aget(JB, I) * B[I + JB - 2]
-
-
-
-
-
