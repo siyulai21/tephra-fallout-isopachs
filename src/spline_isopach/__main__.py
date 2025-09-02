@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
-    xd, yd, fd, meta = Laea.prepare_inputs_from_csv("../../examples/Aso-4_tephra.csv",
+    xd, yd, fd, meta = Laea.prepare_inputs_from_csv("../../examples/Data/Aso-4_tephra.csv",
                                                     "Lon",
                                                     "Lat",
                                                     "Thickness",
@@ -28,5 +28,5 @@ if __name__ == "__main__":
         rou = rou_v[i]
         isopach = LsfBsplines2d(xd, yd, fd, np.zeros_like(fd), tau, rou)
         isopach.fit()
-        cs = isopach.graph_contour(meta['vent'], [3, 5,10,20], 150, 150)
+        cs = isopach.graph_contour(meta['vent'], [ 5,10,20], 150, 150)
         print(isopach.area_compute(cs))

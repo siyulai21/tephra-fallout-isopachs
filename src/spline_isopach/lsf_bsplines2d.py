@@ -30,7 +30,7 @@ class LsfBsplines2d:
     def fit(self):
         self.fit_bsplines2d()
 
-    def area_compute(self, cs):
+    def area_compute(self, cs) -> list:
         areas = []
         for i in range(len(cs.allsegs)):
             area = 0
@@ -41,9 +41,9 @@ class LsfBsplines2d:
                 area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
             area = np.sqrt(area/10**6)
             areas.append((int(cs.levels[i]), round(area)))
-        return areas
+        return areas  # [(thickness_1, area_1^0.5), (thickness_2, area_2^0.5), ...]
 
-    def graph_contour(self, vent, levels, nxg=100, nyg=100):
+    def graph_contour(self, vent, levels, nxg=100, nyg=100) -> "mpl.QuadContourSet":
         Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
         self.levels = levels
         height = max(abs(self.ymin), abs(self.ymax))*2*1.25
@@ -89,6 +89,7 @@ class LsfBsplines2d:
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
+        fig.savefig("../../examples/Isopachs/Aso_4.png", dpi=240)
         plt.close()
         return CS
 
