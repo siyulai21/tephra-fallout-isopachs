@@ -28,16 +28,5 @@ if __name__ == "__main__":
         rou = rou_v[i]
         isopach = LsfBsplines2d(xd, yd, fd, np.zeros_like(fd), tau, rou)
         isopach.fit()
-        fig, CS = isopach.graph_contour(meta['vent'], [3, 5,10,20], 150, 150)
-        plt.close()
-        areas = []
-        for i in range(len(CS.allsegs)):
-            area = 0
-            levelxsegs = CS.allsegs[i]
-            for polygonx in levelxsegs:
-                x = polygonx[:,0]
-                y = polygonx[:,1]
-                area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
-            area = np.sqrt(area/10**6)
-            areas.append((CS.levels[i], area))
-        print(areas)
+        cs = isopach.graph_contour(meta['vent'], [3, 5,10,20], 150, 150)
+        print(isopach.area_compute(cs))

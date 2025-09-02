@@ -26,15 +26,22 @@ class LsfBsplines2d:
         self.rou = rou
         self.unl, self.und, self.mx0, self.my0, self.n2 = self.domain_divisions()
         self.cij = np.zeros((self.my0 + 3) * (self.mx0 + 3))
-        self.levels = None
 
     def fit(self):
         self.fit_bsplines2d()
 
-    # def area_compute(self, cs):
-    #     areas = []
-    #
-    #     return areas
+    def area_compute(self, cs):
+        areas = []
+        for i in range(len(cs.allsegs)):
+            area = 0
+            levelxsegs = cs.allsegs[i]
+            for polygonx in levelxsegs:
+                x = polygonx[:,0]
+                y = polygonx[:,1]
+                area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
+            area = np.sqrt(area/10**6)
+            areas.append((int(cs.levels[i]), round(area)))
+        return areas
 
     def graph_contour(self, vent, levels, nxg=100, nyg=100):
         Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
@@ -56,7 +63,6 @@ class LsfBsplines2d:
         ax.set_title(f"Fitted surface (rou={self.rou:.2f}, tau={self.tau:.2f})")
         CS = ax.contour(X*1000, Y*1000, Z_fit, levels=self.levels, colors='k', linewidths=1)
         ax.clabel(CS, inline=True, fontsize=8, fmt="%g")
-        # areas = self.area_compute(CS)
         masks = [
             ('t > 32 cm', self.fd > np.log(32)),
             ('16 < t ≤ 32 cm', (self.fd > np.log(16)) & (self.fd <= np.log(32))),
@@ -83,7 +89,8 @@ class LsfBsplines2d:
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
-        return fig, CS #  areas
+        plt.close()
+        return CS
 
     def eval_surface_grid(self, nx=100, ny=100):
         xs = np.linspace(self.xmin, self.xmax, nx, endpoint=False)
