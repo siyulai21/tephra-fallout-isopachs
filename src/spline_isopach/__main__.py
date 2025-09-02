@@ -17,12 +17,27 @@ if __name__ == "__main__":
 
     # tau_v = [0.25, 0.75]
     # rou_v = [3.16, 1.33]
+    # xd = np.append(xd, 625)
+    # yd = np.append(yd, -800)
+    # fd = np.append(fd, 2)
 
     tau_v = [0.25]
-    rou_v = [3.16]
+    rou_v = [6]
     for i in range(len(tau_v)):
         tau = tau_v[i]
         rou = rou_v[i]
         isopach = LsfBsplines2d(xd, yd, fd, np.zeros_like(fd), tau, rou)
         isopach.fit()
-        isopach.graph_contour( meta['vent'], 150, 150)
+        fig, CS = isopach.graph_contour(meta['vent'], [3, 5,10,20], 150, 150)
+        plt.close()
+        areas = []
+        for i in range(len(CS.allsegs)):
+            area = 0
+            levelxsegs = CS.allsegs[i]
+            for polygonx in levelxsegs:
+                x = polygonx[:,0]
+                y = polygonx[:,1]
+                area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
+            area = np.sqrt(area/10**6)
+            areas.append((CS.levels[i], area))
+        print(areas)

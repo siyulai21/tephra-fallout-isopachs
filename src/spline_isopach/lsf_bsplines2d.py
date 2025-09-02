@@ -26,16 +26,21 @@ class LsfBsplines2d:
         self.rou = rou
         self.unl, self.und, self.mx0, self.my0, self.n2 = self.domain_divisions()
         self.cij = np.zeros((self.my0 + 3) * (self.mx0 + 3))
+        self.levels = None
 
     def fit(self):
         self.fit_bsplines2d()
 
-    def graph_contour(self, vent, nxg=100, nyg=100):
-        Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
-        levels = [2, 4, 8, 16, 32]
+    # def area_compute(self, cs):
+    #     areas = []
+    #
+    #     return areas
 
-        height = max(abs(self.ymin), abs(self.ymax))*2
-        width = max(abs(self.xmin), abs(self.xmax))*2
+    def graph_contour(self, vent, levels, nxg=100, nyg=100):
+        Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
+        self.levels = levels
+        height = max(abs(self.ymin), abs(self.ymax))*2*1.25
+        width = max(abs(self.xmin), abs(self.xmax))*2*1.25
         offset_x = width / 2
         offset_y = height / 2
         X = np.linspace(self.xmin, self.xmax, nxg, endpoint=False)+offset_x
@@ -49,36 +54,36 @@ class LsfBsplines2d:
         ax = plt.gca()
         fig = plt.gcf()
         ax.set_title(f"Fitted surface (rou={self.rou:.2f}, tau={self.tau:.2f})")
-        CS = ax.contour(X*1000, Y*1000, Z_fit, levels=levels, colors='k', linewidths=1)
+        CS = ax.contour(X*1000, Y*1000, Z_fit, levels=self.levels, colors='k', linewidths=1)
         ax.clabel(CS, inline=True, fontsize=8, fmt="%g")
-
+        # areas = self.area_compute(CS)
         masks = [
             ('t > 32 cm', self.fd > np.log(32)),
             ('16 < t ≤ 32 cm', (self.fd > np.log(16)) & (self.fd <= np.log(32))),
             ('8 < t ≤ 16 cm', (self.fd > np.log(8)) & (self.fd <= np.log(16))),
             ('4 < t ≤ 8 cm', (self.fd > np.log(4)) & (self.fd <= np.log(8))),
             ('2 < t ≤ 4 cm', (self.fd > np.log(2)) & (self.fd <= np.log(4))),
-            ('0.1 < t ≤ 2 cm', (self.fd > np.log(0.1)) & (self.fd <= np.log(2))),
-            ('Unidentified', (self.fd <= np.log(0.1))),
+            ('t ≤ 2 cm', (self.fd <= np.log(2))),
         ]
         colors = mpl.colormaps['tab10'].colors  # take first 5
         for i, (label, m) in enumerate(masks):
             x = self.xd[m]+offset_x
-            y= self.yd[m]+offset_y
+            y = self.yd[m]+offset_y
             ax.scatter(x*1000, y*1000, label=label, s=20,
                         color=colors[i], edgecolor="k", alpha=0.65)
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
-        left_x, right_x = (self.xmin + offset_x)*1000, (self.xmax+offset_x)*1000
-        bottom_y, top_y = (self.ymin + offset_y) * 1000, (self.ymax + offset_y) * 1000
+        pad_x = 0.25 * (self.xmax-self.xmin)
+        pad_y = 0.25 * (self.ymax-self.ymin)
+        left_x, right_x = (self.xmin + offset_x - pad_x)*1000, (self.xmax+offset_x+pad_x)*1000
+        bottom_y, top_y = (self.ymin + offset_y-pad_y) * 1000, (self.ymax + offset_y+pad_y) * 1000
         ax.set_xlim(left_x, right_x)
         ax.set_ylim(bottom_y, top_y)
         fig.tight_layout()
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
-        plt.close()
-        return
+        return fig, CS #  areas
 
     def eval_surface_grid(self, nx=100, ny=100):
         xs = np.linspace(self.xmin, self.xmax, nx, endpoint=False)
