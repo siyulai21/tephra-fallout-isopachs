@@ -44,7 +44,7 @@ class LsfBsplines2d:
             areas.append((int(cs.levels[i]), round(area)))
         return areas  # [(thickness_1, area_1^0.5), (thickness_2, area_2^0.5), ...]
 
-    def graph_contour(self, vent, levels, nxg=100, nyg=100) -> "mpl.QuadContourSet":
+    def graph_contour(self, vent, levels, nxg=150, nyg=150) -> "mpl.QuadContourSet":
         Z_fit = self.eval_surface_grid(nx=nxg, ny=nyg)
         self.levels = levels
         height = max(abs(self.ymin), abs(self.ymax))*2*1.25
@@ -110,7 +110,7 @@ class LsfBsplines2d:
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
-        saving = input("Save the figure to examples/Isopachs [y/n]: ")
+        saving = input("Do you want to save this map to examples/Isopachs [y/n]: ")
         if saving == "y":
             fig.savefig("../../examples/Isopachs/Result.png", dpi=240)
         plt.close()
