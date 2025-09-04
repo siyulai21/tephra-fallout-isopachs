@@ -41,7 +41,7 @@ class LsfBsplines2d:
                 y = polygonx[:,1]
                 area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
             area = np.sqrt(area/10**6) # from m2 to km2
-            areas.append((int(cs.levels[i]), round(area)))
+            areas.append((round(area), int(cs.levels[i])))
         return areas  # [(thickness_1, area_1^0.5), (thickness_2, area_2^0.5), ...]
 
     def graph_contour(self, vent, levels, nxg=150, nyg=150) -> "mpl.QuadContourSet":
