@@ -6,10 +6,11 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    path = input("Input path to your data sheet, no input defaults to Mazama tephra datasheet: ")
-    if path == '':
-        path = "../../examples/Data/Mazama_tephra.csv"
-    xd, yd, fd, meta = Laea.prepare_inputs_from_csv(path,
+    print("To use this program, put your data sheet within the path: tephra-fallout-isopachs/examples/Data")
+    data_name = input("Input the name of your data sheet, no input defaults to Mazama tephra datasheet: ")
+    if data_name == '':
+        data_name = "../../examples/Data/Mazama_tephra.csv"
+    xd, yd, fd, meta = Laea.prepare_inputs_from_csv(data_name,
                                                     "Lon",
                                                     "Lat",
                                                     "Thickness",
