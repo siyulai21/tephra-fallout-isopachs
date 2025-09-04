@@ -13,7 +13,7 @@ except Exception:
 
 class LsfBsplines2d:
 
-    def __init__(self, xd, yd, fd, sd, tau, rou):
+    def __init__(self, xd, yd, fd, sd, tau, rou, meta):
         self.xd = xd
         self.yd = yd
         self.fd = np.log(fd)
@@ -24,6 +24,7 @@ class LsfBsplines2d:
         self.ymax = yd.max()
         self.tau = tau
         self.rou = rou
+        self.meta = meta
         self.unl, self.und, self.mx0, self.my0, self.n2 = self.domain_divisions()
         self.cij = np.zeros((self.my0 + 3) * (self.mx0 + 3))
 
@@ -39,7 +40,7 @@ class LsfBsplines2d:
                 x = polygonx[:,0]
                 y = polygonx[:,1]
                 area = area + 0.5 * np.abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
-            area = np.sqrt(area/10**6)
+            area = np.sqrt(area/10**6) # from m2 to km2
             areas.append((int(cs.levels[i]), round(area)))
         return areas  # [(thickness_1, area_1^0.5), (thickness_2, area_2^0.5), ...]
 
@@ -63,19 +64,39 @@ class LsfBsplines2d:
         ax.set_title(f"Fitted surface (rou={self.rou:.2f}, tau={self.tau:.2f})")
         CS = ax.contour(X*1000, Y*1000, Z_fit, levels=self.levels, colors='k', linewidths=1)
         ax.clabel(CS, inline=True, fontsize=8, fmt="%g")
-        masks = [
-            ('t > 32 cm', self.fd > np.log(32)),
-            ('16 < t ≤ 32 cm', (self.fd > np.log(16)) & (self.fd <= np.log(32))),
-            ('8 < t ≤ 16 cm', (self.fd > np.log(8)) & (self.fd <= np.log(16))),
-            ('4 < t ≤ 8 cm', (self.fd > np.log(4)) & (self.fd <= np.log(8))),
-            ('2 < t ≤ 4 cm', (self.fd > np.log(2)) & (self.fd <= np.log(4))),
-            ('t ≤ 2 cm', (self.fd <= np.log(2))),
-        ]
+
+        masks = []
+        for i in range(len(levels)+2):
+            if i == len(levels):
+                masks.append((f"t ≥ {t} cm", (self.fd >= np.log(t)) &
+                              (self.meta['pseudo'] != "Yes"))
+                             )
+                continue
+            elif i == len(levels)+1:
+                masks.append(('Pseudo data', self.meta['pseudo'] == "Yes")
+                             )
+                continue
+            t = levels[i]
+            if i == 0:
+                masks.append((f"{t} > t cm", (self.fd < np.log(t)) &
+                             (self.meta['pseudo'] != "Yes"))
+                             )
+            else:
+                masks.append((f"{t} > t ≥ {levels[i-1]} cm",
+                             (np.log(t) > self.fd) &
+                             (self.fd >= np.log(levels[i-1])) &
+                             (self.meta['pseudo'] != "Yes"))
+                             )
+
         colors = mpl.colormaps['tab10'].colors  # take first 5
         for i, (label, m) in enumerate(masks):
             x = self.xd[m]+offset_x
             y = self.yd[m]+offset_y
-            ax.scatter(x*1000, y*1000, label=label, s=20,
+            if i == len(masks)-1:
+                ax.scatter(x * 1000, y * 1000, label=label, s=20,
+                           facecolors='none', edgecolor="k")
+            else:
+                ax.scatter(x*1000, y*1000, label=label, s=20,
                         color=colors[i], edgecolor="k", alpha=0.65)
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
@@ -89,7 +110,9 @@ class LsfBsplines2d:
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
-        fig.savefig("../../examples/Isopachs/Aso_4.png", dpi=240)
+        saving = input("Save the figure to examples/Isopachs [y/n]: ")
+        if saving == "y":
+            fig.savefig("../../examples/Isopachs/Result.png", dpi=240)
         plt.close()
         return CS
 

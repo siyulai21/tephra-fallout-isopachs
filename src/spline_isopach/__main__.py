@@ -5,28 +5,26 @@ import pandas as pd
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 
-
 if __name__ == "__main__":
-    xd, yd, fd, meta = Laea.prepare_inputs_from_csv("../../examples/Data/Aso-4_tephra.csv",
+    path = input("Path to your data sheet (No input defaults to Mazama tephra datasheet): ")
+    if path == '':
+        path = "../../examples/Data/Aso-4_tephra.csv"
+    xd, yd, fd, meta = Laea.prepare_inputs_from_csv(path,
                                                     "Lon",
                                                     "Lat",
                                                     "Thickness",
                                                     "Vent Lon",
-                                                    "Vent Lat"
+                                                    "Vent Lat",
                                                     )
 
     # tau_v = [0.25, 0.75]
     # rou_v = [3.16, 1.33]
-    # xd = np.append(xd, 625)
-    # yd = np.append(yd, -800)
-    # fd = np.append(fd, 2)
-
     tau_v = [0.25]
-    rou_v = [6]
+    rou_v = [3.1]
     for i in range(len(tau_v)):
         tau = tau_v[i]
         rou = rou_v[i]
-        isopach = LsfBsplines2d(xd, yd, fd, np.zeros_like(fd), tau, rou)
+        isopach = LsfBsplines2d(xd, yd, fd, np.zeros_like(fd), tau, rou, meta)
         isopach.fit()
-        cs = isopach.graph_contour(meta['vent'], [ 5,10,20], 150, 150)
-        print(isopach.area_compute(cs))
+        cs = isopach.graph_contour((meta['vent_lonlat']), [5, 10, 20], 150, 150)
+        print("Thickness (cm), Area square root (km): ", isopach.area_compute(cs))

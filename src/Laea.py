@@ -32,13 +32,13 @@ def prepare_inputs_from_csv(csv_path: str, lon_col: str, lat_col: str, thickness
     t_cm = df[thickness_cm_col].to_numpy(dtype=float)
     x_km, y_km = fwd.transform(lon, lat)
     t_km = t_cm
+    pseudo = df['Pseudo']
     meta = {
-        "vent_lon": vent_lon,
-        "vent_lat": vent_lat,
+        "vent_lonlat": (vent_lon, vent_lat),
         "laea_crs": laea_crs,
         "transform_fwd": fwd,
         "transform_inv": inv,
         "n_points": len(t_km),
-        "vent": (vent_lon, vent_lat)
+        "pseudo": pseudo,
     }
     return x_km, y_km, t_km, meta
