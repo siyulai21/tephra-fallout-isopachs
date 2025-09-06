@@ -1,3 +1,3 @@
 # tephra-fallout-isopachs
-Implement numerical methods to solve the isopachs of tephra fallout
+In this project I implement numerical methods that solve the isopachs of tephra fallout, focusing on numerical methods that have been published in volcanology literatures. Most tephra fallout isopachs are hand-drawn so far, but they suffers from unquatifiable subjectivity. The method I finished implementing here is cubic bivariate spline, following from [Engwell et. al. (2015)](https://link.springer.com/article/10.1007/s00445-015-0942-y). The image below is a reproduction (not exact) of Mazama tephra isopach in [Buckland et. al. (2020)](https://link.springer.com/article/10.1007/s00445-020-1362-1), who used the same numerical method.
 ![alt text](https://github.com/siyulai21/tephra-fallout-isopachs/blob/main/examples/Isopachs/Mazama_tephra.png)
