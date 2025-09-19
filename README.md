@@ -7,6 +7,8 @@
   The caveat of cubic bivariate spline is that the fit suffers extrapolation instability when a region of no data is large relative to knot spacing, in which case "pseudo data" must be added to ensure fitted surface remains realistic. Where to place and what value (thickness) to choose for the pseudo data is very much subjective and should be clearly labled for reproducibility. My program provides the option to show pseudo data.
 ## Input data format
   Store your data file within directory [examples/Data](./examples/Data/) in "comma-separated values" (.csv) format, these are my program's assumed path and currently the only understood data format. The csv file must have 6 columns of the names ```Lon,Lat,Thickness,Pseudo,Vent Lon,Vent Lat```. All entries of all columns must be float convertible. The longitudes and latitudes data in the columns ```Lon``` and ```Lat``` must be in decimal format. ```Pseudo``` doesn't need to contain data, but if there are pseudo data to control extrapolation instability, you should clearly write ```Yes``` in the column at the rows which pseudo data are stored. ```Vent Lon,Vent Lat``` must contain 1 row of vent's (source volcano's) longtitude and latitude in decimal format. The data table below is what a row of real data followed by a raw of pseudo data looks like. 
+  
+  **Example datasheet**
   | Lon     | Lat   | Thickness | Pseudo | Vent Lon | Vent Lat|
   |---------|-------|-----------|--------|----------|---------|
   | -122.37 | 43.05 | 850       |        | -122.1   | 42.95   |
