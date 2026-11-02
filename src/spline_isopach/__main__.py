@@ -1,17 +1,17 @@
 import numpy as np
-from lsf_bsplines2d import LsfBsplines2d
+from .lsf_bsplines2d import LsfBsplines2d
+from pathlib import Path
 from src import Laea
 import pandas as pd
-from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     print("To use this program, put your data sheet within the path: tephra-fallout-isopachs/examples/Data")
     data_name = input("Input the name of your data sheet, no input defaults to Mazama tephra datasheet: ")
     if data_name == '':
-        data_name = "../../examples/Data/Mazama_tephra.csv"
+        data_name = Path(__file__).parents[2] / "examples/Data/Mazama_tephra.csv"
     else:
-        data_name = "../../examples/Data/" + data_name
+        data_name = Path(__file__).parents[2] / "examples/Data" / data_name
     xd, yd, fd, meta = Laea.prepare_inputs_from_csv(data_name,
                                                     "Lon",
                                                     "Lat",

@@ -1,0 +1,773 @@
+{
+  "real": [
+    {
+      "dataset": "Mazama",
+      "n_real": 45,
+      "ignored_pseudo": 7,
+      "selected": {
+        "tail": "exponential",
+        "length_factor": 0.75,
+        "noise_ratio": 0.75
+      },
+      "nested_rmse_log": 0.9070406601463895,
+      "nested_coverage95": 0.9333333333333333,
+      "nested_log_score": 1.2494172625370785,
+      "baselines": {
+        "trend_only_rmse_log": 0.8716827623470154,
+        "corrected_spline_no_pseudo_rmse_log": 1.4135463597141888,
+        "note": "Fixed exponential trend and corrected spline at legacy defaults; spline clips predictions to training rectangle. These baselines are not independently tuned."
+      },
+      "warnings": [
+        "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.",
+        "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
+        "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review."
+      ],
+      "spline_prior": {
+        "selected_strength": 100.0,
+        "selection_diagnostics": [
+          {
+            "strength": 0.0,
+            "mse_log": 1.874787564669641,
+            "failures": []
+          },
+          {
+            "strength": 1.0,
+            "mse_log": 1.2724972051539314,
+            "failures": []
+          },
+          {
+            "strength": 10.0,
+            "mse_log": 1.1025995132113726,
+            "failures": []
+          },
+          {
+            "strength": 100.0,
+            "mse_log": 0.944418011187197,
+            "failures": []
+          }
+        ],
+        "total_precision": 156.7726305791812
+      },
+      "volume": {
+        "bounds_km": [
+          -377.7499721581613,
+          -357.37501648499324,
+          1168.7499710346049,
+          1679.4749610889266
+        ],
+        "resolution": 24,
+        "draws": 1000,
+        "seed": 1729,
+        "mean_km3": 171.28675710826968,
+        "conditional_quantiles_km3": {
+          "0.025": 132.76900897801622,
+          "0.5": 167.89686685651364,
+          "0.975": 215.4547137993867
+        },
+        "fraction_expected_volume_outside_data_hull": 0.19107426966706317,
+        "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family."
+      },
+      "domain_sensitivity": [
+        {
+          "domain_factor": 1.0,
+          "bounds_km": [
+            -377.74997215816137,
+            -357.37501648499324,
+            1168.7499710346049,
+            1679.4749610889266
+          ],
+          "selected_mean_km3": 171.64647736615007,
+          "alternative_mean_km3": 169.04859680642252
+        },
+        {
+          "domain_factor": 1.5,
+          "bounds_km": [
+            -764.374957956353,
+            -866.5875108784732,
+            1555.3749568327964,
+            2188.6874554824067
+          ],
+          "selected_mean_km3": 176.38675036235955,
+          "alternative_mean_km3": 183.01954783331794
+        },
+        {
+          "domain_factor": 2.0,
+          "bounds_km": [
+            -1150.9999437545446,
+            -1375.800005271953,
+            1941.999942630988,
+            2697.8999498758867
+          ],
+          "selected_mean_km3": 177.51031854700793,
+          "alternative_mean_km3": 192.96497474417657
+        }
+      ],
+      "grid_check": {
+        "refined_mean_km3": 171.7934778977695,
+        "relative_change": 0.00294959270689745
+      }
+    },
+    {
+      "dataset": "Tambora",
+      "n_real": 26,
+      "ignored_pseudo": 2,
+      "selected": {
+        "tail": "power",
+        "length_factor": 0.75,
+        "noise_ratio": 1.5
+      },
+      "nested_rmse_log": 1.483906896901932,
+      "nested_coverage95": 0.9230769230769231,
+      "nested_log_score": 1.975108300728505,
+      "baselines": {
+        "trend_only_rmse_log": 1.5450180324558438,
+        "corrected_spline_no_pseudo_rmse_log": 2.169748824205255,
+        "note": "Fixed exponential trend and corrected spline at legacy defaults; spline clips predictions to training rectangle. These baselines are not independently tuned."
+      },
+      "warnings": [
+        "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.",
+        "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
+        "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review.",
+        "Doubling the integration grid changes expected volume by more than 1%; refine --volume-grid."
+      ],
+      "spline_prior": {
+        "selected_strength": 1.0,
+        "selection_diagnostics": [
+          {
+            "strength": 0.0,
+            "mse_log": 4.4220490164682165,
+            "failures": []
+          },
+          {
+            "strength": 1.0,
+            "mse_log": 1.756165600020972,
+            "failures": []
+          },
+          {
+            "strength": 10.0,
+            "mse_log": 2.804518766332239,
+            "failures": []
+          },
+          {
+            "strength": 100.0,
+            "mse_log": 2.6569490011240835,
+            "failures": []
+          }
+        ],
+        "total_precision": 2.0847732043534015
+      },
+      "volume": {
+        "bounds_km": [
+          -2510.4413271587487,
+          -702.9165784292024,
+          2088.568670716058,
+          1833.2106295002252
+        ],
+        "resolution": 24,
+        "draws": 1000,
+        "seed": 1729,
+        "mean_km3": 132.87128541143628,
+        "conditional_quantiles_km3": {
+          "0.025": 91.70792177589853,
+          "0.5": 129.11399309220872,
+          "0.975": 191.40834649651168
+        },
+        "fraction_expected_volume_outside_data_hull": 0.2800109216370434,
+        "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family."
+      },
+      "domain_sensitivity": [
+        {
+          "domain_factor": 1.0,
+          "bounds_km": [
+            -2510.4413271587487,
+            -702.9165784292024,
+            2088.568670716058,
+            1833.2106295002252
+          ],
+          "selected_mean_km3": 136.36172155280678,
+          "alternative_mean_km3": 167.21591407627346
+        },
+        {
+          "domain_factor": 1.5,
+          "bounds_km": [
+            -3660.19382662745,
+            -1336.9483804115594,
+            3238.3211701847595,
+            2467.242431482582
+          ],
+          "selected_mean_km3": 146.30081480728163,
+          "alternative_mean_km3": 178.57403770624828
+        },
+        {
+          "domain_factor": 2.0,
+          "bounds_km": [
+            -4809.946326096152,
+            -1970.9801823939163,
+            4388.073669653461,
+            3101.2742334649392
+          ],
+          "selected_mean_km3": 148.82647156516975,
+          "alternative_mean_km3": 179.74092792780507
+        }
+      ],
+      "grid_check": {
+        "refined_mean_km3": 136.00726408585834,
+        "relative_change": 0.023057435170833154
+      }
+    },
+    {
+      "dataset": "Aso-4",
+      "n_real": 87,
+      "ignored_pseudo": 6,
+      "selected": {
+        "tail": "power",
+        "length_factor": 0.25,
+        "noise_ratio": 0.75
+      },
+      "nested_rmse_log": 1.1368701676238506,
+      "nested_coverage95": 0.7931034482758621,
+      "nested_log_score": 2.0128850631623783,
+      "baselines": {
+        "trend_only_rmse_log": 1.1842802841702658,
+        "corrected_spline_no_pseudo_rmse_log": 1.2617735959486307,
+        "note": "Fixed exponential trend and corrected spline at legacy defaults; spline clips predictions to training rectangle. These baselines are not independently tuned."
+      },
+      "warnings": [
+        "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.",
+        "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
+        "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review.",
+        "Selected trend touches its decay constraint; extrapolated decay is weakly identified.",
+        "More than half of expected volume lies outside the observed convex hull.",
+        "Nested held-out 95% observation interval coverage is below 90%; uncertainty is poorly calibrated.",
+        "Doubling domain widths raises expected volume by more than 20%; distal volume is unresolved."
+      ],
+      "spline_prior": {
+        "selected_strength": 100.0,
+        "selection_diagnostics": [
+          {
+            "strength": 0.0,
+            "mse_log": 1.8730929966774512,
+            "failures": []
+          },
+          {
+            "strength": 1.0,
+            "mse_log": 1.735893072744847,
+            "failures": []
+          },
+          {
+            "strength": 10.0,
+            "mse_log": 1.695378504191646,
+            "failures": []
+          },
+          {
+            "strength": 100.0,
+            "mse_log": 1.3610779354097267,
+            "failures": []
+          }
+        ],
+        "total_precision": 139.22733575665708
+      },
+      "volume": {
+        "bounds_km": [
+          -730.3729922994254,
+          -909.8727326023245,
+          3407.100990582592,
+          2336.9149962402616
+        ],
+        "resolution": 24,
+        "draws": 1000,
+        "seed": 1729,
+        "mean_km3": 646.8730623039177,
+        "conditional_quantiles_km3": {
+          "0.025": 512.2066571950281,
+          "0.5": 636.8150273193728,
+          "0.975": 822.695188517639
+        },
+        "fraction_expected_volume_outside_data_hull": 0.6679809324334295,
+        "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family."
+      },
+      "domain_sensitivity": [
+        {
+          "domain_factor": 1.0,
+          "bounds_km": [
+            -730.3729922994253,
+            -909.8727326023245,
+            3407.100990582592,
+            2336.9149962402616
+          ],
+          "selected_mean_km3": 646.5535729091881,
+          "alternative_mean_km3": 819.2266296343516
+        },
+        {
+          "domain_factor": 1.5,
+          "bounds_km": [
+            -1764.7414880199299,
+            -1721.569664812971,
+            4441.469486303096,
+            3148.611928450908
+          ],
+          "selected_mean_km3": 1025.434843186303,
+          "alternative_mean_km3": 1771.6667818557523
+        },
+        {
+          "domain_factor": 2.0,
+          "bounds_km": [
+            -2799.109983740434,
+            -2533.2665970236176,
+            5475.8379820236005,
+            3960.3088606615547
+          ],
+          "selected_mean_km3": 1317.2852179735628,
+          "alternative_mean_km3": 2967.5282806664754
+        }
+      ],
+      "grid_check": {
+        "refined_mean_km3": 646.733437625324,
+        "relative_change": 0.00021589215969158008
+      }
+    },
+    {
+      "dataset": "B-Tm",
+      "n_real": 84,
+      "ignored_pseudo": 7,
+      "selected": {
+        "tail": "power",
+        "length_factor": 0.75,
+        "noise_ratio": 0.75
+      },
+      "nested_rmse_log": 0.8848513237945964,
+      "nested_coverage95": 0.9761904761904762,
+      "nested_log_score": 1.2749581486251809,
+      "baselines": {
+        "trend_only_rmse_log": 0.9057873884567796,
+        "corrected_spline_no_pseudo_rmse_log": 1.2414353524237873,
+        "note": "Fixed exponential trend and corrected spline at legacy defaults; spline clips predictions to training rectangle. These baselines are not independently tuned."
+      },
+      "warnings": [
+        "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.",
+        "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
+        "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review.",
+        "Doubling domain widths raises expected volume by more than 20%; distal volume is unresolved."
+      ],
+      "spline_prior": {
+        "selected_strength": 100.0,
+        "selection_diagnostics": [
+          {
+            "strength": 0.0,
+            "mse_log": 2.755382163835089,
+            "failures": []
+          },
+          {
+            "strength": 1.0,
+            "mse_log": 6.014444122480098,
+            "failures": []
+          },
+          {
+            "strength": 10.0,
+            "mse_log": 3.262390199356987,
+            "failures": []
+          },
+          {
+            "strength": 100.0,
+            "mse_log": 1.3802670759822913,
+            "failures": []
+          }
+        ],
+        "total_precision": 133.47895540245162
+      },
+      "volume": {
+        "bounds_km": [
+          -337.17285076705247,
+          -966.3149885034127,
+          1685.8642538352624,
+          743.3932644650397
+        ],
+        "resolution": 24,
+        "draws": 1000,
+        "seed": 1729,
+        "mean_km3": 39.97682470059857,
+        "conditional_quantiles_km3": {
+          "0.025": 30.97694600301658,
+          "0.5": 39.12730314705222,
+          "0.975": 51.34307755873279
+        },
+        "fraction_expected_volume_outside_data_hull": 0.25145832864904744,
+        "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family."
+      },
+      "domain_sensitivity": [
+        {
+          "domain_factor": 1.0,
+          "bounds_km": [
+            -337.1728507670525,
+            -966.3149885034127,
+            1685.8642538352624,
+            743.3932644650397
+          ],
+          "selected_mean_km3": 40.1178259457844,
+          "alternative_mean_km3": 40.944283444216616
+        },
+        {
+          "domain_factor": 1.5,
+          "bounds_km": [
+            -842.9321269176313,
+            -1393.7420517455257,
+            2191.6235299858413,
+            1170.820327707153
+          ],
+          "selected_mean_km3": 47.74531827423431,
+          "alternative_mean_km3": 45.51045210123885
+        },
+        {
+          "domain_factor": 2.0,
+          "bounds_km": [
+            -1348.69140306821,
+            -1821.1691149876387,
+            2697.3828061364197,
+            1598.247390949266
+          ],
+          "selected_mean_km3": 53.687984232522766,
+          "alternative_mean_km3": 47.91826837073388
+        }
+      ],
+      "grid_check": {
+        "refined_mean_km3": 40.05314713435392,
+        "relative_change": 0.0019055290087277206
+      }
+    }
+  ],
+  "synthetic": [
+    {
+      "scenario": "smooth",
+      "seed": 0,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.057890270624504754,
+      "latent_coverage95": 1.0,
+      "observation_coverage95": 0.9225,
+      "volume_relative_error_matched_mc_grid": 0.006400238867915067
+    },
+    {
+      "scenario": "smooth",
+      "seed": 1,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.08587596123221881,
+      "latent_coverage95": 0.945,
+      "observation_coverage95": 0.8775,
+      "volume_relative_error_matched_mc_grid": 0.024472701907114133
+    },
+    {
+      "scenario": "smooth",
+      "seed": 2,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.11438871611734563,
+      "latent_coverage95": 0.9825,
+      "observation_coverage95": 0.9175,
+      "volume_relative_error_matched_mc_grid": -0.09580021046365683
+    },
+    {
+      "scenario": "smooth",
+      "seed": 3,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.10758274484895523,
+      "latent_coverage95": 0.975,
+      "observation_coverage95": 0.9275,
+      "volume_relative_error_matched_mc_grid": 0.0384606915760617
+    },
+    {
+      "scenario": "smooth",
+      "seed": 4,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.09593089247250923,
+      "latent_coverage95": 0.99,
+      "observation_coverage95": 0.9125,
+      "volume_relative_error_matched_mc_grid": 0.06608732060299706
+    },
+    {
+      "scenario": "smooth",
+      "seed": 5,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.09908857458626955,
+      "latent_coverage95": 0.9825,
+      "observation_coverage95": 0.87,
+      "volume_relative_error_matched_mc_grid": -0.04793412801903833
+    },
+    {
+      "scenario": "smooth",
+      "seed": 6,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.10465568868593975,
+      "latent_coverage95": 0.97,
+      "observation_coverage95": 0.7825,
+      "volume_relative_error_matched_mc_grid": -0.08788278537123297
+    },
+    {
+      "scenario": "smooth",
+      "seed": 7,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.1022675284939233,
+      "latent_coverage95": 0.9825,
+      "observation_coverage95": 0.89,
+      "volume_relative_error_matched_mc_grid": -0.018503447090825607
+    },
+    {
+      "scenario": "smooth",
+      "seed": 8,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.03189222825064645,
+      "latent_coverage95": 1.0,
+      "observation_coverage95": 0.9875,
+      "volume_relative_error_matched_mc_grid": 0.02654017649288864
+    },
+    {
+      "scenario": "smooth",
+      "seed": 9,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.11644934554133957,
+      "latent_coverage95": 0.99,
+      "observation_coverage95": 0.92,
+      "volume_relative_error_matched_mc_grid": 0.07300581952310835
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 0,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.29825617179334146,
+      "latent_coverage95": 0.96,
+      "observation_coverage95": 0.995,
+      "volume_relative_error_matched_mc_grid": 0.013576497390067818
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 1,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.26334169483436387,
+      "latent_coverage95": 0.85,
+      "observation_coverage95": 0.9225,
+      "volume_relative_error_matched_mc_grid": -0.09322135974574827
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 2,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.2603425571889248,
+      "latent_coverage95": 0.9725,
+      "observation_coverage95": 0.9975,
+      "volume_relative_error_matched_mc_grid": -0.028942138491658918
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 3,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.3051709496012526,
+      "latent_coverage95": 0.975,
+      "observation_coverage95": 0.9975,
+      "volume_relative_error_matched_mc_grid": 0.07200026439919037
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 4,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.2383828281223699,
+      "latent_coverage95": 0.9925,
+      "observation_coverage95": 1.0,
+      "volume_relative_error_matched_mc_grid": 0.17681530536145018
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 5,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.3083783173287075,
+      "latent_coverage95": 0.9525,
+      "observation_coverage95": 0.9975,
+      "volume_relative_error_matched_mc_grid": 0.33073985877384815
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 6,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.3326558383366267,
+      "latent_coverage95": 0.9325,
+      "observation_coverage95": 0.9625,
+      "volume_relative_error_matched_mc_grid": -0.2219321656884461
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 7,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.24423301406842415,
+      "latent_coverage95": 0.955,
+      "observation_coverage95": 0.9925,
+      "volume_relative_error_matched_mc_grid": -0.11227224253896859
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 8,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.21273779007707214,
+      "latent_coverage95": 0.97,
+      "observation_coverage95": 0.9975,
+      "volume_relative_error_matched_mc_grid": 0.10290738065166924
+    },
+    {
+      "scenario": "secondary_lobe",
+      "seed": 9,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.2711230540116074,
+      "latent_coverage95": 0.995,
+      "observation_coverage95": 1.0,
+      "volume_relative_error_matched_mc_grid": 0.2885732667727901
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 0,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.470299761969161,
+      "latent_coverage95": 0.8875,
+      "observation_coverage95": 0.86,
+      "volume_relative_error_matched_mc_grid": -0.32682633138086165
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 1,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.3784179958282468,
+      "latent_coverage95": 0.885,
+      "observation_coverage95": 0.8225,
+      "volume_relative_error_matched_mc_grid": -0.23350720987945034
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 2,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.4158979870685047,
+      "latent_coverage95": 0.7775,
+      "observation_coverage95": 0.63,
+      "volume_relative_error_matched_mc_grid": -0.26297038015502794
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 3,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.4906873358835197,
+      "latent_coverage95": 0.895,
+      "observation_coverage95": 0.8425,
+      "volume_relative_error_matched_mc_grid": -0.34234334332760175
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 4,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.41673266282643456,
+      "latent_coverage95": 0.89,
+      "observation_coverage95": 0.81,
+      "volume_relative_error_matched_mc_grid": -0.31665935745476687
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 5,
+      "selected_tail": "power",
+      "latent_rmse_log": 0.434706689357087,
+      "latent_coverage95": 0.545,
+      "observation_coverage95": 0.62,
+      "volume_relative_error_matched_mc_grid": 0.09162594002864856
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 6,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.43900696245510534,
+      "latent_coverage95": 0.8725,
+      "observation_coverage95": 0.73,
+      "volume_relative_error_matched_mc_grid": -0.2528249258964978
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 7,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.3776211288661759,
+      "latent_coverage95": 0.8525,
+      "observation_coverage95": 0.7725,
+      "volume_relative_error_matched_mc_grid": -0.2400761390289849
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 8,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.3431957605003737,
+      "latent_coverage95": 0.9,
+      "observation_coverage95": 0.7875,
+      "volume_relative_error_matched_mc_grid": -0.18379983166784208
+    },
+    {
+      "scenario": "missing_sector",
+      "seed": 9,
+      "selected_tail": "exponential",
+      "latent_rmse_log": 0.4713078580854877,
+      "latent_coverage95": 0.8425,
+      "observation_coverage95": 0.815,
+      "volume_relative_error_matched_mc_grid": -0.3196941973776249
+    }
+  ],
+  "design": {
+    "real_folds": 4,
+    "inner_folds": 3,
+    "buffer_km": 0,
+    "synthetic_repeats": 10,
+    "synthetic_observation_noise_log": 0.25,
+    "synthetic_test_sites_per_run": 400,
+    "interpretation": "Diagnostic benchmark; conditional intervals and finite-domain volumes, not validated eruption volumes."
+  },
+  "reproducibility": {
+    "git_base_commit": "74d9362a9fb2077bd2a94a247d94befe4e194d46",
+    "source_sha256": {
+      "Laea.py": "51b3d0775ee44b42f72eceb01d16d73a04df57903ea354b4bcaa84443f3e4d90",
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "probabilistic_isopach/__init__.py": "0af7147ac62a494e7c8c473c908b59ec144cd65fb2c8f51b8c5e832e4c716baa",
+      "probabilistic_isopach/__main__.py": "fcef7e2802b8d01280183a43d5ca550cbae8e16f7a1b10a98f3d2b0f65ada0b8",
+      "probabilistic_isopach/data.py": "019795840017b6bd5115ec7a790ccbddfe693aa09bc50318b170510c8d4ef38c",
+      "probabilistic_isopach/model.py": "aac97ccd847e99e82245c5591c9feb134dfc05ecaa9f50535a11fe970bc1450b",
+      "probabilistic_isopach/regularized_spline.py": "568cc481af6ccfc5212d48e2951f0f9e2031af2d78351a2c89c87fb40f5ab177",
+      "probabilistic_isopach/report.py": "d615f3f363c67d0e837008f25e1167cf8cb534b4b676bed62e3129dfe11cfe10",
+      "probabilistic_isopach/validation.py": "077d98c1c3a6cb06fddceb98ed038bdb140e30fab84a98ae626074f1832c4c9b",
+      "spline_isopach/Model.py": "0196cc65bb381160f276801269f3b06af2005b3a99a1493496cd2e8b3eb488e2",
+      "spline_isopach/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spline_isopach/__main__.py": "128cd20f595f7bada78783269804be629afebbd99c63e4ed205fecd456748084",
+      "spline_isopach/lsf_bsplines2d.py": "bf8174df525442d1476db73a0b84cdab5698f49af17a8c65840feebb24a5bf4d"
+    },
+    "python": "3.13.4",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "3.1.0",
+      "matplotlib": "3.11.2",
+      "pyproj": "3.8.0"
+    }
+  },
+  "input_sha256": {
+    "Aso-4_tephra.csv": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
+    "B-Tm_tephra.csv": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d",
+    "Mazama_tephra.csv": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+    "Tambora_tephra.csv": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf"
+  },
+  "tambora_quadrature_followup": {
+    "bounds_km": [
+      -2510.4413271587487,
+      -702.9165784292024,
+      2088.568670716058,
+      1833.2106295002252
+    ],
+    "resolution": 48,
+    "draws": 1000,
+    "seed": 1729,
+    "mean_km3": 136.00726408585834,
+    "conditional_quantiles_km3": {
+      "0.025": 95.84644413621719,
+      "0.5": 132.69728448957352,
+      "0.975": 192.91058765047163
+    },
+    "fraction_expected_volume_outside_data_hull": 0.2761787575540295,
+    "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family.",
+    "refined_mean_96_grid_km3": 136.40226123879833,
+    "relative_change_48_to_96": 0.0028958255482911303
+  }
+}
