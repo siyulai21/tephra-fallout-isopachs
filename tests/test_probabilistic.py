@@ -75,7 +75,7 @@ def test_correlated_external_evidence_duplicate_invariance():
 
 
 def test_csv_pseudo_invariance_and_vent_not_first_row(tmp_path):
-    df = pd.read_csv("examples/Data/Mazama_tephra.csv")
+    df = pd.read_csv("data/eruptions/Mazama_tephra.csv")
     original = tmp_path/"original.csv"
     df.to_csv(original, index=False)
     d, meta = read_observations(original)

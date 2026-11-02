@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import cKDTree
 import matplotlib as mpl
+from pathlib import Path
 
 try:
     import scipy.linalg as _spl
@@ -128,9 +129,11 @@ class LsfBsplines2d:
         ax.legend(title="Thickness range", fontsize="small", title_fontsize="small",
                    scatterpoints=1, markerscale=1.2, frameon=False)
         plt.show()
-        saving = input("Do you want to save this map to examples/Isopachs [y/n]: ")
+        saving = input("Do you want to save this map to results/legacy/Result.png [y/n]: ")
         if saving == "y":
-            fig.savefig("../../examples/Isopachs/Result.png", dpi=240)
+            destination = Path(__file__).parents[2]/"results/legacy/Result.png"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            fig.savefig(destination, dpi=240)
         plt.close()
         return CS
 

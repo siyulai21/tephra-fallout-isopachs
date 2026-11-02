@@ -9,6 +9,11 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install '.[test]'
+      - name: Check installed command and bundled data outside the checkout
+        working-directory: ${{ runner.temp }}
+        run: |
+          tephra-isopachs --help
+          python -c "from src.probabilistic_isopach.catalog import datasets; rows = datasets(); assert len(rows) == 4; assert all(r['path'].is_file() for r in rows)"
       - run: python -m pytest -q
         env:
           MPLBACKEND: Agg

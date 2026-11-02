@@ -1,0 +1,6 @@
+# Keep generated reports and cartographic data out of the source-code review.
+docs/atlas/** linguist-generated=true
+docs/assets/*.png linguist-generated=true
+docs/atlas/**/*.svg -diff -whitespace
+docs/atlas/**/*.geojson -diff
+src/probabilistic_isopach/assets/* linguist-vendored=true
