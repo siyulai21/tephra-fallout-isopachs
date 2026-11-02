@@ -116,3 +116,16 @@ Runs record input/code hashes, versions, seeds, fold/row assignments, candidates
 [VALIDATION.md](VALIDATION.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
 
 Before publication-level volume claims: jointly infer trend/covariance uncertainty, model independently documented preservation/detection, compare richer anisotropic or multi-lobe means, and evaluate untouched eruptions with preregistered sector holdouts. Those are research extensions, not implemented features of this version.
+
+## Reporting workflow 0.3
+
+The upload workspace and atlas retain the 0.2 statistical fit exactly. Reporting
+now separates the map domain from the finite volume region, expands maps to
+resolve closed median level sets, checks enclosed areas (including holes), and
+refines mean- and median-surface quadrature. Small contour features receive
+local refinement around the globally resolved components. This does not add
+pseudo observations, physical inputs, or a new uncertainty model.
+
+See [OUTPUTS.md](OUTPUTS.md) for numerical definitions, limits, and the
+distinction between the median surface integral and median random volume.
+[ATLAS_VALIDATION.md](ATLAS_VALIDATION.md) records the reporting checks.

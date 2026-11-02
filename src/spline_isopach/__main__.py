@@ -6,12 +6,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    print("To use this program, put your data sheet within the path: tephra-fallout-isopachs/examples/Data")
+    print("To use this program, put your data sheet within the path: tephra-fallout-isopachs/data/eruptions")
     data_name = input("Input the name of your data sheet, no input defaults to Mazama tephra datasheet: ")
     if data_name == '':
-        data_name = Path(__file__).parents[2] / "examples/Data/Mazama_tephra.csv"
+        data_name = Path(__file__).parents[2] / "data/eruptions/Mazama_tephra.csv"
     else:
-        data_name = Path(__file__).parents[2] / "examples/Data" / data_name
+        data_name = Path(__file__).parents[2] / "data/eruptions" / data_name
     xd, yd, fd, meta = Laea.prepare_inputs_from_csv(data_name,
                                                     "Lon",
                                                     "Lat",

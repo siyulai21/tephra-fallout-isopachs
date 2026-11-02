@@ -4,20 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tephra-fallout-isopachs"
-version = "0.2.0"
+version = "0.3.0"
 description = "Reproducible probabilistic tephra isopachs"
 requires-python = ">=3.10"
-dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "pyproj>=3.6"]
+dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "contourpy>=1.2", "pyproj>=3.6"]
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
 legacy-map = ["basemap>=2"]
 
 [project.scripts]
-tephra-isopachs = "src.probabilistic_isopach.__main__:main"
+tephra-isopachs = "src.probabilistic_isopach.cli:main"
 
 [tool.setuptools.packages.find]
+where = ["."]
 include = ["src*"]
+
+[tool.setuptools.package-data]
+"src.probabilistic_isopach" = ["assets/*.geojson"]
+
+[tool.setuptools.data-files]
+"share/tephra-fallout-isopachs" = ["data/datasets.json", "data/README.md"]
+"share/tephra-fallout-isopachs/eruptions" = ["data/eruptions/*.csv"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

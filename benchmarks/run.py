@@ -81,9 +81,9 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     real = []
     for name in ("Mazama", "Tambora", "Aso-4", "B-Tm"):
-        csv = Path(f"examples/Data/{name}_tephra.csv")
+        csv = Path(f"data/eruptions/{name}_tephra.csv")
         dest = args.output/name
-        fit_cli([str(csv), "--output", str(dest), "--nested-cv"])
+        fit_cli([str(csv), "--output", str(dest), "--nested-cv", "--no-publication", "--volume-grid", "24"])
         report = json.loads((dest/"report.json").read_text())
         data, _ = read_observations(csv)
         prior, prior_records = select_spline_prior(data)
