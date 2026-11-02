@@ -71,3 +71,24 @@ def test_http_preview_and_local_origin_boundary(tmp_path):
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
+
+
+def test_selected_method_is_validated_and_forwarded_to_analysis(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    from src.probabilistic_isopach import workbench
+    with pytest.raises(ValueError, match="Choose the established fit"):
+        prepare_upload({"dataset": "mazama", "method": "invented"})
+    workspace = Workspace(tmp_path)
+    folder = tmp_path/'test'; folder.mkdir()
+    state = {'id': 'test', 'name': 'Test', 'nested_validation': True, 'method': 'stacked'}
+    captured = []
+    def run(command, **kwargs):
+        captured.extend(command)
+        output = folder/'report'; output.mkdir()
+        (output/'report.json').write_text(json.dumps({'volume_analysis': {'regional': {'mean_km3': 1.}}}))
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(workbench.subprocess, 'run', run)
+    workspace._run(folder, state)
+    assert state['status'] == 'complete'
+    assert captured[captured.index('--method')+1] == 'stacked'
+    assert '--nested-cv' in captured

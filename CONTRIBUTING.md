@@ -1,12 +1,13 @@
 # Working on this repository
 
-Keep scientific changes distinct from reporting changes. `model.py`, `validation.py` and observation semantics define the fit. The 0.3 reporting release preserves that fit; changing it requires independent validation.
+Keep scientific changes distinct from reporting changes. `model.py`, `validation.py`, `ensemble.py`, `distributions.py` and observation semantics define the fit and predictive distribution. The 0.3 reporting release preserved the selected-model fit; the 0.4 ensemble is opt-in and requires independent evaluation. Never summarize its field as a single Gaussian for quantiles, thickness expectations or volume sampling.
 
 Reporting belongs in `contours.py`, `volume.py`, `figures.py` and `publication.py`. Never use a display boundary or hand-closed curve to constrain the fit. Keep unresolved results visible.
 
 ```sh
 python -m pip install '.[test]'
 python -m pytest -q
+python -m benchmarks.empirical --output results/empirical --repeats 10
 python -m src.probabilistic_isopach atlas --output results/review-atlas
 ```
 

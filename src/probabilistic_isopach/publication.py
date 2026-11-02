@@ -11,7 +11,7 @@ from .figures import save_isopach_map, save_diagnostics
 from .volume import volume_analysis
 
 
-CSS = """+:root{--ink:#183843;--muted:#5c7075;--teal:#087e8b;--line:#d9e3df;--paper:#fafbf8;--amber:#936025}
+CSS = """:root{--ink:#183843;--muted:#5c7075;--teal:#087e8b;--line:#d9e3df;--paper:#fafbf8;--amber:#936025}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 main{max-width:1240px;margin:auto;padding:48px 36px 70px}a{color:var(--teal);text-underline-offset:4px}a:hover{color:#154852}
 .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--teal)}h1{font-size:clamp(38px,6vw,66px);line-height:1.08;letter-spacing:-.045em;margin:18px 0 20px}h2{font-size:24px;letter-spacing:-.02em;margin:0 0 14px}h3{font-size:18px;margin:0 0 9px}p{margin:0 0 15px}.lead{font-size:19px;color:var(--muted);max-width:800px}.muted,small{color:var(--muted)}small{font-size:13px}
@@ -35,6 +35,30 @@ def number(value):
     return f"{value:,.1f}" if value >= 10 else f"{value:,.2f}"
 
 
+def method_description(report):
+    if "stacking" in report["validation"]:
+        return "Spatial holdouts fitted an experimental mixture of exponential and power-law thinning candidates. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement."
+    return f"Spatial validation selected the {report['model']['candidate']['tail']} thinning family within the directional-trend-plus-spatial-residual model."
+
+
+def empirical_section(report):
+    stacking = report["validation"].get("stacking")
+    if stacking is None:
+        return ""
+    rows = "".join(f"<tr><td>{r['candidate']['tail']}</td><td>{r['candidate']['length_factor']:g}</td><td>{r['candidate']['noise_ratio']:g}</td><td>{r['weight']:.1%}</td><td>{r['block_bootstrap_weight_5_95'][0]:.1%}–{r['block_bootstrap_weight_5_95'][1]:.1%}</td></tr>"
+                   for r in stacking["components"])
+    comparison = "<p>Independent geographic validation was not run. Weight-training scores do not estimate predictive accuracy.</p>"
+    nested = report["nested_validation"]
+    if nested:
+        performance = "".join(f"<tr><td>{label}</td><td>{v['coverage95_observations']:.1%}</td><td>{v['mean_interval_width_log']:.2f}</td><td>{v['mean_log_score']:.3f}</td></tr>"
+                              for label, v in (("Ensemble (reported)", nested), ("Extra variance (diagnostic)", nested["discrepancy_adjusted"])))
+        comparison = '<div class="table-wrap"><table><thead><tr><th>Outer geographic holdouts</th><th>95% coverage</th><th>Mean interval width · ln cm</th><th>Negative log score · lower is better</th></tr></thead><tbody>'+performance+'</tbody></table></div>'
+    return f'''<h2>What did the data support?</h2><p>{method_description(report)}</p>
+<div class="table-wrap"><table><thead><tr><th>Tail family</th><th>Length factor</th><th>Noise ratio</th><th>Predictive weight</th><th>Fold reweighting · 5–95%</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p class="muted">Weights describe predictive contribution, not probabilities that a model is true. Reweighting whole geographic folds tests stability; these ranges are not confidence intervals. Zero-weight candidates remain visible.</p>
+{comparison}<div class="note">The final all-data fit learned an extra observation-discrepancy SD of {stacking['calibration']['sd_log']:.3f} in natural-log thickness from its training holdouts. Each outer validation fold estimates its own adjustment independently. The adjustment is exported as a diagnostic: it does not change the headline observation intervals, latent surface or volume draws. Wider intervals alone do not establish better uncertainty. All fits and weights remain estimated, not integrated out.</div>'''
+
+
 def write_short_report(output, name, report):
     volume = report["volume_analysis"]
     regional = volume["regional"]
@@ -47,7 +71,7 @@ def write_short_report(output, name, report):
                 "Independent nested validation was not run; selection scores are not an independent accuracy estimate.")
     text = f"""# {name}: deposit reconstruction
 
-The analysis used **{report['input']['n_measurements']} thickness measurements** and {report['input']['n_upper_limits']} documented upper limits, excluding {len(report['input']['ignored_pseudo_rows'])} legacy pseudo rows. Spatial validation selected the **{report['model']['candidate']['tail']}** thinning family within the existing directional-trend-plus-spatial-residual model.
+The analysis used **{report['input']['n_measurements']} thickness measurements** and {report['input']['n_upper_limits']} documented upper limits, excluding {len(report['input']['ignored_pseudo_rows'])} legacy pseudo rows. {method_description(report)}
 
 | Result | Estimate |
 |---|---:|
@@ -61,7 +85,7 @@ Closed median isopachs were resolved at {', '.join(f'{v:g}' for v in closed)} cm
 
 {coverage}
 
-These are finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. The default region comes from observation coordinates plus 25% padding; exact bounds and alternatives are in the full report. {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent, and conditional intervals omit fitted-parameter and model uncertainty. Input provenance and preservation were not independently audited.
+These are finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. The default region comes from observation coordinates plus 25% padding; exact bounds and alternatives are in the full report. {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent. {report['model']['uncertainty']} Fitted-parameter uncertainty is not integrated. Input provenance and preservation were not independently audited.
 
 [Full report](index.html) · [Map](isopachs.pdf) · [Volume table](volume_summary.csv) · [Contours](isopachs.geojson)
 """
@@ -86,7 +110,7 @@ def write_dataset_page(output, name, report):
     sampling = va["conditional_sampling"]
     q = sampling["quantiles_km3"]
     interval = (f"The joint sampling grid gives an approximate conditional 95% interval of <b>{number(q['0.025'])}–{number(q['0.975'])} km³</b>. "
-                "It holds the fitted parameters and thinning family fixed. Quantile convergence has not been established; "
+                f"{escape(sampling['interpretation'])} Quantile convergence has not been established; "
                 "this is a sampling diagnostic, not a calibrated eruption-volume interval."
                 if sampling["mean_grid_agrees_with_refined_integral"] else
                 "The conditional sampling grid does not agree with the refined mean integral to within 1%. "
@@ -109,12 +133,13 @@ def write_dataset_page(output, name, report):
 <div class="table-wrap"><table><thead><tr><th>Integration region</th><th>Selected fit · km³</th><th>Other family · km³</th><th>Numerical refinement</th></tr></thead><tbody>{rows}</tbody></table></div>
 <div class="note warn">Increasing both widths by 2× increases the area by 4×. These estimates show sensitivity to the integration region and thinning family; the range is not a confidence interval. Total erupted volume has not been established.</div>
 <h2>Fit and numerical checks</h2><p>{coverage}</p><div class="panel"><img src="diagnostics.svg" alt="Contour area curve, volume-domain sensitivity and geographic holdout diagnostics"></div>
+{empirical_section(report)}
 <details><summary>Closed-contour areas and resolution checks</summary><p>Areas include all resolved components and subtract enclosed holes. Unclosed levels have no reported area. Small features are refined locally. The last column compares the final area grid with a grid of half the resolution; per-level scope is recorded in the CSV.</p>
 <div class="table-wrap"><table><thead><tr><th>Thickness · cm</th><th>Status</th><th>Area · km²</th><th>Grid change</th></tr></thead><tbody>{levels}</tbody></table></div></details>
 <details><summary>Conditional volume uncertainty</summary><p>{interval}</p></details>
 <details open><summary>Interpretation and limitations</summary><ul>{warnings}</ul></details>
 <div class="downloads"><a href="report.json">Full report · JSON</a><a href="volume_summary.csv">Volume estimates · CSV</a><a href="observations_used.csv">Measurements used · CSV</a></div>
-<footer>Same directional trend and spatial fit as method 0.2.0; reporting workflow {report['report_version']}. Input SHA-256: <code>{escape(report['input']['input_sha256'])}</code><br>Maps are generated offline. Coastlines: Natural Earth, public domain.</footer>"""
+<footer>Statistical method {report['method_version']}; reporting workflow {report['report_version']}. Input SHA-256: <code>{escape(report['input']['input_sha256'])}</code><br>Maps are generated offline. Coastlines: Natural Earth, public domain.</footer>"""
     (Path(output)/"index.html").write_text(page(name, body))
 
 
@@ -124,7 +149,7 @@ def publish_dataset(output, name, model, alternate, inverse, report, resolution=
     options = {} if levels is None else {"levels": levels}
     contours = build_contours(model, resolution=resolution, max_extent_km=max_extent_km, **options)
     report["contours"] = {k: contours[k] for k in ("bounds_km", "outer_level_cm", "resolution", "max_extent_km", "levels")}
-    report["report_version"] = "0.3.0"
+    report["report_version"] = "0.4.0"
     report["dataset"] = name
     report["volume_analysis"] = volume_analysis(model, alternate, report["volume"]["bounds_km"], report["volume"])
     report["warnings"] = [w for w in report["warnings"] if not w.startswith("Doubling the integration grid")]
@@ -201,7 +226,7 @@ Each deposit includes PNG/SVG/PDF maps, GeoJSON contour lines, enclosed-area
 tables, volume estimates for three explicit regions and two thinning families,
 measurements used, diagnostics, and a full reproducibility report.
 
-The statistical fit is unchanged from method 0.2.0. Dashed isopach sections are
+The statistical method is recorded separately for every deposit. Dashed isopach sections are
 outside the measurement convex hull. The map expands to show closed contours;
 unresolved levels are listed, never joined along the frame. Contour areas
 subtract holes and are checked against a coarser grid.
@@ -220,5 +245,6 @@ validation is reproduced, including unfavorable results.
 """
     if reports:
         map_grid = reports[0][1]["settings"]["map_grid"]
-        readme = readme.replace("atlas --output results/atlas\n", f"atlas --output results/atlas --map-grid {map_grid}\n")
+        method = reports[0][1]["settings"].get("method", "selected")
+        readme = readme.replace("atlas --output results/atlas\n", f"atlas --output results/atlas --map-grid {map_grid} --method {method}\n")
     (output/"README.md").write_text(readme)

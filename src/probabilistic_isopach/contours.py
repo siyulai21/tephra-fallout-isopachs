@@ -3,15 +3,17 @@ import numpy as np
 from contourpy import contour_generator
 
 from .report import domain_bounds
+from .distributions import predictive_distribution, thickness_summaries
 
 
 DEFAULT_LEVELS = (.1, 1., 2., 5., 10., 20., 50., 100., 200., 500.)
 
 
 def predict_chunks(model, xy, chunk_size=4096):
+    """Exact log median and log variance; a mixture median need not be its mean."""
     means, variances = [], []
     for start in range(0, len(xy), chunk_size):
-        m, v = model.predict_log(xy[start:start+chunk_size])
+        m, _, v = thickness_summaries(model, xy[start:start+chunk_size])
         means.append(m)
         variances.append(v)
     return np.concatenate(means), np.concatenate(variances)
@@ -24,7 +26,7 @@ def boundary_maxima(model, bounds, samples=257):
              np.column_stack((x, np.full(samples, y0))),
              np.column_stack((np.full(samples, x1), y)),
              np.column_stack((x, np.full(samples, y1)))]
-    return np.array([model.predict_log(p)[0].max() for p in edges])
+    return np.array([predictive_distribution(model, p).quantile(.5).max() for p in edges])
 
 
 def closed_domain(model, levels=DEFAULT_LEVELS, max_extent_km=6000.):

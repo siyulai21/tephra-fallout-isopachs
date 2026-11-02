@@ -39,6 +39,7 @@ Bundled names are case-insensitive. A CSV path also works. `python -m src.probab
 
 | Option | Purpose |
 |---|---|
+| `--method stacked` | Experimental empirical ensemble; `selected` retains the established default |
 | `--name "My deposit"` | Report title |
 | `--levels 0.1 1 2 5 10 20 50` | Positive increasing contour levels in cm |
 | `--map-grid 961` | Refine small features; odd values 65–1201 |
@@ -52,3 +53,5 @@ Bundled names are case-insensitive. A CSV path also works. `python -m src.probab
 Default map resolution is 481×481. Joint sampling uses 48×48. Expected and median-surface volumes are independently refined at 64, 128, 256 and, if necessary, 512 cells per side. Failed numerical convergence is reported.
 
 See [the input specification](../data/README.md) and [the output guide](OUTPUTS.md). Thickness is in centimetres, coordinates in WGS84 degrees. Invented pseudo rows are ignored. A non-detection needs a documented positive detection limit; a blank region is not a zero.
+
+The upload form also offers the experimental ensemble. No model weights, pseudo-point placements or uncertainty multipliers need to be entered. Its report exposes learned weights, their stability under geographic reweighting, and held-out scores for ordinary and discrepancy-adjusted observation predictions. Read [the empirical method](EMPIRICAL_METHODS.md) before interpreting those diagnostics as evidence about unsampled deposits.

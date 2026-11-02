@@ -31,6 +31,8 @@ MAX_UPLOAD = 5_000_000
 
 def prepare_upload(payload):
     """Return original bytes, analysis bytes and a safe display title."""
+    if payload.get("method", "selected") not in ("selected", "stacked"):
+        raise ValueError("Choose the established fit or the experimental ensemble.")
     if payload.get("dataset"):
         matches = [r for r in datasets() if r["slug"] == payload["dataset"]]
         if not matches:
@@ -141,6 +143,7 @@ class Workspace:
         (folder/"original.csv").write_bytes(raw)
         (folder/"input.csv").write_bytes(analysis)
         state = {"id": identifier, "name": name, "status": "queued", "preview": preview,
+                 "method": payload.get("method", "selected"),
                  "created_utc": datetime.now(timezone.utc).isoformat(),
                  "nested_validation": bool(payload.get("nested_validation", True))}
         with self.lock:
@@ -154,7 +157,8 @@ class Workspace:
             state["status"] = "running"
             _write_json(folder/"job.json", state)
             command = [sys.executable, "-m", "src.probabilistic_isopach", "fit", str(folder/"input.csv"),
-                       "--output", str(folder/"report"), "--name", state["name"], "--draws", "1500"]
+                       "--output", str(folder/"report"), "--name", state["name"], "--draws", "1500",
+                       "--method", state.get("method", "selected")]
             if state["nested_validation"]:
                 command.append("--nested-cv")
             env = {**os.environ, "MPLCONFIGDIR": str(self.root/".matplotlib"), "PYTHONUNBUFFERED": "1"}
@@ -188,6 +192,7 @@ input,select,button{font:inherit}input[type=text],input[type=number],select{widt
 <label class="drop" id="drop"><span style="font-size:28px;color:var(--teal)">↥</span><b>Drop an eruption CSV here</b><span class="muted" style="font-size:13px">or choose a file · thickness in centimetres</span><br><input id="file" type="file" accept=".csv,text/csv" aria-label="Eruption CSV" style="margin-top:16px"></label>
 <label class="field" for="example">Or explore an included eruption</label><select id="example"><option value="">Choose an example…</option></select>
 <label class="field" for="name">Eruption name</label><input id="name" type="text" placeholder="e.g. My eruption" maxlength="100">
+<label class="field" for="method">Statistical method</label><select id="method"><option value="selected">Established fit · best single model</option><option value="stacked">Experimental ensemble · compare thinning models</option></select><small>The ensemble learns model weights from withheld regions. Its report also tests an extra observation-variance adjustment.</small>
 <details style="margin-top:20px"><summary>Vent coordinates, if missing from the CSV</summary><p><small>Leave blank when the CSV already supplies Vent Lon and Vent Lat. Enter decimal degrees.</small></p><div class="two"><div><label class="field" for="lon">Longitude</label><input id="lon" type="number" step="any" min="-180" max="180" placeholder="−180 to 180"></div><div><label class="field" for="lat">Latitude</label><input id="lat" type="number" step="any" min="-90" max="90" placeholder="−90 to 90"></div></div></details>
 <label class="check"><input id="validation" type="checkbox" checked><span>Check predictions against withheld geographic regions<br><small>Recommended; adds time to the analysis.</small></span></label>
 <div class="actions"><button id="preview-button" class="button secondary">Preview measurements</button><button id="run-button" class="button" disabled>Run analysis →</button></div><div id="error" class="error hidden" role="alert"></div>
@@ -206,8 +211,8 @@ function setFile(file){const previous=$('example').selectedOptions[0]?.textConte
 $('file').addEventListener('change',()=>setFile($('file').files[0]));
 $('drop').addEventListener('dragover',e=>{e.preventDefault();$('drop').classList.add('drag')});$('drop').addEventListener('dragleave',()=>$('drop').classList.remove('drag'));$('drop').addEventListener('drop',e=>{e.preventDefault();$('drop').classList.remove('drag');if(e.dataTransfer.files.length){setFile(e.dataTransfer.files[0]);$('drop').querySelector('b').textContent=chosenFile.name}});
 $('example').addEventListener('change',()=>{chosenFile=null;$('file').value='';if($('example').value)$('name').value=$('example').selectedOptions[0].textContent;reset()});
-for(const id of ['name','lon','lat','validation'])$(id).addEventListener('input',reset);
-async function payload(){if(chosenFile&&chosenFile.size>5000000)throw new Error('Choose a CSV smaller than 5 MB.');return {dataset:$('example').value||null,csv:chosenFile?await chosenFile.text():null,filename:chosenFile?.name,name:$('name').value,vent_lon:$('lon').value===''?null:Number($('lon').value),vent_lat:$('lat').value===''?null:Number($('lat').value),nested_validation:$('validation').checked}}
+for(const id of ['name','lon','lat','validation','method'])$(id).addEventListener('input',reset);
+async function payload(){if(chosenFile&&chosenFile.size>5000000)throw new Error('Choose a CSV smaller than 5 MB.');return {dataset:$('example').value||null,csv:chosenFile?await chosenFile.text():null,filename:chosenFile?.name,name:$('name').value,method:$('method').value,vent_lon:$('lon').value===''?null:Number($('lon').value),vent_lat:$('lat').value===''?null:Number($('lat').value),nested_validation:$('validation').checked}}
 function scatter(points){let xs=[0,...points.map(p=>p.x)],ys=[0,...points.map(p=>p.y)],xmin=Math.min(...xs),ymin=Math.min(...ys),sx=Math.max(...xs)-xmin||1,sy=Math.max(...ys)-ymin||1;const scale=Math.min(360/sx,150/sy),cx=x=>30+(x-xmin)*scale,cy=y=>180-(y-ymin)*scale;return `<svg viewBox="0 0 420 210" role="img" aria-label="Projected measurement locations and vent">${points.map(p=>`<circle cx="${cx(p.x)}" cy="${cy(p.y)}" r="3" fill="${p.upper_limit?'#af6c25':'#087e8b'}" opacity=".8"/>`).join('')}<text x="${cx(0)}" y="${cy(0)+5}" text-anchor="middle" fill="#b9573c" font-size="20">★</text><text x="12" y="204" fill="#5c7075" font-size="10">Measurement locations · star = vent · projected kilometres</text></svg>`}
 $('preview-button').addEventListener('click',async()=>{reset();const serial=previewSerial;$('preview-button').disabled=true;try{const p=await payload();const result=await request('/api/preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});if(serial!==previewSerial)return;approved=p;$('preview').innerHTML=`<b>${esc(result.name)} · ready to analyse</b><p style="margin-top:8px;margin-bottom:0">${result.measurements} measurements · ${result.upper_limits} upper limits · ${result.excluded_pseudo} pseudo rows excluded</p><small>Vent: ${result.vent.map(v=>v.toFixed(4)).join(', ')}</small>${scatter(result.points)}<small>Preview checks the input structure. Source provenance and preservation still require geological interpretation.</small>`;$('preview').classList.remove('hidden');$('run-button').disabled=false}catch(e){error(e.message)}finally{$('preview-button').disabled=false}});
 $('run-button').addEventListener('click',async()=>{if(!approved)return;$('run-button').disabled=true;try{await request('/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(approved)});approved=null;await refresh();$('runs').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){error(e.message);$('run-button').disabled=false}});

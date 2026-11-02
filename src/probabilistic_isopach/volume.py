@@ -1,7 +1,7 @@
 """Convergence-checked integrals of the unchanged conditional spatial model."""
 import numpy as np
 
-from .contours import predict_chunks
+from .distributions import thickness_summaries
 from .report import grid_cells, support_flags
 
 
@@ -16,9 +16,10 @@ def converged_volume(model, bounds, tolerance=.005, resolutions=(64, 128, 256, 5
     history = []
     for resolution in resolutions:
         xy, area = grid_cells(bounds, resolution)
-        m, v = predict_chunks(model, xy)
+        chunks = [thickness_summaries(model, xy[start:start+4096]) for start in range(0, len(xy), 4096)]
+        m, log_expected, _ = (np.concatenate([p[i] for p in chunks]) for i in range(3))
         with np.errstate(over="raise", invalid="raise"):
-            expected = np.exp(m+v/2)*area*1e-5
+            expected = np.exp(log_expected)*area*1e-5
             median = np.exp(m)*area*1e-5
         inside, _ = support_flags(model.data, xy)
         row = {"resolution": resolution, "mean_km3": float(expected.sum()),
@@ -52,6 +53,6 @@ def volume_analysis(model, alternate, bounds, sampled_volume):
                 "mean_grid_relative_error": sample_error,
                 "mean_grid_agrees_with_refined_integral": sample_error < .01,
                 "quantile_grid_convergence_verified": False,
-                "interpretation": "Approximate joint-grid conditional interval; excludes fitted-parameter and model uncertainty. Mean-grid agreement does not establish quantile convergence."},
+                "interpretation": sampled_volume["scope"]+" Fitted-parameter uncertainty is not integrated. Mean-grid agreement does not establish quantile convergence."},
             "total_erupted_volume_km3": None,
             "total_status": "Not established: unsampled tails and eruption-wide uncertainty remain unresolved."}
