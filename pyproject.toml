@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tephra-fallout-isopachs"
+version = "0.2.0"
+description = "Reproducible probabilistic tephra isopachs"
+requires-python = ">=3.10"
+dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "pyproj>=3.6"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+legacy-map = ["basemap>=2"]
+
+[project.scripts]
+tephra-isopachs = "src.probabilistic_isopach.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
