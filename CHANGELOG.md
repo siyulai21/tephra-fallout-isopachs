@@ -1,5 +1,13 @@
 # Changes
 
+## 0.6.1 — Reviewed YTT principal dataset
+
+- Include qualified Maninjau primary beds and source-verified U1445B (8 cm), for 46 principal observations.
+- Record a decision for all 88 audited records and keep U1448B as an explicit inclusion sensitivity.
+- Rebuild inputs from versioned rules without changing the original workbook or inventing uncertainty.
+- Separate principal reports, four current sensitivities and archived 43/45-record analyses.
+- Recalculate geographic holdouts, maps and regional volumes with unchanged model code.
+
 ## 0.6.0 — Combined Minoan fallout and repository cleanup
 
 - Apply one total-fallout field to all Minoan fans using a source audit and explicit data sensitivities.

@@ -1,0 +1,82 @@
+{
+  "review_date": "2026-11-03",
+  "principal_case": "principal",
+  "source_sha256": "19931ca2eb1b0ee1ae4cb77f41a2c014bf55bc7b71e1c70bad73bbe90a5f1628",
+  "base_selection": "All original nonblank fit_cm values, in workbook order.",
+  "overrides": {
+    "N001": {
+      "thickness_cm": 23,
+      "principal": true,
+      "reason": "Primary YTT airfall at Maninjau A40; approximately 23 cm; approximate workbook position retained.",
+      "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+    },
+    "N002": {
+      "thickness_cm": 23,
+      "principal": true,
+      "reason": "Primary YTT airfall at Maninjau A64; approximately 23 cm; approximate workbook position retained.",
+      "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+    },
+    "N005": {
+      "thickness_cm": 8,
+      "principal": true,
+      "longitude": 84.78749666666667,
+      "latitude": 17.745163333333334,
+      "reason": "Table 1 p.18: U1445B-2H-6_42-50, event 1 YTT, discrete fine ash with horizontal basal boundary. One representative at U1445; disintegrated companion U1445A remains excluded.",
+      "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+      "coordinate_source": "https://publications.iodp.org/proceedings/353/105/353_105.html",
+      "coordinate_original": "Table T1: 17 degrees 44.7098 minutes N; 84 degrees 47.2498 minutes E. Converted to decimal degrees without adding precision."
+    },
+    "N006": {
+      "thickness_cm": 20,
+      "principal": false,
+      "reason": "Inclusion sensitivity only. Table 1 p.20 reports 20 cm at U1448B-1H-4/5_136/-6 with irregular basal boundary; shipboard B interval 5.53-6.09 m spans 56 cm. Contact-definition discrepancy unresolved; approximate workbook position retained.",
+      "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+      "comparison_source": "https://publications.iodp.org/proceedings/353/108/353_108.html"
+    }
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/YTT_tephra.csv",
+      "exclude": [],
+      "add": [],
+      "definition": "Principal 46: original 43 plus qualified Maninjau N001/N002 and source-verified U1445B N005."
+    },
+    "without_maninjau": {
+      "file": "data/audits/YTT/sensitivity/without_maninjau.csv",
+      "exclude": [
+        "N001",
+        "N002"
+      ],
+      "add": [],
+      "definition": "Principal minus Maninjau; U1445B retained (44)."
+    },
+    "without_u1445b": {
+      "file": "data/audits/YTT/sensitivity/without_u1445b.csv",
+      "exclude": [
+        "N005"
+      ],
+      "add": [],
+      "definition": "Principal minus U1445B (45); byte-identical to previous Maninjau principal."
+    },
+    "without_md161": {
+      "file": "data/audits/YTT/sensitivity/without_md161.csv",
+      "exclude": [
+        "N021",
+        "N022",
+        "N023",
+        "N024",
+        "N025"
+      ],
+      "add": [],
+      "definition": "Principal minus five MD161 beds; Maninjau and U1445B retained (41)."
+    },
+    "with_u1448b": {
+      "file": "data/audits/YTT/sensitivity/with_u1448b.csv",
+      "exclude": [],
+      "add": [
+        "N006"
+      ],
+      "definition": "Principal plus disputed U1448B 20 cm (47); tests inclusion, does not resolve contacts."
+    }
+  }
+}

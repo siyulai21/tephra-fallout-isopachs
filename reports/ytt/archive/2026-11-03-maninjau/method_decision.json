@@ -1,0 +1,58 @@
+{
+  "default": "selected",
+  "promote_stacked": false,
+  "reason": "This revision promotes documented primary-fallout observations into the principal input. The established method remains the default; assess the new matched holdout metrics before any separate method replacement.",
+  "principal_case": "main45",
+  "main45_same_final_component": true,
+  "main45_same_expected_thickness_grid": true,
+  "metrics": {
+    "selected": {
+      "mean_log_score": 2.6414946766195224,
+      "equal_region_log_score": 2.671061012885889,
+      "rmse_log": 1.3359899322561217,
+      "coverage95_observations": 0.9111111111111111,
+      "mean_interval_width_log": 4.55042291330711
+    },
+    "stacked": {
+      "mean_log_score": 2.0371383076713188,
+      "equal_region_log_score": 2.052969271916135,
+      "rmse_log": 1.270128597391424,
+      "coverage95_observations": 0.9111111111111111,
+      "mean_interval_width_log": 4.676511792765582
+    }
+  },
+  "negative_log_score_difference_stacked_minus_selected": -0.6043563689482037,
+  "criterion": "Proper predictive score is primary; also inspect coverage, width and point error. A small point-error gain alone does not establish superiority.",
+  "input_verification": {
+    "workbook_sha256": "19931ca2eb1b0ee1ae4cb77f41a2c014bf55bc7b71e1c70bad73bbe90a5f1628",
+    "audit_records": 88,
+    "cases": {
+      "main45": {
+        "file": "data/eruptions/YTT_tephra.csv",
+        "measurements": 45,
+        "sha256": "28fecaaf595bf1824c85bd8c70064cea4926108fa7a33b9ff35676727c3f61fb"
+      },
+      "main43": {
+        "file": "data/audits/YTT/without_maninjau_43.csv",
+        "measurements": 43,
+        "sha256": "61a48552a8587cd8d5e96130649c5f49674b6f6fdaf41f6d1a0f64c7fc5357a3"
+      },
+      "no_md16140": {
+        "file": "data/audits/YTT/no_md161_40.csv",
+        "measurements": 40,
+        "sha256": "d30df7a2f7eb5bc7b340634c6d3f1cb2e0b4dd2d334b1fb1a5e56357e587aa54"
+      },
+      "no_md16138": {
+        "file": "data/audits/YTT/no_md161_38.csv",
+        "measurements": 38,
+        "sha256": "6718bd76e63284654fda5395ab65ce8e026b3faa63e8de02e674a40ddb21a571"
+      },
+      "with_maninjau45": {
+        "file": "data/audits/YTT/with_maninjau_45.csv",
+        "measurements": 45,
+        "sha256": "28fecaaf595bf1824c85bd8c70064cea4926108fa7a33b9ff35676727c3f61fb"
+      }
+    }
+  },
+  "reproduce": "python -m benchmarks.ytt --output results/ytt"
+}

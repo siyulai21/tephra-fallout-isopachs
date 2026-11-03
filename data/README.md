@@ -8,10 +8,10 @@
 | `Tambora_tephra.csv` | 26 | 2 |
 | `Aso-4_tephra.csv` | 87 | 6 |
 | `B-Tm_tephra.csv` | 84 | 7 |
-| `YTT_tephra.csv` | 43 | 0 |
+| `YTT_tephra.csv` | 46 | 0 |
 | `Minoan_tephra.csv` | 92 exact + 9 lower bounds | 0 |
 
-For the original four datasets, counts reflect supplied flags, not an independent audit of field publications. YTT preserves the supplied audit selections and qualifications; [read the audit provenance](audits/YTT/README.md). Minoan combines all fallout fans using the [documented source decisions](audits/Minoan/README.md). None of these datasets contains explicitly typed upper limits. Unnamed extra columns are ignored and reported. Historical maps in `docs/archive/original-isopachs/` are not fitting inputs.
+For the original four datasets, counts reflect supplied flags, not an independent audit of field publications. YTT includes the two Maninjau primary-fallout beds and source-verified U1445B in its principal selection, with their approximate coordinates explicitly qualified; [read the audit and selection revision](audits/YTT/README.md). Minoan combines all fallout fans using the [documented source decisions](audits/Minoan/README.md). None of these datasets contains explicitly typed upper limits. Unnamed extra columns are ignored and reported. Historical maps in `docs/archive/original-isopachs/` are not fitting inputs.
 
 ## CSV schema
 
