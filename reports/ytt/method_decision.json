@@ -1,29 +1,56 @@
 {
   "default": "selected",
   "promote_stacked": false,
-  "reason": "On matched audited YTT holdouts the stacked negative log score is worse, coverage is unchanged, and only log RMSE improves. No clear predictive superiority supports replacement.",
-  "main43_same_final_component": true,
-  "main43_same_expected_thickness_grid": true,
-  "negative_log_score_difference_stacked_minus_selected": 0.03706155372682307,
+  "reason": "This revision promotes documented primary-fallout observations into the principal input. The established method remains the default; assess the new matched holdout metrics before any separate method replacement.",
+  "principal_case": "principal",
+  "principal_same_final_component": true,
+  "principal_same_expected_thickness_grid": true,
+  "metrics": {
+    "selected": {
+      "mean_log_score": 2.055410780355307,
+      "equal_region_log_score": 2.085909912794751,
+      "rmse_log": 1.3422591887915307,
+      "coverage95_observations": 0.9130434782608695,
+      "mean_interval_width_log": 4.746432589720212
+    },
+    "stacked": {
+      "mean_log_score": 2.034004998744964,
+      "equal_region_log_score": 2.0635311411112096,
+      "rmse_log": 1.2741841393222575,
+      "coverage95_observations": 0.9130434782608695,
+      "mean_interval_width_log": 4.685598824415931
+    }
+  },
+  "negative_log_score_difference_stacked_minus_selected": -0.021405781610343233,
   "criterion": "Proper predictive score is primary; also inspect coverage, width and point error. A small point-error gain alone does not establish superiority.",
   "input_verification": {
     "workbook_sha256": "19931ca2eb1b0ee1ae4cb77f41a2c014bf55bc7b71e1c70bad73bbe90a5f1628",
     "audit_records": 88,
     "cases": {
-      "main43": {
+      "principal": {
         "file": "data/eruptions/YTT_tephra.csv",
-        "measurements": 43,
-        "sha256": "61a48552a8587cd8d5e96130649c5f49674b6f6fdaf41f6d1a0f64c7fc5357a3"
+        "measurements": 46,
+        "sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427"
       },
-      "no_md16138": {
-        "file": "data/audits/YTT/no_md161_38.csv",
-        "measurements": 38,
-        "sha256": "6718bd76e63284654fda5395ab65ce8e026b3faa63e8de02e674a40ddb21a571"
+      "without_maninjau": {
+        "file": "data/audits/YTT/sensitivity/without_maninjau.csv",
+        "measurements": 44,
+        "sha256": "68d4d03b21ce1dd1b35822164863824a72d7522dbd9089494a69cf668ad083c7"
       },
-      "with_maninjau45": {
-        "file": "data/audits/YTT/with_maninjau_45.csv",
+      "without_u1445b": {
+        "file": "data/audits/YTT/sensitivity/without_u1445b.csv",
         "measurements": 45,
         "sha256": "28fecaaf595bf1824c85bd8c70064cea4926108fa7a33b9ff35676727c3f61fb"
+      },
+      "without_md161": {
+        "file": "data/audits/YTT/sensitivity/without_md161.csv",
+        "measurements": 41,
+        "sha256": "7ab87f1e10b957a882924a036efb5e91e89c990ac0be5f9b360fd765f1a305a9"
+      },
+      "with_u1448b": {
+        "file": "data/audits/YTT/sensitivity/with_u1448b.csv",
+        "measurements": 47,
+        "sha256": "97e8797428db43fbdd868b2ac3eef8f0a0cfe4f7a713bb5948567fc49ffefdc0"
       }
     }
   },

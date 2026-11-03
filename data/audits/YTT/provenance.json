@@ -7,10 +7,6 @@
     "n_rows": 88,
     "library_file_id": "libfile_18ffbb17df308191aa2b04a48c2dc31e"
   },
-  "preparation_script": {
-    "file": "original audit-chat preparation script; hash retained as provenance",
-    "sha256": "8deaab675839abe534a42587de9061aae0888dc3f00b4d9dac486a552d5408c4"
-  },
   "vent": {
     "longitude": 98.8417,
     "latitude": 2.6083,
@@ -35,12 +31,114 @@
     "Pseudo": "omitted; excluded observations are absent, not pseudo constraints",
     "upper_limits": "none; missing/held records are not non-detections"
   },
+  "range_handling": "Use audited fit_cm point values unchanged. Reported low/high values mix ranges, alternate contacts and local variation; no distribution or LogSD is inferred.",
+  "spatial_dependence": "No new weights or coordinate aggregation. Rehi/Ghoghara, Mahanadi/U1446, U1449/U1450, Arabian Sea cores and Maninjau sections include local clusters. Repository model and validation determine spatial treatment.",
+  "import_verification": "Input CSVs and manifest recovered as complete ZIP entries with CRC checks, then verified against prior SHA-256 records. Original workbook downloaded separately; its SHA-256 matches the audit record.",
+  "review_date": "2026-11-03",
+  "principal_case": "principal",
+  "selection_rules": {
+    "file": "data/audits/YTT/selection_rules.json",
+    "sha256": "c7b956fea1209be161d45559a6f938c4486e66e586e7d94551762b8c2b366d0f"
+  },
+  "record_review": {
+    "file": "data/audits/YTT/record_review.csv",
+    "sha256": "1b4e0cfc29fc748a0fcf864afa0faabb199ef9b51d18c9e57df63ef513f484bb",
+    "n_rows": 88
+  },
+  "preparation_script": {
+    "file": "benchmarks/ytt_inputs.py",
+    "sha256": "06c6dc66949072817008078065190bb5664519c9cf8d8df3cf6e6c010585d511"
+  },
+  "selection_manifest": {
+    "file": "data/audits/YTT/selection_manifest.csv",
+    "sha256": "d249c1aa277d5ce036935c55b76621620681ef26c06c7ef4618c84847ecad628",
+    "n_rows": 88,
+    "csv_row_definition": "1-based physical CSV row including header; source order retained."
+  },
   "cases": {
-    "main43": {
+    "principal": {
       "file": "data/eruptions/YTT_tephra.csv",
-      "sha256": "61a48552a8587cd8d5e96130649c5f49674b6f6fdaf41f6d1a0f64c7fc5357a3",
-      "n_measurements": 43,
-      "definition": "All 43 nonblank audited fit_cm records; includes retained qualified beds and five qualified MD161 additions.",
+      "sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
+      "n_measurements": 46,
+      "definition": "Principal 46: original 43 plus qualified Maninjau N001/N002 and source-verified U1445B N005.",
+      "record_ids": [
+        "T001",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T021",
+        "T023",
+        "T026",
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T039",
+        "T040",
+        "T048",
+        "T060",
+        "T061",
+        "T062",
+        "N001",
+        "N002",
+        "N003",
+        "N005",
+        "N021",
+        "N022",
+        "N023",
+        "N024",
+        "N025"
+      ],
+      "overrides": {
+        "N001": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A40; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N002": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A64; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N005": {
+          "thickness_cm": 8,
+          "principal": true,
+          "longitude": 84.78749666666667,
+          "latitude": 17.745163333333334,
+          "reason": "Table 1 p.18: U1445B-2H-6_42-50, event 1 YTT, discrete fine ash with horizontal basal boundary. One representative at U1445; disintegrated companion U1445A remains excluded.",
+          "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+          "coordinate_source": "https://publications.iodp.org/proceedings/353/105/353_105.html",
+          "coordinate_original": "Table T1: 17 degrees 44.7098 minutes N; 84 degrees 47.2498 minutes E. Converted to decimal degrees without adding precision."
+        }
+      }
+    },
+    "without_maninjau": {
+      "file": "data/audits/YTT/sensitivity/without_maninjau.csv",
+      "sha256": "68d4d03b21ce1dd1b35822164863824a72d7522dbd9089494a69cf668ad083c7",
+      "n_measurements": 44,
+      "definition": "Principal minus Maninjau; U1445B retained (44).",
       "record_ids": [
         "T001",
         "T003",
@@ -80,66 +178,31 @@
         "T061",
         "T062",
         "N003",
+        "N005",
         "N021",
         "N022",
         "N023",
         "N024",
         "N025"
       ],
-      "overrides": {}
+      "overrides": {
+        "N005": {
+          "thickness_cm": 8,
+          "principal": true,
+          "longitude": 84.78749666666667,
+          "latitude": 17.745163333333334,
+          "reason": "Table 1 p.18: U1445B-2H-6_42-50, event 1 YTT, discrete fine ash with horizontal basal boundary. One representative at U1445; disintegrated companion U1445A remains excluded.",
+          "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+          "coordinate_source": "https://publications.iodp.org/proceedings/353/105/353_105.html",
+          "coordinate_original": "Table T1: 17 degrees 44.7098 minutes N; 84 degrees 47.2498 minutes E. Converted to decimal degrees without adding precision."
+        }
+      }
     },
-    "no_md16138": {
-      "file": "data/audits/YTT/no_md161_38.csv",
-      "sha256": "6718bd76e63284654fda5395ab65ce8e026b3faa63e8de02e674a40ddb21a571",
-      "n_measurements": 38,
-      "definition": "main43 minus N021-N025, testing influence of five new bioturbated Mahanadi beds.",
-      "record_ids": [
-        "T001",
-        "T003",
-        "T004",
-        "T005",
-        "T006",
-        "T007",
-        "T008",
-        "T009",
-        "T010",
-        "T011",
-        "T012",
-        "T013",
-        "T015",
-        "T016",
-        "T017",
-        "T018",
-        "T021",
-        "T023",
-        "T026",
-        "T027",
-        "T028",
-        "T029",
-        "T030",
-        "T031",
-        "T032",
-        "T033",
-        "T034",
-        "T035",
-        "T036",
-        "T037",
-        "T038",
-        "T039",
-        "T040",
-        "T048",
-        "T060",
-        "T061",
-        "T062",
-        "N003"
-      ],
-      "overrides": {}
-    },
-    "with_maninjau45": {
-      "file": "data/audits/YTT/with_maninjau_45.csv",
+    "without_u1445b": {
+      "file": "data/audits/YTT/sensitivity/without_u1445b.csv",
       "sha256": "28fecaaf595bf1824c85bd8c70064cea4926108fa7a33b9ff35676727c3f61fb",
       "n_measurements": 45,
-      "definition": "main43 plus N001/N002 with reported 23 cm each and approximate audited coordinates; explicit sensitivity override only.",
+      "definition": "Principal minus U1445B (45); byte-identical to previous Maninjau principal.",
       "record_ids": [
         "T001",
         "T003",
@@ -189,31 +252,191 @@
       ],
       "overrides": {
         "N001": {
-          "fit_cm": null,
-          "model_thickness_cm": 23
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A40; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
         },
         "N002": {
-          "fit_cm": null,
-          "model_thickness_cm": 23
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A64; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        }
+      }
+    },
+    "without_md161": {
+      "file": "data/audits/YTT/sensitivity/without_md161.csv",
+      "sha256": "7ab87f1e10b957a882924a036efb5e91e89c990ac0be5f9b360fd765f1a305a9",
+      "n_measurements": 41,
+      "definition": "Principal minus five MD161 beds; Maninjau and U1445B retained (41).",
+      "record_ids": [
+        "T001",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T021",
+        "T023",
+        "T026",
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T039",
+        "T040",
+        "T048",
+        "T060",
+        "T061",
+        "T062",
+        "N001",
+        "N002",
+        "N003",
+        "N005"
+      ],
+      "overrides": {
+        "N001": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A40; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N002": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A64; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N005": {
+          "thickness_cm": 8,
+          "principal": true,
+          "longitude": 84.78749666666667,
+          "latitude": 17.745163333333334,
+          "reason": "Table 1 p.18: U1445B-2H-6_42-50, event 1 YTT, discrete fine ash with horizontal basal boundary. One representative at U1445; disintegrated companion U1445A remains excluded.",
+          "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+          "coordinate_source": "https://publications.iodp.org/proceedings/353/105/353_105.html",
+          "coordinate_original": "Table T1: 17 degrees 44.7098 minutes N; 84 degrees 47.2498 minutes E. Converted to decimal degrees without adding precision."
+        }
+      }
+    },
+    "with_u1448b": {
+      "file": "data/audits/YTT/sensitivity/with_u1448b.csv",
+      "sha256": "97e8797428db43fbdd868b2ac3eef8f0a0cfe4f7a713bb5948567fc49ffefdc0",
+      "n_measurements": 47,
+      "definition": "Principal plus disputed U1448B 20 cm (47); tests inclusion, does not resolve contacts.",
+      "record_ids": [
+        "T001",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T021",
+        "T023",
+        "T026",
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T039",
+        "T040",
+        "T048",
+        "T060",
+        "T061",
+        "T062",
+        "N001",
+        "N002",
+        "N003",
+        "N005",
+        "N006",
+        "N021",
+        "N022",
+        "N023",
+        "N024",
+        "N025"
+      ],
+      "overrides": {
+        "N001": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A40; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N002": {
+          "thickness_cm": 23,
+          "principal": true,
+          "reason": "Primary YTT airfall at Maninjau A64; approximately 23 cm; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.epsl.2004.08.014"
+        },
+        "N005": {
+          "thickness_cm": 8,
+          "principal": true,
+          "longitude": 84.78749666666667,
+          "latitude": 17.745163333333334,
+          "reason": "Table 1 p.18: U1445B-2H-6_42-50, event 1 YTT, discrete fine ash with horizontal basal boundary. One representative at U1445; disintegrated companion U1445A remains excluded.",
+          "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+          "coordinate_source": "https://publications.iodp.org/proceedings/353/105/353_105.html",
+          "coordinate_original": "Table T1: 17 degrees 44.7098 minutes N; 84 degrees 47.2498 minutes E. Converted to decimal degrees without adding precision."
+        },
+        "N006": {
+          "thickness_cm": 20,
+          "principal": false,
+          "reason": "Inclusion sensitivity only. Table 1 p.20 reports 20 cm at U1448B-1H-4/5_136/-6 with irregular basal boundary; shipboard B interval 5.53-6.09 m spans 56 cm. Contact-definition discrepancy unresolved; approximate workbook position retained.",
+          "source": "https://doi.org/10.1016/j.jvolgeores.2023.107879",
+          "comparison_source": "https://publications.iodp.org/proceedings/353/108/353_108.html"
         }
       }
     }
   },
-  "selection_manifest": {
-    "file": "data/audits/YTT/selection_manifest.csv",
-    "sha256": "5d69ac51f8f316b1b8274b2e4e0439e5ecc25c6c50cba112442ec6a2191792ab",
-    "n_rows": 88,
-    "csv_row_definition": "1-based physical CSV row, including header on row 1; matches repository row_ids before canonical ordering"
-  },
-  "range_handling": "Use audited fit_cm point values unchanged. Reported low/high values mix ranges, alternate contacts and local variation; no distribution or LogSD is inferred.",
-  "spatial_dependence": "No new weights or coordinate aggregation. Rehi/Ghoghara, Mahanadi/U1446, U1449/U1450, Arabian Sea cores and Maninjau sections include local clusters. Repository model and validation determine spatial treatment.",
   "preserved_semantics": [
+    "The original workbook and all 17 source columns remain unchanged.",
+    "Principal overrides: N001/N002 approximately 23 cm; N005 8 cm with verified hole coordinates.",
+    "N006 20 cm is an inclusion sensitivity only; no distribution is inferred from conflicting contacts.",
     "Chala is gross preserved-deposit thickness, not solid-glass equivalent.",
-    "RC14-37 uses observed 15 cm, not historical reconstructed approximately 20 cm.",
-    "Malawi assumed and illustrative equivalent values excluded.",
-    "Huguangyan has no validated thickness and is excluded.",
-    "All other blank fit_cm records excluded; no occurrence interval substituted."
+    "RC14-37 uses observed 15 cm, not reconstructed approximately 20 cm.",
+    "Malawi assumed thickness, Huguangyan hypothetical thickness and other held records are not constraints.",
+    "Approximate coordinates and preservation uncertainty are not propagated into model intervals."
   ],
-  "repository_validation": null,
-  "import_verification": "Input CSVs and manifest recovered as complete ZIP entries with CRC checks, then verified against prior SHA-256 records. Original workbook downloaded separately; its SHA-256 matches the audit record."
+  "evidence_scope": "All 88 audit records screened. Targeted new primary-source checks: Kutterolf et al. (2023) Table 1 pp.18,20 and IODP U1445/U1448 reports. Other source assessments are inherited unless marked in record_review.csv.",
+  "history": {
+    "directory": "data/audits/YTT/history",
+    "note": "Historical provenance files retain paths used at the time; see history/README.md for relocated files."
+  }
 }

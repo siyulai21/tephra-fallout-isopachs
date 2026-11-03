@@ -2,7 +2,9 @@
 
 Reproducible isopachs and regional deposit volumes from measured thicknesses and documented bounds. Upload a new eruption dataset and source notes in chat; the accepted inputs, audit, calculations and report are then added to this repository.
 
-**Latest: [Minoan combined fallout](reports/minoan/README.md).** One fitted field combines all Plinian and co-ignimbrite fallout fans. Identified turbidites are excluded, incomplete cores enter as lower bounds, and source conflicts are tested separately.
+**Latest: [YTT source review and 46-record reconstruction](reports/ytt/README.md).** Maninjau primary beds and source-verified U1445B enter the principal dataset; named sensitivities and earlier reports are separate.
+
+[Minoan combined fallout](reports/minoan/README.md). One fitted field combines all Plinian and co-ignimbrite fallout fans. Identified turbidites are excluded, incomplete cores enter as lower bounds, and source conflicts are tested separately.
 
 ![Minoan combined fallout reconstruction](reports/minoan/combined_selected/isopachs.png)
 
@@ -11,7 +13,7 @@ Reproducible isopachs and regional deposit volumes from measured thicknesses and
 | Eruption | Exact thickness records | Documented lower bounds | Report | Input audit |
 |---|---:|---:|---|---|
 | Minoan | 92 | 9 | [Combined fallout and sensitivities](reports/minoan/README.md) | [Source decisions](data/audits/Minoan/README.md) |
-| YTT | 43 | 0 | [Method comparison](reports/ytt/README.md) | [Audited workbook](data/audits/YTT/README.md) |
+| YTT | 46 | 0 | [Reviewed principal dataset](reports/ytt/README.md) | [Audited workbook and selection revision](data/audits/YTT/README.md) |
 | Mazama | 45 | 0 | [Reconstruction](reports/mazama/README.md) | Original supplied flags |
 | Tambora | 26 | 0 | [Reconstruction](reports/tambora/README.md) | Original supplied flags |
 | Aso-4 | 87 | 0 | [Reconstruction](reports/aso-4/README.md) | Original supplied flags |
