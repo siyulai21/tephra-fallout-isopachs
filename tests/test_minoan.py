@@ -89,7 +89,13 @@ def test_old_ytt_selected_fit_remains_numerically_unchanged():
     data,_=read_observations('data/eruptions/YTT_tephra.csv')
     previous=json.loads(Path('reports/ytt/main43_selected/report.json').read_text())['model']
     model=SpatialModel(Candidate(**previous['candidate'])).fit(data).describe()
-    assert model==previous
+    assert model.keys()==previous.keys()
+    for key in ('candidate','trend_on_constraint_boundary','uncertainty'):
+        assert model[key]==previous[key]
+    # BLAS/projection builds can differ in their last floating-point bits.
+    # Keep a strict relative tolerance, including for the tiny jitter term.
+    for key in ('beta','radius_scale_km','length_km','amplitude_log','noise_log','jitter'):
+        np.testing.assert_allclose(model[key],previous[key],rtol=1e-12,atol=0)
 
 
 def test_minoan_publication_preserves_bound_types_and_writes_no_html(tmp_path):

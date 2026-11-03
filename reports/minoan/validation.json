@@ -4,7 +4,8 @@
   "pytest": {
     "command": "python -m pytest -q",
     "passed": 51,
-    "failed": 0
+    "failed": 0,
+    "cross_platform_regression": "Numeric model parameters use relative tolerance 1e-12 and zero absolute tolerance; candidate and uncertainty semantics must match exactly. Linux/macOS last-bit differences do not indicate a model change."
   },
   "reproduction": {
     "command": "python -m benchmarks.minoan --output results/minoan",
