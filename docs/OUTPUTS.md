@@ -6,17 +6,19 @@ Maps show level sets of **median predicted thickness**. The map expands on sides
 
 Every resolved path must return to its start. Separate endpoints are never joined around the frame. Areas subtract holes and include separate islands. The map grid is compared with a grid of half its resolution. Features changing by over 0.5% receive a local 481×481 refinement around all globally resolved components. Remaining changes above 2% are flagged. Each area's numerical grid scope is recorded in the CSV.
 
-Solid sections lie inside the observation convex hull; dashed sections lie outside. This is a geometric support indicator, not a confidence band. It cannot identify internal gaps. The map extent is independent of the volume region, shown by the ochre rectangle.
+Solid sections lie inside the observation convex hull; dashed sections lie outside. This is a geometric support indicator, not a confidence band. It cannot identify internal gaps. The map extent is independent of the global integral. The ochre rectangle marks a separate historical regional diagnostic.
 
 ## Volume definitions
 
-The primary estimate is conditional expected **bulk deposit volume in a stated finite rectangle**:
+The primary estimate is conditional expected **bulk fallout over the complete WGS84 Earth**. Its equal-area image is the physical ellipse E, not a user-selected rectangle. [Derivation, numerical checks and assumptions](GLOBAL_VOLUME.md).
+
+The earlier regional integral is retained separately:
 
 \[
 E[V_D\mid\widehat\theta,y]=10^{-5}\int_D\exp\{\mu(s)+v(s)/2\}\,ds.
 \]
 
-Area is km² and thickness cm; conversion to km³ is 10⁻⁵. The default rectangle includes the vent and all non-pseudo observations, padded by 25%. The YTT and Minoan profiles instead specify fixed comparison rectangles; `--bounds` overrides either.
+Area is km² and thickness cm; conversion to km³ is 10⁻⁵. The default rectangle includes the vent and all non-pseudo observations, padded by 25%. The YTT and Minoan profiles instead specify fixed comparison rectangles; `--bounds` overrides either regional diagnostic, without changing the primary global volume.
 
 The integral of the pointwise median surface is reported separately:
 
@@ -30,13 +32,15 @@ These formulas describe the default single-component model. With `--method stack
 
 ## Numerical checks and uncertainty
 
-Midpoint quadrature is refined over 64, 128, 256 and 512 cells per side. Both integrals must change by less than 0.5% between consecutive grids; otherwise failure is reported. This empirical check is not a mathematical error bound.
+Global quadrature refines transformed radius and angle over the complete Earth, with two consecutive 0.1% agreements and a shifted-angle check. Failure remains visible. It also records cumulative volume and contributions beyond the farthest observation and on the opposite hemisphere.
+
+For the historical regional diagnostic, midpoint quadrature is refined over 64, 128, 256 and 512 cells per side. Both integrals must change by less than 0.5% between consecutive grids; otherwise failure is reported. This empirical check is not a mathematical error bound.
 
 Both thinning families are checked at region-width multipliers 1, 1.5 and 2. Doubling widths quadruples area. The alternative is the best validated candidate of the other family, fitted to the same data. This sensitivity range is **not a confidence interval**.
 
 For the ensemble, the main curve is the mixture and the comparison is the best candidate from the family opposite its largest total weight. The comparison can therefore already be represented within the ensemble; it is a sensitivity reference, not independent evidence or a bound.
 
-Joint log-surface draws preserve spatial correlation when approximating a conditional volume distribution. Their coarser-grid interval is secondary: parameters and model selection remain fixed, and volume-quantile convergence is not established. The Markdown headline reports the refined expectation; conditional sampling intervals remain in JSON as secondary diagnostics, together with their grid-mean discrepancy.
+Joint log-surface draws preserve spatial correlation when approximating a conditional volume distribution. Their coarser-grid interval is secondary: parameters and model selection remain fixed, and volume-quantile convergence is not established. The Markdown headline reports the global expectation. No global probability interval is computed. Conditional sampling intervals remain in JSON as regional diagnostics only, together with their grid-mean discrepancy.
 
 Ensemble draws also preserve retained-model disagreement by choosing one component for each entire field. Fitted component parameters and learned weights remain fixed. The extra observation-discrepancy experiment is excluded from every latent map and volume draw.
 
@@ -52,13 +56,14 @@ Numerical convergence does not establish geological accuracy. We do not integrat
 | `diagnostics.png`, `.svg` | Areas, volume sensitivity and holdouts |
 | `isopachs.geojson` | WGS84 contour lines; antimeridian crossings split |
 | `isopach_areas.csv` | Equal-area enclosed areas and resolution checks |
-| `volume_summary.csv` | Refined estimates and explicit region bounds |
+| `global_volume.json`, `.csv` | Primary complete-Earth estimates, tail comparison and numerical checks |
+| `volume_summary.csv` | Historical regional diagnostics and explicit rectangle bounds |
 | `observations_used.csv` | Accepted observations and source-row identifiers |
 | `report.json` | Settings, fits, validation, warnings and source hashes |
 | `predictions.csv` | Thickness summaries and support diagnostics on a grid |
 | `virtual_predictions.npz` | Joint predicted log-thickness moments; ensemble exports also contain each component's weight, mean and covariance |
 
-Large grid files are generated but excluded from the checked-in reports. For compatibility, `report.json.volume` retains coarse joint-grid results. **Use `volume_analysis.regional` for the refined primary estimate** and `volume_analysis.domain_sensitivity` for refined comparisons.
+Large grid files are generated but excluded from the checked-in reports. For compatibility, `report.json.volume` retains coarse joint-grid results. **Use `global_fallout.selected` for the primary estimate** and `global_fallout.alternative` for the other tail family. `volume_analysis.regional` and `volume_analysis.domain_sensitivity` retain regional checks. The `primary_volume` field identifies the preferred record.
 
 The original four input collections were not independently re-audited. YTT preserves the supplied workbook audit, and Minoan has an explicit source-table audit; the calculation is not a new audit of the source publications. Closed curves do not resolve those data limitations. Predicted values are never independent additional measurements.
 

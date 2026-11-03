@@ -15,6 +15,7 @@ from .model import Candidate, SpatialModel
 from .validation import select_model, nested_validate
 from .report import domain_bounds, grid_cells, support_flags, integrate, expected_volume, save_map
 from .distributions import predictive_distribution
+from .global_volume import global_volume, infinite_plane_background
 
 
 def main(argv=None):
@@ -34,7 +35,8 @@ def main(argv=None):
     parser.add_argument("--volume-grid", type=int, default=48)
     parser.add_argument("--draws", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=1729)
-    parser.add_argument("--bounds", type=float, nargs=4, metavar=("XMIN", "YMIN", "XMAX", "YMAX"))
+    parser.add_argument("--bounds", type=float, nargs=4, metavar=("XMIN", "YMIN", "XMAX", "YMAX"),
+                        help="Optional regional diagnostic rectangle; never limits the primary global volume.")
     parser.add_argument("--name", help="Display name; defaults to the CSV stem.")
     parser.add_argument("--map-grid", type=int, default=481, help="Odd resolution for closed-contour maps (65–1201).")
     parser.add_argument("--levels", type=float, nargs="+", help="Positive increasing isopach thicknesses in cm.")
@@ -94,6 +96,9 @@ def main(argv=None):
         alt = min(valid_alternatives, key=lambda r: r["selection_score"])
         alternate = SpatialModel(Candidate(alt["tail"], alt["length_factor"], alt["noise_ratio"])).fit(data)
         alternate_mean, _ = alternate.predict_log(xy)
+    global_fallout = {"selected": global_volume(model, meta["vent_lonlat"][1]),
+                      "alternative": global_volume(alternate, meta["vent_lonlat"][1]) if alternate else None,
+                      "infinite_plane_background_diagnostic": infinite_plane_background(model)}
     volume = integrate(model, bounds, args.volume_grid, args.draws, args.seed)
     center, half = (bounds[:2]+bounds[2:])/2, (bounds[2:]-bounds[:2])/2
     sensitivity = []
@@ -107,8 +112,14 @@ def main(argv=None):
     uncertainty = (model.describe()["uncertainty"] if args.method == "stacked" else
                    "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.")
     warnings = [uncertainty,
-                "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
+                "Primary volume integrates the complete WGS84 Earth. It remains a model-conditional fallout estimate; distant tails are not independently validated.",
+                "Rectangle-based samples and intervals apply only to the regional diagnostic, never to global volume.",
                 "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review."]
+    if any(not value["converged"] for key, value in global_fallout.items()
+           if key in ("selected", "alternative") and value):
+        warnings.append("A global integral did not pass refinement and phase checks; inspect global_fallout before using it.")
+    if global_fallout["selected"]["fraction_beyond_farthest_observation"] > .5:
+        warnings.append("More than half of expected global fallout lies farther from the source than every observation; global volume is strongly extrapolation-dependent.")
     if args.method == "stacked":
         warnings.append("Experimental ensemble: weights and new-observation discrepancy are fitted from spatial holdouts; only outer validation assesses their performance. No coverage guarantee. Discrepancy does not widen latent maps or volume intervals.")
         if validation["stacking"]["calibration"]["at_search_boundary"]:
@@ -131,9 +142,10 @@ def main(argv=None):
     source_root = Path(__file__).parents[1]
     source_hashes = {str(p.relative_to(source_root)): sha256(p.read_bytes()).hexdigest()
                      for p in sorted(source_root.rglob("*.py"))}
-    report = {"method_version": "0.6.0" if data.lower_censored.any() else ("0.4.0" if args.method == "stacked" else "0.2.0"), "input": meta, "model": model.describe(),
+    report = {"method_version": "0.7.0", "input": meta, "model": model.describe(),
               "alternative_model": alternate.describe() if alternate else None,
               "validation": validation, "nested_validation": nested, "volume": volume,
+              "primary_volume": "global_fallout.selected", "global_fallout": global_fallout,
               "domain_sensitivity": sensitivity, "volume_grid_check": {"refined_mean_km3": fine_volume,
                   "relative_change": grid_change},
               "warnings": warnings, "settings": {k: portable_path(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
@@ -183,6 +195,7 @@ def main(argv=None):
     print(json.dumps({"output": str(args.output), "model": asdict(model.candidate),
                       "n_real": len(data.xy), "ignored_pseudo": len(meta["ignored_pseudo_rows"]),
                       "conditional_domain_volume_km3": volume["conditional_quantiles_km3"],
+                      "expected_global_fallout_km3": global_fallout["selected"]["mean_km3"],
                       "nested_validation": None if nested is None else {k: nested[k] for k in
                           ("rmse_log", "coverage95_observations", "mean_log_score")}, "warnings": report["warnings"]}, indent=2))
 

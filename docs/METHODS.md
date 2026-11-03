@@ -101,7 +101,9 @@ The primary workflow partitions unique sites recursively along the longest coord
 
 Each candidate refits the trend, scales, amplitude and likelihood inside each training fold. Selection minimizes the average of fold-mean negative log predictive scores on log thickness, including the observation nugget; upper bounds use log-CDF scores and lower bounds use log-survival scores. With `--nested-cv`, outer four-fold prediction uses independent inner three-fold selection. Reported coverage concerns held-out **observations**, while maps show latent-surface uncertainty without the nugget. Neither coverage nor spatial CV validates a wholly unobserved sector.
 
-For each jointly sampled log surface, finite-domain volume is
+Since version 0.7, the primary reported fallout volume integrates the entire WGS84 Earth, independently of the user-selected rectangle or map extent. The fit, selected candidates and observation predictions remain unchanged. See [complete-Earth integration](GLOBAL_VOLUME.md) for the geometry, numerical checks and remaining extrapolation assumptions.
+
+The historical regional simulation is retained separately. For each jointly sampled log surface, finite-domain volume is
 
 \[
 V^{(b)}=10^{-5}\sum_j a_j\exp(z_j^{(b)})\quad\mathrm{km}^3,

@@ -122,7 +122,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         for dy, style, color, text in [(.055, "-", INK, "Within data hull"),
                                       (.105, "--", INK, "Extrapolated contour"),
                                       (.155, ":", TEAL, "Data hull boundary"),
-                                      (.205, "--", AMBER, "Volume region")]:
+                                      (.205, "--", AMBER, "Regional check")]:
             sidebar.plot([0, .17], [y-dy, y-dy], ls=style, color=color, lw=1)
             sidebar.text(.24, y-dy, text, va="center", fontsize=8)
         sidebar.scatter([.07], [y-.255], s=22, c="white", edgecolors=INK)
@@ -138,7 +138,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
             fig.text(.075, .058, f"Unresolved at map limit: {', '.join(outside)} cm. These curves have not been artificially closed.",
                      fontsize=9, color=AMBER)
         else:
-            fig.text(.075, .058, "Volumes refer to the ochre rectangle; the display extent is chosen independently to show closed curves.",
+            fig.text(.075, .058, "Global volume covers the whole Earth; the ochre rectangle is a separate regional diagnostic.",
                      fontsize=9, color=MUTED)
         fig.text(.075, .026, "Source-centred Lambert azimuthal equal-area projection  ·  Coastlines: Natural Earth, public domain",
                  fontsize=7.5, color=MUTED)
@@ -158,13 +158,24 @@ def save_diagnostics(output, name, report, contours, data):
                      "o-", color=TEAL, ms=4)
         axes[0].set(yscale="log", xlabel="Square root of enclosed area (km)", ylabel="Median thickness (cm)",
                     title="01  Closed-contour areas")
-        rows = report["volume_analysis"]["domain_sensitivity"]
-        x = [r["domain_factor"] for r in rows]
-        axes[1].plot(x, [r["selected"]["mean_km3"] for r in rows], "o-", color=TEAL, label="Selected fit")
-        if all(r["alternative"] for r in rows):
-            axes[1].plot(x, [r["alternative"]["mean_km3"] for r in rows], "o--", color=AMBER, label="Other thinning family")
-        axes[1].set(xlabel="Integration-region width multiplier", ylabel="Expected bulk volume (km³)",
-                    title="02  Sensitivity to region size", xticks=x)
+        if 'global_fallout' in report:
+            for key,color,style,label in [('selected',TEAL,'o-','Selected fit'),('alternative',AMBER,'o--','Other thinning family')]:
+                value=report['global_fallout'][key]
+                if value:
+                    axes[1].plot([r['outer_authalic_arc_km']/1000 for r in value['annuli']],
+                                 np.cumsum([r['mean_km3'] for r in value['annuli']]),style,color=color,label=label,ms=3)
+            farthest=report['global_fallout']['selected']['farthest_observation_authalic_arc_km']/1000
+            axes[1].axvline(farthest,color=MUTED,ls=':',lw=.8)
+            axes[1].set(xscale='log',xlabel='Source distance (1,000 km; authalic)',ylabel='Cumulative bulk volume (km³)',
+                        title='02  Complete-Earth integral')
+        else:
+            rows = report["volume_analysis"]["domain_sensitivity"]
+            x = [r["domain_factor"] for r in rows]
+            axes[1].plot(x, [r["selected"]["mean_km3"] for r in rows], "o-", color=TEAL, label="Selected fit")
+            if all(r["alternative"] for r in rows):
+                axes[1].plot(x, [r["alternative"]["mean_km3"] for r in rows], "o--", color=AMBER, label="Other thinning family")
+            axes[1].set(xlabel="Integration-region width multiplier", ylabel="Expected bulk volume (km³)",
+                        title="02  Sensitivity to region size", xticks=x)
         axes[1].legend(frameon=False, fontsize=8)
         nested = report["nested_validation"]
         if nested:
