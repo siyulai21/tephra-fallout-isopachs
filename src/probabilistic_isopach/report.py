@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial import Delaunay, QhullError, cKDTree
 from scipy.linalg import cholesky
+from .distributions import predictive_distribution
 
 
 def domain_bounds(xy, padding=.25):
@@ -42,28 +43,31 @@ def integrate(model, bounds, resolution=24, draws=1000, seed=1729):
     if draws < 20 or resolution > 60:
         raise ValueError("Use at least 20 draws and resolution <=60 for joint integration.")
     xy, area = grid_cells(bounds, resolution)
-    m, C = model.predict_log(xy, covariance=True)
-    numerical_jitter = max(model.amplitude**2, 1.)*1e-10
-    L = cholesky(C + numerical_jitter*np.eye(len(C)), lower=True)
-    rng = np.random.default_rng(seed)
-    log_samples = m[:, None]+L@rng.standard_normal((len(m), draws))
+    if hasattr(model, "sample_log_fields"):
+        log_samples = model.sample_log_fields(xy, draws, seed)
+    else:
+        m, C = model.predict_log(xy, covariance=True)
+        numerical_jitter = max(model.amplitude**2, 1.)*1e-10
+        L = cholesky(C + numerical_jitter*np.eye(len(C)), lower=True)
+        rng = np.random.default_rng(seed)
+        log_samples = m[:, None]+L@rng.standard_normal((len(m), draws))
     with np.errstate(over="raise", invalid="raise"):
         volumes = np.exp(log_samples).sum(axis=0)*area*1e-5
-        expected_cells = np.exp(m+np.diag(C)/2)*area*1e-5
+        expected_cells = np.exp(predictive_distribution(model, xy).log_expected_thickness())*area*1e-5
     inside, _ = support_flags(model.data, xy)
     return {"bounds_km": list(map(float, bounds)), "resolution": resolution,
             "draws": draws, "seed": seed, "mean_km3": float(expected_cells.sum()),
             "conditional_quantiles_km3": dict(zip(("0.025", "0.5", "0.975"),
                                                   np.quantile(volumes, [.025, .5, .975]).tolist())),
             "fraction_expected_volume_outside_data_hull": float(expected_cells[~inside].sum()/expected_cells.sum()),
-            "scope": "Finite rectangle only; conditional on fitted trend, covariance and selected family."}
+            "scope": "Finite rectangle only; conditional on fitted component parameters and estimated weights. Mixture draws choose one component for the whole field; observation discrepancy is excluded." if hasattr(model, "models") else
+                     "Finite rectangle only; conditional on fitted trend, covariance and selected family."}
 
 
 def expected_volume(model, bounds, resolution=80):
     xy, area = grid_cells(bounds, resolution)
-    m, v = model.predict_log(xy)
     with np.errstate(over="raise"):
-        return float(np.exp(m+v/2).sum()*area*1e-5)
+        return float(np.exp(predictive_distribution(model, xy).log_expected_thickness()).sum()*area*1e-5)
 
 
 def save_map(path, model, xy, shape, mean, variance, inside, alternate_mean=None):

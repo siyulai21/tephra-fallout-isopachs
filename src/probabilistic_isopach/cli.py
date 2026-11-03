@@ -14,6 +14,7 @@ from .data import read_observations
 from .model import Candidate, SpatialModel
 from .validation import select_model, nested_validate
 from .report import domain_bounds, grid_cells, support_flags, integrate, expected_volume, save_map
+from .distributions import predictive_distribution
 
 
 def main(argv=None):
@@ -31,6 +32,8 @@ def main(argv=None):
     parser.add_argument("csv", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--folds", type=int, default=4)
+    parser.add_argument("--method", choices=("selected", "stacked"), default="selected",
+                        help="selected: established single-model workflow; stacked: experimental spatial ensemble with observation calibration.")
     parser.add_argument("--nested-cv", action="store_true", help="Also estimate performance with outer held-out spatial regions.")
     parser.add_argument("--buffer-km", type=float, default=0.)
     parser.add_argument("--grid", type=int, default=64)
@@ -68,12 +71,15 @@ def main(argv=None):
         return str(path.relative_to(repository_root)) if path.is_relative_to(repository_root) else path.name
     meta["source"] = portable_path(args.csv)
     inverse = meta.pop("transform_inv")
-    model, validation = select_model(data, n_folds=args.folds, buffer_km=args.buffer_km)
+    model, validation = select_model(data, n_folds=args.folds, buffer_km=args.buffer_km, method=args.method)
     bounds = np.asarray(args.bounds) if args.bounds is not None else domain_bounds(data.xy)
     xy, area = grid_cells(bounds, args.grid)
-    mean, var = model.predict_log(xy)
+    distribution = predictive_distribution(model, xy)
+    mean = distribution.quantile(.5)
+    moment_mean, var = distribution.moments()
     inside, distance = support_flags(data, xy)
-    valid_alternatives = [r for r in validation["candidates"] if r["tail"] != model.candidate.tail and r["selection_score"] is not None]
+    reference_tail = getattr(model, "dominant_tail", model.candidate.tail)
+    valid_alternatives = [r for r in validation["candidates"] if r["tail"] != reference_tail and r["selection_score"] is not None]
     alternate = None
     alternate_mean = None
     if valid_alternatives:
@@ -89,10 +95,16 @@ def main(argv=None):
                             "selected_mean_km3": expected_volume(model, b),
                             "alternative_mean_km3": expected_volume(alternate, b) if alternate else None})
     fine_volume = expected_volume(model, bounds, 2*args.volume_grid)
-    nested = nested_validate(data, outer_folds=args.folds, buffer_km=args.buffer_km) if args.nested_cv else None
-    warnings = ["Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.",
+    nested = nested_validate(data, outer_folds=args.folds, buffer_km=args.buffer_km, method=args.method) if args.nested_cv else None
+    uncertainty = (model.describe()["uncertainty"] if args.method == "stacked" else
+                   "Intervals condition on estimated trend/covariance and model selection; they omit parameter and model uncertainty.")
+    warnings = [uncertainty,
                 "Finite-domain volume is not total erupted volume. Unsampled tails are assumption-dependent.",
                 "Legacy positive values are accepted as measurements unless flagged Pseudo; historical trace/absence encodings need provenance review."]
+    if args.method == "stacked":
+        warnings.append("Experimental ensemble: weights and new-observation discrepancy are fitted from spatial holdouts; only outer validation assesses their performance. No coverage guarantee. Discrepancy does not widen latent maps or volume intervals.")
+        if validation["stacking"]["calibration"]["at_search_boundary"]:
+            warnings.append("Observation-discrepancy variance reached its search boundary; calibration remains unresolved.")
     if model.trend_boundary:
         warnings.append("Selected trend touches its decay constraint; extrapolated decay is weakly identified.")
     if volume["fraction_expected_volume_outside_data_hull"] > .5:
@@ -111,7 +123,7 @@ def main(argv=None):
     source_root = Path(__file__).parents[1]
     source_hashes = {str(p.relative_to(source_root)): sha256(p.read_bytes()).hexdigest()
                      for p in sorted(source_root.rglob("*.py"))}
-    report = {"method_version": "0.2.0", "input": meta, "model": model.describe(),
+    report = {"method_version": "0.4.0" if args.method == "stacked" else "0.2.0", "input": meta, "model": model.describe(),
               "alternative_model": alternate.describe() if alternate else None,
               "validation": validation, "nested_validation": nested, "volume": volume,
               "domain_sensitivity": sensitivity, "volume_grid_check": {"refined_mean_km3": fine_volume,
@@ -125,11 +137,17 @@ def main(argv=None):
     # Compute everything before creating artifacts, so invalid science input leaves no partial output.
     args.output.mkdir(parents=True, exist_ok=True)
     lon, lat = inverse.transform(xy[:, 0], xy[:, 1])
-    z = 1.959963984540054
+    observations = predictive_distribution(model, xy, observation=True)
+    adjusted = predictive_distribution(model, xy, observation=True, calibrated=True)
     table = pd.DataFrame({"x_km": xy[:, 0], "y_km": xy[:, 1], "Lon": lon, "Lat": lat,
-                          "median_cm": np.exp(mean), "conditional_mean_cm": np.exp(mean+var/2),
-                          "conditional_lower95_cm": np.exp(mean-z*np.sqrt(var)),
-                          "conditional_upper95_cm": np.exp(mean+z*np.sqrt(var)),
+                          "median_cm": np.exp(mean), "conditional_mean_cm": np.exp(distribution.log_expected_thickness()),
+                          "conditional_lower95_cm": np.exp(distribution.quantile(.025)),
+                          "conditional_upper95_cm": np.exp(distribution.quantile(.975)),
+                          "new_observation_lower95_cm": np.exp(observations.quantile(.025)),
+                          "new_observation_upper95_cm": np.exp(observations.quantile(.975)),
+                          "diagnostic_adjusted_observation_lower95_cm": np.exp(adjusted.quantile(.025)),
+                          "diagnostic_adjusted_observation_upper95_cm": np.exp(adjusted.quantile(.975)),
+                          "between_model_variance_log": distribution.weights@((distribution.means-moment_mean)**2),
                           "log_sd": np.sqrt(var), "inside_data_hull": inside,
                           "nearest_observation_km": distance, "cell_area_km2": area})
     table.to_csv(args.output/"predictions.csv", index=False)
@@ -144,8 +162,16 @@ def main(argv=None):
     # Export a bounded JOINT distribution as the rigorous replacement for fake data.
     virtual_xy, _ = grid_cells(bounds, min(args.volume_grid, 24))
     vm, vc = model.predict_log(virtual_xy, covariance=True)
-    np.savez_compressed(args.output/"virtual_predictions.npz", xy_km=virtual_xy, mean_log=vm, covariance_log=vc,
-                        role="posterior prediction; never independent training data")
+    joint = {"xy_km": virtual_xy, "mean_log": vm, "covariance_log": vc,
+             "role": "joint latent prediction; never independent training data"}
+    if hasattr(model, "models"):
+        components = [m.predict_log(virtual_xy, covariance=True) for m in model.models]
+        joint.update(distribution="Gaussian mixture; mean/covariance alone are only moments",
+                     component_weights=model.weights, component_mean_log=np.array([p[0] for p in components]),
+                     component_covariance_log=np.array([p[1] for p in components]))
+    else:
+        joint.update(distribution="Gaussian conditional approximation")
+    np.savez_compressed(args.output/"virtual_predictions.npz", **joint)
     print(json.dumps({"output": str(args.output), "model": asdict(model.candidate),
                       "n_real": len(data.xy), "ignored_pseudo": len(meta["ignored_pseudo_rows"]),
                       "conditional_domain_volume_km3": volume["conditional_quantiles_km3"],

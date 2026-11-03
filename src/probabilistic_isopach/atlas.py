@@ -13,6 +13,7 @@ def main(argv=None):
     parser.add_argument("--datasets", nargs="+", help="Names/slugs from data/datasets.json; defaults to all four.")
     parser.add_argument("--map-grid", type=int, default=481)
     parser.add_argument("--volume-grid", type=int, default=48)
+    parser.add_argument("--method", choices=("selected", "stacked"), default="selected")
     parser.add_argument("--draws", type=int, default=1500)
     parser.add_argument("--seed", type=int, default=1729)
     parser.add_argument("--max-extent-km", type=float, default=6000.)
@@ -35,7 +36,7 @@ def main(argv=None):
         print(f"Analysing {row['name']} ({len(reports)+1}/{len(rows)})", flush=True)
         command = [str(row["path"]), "--output", str(output), "--name", row["name"],
                    "--map-grid", str(args.map_grid), "--volume-grid", str(args.volume_grid),
-                   "--draws", str(args.draws), "--seed", str(args.seed),
+                   "--draws", str(args.draws), "--seed", str(args.seed), "--method", args.method,
                    "--max-extent-km", str(args.max_extent_km), "--atlas-parent"]
         if not args.skip_validation:
             command.append("--nested-cv")

@@ -6,6 +6,8 @@ A small statistical workflow for reconstructing tephra deposits without hand-pla
 
 [Explore the atlas](docs/atlas/index.html) · [Quick start](docs/QUICKSTART.md) · [Understand the outputs](docs/OUTPUTS.md) · [Methods](docs/METHODS.md) · [Validation](docs/VALIDATION.md)
 
+**Experimental empirical ensemble:** choose “Experimental ensemble” in the upload workspace, or add `--method stacked` to a fit or atlas command. It learns weights across thinning models from withheld geographic regions, preserves their joint predictive mixture, and reports a separate observation-calibration experiment. The established single-model fit remains the default. See [the method and measured results](docs/EMPIRICAL_METHODS.md).
+
 ![Mazama: closed median isopachs, observations and extrapolation](docs/atlas/mazama/isopachs.png)
 
 > GitHub shows HTML source rather than rendering the atlas. Open `docs/atlas/index.html` locally in a browser, or browse the PNG previews and CSV files directly on GitHub. The atlas works offline.
@@ -49,13 +51,13 @@ Open the resulting `index.html`. Existing nonempty output directories are refuse
 
 ## What the workflow does
 
-- Keeps the simple directional thinning trend plus spatial residual model. Reporting improvements do not change its fit or candidate selection.
+- Uses a directional thinning trend plus spatial residual model. The default selects one candidate; the optional ensemble combines competing candidates using geographic predictive scores.
 - Excludes legacy pseudo-data from fitting, validation and domain selection.
 - Expands the map to resolve closed contours. Extrapolated sections are dashed; unresolved levels receive no fabricated closure or area.
 - Refines volume integrals and compares three integration regions and both thinning families.
 - Exports PDF/SVG/PNG maps, geographic contour lines, area and volume tables, a short report, and complete numerical records.
 
-**Research scope:** an unsampled region remains assumption-dependent. Conditional intervals omit fitted-parameter and model uncertainty. Aso-4 and the synthetic missing-sector experiment fail important uncertainty checks. Closing a curve does not validate the missing deposit. See [the output guide](docs/OUTPUTS.md) and [executed checks](docs/ATLAS_VALIDATION.md).
+**Research scope:** an unsampled region remains assumption-dependent. Intervals omit fitted-parameter uncertainty; the ensemble represents disagreement only among retained candidates. Aso-4 and the synthetic missing-sector experiment still fail important uncertainty checks. Closing a curve does not validate the missing deposit. The checked-in atlas shows the established method. See [the output guide](docs/OUTPUTS.md) and [executed checks](docs/ATLAS_VALIDATION.md).
 
 ## Repository map
 
@@ -70,6 +72,7 @@ docs/
   METHODS.md, VALIDATION.md     Statistical definitions and benchmark
 src/probabilistic_isopach/
   model.py, validation.py        Existing fit and selection
+  ensemble.py, distributions.py  Predictive stacking and exact mixture summaries
   data.py, catalog.py            Observation semantics and datasets
   contours.py, volume.py         Closed level sets and checked integration
   figures.py, publication.py     Maps and reports
@@ -86,6 +89,7 @@ results/                        Local runs and large arrays; not in Git
 ```sh
 python -m pytest -q
 python -m benchmarks.run --output results/benchmark --repeats 10
+python -m benchmarks.empirical --output results/empirical --repeats 10
 ```
 
 The historical spline GUI is available with `pip install '.[legacy-map]'` and `python -m src.spline_isopach`. It retains manual pseudo-points and is separate from the default workflow. Its optional GUI is not part of the automated atlas validation.

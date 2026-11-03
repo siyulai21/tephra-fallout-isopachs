@@ -167,7 +167,7 @@ def save_diagnostics(output, name, report, contours, data):
                       zip(data.row_ids, data.log_value, data.censored)}
             detected = np.array([not lookup[int(row)][1] for row in nested["row_ids"]])
             actual = np.array([lookup[int(row)][0] for row in nested["row_ids"]])[detected]
-            predicted = np.asarray(nested["mean_log"])[detected]
+            predicted = np.asarray(nested.get("median_log", nested["mean_log"]))[detected]
             lo, hi = min(actual.min(), predicted.min()), max(actual.max(), predicted.max())
             axes[2].plot(np.exp([lo, hi]), np.exp([lo, hi]), color=MUTED, ls="--", lw=.8)
             axes[2].scatter(np.exp(actual), np.exp(predicted), s=23, c=TEAL, alpha=.75, edgecolors="white", lw=.4)
