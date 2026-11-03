@@ -1,5 +1,7 @@
 # YTT: deposit reconstruction
 
+**Method: selected Gaussian process (`selected`) · current complete-Earth calculation.** [Method guide](../../../../docs/METHODS.md) · [Report catalogue](../../../README.md)
+
 The analysis used **46 thickness measurements** and 0 documented upper limits and 0 lower bounds, excluding 0 legacy pseudo rows. Spatial validation selected the exponential thinning family within the directional-trend-plus-spatial-residual model.
 
 ## Primary result: complete-Earth fallout

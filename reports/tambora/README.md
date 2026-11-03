@@ -1,10 +1,12 @@
 # Tambora: complete-Earth fallout volume
 
+**Method: Gaussian process · current complete-Earth results.** [All eruptions](../README.md) · [Methods explained](../../docs/METHODS.md) · [Regional history](regional/README.md)
+
 **Expected global bulk fallout: 153.5 km³**, conditional on the selected thickness model. The calculation covers the complete physical WGS84 Earth and is independent of map extent, contour levels and any user-selected calculation rectangle. The distance-based tail fraction does not detect unsampled directions or internal gaps; a small fraction is not proof of well-constrained volume.
 
 The accepted input contains **26 thickness measurements**. Original legacy pseudo-observations remain excluded. These source collections have not received a new geological audit.
 
-[Selected calculation](global/selected/README.md) · [Ensemble calculation](global/stacked/README.md) · [All-eruption comparison](../global-fallout/README.md) · [Method](../../docs/GLOBAL_VOLUME.md) · [Earlier regional analysis and source discussion](REGIONAL_REPORT.md)
+[Selected GP calculation](global/selected/README.md) · [GP ensemble calculation](global/stacked/README.md) · [All-eruption comparison](../global-fallout/README.md) · [Method](../../docs/methods/global-volume.md) · [Earlier regional analysis and source discussion](regional/README.md)
 
 ![Tambora reconstructed median isopachs](global/selected/isopachs.png)
 

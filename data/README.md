@@ -1,5 +1,7 @@
 # Input data
 
+[Project home](../README.md) · [Accepted inputs](eruptions/README.md) · [Audits](audits/README.md) · [Preserved sources](sources/README.md) · [Reports](../reports/README.md)
+
 `datasets.json` is the dataset catalogue. The four original CSVs in `eruptions/` were moved from `examples/Data/` **without changing their contents**. YTT was subsequently added from the supplied audited workbook.
 
 | File | Measurements | Excluded pseudo rows |

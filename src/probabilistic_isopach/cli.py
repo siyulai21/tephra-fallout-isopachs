@@ -28,7 +28,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--folds", type=int, default=4)
     parser.add_argument("--method", choices=("selected", "stacked"), default="selected",
-                        help="selected: established single-model workflow; stacked: experimental spatial ensemble with observation calibration.")
+                        help="selected: one Gaussian-process model; stacked: experimental Gaussian-process ensemble with observation calibration.")
     parser.add_argument("--nested-cv", action="store_true", help="Also estimate performance with outer held-out spatial regions.")
     parser.add_argument("--buffer-km", type=float, help="Validation buffer; uses the dataset profile or 0 km.")
     parser.add_argument("--grid", type=int, default=64)

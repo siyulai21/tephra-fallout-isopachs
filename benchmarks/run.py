@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 from src.probabilistic_isopach import Observations, SpatialModel, Candidate, read_observations
 from src.probabilistic_isopach.validation import select_model, training_mask
-from src.probabilistic_isopach.regularized_spline import select_spline_prior
+from src.research.trend_regularized_spline import select_spline_prior
 from src.probabilistic_isopach.__main__ import main as fit_cli
 from src.spline_isopach.lsf_bsplines2d import LsfBsplines2d
 

@@ -1,5 +1,7 @@
 # Minoan: deposit reconstruction
 
+**Method: GP ensemble (`stacked`) · complete-Earth calculation.** [Method definitions](../../../../docs/METHODS.md)
+
 The analysis used **92 thickness measurements** and 0 documented upper limits and 9 lower bounds, excluding 0 legacy pseudo rows. Spatial holdouts fitted an experimental mixture of exponential and power-law thinning candidates. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement.
 
 ## Primary result: complete-Earth fallout

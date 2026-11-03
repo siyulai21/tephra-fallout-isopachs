@@ -1,5 +1,7 @@
 # Minoan: deposit reconstruction
 
+**Method: selected Gaussian process (`selected`) · complete-Earth calculation.** [Method definitions](../../../../docs/METHODS.md)
+
 The analysis used **92 thickness measurements** and 0 documented upper limits and 9 lower bounds, excluding 0 legacy pseudo rows. Spatial validation selected the power thinning family within the directional-trend-plus-spatial-residual model.
 
 ## Primary result: complete-Earth fallout

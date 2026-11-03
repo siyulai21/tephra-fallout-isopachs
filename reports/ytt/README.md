@@ -1,10 +1,12 @@
 # YTT: complete-Earth fallout volume
 
+**Method: Gaussian process · current complete-Earth results.** [All eruptions](../README.md) · [Methods explained](../../docs/METHODS.md) · [Regional history](regional/README.md)
+
 **Expected global bulk fallout: 1,624.8 km³**, conditional on the selected thickness model. The calculation covers the complete physical WGS84 Earth and is independent of map extent, contour levels and any user-selected calculation rectangle. The distance-based tail fraction does not detect unsampled directions or internal gaps; a small fraction is not proof of well-constrained volume.
 
 The latest principal input contains **46 observations**, including Maninjau and U1445B; the five MD161 beds remain principal. [Reviewed data and qualifications](../../data/audits/YTT/README.md).
 
-[Selected calculation](global/selected/README.md) · [Ensemble calculation](global/stacked/README.md) · [All-eruption comparison](../global-fallout/README.md) · [Method](../../docs/GLOBAL_VOLUME.md) · [Earlier regional analysis and source discussion](REGIONAL_REPORT.md)
+[Selected GP calculation](global/selected/README.md) · [GP ensemble calculation](global/stacked/README.md) · [All-eruption comparison](../global-fallout/README.md) · [Method](../../docs/methods/global-volume.md) · [Earlier regional analysis and source discussion](regional/README.md)
 
 ![YTT reconstructed median isopachs](global/selected/isopachs.png)
 

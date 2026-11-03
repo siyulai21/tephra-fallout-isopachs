@@ -1,5 +1,15 @@
 # Changes
 
+## Repository navigation — 3 November 2026
+
+- Add a newcomer guide, method comparison, source map and folder indexes.
+- Explicitly label current reports as selected Gaussian-process models or GP ensembles.
+- Group earlier eruption artifacts under `regional/`; retain current `global/` reports and YTT input-version archives.
+- Separate detailed method pages from dated validation artifacts, retaining earlier page pointers.
+- Move the trend-regularized spline experiment into `src/research/` with compatible old imports.
+- Preserve all input data, numerical report records, tables, maps and scientific fitting behavior.
+- Check repository-local Markdown links in GitHub Actions.
+
 ## 0.7.0 — Complete-Earth fallout volumes
 
 - Replace the arbitrary-region headline with an integral over the physical WGS84 Earth, using the exact ellipsoidal LAEA domain.

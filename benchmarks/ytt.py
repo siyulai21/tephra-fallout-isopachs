@@ -67,7 +67,7 @@ def summarize(output):
     # Changing accepted observations must not encode the previous score ordering
     # as a success condition. Report the new comparison for scientific review.
     decision = {'default': 'selected', 'promote_stacked': False,
-                'reason': 'This revision promotes documented primary-fallout observations into the principal input. The established method remains the default; assess the new matched holdout metrics before any separate method replacement.',
+                'reason': 'This revision promotes documented primary-fallout observations into the principal input. The selected Gaussian-process method remains the default; assess the new matched holdout metrics before any separate method replacement.',
                 'principal_case': 'principal',
                 'principal_same_final_component': same_fit, 'principal_same_expected_thickness_grid': bool(same_grids),
                 'metrics': {name: {k: v[k] for k in ('mean_log_score', 'equal_region_log_score', 'rmse_log', 'coverage95_observations', 'mean_interval_width_log')}
