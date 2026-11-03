@@ -16,7 +16,7 @@ import zipfile
 import numpy as np
 import pandas as pd
 from src.probabilistic_isopach.cli import main as fit
-from src.probabilistic_isopach.publication import write_short_report, write_dataset_page
+from src.probabilistic_isopach.publication import write_short_report
 
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT/'data/audits/YTT'
@@ -199,7 +199,6 @@ def main(argv=None):
         report['reproducibility']['benchmark_sha256'] = sha256(Path(__file__).read_bytes()).hexdigest()
         report_path.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
         write_short_report(args.output/name, report['dataset'], report)
-        write_dataset_page(args.output/name, report['dataset'], report)
     summarize(args.output)
 
 

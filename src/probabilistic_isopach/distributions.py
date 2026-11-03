@@ -51,13 +51,18 @@ class LogMixture:
             hi = np.where(below, hi, mid)
         return (lo+hi)/2
 
-    def log_score(self, values, censored=None):
+    def log_score(self, values, censored=None, lower_censored=None):
         variance = np.maximum(self.variances, 1e-16)
         z = (np.asarray(values)-self.means)/np.sqrt(variance)
         scores = -.5*(np.log(2*np.pi*variance)+z*z)
         if censored is not None:
             mask = np.asarray(censored, bool)
             scores[:, mask] = log_ndtr(z[:, mask])
+        if lower_censored is not None:
+            mask = np.asarray(lower_censored, bool)
+            if censored is None or np.any(mask & ~np.asarray(censored, bool)):
+                raise ValueError("Lower bounds must also be marked censored.")
+            scores[:, mask] = log_ndtr(-z[:, mask])
         return logsumexp(np.log(self.weights)[:, None]+scores, axis=0)
 
 

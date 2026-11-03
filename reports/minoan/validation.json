@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-03",
+  "base_commit": "84d8e8f5486904919c3bd8ef4fdb29c7228a1252",
+  "pytest": {
+    "command": "python -m pytest -q",
+    "passed": 51,
+    "failed": 0
+  },
+  "reproduction": {
+    "command": "python -m benchmarks.minoan --output results/minoan",
+    "completed_runs": 6,
+    "all_published_source_hashes_match": true,
+    "audited_inputs_and_manifest_reproduce_exactly": true,
+    "source_records_independently_read": 105,
+    "standalone_and_spreadsheet_reads_equal": true
+  },
+  "legacy_regression": {
+    "command": "python -m benchmarks.empirical --output results/minoan-regression --repeats 10",
+    "reference": "docs/empirical/benchmark.json",
+    "real_datasets": 4,
+    "synthetic_trials": 30,
+    "real_results_exactly_equal": true,
+    "synthetic_results_exactly_equal": true
+  },
+  "package": {
+    "version": "0.6.0",
+    "clean_wheel_built_and_installed": true,
+    "checked_outside_repository": true,
+    "bundled_datasets": 6,
+    "ytt_and_minoan_audits_present": true,
+    "retired_atlas_and_workbench_modules_absent": true
+  },
+  "report_verification": {
+    "published_main_pdf_rendered_and_visually_inspected": true,
+    "main_diagnostic_and_sensitivity_map_inspected": true,
+    "prior_four_eruptions_scientific_exports_byte_identical_after_relocation": true
+  },
+  "reproducibility": {
+    "git_base_commit": "84d8e8f5486904919c3bd8ef4fdb29c7228a1252",
+    "source_sha256": {
+      "Laea.py": "51b3d0775ee44b42f72eceb01d16d73a04df57903ea354b4bcaa84443f3e4d90",
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "probabilistic_isopach/__init__.py": "0af7147ac62a494e7c8c473c908b59ec144cd65fb2c8f51b8c5e832e4c716baa",
+      "probabilistic_isopach/__main__.py": "cb85987ebb21dffaad8d1ddf3c364afadff051f897b5d4c14eaa6051dfe3be6f",
+      "probabilistic_isopach/catalog.py": "0c4ec7e2adc89df376d6f456dc6bd751e5777d7fe966d2118fb1ed8bdd376948",
+      "probabilistic_isopach/cli.py": "a3fbc100b0b76f2b52f6b4bfa390666ab519ebe7b464e79006f85e5ba9ad263f",
+      "probabilistic_isopach/contours.py": "644383d07c3eec8ea9c793854077ea258bb3bccf7387cc7fd0207a48098d6c8d",
+      "probabilistic_isopach/data.py": "d2e888d59351d0aefe69a4eab64a94458e4b0528231c06ddbf6585a0254a1257",
+      "probabilistic_isopach/distributions.py": "5a11e991728c24304b35194c0086a94100dd3b6a90f0c091c2757c3bb078c28e",
+      "probabilistic_isopach/ensemble.py": "d008a504e6d75ba6dd6fb1457d923b74c6ec354bed3a77f4ca4a1576783818ef",
+      "probabilistic_isopach/figures.py": "2073fa47879e809539481b99911dde85d020c5f3add7ff5cb2134df1d63a0345",
+      "probabilistic_isopach/model.py": "37c33c6f4aca2bb6ceed262b10a1d857660fc691b54991205e82954ac1be8054",
+      "probabilistic_isopach/publication.py": "7c3e04f1e487c2ea7ad301e0119953aaa189bb5237d086f26287ebb86d048959",
+      "probabilistic_isopach/regularized_spline.py": "568cc481af6ccfc5212d48e2951f0f9e2031af2d78351a2c89c87fb40f5ab177",
+      "probabilistic_isopach/report.py": "b0785f6fb1d91dcb16e1e1f8ac52bc6aebdae79c3551af45eeb42d3506122d45",
+      "probabilistic_isopach/validation.py": "8ad38bedc4fb878e916b756a200e18381328f7da1391f40950b92d9f8e30ba02",
+      "probabilistic_isopach/volume.py": "2f2908af4187bfa2281995a192e4b076d570b42ff5b7155c54c78504c5a9fc30",
+      "spline_isopach/Model.py": "0196cc65bb381160f276801269f3b06af2005b3a99a1493496cd2e8b3eb488e2",
+      "spline_isopach/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spline_isopach/__main__.py": "9156d9aaa25e0276eed6332510e15e8f57f9a09e5d6b71a1de3641e04d9395c7",
+      "spline_isopach/lsf_bsplines2d.py": "fdb64f03e07d6661f5f5009fa77070d202dd6232980c1fbccd7b995d8c589299"
+    },
+    "asset_sha256": {
+      "probabilistic_isopach/assets/ne_110m_land.geojson": "9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9"
+    },
+    "python": "3.13.4",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "3.1.0",
+      "matplotlib": "3.11.2",
+      "pyproj": "3.8.0"
+    },
+    "benchmark_sha256": "a5217411442fbc4247e9ef7b46e9b1e03eaaaa208ea2de26ee0333ec2e4c913a"
+  }
+}

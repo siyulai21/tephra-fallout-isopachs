@@ -54,6 +54,7 @@ def score_predictions(data, mean, variance):
     z = (data.log_value-mean)/np.sqrt(variance)
     nll = .5*(np.log(2*np.pi*variance)+z*z)
     nll[data.censored] = -log_ndtr(z[data.censored])
+    nll[data.lower_censored] = -log_ndtr(-z[data.lower_censored])
     det = ~data.censored
     return {"mean_log_score": float(np.mean(nll)),
             "rmse_log": float(np.sqrt(np.mean((data.log_value[det]-mean[det])**2))) if det.any() else None,
@@ -134,7 +135,7 @@ def nested_validate(data, candidates=DEFAULT_CANDIDATES, outer_folds=4, inner_fo
             distribution = predictive_distribution(model, data.xy[test], True, data.log_sd[test], calibrated)
             for key, probability in (("median", .5), ("lower", .025), ("upper", .975)):
                 summaries[name][key][test] = distribution.quantile(probability)
-            summaries[name]["score"][test] = distribution.log_score(data.log_value[test], data.censored[test])
+            summaries[name]["score"][test] = distribution.log_score(data.log_value[test], data.censored[test], data.lower_censored[test])
         selections.append({"fold": fold, "n_train": int(train.sum()), "n_test": int(test.sum()),
                            "selected": asdict(model.candidate), "inner_selection": selection})
     def metrics_for(summary):

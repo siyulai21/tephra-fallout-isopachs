@@ -1,11 +1,12 @@
 # Eruption reports
 
-Reports render directly on GitHub. Upload new eruption data and available source notes in chat to request the next analysis; the accepted data, provenance and reproducible results are then added to this repository.
+Upload eruption measurements and source notes in chat to request a calculation. Each report preserves accepted data, assumptions, validation and reproducible settings. Markdown and figures render directly on GitHub.
 
-- [YTT: audited data, method comparison and sensitivity runs](ytt/README.md)
-- [Mazama](../docs/atlas/mazama/short_report.md)
-- [Tambora](../docs/atlas/tambora/short_report.md)
-- [Aso-4](../docs/atlas/aso-4/short_report.md)
-- [B-Tm](../docs/atlas/b-tm/short_report.md)
+- [Minoan: all fallout fans fitted together](minoan/README.md)
+- [YTT: audited data and method comparison](ytt/README.md)
+- [Mazama](mazama/README.md)
+- [Tambora](tambora/README.md)
+- [Aso-4](aso-4/README.md)
+- [B-Tm](b-tm/README.md)
 
-All headline volumes refer to a stated finite region. Read each report's assumptions, source qualifications and geographic holdout failures before interpreting its maps.
+All headline volumes refer to a stated finite region. The four original reports were relocated without changing their numerical results. The former atlas/browser interfaces have been removed; historical implementation remains accessible through Git history.

@@ -69,7 +69,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         sidebar = fig.add_axes((.81, .18, .18, .65))
         sidebar.set_axis_off()
         sidebar.set(xlim=(0, 1), ylim=(0, 1))
-        fig.text(.075, .944, "TEPHRA  /  DEPOSIT ATLAS", fontsize=10, weight="bold", color=TEAL)
+        fig.text(.075, .944, "TEPHRA  /  FALLOUT RECONSTRUCTION", fontsize=10, weight="bold", color=TEAL)
         fig.text(.075, .89, name, fontsize=29, weight="bold")
         fig.text(.075, .855, f"{metadata['n_measurements']} measurements  ·  {model.candidate.tail} thinning  ·  median surface",
                  fontsize=11, color=MUTED)
@@ -101,8 +101,10 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         detected = ~model.data.censored
         ax.scatter(*model.data.xy[detected].T, s=20, facecolors="white", edgecolors=INK,
                    linewidths=.7, zorder=7)
-        if model.data.censored.any():
-            ax.scatter(*model.data.xy[~detected].T, marker="v", s=24, c=AMBER, zorder=7)
+        for mask, marker in ((model.data.censored & ~model.data.lower_censored, "v"),
+                             (model.data.lower_censored, "^")):
+            if mask.any():
+                ax.scatter(*model.data.xy[mask].T, marker=marker, s=26, c=AMBER, zorder=7)
         ax.scatter([0], [0], marker="*", s=155, c="#B9573C", edgecolors="white", linewidths=.8, zorder=8)
         bounds = contours["bounds_km"]
         ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
@@ -127,6 +129,8 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         sidebar.text(.24, y-.255, "Measurement", va="center", fontsize=8)
         sidebar.scatter([.07], [y-.305], marker="*", s=80, c="#B9573C")
         sidebar.text(.24, y-.305, "Source reference", va="center", fontsize=8)
+        if model.data.censored.any():
+            sidebar.text(0, y-.365, "▲ lower bound   ▼ upper limit", fontsize=7, color=AMBER)
         outside = [f"{r['level_cm']:g}" for r in contours["levels"] if r["status"] == "extends_beyond_map"]
         foot = "Closed contours follow the fitted surface. Dashed sections are extrapolated, not evidence of measured absence."
         fig.text(.075, .09, foot, fontsize=9, color=MUTED)

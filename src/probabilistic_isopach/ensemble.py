@@ -19,6 +19,7 @@ def point_log_scores(data, means, variances):
     z = (data.log_value[:, None]-means)/np.sqrt(variance)
     scores = -.5*(np.log(2*np.pi*variance)+z*z)
     scores[data.censored] = log_ndtr(z[data.censored])
+    scores[data.lower_censored] = log_ndtr(-z[data.lower_censored])
     return scores
 
 
@@ -58,7 +59,7 @@ def observation_discrepancy(data, weights, means, variances, row_weights):
     cap = max(4*error_scale, 1.)
     def loss(extra):
         distribution = LogMixture(weights, means.T, variances.T+extra)
-        return -float(row_weights@distribution.log_score(data.log_value, data.censored))
+        return -float(row_weights@distribution.log_score(data.log_value, data.censored, data.lower_censored))
     # Mixture scores need not be unimodal in variance: screen a fixed log grid
     # before refining its best bracket. Include both endpoints explicitly.
     grid = np.r_[0., np.geomspace(cap*1e-8, cap, 81)]
@@ -94,7 +95,7 @@ class StackedModel:
             raise ValueError("Invalid stacked model weights or discrepancy variance.")
         self.data = self.models[0].data
         if any(not np.array_equal(getattr(m.data, field), getattr(self.data, field))
-               for m in self.models for field in ("xy", "log_value", "censored", "log_sd", "row_ids")):
+               for m in self.models for field in ("xy", "log_value", "censored", "log_sd", "row_ids", "lower_censored")):
             raise ValueError("Stacked models must use the same observations in the same order.")
         self.discrepancy_variance = discrepancy_variance
         self.amplitude = max(m.amplitude for m in self.models)

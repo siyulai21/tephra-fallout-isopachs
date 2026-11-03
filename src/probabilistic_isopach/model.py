@@ -34,12 +34,13 @@ def matern32(a, b, length, amplitude):
     return amplitude**2 * (1 + d) * np.exp(-d)
 
 
-def censored_terms(f, log_limit, sd):
-    """Negative log P(log Y <= log L), gradient and positive Hessian diagonal."""
-    z = (log_limit - f) / sd
+def censored_terms(f, log_limit, sd, lower=False):
+    """Negative log CDF (upper bound) or survival (lower), with derivatives."""
+    sign = np.where(lower, -1., 1.)
+    z = sign * (log_limit - f) / sd
     lp = log_ndtr(z)
     mills = np.exp(-0.5*z*z - 0.5*np.log(2*np.pi) - lp)
-    return -lp, mills/sd, np.maximum(mills*(mills+z)/(sd*sd), 0.)
+    return -lp, sign*mills/sd, np.maximum(mills*(mills+z)/(sd*sd), 0.)
 
 
 class SpatialModel:
@@ -106,7 +107,7 @@ class SpatialModel:
                 delta = (f[det]-data.log_value[det])/self.sd[det]
                 loss = .5*(v@v + delta@delta)
                 grad[det] = delta/self.sd[det]
-                terms, g, _ = censored_terms(f[~det], data.log_value[~det], self.sd[~det])
+                terms, g, _ = censored_terms(f[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det])
                 grad[~det] = g
                 return loss+terms.sum(), v+L.T@grad
             opt = minimize(objective, np.zeros(len(K)), jac=True, method="BFGS",
@@ -115,7 +116,7 @@ class SpatialModel:
                 raise RuntimeError(f"Censored posterior fit did not converge: {opt.message}")
             mode = self.mean_train + L@opt.x
             w = 1/self.sd**2
-            w[~det] = censored_terms(mode[~det], data.log_value[~det], self.sd[~det])[2]
+            w[~det] = censored_terms(mode[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det])[2]
             sw = np.sqrt(w)
             B = np.eye(len(K)) + sw[:, None]*K*sw[None, :]
             self.factor = cho_factor(B, lower=True)
