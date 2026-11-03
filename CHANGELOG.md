@@ -1,5 +1,14 @@
 # Changes
 
+## 0.6.0 — Combined Minoan fallout and repository cleanup
+
+- Apply one total-fallout field to all Minoan fans using a source audit and explicit data sensitivities.
+- Add lower-bound likelihoods consistently to fitting, selection, stacking and validation.
+- Preserve exact-measurement coverage denominators and unchanged existing-data predictions.
+- Remove the atlas command, HTML/CSS report generator and remaining browser workflow.
+- Consolidate scientific results under `reports/` and raw Minoan sources under `data/sources/`.
+- Keep the established method as default; report the ensemble comparison and unresolved tails.
+
 ## 0.3.0 — Upload workspace and deposit atlas
 
 - Preserve the existing fit and candidate selection.

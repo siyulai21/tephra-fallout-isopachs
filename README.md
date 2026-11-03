@@ -1,95 +1,76 @@
-# Tephra fallout isopachs
+# Tephra fallout reconstruction
 
-**Send measurements in chat → reproducible calculations → data and reports on GitHub.**
+Reproducible isopachs and regional deposit volumes from measured thicknesses and documented bounds. Upload a new eruption dataset and source notes in chat; the accepted inputs, audit, calculations and report are then added to this repository.
 
-A small statistical workflow for reconstructing tephra deposits without hand-placed pseudo-data. The repository includes Mazama, Tambora, Aso-4, B-Tm, and the audited 43-observation YTT dataset, with maps and explicit extrapolation diagnostics.
+**Latest: [Minoan combined fallout](reports/minoan/README.md).** One fitted field combines all Plinian and co-ignimbrite fallout fans. Identified turbidites are excluded, incomplete cores enter as lower bounds, and source conflicts are tested separately.
 
-[Read the YTT comparison](reports/ytt/README.md) · [Quick start](docs/QUICKSTART.md) · [Understand the outputs](docs/OUTPUTS.md) · [Methods](docs/METHODS.md) · [Validation](docs/VALIDATION.md)
+![Minoan combined fallout reconstruction](reports/minoan/combined_selected/isopachs.png)
 
-**Experimental empirical ensemble:** add `--method stacked` to a fit or atlas command. It learns weights across thinning models from withheld geographic regions, preserves their joint predictive mixture, and reports a separate observation-calibration experiment. The established single-model fit remains the default. See [the method and measured results](docs/EMPIRICAL_METHODS.md).
+## Reports and data
 
-![Mazama: closed median isopachs, observations and extrapolation](docs/atlas/mazama/isopachs.png)
+| Eruption | Exact thickness records | Documented lower bounds | Report | Input audit |
+|---|---:|---:|---|---|
+| Minoan | 92 | 9 | [Combined fallout and sensitivities](reports/minoan/README.md) | [Source decisions](data/audits/Minoan/README.md) |
+| YTT | 43 | 0 | [Method comparison](reports/ytt/README.md) | [Audited workbook](data/audits/YTT/README.md) |
+| Mazama | 45 | 0 | [Reconstruction](reports/mazama/README.md) | Original supplied flags |
+| Tambora | 26 | 0 | [Reconstruction](reports/tambora/README.md) | Original supplied flags |
+| Aso-4 | 87 | 0 | [Reconstruction](reports/aso-4/README.md) | Original supplied flags |
+| B-Tm | 84 | 0 | [Reconstruction](reports/b-tm/README.md) | Original supplied flags |
 
-## Add another eruption
+Legacy pseudo rows are excluded. All volumes refer to stated finite regions; they are not automatically total erupted volumes or dense-rock equivalents. Sparse sectors and distant tails remain assumption-dependent. [Read the output definitions](docs/OUTPUTS.md).
 
-Upload the measurements and available source/audit notes in chat. The assistant checks units, measurement meanings and exclusions, saves the source and accepted data in `data/`, runs the model and geographic validation, and adds a report under `reports/<eruption>/` to this repository. No browser upload application or local server is needed.
+## Workflow
 
-Reports render directly on GitHub as Markdown, with PNG maps, downloadable PDFs, CSV tables and full numerical JSON records. New methods replace the default only when matched validation supports the change; apparent contour plausibility is not a validation criterion.
+1. Preserve the source and record units, locations, thickness meanings and provenance.
+2. Prepare one accepted input table, keeping missing data, exact thicknesses, upper limits and lower bounds distinct.
+3. Fit the directional trend and spatial residual field, select candidates using geographic holdouts, and assess them with nested validation.
+4. Publish a Markdown report with maps, tables, full numerical records and a reproducible command.
 
-**YTT result:** retain `selected`. The ensemble slightly improves log RMSE but worsens the predictive log score and does not improve coverage. Both final fits produce the same surface. [Data qualifications, comparison and sensitivity runs](reports/ytt/README.md).
+There is no atlas command, browser application, HTML report generator or local server. Reports render directly on GitHub. The established `selected` method remains the default; `--method stacked` runs the experimental predictive ensemble. [Methods](docs/METHODS.md) · [Empirical ensemble](docs/EMPIRICAL_METHODS.md) · [Validation](docs/VALIDATION.md).
 
-## Reproduce from the command line
+## Reproduce
 
-Use Python 3.10 or later and install with `python -m pip install '.[test]'`.
+Python 3.10 or later, from the repository root:
 
 ```sh
-# All five catalogued deposits, including nested geographic validation.
-tephra-isopachs atlas --output results/atlas
-
-# One bundled deposit or a new CSV.
-tephra-isopachs fit Mazama --output results/mazama --nested-cv
-tephra-isopachs fit path/to/measurements.csv --output results/my-deposit --nested-cv
+python -m pip install '.[test]'
+python -m benchmarks.minoan --output results/minoan
+python -m benchmarks.ytt --output results/ytt
+tephra-isopachs fit Minoan --output results/minoan-single --nested-cv
+tephra-isopachs fit path/to/measurements.csv --output results/new-eruption --nested-cv
 ```
 
-Read the resulting `README.md` and maps. Existing nonempty output directories are refused. `python -m src.probabilistic_isopach` is equivalent to `tephra-isopachs`; the original `tephra-isopachs CSV --output DIR` syntax still works.
+Use a new output directory for each run. Open its `README.md` and figures. Dataset profiles record known analysis settings; explicit command options override them. [Quick start](docs/QUICKSTART.md) · [Input format](data/README.md).
 
-## Included deposits
-
-| Deposit | Measurements | Excluded pseudo rows | Report | Map |
-|---|---:|---:|---|---|
-| Mazama | 45 | 7 | [Report](docs/atlas/mazama/short_report.md) | [PNG](docs/atlas/mazama/isopachs.png) · [PDF](docs/atlas/mazama/isopachs.pdf) |
-| Tambora | 26 | 2 | [Report](docs/atlas/tambora/short_report.md) | [PNG](docs/atlas/tambora/isopachs.png) · [PDF](docs/atlas/tambora/isopachs.pdf) |
-| Aso-4 | 87 | 6 | [Report](docs/atlas/aso-4/short_report.md) | [PNG](docs/atlas/aso-4/isopachs.png) · [PDF](docs/atlas/aso-4/isopachs.pdf) |
-| B-Tm | 84 | 7 | [Report](docs/atlas/b-tm/short_report.md) | [PNG](docs/atlas/b-tm/isopachs.png) · [PDF](docs/atlas/b-tm/isopachs.pdf) |
-| YTT | 43 | 0 (45 audited records excluded) | [Comparison](reports/ytt/README.md) | [PNG](reports/ytt/main43_selected/isopachs.png) · [PDF](reports/ytt/main43_selected/isopachs.pdf) |
-
-[Compare the original four volume summaries](docs/atlas/summary.csv). These are **bulk deposit volumes inside defined regions**, not total erupted volumes or dense-rock equivalents.
-
-## What the workflow does
-
-- Uses a directional thinning trend plus spatial residual model. The default selects one candidate; the optional ensemble combines competing candidates using geographic predictive scores.
-- Excludes legacy pseudo-data from fitting, validation and domain selection.
-- Expands the map to resolve closed contours. Extrapolated sections are dashed; unresolved levels receive no fabricated closure or area.
-- Refines volume integrals and compares three integration regions and both thinning families.
-- Exports PDF/SVG/PNG maps, geographic contour lines, area and volume tables, a short report, and complete numerical records.
-
-**Research scope:** an unsampled region remains assumption-dependent. Intervals omit fitted-parameter uncertainty; the ensemble represents disagreement only among retained candidates. Aso-4 and the synthetic missing-sector experiment still fail important uncertainty checks. Closing a curve does not validate the missing deposit. The checked-in atlas shows the established method. See [the output guide](docs/OUTPUTS.md) and [executed checks](docs/ATLAS_VALIDATION.md).
-
-## Repository map
+## Repository structure
 
 ```text
 data/
-  datasets.json                 Dataset catalogue
-  eruptions/                    Accepted model input CSVs
-  audits/YTT/                   Original audit workbook and exact selection manifest
-reports/ytt/                    YTT comparison, maps, tables and decision
-docs/
-  atlas/                        Ready-to-browse reports and exports
-  archive/original-isopachs/     Historical reference figures
-  QUICKSTART.md, OUTPUTS.md      User workflow and interpretation
-  METHODS.md, VALIDATION.md     Statistical definitions and benchmark
+  sources/               Unchanged published source files and attribution
+  audits/                Selection manifests, provenance and sensitivity inputs
+  eruptions/             Accepted model input CSVs
+  datasets.json          Dataset profiles
+reports/                 One directory per eruption, with reports and exports
 src/probabilistic_isopach/
-  model.py, validation.py        Existing fit and selection
-  ensemble.py, distributions.py  Predictive stacking and exact mixture summaries
-  data.py, catalog.py            Observation semantics and datasets
-  contours.py, volume.py         Closed level sets and checked integration
-  figures.py, publication.py     Maps and reports
-  cli.py, atlas.py               Reproducible single and batch runs
-  regularized_spline.py          Optional spline-prior estimator
-src/spline_isopach/              Original interactive spline and solver
-tests/                          Numerical and statistical checks
-benchmarks/                     Real-data and synthetic benchmark
-results/                        Local runs and large arrays; not in Git
+  data.py                Observation definitions and input validation
+  model.py               Conditional spatial model and censored likelihoods
+  validation.py          Geographic selection and nested validation
+  ensemble.py            Optional predictive stacking
+  distributions.py       Exact mixture calculations
+  contours.py, volume.py  Level sets and checked finite-region integration
+  figures.py, publication.py  Scientific figures and Markdown reports
+  cli.py                 Reproducible calculation command
+benchmarks/              Real-data reproduction and synthetic experiments
+tests/                   Numerical, statistical and provenance checks
+docs/                    Methods, interpretation and archived research history
+results/                 Local runs and regenerable large arrays; ignored by Git
 ```
 
-## Development and legacy interface
+The original `src/spline_isopach/` GUI and normalized spline-prior estimator are retained as research code, separate from the main fitting workflow. Historical numerical results remain available even when interfaces are retired.
 
 ```sh
 python -m pytest -q
-python -m benchmarks.run --output results/benchmark --repeats 10
 python -m benchmarks.empirical --output results/empirical --repeats 10
 ```
 
-The historical spline GUI is available with `pip install '.[legacy-map]'` and `python -m src.spline_isopach`. It retains manual pseudo-points and is separate from the default workflow. Its optional GUI is not part of the automated atlas validation.
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing fitting or numerical reporting. Coastline attribution is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing likelihoods, validation or numerical reporting. Source and map-data attribution is recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

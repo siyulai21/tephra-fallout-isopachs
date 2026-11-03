@@ -19,7 +19,7 @@ from src.probabilistic_isopach.validation import select_model, nested_validate, 
 
 def assess(data, distribution):
     return interval_metrics(data, distribution.quantile(.5), distribution.quantile(.025),
-                            distribution.quantile(.975), distribution.log_score(data.log_value, data.censored))
+                            distribution.quantile(.975), distribution.log_score(data.log_value, data.censored, data.lower_censored))
 
 
 def synthetic(repeats):

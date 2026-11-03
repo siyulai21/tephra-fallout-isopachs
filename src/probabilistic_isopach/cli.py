@@ -19,13 +19,10 @@ from .distributions import predictive_distribution
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
-    if argv and argv[0] == "atlas":
-        from .atlas import main as atlas_main
-        return atlas_main(argv[1:])
     if argv and argv[0] == "fit":
         argv = argv[1:]
     parser = argparse.ArgumentParser(description="Fit reproducible isopachs from real observations; ignore invented pseudo-points.",
-        epilog="Batch reports: tephra-isopachs atlas --output results/atlas")
+        epilog="Reports are written as README.md, figures, tables and JSON for GitHub.")
     parser.add_argument("csv", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--folds", type=int, default=4)
@@ -43,7 +40,6 @@ def main(argv=None):
     parser.add_argument("--levels", type=float, nargs="+", help="Positive increasing isopach thicknesses in cm.")
     parser.add_argument("--max-extent-km", type=float, help="Maximum map coordinate; uses the dataset profile or 6000 km.")
     parser.add_argument("--no-publication", action="store_true", help="Only write compact numerical outputs and the legacy diagnostic map.")
-    parser.add_argument("--atlas-parent", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     from .catalog import resolve_dataset, dataset_record, data_directory
     args.csv = resolve_dataset(args.csv)
@@ -135,7 +131,7 @@ def main(argv=None):
     source_root = Path(__file__).parents[1]
     source_hashes = {str(p.relative_to(source_root)): sha256(p.read_bytes()).hexdigest()
                      for p in sorted(source_root.rglob("*.py"))}
-    report = {"method_version": "0.4.0" if args.method == "stacked" else "0.2.0", "input": meta, "model": model.describe(),
+    report = {"method_version": "0.6.0" if data.lower_censored.any() else ("0.4.0" if args.method == "stacked" else "0.2.0"), "input": meta, "model": model.describe(),
               "alternative_model": alternate.describe() if alternate else None,
               "validation": validation, "nested_validation": nested, "volume": volume,
               "domain_sensitivity": sensitivity, "volume_grid_check": {"refined_mean_km3": fine_volume,

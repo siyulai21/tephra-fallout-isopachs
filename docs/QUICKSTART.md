@@ -2,7 +2,7 @@
 
 Upload your measurements in chat with the eruption name, units, location reference and available source notes. The assistant will preserve the source, check which records are measured thicknesses, run the calculation and add the accepted data and report to GitHub. Missing deposits, cryptotephra occurrence intervals and illustrative equivalents are not automatically treated as measured thickness or zero deposition.
 
-Reports are Markdown pages with embedded figures. Start with the [YTT report and method comparison](../reports/ytt/README.md). No browser upload application or local server is required.
+Reports are Markdown pages with embedded figures. Start with the [Minoan combined-fallout report](../reports/minoan/README.md). No browser upload application or local server is required.
 
 ## Reproduce a calculation
 
@@ -12,17 +12,16 @@ Use Python 3.10 or later, from a repository checkout:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[test]'
-python -m benchmarks.ytt --output results/ytt
+python -m benchmarks.minoan --output results/minoan
 ```
 
-On Windows, activate with `.venv\Scripts\activate`. The YTT command verifies the audit workbook, all selections and exact input checksums, then runs the established and ensemble methods on the main dataset plus two ensemble sensitivity cases. Read `README.md` and `report.json` in each run directory. The [published comparison](../reports/ytt/README.md) explains the decision to retain the established default.
+On Windows, activate with `.venv\Scripts\activate`. The Minoan command verifies the source workbook, deposit arithmetic, selections and checksums, then runs a single combined-fallout reconstruction, the ensemble comparison and four data sensitivities. Read `README.md` and `report.json` in each run directory. The [published comparison](../reports/minoan/README.md) explains the decision to retain the established default.
 
 For other runs:
 
 ```sh
-tephra-isopachs fit YTT --output results/ytt-single --nested-cv
+tephra-isopachs fit Minoan --output results/minoan-single --nested-cv
 tephra-isopachs fit path/to/measurements.csv --output results/new-eruption --nested-cv
-tephra-isopachs atlas --output results/all-deposits
 ```
 
 Bundled names are case-insensitive. `python -m src.probabilistic_isopach` is equivalent. Existing nonempty output directories are refused. The statistical workflow requires no map tiles, API keys, Basemap or Cartopy.
@@ -42,8 +41,8 @@ Bundled names are case-insensitive. `python -m src.probabilistic_isopach` is equ
 | `--grid 128` | Exported prediction-table resolution |
 | `--no-publication` | Compact numerical output for benchmarks |
 
-The catalogued YTT file automatically uses the documented 50 km validation buffer, fixed comparison volume rectangle, 8,000 km map-coordinate limit and YTT contour levels. Explicit options override these settings. This profile is matched by the actual catalogued path, never by a same-named external file. All resolved settings are recorded. Other deposits retain their previous defaults.
+The Minoan and YTT profiles supply documented validation buffers, integration rectangles, map limits and contour levels. Explicit options override them. Profiles match the actual catalogued file path, never a same-named external CSV. Other deposits retain their previous defaults. All resolved settings are recorded.
 
-The report-generation command also produces an optional static HTML export. GitHub uses `README.md` as the primary report. Large prediction arrays remain in the local run directory; the committed report records the command and source/input hashes needed to regenerate them.
+The report generator writes Markdown, figures, GIS contours, CSV tables and JSON. Atlas and browser/HTML code has been removed. Large prediction arrays remain in the local run directory and can be regenerated from the recorded command and source/input hashes.
 
 See the [input specification](../data/README.md), [output guide](OUTPUTS.md) and [empirical method](EMPIRICAL_METHODS.md). No hand-entered model weights or invented uncertainty values are required. Unsampled sectors still depend on model assumptions.

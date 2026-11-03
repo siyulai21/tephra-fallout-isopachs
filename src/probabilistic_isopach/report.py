@@ -100,8 +100,10 @@ def save_map(path, model, xy, shape, mean, variance, inside, alternate_mean=None
             ax.contour(X, Y, inside.reshape(shape).astype(float), levels=[.5], colors="cyan", linestyles="--", linewidths=1)
         det = ~model.data.censored
         ax.scatter(*model.data.xy[det].T, c="white", edgecolors="black", s=14, linewidths=.6, label="Measurement")
-        if model.data.censored.any():
-            ax.scatter(*model.data.xy[~det].T, c="orange", marker="v", s=25, label="Upper limit")
+        for mask, marker, label in ((model.data.censored & ~model.data.lower_censored, "v", "Upper limit"),
+                                    (model.data.lower_censored, "^", "Lower bound")):
+            if mask.any():
+                ax.scatter(*model.data.xy[mask].T, c="orange", marker=marker, s=25, label=label)
         ax.scatter([0], [0], c="red", marker="*", s=100, edgecolors="white", label="Vent")
         ax.set(xlabel="East of vent (km)", ylabel="North of vent (km)", aspect="equal")
     axes[0].legend(fontsize=8)

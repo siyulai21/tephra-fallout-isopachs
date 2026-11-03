@@ -99,7 +99,7 @@ This API requires justified evidence and covariance. Legacy pseudo rows are not 
 
 The primary workflow partitions unique sites recursively along the longest coordinate span into four approximately balanced spatial blocks. Colocated observations stay together; lexical ordering resolves ties. Nearby but nonidentical locations can lie across a boundary, so `--buffer-km` is available. Empty/insufficient training sets fail visibly. Row permutations do not change the fitted result.
 
-Each candidate refits the trend, scales, amplitude and likelihood inside each training fold. Selection minimizes the average of fold-mean negative log predictive scores on log thickness, including the observation nugget; censored rows use log-CDF scores. With `--nested-cv`, outer four-fold prediction uses independent inner three-fold selection. Reported coverage concerns held-out **observations**, while maps show latent-surface uncertainty without the nugget. Neither coverage nor spatial CV validates a wholly unobserved sector.
+Each candidate refits the trend, scales, amplitude and likelihood inside each training fold. Selection minimizes the average of fold-mean negative log predictive scores on log thickness, including the observation nugget; upper bounds use log-CDF scores and lower bounds use log-survival scores. With `--nested-cv`, outer four-fold prediction uses independent inner three-fold selection. Reported coverage concerns held-out **observations**, while maps show latent-surface uncertainty without the nugget. Neither coverage nor spatial CV validates a wholly unobserved sector.
 
 For each jointly sampled log surface, finite-domain volume is
 
@@ -117,10 +117,9 @@ Runs record input/code hashes, versions, seeds, fold/row assignments, candidates
 
 Before publication-level volume claims: jointly infer trend/covariance uncertainty, model independently documented preservation/detection, compare richer anisotropic or multi-lobe means, and evaluate untouched eruptions with preregistered sector holdouts. Those are research extensions, not implemented features of this version.
 
-## Reporting workflow 0.3
+## Scientific reporting
 
-The upload workspace and atlas retain the 0.2 statistical fit exactly. Reporting
-now separates the map domain from the finite volume region, expands maps to
+The Markdown reporting workflow separates the map domain from the finite volume region, expands maps to
 resolve closed median level sets, checks enclosed areas (including holes), and
 refines mean- and median-surface quadrature. Small contour features receive
 local refinement around the globally resolved components. This does not add
@@ -128,4 +127,19 @@ pseudo observations, physical inputs, or a new uncertainty model.
 
 See [OUTPUTS.md](OUTPUTS.md) for numerical definitions, limits, and the
 distinction between the median surface integral and median random volume.
-[ATLAS_VALIDATION.md](ATLAS_VALIDATION.md) records the reporting checks.
+[Historical reporting validation](archive/reporting-0.3-validation.md) records the reporting checks.
+
+
+## Lower bounds and combined-fallout observations (0.6)
+
+A recovered layer that ends before the original base constrains thickness from below. For `Kind=lower_limit` with positive `Limit_cm=L`, the likelihood is
+
+\[
+P(Y>L\mid z)=\Phi\!\left(\frac{z-\log L}{\sqrt{\sigma^2+v}}\right).
+\]
+
+This is the survival counterpart of the existing upper-limit likelihood, evaluated with a stable log-normal-CDF function. Its negative log is convex in latent log thickness. The same conditional Laplace approximation applies, with the gradient sign reversed and the Hessian form preserved. Trend and covariance scales continue to be fitted to exact observations; bounds constrain the latent field conditional on those estimates. This remains a two-stage conditional method.
+
+All selection, stacking, discrepancy fitting and outer scores use the corresponding tail probability. Interval coverage and RMSE exclude censored rows. Mixing exact-density and censored-probability scores is useful for comparing candidates on the same observation records and censoring pattern; scores across differently censored datasets are not directly comparable evidence of superiority. [Censoring terminology](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.CensoredData.html).
+
+For Minoan, the target is one total field `T_total(s)` for Plinian plus co-ignimbrite/dispersed fallout. At each site, use the reported total minus an identified turbidite, or a recovered-fallout lower bound. Fit and sample the combined field once. No phase boundary is fitted, no missing phase is assigned zero thickness, and no separately fitted fan volumes or interval endpoints are added. A single directional mean with spatial residuals can represent local departures but does not guarantee recovery of every unsampled lobe. [Audit and source decisions](../data/audits/Minoan/README.md).

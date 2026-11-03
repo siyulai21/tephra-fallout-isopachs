@@ -1,6 +1,6 @@
 # Empirical prediction without invented observations
 
-Version 0.4 adds an **experimental spatial predictive ensemble** to the fit and atlas workflows. It removes the need to choose a single thinning configuration by hand and carries disagreement among data-supported candidates into maps and joint volume draws. The established `selected` method remains the default; use `--method stacked`.
+Version 0.4 adds an **experimental spatial predictive ensemble** to the fit workflow. It removes the need to choose a single thinning configuration by hand and carries disagreement among data-supported candidates into maps and joint volume draws. The established `selected` method remains the default; use `--method stacked`.
 
 This is an application and extension of existing statistical ideas, not a claim to have invented predictive stacking. It does not eliminate scientific assumptions or make unobserved deposit structure identifiable. The four bundled eruptions and synthetic scenarios are development benchmarks, not independent external validation.
 
@@ -23,7 +23,7 @@ Legacy pseudo rows continue to be excluded before fitting, validation and domain
 
 Each component retains the existing constrained directional mean and Matérn spatial residual model. The candidate grid is fixed: two tail families, three correlation-length factors and three residual-noise ratios. All scale estimation and fitting happen again inside each training fold. Colocated observations stay in one geographic fold. An optional distance buffer excludes nearby training locations.
 
-For observation \(i\), candidate \(k\) supplies an out-of-fold predictive density \(p_{ik}\). A documented upper limit contributes its predictive CDF instead. Retain the three lowest equal-region negative-log-score candidates per tail family, at most six total. Fit weights by
+For observation \(i\), candidate \(k\) supplies an out-of-fold predictive density \(p_{ik}\). A documented upper limit contributes its predictive CDF instead; a documented lower bound contributes the survival probability. Retain the three lowest equal-region negative-log-score candidates per tail family, at most six total. Fit weights by
 
 \[
 \widehat w=\arg\max_{w_k\geq0,\ \sum_k w_k=1}
@@ -90,7 +90,7 @@ The 30 synthetic runs exactly match the prior benchmark's three surfaces and ten
 
 Volume comparisons use the same Monte Carlo locations for truth and estimated expected thickness; they are not tests of volume interval coverage. The hidden-lobe failure remains substantial. An empirical procedure cannot discover arbitrary structure absent from the observed sectors. Physics, independently justified external evidence or new sampling would be needed to constrain that case.
 
-Machine-readable results and source/input hashes: [benchmark JSON](empirical/benchmark.json), [real comparison CSV](empirical/real_comparison.csv), [synthetic comparison CSV](empirical/synthetic_comparison.csv). Full fold-level records are produced by the benchmark command below. A four-eruption stacked atlas also completed with all expected/median regional integrals meeting the 0.5% refinement rule at all three region sizes; unresolved 0.1 cm Aso-4/B-Tm contours remained explicitly omitted.
+Machine-readable results and source/input hashes: [benchmark JSON](empirical/benchmark.json), [real comparison CSV](empirical/real_comparison.csv), [synthetic comparison CSV](empirical/synthetic_comparison.csv). Full fold-level records are produced by the benchmark command below. A four-eruption stacked report build also completed with all expected/median regional integrals meeting the 0.5% refinement rule at all three region sizes; unresolved 0.1 cm Aso-4/B-Tm contours remained explicitly omitted.
 
 ## Reproduce and use
 
@@ -98,7 +98,7 @@ Machine-readable results and source/input hashes: [benchmark JSON](empirical/ben
 python -m pytest -q
 python -m benchmarks.empirical --output results/empirical --repeats 10
 python -m benchmarks.summarize_empirical results/empirical/benchmark.json --output results/comparison
-python -m src.probabilistic_isopach atlas --output results/ensemble-atlas --method stacked --map-grid 241 --volume-grid 32 --draws 1000
+tephra-isopachs fit Minoan --output results/minoan-ensemble --method stacked --nested-cv
 python -m src.probabilistic_isopach fit path/to/measurements.csv --output results/new-eruption --method stacked --nested-cv
 ```
 
@@ -108,3 +108,6 @@ Keep the established fit as a comparison: run the same file into a fresh output 
 ## Audited YTT application
 
 The subsequent [YTT comparison](../reports/ytt/README.md) uses 43 audited records and matched buffered geographic holdouts. It does not support promoting the ensemble: negative log score worsens from 2.130 to 2.167, coverage remains 39/43, and log RMSE improves from 1.394 to 1.336. Both all-data fits select the same single exponential component. The report also preserves the 38- and 45-record sensitivity cases and the four western holdout failures.
+
+
+The [Minoan combined-fallout application](../reports/minoan/README.md) keeps the established default. Both methods see the same 101 location constraints, comprising 92 exact totals and nine lower bounds. The ensemble does not improve the predictive log score or point RMSE on matched outer holdouts.
