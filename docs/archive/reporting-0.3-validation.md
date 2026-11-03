@@ -4,7 +4,7 @@ This is an archived record. The atlas and browser application were removed in 0.
 
 The 0.3 reporting workflow was checked on 1–2 November 2026. The statistical
 model remains the one documented in [METHODS.md](../METHODS.md); the earlier
-research benchmark and its unfavorable results remain in [VALIDATION.md](../VALIDATION.md).
+research benchmark and its unfavorable results remain in [VALIDATION.md](../validation/initial-benchmark.md).
 
 ## Unchanged scientific fit
 

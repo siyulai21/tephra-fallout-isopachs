@@ -1,5 +1,9 @@
 # Reading the maps and volumes
 
+[Documentation](README.md) · [Method definitions](METHODS.md) · [Current reports](../reports/README.md)
+
+This guide describes the Gaussian-process report workflow. For retained spline research, see the [spline methods](methods/cubic-splines.md).
+
 ## Closed isopachs
 
 Maps show level sets of **median predicted thickness**. The map expands on sides where a requested level reaches the frame. By default no projected coordinate exceeds 6,000 km in absolute value. The YTT profile uses 8,000 km and Minoan 3,000 km. This is a display limit, not a deposit boundary. If a level cannot be resolved within it, a thicker outer level is used and the unresolved level is listed.
@@ -10,7 +14,7 @@ Solid sections lie inside the observation convex hull; dashed sections lie outsi
 
 ## Volume definitions
 
-The primary estimate is conditional expected **bulk fallout over the complete WGS84 Earth**. Its equal-area image is the physical ellipse E, not a user-selected rectangle. [Derivation, numerical checks and assumptions](GLOBAL_VOLUME.md).
+The primary estimate is conditional expected **bulk fallout over the complete WGS84 Earth**. Its equal-area image is the physical ellipse E, not a user-selected rectangle. [Derivation, numerical checks and assumptions](methods/global-volume.md).
 
 The earlier regional integral is retained separately:
 
@@ -28,7 +32,7 @@ V_{\mathrm{median\ surface},D}=10^{-5}\int_D\exp\{\mu(s)\}\,ds.
 
 This is **not** the median of random total volume. Neither estimate is dense-rock equivalent: no density or vesicularity correction is applied automatically. An eruption report may supply an explicitly qualified porosity sensitivity.
 
-These formulas describe the default single-component model. With `--method stacked`, expected thickness is the weighted sum of component lognormal expectations, and the median solves the mixture CDF. Exponentiating the mixture's mean log thickness or applying a lognormal formula to its moment covariance would be incorrect. See [the empirical method](EMPIRICAL_METHODS.md) for the full definitions.
+These formulas describe the default single-component model. With `--method stacked`, expected thickness is the weighted sum of component lognormal expectations, and the median solves the mixture CDF. Exponentiating the mixture's mean log thickness or applying a lognormal formula to its moment covariance would be incorrect. See [the empirical method](methods/gp-ensemble.md) for the full definitions.
 
 ## Numerical checks and uncertainty
 

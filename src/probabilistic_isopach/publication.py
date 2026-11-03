@@ -16,8 +16,8 @@ def number(value):
 
 def method_description(report):
     if "stacking" in report["validation"]:
-        return "Spatial holdouts fitted an experimental mixture of exponential and power-law thinning candidates. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement."
-    return f"Spatial validation selected the {report['model']['candidate']['tail']} thinning family within the directional-trend-plus-spatial-residual model."
+        return "Gaussian-process ensemble (`stacked`): geographic holdouts fitted a mixture of GP candidates with exponential or power-law thinning trends. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement."
+    return f"Gaussian-process model (`selected`): spatial validation selected the {report['model']['candidate']['tail']} thinning trend with a Matérn spatial residual field."
 
 
 def write_short_report(output, name, report):

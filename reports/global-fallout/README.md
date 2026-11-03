@@ -4,7 +4,7 @@
 
 **This removes a numerical-domain choice; it does not establish reliable global extrapolation.** Minoan, Aso-4 and B-Tm place half or more of their selected global expected volume beyond the farthest observation. Their totals remain strongly dependent on the assumed tails. No global probability interval is estimated.
 
-[Method and derivation](../../docs/GLOBAL_VOLUME.md) · [All numerical comparisons](comparison.csv) · [Geographic deletion results](geographic_deletions.json) · [Known-truth trials](synthetic.json) · [Verification](validation.json) · [Recorded decision](method_decision.json)
+[Method and derivation](../../docs/methods/global-volume.md) · [All numerical comparisons](comparison.csv) · [Geographic deletion results](geographic_deletions.json) · [Known-truth trials](synthetic.json) · [Verification](validation.json) · [Recorded decision](method_decision.json)
 
 ![Global volumes and extrapolation diagnostics](comparison.png)
 
@@ -29,7 +29,7 @@ YTT's small beyond-farthest fraction does not show that its sampled footprint is
 
 ## Data and model sensitivity
 
-Both established `selected` and experimental `stacked` methods were rerun on the same inputs and geographic folds. Their global totals are:
+Both single-GP `selected` and experimental `stacked` methods were rerun on the same inputs and geographic folds. Their global totals are:
 
 | Eruption | Selected, km³ | Stacked, km³ | Four geographic-deletion/refit totals, km³ |
 |---|---:|---:|---:|
@@ -42,7 +42,7 @@ Both established `selected` and experimental `stacked` methods were rerun on the
 
 Each deletion removes one outer geographic group and its configured buffer, then refits using the candidate chosen inside that training set. These ranges measure sensitivity to available observations and model selection. **They are not confidence intervals.** The mixture integrates component expectations correctly; it is never replaced by a Gaussian with matching log moments.
 
-The integration revision leaves all six selected fitted models and their common held-out predictions/scores unchanged. The established selected default is retained, with both methods published. No family is chosen because its volume is closer to a preferred number. The new default concerns the physical integration domain, not a claim that predictive accuracy has improved.
+The integration revision leaves all six selected fitted models and their common held-out predictions/scores unchanged. The selected-GP default is retained, with both methods published. No family is chosen because its volume is closer to a preferred number. The new default concerns the physical integration domain, not a claim that predictive accuracy has improved.
 
 ## Why the integral is independent of the calculation region
 

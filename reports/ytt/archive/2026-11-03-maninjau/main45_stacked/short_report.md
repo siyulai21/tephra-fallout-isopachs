@@ -1,5 +1,7 @@
 # YTT · ensemble 45: deposit reconstruction
 
+**Method: GP ensemble (`stacked`) · historical regional calculation.** [Method definitions](../../../../../docs/METHODS.md)
+
 The analysis used **45 thickness measurements** and 0 documented upper limits and 0 lower bounds, excluding 0 legacy pseudo rows. Spatial holdouts fitted an experimental mixture of exponential and power-law thinning candidates. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement.
 
 | Result | Estimate |

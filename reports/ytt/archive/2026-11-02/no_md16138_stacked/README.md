@@ -1,5 +1,7 @@
 # YTT · no MD161: deposit reconstruction
 
+**Method: GP ensemble (`stacked`) · archived regional calculation and input selection.** [Method guide](../../../../../docs/METHODS.md) · [Report catalogue](../../../../README.md)
+
 The analysis used **38 thickness measurements** and 0 documented upper limits, excluding 0 legacy pseudo rows. Spatial holdouts fitted an experimental mixture of exponential and power-law thinning candidates. Mixture quantiles and expected thickness are computed directly; whole-field draws preserve both spatial covariance and model disagreement.
 
 | Result | Estimate |

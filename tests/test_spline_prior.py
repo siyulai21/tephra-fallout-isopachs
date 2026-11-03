@@ -1,6 +1,6 @@
 import numpy as np
 from src.probabilistic_isopach import Observations
-from src.probabilistic_isopach.regularized_spline import RegularizedSpline, select_spline_prior
+from src.research.trend_regularized_spline import RegularizedSpline, select_spline_prior
 from src.probabilistic_isopach.report import grid_cells
 
 
@@ -40,3 +40,11 @@ def test_strength_selection_refits_and_includes_zero():
     assert {r['strength'] for r in records} == {0., 10.}
     assert all(r['mse_log'] is not None for r in records)
     assert np.isfinite(fitted.predict_log(data().xy)).all()
+
+
+def test_previous_spline_imports_remain_compatible():
+    from src.probabilistic_isopach import regularized_spline as previous
+    from src.research import trend_regularized_spline as current
+    assert previous.RegularizedSpline is current.RegularizedSpline
+    assert previous.select_spline_prior is current.select_spline_prior
+    assert previous.design_matrix is current.design_matrix
