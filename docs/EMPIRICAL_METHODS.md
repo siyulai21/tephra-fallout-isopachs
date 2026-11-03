@@ -1,6 +1,6 @@
 # Empirical prediction without invented observations
 
-Version 0.4 adds an **experimental spatial predictive ensemble** to the existing upload, fit and atlas workflows. It removes the need to choose a single thinning configuration by hand and carries disagreement among data-supported candidates into maps and joint volume draws. The established `selected` method remains the default; use `--method stacked` or choose **Experimental ensemble** in the upload workspace.
+Version 0.4 adds an **experimental spatial predictive ensemble** to the fit and atlas workflows. It removes the need to choose a single thinning configuration by hand and carries disagreement among data-supported candidates into maps and joint volume draws. The established `selected` method remains the default; use `--method stacked`.
 
 This is an application and extension of existing statistical ideas, not a claim to have invented predictive stacking. It does not eliminate scientific assumptions or make unobserved deposit structure identifiable. The four bundled eruptions and synthetic scenarios are development benchmarks, not independent external validation.
 
@@ -103,3 +103,8 @@ python -m src.probabilistic_isopach fit path/to/measurements.csv --output result
 ```
 
 Keep the established fit as a comparison: run the same file into a fresh output folder with `--method selected`. Do not choose whichever method has favorable coverage for a desired conclusion. Keep unfavorable holdout results and domain sensitivity with the reported estimate. Before promoting the ensemble to the default, evaluate fresh eruptions, alternative geographic partitions/buffers, preservation/sampling bias, and fitted-parameter uncertainty.
+
+
+## Audited YTT application
+
+The subsequent [YTT comparison](../reports/ytt/README.md) uses 43 audited records and matched buffered geographic holdouts. It does not support promoting the ensemble: negative log score worsens from 2.130 to 2.167, coverage remains 39/43, and log RMSE improves from 1.394 to 1.336. Both all-data fits select the same single exponential component. The report also preserves the 38- and 45-record sensitivity cases and the four western holdout failures.

@@ -15,4 +15,9 @@ Inspect maps, compare model coefficients when fitting should be unchanged, and i
 
 Keep raw input bytes unchanged unless correcting a documented source error. Generate into a new directory before replacing a published atlas. `docs/atlas/` is a reviewable build; `results/` holds scratch runs and large arrays. Do not fabricate provenance or claim total-volume validation.
 
-Original `src.*` imports and the separate spline GUI are retained for compatibility. The upload workspace runs analyses in separate subprocesses and isolated output directories.
+Original `src.*` imports and the separate spline GUI are retained for compatibility. The browser upload server has been removed. New analyses are requested in chat and published as GitHub-readable Markdown reports with figures, tables and numerical records.
+
+
+For an uploaded eruption, preserve the raw source and its checksum, document accepted/excluded records and units, and keep sensitivity overrides separate from the main input. Save accepted CSVs in `data/eruptions/`, audits in `data/audits/<eruption>/`, and reviewable results in `reports/<eruption>/`. Do not infer measurement error from a range without a defensible observation model. Record commands, package versions and code hashes; leave large prediction arrays in `results/`.
+
+The audited YTT comparison is reproduced with `python -m benchmarks.ytt --output results/ytt`. Keep the established default unless matched geographic holdouts show a defensible improvement in proper predictive scores, with coverage and point errors also examined. Publish unfavorable results and site-level failures. Four folds on one deposit do not establish general superiority.

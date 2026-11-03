@@ -1,6 +1,6 @@
 # Input data
 
-`datasets.json` is the atlas catalogue. The CSVs in `eruptions/` are the original `examples/Data/` files moved **without changing their contents**.
+`datasets.json` is the atlas catalogue. The four original CSVs in `eruptions/` were moved from `examples/Data/` **without changing their contents**. YTT was subsequently added from the supplied audited workbook.
 
 | File | Measurements | Excluded pseudo rows |
 |---|---:|---:|
@@ -8,8 +8,9 @@
 | `Tambora_tephra.csv` | 26 | 2 |
 | `Aso-4_tephra.csv` | 87 | 6 |
 | `B-Tm_tephra.csv` | 84 | 7 |
+| `YTT_tephra.csv` | 43 | 0 |
 
-Counts reflect supplied flags, not an independent audit of field publications. None contains explicitly typed upper limits. Unnamed extra columns are ignored and reported. Historical maps in `docs/archive/original-isopachs/` are not fitting inputs.
+For the original four datasets, counts reflect supplied flags, not an independent audit of field publications. YTT preserves the supplied audit selections and qualifications; [read the audit provenance](audits/YTT/README.md). None contains explicitly typed upper limits. Unnamed extra columns are ignored and reported. Historical maps in `docs/archive/original-isopachs/` are not fitting inputs.
 
 ## CSV schema
 

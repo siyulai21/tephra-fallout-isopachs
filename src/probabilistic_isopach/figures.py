@@ -71,7 +71,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         sidebar.set(xlim=(0, 1), ylim=(0, 1))
         fig.text(.075, .944, "TEPHRA  /  DEPOSIT ATLAS", fontsize=10, weight="bold", color=TEAL)
         fig.text(.075, .89, name, fontsize=29, weight="bold")
-        fig.text(.33, .898, f"{metadata['n_measurements']} measurements  ·  {model.candidate.tail} thinning  ·  median surface",
+        fig.text(.075, .855, f"{metadata['n_measurements']} measurements  ·  {model.candidate.tail} thinning  ·  median surface",
                  fontsize=11, color=MUTED)
         upper = max(float(contours["mean"].max()), np.log(levels[-1])+.01)
         fill_levels = np.r_[np.log(levels), upper+.001]
@@ -106,7 +106,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         ax.scatter([0], [0], marker="*", s=155, c="#B9573C", edgecolors="white", linewidths=.8, zorder=8)
         bounds = contours["bounds_km"]
         ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
-               xlabel="Projected easting from vent (km)", ylabel="Projected northing from vent (km)")
+               xlabel="Projected easting from source reference (km)", ylabel="Projected northing from source reference (km)")
         ax.tick_params(labelsize=8)
         ax.grid(alpha=.18, linewidth=.5)
         sidebar.text(0, .98, "THICKNESS", weight="bold", fontsize=10)
@@ -126,7 +126,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         sidebar.scatter([.07], [y-.255], s=22, c="white", edgecolors=INK)
         sidebar.text(.24, y-.255, "Measurement", va="center", fontsize=8)
         sidebar.scatter([.07], [y-.305], marker="*", s=80, c="#B9573C")
-        sidebar.text(.24, y-.305, "Vent", va="center", fontsize=8)
+        sidebar.text(.24, y-.305, "Source reference", va="center", fontsize=8)
         outside = [f"{r['level_cm']:g}" for r in contours["levels"] if r["status"] == "extends_beyond_map"]
         foot = "Closed contours follow the fitted surface. Dashed sections are extrapolated, not evidence of measured absence."
         fig.text(.075, .09, foot, fontsize=9, color=MUTED)
@@ -136,7 +136,7 @@ def save_isopach_map(output, name, model, metadata, contours, volume):
         else:
             fig.text(.075, .058, "Volumes refer to the ochre rectangle; the display extent is chosen independently to show closed curves.",
                      fontsize=9, color=MUTED)
-        fig.text(.075, .026, "Vent-centred Lambert azimuthal equal-area projection  ·  Coastlines: Natural Earth, public domain",
+        fig.text(.075, .026, "Source-centred Lambert azimuthal equal-area projection  ·  Coastlines: Natural Earth, public domain",
                  fontsize=7.5, color=MUTED)
         for suffix in ("png", "svg", "pdf"):
             fig.savefig(output/f"isopachs.{suffix}", dpi=180)
@@ -147,7 +147,8 @@ def save_diagnostics(output, name, report, contours, data):
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 3, figsize=(12, 4.3))
         fig.subplots_adjust(left=.075, right=.97, bottom=.22, top=.77, wspace=.39)
-        fig.text(.075, .91, f"{name}  /  What supports this reconstruction?", fontsize=18, weight="bold")
+        fig.text(.075, .93, name, fontsize=18, weight="bold")
+        fig.text(.075, .85, "What supports this reconstruction?", fontsize=12, color=MUTED)
         closed = [r for r in contours["levels"] if r["status"] == "closed"]
         axes[0].plot([np.sqrt(r["area_km2"]) for r in closed], [r["level_cm"] for r in closed],
                      "o-", color=TEAL, ms=4)

@@ -26,3 +26,9 @@ def resolve_dataset(value):
         if str(value).lower() in {row["name"].lower(), row["slug"]}:
             return row["path"]
     return value
+
+
+def dataset_record(path):
+    """Match only the actual catalogued file, never a same-named external CSV."""
+    resolved = Path(path).resolve()
+    return next((row for row in datasets() if row['path'].resolve() == resolved), None)

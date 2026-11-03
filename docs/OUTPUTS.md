@@ -2,7 +2,7 @@
 
 ## Closed isopachs
 
-Maps show level sets of **median predicted thickness**. The map expands on sides where a requested level reaches the frame. By default no projected coordinate exceeds 6,000 km in absolute value. This is a display limit, not a deposit boundary. If a level cannot be resolved within it, a thicker outer level is used and the unresolved level is listed.
+Maps show level sets of **median predicted thickness**. The map expands on sides where a requested level reaches the frame. By default no projected coordinate exceeds 6,000 km in absolute value. The catalogued YTT profile uses 8,000 km. This is a display limit, not a deposit boundary. If a level cannot be resolved within it, a thicker outer level is used and the unresolved level is listed.
 
 Every resolved path must return to its start. Separate endpoints are never joined around the frame. Areas subtract holes and include separate islands. The map grid is compared with a grid of half its resolution. Features changing by over 0.5% receive a local 481×481 refinement around all globally resolved components. Remaining changes above 2% are flagged. Each area's numerical grid scope is recorded in the CSV.
 
@@ -16,7 +16,7 @@ The primary estimate is conditional expected **bulk deposit volume in a stated f
 E[V_D\mid\widehat\theta,y]=10^{-5}\int_D\exp\{\mu(s)+v(s)/2\}\,ds.
 \]
 
-Area is km² and thickness cm; conversion to km³ is 10⁻⁵. The default rectangle includes the vent and all non-pseudo observations, padded by 25%. `--bounds` overrides it.
+Area is km² and thickness cm; conversion to km³ is 10⁻⁵. The default rectangle includes the vent and all non-pseudo observations, padded by 25%. The catalogued YTT profile instead specifies a fixed comparison rectangle; `--bounds` overrides either.
 
 The integral of the pointwise median surface is reported separately:
 
@@ -46,7 +46,8 @@ Numerical convergence does not establish geological accuracy. We do not integrat
 
 | File | Contents |
 |---|---|
-| `index.html` | Offline responsive report |
+| `README.md` | Primary GitHub-readable report with embedded maps and diagnostics |
+| `index.html` | Optional static HTML export |
 | `short_report.md` | Concise, shareable findings and limitations |
 | `isopachs.png`, `.svg`, `.pdf` | Raster, scalable and print-ready maps |
 | `diagnostics.png`, `.svg` | Areas, volume sensitivity and holdouts |
@@ -60,7 +61,7 @@ Numerical convergence does not establish geological accuracy. We do not integrat
 
 Large grid files are generated but excluded from the checked-in atlas. For compatibility, `report.json.volume` retains coarse joint-grid results. **Use `volume_analysis.regional` for the refined primary estimate** and `volume_analysis.domain_sensitivity` for refined comparisons.
 
-Historical traces, source provenance and preservation have not been independently audited. Closed curves do not resolve those data limitations. Predicted values are never independent additional measurements.
+The original four input collections were not independently re-audited. YTT preserves the supplied workbook audit and its geological qualifications; the calculation is not a new audit of the source publications. Closed curves do not resolve those data limitations. Predicted values are never independent additional measurements.
 
 ## Ensemble and observation diagnostics
 

@@ -22,20 +22,17 @@ def main(argv=None):
     if argv and argv[0] == "atlas":
         from .atlas import main as atlas_main
         return atlas_main(argv[1:])
-    if argv and argv[0] == "serve":
-        from .workbench import main as workbench_main
-        return workbench_main(argv[1:])
     if argv and argv[0] == "fit":
         argv = argv[1:]
     parser = argparse.ArgumentParser(description="Fit reproducible isopachs from real observations; ignore invented pseudo-points.",
-        epilog="Other workflows: tephra-isopachs serve | tephra-isopachs atlas --output results/atlas")
+        epilog="Batch reports: tephra-isopachs atlas --output results/atlas")
     parser.add_argument("csv", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--folds", type=int, default=4)
     parser.add_argument("--method", choices=("selected", "stacked"), default="selected",
                         help="selected: established single-model workflow; stacked: experimental spatial ensemble with observation calibration.")
     parser.add_argument("--nested-cv", action="store_true", help="Also estimate performance with outer held-out spatial regions.")
-    parser.add_argument("--buffer-km", type=float, default=0.)
+    parser.add_argument("--buffer-km", type=float, help="Validation buffer; uses the dataset profile or 0 km.")
     parser.add_argument("--grid", type=int, default=64)
     parser.add_argument("--volume-grid", type=int, default=48)
     parser.add_argument("--draws", type=int, default=1000)
@@ -44,10 +41,17 @@ def main(argv=None):
     parser.add_argument("--name", help="Display name; defaults to the CSV stem.")
     parser.add_argument("--map-grid", type=int, default=481, help="Odd resolution for closed-contour maps (65–1201).")
     parser.add_argument("--levels", type=float, nargs="+", help="Positive increasing isopach thicknesses in cm.")
-    parser.add_argument("--max-extent-km", type=float, default=6000., help="Maximum absolute easting/northing of the contour map.")
+    parser.add_argument("--max-extent-km", type=float, help="Maximum map coordinate; uses the dataset profile or 6000 km.")
     parser.add_argument("--no-publication", action="store_true", help="Only write compact numerical outputs and the legacy diagnostic map.")
     parser.add_argument("--atlas-parent", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
+    from .catalog import resolve_dataset, dataset_record, data_directory
+    args.csv = resolve_dataset(args.csv)
+    record = dataset_record(args.csv)
+    profile = record.get("analysis_defaults", {}) if record else {}
+    for key, fallback in (("buffer_km", 0.), ("max_extent_km", 6000.), ("bounds", None), ("levels", None)):
+        if getattr(args, key) is None:
+            setattr(args, key, profile.get(key, fallback))
     if not 8 <= args.grid <= 300:
         parser.error("--grid must be between 8 and 300")
     if not 8 <= args.volume_grid <= 60 or not 20 <= args.draws <= 100000:
@@ -60,8 +64,6 @@ def main(argv=None):
         parser.error("--max-extent-km must be between 100 and 8000")
     if args.levels is not None and (not np.isfinite(args.levels).all() or min(args.levels) <= 0 or np.any(np.diff(args.levels) <= 0)):
         parser.error("--levels must be finite, positive and strictly increasing")
-    from .catalog import resolve_dataset
-    args.csv = resolve_dataset(args.csv)
     if args.output.exists() and any(args.output.iterdir()):
         parser.error("Output directory is not empty; choose a new directory to preserve previous runs.")
     data, meta = read_observations(args.csv)
@@ -70,6 +72,16 @@ def main(argv=None):
         path = Path(value).resolve()
         return str(path.relative_to(repository_root)) if path.is_relative_to(repository_root) else path.name
     meta["source"] = portable_path(args.csv)
+    if record and record.get("audit"):
+        audit_path = data_directory()/record["audit"]
+        provenance = json.loads(audit_path.read_text())
+        audit_case = provenance["cases"][record["audit_case"]]
+        if meta["input_sha256"] != audit_case["sha256"]:
+            raise ValueError("Catalogued audit input changed; update its audit and provenance before fitting.")
+        meta["audit"] = {"provenance_file": portable_path(audit_path),
+                         "provenance_sha256": sha256(audit_path.read_bytes()).hexdigest(),
+                         "source_workbook_sha256": provenance["source"]["sha256"],
+                         "selection": audit_case["definition"], "preserved_semantics": provenance["preserved_semantics"]}
     inverse = meta.pop("transform_inv")
     model, validation = select_model(data, n_folds=args.folds, buffer_km=args.buffer_km, method=args.method)
     bounds = np.asarray(args.bounds) if args.bounds is not None else domain_bounds(data.xy)

@@ -1,34 +1,29 @@
 # Tephra fallout isopachs
 
-**Upload measurements → closed isopachs → regional volumes → a short report.**
+**Send measurements in chat → reproducible calculations → data and reports on GitHub.**
 
-A small statistical workflow for reconstructing tephra deposits without hand-placed pseudo-data. The supplied Mazama, Tambora, Aso-4 and B-Tm datasets have ready-to-browse reports, downloadable maps and explicit extrapolation diagnostics.
+A small statistical workflow for reconstructing tephra deposits without hand-placed pseudo-data. The repository includes Mazama, Tambora, Aso-4, B-Tm, and the audited 43-observation YTT dataset, with maps and explicit extrapolation diagnostics.
 
-[Explore the atlas](docs/atlas/index.html) · [Quick start](docs/QUICKSTART.md) · [Understand the outputs](docs/OUTPUTS.md) · [Methods](docs/METHODS.md) · [Validation](docs/VALIDATION.md)
+[Read the YTT comparison](reports/ytt/README.md) · [Quick start](docs/QUICKSTART.md) · [Understand the outputs](docs/OUTPUTS.md) · [Methods](docs/METHODS.md) · [Validation](docs/VALIDATION.md)
 
-**Experimental empirical ensemble:** choose “Experimental ensemble” in the upload workspace, or add `--method stacked` to a fit or atlas command. It learns weights across thinning models from withheld geographic regions, preserves their joint predictive mixture, and reports a separate observation-calibration experiment. The established single-model fit remains the default. See [the method and measured results](docs/EMPIRICAL_METHODS.md).
+**Experimental empirical ensemble:** add `--method stacked` to a fit or atlas command. It learns weights across thinning models from withheld geographic regions, preserves their joint predictive mixture, and reports a separate observation-calibration experiment. The established single-model fit remains the default. See [the method and measured results](docs/EMPIRICAL_METHODS.md).
 
 ![Mazama: closed median isopachs, observations and extrapolation](docs/atlas/mazama/isopachs.png)
 
-> GitHub shows HTML source rather than rendering the atlas. Open `docs/atlas/index.html` locally in a browser, or browse the PNG previews and CSV files directly on GitHub. The atlas works offline.
+## Add another eruption
 
-## Start the upload workspace
+Upload the measurements and available source/audit notes in chat. The assistant checks units, measurement meanings and exclusions, saves the source and accepted data in `data/`, runs the model and geographic validation, and adds a report under `reports/<eruption>/` to this repository. No browser upload application or local server is needed.
 
-Python 3.10 or later, from a checkout of this repository:
+Reports render directly on GitHub as Markdown, with PNG maps, downloadable PDFs, CSV tables and full numerical JSON records. New methods replace the default only when matched validation supports the change; apparent contour plausibility is not a validation criterion.
 
-```sh
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install '.[test]'
-tephra-isopachs serve
-```
-
-The local browser workspace lets you upload a CSV or choose a bundled eruption, preview the accepted observations, and start an analysis. Each run gets its own folder, maps, plots, volume tables and short report. Your data stay on your computer; the workspace listens on localhost only. [Preview the workspace](docs/assets/upload-workspace.png).
+**YTT result:** retain `selected`. The ensemble slightly improves log RMSE but worsens the predictive log score and does not improve coverage. Both final fits produce the same surface. [Data qualifications, comparison and sensitivity runs](reports/ytt/README.md).
 
 ## Reproduce from the command line
 
+Use Python 3.10 or later and install with `python -m pip install '.[test]'`.
+
 ```sh
-# All four deposits, including nested geographic validation.
+# All five catalogued deposits, including nested geographic validation.
 tephra-isopachs atlas --output results/atlas
 
 # One bundled deposit or a new CSV.
@@ -36,18 +31,19 @@ tephra-isopachs fit Mazama --output results/mazama --nested-cv
 tephra-isopachs fit path/to/measurements.csv --output results/my-deposit --nested-cv
 ```
 
-Open the resulting `index.html`. Existing nonempty output directories are refused. `python -m src.probabilistic_isopach` is equivalent to `tephra-isopachs`; the original `tephra-isopachs CSV --output DIR` syntax still works.
+Read the resulting `README.md` and maps. Existing nonempty output directories are refused. `python -m src.probabilistic_isopach` is equivalent to `tephra-isopachs`; the original `tephra-isopachs CSV --output DIR` syntax still works.
 
 ## Included deposits
 
 | Deposit | Measurements | Excluded pseudo rows | Report | Map |
 |---|---:|---:|---|---|
-| Mazama | 45 | 7 | [Explore](docs/atlas/mazama/index.html) | [PNG](docs/atlas/mazama/isopachs.png) · [PDF](docs/atlas/mazama/isopachs.pdf) |
-| Tambora | 26 | 2 | [Explore](docs/atlas/tambora/index.html) | [PNG](docs/atlas/tambora/isopachs.png) · [PDF](docs/atlas/tambora/isopachs.pdf) |
-| Aso-4 | 87 | 6 | [Explore](docs/atlas/aso-4/index.html) | [PNG](docs/atlas/aso-4/isopachs.png) · [PDF](docs/atlas/aso-4/isopachs.pdf) |
-| B-Tm | 84 | 7 | [Explore](docs/atlas/b-tm/index.html) | [PNG](docs/atlas/b-tm/isopachs.png) · [PDF](docs/atlas/b-tm/isopachs.pdf) |
+| Mazama | 45 | 7 | [Report](docs/atlas/mazama/short_report.md) | [PNG](docs/atlas/mazama/isopachs.png) · [PDF](docs/atlas/mazama/isopachs.pdf) |
+| Tambora | 26 | 2 | [Report](docs/atlas/tambora/short_report.md) | [PNG](docs/atlas/tambora/isopachs.png) · [PDF](docs/atlas/tambora/isopachs.pdf) |
+| Aso-4 | 87 | 6 | [Report](docs/atlas/aso-4/short_report.md) | [PNG](docs/atlas/aso-4/isopachs.png) · [PDF](docs/atlas/aso-4/isopachs.pdf) |
+| B-Tm | 84 | 7 | [Report](docs/atlas/b-tm/short_report.md) | [PNG](docs/atlas/b-tm/isopachs.png) · [PDF](docs/atlas/b-tm/isopachs.pdf) |
+| YTT | 43 | 0 (45 audited records excluded) | [Comparison](reports/ytt/README.md) | [PNG](reports/ytt/main43_selected/isopachs.png) · [PDF](reports/ytt/main43_selected/isopachs.pdf) |
 
-[Compare the volume summaries](docs/atlas/summary.csv). These are **bulk deposit volumes inside defined regions**, not total erupted volumes or dense-rock equivalents.
+[Compare the original four volume summaries](docs/atlas/summary.csv). These are **bulk deposit volumes inside defined regions**, not total erupted volumes or dense-rock equivalents.
 
 ## What the workflow does
 
@@ -64,7 +60,9 @@ Open the resulting `index.html`. Existing nonempty output directories are refuse
 ```text
 data/
   datasets.json                 Dataset catalogue
-  eruptions/                    Original input CSVs, unchanged
+  eruptions/                    Accepted model input CSVs
+  audits/YTT/                   Original audit workbook and exact selection manifest
+reports/ytt/                    YTT comparison, maps, tables and decision
 docs/
   atlas/                        Ready-to-browse reports and exports
   archive/original-isopachs/     Historical reference figures
@@ -76,7 +74,7 @@ src/probabilistic_isopach/
   data.py, catalog.py            Observation semantics and datasets
   contours.py, volume.py         Closed level sets and checked integration
   figures.py, publication.py     Maps and reports
-  cli.py, atlas.py, workbench.py  Command line, batch and upload workflows
+  cli.py, atlas.py               Reproducible single and batch runs
   regularized_spline.py          Optional spline-prior estimator
 src/spline_isopach/              Original interactive spline and solver
 tests/                          Numerical and statistical checks
