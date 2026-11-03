@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tephra-fallout-isopachs"
-version = "0.4.0"
+version = "0.5.0"
 description = "Reproducible probabilistic tephra isopachs"
 requires-python = ">=3.10"
 dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "contourpy>=1.2", "pyproj>=3.6"]
@@ -26,6 +26,7 @@ include = ["src*"]
 [tool.setuptools.data-files]
 "share/tephra-fallout-isopachs" = ["data/datasets.json", "data/README.md"]
 "share/tephra-fallout-isopachs/eruptions" = ["data/eruptions/*.csv"]
+"share/tephra-fallout-isopachs/audits/YTT" = ["data/audits/YTT/*.xlsx", "data/audits/YTT/*.json", "data/audits/YTT/*.csv", "data/audits/YTT/README.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

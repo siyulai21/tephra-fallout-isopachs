@@ -69,6 +69,26 @@ def write_short_report(output, name, report):
     coverage = (f"Nested geographic holdouts covered {nested['coverage95_observations']:.0%} of observations with nominal 95% intervals; "
                 f"natural-log RMSE was {nested['rmse_log']:.2f}." if nested else
                 "Independent nested validation was not run; selection scores are not an independent accuracy estimate.")
+    bounds = regional['bounds_km']
+    region_description = (f"The stated equal-area rectangle is easting {bounds[0]:g} to {bounds[2]:g} km and "
+                          f"northing {bounds[1]:g} to {bounds[3]:g} km from the supplied source reference.")
+    audit = report['input'].get('audit')
+    provenance_note = ("Input selection preserves the supplied audit: "+audit['selection']+
+                       " Geological qualifications remain in the source audit; this model run does not re-audit the original publications."
+                       if audit else "Input provenance and preservation were not independently audited.")
+    predictive_summary = ""
+    if nested:
+        predictive_summary = ("\n| Geographic holdout metric | Value |\n|---|---:|\n"
+                              f"| Negative log score (lower is better) | {nested['mean_log_score']:.3f} |\n"
+                              f"| Equal-region negative log score | {nested['equal_region_log_score']:.3f} |\n"
+                              f"| Mean 95% interval width (natural-log cm) | {nested['mean_interval_width_log']:.3f} |\n")
+    if 'components' in report['model']:
+        predictive_summary += "\n| Retained component | Length factor | Noise ratio | Weight |\n|---|---:|---:|---:|\n"
+        for component in report['model']['components']:
+            candidate = component['model']['candidate']
+            predictive_summary += (f"| {candidate['tail']} | {candidate['length_factor']:g} | "
+                                   f"{candidate['noise_ratio']:g} | {component['weight']:.1%} |\n")
+        predictive_summary += "\nWeights are predictive contributions, not probabilities that models are true. Extra observation-discrepancy adjustment is diagnostic only; see the numerical report.\n"
     text = f"""# {name}: deposit reconstruction
 
 The analysis used **{report['input']['n_measurements']} thickness measurements** and {report['input']['n_upper_limits']} documented upper limits, excluding {len(report['input']['ignored_pseudo_rows'])} legacy pseudo rows. {method_description(report)}
@@ -84,12 +104,15 @@ The analysis used **{report['input']['n_measurements']} thickness measurements**
 Closed median isopachs were resolved at {', '.join(f'{v:g}' for v in closed)} cm. {'Levels '+', '.join(f'{v:g}' for v in omitted)+' cm remain beyond the map limit and were not artificially closed.' if omitted else 'Extrapolated contour sections are dashed on the map.'}
 
 {coverage}
+{predictive_summary}
 
-These are finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. The default region comes from observation coordinates plus 25% padding; exact bounds and alternatives are in the full report. {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent. {report['model']['uncertainty']} Fitted-parameter uncertainty is not integrated. Input provenance and preservation were not independently audited.
+These are finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. {region_description} {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent. Uncertainty model: {report['model']['uncertainty'].rstrip('.')}. Fitted-parameter uncertainty is not integrated. {provenance_note}
 
-[Full report](index.html) · [Map](isopachs.pdf) · [Volume table](volume_summary.csv) · [Contours](isopachs.geojson)
+[Numerical report](report.json) · [Map PDF](isopachs.pdf) · [Volume table](volume_summary.csv) · [Contours](isopachs.geojson)
 """
     (Path(output)/"short_report.md").write_text(text)
+    figures = "\n![Median isopachs with observations and extrapolation](isopachs.png)\n\n![Geographic holdouts and numerical diagnostics](diagnostics.png)\n"
+    (Path(output)/"README.md").write_text(text+figures)
 
 
 def write_dataset_page(output, name, report):
@@ -149,7 +172,7 @@ def publish_dataset(output, name, model, alternate, inverse, report, resolution=
     options = {} if levels is None else {"levels": levels}
     contours = build_contours(model, resolution=resolution, max_extent_km=max_extent_km, **options)
     report["contours"] = {k: contours[k] for k in ("bounds_km", "outer_level_cm", "resolution", "max_extent_km", "levels")}
-    report["report_version"] = "0.4.0"
+    report["report_version"] = "0.5.0"
     report["dataset"] = name
     report["volume_analysis"] = volume_analysis(model, alternate, report["volume"]["bounds_km"], report["volume"])
     report["warnings"] = [w for w in report["warnings"] if not w.startswith("Doubling the integration grid")]
@@ -207,14 +230,14 @@ def write_atlas_index(output, reports):
                         "volume_outside_hull_fraction": regional["fraction_expected_volume_outside_data_hull"],
                         "volume_grid_converged": regional["converged"],
                         "outer_closed_contour_cm": outer, "nested_observation_coverage95": coverage})
-    body = f'''<div class="eyebrow">Tephra / Reproducible deposit atlas</div><h1>From measurements<br>to isopachs.</h1><p class="lead">Four deposits. One simple statistical workflow. Explore closed thickness contours, the measurements behind them, and what the missing regions mean for volume.</p><div class="downloads"><a href="summary.csv">Compare deposits · CSV</a><a href="README.md">Reproduction and interpretation</a></div><div class="note">The original simple fit is retained. Legacy pseudo-points are excluded. All reported volumes refer to stated regions; none is claimed as total erupted volume.</div><div class="grid">{''.join(cards)}</div><div class="rule"></div><h2>Read the numbers with their support</h2><p class="muted">Regions differ between deposits. Volume outside the data hull measures reliance on extrapolation, not an error bound. Coverage describes held-out observations, not total-volume accuracy.</p><div class="table-wrap"><table><thead><tr><th>Deposit</th><th>Measurements</th><th>Regional bulk · km³</th><th>Volume outside hull</th><th>95% holdout coverage</th></tr></thead><tbody>{''.join(table)}</tbody></table></div><footer>Directional thinning + spatial residuals. No historical wind reconstruction. Maps and downloadable data work offline.<br>Coastlines: Natural Earth, public domain. Full assumptions and code/input hashes are recorded in each report.</footer>'''
+    body = f'''<div class="eyebrow">Tephra / Reproducible deposit atlas</div><h1>From measurements<br>to isopachs.</h1><p class="lead">{len(reports)} deposits. One statistical workflow. Explore closed thickness contours, the measurements behind them, and what the missing regions mean for volume.</p><div class="downloads"><a href="summary.csv">Compare deposits · CSV</a><a href="README.md">Reproduction and interpretation</a></div><div class="note">The original simple fit is retained. Legacy pseudo-points are excluded. All reported volumes refer to stated regions; none is claimed as total erupted volume.</div><div class="grid">{''.join(cards)}</div><div class="rule"></div><h2>Read the numbers with their support</h2><p class="muted">Regions differ between deposits. Volume outside the data hull measures reliance on extrapolation, not an error bound. Coverage describes held-out observations, not total-volume accuracy.</p><div class="table-wrap"><table><thead><tr><th>Deposit</th><th>Measurements</th><th>Regional bulk · km³</th><th>Volume outside hull</th><th>95% holdout coverage</th></tr></thead><tbody>{''.join(table)}</tbody></table></div><footer>Directional thinning + spatial residuals. No historical wind reconstruction. Maps and downloadable data work offline.<br>Coastlines: Natural Earth, public domain. Full assumptions and code/input hashes are recorded in each report.</footer>'''
     output = Path(output)
-    (output/"index.html").write_text(page("Four-deposit overview", body))
+    (output/"index.html").write_text(page("Tephra deposit overview", body))
     pd.DataFrame(summary).to_csv(output/"summary.csv", index=False)
     (output/"summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False)+"\n")
     readme = """# Tephra deposit atlas
 
-Open [index.html](index.html) in a browser to explore all four deposits.
+Read the individual README reports linked below; no local server is required.
 
 Rebuild from the repository root with:
 
@@ -239,7 +262,8 @@ Conditional sampling intervals are secondary diagnostics; parameter uncertainty
 and quantile-grid convergence are not established. Domain/family sensitivity is
 reported separately and is not a confidence interval.
 
-The original CSV provenance has not been independently audited. No new field
+The original four input collections have not been independently re-audited.
+YTT preserves the supplied audit and its qualifications. No new field
 measurements or eruption-physics inputs were introduced. Existing nested
 validation is reproduced, including unfavorable results.
 """
@@ -247,4 +271,5 @@ validation is reproduced, including unfavorable results.
         map_grid = reports[0][1]["settings"]["map_grid"]
         method = reports[0][1]["settings"].get("method", "selected")
         readme = readme.replace("atlas --output results/atlas\n", f"atlas --output results/atlas --map-grid {map_grid} --method {method}\n")
+    readme += "\n" + "\n".join(f"- [{r['dataset']}]({slug}/README.md)" for slug, r in reports) + "\n"
     (output/"README.md").write_text(readme)
