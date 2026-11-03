@@ -1,5 +1,12 @@
 # Changes
 
+## 0.7.0 — Complete-Earth fallout volumes
+
+- Replace the arbitrary-region headline with an integral over the physical WGS84 Earth, using the exact ellipsoidal LAEA domain.
+- Add positive transformed-radial/angular quadrature, two-refinement and phase checks, distance-based tail accounting, and alternate-family/deletion sensitivities.
+- Keep fitted models and held-out predictions unchanged; retain regional results explicitly as diagnostics, with no relabelling of their intervals as global uncertainty.
+- Publish both methods for all six current eruptions, 24 geographic deletion fits, 30 global known-truth trials and independent geometric/analytic tests.
+
 ## 0.6.1 — Reviewed YTT principal dataset
 
 - Include qualified Maninjau primary beds and source-verified U1445B (8 cm), for 46 principal observations.

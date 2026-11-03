@@ -46,3 +46,9 @@ The Minoan and YTT profiles supply documented validation buffers, integration re
 The report generator writes Markdown, figures, GIS contours, CSV tables and JSON. Atlas and browser/HTML code has been removed. Large prediction arrays remain in the local run directory and can be regenerated from the recorded command and source/input hashes.
 
 See the [input specification](../data/README.md), [output guide](OUTPUTS.md) and [empirical method](EMPIRICAL_METHODS.md). No hand-entered model weights or invented uncertainty values are required. Unsampled sectors still depend on model assumptions.
+
+Run both methods for every catalogued eruption, geographic-deletion checks and 30 synthetic trials:
+
+```sh
+python -m benchmarks.global_fallout --output results/global-fallout
+```

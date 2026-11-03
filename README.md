@@ -1,12 +1,12 @@
 # Tephra fallout reconstruction
 
-Reproducible isopachs and regional deposit volumes from measured thicknesses and documented bounds. Upload a new eruption dataset and source notes in chat; the accepted inputs, audit, calculations and report are then added to this repository.
+Reproducible isopachs and complete-Earth fallout volumes from measured thicknesses and documented bounds. Upload a new eruption dataset and source notes in chat; the accepted inputs, audit, calculations and report are then added to this repository.
 
-**Latest: [YTT source review and 46-record reconstruction](reports/ytt/README.md).** Maninjau primary beds and source-verified U1445B enter the principal dataset; named sensitivities and earlier reports are separate.
+**Latest: [fallout volumes without an arbitrary calculation region](reports/global-fallout/README.md).** All six eruptions have been rerun over the complete physical WGS84 Earth. The new headline is independent of map extent and diagnostic rectangles; comparisons expose the remaining tail-model uncertainty.
 
-[Minoan combined fallout](reports/minoan/README.md). One fitted field combines all Plinian and co-ignimbrite fallout fans. Identified turbidites are excluded, incomplete cores enter as lower bounds, and source conflicts are tested separately.
+![Complete-Earth volume comparison and extrapolation](reports/global-fallout/comparison.png)
 
-![Minoan combined fallout reconstruction](reports/minoan/combined_selected/isopachs.png)
+The latest [YTT input](reports/ytt/README.md) contains 46 reviewed records. [Minoan](reports/minoan/README.md) combines all accepted Plinian and co-ignimbrite fans in one field, with identified turbidites excluded and incomplete cores treated as lower bounds.
 
 ## Reports and data
 
@@ -19,14 +19,15 @@ Reproducible isopachs and regional deposit volumes from measured thicknesses and
 | Aso-4 | 87 | 0 | [Reconstruction](reports/aso-4/README.md) | Original supplied flags |
 | B-Tm | 84 | 0 | [Reconstruction](reports/b-tm/README.md) | Original supplied flags |
 
-Legacy pseudo rows are excluded. All volumes refer to stated finite regions; they are not automatically total erupted volumes or dense-rock equivalents. Sparse sectors and distant tails remain assumption-dependent. [Read the output definitions](docs/OUTPUTS.md).
+Legacy pseudo rows are excluded. The primary estimate is model-conditional bulk fallout over the complete Earth. Regional volumes remain diagnostics; none is automatically total erupted volume or dense-rock equivalent. Sparse sectors and distant tails remain assumption-dependent. [Read the output definitions](docs/OUTPUTS.md).
 
 ## Workflow
 
 1. Preserve the source and record units, locations, thickness meanings and provenance.
 2. Prepare one accepted input table, keeping missing data, exact thicknesses, upper limits and lower bounds distinct.
 3. Fit the directional trend and spatial residual field, select candidates using geographic holdouts, and assess them with nested validation.
-4. Publish a Markdown report with maps, tables, full numerical records and a reproducible command.
+4. Integrate the complete physical Earth, check numerical refinement, and expose tail-family and spatial-data sensitivity.
+5. Publish a Markdown report with maps, tables, full numerical records and a reproducible command.
 
 There is no atlas command, browser application, HTML report generator or local server. Reports render directly on GitHub. The established `selected` method remains the default; `--method stacked` runs the experimental predictive ensemble. [Methods](docs/METHODS.md) · [Empirical ensemble](docs/EMPIRICAL_METHODS.md) · [Validation](docs/VALIDATION.md).
 
@@ -36,6 +37,7 @@ Python 3.10 or later, from the repository root:
 
 ```sh
 python -m pip install '.[test]'
+python -m benchmarks.global_fallout --output results/global-fallout
 python -m benchmarks.minoan --output results/minoan
 python -m benchmarks.ytt --output results/ytt
 tephra-isopachs fit Minoan --output results/minoan-single --nested-cv
@@ -59,7 +61,8 @@ src/probabilistic_isopach/
   validation.py          Geographic selection and nested validation
   ensemble.py            Optional predictive stacking
   distributions.py       Exact mixture calculations
-  contours.py, volume.py  Level sets and checked finite-region integration
+  global_volume.py       Primary complete-Earth integral and tail accounting
+  contours.py, volume.py  Level sets and historical regional diagnostics
   figures.py, publication.py  Scientific figures and Markdown reports
   cli.py                 Reproducible calculation command
 benchmarks/              Real-data reproduction and synthetic experiments

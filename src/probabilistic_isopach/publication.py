@@ -38,6 +38,28 @@ def write_short_report(output, name, report):
                        " Geological qualifications remain in the source audit; this model run does not re-audit the original publications."
                        if audit else "Input provenance and preservation were not independently audited.")
     predictive_summary = ""
+    globe = report.get("global_fallout")
+    global_summary = ""
+    if globe:
+        primary = globe['selected']
+        alternative = globe['alternative']
+        global_summary = ("## Primary result: complete-Earth fallout\n\n"
+            f"**Expected global bulk fallout: {number(primary['mean_km3'])} km³.** "
+            "The integral covers the complete WGS84 surface, independently of the display extent or diagnostic rectangle. "
+            f"{'Numerical refinement and angular-phase checks passed.' if primary['converged'] else 'Numerical convergence FAILED; do not treat this as a resolved numerical estimate.'}\n\n"
+            f"The integral of the global median thickness surface is {number(primary['median_surface_km3'])} km³. "
+            f"{primary['fraction_beyond_farthest_observation']:.1%} of expected volume lies beyond the farthest sampled source-distance "
+            f"({primary['farthest_observation_authalic_arc_km']:,.0f} km on the authalic sphere); "
+            f"{primary['fraction_on_opposite_hemisphere']:.1%} lies on the opposite hemisphere. "
+            "These fractions describe extrapolation, not measured deposition.\n\n")
+        if alternative:
+            global_summary += (f"The other fitted thinning family gives **{number(alternative['mean_km3'])} km³** globally. "
+                               "This comparison tests tail assumptions; it is not a confidence interval.\n\n")
+        global_summary += ("The result is conditional on the fitted thickness model and its global extrapolation. "
+                           "No global probability interval is estimated. The regional simulation intervals below or in JSON do not apply globally. "
+                           "It is bulk fallout volume; DRE and other eruption products require separate evidence. "
+                           "[Global numerical record](global_volume.json) · [Global volume table](global_volume.csv)\n\n"
+                           "## Historical regional diagnostic\n\n")
     if nested:
         predictive_summary = ("\n| Geographic holdout metric | Value |\n|---|---:|\n"
                               f"| Negative log score (lower is better) | {nested['mean_log_score']:.3f} |\n"
@@ -54,6 +76,7 @@ def write_short_report(output, name, report):
 
 The analysis used **{report['input']['n_measurements']} thickness measurements** and {report['input']['n_upper_limits']} documented upper limits and {report['input'].get('n_lower_limits', 0)} lower bounds, excluding {len(report['input']['ignored_pseudo_rows'])} legacy pseudo rows. {method_description(report)}
 
+{global_summary}
 | Result | Estimate |
 |---|---:|
 | Expected bulk volume in the stated region | {number(regional['mean_km3'])} km³ |
@@ -67,7 +90,7 @@ Closed median isopachs were resolved at {', '.join(f'{v:g}' for v in closed)} cm
 {coverage}
 {predictive_summary}
 
-These are finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. {region_description} {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent. Uncertainty model: {report['model']['uncertainty'].rstrip('.')}. Fitted-parameter uncertainty is not integrated. {provenance_note}
+The regional table contains finite-region **bulk deposit volumes**, not total erupted volumes or DRE. The median-surface integral is not the median of total random volume. {region_description} {'Numerical convergence passed the 0.5% criterion.' if regional['converged'] else 'Numerical convergence did not meet the 0.5% criterion; this estimate needs refinement.'} Unsampled sectors and distant tails remain assumption-dependent. Uncertainty model: {report['model']['uncertainty'].rstrip('.')}. Fitted-parameter uncertainty is not integrated. {provenance_note}
 
 [Numerical report](report.json) · [Map PDF](isopachs.pdf) · [Volume table](volume_summary.csv) · [Contours](isopachs.geojson)
 """
@@ -82,7 +105,7 @@ def publish_dataset(output, name, model, alternate, inverse, report, resolution=
     options = {} if levels is None else {"levels": levels}
     contours = build_contours(model, resolution=resolution, max_extent_km=max_extent_km, **options)
     report["contours"] = {k: contours[k] for k in ("bounds_km", "outer_level_cm", "resolution", "max_extent_km", "levels")}
-    report["report_version"] = "0.6.0"
+    report["report_version"] = "0.7.0"
     report["dataset"] = name
     report["volume_analysis"] = volume_analysis(model, alternate, report["volume"]["bounds_km"], report["volume"])
     report["warnings"] = [w for w in report["warnings"] if not w.startswith("Doubling the integration grid")]
@@ -116,6 +139,11 @@ def publish_dataset(output, name, model, alternate, inverse, report, resolution=
                                                        "fraction_expected_volume_outside_data_hull")},
                              **dict(zip(("xmin_km", "ymin_km", "xmax_km", "ymax_km"), values["bounds_km"]))})
     pd.DataFrame(rows).to_csv(output/"volume_summary.csv", index=False)
+    if 'global_fallout' in report:
+        (output/'global_volume.json').write_text(json.dumps(report['global_fallout'], indent=2, allow_nan=False)+'\n')
+        pd.DataFrame([{'model':key, **{k:value[k] for k in ('mean_km3','median_surface_km3','converged',
+            'fraction_beyond_farthest_observation','fraction_on_opposite_hemisphere')}}
+            for key,value in report['global_fallout'].items() if key in ('selected','alternative') and value]).to_csv(output/'global_volume.csv',index=False)
     save_isopach_map(output, name, model, report["input"], contours, report["volume_analysis"])
     save_diagnostics(output, name, report, contours, data)
     write_short_report(output, name, report)
