@@ -1,5 +1,13 @@
 # Changes
 
+## 0.8.0 — Automatic cubic spline and peer regional comparisons
+
+- Add an active cubic B-spline with mixed exact/upper/lower likelihood, normalized penalties and conditional correlated uncertainty.
+- Jointly select knots, tension, smoothing, trend strength, trend family and noise on geographic training folds; retain complete search tables and boundary diagnostics.
+- Add `compare`: one GP ensemble and one spline, common automatic buffers, nested holdouts and an observation-hull volume domain.
+- Publish six paired regional reports and four known-truth scenarios, preserving failures and poor interval coverage.
+- Keep all accepted inputs and historical GP/global numerical artifacts unchanged; make new regional comparisons the human-facing entry point.
+
 ## Repository navigation — 3 November 2026
 
 - Add a newcomer guide, method comparison, source map and folder indexes.

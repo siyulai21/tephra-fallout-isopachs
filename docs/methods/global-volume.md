@@ -1,6 +1,8 @@
 # Fallout volume without a user-selected calculation region
 
-[Method overview](../METHODS.md) · [Output definitions](../OUTPUTS.md) · [Current comparison](../../reports/global-fallout/README.md)
+The current peer-method workflow uses [matched regional volumes](regional-comparison.md). This page describes the retained complete-Earth GP calculation.
+
+[Method overview](../METHODS.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](../../reports/global-fallout/README.md)
 
 Version 0.7 makes the **complete-Earth integral** the primary fallout-volume estimate. `--bounds` controls only a regional diagnostic and prediction export. Map extent and contour thresholds cannot change the global estimate. The accepted observations, likelihoods, selected models and nested validation are unchanged by this integration revision.
 

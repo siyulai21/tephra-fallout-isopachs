@@ -1,49 +1,24 @@
-# Minoan: complete-Earth fallout volume
+# Minoan: current regional comparison
 
-**Method: Gaussian process · current complete-Earth results.** [All eruptions](../README.md) · [Methods explained](../../docs/METHODS.md) · [Regional history](regional/README.md)
+**GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
 
-**Expected global bulk fallout: 86.1 km³**, conditional on the selected thickness model. The calculation covers the complete physical WGS84 Earth and is independent of map extent, contour levels and any user-selected calculation rectangle. **More than half of the selected global estimate lies beyond the farthest observation. Treat this as a strongly extrapolation-dependent model estimate.**
+[Read the full comparison](comparison/README.md) · [Compare all six eruptions](../regional-methods/README.md) · [Method definitions](../../docs/METHODS.md)
 
-A **single combined fallout field** includes all accepted Plinian and co-ignimbrite fans: 92 exact thicknesses and nine incomplete-core lower bounds. Identified turbidites are excluded. [Source audit](../../data/audits/Minoan/README.md).
+92 exact measurements and 9 lower bounds; regional area 760,879 km².
 
-[Selected GP calculation](global/selected/README.md) · [GP ensemble calculation](global/stacked/README.md) · [All-eruption comparison](../global-fallout/README.md) · [Method](../../docs/methods/global-volume.md) · [Earlier regional analysis and source discussion](regional/README.md)
+| Quantity | GP ensemble | Cubic spline |
+|---|---:|---:|
+| Expected regional bulk fallout (km³) | 27.21 | 24.78 |
+| Outer equal-region negative log score ↓ | 1.451 | 1.601 |
 
-![Minoan reconstructed median isopachs](global/selected/isopachs.png)
+![Paired regional isopachs](comparison/isopachs.png)
 
-## What changes when the region choice is removed
+These volumes cover only the observation hull. It can include unsampled gaps and exclude proximal deposits; it is not total eruption volume or dense-rock equivalent. Conditional intervals omit fitted-parameter and selection uncertainty. Read withheld coverage and geographic-deletion sensitivity in the full report.
 
-| Quantity | Result |
-|---|---:|
-| Selected global expected bulk fallout | **86.1 km³** |
-| Ensemble global expected bulk fallout | 81.3 km³ |
-| Other fitted thinning family, globally | 40.3 km³ |
-| Selected global median-surface integral | 53.6 km³ |
-| Previous selected regional expectation | 44.2 km³ |
-| Global expected volume beyond farthest observation | 50.1% |
-| Global expected volume on opposite hemisphere | 6.6% |
-| Four geographic-deletion/refit volumes | 59.0–92.8 km³ |
+All accepted Plinian and co-ignimbrite fallout fans remain combined in one field. The [source audit](../../data/audits/Minoan/README.md) and input selection are unchanged.
 
-The other-family and deletion comparisons are sensitivities, **not confidence intervals**. A different fitting family can give a very different global total even when both integrals converge. The selected fit and its predictions are unchanged by the integration revision. The ensemble remains an evaluated alternative; this release does not reselect a tail to obtain a preferred volume.
+## Earlier calculations
 
-The source-distance diagnostic uses arcs on the equal-area authalic sphere; the farthest accepted observation is 1,156 km from the source. The map's ochre rectangle now marks only the separate regional check. The entire Earth is integrated, including regions outside the displayed map and where no contour closes.
+[GP-only global ensemble](global/stacked/README.md) · [Earlier selected GP](global/selected/README.md) · [Rectangular regional history](regional/README.md)
 
-The [source paper](https://doi.org/10.1038/s41467-023-38176-3) reports 47.8–55.5 km³ of combined bulk fallout. The selected global estimate exceeds that range, whereas the exponential comparison is below it. Shared measurements and large tail-model disagreement prevent treating either agreement or disagreement as independent validation. The paper's total-eruption DRE headline is a different quantity.
-
-## Validation and remaining limits
-
-Both global integrals pass radial/angular refinement and shifted-grid checks. The nominal numerical tolerance is 0.1%; this is an empirical integration check, not a statistical uncertainty interval. Selected-method geographic holdouts have negative log score 1.443, natural-log RMSE 1.095, and nominal 95% observation coverage 96.7%. These observation checks do not validate wholly unsampled sectors or a global volume.
-
-![Minoan accumulation and holdout diagnostics](global/selected/diagnostics.png)
-
-The middle panel accumulates volume across all source distances to the antipode; its dotted vertical line marks the farthest observation. The total uses the full physical Earth in both fitting-family curves.
-
-**No global probability interval is estimated.** Conditional intervals in the regional calculation remain specific to that rectangle. Fitted-parameter, source-position, preservation and model-choice uncertainty are not fully propagated. The global extension of the planar trend/covariance is an explicit extrapolation assumption, especially far from the data. These are bulk fallout estimates; DRE and other eruption products require additional evidence.
-
-## Reproduce
-
-```sh
-tephra-isopachs fit Minoan --output results/minoan-global --nested-cv --grid 128 --draws 1500
-python -m benchmarks.global_fallout --output results/global-fallout
-```
-
-The second command reproduces both methods for all six eruptions, geographic deletions and known-truth trials. Accepted input bytes and existing historical report artifacts are preserved. [Numerical global record](global/selected/global_volume.json) · [Full run and code hashes](global/selected/report.json).
+Historical numerical artifacts retain their original method, source hashes and integration domain. They are not used to rank the current regional methods.

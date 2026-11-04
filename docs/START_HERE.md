@@ -1,61 +1,48 @@
 # Start here
 
-[Project home](../README.md) · [Documentation](README.md) · [Reports](../reports/README.md)
+[Project home](../README.md) · [Reports](../reports/README.md) · [Methods](METHODS.md)
 
-## What question does this project answer?
+Field studies recover ash at scattered locations. This project reconstructs a thickness surface, draws equal-thickness contours (isopachs), integrates the surface, and tests predictions in withheld geographic regions.
 
-After an explosive volcanic eruption, field studies recover ash at scattered locations. This project asks what thickness surface is compatible with those observations, where equal-thickness contours lie, and what volume the fitted surface implies. It also checks where prediction or extrapolation is unreliable.
+## Follow one eruption
 
-An **isopach** connects equal deposit thickness. **Fallout** is material deposited from an eruption cloud; the target is not automatically every volcanic product. **Bulk volume** includes deposit pore space. **Dense-rock equivalent (DRE)** needs additional density or porosity evidence.
-
-## Follow one example
-
-The [Minoan report](../reports/minoan/README.md) is a useful entry point:
-
-1. The [source audit](../data/audits/Minoan/README.md) explains how a published table becomes usable observations.
-2. The [accepted CSV](../data/eruptions/Minoan_tephra.csv) contains 92 measured thicknesses and nine lower bounds from incomplete cores. All accepted fallout fans enter one field.
-3. The [current GP calculation](../reports/minoan/global/selected/README.md) shows maps, geographic holdouts and volume diagnostics.
-4. The [regional analysis](../reports/minoan/regional/README.md) preserves earlier finite-region estimates and source-selection sensitivities.
+1. Read the [Minoan source audit](../data/audits/Minoan/README.md).
+2. The [accepted data](../data/eruptions/Minoan_tephra.csv) contain 92 exact thicknesses and nine lower bounds, combining all accepted Plinian and co-ignimbrite fallout fans.
+3. The [current comparison](../reports/minoan/comparison/README.md) fits a GP ensemble and a cubic spline to those same observations.
+4. Compare their maps, regional volumes, withheld predictions and uncertainty checks. Neither is automatically selected as the winner.
 
 ## What happens in a calculation?
 
 ```text
 Source measurements and geological notes
-    ↓ review units, deposit meaning, locations and exclusions
-Accepted thicknesses and documented upper/lower bounds
-    ↓ fit and evaluate on withheld geographic regions
-Gaussian-process thickness surface
-    ↓ draw contours and integrate the fitted surface
-Maps, bulk fallout volume, failure checks and a reproducible report
+    → audit units, locations, deposit meaning and exclusions
+Accepted exact thicknesses and documented bounds
+    → fit and tune each method inside geographic training folds
+GP ensemble                     Cubic spline
+    → identical withheld regions and regional integration footprint
+Paired maps, volumes, diagnostics and a reproducible report
 ```
 
-Missing or unvisited locations are prediction locations. They do not become zero thickness or invented observations. An incomplete core can supply a lower bound; an actual documented detection limit can supply an upper bound.
+A missing location is not a zero. An incomplete core can provide a lower bound; a documented detection limit can provide an upper limit. Predictions and numerical integration points never become additional observations.
 
-## Which model am I looking at?
+## What is being compared?
 
-**All eruption calculations under `reports/` use Gaussian-process models.** A directional thinning trend describes broad decay and asymmetry; a spatial covariance model describes local departures. There are no spline knots in this workflow.
+The GP ensemble combines spatial covariance models. The spline fits cubic basis coefficients with automatically selected knots and smoothing. They are separate methods sharing observation semantics, evaluation and reporting. [Equations and differences](METHODS.md).
 
-| Label | Meaning |
-|---|---|
-| `selected` | One GP configuration chosen by geographic predictive scores |
-| `stacked` | An evaluated ensemble of GP configurations |
-| Exponential / power-law | Alternative thinning trends within the GP model |
-| `global/` | Current volume calculation over the complete physical Earth |
-| `regional/` | Earlier volume calculations within a stated rectangle |
-| `archive/` | Superseded input selections or historical material |
+Both volumes are integrated over the **convex hull of the accepted locations**. This footprint can contain unsampled gaps and omit proximal deposits. The result is regional bulk fallout, not complete eruption volume. Bulk volume includes pore space; dense-rock equivalent needs independent density information.
 
-The original cubic spline and trend-regularized spline remain available for research. They are not steps inside the report workflow. [Compare the implementations](METHODS.md).
+## What deserves caution?
 
-## What should I inspect carefully?
+Start with the input audit, then inspect withheld predictive scores, errors and coverage. A smooth-looking map alone does not establish accuracy. Conditional intervals omit parameter/selection uncertainty and can be too narrow, especially when a spline strongly follows its fitted trend. Geographic-deletion ranges show a separate sensitivity, not a confidence interval.
 
-Start with the input audit and predictions for withheld measurements. Then inspect changes between thinning families, included records and omitted geographic groups. Numerical convergence establishes that an integral was calculated consistently; it cannot establish that extrapolated thickness is correct.
+Numerical convergence checks arithmetic, not geological correctness. Historical global estimates remain available but do not rank the regional methods.
 
-The current headline integrates the whole Earth, so choosing a larger map or rectangle does not change it. That removes a numerical-domain choice but leaves scientific assumptions about unobserved deposit. Reports identify large distant contributions and model disagreement. No global probability interval is currently estimated; older regional intervals cannot be attached to the global estimate.
+## Navigate the repository
 
-## Where next?
+- `reports/<eruption>/comparison/`: current two-method regional result.
+- `reports/regional-methods/`: six-eruption summary and known-truth trials.
+- `reports/<eruption>/global/`: earlier GP-only complete-Earth calculations.
+- `reports/<eruption>/regional/`: earlier rectangular GP calculations and source sensitivities.
+- `archive/`: superseded inputs or historical material.
 
-- Read the [eruption catalogue](../reports/README.md) or [combined comparison](../reports/global-fallout/README.md).
-- Run an example or submit data using the [quick start](QUICKSTART.md).
-- Inspect [model equations](methods/gaussian-process.md), [data rules](../data/README.md), or [source code](../src/README.md).
-
-Read historical results with their recorded input selection, model version and volume domain.
+[Quick start](QUICKSTART.md) · [Output guide](OUTPUTS.md) · [Data guide](../data/README.md)

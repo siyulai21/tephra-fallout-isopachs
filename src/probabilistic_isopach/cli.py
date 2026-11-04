@@ -20,6 +20,9 @@ from .global_volume import global_volume, infinite_plane_background
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "compare":
+        from src.empirical_isopach.cli import main as compare
+        return compare(argv[1:])
     if argv and argv[0] == "fit":
         argv = argv[1:]
     parser = argparse.ArgumentParser(description="Fit reproducible isopachs from real observations; ignore invented pseudo-points.",

@@ -1,8 +1,10 @@
-# Experimental spline research
+# Historical spline research
 
 [Source map](../README.md) · [Method comparison](../../docs/METHODS.md) · [Mathematical description](../../docs/methods/cubic-splines.md)
 
-`trend_regularized_spline.py` implements a **trend-regularized cubic spline**. It retains the original basis and tension/roughness penalties, then adds an area-averaged penalty toward a thinning trend estimated from measured data.
+**For current fitting, use the [automatic spline and regional comparison](../empirical_isopach/README.md).**
+
+`trend_regularized_spline.py` preserves the **first trend-regularized spline experiment**. It retains the original basis and tension/roughness penalties, then adds an area-averaged penalty toward a thinning trend estimated from measured data.
 
 Numerical evaluation points approximate one normalized penalty rather than supplying additional independent measurements. Held-out data select its strength, including zero. Existing tension/roughness defaults remain fixed during that selection.
 

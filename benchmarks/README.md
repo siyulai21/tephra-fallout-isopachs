@@ -6,7 +6,8 @@ Run these commands from the repository root after installing `.[test]`. Use a fr
 
 | Command | What it does | Method family |
 |---|---|---|
-| `python -m benchmarks.global_fallout --output results/global-fallout` | Current six-eruption selected/stacked fits, global integrals, geographic deletions and 30 known-truth trials | GP |
+| `python -m benchmarks.regional --output results/regional-methods` | Current six-eruption matched regional fits, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
+| `python -m benchmarks.global_fallout --output results/global-fallout` | Historical six-eruption selected/stacked GP fits, global integrals, geographic deletions and 30 known-truth trials | GP |
 | `python -m benchmarks.minoan --output results/minoan` | Verify source arithmetic and rerun combined fallout, ensemble and source sensitivities | GP |
 | `python -m benchmarks.ytt --output results/ytt` | Verify the reviewed principal selection and rerun its comparisons/sensitivities | GP |
 | `python -m benchmarks.empirical --output results/empirical --repeats 10` | Four-eruption and synthetic selected-versus-stacked development benchmark | GP |

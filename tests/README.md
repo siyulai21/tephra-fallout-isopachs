@@ -17,3 +17,7 @@ Run `python -m pytest -q` from the repository root after installing `.[test]`.
 Passing tests does not validate a real global eruption volume. Predictive failures and extrapolation assumptions remain in the reports. Test counts in historical validation files refer to those executions.
 
 `python scripts/check_repository_navigation.py` checks local Markdown links and images. GitHub Actions also installs the package outside the checkout to catch missing bundled inputs or import problems.
+
+## Current regional spline and comparison checks
+
+`test_regional_spline.py` checks cubic polynomial identities, derivative integrals, Gaussian reference equations, directional bound effects, unit and row-order invariance, coefficient covariance, whole-field mixture sampling, hull integration, nested response isolation and retention of unestimable censored simulations. Full method validation is in the [regional benchmark](../reports/regional-methods/README.md).

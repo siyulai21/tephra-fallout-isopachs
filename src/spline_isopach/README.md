@@ -4,7 +4,7 @@
 
 This package retains the cubic B-spline approach: fit log thickness with basis functions and tension/roughness penalties. It includes numerical corrections recorded in the [change history](../../CHANGELOG.md); “original” identifies the method family, not an untouched copy of the earliest code.
 
-**It does not generate the current eruption reports.** Those use the separate [GP workflow](../probabilistic_isopach/README.md).
+**It does not generate the current eruption reports.** Those now use the [GP-ensemble / automatic-spline comparison](../empirical_isopach/README.md); this is the historical solver.
 
 | File | Role |
 |---|---|
