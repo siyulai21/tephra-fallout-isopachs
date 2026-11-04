@@ -1,58 +1,65 @@
-# Repository and path guide
+# Repository map
 
 [Project home](../README.md) · [Documentation](README.md)
 
 ```text
+eruptions/                     START HERE for a particular eruption
+  <slug>/README.md             Evidence → results → history
+  <slug>/results/              Current reviewed report, maps, tables and provenance
 data/
-  eruptions/                  Accepted model inputs
-  audits/                     Decisions, sensitivity inputs and selection history
-  sources/                    Unchanged published sources
-  datasets.json               Named dataset profiles
-reports/
-  <eruption>/README.md         Start here for an eruption
-  <eruption>/comparison/       Current GP-ensemble / cubic-spline regional report
-  <eruption>/global/           Historical selected/ensemble GP global reports
-  <eruption>/regional/         Earlier finite-region runs and sensitivities
-  ytt/archive/                Superseded YTT input selections
-  regional-methods/           Current six-eruption and known-truth comparison
-  global-fallout/              Earlier GP-only global comparison
-  regional-comparison/        Historical four-eruption summary
+  datasets.json               Accepted-case catalogue; stable input paths
+  eruptions/                  Accepted measurement CSVs
+  audits/                     Row decisions, checksums and selection history
+  sources/                    Preserved source files
+methods/                       Active model catalogue and plain-language method cards
+comparisons/
+  regional/                   Current six-eruption and known-truth evaluation
+templates/eruption/            Optional upload notes and empty CSV schema
 docs/
-  START_HERE.md               Plain-language introduction
-  QUICKSTART.md, OUTPUTS.md    How to run and read an analysis
-  METHODS.md                  Which model does what
-  methods/                    GP, ensemble, volume and spline derivations
-  validation/                 Research benchmarks and validation index
-  archive/                    Reference images and reporting history
-src/
-  empirical_isopach/           Active spline and shared regional comparison
-  probabilistic_isopach/       Active GP fitter, shared utilities and legacy workflow
-  spline_isopach/              Original cubic-spline implementation
-  research/                   Historical first trend-penalty experiment
-benchmarks/                   Reproduction and evaluation commands
-tests/                        Numerical, statistical and data-integrity checks
-scripts/                      Repository maintenance checks
-results/                      Ignored local runs, not published results
+  NEW_ERUPTION.md              Chat upload → audit → calculation → GitHub
+  ADDING_METHOD.md             Statistical/model integration contract
+  methods/                    Equations, assumptions and validation protocol
+  organization/               Move manifest and preservation checks
+src/empirical_isopach/
+  core/                       Observations, probability, folds and survey geometry
+  models/registry.py          Active families, with no preferred method
+  models/gaussian_process/    GP ensemble and its component implementation
+  models/cubic_spline/        Automatic trend-regularized cubic spline
+  validation.py, region.py    Shared nested comparison and regional volumes
+  reporting.py, cli.py        Shared maps, reports and command entry point
+src/probabilistic_isopach/    Compatibility imports and historical GP workflow
+src/spline_isopach/           Historical original spline/desktop implementation
+src/research/                 Historical first trend-penalty experiment
+archive/
+  reports/                    Superseded eruption calculations and sensitivities
+  validation/                 Earlier research benchmarks
+  reference/                  Reference images and historical output definitions
+benchmarks/                   Reproduction commands; current regional runner first
+tests/, scripts/              Numerical, provenance and navigation checks
+results/                      Ignored local runs; not a published collection
+reports/                      Compatibility navigation pointers only
 ```
 
-## Stable entry points and moved artifacts
+## What changes when a new eruption arrives?
 
-The root README and `reports/<eruption>/README.md` remain the entry points. Numerical CSV, JSON, GIS and image artifacts were moved without changing their contents. Paths inside historical provenance record the original execution environment and have deliberately not been rewritten.
+Original source files, audit and accepted CSV are added under `data/`. The accepted case enters `data/datasets.json`. Its reviewed run and readable case home go under `eruptions/<slug>/`; indexes point there. No browser or per-eruption app is created. [Full intake protocol](NEW_ERUPTION.md).
 
-| Earlier location | Organized location |
+## What changes when a new method arrives?
+
+Its implementation gets a family directory under `src/empirical_isopach/models/`, one registry entry, a method card and validation evidence. Shared reporting iterates the registry; each family keeps its own surface and volume. [Full method contract](ADDING_METHOD.md).
+
+## Historical paths
+
+| Earlier location | Current location |
 |---|---|
-| Regional artifacts at the root of Mazama, Tambora, Aso-4 and B-Tm reports | Each eruption's `regional/` folder |
-| Minoan `combined_*` and sensitivity folders | `reports/minoan/regional/` |
-| YTT `principal/`, `sensitivity/` and comparison tables | `reports/ytt/regional/` |
-| `REGIONAL_REPORT.md` | Short pointer to `regional/README.md` |
-| `reports/reference/` | `reports/regional-comparison/` |
-| `docs/validation.json` | `docs/validation/initial-benchmark.json` |
-| `docs/empirical/` | `docs/validation/ensemble/` |
-| Detailed global-volume and ensemble pages | `docs/methods/`; earlier URLs retain pointers |
-| Spline extension inside the GP package | `src/research/trend_regularized_spline.py`; old imports remain compatible |
+| `reports/<slug>/comparison/` | `eruptions/<slug>/results/` |
+| `reports/<slug>/README.md` | `eruptions/<slug>/README.md` |
+| `reports/regional-methods/` | `comparisons/regional/` |
+| Other numerical `reports/` artifacts | `archive/reports/` |
+| `docs/validation/` research artifacts | `archive/validation/` |
+| `docs/archive/` reference artifacts | `archive/reference/` |
+| GP implementation in `src/probabilistic_isopach/` | `src/empirical_isopach/models/gaussian_process/`; old imports remain wrappers |
+| Shared GP data/probability modules | `src/empirical_isopach/core/`; old imports remain wrappers |
+| `src/empirical_isopach/spline.py`, `selection.py` | `models/cubic_spline/`; old imports remain wrappers |
 
-## Naming conventions
-
-`selected` and `stacked` are strategies within the GP family. `global` and `regional` describe the integration domain. `principal` and `sensitivity` describe data selections. The current `spline` label explicitly identifies the automatic cubic-spline method.
-
-Accepted input and source paths stay stable because the catalogue and audits check them. New runs go to a fresh `results/` directory; reviewed outputs are published under `reports/`. See the [contribution guide](../CONTRIBUTING.md).
+Old README URLs retain navigation pointers. The [complete move manifest](organization/path-map.json) records original hashes; numerical files and accepted inputs are preserved. Paths inside historical provenance remain as executed.

@@ -1,16 +1,16 @@
-# Peer empirical methods and regional reports
+# Shared empirical-isopach workflow
 
-[Source map](../README.md) · [Regional protocol](../../docs/methods/regional-comparison.md) · [Spline derivation](../../docs/methods/cubic-splines.md)
+[Source map](../README.md) · [Regional protocol](../../docs/methods/regional-comparison.md) · [Adding methods](../../docs/ADDING_METHOD.md)
 
-`tephra-isopachs compare` evaluates the GP ensemble and automatic cubic spline without choosing an overall winner.
+`tephra-isopachs compare` runs every registered model as a peer. It has no default winner and needs no per-eruption pseudo-points or smoothing inputs.
 
-| File | Responsibility |
+| Path | Responsibility |
 |---|---|
-| `spline.py` | Cubic basis, integrated penalties, mixed likelihood and conditional coefficient uncertainty |
-| `selection.py` | Exhaustive geographic tuning with automatic boundary expansion |
-| `validation.py` | Shared automatic buffer, nested splits and prediction/deletion assessment |
-| `region.py` | Observation hull, regional integration and joint volume draws |
-| `reporting.py` | Provenance, tuning tables, matched maps and reports |
-| `cli.py` | CSV-oriented command without manual statistical tuning options |
+| [core/](core/README.md) | Accepted observations, shared likelihood/probability, survey geometry and scoring |
+| [models/](models/README.md) | Separate model-family implementations and the active registry |
+| [validation.py](validation.py) | Common automatic buffer, nested holdouts, predictive scores and deletion sensitivity |
+| [region.py](region.py) | Shared observation hull, volume integration and correlated draws |
+| [reporting.py](reporting.py) | Provenance, candidate tables and reports for all fitted methods |
+| [cli.py](cli.py) | `methods`, `compare` and historical `fit` dispatch |
 
-The GP remains in `probabilistic_isopach/`. This package shares observation semantics and probability/partition utilities but the active spline does not fit a GP. New families should implement the common predictive-distribution contract, use identical outer folds and integrate the same physical region. Never feed one method's predictions into another as training evidence.
+`spline.py` and `selection.py` are compatibility imports. Edit the cubic-spline implementation under `models/cubic_spline/`. Method-specific diagnostics belong to its adapter; shared reporting should not contain a branch for each new family.

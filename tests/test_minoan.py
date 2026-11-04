@@ -87,7 +87,7 @@ def test_nested_holdouts_score_bounds_but_cover_only_measured_values():
 
 def test_old_ytt_selected_fit_remains_numerically_unchanged():
     data,_=read_observations('data/audits/YTT/history/2026-11-02/without_maninjau_43.csv')
-    previous=json.loads(Path('reports/ytt/archive/2026-11-02/main43_selected/report.json').read_text())['model']
+    previous=json.loads(Path('archive/reports/ytt/archive/2026-11-02/main43_selected/report.json').read_text())['model']
     model=SpatialModel(Candidate(**previous['candidate'])).fit(data).describe()
     assert model.keys()==previous.keys()
     for key in ('candidate','trend_on_constraint_boundary','uncertainty'):

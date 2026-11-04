@@ -1,10 +1,5 @@
-# YTT principal dataset: regional calculations
+# This page has moved
 
-[Regional comparison](../README.md) · [Current global report](../../README.md)
+[Open the organized location](../../../../archive/reports/ytt/regional/principal/README.md).
 
-Both calculations use the reviewed 46-observation principal dataset and Gaussian-process models. These earlier headlines concern the stated finite rectangle.
-
-- [Selected GP](selected/README.md)
-- [GP ensemble](stacked/README.md)
-
-Use the current global report for the complete-Earth headline and its extrapolation diagnostics.
+This compatibility page preserves an earlier GitHub link. Current eruption homes are in `eruptions/`; superseded analyses are in `archive/`.

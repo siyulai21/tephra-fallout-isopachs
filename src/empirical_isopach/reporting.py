@@ -9,12 +9,24 @@ import shlex
 import numpy as np
 import pandas as pd
 
-from src.probabilistic_isopach.catalog import dataset_record, data_directory
-from src.probabilistic_isopach.data import read_observations
-from src.probabilistic_isopach.distributions import predictive_distribution
+from .core.catalog import dataset_record, data_directory
+from .core.observations import read_observations
+from .core.distributions import predictive_distribution
 from .region import SurveyRegion, integrate_region, regional_draws
-from .spline import survey_bounds, TrendRegularizedSpline
-from .validation import LABELS, METHODS, nested_comparison, fit_method
+from .core.geometry import survey_bounds
+from .models.registry import active_methods, method_spec, method_label, method_metadata
+from .validation import nested_comparison, fit_method
+
+
+def report_label(report, method):
+    """Read recorded labels, including methods no longer in the active registry."""
+    label = report.get("method_metadata", {}).get(method, {}).get("label")
+    if label:
+        return label
+    try:
+        return method_label(method)
+    except ValueError:
+        return method
 
 
 def provenance():
@@ -50,6 +62,8 @@ def save_figures(output, name, data, metadata, region, models, report):
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
     from src.probabilistic_isopach.figures import STYLE, CMAP, INK, MUTED, TEAL, AMBER, _coastlines
+    methods = tuple(report["methods"])
+    labels = {m: report_label(report, m) for m in methods}
     bounds = np.array(report["fit_bounds_km"])
     x, y = np.linspace(bounds[0], bounds[2], 181), np.linspace(bounds[1], bounds[3], 181)
     xx, yy = np.meshgrid(x, y)
@@ -75,8 +89,14 @@ def save_figures(output, name, data, metadata, region, models, report):
     contours = contours[(contours > low) & (contours < high)]
     boundary = np.vstack((region.vertices, region.vertices[0]))
     with plt.rc_context(STYLE):
-        fig, axes = plt.subplots(1, 2, figsize=(13, 6.6), layout="constrained", sharex=True, sharey=True)
-        for ax, method in zip(axes, METHODS):
+        ncols = min(2, len(methods))
+        nrows = (len(methods)+ncols-1)//ncols
+        fig, grid_axes = plt.subplots(nrows, ncols, figsize=(6.5*ncols, 6.6*nrows),
+            layout="constrained", sharex=True, sharey=True, squeeze=False)
+        axes = list(grid_axes.flat)[:len(methods)]
+        for unused in list(grid_axes.flat)[len(methods):]:
+            unused.set_visible(False)
+        for ax, method in zip(axes, methods):
             fill = ax.contourf(x, y, fields[method], levels=levels, cmap=CMAP)
             _coastlines(ax, metadata["vent_lonlat"])
             if len(contours):
@@ -89,7 +109,7 @@ def save_figures(output, name, data, metadata, region, models, report):
                     ax.scatter(*data.xy[mask].T, s=18, marker=marker, edgecolors=color, facecolors="white", linewidths=.7, zorder=5)
             ax.scatter([0], [0], marker="*", color="#B9573C", edgecolors="white", s=90, zorder=6)
             volume = report["methods"][method]["regional_volume"]
-            ax.set(title=f"{LABELS[method]}\nExpected regional volume: {volume['expected_km3']:.1f} km³",
+            ax.set(title=f"{labels[method]}\nExpected regional volume: {volume['expected_km3']:.1f} km³",
                    xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
                    xlabel="Easting from source reference (km)")
             ax.grid(alpha=.15)
@@ -111,11 +131,19 @@ def save_figures(output, name, data, metadata, region, models, report):
             fig.savefig(output/f"isopachs.{suffix}", dpi=170)
         plt.close(fig)
 
-        fig, axes = plt.subplots(1, 3, figsize=(13, 4.6), layout="constrained")
+        panels = len(methods)+1
+        ncols = min(3, panels)
+        nrows = (panels+ncols-1)//ncols
+        fig, grid_axes = plt.subplots(nrows, ncols, figsize=(4.4*ncols, 4.6*nrows),
+            layout="constrained", squeeze=False)
+        axes = list(grid_axes.flat)[:panels]
+        for unused in list(grid_axes.flat)[panels:]:
+            unused.set_visible(False)
+        prediction_axes, volume_ax = axes[:-1], axes[-1]
         det = ~data.censored
         limits = [float(data.log_value[det].min())-.3, float(data.log_value[det].max())+.3]
-        colors = (TEAL, AMBER)
-        for ax, method, color in zip(axes[:2], METHODS, colors):
+        colors = [TEAL, AMBER]+[plt.get_cmap("tab10")(i % 10) for i in range(2, len(methods))]
+        for ax, method, color in zip(prediction_axes, methods, colors):
             validation = report["validation"]["methods"][method]
             pred, metrics = validation["predictions"], validation["metrics"]
             median = np.array(pred["median"])[det]
@@ -124,24 +152,24 @@ def save_figures(output, name, data, metadata, region, models, report):
             ax.scatter(data.log_value[det], median, s=15, color=color)
             ax.plot(limits, limits, "--", color=MUTED, lw=1)
             ax.set(xlabel="Observed log thickness", ylabel="Withheld prediction (log thickness)",
-                   title=f"{LABELS[method]}\nRMSE {metrics['rmse_log']:.2f} · coverage {metrics['coverage95_observations']:.0%}")
+                   title=f"{labels[method]}\nRMSE {metrics['rmse_log']:.2f} · coverage {metrics['coverage95_observations']:.0%}")
             ax.grid(alpha=.15)
-        prediction_limits = [min(a.get_ylim()[0] for a in axes[:2]), max(a.get_ylim()[1] for a in axes[:2])]
-        for ax in axes[:2]:
+        prediction_limits = [min(a.get_ylim()[0] for a in prediction_axes), max(a.get_ylim()[1] for a in prediction_axes)]
+        for ax in prediction_axes:
             ax.set(xlim=limits, ylim=prediction_limits)
-        for index, (method, color) in enumerate(zip(METHODS, colors)):
+        for index, (method, color) in enumerate(zip(methods, colors)):
             result = report["methods"][method]
             q = result["joint_volume"]["conditional_quantiles_km3"]
-            axes[2].errorbar(q["0.5"], index, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
+            volume_ax.errorbar(q["0.5"], index, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
                             fmt="o", color=color, capsize=4)
-            axes[2].scatter(result["regional_volume"]["expected_km3"], index, marker="D", color=color, s=30)
+            volume_ax.scatter(result["regional_volume"]["expected_km3"], index, marker="D", color=color, s=30)
             deletion = [v["regional_deletion_volume"]["expected_km3"]
                         for v in report["validation"]["methods"][method]["selections"]]
-            axes[2].plot([min(deletion), max(deletion)], [index+.12, index+.12], ":", color=color, lw=2)
-        axes[2].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(-.6, 1.6),
+            volume_ax.plot([min(deletion), max(deletion)], [index+.12, index+.12], ":", color=color, lw=2)
+        volume_ax.set(yticks=range(len(methods)), yticklabels=[labels[m] for m in methods], ylim=(-.6, len(methods)-.4),
                     xlabel="Bulk fallout within observation hull (km³)",
                     title="Regional volume\nDotted: geographic-deletion range")
-        axes[2].grid(axis="x", alpha=.15)
+        volume_ax.grid(axis="x", alpha=.15)
         fig.suptitle(f"{name} · geographic holdouts and conditional 95% intervals\n"
                      "Intervals omit parameter/selection uncertainty; bounds contribute scores, not RMSE.", fontsize=13)
         for suffix in ("png", "svg"):
@@ -151,16 +179,18 @@ def save_figures(output, name, data, metadata, region, models, report):
 
 def write_readme(output, name, report):
     region, meta = report["region"], report["input"]
-    lines = [f"# {name}: two empirical methods, one regional footprint", "",
-             "Both methods use the same accepted observations, geographic holdouts and integration area. Neither is designated the preferred method.", "",
+    methods = tuple(report["methods"])
+    labels = {m: report_label(report, m) for m in methods}
+    lines = [f"# {name}: empirical methods on one regional footprint", "",
+             "All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.", "",
              f"**{meta['n_measurements']} exact measurements, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper limits.** "
              f"The observation hull covers {region['area_km2']:,.0f} km². The automatic validation buffer is {report['validation']['buffer_km']:.2f} km.", "",
              "![Matched median isopachs](isopachs.png)", "",
-             "| Quantity | GP ensemble | Trend-regularized cubic spline |", "|---|---:|---:|"]
+             "| Quantity | "+" | ".join(labels[m] for m in methods)+" |", "|---|"+"---:|"*len(methods)]
     def pair(label, values, fmt=".2f"):
         lines.append("| "+label+" | "+" | ".join(format(x, fmt) for x in values)+" |")
-    rows = [report["methods"][m] for m in METHODS]
-    metrics = [report["validation"]["methods"][m]["metrics"] for m in METHODS]
+    rows = [report["methods"][m] for m in methods]
+    metrics = [report["validation"]["methods"][m]["metrics"] for m in methods]
     pair("Expected regional bulk fallout (km³)", [r["regional_volume"]["expected_km3"] for r in rows])
     pair("Integral of median thickness surface (km³)", [r["regional_volume"]["median_surface_km3"] for r in rows])
     interval = [r["joint_volume"]["conditional_quantiles_km3"] for r in rows]
@@ -172,8 +202,11 @@ def write_readme(output, name, report):
               "![Withheld predictions and regional volumes](diagnostics.png)", "", "## Scope", "",
               "The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.", "",
               "The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.", "",
-              "## Automatic spline fit", "", "```json", json.dumps(report["methods"]["spline"]["model"]["candidate"], indent=2), "```", "",
-              "Cubic basis size, tension, derivative penalty, trend strength, trend family and observation noise are selected by geographic predictive scores. Every explored candidate is retained in the selection tables. Numerical quadrature points approximate an area-normalized penalty and never become observations.", "",
+              "## Fitted methods", ""]
+    for method in methods:
+        lines += [f"### {labels[method]}", "", "```json",
+                  json.dumps(report["methods"][method]["model"], indent=2), "```", ""]
+    lines += ["Every explored candidate is retained in the selection tables. All response-dependent choices are retuned within training folds; no hand-placed pseudo-data enter the likelihood.", "",
               "## Reliability checks", ""]
     lines += ["- "+warning for warning in report["notes"]]
     command_input = name if meta["source"].startswith("data/") else meta["source"]
@@ -204,10 +237,11 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     region, bounds = SurveyRegion(data.xy), survey_bounds(data.xy)
     validation = nested_comparison(data, region, bounds, progress=lambda s: progress(f"{name}: {s}"))
     models, methods = {}, {}
+    labels = {m: method_label(m) for m in active_methods()}
     notes = ["All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.",
              "Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.",
              "Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals."]
-    for method in METHODS:
+    for method in active_methods():
         model, selection = fit_method(method, data, bounds, 4, validation["buffer_km"])
         volume = integrate_region(model, region)
         joint = regional_draws(model, region, volume["expected_km3"], draws=draws)
@@ -215,48 +249,38 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
         methods[method] = {"model": model.describe(), "selection": selection,
                            "regional_volume": volume, "joint_volume": joint}
         if not volume["converged"]:
-            notes.append(f"{LABELS[method]} regional integration did not reach the stated refinement tolerance.")
+            notes.append(f"{labels[method]} regional integration did not reach the stated refinement tolerance.")
         if not joint["expected_grid_converged"]:
-            notes.append(f"{LABELS[method]} joint-draw quadrature needs further refinement; inspect its grid checks before using intervals.")
+            notes.append(f"{labels[method]} joint-draw quadrature needs further refinement; inspect its grid checks before using intervals.")
         coverage = validation["methods"][method]["metrics"]["coverage95_observations"]
         if coverage < .9:
-            notes.append(f"{LABELS[method]}: held-out 95% observation coverage is only {coverage:.1%}; uncertainty is undercovered.")
-        progress(f"{name}: completed {LABELS[method]} regional fit and joint draws")
-    spline = models["spline"]
-    refined = TrendRegularizedSpline(spline.candidate, quadrature_order=12).fit(data, bounds=bounds)
-    qxy, _ = region.quadrature(16)
-    prediction_change = float(np.max(abs(spline.predict_log(qxy)[0]-refined.predict_log(qxy)[0])))
-    fine_volume = integrate_region(refined, region)
-    relative_volume_change = abs(fine_volume["expected_km3"]/methods["spline"]["regional_volume"]["expected_km3"]-1)
-    methods["spline"]["penalty_quadrature_check"] = {"orders": [6, 12], "max_log_prediction_change": prediction_change,
-        "relative_expected_volume_change": relative_volume_change,
-        "passed": prediction_change < .02 and relative_volume_change < .005}
-    if not methods["spline"]["penalty_quadrature_check"]["passed"]:
-        notes.append("Spline trend-penalty quadrature sensitivity exceeds the declared tolerance; inspect its numerical check.")
-    edges = methods["spline"]["selection"]["selected_at_explored_boundary"]
-    if edges:
-        notes.append("Spline selection reaches an explored search boundary: "+", ".join(edges)+". This is a bounded-grid result, not proof of a continuous optimum.")
-    if spline.candidate.trend_strength >= 10000:
-        notes.append("The selected spline strongly follows its estimated trend. Its conditional volume interval can be extremely narrow because trend-estimation uncertainty is omitted; inspect the geographic-deletion range rather than interpreting narrowness as established precision.")
+            notes.append(f"{labels[method]}: held-out 95% observation coverage is only {coverage:.1%}; uncertainty is undercovered.")
+        progress(f"{name}: completed {labels[method]} regional fit and joint draws")
+    for method, model in models.items():
+        diagnose = method_spec(method).diagnose
+        if diagnose is not None:
+            checks, warnings = diagnose(model, data, bounds, region, methods[method])
+            methods[method].update(checks)
+            notes.extend(warnings)
     report = {"dataset": name, "input": meta, "region": region.describe(), "fit_bounds_km": bounds.tolist(),
-              "methods": methods, "validation": validation, "notes": notes, "reproducibility": provenance()}
+              "methods": methods, "method_metadata": method_metadata(), "validation": validation, "notes": notes, "reproducibility": provenance()}
     output.mkdir(parents=True, exist_ok=True)
     selection_links = []
-    for method in METHODS:
+    for method in active_methods():
         relative = f"selection/{method}-all-data.csv"
         save_selection(output, relative, report["methods"][method]["selection"])
-        selection_links.append(f"- [{LABELS[method]}: all-data tuning]({Path(relative).name})")
+        selection_links.append(f"- [{labels[method]}: all-data tuning]({Path(relative).name})")
         for split in report["validation"]["methods"][method]["selections"]:
             relative = f"selection/{method}-outer-{split['fold']}.csv"
             save_selection(output, relative, split["selection"])
-            selection_links.append(f"- [{LABELS[method]}: outer fold {split['fold']+1}]({Path(relative).name})")
+            selection_links.append(f"- [{labels[method]}: outer fold {split['fold']+1}]({Path(relative).name})")
     (output/"selection/README.md").write_text("# Geographic tuning tables\n\nEach row is one candidate; lower equal-region selection score is better. These inner scores tune models and do not estimate performance. See the outer scores in the [report](../README.md).\n\n"+"\n".join(selection_links)+"\n")
     observations = {"row_id": data.row_ids, "x_km": data.xy[:, 0], "y_km": data.xy[:, 1],
                     "log_value": data.log_value, "censored": data.censored,
                     "lower_bound": data.lower_censored, "known_log_sd": data.log_sd}
     pd.DataFrame(observations).to_csv(output/"accepted_observations.csv", index=False)
     withheld = {**observations, "fold": validation["folds"]}
-    for method in METHODS:
+    for method in active_methods():
         withheld.update({method+"_"+k: v for k, v in validation["methods"][method]["predictions"].items()})
     pd.DataFrame(withheld).to_csv(output/"heldout_predictions.csv", index=False)
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")

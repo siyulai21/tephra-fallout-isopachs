@@ -20,4 +20,6 @@ Passing tests does not validate a real global eruption volume. Predictive failur
 
 ## Current regional spline and comparison checks
 
-`test_regional_spline.py` checks cubic polynomial identities, derivative integrals, Gaussian reference equations, directional bound effects, unit and row-order invariance, coefficient covariance, whole-field mixture sampling, hull integration, nested response isolation and retention of unestimable censored simulations. Full method validation is in the [regional benchmark](../reports/regional-methods/README.md).
+`test_regional_spline.py` checks cubic polynomial identities, derivative integrals, Gaussian reference equations, directional bound effects, unit and row-order invariance, coefficient covariance, whole-field mixture sampling, hull integration, nested response isolation and retention of unestimable censored simulations. Full method validation is in the [regional benchmark](../comparisons/regional/README.md).
+
+`test_method_registry.py` checks compatibility imports and runs a test-only third family through common folds, regional integration, candidate exports, maps, reports and benchmark summaries. It does not register a third scientific method.

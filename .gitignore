@@ -38,9 +38,11 @@ htmlcov/
 # Directory
 spline_isopach(failed)/
 
-# Reproducible run artifacts; compact benchmark findings are in docs/validation/initial-benchmark.json.
-results/
+# Reproducible scratch runs; reviewed comparisons are in comparisons/ and eruptions/.
+/results/
 
 # Large regenerable grids stay in local run folders.
 reports/**/predictions.csv
 reports/**/virtual_predictions.npz
+eruptions/**/predictions.csv
+eruptions/**/virtual_predictions.npz

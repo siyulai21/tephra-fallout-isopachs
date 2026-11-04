@@ -15,6 +15,8 @@ jobs:
         working-directory: ${{ runner.temp }}
         run: |
           tephra-isopachs --help
+          tephra-isopachs methods
+          tephra-isopachs compare --help
           python -c "from src.research.trend_regularized_spline import RegularizedSpline; from src.probabilistic_isopach.regularized_spline import RegularizedSpline as Legacy; assert Legacy is RegularizedSpline"
           python -c "from importlib.util import find_spec; from src.probabilistic_isopach.global_volume import EarthDomain; assert 5.1e8 < EarthDomain.wgs84(36).describe()['surface_area_km2'] < 5.2e8; from src.probabilistic_isopach.catalog import datasets, data_directory; rows = datasets(); assert len(rows) == 6; assert all(r['path'].is_file() for r in rows); assert (data_directory()/'audits/YTT/provenance.json').is_file(); assert (data_directory()/'audits/Minoan/provenance.json').is_file(); assert find_spec('src.probabilistic_isopach.workbench') is None; assert find_spec('src.probabilistic_isopach.atlas') is None"
       - run: python -m pytest -q

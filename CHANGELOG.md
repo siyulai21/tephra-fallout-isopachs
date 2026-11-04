@@ -1,5 +1,14 @@
 # Changes
 
+## 0.8.1 — Eruption-centred repository and extensible method catalogue
+
+- Organize current cases in `eruptions/`, comparative evidence in `comparisons/`, and superseded analyses in `archive/`; preserve numerical artifacts and old landing links.
+- Document the chat-upload → source audit → all-method regional comparison → GitHub publication workflow, with blank intake templates.
+- Put active GP and cubic-spline implementations in separate family folders under one shared framework, keeping historical import compatibility.
+- Drive fitting, maps, reports and benchmark summaries from an explicit method registry with no preferred family; retain historical GP commands.
+- Verify exact all-data selection/prediction/volume parity for both methods across all six eruptions; preserve all accepted data and numerical report bytes.
+
+
 ## 0.8.0 — Automatic cubic spline and peer regional comparisons
 
 - Add an active cubic B-spline with mixed exact/upper/lower likelihood, normalized penalties and conditional correlated uncertainty.

@@ -5,7 +5,7 @@ from scipy.linalg import cholesky
 from scipy.spatial import ConvexHull
 from scipy.special import logsumexp
 
-from src.probabilistic_isopach.distributions import predictive_distribution
+from .core.distributions import predictive_distribution
 
 
 class SurveyRegion:

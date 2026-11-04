@@ -1,6 +1,6 @@
 # Start here
 
-[Project home](../README.md) · [Reports](../reports/README.md) · [Methods](METHODS.md)
+[Project home](../README.md) · [Reports](../eruptions/README.md) · [Methods](METHODS.md)
 
 Field studies recover ash at scattered locations. This project reconstructs a thickness surface, draws equal-thickness contours (isopachs), integrates the surface, and tests predictions in withheld geographic regions.
 
@@ -8,7 +8,7 @@ Field studies recover ash at scattered locations. This project reconstructs a th
 
 1. Read the [Minoan source audit](../data/audits/Minoan/README.md).
 2. The [accepted data](../data/eruptions/Minoan_tephra.csv) contain 92 exact thicknesses and nine lower bounds, combining all accepted Plinian and co-ignimbrite fallout fans.
-3. The [current comparison](../reports/minoan/comparison/README.md) fits a GP ensemble and a cubic spline to those same observations.
+3. The [current comparison](../eruptions/minoan/results/README.md) fits a GP ensemble and a cubic spline to those same observations.
 4. Compare their maps, regional volumes, withheld predictions and uncertainty checks. Neither is automatically selected as the winner.
 
 ## What happens in a calculation?
@@ -39,10 +39,10 @@ Numerical convergence checks arithmetic, not geological correctness. Historical 
 
 ## Navigate the repository
 
-- `reports/<eruption>/comparison/`: current two-method regional result.
-- `reports/regional-methods/`: six-eruption summary and known-truth trials.
-- `reports/<eruption>/global/`: earlier GP-only complete-Earth calculations.
-- `reports/<eruption>/regional/`: earlier rectangular GP calculations and source sensitivities.
-- `archive/`: superseded inputs or historical material.
+- [Eruptions](../eruptions/README.md): evidence, current reports and history for each case.
+- [Methods](../methods/README.md): one GP ensemble and one automatic cubic spline, with room for future families.
+- [Comparisons](../comparisons/README.md): shared regional evaluation across real and simulated deposits.
+- [Add an eruption](NEW_ERUPTION.md): upload in chat, audit, calculate and publish on GitHub.
+- [Archive](../archive/README.md): earlier analyses, clearly separated from current results.
 
-[Quick start](QUICKSTART.md) · [Output guide](OUTPUTS.md) · [Data guide](../data/README.md)
+[Quick start](QUICKSTART.md) · [Output guide](OUTPUTS.md) · [Data guide](../data/README.md) · [Repository map](REPOSITORY_MAP.md)
