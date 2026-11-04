@@ -1,29 +1,31 @@
-# Regional comparison: GP ensemble and cubic spline
+# Regional comparison of empirical methods
 
-[Project home](../../README.md) · [Report catalogue](../../reports/README.md) · [Statistical protocol](../../docs/methods/regional-comparison.md)
+All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison. Read the separate [support and contour audit](../support/README.md) before treating any hull as well sampled.
 
-Both methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison.
-
-| Eruption | Expected regional volume: GP / spline (km³) | Outer equal-region score: GP / spline ↓ | 95% observation coverage: GP / spline |
-|---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/README.md) | 207.2 / 254.1 | 1.659 / 2.066 | 83.9% / 79.3% |
-| [B-Tm](../../eruptions/b-tm/results/README.md) | 30.5 / 40.2 | 1.331 / 1.814 | 97.6% / 90.5% |
-| [Mazama](../../eruptions/mazama/results/README.md) | 141.6 / 132.6 | 1.272 / 1.971 | 95.6% / 82.2% |
-| [Minoan](../../eruptions/minoan/results/README.md) | 27.2 / 24.8 | 1.451 / 1.601 | 96.7% / 96.7% |
-| [Tambora](../../eruptions/tambora/results/README.md) | 97.9 / 107.7 | 1.620 / 1.548 | 96.2% / 96.2% |
-| [YTT](../../eruptions/ytt/results/README.md) | 1196.1 / 1203.0 | 1.934 / 2.153 | 91.3% / 82.6% |
+| Eruption | Method | Expected regional volume (km³) | Outer equal-region score ↓ | 95% observation coverage |
+|---|---|---:|---:|---:|
+| [Aso-4](../../eruptions/aso-4/results/README.md) | GP ensemble | 207.2 | 1.659 | 83.9% |
+| [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 254.1 | 2.066 | 79.3% |
+| [B-Tm](../../eruptions/b-tm/results/README.md) | GP ensemble | 30.5 | 1.331 | 97.6% |
+| [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 40.2 | 1.814 | 90.5% |
+| [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 141.6 | 1.272 | 95.6% |
+| [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 132.6 | 1.971 | 82.2% |
+| [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 27.2 | 1.451 | 96.7% |
+| [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.8 | 1.601 | 96.7% |
+| [Tambora](../../eruptions/tambora/results/README.md) | GP ensemble | 97.9 | 1.620 | 96.2% |
+| [Tambora](../../eruptions/tambora/results/README.md) | Trend-regularized cubic spline | 107.7 | 1.548 | 96.2% |
+| [YTT](../../eruptions/ytt/results/README.md) | GP ensemble | 1196.1 | 1.934 | 91.3% |
+| [YTT](../../eruptions/ytt/results/README.md) | Trend-regularized cubic spline | 1203.0 | 2.153 | 82.6% |
 
 These are bulk fallout volumes inside each dataset’s observation hull, not total eruption volumes. Different eruptions have different footprints. Lower predictive scores are better; close differences across four folds do not establish superiority.
 
 ![Regional volume and held-out scores](comparison.png)
 
-[Machine-readable real-data comparison](comparison.csv) · [Release verification](validation.json). Each eruption report includes full tuning tables, fold assignments, conditional joint-volume draws, numerical refinements and deletion sensitivity.
-
-**Uncertainty limitation:** conditional spline volume intervals covered the known volume in only 38–50% of completed trials across these scenarios. They are not calibrated 95% confidence intervals. GP coverage also fails in some scenarios. Use the disclosed coverage and refitting sensitivity; a narrow interval is not evidence of accuracy.
+[Machine-readable real-data comparison](comparison.csv). Each eruption report includes full tuning tables, fold assignments, conditional joint-volume draws, numerical refinements and deletion sensitivity.
 
 ## Known-truth development trials
 
-Ten fixed seeds per scenario; each model is tuned from training observations, then tested at 400 independent sites in the same hull. Conditional volume intervals are also checked against the known integral.
+10 fixed seeds per scenario; each model is tuned from training observations, then tested at 400 independent sites in the same hull. Conditional volume intervals are also checked against the known integral.
 
 | Scenario / method | Completed / attempted | Predictive score ↓ | Observation coverage | Mean absolute volume error | Volume interval coverage |
 |---|---:|---:|---:|---:|---:|

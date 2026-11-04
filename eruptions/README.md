@@ -4,6 +4,8 @@
 
 Start with a case home, then follow its accepted data, source decisions and current results. Each current report compares every active method on the same regional footprint, with no preferred family.
 
+Each case now also has a **local support and complete-contour audit** under `results/support/`. All six current cases lack a qualifying complete thickness band; a preferred global volume is therefore withheld. [What the checks mean and all-eruption findings](../comparisons/support/README.md).
+
 | Eruption | Current accepted evidence | Source status |
 |---|---|---|
 | [Minoan](minoan/README.md) | 92 exact measurements and 9 lower bounds; combined Plinian and co-ignimbrite fans | [Source-table audit](../data/audits/Minoan/README.md) |

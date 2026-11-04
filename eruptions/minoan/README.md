@@ -2,6 +2,8 @@
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
+**New support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 41,066 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. No preferred global volume is reported.
+
 **GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
 
 [Read the full comparison](results/README.md) · [Compare all six eruptions](../../comparisons/regional/README.md) · [Method definitions](../../docs/METHODS.md)
@@ -30,7 +32,7 @@ All accepted Plinian and co-ignimbrite fallout fans remain combined in one field
 | Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Automatic tuning | [Candidate tables](results/selection/README.md) |
 
-The current published result was generated before the repository reorganization. Its numerical artifacts and recorded execution hashes are preserved unchanged; moving a file does not create a new analysis.
+Both methods were rerun on 2026-11-04. Accepted inputs, fitted settings, held-out predictions and matched-hull volumes reproduce the preceding comparison; the new support audit adds local evidence and extrapolation checks. [Previous matched-hull report](../../archive/2026-11-03-regional/minoan/README.md).
 
 ## Earlier calculations
 

@@ -6,7 +6,7 @@ The current workflow compares one **GP ensemble** and one **trend-regularized cu
 
 ## Region and volume estimand
 
-The primary region is the convex hull of all accepted exact and upper/lower-bound locations in the source-centred WGS84 Lambert azimuthal equal-area projection. Pseudo-points are ignored, including their coordinates. The vent is not inserted into the hull. The region can bridge unsampled gaps and exclude unsampled proximal deposits: these are **regional bulk fallout volumes, not complete eruption volumes**.
+The matched comparison region is the convex hull of all accepted exact and upper/lower-bound locations in the source-centred WGS84 Lambert azimuthal equal-area projection. Pseudo-points are ignored, including their coordinates. The vent is not inserted into the hull. The region can bridge unsampled gaps and exclude unsampled proximal deposits: these are **regional bulk fallout volumes, not complete eruption volumes**. Version 0.9 adds a separate [local support and contour audit](supported-isopachs.md) to every comparison; the hull is not treated as evidence that its interior is adequately sampled.
 
 The spline fitting rectangle is the coordinate bounding box plus 5% of each span. This geometry-only rule defines a numerical domain, not a deposit boundary. Both methods integrate the same hull. The spline refuses predictions beyond its rectangle. No global tails or artificially closed contours enter the comparison.
 

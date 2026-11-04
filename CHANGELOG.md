@@ -1,5 +1,13 @@
 # Changes
 
+## 0.9.0 — Supported isopachs and explicit extrapolation limits
+
+- Added common local interpolation footprints with holes, three fixed geometry policies, and separate per-family partial volumes.
+- Added complete-contour bracketing, grid refinement, fully retuned geographic-deletion stability, and intermediate-level checks before selecting an isopach band.
+- Added direct band integration with an independent layer-cake check. Proximal/distal extensions are explicit conditional scenarios; nonintegrable tails fail without arbitrary cutoffs. No preferred global total is manufactured.
+- Reran all six accepted eruptions and the matched regional benchmark; fitting procedures and accepted inputs are unchanged. Added known-truth support stress tests, fitting-domain sensitivity, and analytic/numerical tests. Failures and unresolved cases remain visible.
+- Every normal chat-led comparison now includes the support report. GP and spline remain peer methods; no browser or atlas workflow was added.
+
 ## 0.8.1 — Eruption-centred repository and extensible method catalogue
 
 - Organize current cases in `eruptions/`, comparative evidence in `comparisons/`, and superseded analyses in `archive/`; preserve numerical artifacts and old landing links.
