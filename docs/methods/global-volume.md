@@ -2,7 +2,7 @@
 
 The current peer-method workflow uses [matched regional volumes](regional-comparison.md). This page describes the retained complete-Earth GP calculation.
 
-[Method overview](../METHODS.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](../../reports/global-fallout/README.md)
+[Method overview](../METHODS.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](../../archive/reports/global-fallout/README.md)
 
 Version 0.7 makes the **complete-Earth integral** the primary fallout-volume estimate. `--bounds` controls only a regional diagnostic and prediction export. Map extent and contour thresholds cannot change the global estimate. The accepted observations, likelihoods, selected models and nested validation are unchanged by this integration revision.
 
@@ -67,4 +67,4 @@ tephra-isopachs fit Minoan --output results/minoan --nested-cv
 python -m pytest -q
 ```
 
-The first command reruns both methods for all six catalogued eruptions, 24 geographic-deletion integrals and 30 known-truth synthetic fits. It preserves the latest accepted YTT principal selection and fits all accepted Minoan fallout fans together. Per-run source/input hashes and the benchmark hash identify the calculation. [All-eruption results](../../reports/global-fallout/README.md).
+The first command reruns both methods for all six catalogued eruptions, 24 geographic-deletion integrals and 30 known-truth synthetic fits. It preserves the latest accepted YTT principal selection and fits all accepted Minoan fallout fans together. Per-run source/input hashes and the benchmark hash identify the calculation. [All-eruption results](../../archive/reports/global-fallout/README.md).

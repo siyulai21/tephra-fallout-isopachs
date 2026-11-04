@@ -1,6 +1,6 @@
 # Two methods, matched regional evidence
 
-[Current findings](../../reports/regional-methods/README.md) · [Spline equations](cubic-splines.md) · [GP ensemble](gp-ensemble.md)
+[Current findings](../../comparisons/regional/README.md) · [Spline equations](cubic-splines.md) · [GP ensemble](gp-ensemble.md)
 
 The current workflow compares one **GP ensemble** and one **trend-regularized cubic spline** as peers. Per-method tuning does not designate an overall preferred family. Agreement with a desired published eruption volume is never a selection criterion.
 

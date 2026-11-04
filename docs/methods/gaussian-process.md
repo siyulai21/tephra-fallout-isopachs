@@ -1,6 +1,6 @@
 # Gaussian-process thickness model
 
-[Method overview](../METHODS.md) · [Documentation](../README.md) · [Implementation](../../src/probabilistic_isopach/README.md)
+[Method overview](../METHODS.md) · [Documentation](../README.md) · [Implementation](../../src/empirical_isopach/models/gaussian_process/README.md)
 
 **Used by the GP side of the current regional comparison and historical GP-only reports.** `selected` chooses one GP configuration; `stacked` combines GP configurations. Neither uses cubic splines.
 
@@ -101,7 +101,7 @@ Runs record input/code hashes, versions, seeds, fold/row assignments, candidates
 
 ## Limits shown by the experiments
 
-[VALIDATION.md](../validation/initial-benchmark.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
+[VALIDATION.md](../../archive/validation/initial-benchmark.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
 
 Before publication-level volume claims: jointly infer trend/covariance uncertainty, model independently documented preservation/detection, compare richer anisotropic or multi-lobe means, and evaluate untouched eruptions with preregistered sector holdouts. Those are research extensions, not implemented features of this version.
 
@@ -115,7 +115,7 @@ pseudo observations, physical inputs, or a new uncertainty model.
 
 See [OUTPUTS.md](../OUTPUTS.md) for numerical definitions, limits, and the
 distinction between the median surface integral and median random volume.
-[Historical reporting validation](../archive/reporting-0.3-validation.md) records the reporting checks.
+[Historical reporting validation](../../archive/reference/reporting-0.3-validation.md) records the reporting checks.
 
 
 ## Lower bounds and combined-fallout observations (0.6)

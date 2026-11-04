@@ -2,7 +2,7 @@
 
 [Project home](../README.md) · [Quick start](../docs/QUICKSTART.md) · [Validation catalogue](../docs/validation/README.md)
 
-Run these commands from the repository root after installing `.[test]`. Use a fresh output directory. Generated runs go to ignored `results/`; reviewed publication artifacts live in `reports/`.
+Run these commands from the repository root after installing `.[test]`. Use a fresh output directory. Generated runs go to ignored `results/`; reviewed publication artifacts live in `eruptions/<slug>/results/` and `comparisons/`.
 
 | Command | What it does | Method family |
 |---|---|---|
@@ -18,6 +18,6 @@ Run these commands from the repository root after installing `.[test]`. Use a fr
 
 ## Reproduction versus historical records
 
-Running current code records current source hashes and uses current report/integration behavior. Published older regional results retain the version, inputs and source hashes that produced them. The [report catalogue](../reports/README.md) and [path guide](../docs/REPOSITORY_MAP.md) distinguish current results, regional history and superseded input selections.
+Running current code records current source hashes and uses current report/integration behavior. Published older regional results retain the version, inputs and source hashes that produced them. The [report catalogue](../eruptions/README.md) and [path guide](../docs/REPOSITORY_MAP.md) distinguish current results, regional history and superseded input selections.
 
 `ytt_inputs.py` supplies audit reconstruction used by `ytt.py`. Keep scientific changes separate from report organization. No benchmark selects a method because its volume approaches a preferred published number.

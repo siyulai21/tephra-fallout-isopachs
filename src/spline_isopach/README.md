@@ -12,4 +12,4 @@ This package retains the cubic B-spline approach: fit log thickness with basis f
 | `Model.py` | Compatibility functions for the spline API |
 | `__main__.py` | Optional legacy desktop GUI; requires the extra mapping dependency |
 
-The spline's domain and knot layout are separate from a display grid. The [initial research benchmark](../../docs/validation/initial-benchmark.md) contains fixed-default comparisons and their limitations. It does not establish that GP outperforms a fully tuned spline on every eruption.
+The spline's domain and knot layout are separate from a display grid. The [initial research benchmark](../../archive/validation/initial-benchmark.md) contains fixed-default comparisons and their limitations. It does not establish that GP outperforms a fully tuned spline on every eruption.

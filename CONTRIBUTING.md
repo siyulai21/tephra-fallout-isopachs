@@ -2,11 +2,13 @@
 
 [Project home](README.md) · [Source map](src/README.md) · [Regional protocol](docs/methods/regional-comparison.md)
 
+[Add an eruption](docs/NEW_ERUPTION.md) · [Add a method](docs/ADDING_METHOD.md)
+
 The public comparison has two peer methods: GP ensemble and automatic cubic spline. Neither is a default scientific winner. New empirical models must see the same accepted inputs, outer folds, observation semantics and integration region. Method-specific tuning belongs entirely inside training folds. Never choose a method because its volume approaches a preferred published number.
 
-Preserve raw sources and checksums; document accepted/excluded records and units. Inputs live in `data/eruptions/`, audits in `data/audits/`, and reviewed current comparisons in `reports/<eruption>/comparison/`. Existing inputs must not change without a documented source correction. Ordinary runs verify audits and write a fresh output directory.
+Preserve raw sources and checksums; document accepted/excluded records and units. Inputs live in `data/eruptions/`, audits in `data/audits/`, and reviewed current comparisons in `eruptions/<slug>/results/`. Existing inputs must not change without a documented source correction. Ordinary runs verify audits and write a fresh output directory.
 
-The active spline code is in `src/empirical_isopach/`; the GP components remain in `src/probabilistic_isopach/`. Original spline and first-extension packages are historical compatibility code. Retain old reports and their source hashes. `global/`, `regional/` and `archive/` describe historical scope/input selections, not preferred model families.
+Active families live in `src/empirical_isopach/models/cubic_spline/` and `models/gaussian_process/`, registered in `models/registry.py`. Common observation and scoring tools live in `core/`. Original spline and first-extension packages are historical compatibility code. Retain old reports and their source hashes. `global/`, `regional/` and `archive/` describe historical scope/input selections, not preferred model families.
 
 For either method, bounds are likelihood events, missing locations are not zeros, and predictions never become training observations. Do not Gaussian-moment-match the ensemble for quantiles or volume draws. Draw one GP component per whole field; draw one spline coefficient vector per whole field. Keep observation noise out of latent volumes. Conditional intervals and geographic-deletion ranges need distinct labels.
 

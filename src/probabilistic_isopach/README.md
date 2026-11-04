@@ -1,21 +1,17 @@
-# Gaussian-process workflow
+# Historical GP workflow and compatibility imports
 
-[Source map](../README.md) · [Model equations](../../docs/methods/gaussian-process.md) · [Current reports](../../reports/README.md)
+[Source map](../README.md) · [Active GP implementation](../empirical_isopach/models/gaussian_process/README.md) · [Historical output guide](../../archive/reference/historical-gp-outputs.md)
 
-This package implements the GP component of the current [regional comparison](../empirical_isopach/README.md) and retains the legacy `fit` workflow. The `compare` command dispatches to the peer-method package. It fits a directional trend plus a Matérn spatial residual model to log thickness, with documented upper/lower bounds handled through censored likelihoods. It uses no cubic-spline basis functions or knots.
+The active GP ensemble has moved into the shared framework's `models/gaussian_process/` directory. Shared data/probability/scoring utilities live in `empirical_isopach/core/`. Old imports remain valid through thin wrappers; there is one implementation of each solver.
 
-| Files | Responsibility |
+| Retained files | Role |
 |---|---|
-| `cli.py`, `__main__.py` | Dispatch `compare`, or run the legacy GP `fit` workflow |
-| `catalog.py`, `data.py` | Resolve datasets and validate observations |
-| `model.py` | Trend, spatial covariance, conditioning and censored likelihood |
-| `validation.py` | Selection and nested geographic holdouts |
-| `ensemble.py`, `distributions.py` | GP stacking and exact mixture calculations |
-| `global_volume.py` | Historical complete-Earth GP integral and tail diagnostics |
-| `volume.py` | Historical finite-region integration and conditional sampling |
-| `contours.py` | Isopach geometry and resolution checks |
-| `figures.py`, `publication.py`, `report.py` | Maps, tables, Markdown and numerical records |
-| `assets/` | Bundled coastline data; see attribution |
-| `regularized_spline.py` | Compatibility import; implementation is in [research/](../research/README.md) |
+| `model.py`, `ensemble.py`, `validation.py` | Compatibility exports of active GP implementations and shared scoring |
+| `catalog.py`, `data.py`, `distributions.py` | Compatibility exports of shared core utilities |
+| `cli.py`, `__main__.py` | Historical GP-only `fit`; `compare` dispatches to the active workflow |
+| `global_volume.py`, `volume.py` | Historical complete-Earth and rectangular-domain calculations |
+| `contours.py`, `publication.py`, `report.py` | Historical GP report and contour exports |
+| `figures.py`, `assets/` | Historical plotting and bundled coastline/style resources reused by current reports |
+| `regularized_spline.py` | Compatibility export of the first [research extension](../research/README.md) |
 
-`selected` and `stacked` are both GP strategies; only the ensemble participates in the current peer comparison. Probability intervals condition on estimated parameters; no global-volume probability interval is computed. See the [output guide](../../docs/OUTPUTS.md).
+This directory is not a second active method catalogue. Only the [registry](../empirical_isopach/models/registry.py) determines the families in a new regional comparison.

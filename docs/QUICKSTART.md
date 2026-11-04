@@ -2,7 +2,7 @@
 
 [Project home](../README.md) · [Input format](../data/README.md) · [Method guide](METHODS.md)
 
-Supply measurements in chat with the eruption name, units, coordinate reference and available source notes. Accepted data, audit decisions and both method reports can then be published on GitHub. Missing deposits or illustrative equivalents are not automatically measurements or zeros.
+Supply measurements in chat with the eruption name, units, coordinate reference and available source notes. Accepted data, audit decisions and each method report can then be published on GitHub. Missing deposits or illustrative equivalents are not automatically measurements or zeros.
 
 ## Run locally
 
@@ -18,7 +18,7 @@ tephra-isopachs compare path/to/measurements.csv --output results/new-eruption -
 
 On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-The command fits **both** the GP ensemble and cubic spline, repeats fitting inside geographic holdouts, integrates a common observation hull and writes an illustrated `README.md`. It automatically determines spline knots/smoothing, the validation buffer and regional footprint. The only optional public setting is the report title; no per-eruption pseudo-points or smoothing inputs are requested.
+The command fits **every active method** (currently the GP ensemble and cubic spline), repeats fitting inside geographic holdouts, integrates a common observation hull and writes an illustrated `README.md`. It automatically determines spline knots/smoothing, the validation buffer and regional footprint. The only optional public setting is the report title; no per-eruption pseudo-points or smoothing inputs are requested.
 
 The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. Both methods retain explicit assumptions and conditional uncertainty limitations.
 
@@ -35,7 +35,7 @@ This runs six accepted eruptions and ten fixed trials in each of four synthetic 
 ## Read the outputs
 
 - `README.md`: matched maps, regional volumes and interpretation.
-- `report.json`: both fits, nested validation, integration checks and provenance.
+- `report.json`: all fits, nested validation, integration checks and provenance.
 - `heldout_predictions.csv`: every scored location and fold.
 - `accepted_observations.csv`: source-row IDs and preserved bound semantics.
 - `selection/`: every evaluated tuning candidate for final and outer fits.

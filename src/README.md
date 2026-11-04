@@ -1,16 +1,18 @@
 # Source-code map
 
-[Project home](../README.md) · [Method guide](../docs/METHODS.md)
+[Project home](../README.md) · [Method catalogue](../methods/README.md) · [Add a family](../docs/ADDING_METHOD.md)
 
-`tephra-isopachs compare` runs two peer methods with common regional validation. Existing imports and legacy commands remain available for historical reproduction.
+The active workflow lives in **[empirical_isopach/](empirical_isopach/README.md)**. Its two model families have separate implementations; they share observation semantics, validation, regional integration and reporting.
 
 | Directory | Role |
 |---|---|
-| [empirical_isopach/](empirical_isopach/README.md) | Active automatic spline, common regional evaluation, integration and comparison reports |
-| [probabilistic_isopach/](probabilistic_isopach/README.md) | Active GP-ensemble fitter and shared probability/data utilities; also the legacy GP/global CLI |
-| [spline_isopach/](spline_isopach/README.md) | Original cubic spline and optional legacy GUI; historical reproduction |
-| [research/](research/README.md) | First fixed-smoothing trend-penalty experiment; historical research |
+| [empirical_isopach/core/](empirical_isopach/core/README.md) | Common data, probability, geography and scoring utilities |
+| [empirical_isopach/models/](empirical_isopach/models/README.md) | Active registry, GP ensemble and automatic cubic spline |
+| [empirical_isopach/](empirical_isopach/README.md) | Shared comparison runner, volume integration, maps and reports |
+| [probabilistic_isopach/](probabilistic_isopach/README.md) | Old import wrappers, historical GP/global workflow and reused map assets |
+| [spline_isopach/](spline_isopach/README.md) | Historical original spline and optional desktop GUI |
+| [research/](research/README.md) | Historical first fixed-smoothing trend-penalty experiment |
 
-The active spline uses its own cubic basis, trend and penalized mixed-likelihood solver. It never fits a GP residual. The GP ensemble still needs individual GP component fitters internally. Shared parsing, probability scoring and region tools do not make these the same statistical method.
+The GP does not call the spline solver. The spline does not fit a GP residual. GP components are internal ingredients of one public ensemble, not extra public methods. Historical source packages are retained for reproduction and are not active registry entries.
 
-`Laea.py` supplies projection helpers. New method families should use the same accepted observations, geographic splits, prediction contract and regional volume definition. [Benchmark commands](../benchmarks/README.md) · [Tests](../tests/README.md).
+`Laea.py` supplies projection helpers. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md).

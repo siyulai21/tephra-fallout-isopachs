@@ -1,10 +1,11 @@
-# Detailed methods
+# Detailed statistical methods
 
-[Which method does what?](../METHODS.md) · [Documentation](../README.md)
+[Active method catalogue](../../methods/README.md) · [Documentation](../README.md)
 
-- [Gaussian-process thickness model](gaussian-process.md): the active report workflow.
-- [GP ensemble](gp-ensemble.md): experimental stacking of GP candidates.
-- [Global volume integration](global-volume.md): integration domain and numerical checks.
-- [Cubic-spline methods](cubic-splines.md): original implementation and trend-regularized research extension.
+- [Matched regional protocol](regional-comparison.md): common data, automatic tuning, nested holdouts and regional volumes.
+- [Gaussian-process model](gaussian-process.md): trend, covariance and bounded observations.
+- [GP ensemble](gp-ensemble.md): predictive stacking and mixture calculations.
+- [Cubic-spline methods](cubic-splines.md): active automatic spline, penalties, uncertainty and historical context.
+- [Historical global-volume integration](global-volume.md): retained GP extrapolation and numerical checks.
 
-Model family, fitting strategy and integration domain are separate choices. Current eruption reports all use the GP family.
+Current reports compare the GP ensemble and automatic cubic spline as peers within the same observation hull. Model family and integration domain are separate choices.

@@ -8,7 +8,7 @@ Version 0.4 adds an **experimental spatial predictive ensemble** to the fit work
 
 This is an application and extension of existing statistical ideas, not a claim to have invented predictive stacking. It does not eliminate scientific assumptions or make unobserved deposit structure identifiable. The four bundled eruptions and synthetic scenarios are development benchmarks, not independent external validation.
 
-![Matched comparison of the selected GP and GP ensemble](../validation/ensemble/comparison.png)
+![Matched comparison of the selected GP and GP ensemble](../../archive/validation/ensemble/comparison.png)
 
 ## What replaces pseudo-data?
 
@@ -94,7 +94,7 @@ The 30 synthetic runs exactly match the prior benchmark's three surfaces and ten
 
 Volume comparisons use the same Monte Carlo locations for truth and estimated expected thickness; they are not tests of volume interval coverage. The hidden-lobe failure remains substantial. An empirical procedure cannot discover arbitrary structure absent from the observed sectors. Physics, independently justified external evidence or new sampling would be needed to constrain that case.
 
-Machine-readable results and source/input hashes: [benchmark JSON](../validation/ensemble/benchmark.json), [real comparison CSV](../validation/ensemble/real_comparison.csv), [synthetic comparison CSV](../validation/ensemble/synthetic_comparison.csv). Full fold-level records are produced by the benchmark command below. A four-eruption stacked report build also completed with all expected/median regional integrals meeting the 0.5% refinement rule at all three region sizes; unresolved 0.1 cm Aso-4/B-Tm contours remained explicitly omitted.
+Machine-readable results and source/input hashes: [benchmark JSON](../../archive/validation/ensemble/benchmark.json), [real comparison CSV](../../archive/validation/ensemble/real_comparison.csv), [synthetic comparison CSV](../../archive/validation/ensemble/synthetic_comparison.csv). Full fold-level records are produced by the benchmark command below. A four-eruption stacked report build also completed with all expected/median regional integrals meeting the 0.5% refinement rule at all three region sizes; unresolved 0.1 cm Aso-4/B-Tm contours remained explicitly omitted.
 
 ## Reproduce and use
 
@@ -111,7 +111,7 @@ Keep the selected GP as a comparison: run the same file into a fresh output fold
 
 ## Historical and current YTT applications
 
-The [archived 43-record YTT comparison](../../reports/ytt/archive/2026-11-02/README.md) uses 43 audited records and matched buffered geographic holdouts. It does not support promoting the ensemble: negative log score worsens from 2.130 to 2.167, coverage remains 39/43, and log RMSE improves from 1.394 to 1.336. Both all-data fits select the same single exponential component. That archived report preserves the 38- and 45-record sensitivity cases and the four western holdout failures. The [current YTT report](../../reports/ytt/README.md) uses 46 reviewed observations; its newer scores must not be confused with this historical comparison.
+The [archived 43-record YTT comparison](../../archive/reports/ytt/archive/2026-11-02/README.md) uses 43 audited records and matched buffered geographic holdouts. It does not support promoting the ensemble: negative log score worsens from 2.130 to 2.167, coverage remains 39/43, and log RMSE improves from 1.394 to 1.336. Both all-data fits select the same single exponential component. That archived report preserves the 38- and 45-record sensitivity cases and the four western holdout failures. The [current YTT report](../../eruptions/ytt/README.md) uses 46 reviewed observations; its newer scores must not be confused with this historical comparison.
 
 
-The [Minoan combined-fallout application](../../reports/minoan/README.md) keeps the selected-GP default. Both methods see the same 101 location constraints, comprising 92 exact totals and nine lower bounds. The ensemble does not improve the predictive log score or point RMSE on matched outer holdouts.
+The [Minoan combined-fallout application](../../eruptions/minoan/README.md) keeps the selected-GP default. Both methods see the same 101 location constraints, comprising 92 exact totals and nine lower bounds. The ensemble does not improve the predictive log score or point RMSE on matched outer holdouts.

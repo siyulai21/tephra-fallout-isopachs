@@ -1,5 +1,5 @@
-# Original reference map images
+# This page has moved
 
-[Historical material](../README.md) · [Current eruption reports](../../../reports/README.md)
+[Open the organized location](../../../archive/reference/original-isopachs/README.md).
 
-These four images were preserved from the original `examples/Isopachs/` directory. Their bytes are unchanged. They are historical visual references, not current model results or fitting inputs. Use the report catalogue for the current method comparisons and their recorded provenance.
+This compatibility page preserves an earlier GitHub link. Current eruption homes are in `eruptions/`; superseded analyses are in `archive/`.

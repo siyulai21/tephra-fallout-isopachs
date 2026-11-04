@@ -1,6 +1,6 @@
 # Automatic trend-regularized cubic spline
 
-[Method overview](../METHODS.md) · [Regional evidence](../../reports/regional-methods/README.md) · [Implementation](../../src/empirical_isopach/spline.py)
+[Method overview](../METHODS.md) · [Regional evidence](../../comparisons/regional/README.md) · [Implementation](../../src/empirical_isopach/models/cubic_spline/model.py)
 
 The active spline is a cubic tensor-product B-spline model of **log thickness**, fitted to real measurements and documented bounds. It is a peer of the GP ensemble. It does not call a GP surface fitter or require manually placed pseudo-points, knot spacing, tension, roughness or trend strength.
 

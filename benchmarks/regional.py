@@ -1,4 +1,4 @@
-"""Matched regional GP-ensemble / tuned cubic-spline evaluation.
+"""Matched regional evaluation of every active empirical model family.
 
 python -m benchmarks.regional --output results/regional-methods
 The same frozen fitting protocol is used for real and simulated deposits.
@@ -11,14 +11,15 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.probabilistic_isopach.catalog import datasets
-from src.probabilistic_isopach.data import Observations
-from src.probabilistic_isopach.distributions import predictive_distribution
-from src.probabilistic_isopach.validation import interval_metrics
+from src.empirical_isopach.core.catalog import datasets
+from src.empirical_isopach.core.observations import Observations
+from src.empirical_isopach.core.distributions import predictive_distribution
+from src.empirical_isopach.core.validation import interval_metrics
 from src.empirical_isopach.region import SurveyRegion, integrate_region, regional_draws
-from src.empirical_isopach.spline import survey_bounds
-from src.empirical_isopach.validation import METHODS, LABELS, automatic_buffer, fit_method
-from src.empirical_isopach.reporting import compare_dataset, provenance, save_selection
+from src.empirical_isopach.core.geometry import survey_bounds
+from src.empirical_isopach.validation import automatic_buffer, fit_method
+from src.empirical_isopach.models.registry import active_methods, method_metadata
+from src.empirical_isopach.reporting import compare_dataset, provenance, save_selection, report_label
 
 
 def synthetic_case(scenario, seed):
@@ -58,7 +59,7 @@ def synthetic_benchmark(output, repeats=10):
             "test_locations": "400 independent uniform locations within the training-site hull",
             "censoring": "Training observations below log thickness 1 are upper limits at 1; above 3 are lower bounds at 3. Test observations remain exact.",
             "scope": "Fixed development scenarios, not samples from the fitted spline/GP and not external validation. Unestimable trials are retained explicitly.",
-            "reproducibility": provenance(), "benchmark_sha256": sha256(Path(__file__).read_bytes()).hexdigest()},
+            "method_metadata": method_metadata(), "reproducibility": provenance(), "benchmark_sha256": sha256(Path(__file__).read_bytes()).hexdigest()},
             "runs": rows}, indent=2, allow_nan=False)+"\n")
     for scenario in ("smooth", "secondary_lobe", "missing_sector", "censored"):
         for seed in range(repeats):
@@ -70,9 +71,9 @@ def synthetic_benchmark(output, repeats=10):
                 rows.append({"scenario": scenario, "seed": seed, "n_training": len(data.xy),
                     "n_exact": int((~data.censored).sum()), "n_upper": int((data.censored & ~data.lower_censored).sum()),
                     "n_lower": int(data.lower_censored.sum()), "status": "insufficient_training_support",
-                    "methods": {m: {"status": "insufficient_training_support", "error": str(exc)} for m in METHODS}})
+                    "methods": {m: {"status": "insufficient_training_support", "error": str(exc)} for m in active_methods()}})
                 save()
-                print(f"Synthetic {scenario} {seed+1}/{repeats}: insufficient exact training support (both methods)", flush=True)
+                print(f"Synthetic {scenario} {seed+1}/{repeats}: insufficient exact training support (all active methods)", flush=True)
                 continue
             class Oracle:
                 def predict_log(self, points):
@@ -85,7 +86,7 @@ def synthetic_benchmark(output, repeats=10):
                    "n_lower": int(data.lower_censored.sum()), "n_test": len(heldout.xy),
                    "buffer_km": buffer, "buffer_rule": rule, "region": region.describe(),
                    "true_regional_volume_km3": true_volume["expected_km3"], "methods": {}}
-            for method in METHODS:
+            for method in active_methods():
                 model, selection = fit_method(method, data, bounds, 4, buffer)
                 observations = predictive_distribution(model, heldout.xy, observation=True, log_sd=heldout.log_sd)
                 latent = predictive_distribution(model, heldout.xy)
@@ -115,9 +116,8 @@ def summarize(output):
     rows = []
     for path in sorted(output.glob("*/report.json")):
         report = json.loads(path.read_text())
-        for method in METHODS:
-            result = report["methods"][method]
-            rows.append({"dataset": report["dataset"], "slug": path.parent.name, "method": method,
+        for method, result in report["methods"].items():
+            rows.append({"dataset": report["dataset"], "slug": path.parent.name, "method": method, "label": report_label(report, method),
                 "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
                 "expected_regional_km3": result["regional_volume"]["expected_km3"],
@@ -128,15 +128,13 @@ def summarize(output):
                 **{k: v for k, v in report["validation"]["methods"][method]["metrics"].items() if k != "fold_log_scores"}})
     table = pd.DataFrame(rows)
     table.to_csv(output/"comparison.csv", index=False)
-    lines = ["# Regional comparison: GP ensemble and cubic spline", "",
-        "Both methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison.", "",
-        "| Eruption | Expected regional volume: GP / spline (km³) | Outer equal-region score: GP / spline ↓ | 95% observation coverage: GP / spline |",
-        "|---|---:|---:|---:|"]
-    for slug in table.slug.unique():
-        group = table[table.slug == slug].set_index("method")
-        gp, spline = group.loc["stacked"], group.loc["spline"]
-        lines.append(f"| [{gp['dataset']}]({slug}/README.md) | {gp.expected_regional_km3:.1f} / {spline.expected_regional_km3:.1f} | "
-                     f"{gp.equal_region_log_score:.3f} / {spline.equal_region_log_score:.3f} | {gp.coverage95_observations:.1%} / {spline.coverage95_observations:.1%} |")
+    lines = ["# Regional comparison of empirical methods", "",
+        "All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison.", "",
+        "| Eruption | Method | Expected regional volume (km³) | Outer equal-region score ↓ | 95% observation coverage |",
+        "|---|---|---:|---:|---:|"]
+    for row in table.itertuples():
+        lines.append(f"| [{row.dataset}]({row.slug}/README.md) | {row.label} | {row.expected_regional_km3:.1f} | "
+                     f"{row.equal_region_log_score:.3f} | {row.coverage95_observations:.1%} |")
     lines += ["", "These are bulk fallout volumes inside each dataset’s observation hull, not total eruption volumes. Different eruptions have different footprints. Lower predictive scores are better; close differences across four folds do not establish superiority.", "",
               "![Regional volume and held-out scores](comparison.png)", "",
               "[Machine-readable real-data comparison](comparison.csv). Each eruption report includes full tuning tables, fold assignments, conditional joint-volume draws, numerical refinements and deletion sensitivity."]
@@ -161,12 +159,12 @@ def summarize(output):
         synthetic.to_csv(output/"synthetic/comparison.csv", index=False)
         summary = synthetic.groupby(["scenario", "method"]).mean(numeric_only=True)
         lines += ["", "## Known-truth development trials", "",
-                  "Ten fixed seeds per scenario; each model is tuned from training observations, then tested at 400 independent sites in the same hull. Conditional volume intervals are also checked against the known integral.", "",
+                  f"{simulations['design']['repeats']} fixed seeds per scenario; each model is tuned from training observations, then tested at 400 independent sites in the same hull. Conditional volume intervals are also checked against the known integral.", "",
                   "| Scenario / method | Completed / attempted | Predictive score ↓ | Observation coverage | Mean absolute volume error | Volume interval coverage |",
                   "|---|---:|---:|---:|---:|---:|"]
         for (scenario, method), row in summary.iterrows():
             group = synthetic[(synthetic.scenario == scenario) & (synthetic.method == method)]
-            lines.append(f"| {scenario} / {LABELS[method]} | {int(group.completed.sum())} / {len(group)} | {row.negative_log_score:.3f} | {row.observation_coverage95:.1%} | "
+            lines.append(f"| {scenario} / {simulations['design'].get('method_metadata', {}).get(method, {}).get('label', method)} | {int(group.completed.sum())} / {len(group)} | {row.negative_log_score:.3f} | {row.observation_coverage95:.1%} | "
                          f"{row.volume_absolute_relative_error:.1%} | {row.volume_interval_covers_truth:.0%} |")
         lines += ["", "Metrics describe completed trials only; unestimable censored trials remain in the attempted count and JSON with their failure reason. No censoring threshold or training requirement was relaxed to make these trials pass.", "",
                   "These small development experiments cannot certify coverage for real eruptions. Poor conditional coverage is retained rather than repaired after seeing test outcomes.", "",
@@ -181,10 +179,15 @@ def summarize(output):
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 2, figsize=(12, 5), layout="constrained")
         names = table.dataset.unique()
-        for method, shift, color in (("stacked", -.16, TEAL), ("spline", .16, AMBER)):
-            subset = table[table.method == method].set_index("dataset").loc[names]
-            axes[0].barh(np.arange(len(names))+shift, subset.expected_regional_km3, height=.3, color=color, label=LABELS[method])
-            axes[1].barh(np.arange(len(names))+shift, subset.equal_region_log_score, height=.3, color=color)
+        methods = list(table.method.unique())
+        width = .8/len(methods)
+        colors = [TEAL, AMBER]+[plt.get_cmap("tab10")(i % 10) for i in range(2, len(methods))]
+        for index, (method, color) in enumerate(zip(methods, colors)):
+            shift = (index-(len(methods)-1)/2)*width
+            subset = table[table.method == method].set_index("dataset").reindex(names)
+            label = table.loc[table.method == method, "label"].iloc[0]
+            axes[0].barh(np.arange(len(names))+shift, subset.expected_regional_km3, height=.9*width, color=color, label=label)
+            axes[1].barh(np.arange(len(names))+shift, subset.equal_region_log_score, height=.9*width, color=color)
         for ax in axes:
             ax.set(yticks=np.arange(len(names)), yticklabels=names)
             ax.invert_yaxis()
@@ -192,7 +195,7 @@ def summarize(output):
         axes[0].set(xscale="log", xlabel="Expected regional bulk fallout (km³; log scale)", title="One shared footprint per eruption")
         axes[1].set(xlabel="Outer equal-region negative log score (lower is better)", title="Identical geographic holdouts")
         axes[0].legend(fontsize=9, loc="lower right")
-        fig.suptitle("Two empirical methods · matched regional evaluation", fontsize=16)
+        fig.suptitle("Empirical methods · matched regional evaluation", fontsize=16)
         for suffix in ("png", "svg"):
             fig.savefig(output/f"comparison.{suffix}", dpi=180)
         plt.close(fig)
@@ -201,7 +204,7 @@ def summarize(output):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--dataset", help="One catalogued eruption; default runs all six")
+    parser.add_argument("--dataset", help="One catalogued eruption; default runs all accepted cases")
     parser.add_argument("--synthetic-only", action="store_true")
     parser.add_argument("--skip-synthetic", action="store_true")
     parser.add_argument("--summarize-only", action="store_true")

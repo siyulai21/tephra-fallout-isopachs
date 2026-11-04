@@ -1,16 +1,19 @@
-"""Identical outer folds and regional estimands for both empirical methods."""
+"""Identical outer folds and regional estimands for all active empirical methods."""
+from itertools import combinations
+
 import numpy as np
 from scipy.spatial.distance import cdist
 
-from src.probabilistic_isopach.distributions import predictive_distribution
-from src.probabilistic_isopach.validation import spatial_folds, training_mask, select_model, interval_metrics
-from .spline import survey_bounds
-from .selection import select_spline
+from .core.distributions import predictive_distribution
+from .core.validation import spatial_folds, training_mask, interval_metrics
+from .core.geometry import survey_bounds
+from .models.registry import active_methods, method_spec, method_label, method_metadata
 from .region import integrate_region
 
 
-METHODS = ("stacked", "spline")
-LABELS = {"stacked": "GP ensemble", "spline": "Trend-regularized cubic spline"}
+# Compatibility snapshots; the workflow queries the registry at execution time.
+METHODS = active_methods()
+LABELS = {key: method_label(key) for key in METHODS}
 
 
 def valid_training(data):
@@ -53,11 +56,7 @@ def automatic_buffer(data, outer_folds=4, inner_folds=3):
 
 
 def fit_method(method, data, bounds, folds, buffer):
-    if method == "spline":
-        return select_spline(data, bounds=bounds, n_folds=folds, buffer_km=buffer)
-    if method == "stacked":
-        return select_model(data, n_folds=folds, buffer_km=buffer, method="stacked")
-    raise ValueError(f"Unknown empirical method: {method}")
+    return method_spec(method).fit(data, bounds, folds, buffer)
 
 
 def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, inner_folds=3,
@@ -72,9 +71,10 @@ def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, 
     result = {"outer_folds": outer_folds, "inner_folds": inner_folds,
               "folds": labels.tolist(), "row_ids": data.row_ids.tolist(),
               "buffer_km": buffer_km, "buffer_rule": buffer_rule, "methods": {},
+              "method_metadata": method_metadata(),
               "scope": "All response-dependent fitting and selection repeated in outer training sets. Full survey coordinates supply the common rectangle/hull.",
               "primary_metric": "equal_region_log_score; lower is better; no automatic preferred method"}
-    for method in METHODS:
+    for method in active_methods():
         arrays = {k: np.zeros(len(data.xy)) for k in ("median", "lower", "upper", "log_score")}
         selections = []
         for fold in range(outer_folds):
@@ -91,14 +91,21 @@ def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, 
                                "model": model.describe(), "selection": selection,
                                "regional_deletion_volume": integrate_region(model, region)})
             if progress:
-                progress(f"{LABELS[method]}: geographic holdout {fold+1}/{outer_folds}")
+                progress(f"{method_label(method)}: geographic holdout {fold+1}/{outer_folds}")
         metrics = interval_metrics(data, arrays["median"], arrays["lower"], arrays["upper"], arrays["log_score"])
         fold_scores = [-float(np.mean(arrays["log_score"][labels == k])) for k in range(outer_folds)]
         metrics.update(equal_region_log_score=float(np.mean(fold_scores)), fold_log_scores=fold_scores)
         result["methods"][method] = {"metrics": metrics, "predictions": {k: v.tolist() for k, v in arrays.items()},
                                     "selections": selections,
                                     "deletion_interpretation": "Complete retuning after each geographic deletion; sensitivity, not a confidence interval."}
-    result["paired_fold_score_difference_spline_minus_gp"] = (
-        np.array(result["methods"]["spline"]["metrics"]["fold_log_scores"])
-        - np.array(result["methods"]["stacked"]["metrics"]["fold_log_scores"])).tolist()
+    result["paired_fold_score_differences"] = [
+        {"minuend": second, "subtrahend": first, "values": (
+            np.array(result["methods"][second]["metrics"]["fold_log_scores"])
+            - np.array(result["methods"][first]["metrics"]["fold_log_scores"])).tolist()}
+        for first, second in combinations(result["methods"], 2)]
+    # Preserve the historical field for downstream readers of two-family reports.
+    if {"stacked", "spline"} <= result["methods"].keys():
+        result["paired_fold_score_difference_spline_minus_gp"] = (
+            np.array(result["methods"]["spline"]["metrics"]["fold_log_scores"])
+            - np.array(result["methods"]["stacked"]["metrics"]["fold_log_scores"])).tolist()
     return result

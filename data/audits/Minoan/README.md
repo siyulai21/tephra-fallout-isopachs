@@ -1,6 +1,6 @@
 # Minoan combined-fallout audit
 
-[Source workbook and attribution](../../sources/minoan/README.md) · [Full 105-row manifest](selection_manifest.csv) · [Provenance](provenance.json) · [Calculation report](../../../reports/minoan/README.md)
+[Source workbook and attribution](../../sources/minoan/README.md) · [Full 105-row manifest](selection_manifest.csv) · [Provenance](provenance.json) · [Calculation report](../../../eruptions/minoan/README.md)
 
 The target is **total primary fallout from all fans together**, including Plinian and co-ignimbrite/dispersed fallout. A site contributes one total observation, not one training row per phase. Identified turbidites are removed. No separate fan fit, hand-drawn isopach, pseudo-point or invented non-detection enters the model.
 
@@ -30,8 +30,8 @@ The earlier PANGAEA catalogue is only a cross-check. It contains differences in 
 | [Reported totals](total_conflicts.csv) | 94 | 9 | Include conflicting rows using the total column |
 | [Without POS513-41](without_pos513_41.csv) | 91 | 9 | Sensitivity to the workbook/sequence-description mismatch |
 
-Coordinates and units are unchanged. The common source reference is [GVP Santorini](https://volcano.si.edu/volcano.cfm?vn=212040), 25.396° E, 36.404° N, not a uniquely established Minoan vent. The finite volume rectangle is derived from the primary input and source location with 25% padding, then rounded outward to 25 km: −400 to 1,200 km east and −850 to 1,100 km north. All sensitivity cases retain that rectangle. The fixed 10 km geographic-validation buffer limits leakage from nearby cores; it is an analysis setting, not a physical deposit parameter.
+Coordinates and units are unchanged. The common source reference is [GVP Santorini](https://volcano.si.edu/volcano.cfm?vn=212040), 25.396° E, 36.404° N, not a uniquely established Minoan vent. For the historical GP-only workflow, the finite volume rectangle is derived from the primary input and source location with 25% padding, then rounded outward to 25 km: −400 to 1,200 km east and −850 to 1,100 km north. All sensitivity cases retain that rectangle. The fixed 10 km geographic-validation buffer limits leakage from nearby cores; it is an analysis setting, not a physical deposit parameter.
 
 Rebuild and review inputs with `python -m benchmarks.minoan --prepare-only`. Ordinary reproduction (`python -m benchmarks.minoan --output results/minoan`) verifies exact workbook, manifest and input bytes before fitting. The workbook was independently read with the spreadsheet tool and the standalone reader; all 105 rows agreed.
 
-The rectangle described above belongs to the retained [regional calculations](../../../reports/minoan/regional/README.md). The [current report](../../../reports/minoan/README.md) integrates the modeled fallout over the complete Earth; this does not change these source-selection decisions.
+The rectangle described above belongs to the retained [regional calculations](../../../archive/reports/minoan/regional/README.md). The [current report](../../../eruptions/minoan/README.md) compares the GP ensemble and automatic spline within the observation hull, using shared automatic geographic validation. Earlier [complete-Earth GP estimates](../../../archive/reports/minoan/global/README.md) remain historical records. These changes in calculation domain do not alter the source-selection decisions.
