@@ -15,11 +15,14 @@ For either method, bounds are likelihood events, missing locations are not zeros
 ```sh
 python -m pytest -q
 python -m benchmarks.regional --output results/regional-methods
+python -m benchmarks.support --output results/support-stress-tests
 python scripts/check_repository_navigation.py
 ```
 
 Inspect matched maps, all prediction failures, interval coverage and numerical refinement. Preserve unfavorable outcomes and explicitly count unestimable trials. The simulated scenarios are development evidence, not proof of universal calibration. Do not retune the algorithm from outer test outcomes without declaring a new development cycle.
 
 Keep source/input hashes, package versions, complete candidate tables and fold membership. Large regenerated grids stay in ignored local output. Update newcomer guides, report indexes and method documentation when adding a family. New runs are requested through chat and published on GitHub; no browser workflow is required.
+
+Support footprints and contour gates are declared development assumptions, not confidence sets. Preserve all three policies, failed contours, training-only support strata, and geographic-deletion sensitivity. Never tune closure thresholds to obtain a preferred total. A qualified perimeter does not validate its proximal interior. Derived contours are correlated summaries of one field, not extra independent observations. Keep interpolated bands and proximal/distal continuation scenarios separate; no supported band means no continuation. Fitting-domain sensitivity is distinct from changing a display or integration window.
 
 Legacy `fit` and historical benchmark commands retain their original semantics for reproduction. Their global integrations and rectangular intervals must not be relabelled as current observation-hull volumes.

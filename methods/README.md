@@ -11,6 +11,8 @@
 
 Neither needs invented pseudo-observations. Numerical integration points evaluate integrals and penalties; they do not supply additional evidence. Automation removes per-eruption hand tuning, not the model's fixed assumptions or search limits.
 
+Both now pass through the same [support and complete-contour audit](../docs/methods/supported-isopachs.md). A smooth GP prediction and a closed spline contour both require spatial evidence. The audit reports local partial volumes, refuses unsupported closure, and keeps proximal/distal continuations as explicit scenarios. [Results across all eruptions](../comparisons/support/README.md).
+
 The [code registry](../src/empirical_isopach/models/registry.py) is the executable list of active families. `tephra-isopachs methods` displays it. Adding a registry entry includes the method in fitting, geographic evaluation, maps and comparison tables; [the contributor contract](../docs/ADDING_METHOD.md) specifies the statistical obligations.
 
 `selected` remains an internal GP strategy and historical reproduction option, not another public family. The original spline and first trend-penalty experiment are historical implementations. [Method history](../docs/METHODS.md) · [Source map](../src/README.md).

@@ -31,8 +31,8 @@ def report_label(report, method):
 
 def provenance():
     root = Path(__file__).resolve().parents[2]
-    return {"protocol": "regional-spline-v1", "python": platform.python_version(),
-            "packages": {k: version(k) for k in ("numpy", "scipy", "pandas", "matplotlib", "pyproj")},
+    return {"protocol": "regional-spline-v1+supported-isopachs-v1", "python": platform.python_version(),
+            "packages": {k: version(k) for k in ("numpy", "scipy", "pandas", "matplotlib", "pyproj", "shapely")},
             "source_sha256": {str(p.relative_to(root)): sha256(p.read_bytes()).hexdigest()
                               for p in sorted((root/"src").rglob("*.py"))}}
 
@@ -235,7 +235,9 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     meta.pop("transform_inv")
     meta["source"] = "data/"+record["file"] if record else Path(path).name
     region, bounds = SurveyRegion(data.xy), survey_bounds(data.xy)
-    validation = nested_comparison(data, region, bounds, progress=lambda s: progress(f"{name}: {s}"))
+    deletion_models = {m: [] for m in active_methods()}
+    validation = nested_comparison(data, region, bounds, progress=lambda s: progress(f"{name}: {s}"),
+        model_callback=lambda method, fold, model: deletion_models[method].append(model))
     models, methods = {}, {}
     labels = {m: method_label(m) for m in active_methods()}
     notes = ["All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.",
@@ -286,4 +288,10 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
     save_figures(output, name, data, meta, region, models, report)
     write_readme(output, name, report)
+    from .support_reporting import write_support_analysis
+    write_support_analysis(output/"support", name, data, bounds, models, deletion_models, validation,
+        {"input": meta, "execution": report["reproducibility"],
+         "parent_report_sha256": sha256((output/"report.json").read_bytes()).hexdigest()}, progress)
+    with (output/"README.md").open("a") as stream:
+        stream.write("\n## Which parts are actually supported?\n\nRead the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.\n")
     return report

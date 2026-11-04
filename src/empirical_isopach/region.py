@@ -50,9 +50,14 @@ def integrate_region(model, region, orders=(8, 12, 20, 32, 48, 64), tolerance=.0
     history, previous, consecutive = [], None, 0
     for order in orders:
         xy, weights = region.quadrature(order)
-        dist = predictive_distribution(model, xy)
-        logs = np.array([logsumexp(np.log(weights)+dist.log_expected_thickness()),
-                         logsumexp(np.log(weights)+dist.quantile(.5))])+np.log(1e-5)
+        # Bound prediction memory for triangulated supports with many components.
+        expected, medians = [], []
+        for start in range(0, len(xy), 2048):
+            dist = predictive_distribution(model, xy[start:start+2048])
+            expected.append(dist.log_expected_thickness())
+            medians.append(dist.quantile(.5))
+        logs = np.array([logsumexp(np.log(weights)+np.concatenate(expected)),
+                         logsumexp(np.log(weights)+np.concatenate(medians))])+np.log(1e-5)
         if not np.isfinite(logs).all() or np.any(logs > 700):
             raise RuntimeError("Regional volume is not numerically representable; inspect unconstrained surface variance.")
         values = np.exp(logs)
@@ -66,7 +71,7 @@ def integrate_region(model, region, orders=(8, 12, 20, 32, 48, 64), tolerance=.0
     return {"expected_km3": float(values[0]), "median_surface_km3": float(values[1]),
             "converged": consecutive >= 2, "tolerance": tolerance, "refinement": history,
             "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-            "scope": "Matched observation hull only; no global integral.",
+            "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
             "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."}
 
 

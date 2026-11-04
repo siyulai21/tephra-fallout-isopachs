@@ -1,6 +1,6 @@
 # Tephra fallout reconstruction
 
-**From eruption measurements to isopach maps, regional volumes, and reproducible comparisons of empirical statistical models.** An isopach joins locations with the same ash thickness.
+**From eruption measurements to isopach maps, screened partial volumes, and reproducible comparisons of empirical statistical models.** An isopach joins locations with the same ash thickness.
 
 The intended workflow is simple: **upload an eruption's data in chat → audit the evidence → run every active method → publish the data and illustrated reports here.** No browser application or manual pseudo-data placement is needed.
 
@@ -9,18 +9,21 @@ The intended workflow is simple: **upload an eruption's data in chat → audit t
 | [Eruptions](eruptions/README.md) | One home per eruption: accepted data, source decisions, maps, volumes and reliability checks |
 | [Methods](methods/README.md) | The GP ensemble and automatic cubic spline, presented as peers |
 | [Comparisons](comparisons/README.md) | Matched regional evaluation across eruptions and known-truth trials |
+| [Which contours can be trusted?](comparisons/support/README.md) | Sampling gaps, contour stability, proximal/distal extrapolation and the limits of global estimates |
 | [Add an eruption](docs/NEW_ERUPTION.md) | What to upload and how it becomes an auditable GitHub result |
 | [Start here](docs/START_HERE.md) | A worked reading path for someone new to the project |
 
-![Regional volumes and withheld prediction scores](comparisons/regional/comparison.png)
+**Current finding:** none of the six accepted datasets supplies a complete isopach band that passes the new support and geographic-deletion checks. Local partial volumes remain estimable. The audit withholds a preferred global total; adding pseudo-data to make a contour close would not resolve the missing evidence.
+
+![Local footprints and partial volumes](comparisons/support/comparison.png)
 
 ## One dataset, multiple methods
 
-Each active model fits the same accepted measurements and documented bounds. Each produces its own thickness surface, isopachs and volume. All use the same geographic holdouts and **regional observation hull**; there is no preferred model or automatic winner.
+Each active model fits the same accepted measurements and documented bounds. Each produces its own thickness surface, isopachs and volume. All use the same geographic holdouts and common integration footprints; there is no preferred model or automatic winner.
 
 Today the catalogue contains one **GP ensemble** and one **trend-regularized cubic spline**. The spline selects its knots, tension, smoothing, trend strength and noise automatically. Future empirical families can join the [same comparison contract](docs/ADDING_METHOD.md).
 
-Volumes cover the observation hull, which can contain unsampled gaps and exclude proximal deposits. They are **regional bulk fallout volumes**, not complete eruption volumes or dense-rock equivalents. Conditional uncertainty can understate uncertainty; held-out coverage, geographic-deletion sensitivity and failed checks remain visible.
+The new support audit removes long sampling bridges and preserves holes, reports three fixed footprint policies, and tests whole contours before any proximal/distal continuation. The broader observation-hull comparison remains available. Both kinds of volume are **partial bulk fallout volumes**, not complete eruption volumes or dense-rock equivalents. Neither is a certified lower bound. Conditional uncertainty can understate uncertainty; held-out coverage, geographic-deletion sensitivity and failed checks remain visible.
 
 ## Explore the current eruptions
 

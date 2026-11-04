@@ -1,6 +1,6 @@
-# Aso-4: two empirical methods, one regional footprint
+# Aso-4: empirical methods on one regional footprint
 
-Both methods use the same accepted observations, geographic holdouts and integration area. Neither is designated the preferred method.
+All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
 **87 exact measurements, 0 lower bounds, 0 upper limits.** The observation hull covers 3,632,243 km². The automatic validation buffer is 37.63 km.
 
@@ -25,20 +25,121 @@ The footprint is the convex hull of measured/bounded locations, with no source p
 
 The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.
 
-## Automatic spline fit
+## Fitted methods
+
+### GP ensemble
 
 ```json
 {
-  "tail": "power",
-  "knot_intervals": 4,
-  "tension": 1.0,
-  "smoothing": 0.01,
-  "trend_strength": 1.0,
-  "noise_ratio": 0.75
+  "candidate": {
+    "tail": "stacked"
+  },
+  "components": [
+    {
+      "weight": 0.8321168321978664,
+      "model": {
+        "candidate": {
+          "tail": "power",
+          "length_factor": 0.25,
+          "noise_ratio": 0.75
+        },
+        "beta": [
+          3.1230045367323087,
+          2.065570389900075,
+          0.06556817444968209,
+          0.00039923995342634093
+        ],
+        "radius_scale_km": 897.1034093330701,
+        "length_km": 191.0702850703864,
+        "amplitude_log": 0.8249364637301771,
+        "noise_log": 0.6187023477976329,
+        "jitter": 6.805201691916499e-10,
+        "trend_on_constraint_boundary": true,
+        "uncertainty": "conditional Gaussian"
+      }
+    },
+    {
+      "weight": 0.16788316780213366,
+      "model": {
+        "candidate": {
+          "tail": "power",
+          "length_factor": 0.75,
+          "noise_ratio": 0.75
+        },
+        "beta": [
+          3.1230045367323087,
+          2.065570389900075,
+          0.06556817444968209,
+          0.00039923995342634093
+        ],
+        "radius_scale_km": 897.1034093330701,
+        "length_km": 573.2108552111592,
+        "amplitude_log": 0.8249364637301771,
+        "noise_log": 0.6187023477976329,
+        "jitter": 6.805201691916499e-10,
+        "trend_on_constraint_boundary": true,
+        "uncertainty": "conditional Gaussian"
+      }
+    }
+  ],
+  "dominant_tail": "power",
+  "observation_discrepancy_variance_log": 0.0,
+  "trend_on_constraint_boundary": true,
+  "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
 }
 ```
 
-Cubic basis size, tension, derivative penalty, trend strength, trend family and observation noise are selected by geographic predictive scores. Every explored candidate is retained in the selection tables. Numerical quadrature points approximate an area-normalized penalty and never become observations.
+### Trend-regularized cubic spline
+
+```json
+{
+  "method": "spline",
+  "candidate": {
+    "tail": "power",
+    "knot_intervals": 4,
+    "tension": 1.0,
+    "smoothing": 0.01,
+    "trend_strength": 1.0,
+    "noise_ratio": 0.75
+  },
+  "bounds_km": [
+    -178.70979458182308,
+    -476.9677020899797,
+    2855.4377928649897,
+    1904.0099657279166
+  ],
+  "knot_intervals_xy": [
+    4,
+    3
+  ],
+  "n_coefficients": 42,
+  "noise_log": 0.6102200455524363,
+  "amplitude_log": 0.8136267274032484,
+  "trend_beta": [
+    2.9015868963383684,
+    0.8943578454142023,
+    -0.5434271646828661,
+    -0.7103246325623289
+  ],
+  "trend_radius_scale_km": 897.1034093330701,
+  "trend_on_constraint_boundary": true,
+  "effective_df_exact": 19.571395816024236,
+  "newton_decrement": 1.1037459278046333e-27,
+  "newton_iterations": 0,
+  "quadrature_order": 6,
+  "uncertainty": "Conditional Gaussian",
+  "uncertainty_omits": [
+    "fitted trend",
+    "noise and smoothing estimation",
+    "knot/trend selection",
+    "sampling and preservation bias",
+    "vent location error"
+  ],
+  "pseudo_observations": 0
+}
+```
+
+Every explored candidate is retained in the selection tables. All response-dependent choices are retuned within training folds; no hand-placed pseudo-data enter the likelihood.
 
 ## Reliability checks
 
@@ -57,3 +158,7 @@ tephra-isopachs compare Aso-4 --output results/new-regional-run
 [Complete numerical report](report.json) · [Withheld predictions](heldout_predictions.csv) · [Accepted observation semantics](accepted_observations.csv) · [Selection tables](selection/README.md)
 
 The JSON records input/source hashes, package versions, all fold memberships, regional integration refinements, conditional-volume sampling precision and geographic-deletion sensitivity. Historical GP global calculations remain separate.
+
+## Which parts are actually supported?
+
+Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.

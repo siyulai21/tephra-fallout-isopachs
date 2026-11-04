@@ -719,7 +719,7 @@
           }
         ],
         "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-        "scope": "Matched observation hull only; no global integral.",
+        "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
         "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
       },
       "joint_volume": {
@@ -1060,7 +1060,7 @@
           }
         ],
         "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-        "scope": "Matched observation hull only; no global integral.",
+        "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
         "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
       },
       "joint_volume": {
@@ -1108,6 +1108,16 @@
         "relative_expected_volume_change": 3.008704396734174e-14,
         "passed": true
       }
+    }
+  },
+  "method_metadata": {
+    "stacked": {
+      "label": "GP ensemble",
+      "description": "Predictive stacking of Gaussian-process components; no hand-placed pseudo-data."
+    },
+    "spline": {
+      "label": "Trend-regularized cubic spline",
+      "description": "Cubic basis with automatically selected trend and derivative penalties."
     }
   },
   "validation": {
@@ -2269,7 +2279,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -2882,7 +2892,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -3489,7 +3499,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -4090,7 +4100,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           }
@@ -4812,7 +4822,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -5160,7 +5170,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -5516,7 +5526,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           },
@@ -5858,7 +5868,7 @@
                 }
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
-              "scope": "Matched observation hull only; no global integral.",
+              "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
               "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
             }
           }
@@ -5866,8 +5876,30 @@
         "deletion_interpretation": "Complete retuning after each geographic deletion; sensitivity, not a confidence interval."
       }
     },
+    "method_metadata": {
+      "stacked": {
+        "label": "GP ensemble",
+        "description": "Predictive stacking of Gaussian-process components; no hand-placed pseudo-data."
+      },
+      "spline": {
+        "label": "Trend-regularized cubic spline",
+        "description": "Cubic basis with automatically selected trend and derivative penalties."
+      }
+    },
     "scope": "All response-dependent fitting and selection repeated in outer training sets. Full survey coordinates supply the common rectangle/hull.",
     "primary_metric": "equal_region_log_score; lower is better; no automatic preferred method",
+    "paired_fold_score_differences": [
+      {
+        "minuend": "spline",
+        "subtrahend": "stacked",
+        "values": [
+          0.7409554732874828,
+          0.3938941251528567,
+          0.5010141794520095,
+          0.2951893339842082
+        ]
+      }
+    ],
     "paired_fold_score_difference_spline_minus_gp": [
       0.7409554732874828,
       0.3938941251528567,
@@ -5881,40 +5913,62 @@
     "Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals."
   ],
   "reproducibility": {
-    "protocol": "regional-spline-v1",
+    "protocol": "regional-spline-v1+supported-isopachs-v1",
     "python": "3.13.4",
     "packages": {
       "numpy": "2.5.4",
       "scipy": "1.18.1",
       "pandas": "3.1.0",
       "matplotlib": "3.11.2",
-      "pyproj": "3.8.0"
+      "pyproj": "3.8.0",
+      "shapely": "2.2.0"
     },
     "source_sha256": {
       "src/Laea.py": "51b3d0775ee44b42f72eceb01d16d73a04df57903ea354b4bcaa84443f3e4d90",
       "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "src/empirical_isopach/__init__.py": "11ceb8c69d4e5cf61005bb4c2d019549c7bb95bbc2e452dc121e181887720886",
-      "src/empirical_isopach/cli.py": "6a2721716639baef2157b19ee2d143f95d4edda8b2fa00448926cfd57df2d2e8",
-      "src/empirical_isopach/region.py": "46c7ca4fae80133fd23ba7e36fdef76f8741ef9da8ed4f572ecace85cc2f2d44",
-      "src/empirical_isopach/reporting.py": "3c25b72c45220f08dd82fb940b97089931335585ded219b203e19946d2cc2f1c",
-      "src/empirical_isopach/selection.py": "c44e8b6cc700c78bdce0c7cbd22b6d4c496d79669e80127c0bd2cf8b8d471979",
-      "src/empirical_isopach/spline.py": "87ae795b65cbb0c2a6dc6ede56451fd36e615d288ad71872072c43a0f87336c9",
-      "src/empirical_isopach/validation.py": "d0e922d55aaa0c55e01ca12456c32e6368890ab1b2358ea54ad7757f7b422770",
+      "src/empirical_isopach/cli.py": "7151954e602428543dee1a37c1338211459ce49fa536e92791360bb152165886",
+      "src/empirical_isopach/contour_support.py": "00d5df14312f3e97c062e61d06b2dc301888398a88c970f691a99abf20f79bd4",
+      "src/empirical_isopach/core/__init__.py": "c7e7ca2232be6a5be836a679aa2091a7a62dcedd877d24c7c6afdd27a26f2686",
+      "src/empirical_isopach/core/catalog.py": "d97393afdfb2a5f0241778fd7bed5590155c8c876641bca90d3f7da3d0cef26d",
+      "src/empirical_isopach/core/distributions.py": "5a11e991728c24304b35194c0086a94100dd3b6a90f0c091c2757c3bb078c28e",
+      "src/empirical_isopach/core/geometry.py": "8351907d123d051f4b65541d8308c23b6228d057bd3113acb3b0ba3a5bffa6a7",
+      "src/empirical_isopach/core/likelihood.py": "1395ede77f27d566ac4eab50e9d2fe41792834b8bdeaaefdafea0a547e332489",
+      "src/empirical_isopach/core/observations.py": "d2e888d59351d0aefe69a4eab64a94458e4b0528231c06ddbf6585a0254a1257",
+      "src/empirical_isopach/core/validation.py": "f89c53d354708ad408acea5890b889b21fc862bb678e53cd498997ef15ec1024",
+      "src/empirical_isopach/models/__init__.py": "561077a95074c5be9403d88dc64542396133102cfea398f82ca1733051ba475e",
+      "src/empirical_isopach/models/cubic_spline/__init__.py": "7abeb3a322f86cb235e4299210565012e8dddb2df23a468920c8d85770b325ab",
+      "src/empirical_isopach/models/cubic_spline/adapter.py": "6829c8f35b34efdfbf735454e331d3a848b259cc4b152cc59c1cd76a9cbc3d41",
+      "src/empirical_isopach/models/cubic_spline/model.py": "453bd41cb72dd253e79d6f107f898176f7673bf85ab2092d61268399181780e0",
+      "src/empirical_isopach/models/cubic_spline/selection.py": "1b235f1d4b61792d611df80bbbe27ef8f72773d3d1035d8e3e4138278f4c368b",
+      "src/empirical_isopach/models/gaussian_process/__init__.py": "758182ed3e57f21d2d7b92abab45f03b3d4cc8efeff55813fcc7e10ae38157a1",
+      "src/empirical_isopach/models/gaussian_process/adapter.py": "11f524a8c0ada9fc46ef1c0bfc97764577329de55d38582584e4ed7bcae82f15",
+      "src/empirical_isopach/models/gaussian_process/ensemble.py": "d8d3a89c719607e770f440f8a74ff06800228151c1a45f334ab54f82749823fe",
+      "src/empirical_isopach/models/gaussian_process/model.py": "1f24d0f95d07a5c1778dd371f5dcb220e6d4754f6d65c8fe6a4e0dbd051e247a",
+      "src/empirical_isopach/models/gaussian_process/selection.py": "7955f38753fd2f1e85323639c686cbdbcc7f3e25217158c5a0b5f5c5af800cfe",
+      "src/empirical_isopach/models/registry.py": "0143a933ec9ef2291e67a04488a156f82c40681d88efeb777c9680022a12ea6e",
+      "src/empirical_isopach/region.py": "9116296b0a57b117d5056c10eec9aad65e4019c929e66cb5b5124562fe53ff95",
+      "src/empirical_isopach/reporting.py": "fedfa7d4515d4ed80691ba03805c3ab62a2fc47b329eb6e41372466b6ee3cc38",
+      "src/empirical_isopach/selection.py": "ca3936a749cbc5f43715c060551f3c994ab680dd3ce8beb787374940694228b2",
+      "src/empirical_isopach/spline.py": "3263648ac5c7e7d58c5c97792ec4106b3bddb36d68f1709a988a464d9173dad7",
+      "src/empirical_isopach/support.py": "d3ce8159d91485d03b477dec17e9b188c4c68c1bf18965501c92c00ebe22e85f",
+      "src/empirical_isopach/support_reporting.py": "8a101f68fbea4b51e4ac4a1b48b549615462973d4ab72df268eb0efc294263dd",
+      "src/empirical_isopach/validation.py": "516b6fd17954df69cec49ce300c972a95aa6b71cd7d7c610acabf8ee135c6ddb",
       "src/probabilistic_isopach/__init__.py": "0af7147ac62a494e7c8c473c908b59ec144cd65fb2c8f51b8c5e832e4c716baa",
       "src/probabilistic_isopach/__main__.py": "cb85987ebb21dffaad8d1ddf3c364afadff051f897b5d4c14eaa6051dfe3be6f",
-      "src/probabilistic_isopach/catalog.py": "0c4ec7e2adc89df376d6f456dc6bd751e5777d7fe966d2118fb1ed8bdd376948",
+      "src/probabilistic_isopach/catalog.py": "828bb0e6e5224a063acd5cac682fe1b1e9a68d7d56b3acbedacb0dae50a93ee5",
       "src/probabilistic_isopach/cli.py": "388a29a916dd5e629f9c5029e5fb51b768ef32218efd1cfa4c1a89c294753505",
       "src/probabilistic_isopach/contours.py": "644383d07c3eec8ea9c793854077ea258bb3bccf7387cc7fd0207a48098d6c8d",
-      "src/probabilistic_isopach/data.py": "d2e888d59351d0aefe69a4eab64a94458e4b0528231c06ddbf6585a0254a1257",
-      "src/probabilistic_isopach/distributions.py": "5a11e991728c24304b35194c0086a94100dd3b6a90f0c091c2757c3bb078c28e",
-      "src/probabilistic_isopach/ensemble.py": "d008a504e6d75ba6dd6fb1457d923b74c6ec354bed3a77f4ca4a1576783818ef",
+      "src/probabilistic_isopach/data.py": "37a66fdf343e42f03051a7cab5d06ca4ab68aced6b8d1b9028405ad0a8696f69",
+      "src/probabilistic_isopach/distributions.py": "79c69aa4c5e838cdcafffa2e2f0107343f4b6c0aa58052d5ccf3cac5de40150f",
+      "src/probabilistic_isopach/ensemble.py": "28246e92fdb173e0010bc34439cdf1d27bc229f1c2a89919d42e8cac1a84cbd2",
       "src/probabilistic_isopach/figures.py": "621312fb660e37e2caea5594d5b75624b7fef87b61b15379842e400480429e22",
       "src/probabilistic_isopach/global_volume.py": "7b5efee42d520d651d542ba8a8100d3da20c4d5a124a4346c72f424356da2098",
-      "src/probabilistic_isopach/model.py": "37c33c6f4aca2bb6ceed262b10a1d857660fc691b54991205e82954ac1be8054",
+      "src/probabilistic_isopach/model.py": "f38c6662baffec16582f9c299bfbb49c938bfe7992440447370714d052ae5e69",
       "src/probabilistic_isopach/publication.py": "0f73428662a29eec0d8cd53c6dfe34575ebbda255c7de02f929466b5105e0f51",
       "src/probabilistic_isopach/regularized_spline.py": "b88a383a1aa14e8993ef65e7499519cad0ed8b87fc03f629adbb12a9346374f7",
       "src/probabilistic_isopach/report.py": "b0785f6fb1d91dcb16e1e1f8ac52bc6aebdae79c3551af45eeb42d3506122d45",
-      "src/probabilistic_isopach/validation.py": "8ad38bedc4fb878e916b756a200e18381328f7da1391f40950b92d9f8e30ba02",
+      "src/probabilistic_isopach/validation.py": "9d5c701af77b98806568df1120a7d3f6e37866834a33ee44395d60eef36ad95e",
       "src/probabilistic_isopach/volume.py": "2f2908af4187bfa2281995a192e4b076d570b42ff5b7155c54c78504c5a9fc30",
       "src/research/__init__.py": "0bb9d1326c3a9d83c09f316b44d294718ee5a421db73673bc9dbfb595bc0b892",
       "src/research/trend_regularized_spline.py": "c6ea9bbf6c15ddf1f4aa1016ef89f74c9d3298f40379eaa5ea055c9bbb8f2949",

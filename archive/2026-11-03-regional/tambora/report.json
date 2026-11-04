@@ -1,0 +1,3139 @@
+{
+  "dataset": "Tambora",
+  "input": {
+    "source": "data/eruptions/Tambora_tephra.csv",
+    "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+    "vent_lonlat": [
+      118.0,
+      -8.25
+    ],
+    "projection": "+proj=laea +lat_0=-8.25 +lon_0=118.0 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 26,
+    "n_upper_limits": 0,
+    "n_lower_limits": 0,
+    "ignored_pseudo_rows": [
+      28,
+      29
+    ],
+    "ignored_extra_columns": []
+  },
+  "region": {
+    "definition": "Convex hull of all accepted measurement and bound locations; no vent or pseudo-points added.",
+    "vertices_xy_km": [
+      [
+        -365.07659829709894,
+        1410.5227615119873
+      ],
+      [
+        -1743.939660846281,
+        462.2572557533587
+      ],
+      [
+        -1232.120310915042,
+        209.50784499750986
+      ],
+      [
+        -185.96580244674468,
+        -280.22871044096445
+      ],
+      [
+        1322.0670044035903,
+        391.6179793096652
+      ],
+      [
+        1096.158201158308,
+        987.7692379647016
+      ]
+    ],
+    "area_km2": 2980287.2688565482,
+    "interpretation": "Bulk fallout inside the surveyed footprint, including unsampled gaps; not total eruption volume."
+  },
+  "fit_bounds_km": [
+    -1897.2399941087745,
+    -364.76628403861207,
+    1475.3673376660838,
+    1495.060335109635
+  ],
+  "methods": {
+    "stacked": {
+      "model": {
+        "candidate": {
+          "tail": "stacked"
+        },
+        "components": [
+          {
+            "weight": 0.5042249718762707,
+            "model": {
+              "candidate": {
+                "tail": "power",
+                "length_factor": 0.75,
+                "noise_ratio": 1.5
+              },
+              "beta": [
+                4.919343599926689,
+                4.329884819595936,
+                -0.6511549234382746,
+                -0.2675376968048928
+              ],
+              "radius_scale_km": 337.4763181106144,
+              "length_km": 373.37859987704354,
+              "amplitude_log": 0.6582756775213083,
+              "noise_log": 0.9874135162819625,
+              "jitter": 4.3332686761613755e-10,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "conditional Gaussian"
+            }
+          },
+          {
+            "weight": 0.49577502812372926,
+            "model": {
+              "candidate": {
+                "tail": "power",
+                "length_factor": 1.5,
+                "noise_ratio": 1.5
+              },
+              "beta": [
+                4.919343599926689,
+                4.329884819595936,
+                -0.6511549234382746,
+                -0.2675376968048928
+              ],
+              "radius_scale_km": 337.4763181106144,
+              "length_km": 746.7571997540871,
+              "amplitude_log": 0.6582756775213083,
+              "noise_log": 0.9874135162819625,
+              "jitter": 4.3332686761613755e-10,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "conditional Gaussian"
+            }
+          }
+        ],
+        "dominant_tail": "power",
+        "observation_discrepancy_variance_log": 0.34988895306784606,
+        "trend_on_constraint_boundary": false,
+        "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
+      },
+      "selection": {
+        "method": "stacked",
+        "selected_index": 14,
+        "folds": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "row_ids": [
+          20,
+          19,
+          18,
+          17,
+          16,
+          15,
+          14,
+          23,
+          13,
+          12,
+          11,
+          7,
+          10,
+          8,
+          9,
+          5,
+          2,
+          3,
+          6,
+          4,
+          22,
+          24,
+          21,
+          25,
+          27,
+          26
+        ],
+        "cv_mean_log": [
+          -0.9450021794616541,
+          -0.05473640948616898,
+          1.2771402681703137,
+          1.9872418353992756,
+          1.922044173894176,
+          2.1009837044929074,
+          1.9113441690234145,
+          -1.7572517809451684,
+          2.543144877406643,
+          2.395416692825399,
+          2.9759128894874447,
+          2.2310223508927414,
+          3.115866181801465,
+          3.5509464930540373,
+          3.543404467484555,
+          4.429997366149344,
+          4.927862869058738,
+          4.697607364133855,
+          3.8950072491092493,
+          3.6371824269449906,
+          0.8819205192080503,
+          2.956428055693606,
+          1.0190249393144608,
+          1.350676526531028,
+          -5.5003469160134495,
+          -6.135231936799619
+        ],
+        "cv_variance_log": [
+          1.9455428469634815,
+          1.9415304110838896,
+          1.0041086067333491,
+          1.7596241933391188,
+          1.773924446190919,
+          1.735271490343819,
+          0.9872267850528293,
+          1.9439009806284313,
+          1.638569075325215,
+          0.9762017553731629,
+          0.9651836256356497,
+          1.0022328469517674,
+          0.9580438555364993,
+          0.8598791930660754,
+          0.8561918906634831,
+          0.8806969159872491,
+          0.8765353704419302,
+          0.8792349659187427,
+          0.894294125032835,
+          0.7376891622391972,
+          0.83486922716892,
+          0.779971713862994,
+          0.8307318924520403,
+          0.8045831927275675,
+          0.861062805632646,
+          0.8610409307775383
+        ],
+        "assessment": "Selection diagnostics; use nested CV for performance estimation.",
+        "buffer_km": 80.58613723171388,
+        "stacking": {
+          "screening": "Three lowest CV-score candidates per tail family; no screen uses outer holdout responses.",
+          "components": [
+            {
+              "candidate_index": 2,
+              "candidate": {
+                "tail": "exponential",
+                "length_factor": 0.25,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.0,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                5.826152383092324e-17
+              ]
+            },
+            {
+              "candidate_index": 5,
+              "candidate": {
+                "tail": "exponential",
+                "length_factor": 0.75,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.0,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                8.31319259816554e-17
+              ]
+            },
+            {
+              "candidate_index": 8,
+              "candidate": {
+                "tail": "exponential",
+                "length_factor": 1.5,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.0,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                0.11194425878775463
+              ]
+            },
+            {
+              "candidate_index": 11,
+              "candidate": {
+                "tail": "power",
+                "length_factor": 0.25,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.0,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                0.9999999999999998
+              ]
+            },
+            {
+              "candidate_index": 14,
+              "candidate": {
+                "tail": "power",
+                "length_factor": 0.75,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.5042249718762707,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                0.9799933240335641
+              ]
+            },
+            {
+              "candidate_index": 17,
+              "candidate": {
+                "tail": "power",
+                "length_factor": 1.5,
+                "noise_ratio": 1.5
+              },
+              "weight": 0.49577502812372926,
+              "block_bootstrap_weight_5_95": [
+                0.0,
+                0.9999999999999998
+              ]
+            }
+          ],
+          "block_bootstrap_draws": 64,
+          "block_bootstrap_seed": 1729,
+          "calibration": {
+            "variance_log": 0.34988895306784606,
+            "sd_log": 0.5915141190773439,
+            "search_upper_variance": 4.893285215808087,
+            "at_search_boundary": false,
+            "training_cv_score_before": 1.5790119532351845,
+            "training_cv_score_after": 1.549215760786437,
+            "scope": "Additional discrepancy for new observations only; not included in latent maps or volume intervals.",
+            "coverage_guarantee": "None. Data-adaptive calibration must be evaluated in outer spatial holdouts."
+          },
+          "assessment": "Weight/calibration training diagnostics. Use outer nested validation for performance.",
+          "dropped_numerical_weight": 0.0
+        },
+        "cv_median_log": [
+          -0.9450020539419622,
+          -0.05472648917921849,
+          1.2769525115452343,
+          1.9868525847690375,
+          1.9219205826408485,
+          2.100509770178115,
+          1.9112196448953491,
+          -1.7572516376363012,
+          2.5427105331168782,
+          2.395355074031567,
+          2.975914252284211,
+          2.2312388932116307,
+          3.1158386021423192,
+          3.550937087364777,
+          3.543326757299696,
+          4.430150500579401,
+          4.927923353875289,
+          4.697671625701557,
+          3.895188992973453,
+          3.6373820210284737,
+          0.8817225949805783,
+          2.9565168526227987,
+          1.018789362225736,
+          1.350441076221702,
+          -5.5003470229475475,
+          -6.135232170961114
+        ],
+        "candidate_table": "selection/stacked-all-data.csv",
+        "n_evaluated": 18,
+        "candidate_table_sha256": "2ecdafd39591d24cec9b563a9d3bcedfbc0437cda548e7bb00a68067207565c4"
+      },
+      "regional_volume": {
+        "expected_km3": 97.91055093219573,
+        "median_surface_km3": 91.1445713776546,
+        "converged": true,
+        "tolerance": 0.001,
+        "refinement": [
+          {
+            "order": 8,
+            "n_points": 384,
+            "expected_km3": 97.39268239523976,
+            "median_surface_km3": 90.64628959579981,
+            "relative_change": null
+          },
+          {
+            "order": 12,
+            "n_points": 864,
+            "expected_km3": 97.29268945010477,
+            "median_surface_km3": 90.54963020522976,
+            "relative_change": 0.0010674741614181747
+          },
+          {
+            "order": 20,
+            "n_points": 2400,
+            "expected_km3": 97.92051171318745,
+            "median_surface_km3": 91.15404033912743,
+            "relative_change": 0.006630645571485797
+          },
+          {
+            "order": 32,
+            "n_points": 6144,
+            "expected_km3": 97.90739378470758,
+            "median_surface_km3": 91.14151452096601,
+            "relative_change": 0.00013743263130151282
+          },
+          {
+            "order": 48,
+            "n_points": 13824,
+            "expected_km3": 97.91055093219573,
+            "median_surface_km3": 91.1445713776546,
+            "relative_change": 3.353854916845881e-05
+          }
+        ],
+        "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+        "scope": "Matched observation hull only; no global integral.",
+        "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+      },
+      "joint_volume": {
+        "conditional_quantiles_km3": {
+          "0.025": 66.6055859857305,
+          "0.5": 97.03957965773422,
+          "0.975": 142.60324618556595
+        },
+        "draws": 2000,
+        "seed": 1729,
+        "integration_order": 16,
+        "sampling_mean_km3": 98.49920614677418,
+        "grid_checks": [
+          {
+            "order": 4,
+            "n_points": 96,
+            "expected_km3": 110.01711520966559,
+            "relative_error_to_refined_mean": 0.12364923046806053
+          },
+          {
+            "order": 6,
+            "n_points": 216,
+            "expected_km3": 101.86968985089672,
+            "relative_error_to_refined_mean": 0.040436284762024766
+          },
+          {
+            "order": 8,
+            "n_points": 384,
+            "expected_km3": 97.3926823952398,
+            "relative_error_to_refined_mean": 0.005289200520529835
+          },
+          {
+            "order": 10,
+            "n_points": 600,
+            "expected_km3": 97.11390273540984,
+            "relative_error_to_refined_mean": 0.008136489777670453
+          },
+          {
+            "order": 12,
+            "n_points": 864,
+            "expected_km3": 97.2926894501048,
+            "relative_error_to_refined_mean": 0.006310468853543805
+          },
+          {
+            "order": 16,
+            "n_points": 1536,
+            "expected_km3": 98.26156918378686,
+            "relative_error_to_refined_mean": 0.0035850911699415455
+          }
+        ],
+        "expected_grid_converged": true,
+        "covariance_jitter_log": 1e-10,
+        "quantile_monte_carlo_90_ranges_km3": {
+          "0.025": [
+            65.80839958795865,
+            67.4941003803486
+          ],
+          "0.5": [
+            95.97897437037675,
+            97.90592815374318
+          ],
+          "0.975": [
+            141.23256294725988,
+            145.24154445119188
+          ]
+        },
+        "interpretation": "Conditional joint-surface intervals. Omit fitted-parameter and selection uncertainty. Mean-grid and Monte Carlo checks do not establish tail-quantile quadrature convergence."
+      }
+    },
+    "spline": {
+      "model": {
+        "method": "spline",
+        "candidate": {
+          "tail": "exponential",
+          "knot_intervals": 4,
+          "tension": 1.0,
+          "smoothing": 0.01,
+          "trend_strength": 1.0,
+          "noise_ratio": 0.75
+        },
+        "bounds_km": [
+          -1897.2399941087745,
+          -364.76628403861207,
+          1475.3673376660838,
+          1495.060335109635
+        ],
+        "knot_intervals_xy": [
+          4,
+          2
+        ],
+        "n_coefficients": 35,
+        "noise_log": 0.5194357723512364,
+        "amplitude_log": 0.6925810298016486,
+        "trend_beta": [
+          3.8418513376129138,
+          1.4567598624616778,
+          -0.23535508970803493,
+          -0.1424323934755244
+        ],
+        "trend_radius_scale_km": 337.4763181106144,
+        "trend_on_constraint_boundary": false,
+        "effective_df_exact": 9.715989471449298,
+        "newton_decrement": 2.1054228182815445e-26,
+        "newton_iterations": 0,
+        "quadrature_order": 6,
+        "uncertainty": "Conditional Gaussian",
+        "uncertainty_omits": [
+          "fitted trend",
+          "noise and smoothing estimation",
+          "knot/trend selection",
+          "sampling and preservation bias",
+          "vent location error"
+        ],
+        "pseudo_observations": 0
+      },
+      "selection": {
+        "method": "spline",
+        "protocol": "regional-spline-v1",
+        "selected_index": 597,
+        "searches": [
+          {
+            "tail": "exponential",
+            "initial_winner_index": 597,
+            "expanded_winner_index": 597,
+            "expanded_axes": {}
+          },
+          {
+            "tail": "power",
+            "initial_winner_index": 1554,
+            "expanded_winner_index": 1554,
+            "expanded_axes": {}
+          }
+        ],
+        "selected_at_explored_boundary": [],
+        "n_evaluated": 2400,
+        "folds": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "row_ids": [
+          20,
+          19,
+          18,
+          17,
+          16,
+          15,
+          14,
+          23,
+          13,
+          12,
+          11,
+          7,
+          10,
+          8,
+          9,
+          5,
+          2,
+          3,
+          6,
+          4,
+          22,
+          24,
+          21,
+          25,
+          27,
+          26
+        ],
+        "buffer_km": 80.58613723171388,
+        "bounds_km": [
+          -1897.2399941087745,
+          -364.76628403861207,
+          1475.3673376660838,
+          1495.060335109635
+        ],
+        "assessment": "Inner selection diagnostics, not estimates of generalization performance.",
+        "search_limitation": "Minimum over evaluated discrete grids; no continuous global-optimum guarantee.",
+        "candidate_table": "selection/spline-all-data.csv",
+        "candidate_table_sha256": "5a8a42d1159e772b88d5032653a009dedae3535e9b96e9a01da12eedc1ab0272"
+      },
+      "regional_volume": {
+        "expected_km3": 107.6914814400451,
+        "median_surface_km3": 93.45758137922316,
+        "converged": true,
+        "tolerance": 0.001,
+        "refinement": [
+          {
+            "order": 8,
+            "n_points": 384,
+            "expected_km3": 107.68837998546813,
+            "median_surface_km3": 93.45450431076036,
+            "relative_change": null
+          },
+          {
+            "order": 12,
+            "n_points": 864,
+            "expected_km3": 107.69143944706444,
+            "median_surface_km3": 93.45761598342901,
+            "relative_change": 3.3295014386026156e-05
+          },
+          {
+            "order": 20,
+            "n_points": 2400,
+            "expected_km3": 107.6914814400451,
+            "median_surface_km3": 93.45758137922316,
+            "relative_change": 3.89937812108334e-07
+          }
+        ],
+        "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+        "scope": "Matched observation hull only; no global integral.",
+        "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+      },
+      "joint_volume": {
+        "conditional_quantiles_km3": {
+          "0.025": 79.51453726533549,
+          "0.5": 104.70987224666422,
+          "0.975": 155.2289517356489
+        },
+        "draws": 2000,
+        "seed": 1729,
+        "integration_order": 6,
+        "sampling_mean_km3": 107.49841063684053,
+        "grid_checks": [
+          {
+            "order": 4,
+            "n_points": 96,
+            "expected_km3": 109.12776424654223,
+            "relative_error_to_refined_mean": 0.013337014100755606
+          },
+          {
+            "order": 6,
+            "n_points": 216,
+            "expected_km3": 107.65328859820674,
+            "relative_error_to_refined_mean": 0.00035465053807082203
+          }
+        ],
+        "expected_grid_converged": true,
+        "covariance_jitter_log": 0.0,
+        "quantile_monte_carlo_90_ranges_km3": {
+          "0.025": [
+            78.23631585542527,
+            80.28407485872205
+          ],
+          "0.5": [
+            103.74368812907161,
+            105.4684860331179
+          ],
+          "0.975": [
+            151.37325998281275,
+            159.92510443105078
+          ]
+        },
+        "interpretation": "Conditional joint-surface intervals. Omit fitted-parameter and selection uncertainty. Mean-grid and Monte Carlo checks do not establish tail-quantile quadrature convergence."
+      },
+      "penalty_quadrature_check": {
+        "orders": [
+          6,
+          12
+        ],
+        "max_log_prediction_change": 5.799164931730161e-05,
+        "relative_expected_volume_change": 4.111500078729513e-06,
+        "passed": true
+      }
+    }
+  },
+  "validation": {
+    "outer_folds": 4,
+    "inner_folds": 3,
+    "folds": [
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "row_ids": [
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      23,
+      13,
+      12,
+      11,
+      7,
+      10,
+      8,
+      9,
+      5,
+      2,
+      3,
+      6,
+      4,
+      22,
+      24,
+      21,
+      25,
+      27,
+      26
+    ],
+    "buffer_km": 80.58613723171388,
+    "buffer_rule": {
+      "rule": "Median nearest-distinct-site distance; halve to 1/2, 1/4, then zero only if an inner training set lacks six exact values/four distinct non-collinear sites.",
+      "proposed_km": 80.58613723171388,
+      "attempts": [
+        {
+          "fraction": 1.0,
+          "buffer_km": 80.58613723171388,
+          "feasible": true
+        }
+      ],
+      "uses": "Coordinates and observation kinds only; never thickness values."
+    },
+    "methods": {
+      "stacked": {
+        "metrics": {
+          "mean_log_score": 1.6532091908348556,
+          "rmse_log": 1.215903230923939,
+          "coverage95_observations": 0.9615384615384616,
+          "mean_interval_width_log": 4.536520886595215,
+          "equal_region_log_score": 1.6197644505043818,
+          "fold_log_scores": [
+            1.2415765390903524,
+            1.4045370761130633,
+            1.1283891133260882,
+            2.704555073488023
+          ]
+        },
+        "predictions": {
+          "median": [
+            -0.9474597316452065,
+            -0.06593166928911198,
+            1.4343963333480074,
+            1.916634429201383,
+            1.846152982616461,
+            2.0387875181376525,
+            2.0641369553658,
+            -1.7577434887465682,
+            2.5228225271625835,
+            2.5140028453262167,
+            3.0233628962655423,
+            2.3149884520763546,
+            3.1487344703016387,
+            3.442902666687215,
+            3.4420647901345287,
+            4.194879387099078,
+            4.645325553013437,
+            4.440865262647085,
+            3.7226532305381768,
+            3.463006676865124,
+            1.4315941067949596,
+            3.0313865126083006,
+            1.537993602247766,
+            1.7372692731429245,
+            -6.231568165518139,
+            -7.048791215952303
+          ],
+          "lower": [
+            -3.681408658761077,
+            -2.7998805964049813,
+            -0.6966026506712736,
+            -0.8153003980118787,
+            -0.8870588924463072,
+            -0.6906782049369133,
+            -0.03431547260756919,
+            -4.491692415862438,
+            -0.18185444899975556,
+            0.4241148293058559,
+            0.9457482962055047,
+            0.12827710166365275,
+            1.0842767808868519,
+            1.406290924965515,
+            1.4090888712565088,
+            1.8568009874428393,
+            2.126727134645745,
+            2.0276535006893495,
+            1.5489496762531347,
+            1.4842252494656565,
+            -0.5939770339733507,
+            1.085207629877378,
+            -0.4701317997880554,
+            -0.22142446785743217,
+            -8.45108123314647,
+            -9.346353039079307
+          ],
+          "upper": [
+            1.7864891954706636,
+            2.6680172578267567,
+            3.596286864569878,
+            4.648569256414644,
+            4.579364857679229,
+            4.768253241212218,
+            4.18172430857866,
+            0.976205438369302,
+            5.227499503324921,
+            4.612517436173021,
+            5.102724565981328,
+            4.526382075841486,
+            5.212918567616375,
+            5.358241897325158,
+            5.353512478014573,
+            6.190784875234012,
+            6.67264972208983,
+            6.451330936996619,
+            5.699787839839853,
+            5.384122188048126,
+            3.5401009590527703,
+            4.971688970542992,
+            3.629129156588937,
+            3.766562214887937,
+            -4.058707263830875,
+            -4.731011822261657
+          ],
+          "log_score": [
+            -1.7236533656007405,
+            -1.6997531660176786,
+            -1.0222572392586469,
+            -1.2753086389089958,
+            -1.2658967926260738,
+            -1.2976445132701377,
+            -1.4906820628878006,
+            -1.3280421685274095,
+            -1.241460887840408,
+            -1.3310739662553297,
+            -1.2506611068839453,
+            -1.3734790850402339,
+            -0.9813057742161568,
+            -1.1164499802179793,
+            -1.3990297654306167,
+            -1.00001218681149,
+            -1.0209388310135328,
+            -1.0019799017624904,
+            -1.2319240147204207,
+            -1.6011487397337343,
+            -1.021873499204861,
+            -0.9116521053429048,
+            -0.9769178875847544,
+            -1.9932013345946733,
+            -2.039302286923281,
+            -10.38778966103195
+          ]
+        },
+        "selections": [
+          {
+            "fold": 0,
+            "n_train": 16,
+            "n_test": 6,
+            "training_row_ids": [
+              20,
+              19,
+              16,
+              23,
+              13,
+              5,
+              2,
+              3,
+              6,
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              18,
+              14,
+              12,
+              11,
+              7,
+              10
+            ],
+            "model": {
+              "candidate": {
+                "tail": "stacked"
+              },
+              "components": [
+                {
+                  "weight": 0.17815291168318914,
+                  "model": {
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      3.8361453430897825,
+                      1.4559020788072032,
+                      -0.2374985214930321,
+                      -0.27263140823489734
+                    ],
+                    "radius_scale_km": 354.07347167202454,
+                    "length_km": 834.7752489136241,
+                    "amplitude_log": 0.6730633269700295,
+                    "noise_log": 1.009594990455044,
+                    "jitter": 4.530142421119648e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                },
+                {
+                  "weight": 0.8218470883168109,
+                  "model": {
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      4.756801000908479,
+                      4.333783030202926,
+                      -0.543651194131224,
+                      -0.325128600967033
+                    ],
+                    "radius_scale_km": 354.07347167202454,
+                    "length_km": 278.25841630454136,
+                    "amplitude_log": 0.6221975315887537,
+                    "noise_log": 0.9332962973831305,
+                    "jitter": 3.8712976831513814e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                }
+              ],
+              "dominant_tail": "power",
+              "observation_discrepancy_variance_log": 2.730332773454918,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
+            },
+            "selection": {
+              "method": "stacked",
+              "selected_index": 11,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                20,
+                19,
+                16,
+                23,
+                13,
+                5,
+                2,
+                3,
+                6,
+                4,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "cv_mean_log": [
+                -4.900615920482255,
+                -2.9639631456803492,
+                0.5188061545657808,
+                -3.804860129917349,
+                1.4281520053069054,
+                4.327641786572179,
+                4.6701942136143835,
+                4.501258594432507,
+                3.9427217519647044,
+                4.0750617137146685,
+                0.6637505989199697,
+                2.5746202101272115,
+                0.6578747412528579,
+                0.48972748823839046,
+                -7.150486505991681,
+                -8.509394526967636
+              ],
+              "cv_variance_log": [
+                25.153054702389003,
+                10.570833586664461,
+                2.4029203367545855,
+                8.099425448461007,
+                2.0965122915024827,
+                0.9346803621468668,
+                1.0046591841481394,
+                0.9613992851526179,
+                0.8696449265592838,
+                0.8708884091844076,
+                0.7146912149191954,
+                0.5337955692770031,
+                0.7064597907714096,
+                0.6713888654366581,
+                2.2154177817260496,
+                3.189015320859545
+              ],
+              "assessment": "Selection diagnostics; use nested CV for performance estimation.",
+              "buffer_km": 80.58613723171388,
+              "stacking": {
+                "screening": "Three lowest CV-score candidates per tail family; no screen uses outer holdout responses.",
+                "components": [
+                  {
+                    "candidate_index": 2,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      2.710875174864771e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 5,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.17815291168318906,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.38325634860412855
+                    ]
+                  },
+                  {
+                    "candidate_index": 8,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.37870471516242504
+                    ]
+                  },
+                  {
+                    "candidate_index": 11,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.8218470883168105,
+                    "block_bootstrap_weight_5_95": [
+                      2.184737476068613e-18,
+                      0.9413054148138474
+                    ]
+                  },
+                  {
+                    "candidate_index": 14,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 4.990133372220364e-16,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.6851622329661742
+                    ]
+                  },
+                  {
+                    "candidate_index": 17,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.7882821023625436
+                    ]
+                  }
+                ],
+                "block_bootstrap_draws": 64,
+                "block_bootstrap_seed": 1729,
+                "calibration": {
+                  "variance_log": 2.730332773454918,
+                  "sd_log": 1.652371862945783,
+                  "search_upper_variance": 17.892429650991982,
+                  "at_search_boundary": false,
+                  "training_cv_score_before": 3.6715395996546305,
+                  "training_cv_score_after": 2.0841565013867327,
+                  "scope": "Additional discrepancy for new observations only; not included in latent maps or volume intervals.",
+                  "coverage_guarantee": "None. Data-adaptive calibration must be evaluated in outer spatial holdouts."
+                },
+                "assessment": "Weight/calibration training diagnostics. Use outer nested validation for performance.",
+                "dropped_numerical_weight": 4.990133372220364e-16
+              },
+              "cv_median_log": [
+                -3.0580913216224985,
+                -1.9967541586303343,
+                0.5025124207736593,
+                -3.04993245176222,
+                1.3866693396877725,
+                4.359797721183985,
+                4.723771056717599,
+                4.544745648379942,
+                3.9614085209934085,
+                4.100463900484056,
+                0.5840525820243767,
+                2.540489131311876,
+                0.5799481456551829,
+                0.41574182907672974,
+                -6.7275893933514315,
+                -7.931550486561173
+              ],
+              "candidate_table": "selection/stacked-outer-0.csv",
+              "n_evaluated": 18,
+              "candidate_table_sha256": "e94f9fc985ecb87bafbd80cdba23fe88f3248e1d3ab1fed5274607eecc03b540"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 95.57075926660339,
+              "median_surface_km3": 85.0853606980178,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 95.23130016176451,
+                  "median_surface_km3": 84.72808871380848,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 95.1274748026427,
+                  "median_surface_km3": 84.64365598690515,
+                  "relative_change": 0.0010914339872598968
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 95.57890987650566,
+                  "median_surface_km3": 85.09299157954892,
+                  "relative_change": 0.0052805240984355
+                },
+                {
+                  "order": 32,
+                  "n_points": 6144,
+                  "expected_km3": 95.5686927682545,
+                  "median_surface_km3": 85.08325922580094,
+                  "relative_change": 0.00011438623574761723
+                },
+                {
+                  "order": 48,
+                  "n_points": 13824,
+                  "expected_km3": 95.57075926660339,
+                  "median_surface_km3": 85.0853606980178,
+                  "relative_change": 2.46983993440267e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 1,
+            "n_train": 17,
+            "n_test": 7,
+            "training_row_ids": [
+              12,
+              11,
+              7,
+              10,
+              8,
+              9,
+              5,
+              2,
+              3,
+              6,
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              20,
+              19,
+              17,
+              16,
+              15,
+              23,
+              13
+            ],
+            "model": {
+              "candidate": {
+                "tail": "stacked"
+              },
+              "components": [
+                {
+                  "weight": 1.0,
+                  "model": {
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      5.04669432603031,
+                      3.185634749053316,
+                      -0.6996282277101238,
+                      -0.13835084050061602
+                    ],
+                    "radius_scale_km": 189.06001731884976,
+                    "length_km": 85.72388665332171,
+                    "amplitude_log": 0.7737499353575167,
+                    "noise_log": 1.160624903036275,
+                    "jitter": 5.986889624657612e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                }
+              ],
+              "dominant_tail": "power",
+              "observation_discrepancy_variance_log": 16.294236091779965,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
+            },
+            "selection": {
+              "method": "stacked",
+              "selected_index": 11,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                12,
+                11,
+                7,
+                10,
+                8,
+                9,
+                5,
+                2,
+                3,
+                6,
+                4,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "cv_mean_log": [
+                1.838689802777018,
+                2.536593618626969,
+                1.6630589422854463,
+                2.7364145685495984,
+                2.8012308062477116,
+                3.518322289509535,
+                4.801483627639423,
+                5.434865062489669,
+                5.180413597763647,
+                4.286613917548916,
+                4.584450526046467,
+                -3.273949786391291,
+                0.5288858010186708,
+                -3.1543968849137745,
+                -1.975816180029542,
+                -13.508987228618171,
+                -13.605953510322308
+              ],
+              "cv_variance_log": [
+                2.1219382278310803,
+                2.1186325095382075,
+                2.121721048237845,
+                2.1174176834646925,
+                2.1132551593106,
+                1.5636913077313799,
+                1.5892469679037617,
+                1.5618129567275303,
+                1.5613129078374037,
+                1.592344238070451,
+                1.5480029104927475,
+                0.7718968660019766,
+                0.7713638910921587,
+                0.7718968644465835,
+                0.7718519667916003,
+                0.7718968660329915,
+                0.7718968660329915
+              ],
+              "assessment": "Selection diagnostics; use nested CV for performance estimation.",
+              "buffer_km": 80.58613723171388,
+              "stacking": {
+                "screening": "Three lowest CV-score candidates per tail family; no screen uses outer holdout responses.",
+                "components": [
+                  {
+                    "candidate_index": 2,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      2.2805273218122844e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 5,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.40573098545219793
+                    ]
+                  },
+                  {
+                    "candidate_index": 8,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 2.5702711583200966e-17,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.5702249517794349
+                    ]
+                  },
+                  {
+                    "candidate_index": 11,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 1.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.34522788356297773,
+                      1.0
+                    ]
+                  },
+                  {
+                    "candidate_index": 14,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 5.551115123125783e-17,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      5.101821742847785e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 17,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      5.706788738381496e-16
+                    ]
+                  }
+                ],
+                "block_bootstrap_draws": 64,
+                "block_bootstrap_seed": 1729,
+                "calibration": {
+                  "variance_log": 16.294236091779965,
+                  "sd_log": 4.036611957047638,
+                  "search_upper_variance": 69.58931509473567,
+                  "at_search_boundary": false,
+                  "training_cv_score_before": 11.430861810215907,
+                  "training_cv_score_after": 2.83954453332949,
+                  "scope": "Additional discrepancy for new observations only; not included in latent maps or volume intervals.",
+                  "coverage_guarantee": "None. Data-adaptive calibration must be evaluated in outer spatial holdouts."
+                },
+                "assessment": "Weight/calibration training diagnostics. Use outer nested validation for performance.",
+                "dropped_numerical_weight": 8.121386281445879e-17
+              },
+              "cv_median_log": [
+                1.838689802777018,
+                2.536593618626969,
+                1.6630589422854463,
+                2.7364145685495984,
+                2.8012308062477116,
+                3.518322289509535,
+                4.801483627639423,
+                5.434865062489669,
+                5.180413597763647,
+                4.286613917548916,
+                4.584450526046467,
+                -3.273949786391291,
+                0.5288858010186708,
+                -3.1543968849137745,
+                -1.975816180029542,
+                -13.508987228618171,
+                -13.605953510322308
+              ],
+              "candidate_table": "selection/stacked-outer-1.csv",
+              "n_evaluated": 18,
+              "candidate_table_sha256": "6ce155263c49ca17efd4461608d95b9e880fb7364aa7ef40fa3558472466c35e"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 120.56917538234245,
+              "median_surface_km3": 93.25677581437724,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 119.6578495956145,
+                  "median_surface_km3": 92.21069215411215,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 119.74306651392395,
+                  "median_surface_km3": 92.51701638328204,
+                  "relative_change": 0.0033110041930107213
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 120.60136758606167,
+                  "median_surface_km3": 93.27385341707524,
+                  "relative_change": 0.008114139236952044
+                },
+                {
+                  "order": 32,
+                  "n_points": 6144,
+                  "expected_km3": 120.56423987403257,
+                  "median_surface_km3": 93.25165128309885,
+                  "relative_change": 0.0003079496214457592
+                },
+                {
+                  "order": 48,
+                  "n_points": 13824,
+                  "expected_km3": 120.56917538234245,
+                  "median_surface_km3": 93.25677581437724,
+                  "relative_change": 5.495076613610927e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 2,
+            "n_train": 17,
+            "n_test": 6,
+            "training_row_ids": [
+              20,
+              19,
+              18,
+              17,
+              16,
+              15,
+              14,
+              23,
+              13,
+              12,
+              7,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              8,
+              9,
+              5,
+              2,
+              3,
+              6
+            ],
+            "model": {
+              "candidate": {
+                "tail": "stacked"
+              },
+              "components": [
+                {
+                  "weight": 0.26171364161396077,
+                  "model": {
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      3.5724675328678157,
+                      1.8158475070286628,
+                      -0.3072905624157016,
+                      -0.2131762378852678
+                    ],
+                    "radius_scale_km": 448.20278330559245,
+                    "length_km": 190.26965172741296,
+                    "amplitude_log": 0.6316065757592372,
+                    "noise_log": 0.9474098636388557,
+                    "jitter": 3.9892686654230904e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                },
+                {
+                  "weight": 0.7382863583860393,
+                  "model": {
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      5.135556304885479,
+                      5.246736126773262,
+                      -0.650903669097157,
+                      -0.3186006059036123
+                    ],
+                    "radius_scale_km": 448.20278330559245,
+                    "length_km": 570.8089551822388,
+                    "amplitude_log": 0.5835855621118664,
+                    "noise_log": 0.8753783431677996,
+                    "jitter": 3.405721083054231e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                }
+              ],
+              "dominant_tail": "power",
+              "observation_discrepancy_variance_log": 1.9481110804540915,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
+            },
+            "selection": {
+              "method": "stacked",
+              "selected_index": 11,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                20,
+                19,
+                18,
+                17,
+                16,
+                15,
+                14,
+                23,
+                13,
+                12,
+                7,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "cv_mean_log": [
+                -1.7624655988926305,
+                -0.3728079008028209,
+                1.9700089248500992,
+                2.1834902793308624,
+                2.0975507814075587,
+                2.1308685135841325,
+                2.5433716900591556,
+                -4.8061500130873585,
+                2.5697939763077744,
+                3.0523525822128184,
+                3.8431303827069034,
+                1.3919845596844802,
+                3.278531502064924,
+                1.5032943511653118,
+                1.6697067271674517,
+                -6.27888968813815,
+                -7.266655292073123
+              ],
+              "cv_variance_log": [
+                1.6089664900107445,
+                1.6917212497419216,
+                1.4378968354131905,
+                1.3922159920907171,
+                1.4014327778194273,
+                0.36259017449795017,
+                0.36676210363892014,
+                0.4473841500639708,
+                0.3689822005666766,
+                0.3836936970143571,
+                0.41086922853496366,
+                0.5934256841783184,
+                0.6756552455588273,
+                0.5905134917648514,
+                0.592763485816987,
+                0.9825247548347407,
+                1.1060027906480112
+              ],
+              "assessment": "Selection diagnostics; use nested CV for performance estimation.",
+              "buffer_km": 80.58613723171388,
+              "stacking": {
+                "screening": "Three lowest CV-score candidates per tail family; no screen uses outer holdout responses.",
+                "components": [
+                  {
+                    "candidate_index": 2,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.2617136416139606,
+                    "block_bootstrap_weight_5_95": [
+                      0.041693581885473605,
+                      0.7817385891348502
+                    ]
+                  },
+                  {
+                    "candidate_index": 5,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 6.118308462888552e-17,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      7.292350668882022e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 8,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      2.0853822961619147e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 11,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 2.6152825008682327e-16,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      5.743727808184805e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 14,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.7382863583860388,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.9497186139517135
+                    ]
+                  },
+                  {
+                    "candidate_index": 17,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 1.9121462277463683e-16,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      0.8844487860407395
+                    ]
+                  }
+                ],
+                "block_bootstrap_draws": 64,
+                "block_bootstrap_seed": 1729,
+                "calibration": {
+                  "variance_log": 1.9481110804540915,
+                  "sd_log": 1.3957474988170646,
+                  "search_upper_variance": 10.59488283476684,
+                  "at_search_boundary": false,
+                  "training_cv_score_before": 2.9117662873251073,
+                  "training_cv_score_after": 1.8976089705201462,
+                  "scope": "Additional discrepancy for new observations only; not included in latent maps or volume intervals.",
+                  "coverage_guarantee": "None. Data-adaptive calibration must be evaluated in outer spatial holdouts."
+                },
+                "assessment": "Weight/calibration training diagnostics. Use outer nested validation for performance.",
+                "dropped_numerical_weight": 5.139259574903456e-16
+              },
+              "cv_median_log": [
+                -1.7624341162591868,
+                -0.37690723424340167,
+                1.965189348037843,
+                2.180158435974592,
+                2.094517192489123,
+                2.1298248860444793,
+                2.5485332028857197,
+                -4.781536869514701,
+                2.578260867372392,
+                3.069556044693341,
+                3.8670421178007683,
+                1.3861460838335926,
+                3.3153975939428495,
+                1.5011294874461152,
+                1.6758766470369704,
+                -6.169415316643272,
+                -7.12413896925408
+              ],
+              "candidate_table": "selection/stacked-outer-2.csv",
+              "n_evaluated": 18,
+              "candidate_table_sha256": "fefba081af6c7e3b76bee72629fa01ef8b699df296eb552a24c245d6edf6fafd"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 118.39509753721364,
+              "median_surface_km3": 109.02203874027401,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 117.88008781131423,
+                  "median_surface_km3": 108.5024082811698,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 117.79777817604135,
+                  "median_surface_km3": 108.40985598107021,
+                  "relative_change": 0.000853725883703405
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 118.40294881811948,
+                  "median_surface_km3": 109.0308320323243,
+                  "relative_change": 0.0056954169722376255
+                },
+                {
+                  "order": 32,
+                  "n_points": 6144,
+                  "expected_km3": 118.39202883737727,
+                  "median_surface_km3": 109.018990697305,
+                  "relative_change": 0.00010861717709509848
+                },
+                {
+                  "order": 48,
+                  "n_points": 13824,
+                  "expected_km3": 118.39509753721364,
+                  "median_surface_km3": 109.02203874027401,
+                  "relative_change": 2.7958044118716075e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 3,
+            "n_train": 17,
+            "n_test": 7,
+            "training_row_ids": [
+              20,
+              19,
+              18,
+              17,
+              16,
+              15,
+              14,
+              23,
+              13,
+              12,
+              11,
+              7,
+              10,
+              8,
+              9,
+              5,
+              6
+            ],
+            "withheld_row_ids": [
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "model": {
+              "candidate": {
+                "tail": "stacked"
+              },
+              "components": [
+                {
+                  "weight": 0.6489359639580065,
+                  "model": {
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      4.04780360246073,
+                      2.230971898619017,
+                      -0.8079435234363177,
+                      0.5660216282950729
+                    ],
+                    "radius_scale_km": 338.6322386312705,
+                    "length_km": 81.01690238389091,
+                    "amplitude_log": 0.5673969187052746,
+                    "noise_log": 0.851095378057912,
+                    "jitter": 3.219392633562401e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                },
+                {
+                  "weight": 0.3510640360419936,
+                  "model": {
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "beta": [
+                      5.372122781077469,
+                      5.778631520706308,
+                      -1.569813784577382,
+                      0.69972072947214
+                    ],
+                    "radius_scale_km": 338.6322386312705,
+                    "length_km": 81.01690238389091,
+                    "amplitude_log": 0.5147524382868666,
+                    "noise_log": 0.7721286574302999,
+                    "jitter": 2.6497007272227437e-10,
+                    "trend_on_constraint_boundary": false,
+                    "uncertainty": "conditional Gaussian"
+                  }
+                }
+              ],
+              "dominant_tail": "exponential",
+              "observation_discrepancy_variance_log": 1.0261144779090061,
+              "trend_on_constraint_boundary": false,
+              "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
+            },
+            "selection": {
+              "method": "stacked",
+              "selected_index": 11,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                2,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1,
+                2,
+                1,
+                2,
+                1,
+                1
+              ],
+              "row_ids": [
+                20,
+                19,
+                18,
+                17,
+                16,
+                15,
+                14,
+                23,
+                13,
+                12,
+                11,
+                7,
+                10,
+                8,
+                9,
+                5,
+                6
+              ],
+              "cv_mean_log": [
+                -1.1314467434322775,
+                0.23145057650633066,
+                2.3029779046540026,
+                2.505496414763129,
+                2.519898925954464,
+                2.3912206251631027,
+                2.530973308303452,
+                0.03805720636205218,
+                3.1465456608994695,
+                2.734047989426919,
+                3.128996762964141,
+                2.7098231508163972,
+                3.943641456673116,
+                3.2633873591682168,
+                3.946222392122567,
+                3.826176994646893,
+                3.601994324372762
+              ],
+              "cv_variance_log": [
+                1.6288061848238984,
+                1.0760476105219554,
+                0.9188254805007471,
+                0.9149442986557158,
+                0.9361570496904136,
+                0.3767047865433554,
+                0.3469807170753457,
+                15.961481933734593,
+                0.39956148577353606,
+                0.5339193922911875,
+                0.648901693284707,
+                0.9939288792190407,
+                0.35588388616397365,
+                0.7021232961414609,
+                0.35474305304342607,
+                1.1188280901110081,
+                1.275495921649321
+              ],
+              "assessment": "Selection diagnostics; use nested CV for performance estimation.",
+              "buffer_km": 80.58613723171388,
+              "stacking": {
+                "screening": "Three lowest CV-score candidates per tail family; no screen uses outer holdout responses.",
+                "components": [
+                  {
+                    "candidate_index": 2,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.6489359639580063,
+                    "block_bootstrap_weight_5_95": [
+                      0.42435849166765915,
+                      0.9539095731944798
+                    ]
+                  },
+                  {
+                    "candidate_index": 5,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      3.845520227649527e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 8,
+                    "candidate": {
+                      "tail": "exponential",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      5.713624039756887e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 11,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.25,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.35106403604199354,
+                    "block_bootstrap_weight_5_95": [
+                      0.04609042680551975,
+                      0.5756415083323403
+                    ]
+                  },
+                  {
+                    "candidate_index": 14,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 0.75,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 0.0,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      4.055718933952304e-16
+                    ]
+                  },
+                  {
+                    "candidate_index": 17,
+                    "candidate": {
+                      "tail": "power",
+                      "length_factor": 1.5,
+                      "noise_ratio": 1.5
+                    },
+                    "weight": 1.198019100237761e-16,
+                    "block_bootstrap_weight_5_95": [
+                      0.0,
+                      2.1989562553969116e-16
+                    ]
+                  }
+                ],
+                "block_bootstrap_draws": 64,
+                "block_bootstrap_seed": 1729,
+                "calibration": {
+                  "variance_log": 1.0261144779090061,
+                  "sd_log": 1.012973088442633,
+                  "search_upper_variance": 4.6388217463693096,
+                  "at_search_boundary": false,
+                  "training_cv_score_before": 2.4204827696805067,
+                  "training_cv_score_after": 1.694366935921432,
+                  "scope": "Additional discrepancy for new observations only; not included in latent maps or volume intervals.",
+                  "coverage_guarantee": "None. Data-adaptive calibration must be evaluated in outer spatial holdouts."
+                },
+                "assessment": "Weight/calibration training diagnostics. Use outer nested validation for performance.",
+                "dropped_numerical_weight": 1.198019100237761e-16
+              },
+              "cv_median_log": [
+                -1.1920271508141465,
+                0.23179914305738436,
+                2.3021628455115986,
+                2.504321970263665,
+                2.5174397046031696,
+                2.3686942129830078,
+                2.522507971974915,
+                2.4549417908656563,
+                3.1203071711262993,
+                2.7599117426084123,
+                3.168640361742518,
+                2.726101037099639,
+                3.940602795736339,
+                3.3052663591996367,
+                3.9480614762518367,
+                3.8151698587338787,
+                3.5494444696443788
+              ],
+              "candidate_table": "selection/stacked-outer-3.csv",
+              "n_evaluated": 18,
+              "candidate_table_sha256": "95df5c06bca89d8bbe60e1fbdcaef87a36f40f603077842ca941954e17d527ba"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 113.93803653434406,
+              "median_surface_km3": 96.50429723224269,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 113.17841975856611,
+                  "median_surface_km3": 95.85230247152509,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 113.4048787716043,
+                  "median_surface_km3": 96.28863949723132,
+                  "relative_change": 0.004531552506968066
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 113.95900576219597,
+                  "median_surface_km3": 96.50896197807133,
+                  "relative_change": 0.004862511627628571
+                },
+                {
+                  "order": 32,
+                  "n_points": 6144,
+                  "expected_km3": 113.93689440658802,
+                  "median_surface_km3": 96.50343104838184,
+                  "relative_change": 0.00019406668685423452
+                },
+                {
+                  "order": 48,
+                  "n_points": 13824,
+                  "expected_km3": 113.93803653434406,
+                  "median_surface_km3": 96.50429723224269,
+                  "relative_change": 1.0024113024765868e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          }
+        ],
+        "deletion_interpretation": "Complete retuning after each geographic deletion; sensitivity, not a confidence interval."
+      },
+      "spline": {
+        "metrics": {
+          "mean_log_score": 1.558808177085024,
+          "rmse_log": 1.18595378540484,
+          "coverage95_observations": 0.9615384615384616,
+          "mean_interval_width_log": 5.605885758884473,
+          "equal_region_log_score": 1.5478835722059785,
+          "fold_log_scores": [
+            1.5844664085931932,
+            1.6622181575590065,
+            1.2272610089635816,
+            1.717588713708133
+          ]
+        },
+        "predictions": {
+          "median": [
+            -0.35440660679594405,
+            -0.5675338629297868,
+            2.168453232230653,
+            2.251640819371027,
+            2.0479410831321045,
+            2.4077605265463045,
+            2.615278005690876,
+            -0.47382556177825175,
+            2.8985800359446254,
+            2.846055823126024,
+            3.0266550302419173,
+            4.047957845917823,
+            2.752434325657524,
+            3.6725954301268584,
+            3.591698117445711,
+            3.764438917380907,
+            3.792904848839307,
+            3.7757020562020323,
+            3.5173442999919144,
+            2.687419138953276,
+            0.15625921669708293,
+            1.9279721748558778,
+            0.3780996163205824,
+            1.309115469980907,
+            -5.016360806997111,
+            -5.155223976883625
+          ],
+          "lower": [
+            -10.38862493361694,
+            -7.841142602434967,
+            0.17425859497249663,
+            0.09124368009431683,
+            -0.19904254669540178,
+            0.43824272698069056,
+            0.6420551248011765,
+            -9.058084916810127,
+            1.4486243233048126,
+            0.8864080382145034,
+            1.080226342408446,
+            1.9720016249748058,
+            0.8242447357426232,
+            2.5331835437457797,
+            2.474921862758106,
+            2.5446199649093586,
+            2.67391057147096,
+            2.6410489508907826,
+            2.069854994863274,
+            0.7778219832109752,
+            -2.6901675633865607,
+            -0.3837470397887497,
+            -2.6570328541882677,
+            -1.1687962372579357,
+            -8.413997980634885,
+            -9.279590054758815
+          ],
+          "upper": [
+            9.67981172002505,
+            6.706074876575393,
+            4.162647869488809,
+            4.412037958647737,
+            4.2949247129596095,
+            4.377278326111918,
+            4.588500886580576,
+            8.110433793253621,
+            4.348535748584438,
+            4.805703608037544,
+            4.973083718075388,
+            6.12391406686084,
+            4.680623915572425,
+            4.812007316507937,
+            4.708474372133316,
+            4.9842578698524544,
+            4.911899126207653,
+            4.910355161513282,
+            4.964833605120555,
+            4.597016294695577,
+            3.002685996780726,
+            4.239691389500504,
+            3.4132320868294315,
+            3.7870271772197492,
+            -1.6187236333593376,
+            -1.0308578990084358
+          ],
+          "log_score": [
+            -2.624416522993152,
+            -2.254602722084806,
+            -1.0871837374394884,
+            -1.1860286083821858,
+            -1.1287507246438842,
+            -1.2393766404712057,
+            -1.0591807435473406,
+            -2.4831139957606876,
+            -0.7192378885771253,
+            -1.0729179967375968,
+            -1.2204600574667912,
+            -4.13388152303694,
+            -0.9331743933310025,
+            -0.6396805625506957,
+            -2.2429961541969954,
+            -0.5852079610560447,
+            -1.875828215025538,
+            -1.154590541795935,
+            -0.8652626191562804,
+            -0.9709110352545962,
+            -1.502596926663666,
+            -1.6080701363686116,
+            -1.5682010713742183,
+            -2.294340929315064,
+            -1.49722454553115,
+            -2.581776351449623
+          ]
+        },
+        "selections": [
+          {
+            "fold": 0,
+            "n_train": 16,
+            "n_test": 6,
+            "training_row_ids": [
+              20,
+              19,
+              16,
+              23,
+              13,
+              5,
+              2,
+              3,
+              6,
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              18,
+              14,
+              12,
+              11,
+              7,
+              10
+            ],
+            "model": {
+              "method": "spline",
+              "candidate": {
+                "tail": "power",
+                "knot_intervals": 8,
+                "tension": 0.5,
+                "smoothing": 0.01,
+                "trend_strength": 1.0,
+                "noise_ratio": 1.5
+              },
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "knot_intervals_xy": [
+                8,
+                4
+              ],
+              "n_coefficients": 77,
+              "noise_log": 0.9332962973831304,
+              "amplitude_log": 0.6221975315887536,
+              "trend_beta": [
+                4.756801001984552,
+                4.333783032396637,
+                -0.5436511946168516,
+                -0.32512859750032796
+              ],
+              "trend_radius_scale_km": 354.07347167202454,
+              "trend_on_constraint_boundary": false,
+              "effective_df_exact": 3.670508102304582,
+              "newton_decrement": 8.054605486398671e-27,
+              "newton_iterations": 0,
+              "quadrature_order": 6,
+              "uncertainty": "Conditional Gaussian",
+              "uncertainty_omits": [
+                "fitted trend",
+                "noise and smoothing estimation",
+                "knot/trend selection",
+                "sampling and preservation bias",
+                "vent location error"
+              ],
+              "pseudo_observations": 0
+            },
+            "selection": {
+              "method": "spline",
+              "protocol": "regional-spline-v1",
+              "selected_index": 1807,
+              "searches": [
+                {
+                  "tail": "exponential",
+                  "initial_winner_index": 561,
+                  "expanded_winner_index": 561,
+                  "expanded_axes": {}
+                },
+                {
+                  "tail": "power",
+                  "initial_winner_index": 1807,
+                  "expanded_winner_index": 1807,
+                  "expanded_axes": {
+                    "knot_intervals": [
+                      2,
+                      4,
+                      6,
+                      8,
+                      12
+                    ]
+                  }
+                }
+              ],
+              "selected_at_explored_boundary": [],
+              "n_evaluated": 2700,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                20,
+                19,
+                16,
+                23,
+                13,
+                5,
+                2,
+                3,
+                6,
+                4,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "buffer_km": 80.58613723171388,
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "assessment": "Inner selection diagnostics, not estimates of generalization performance.",
+              "search_limitation": "Minimum over evaluated discrete grids; no continuous global-optimum guarantee.",
+              "candidate_table": "selection/spline-outer-0.csv",
+              "candidate_table_sha256": "5271a6a852f80c4d5b763373dc0612370bcd4c7b633b1e2745c13164ebb7bab9"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 104.46312266665988,
+              "median_surface_km3": 97.02874781501409,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 104.4622066393408,
+                  "median_surface_km3": 97.02785219532934,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 104.4630933674198,
+                  "median_surface_km3": 97.02867651082569,
+                  "relative_change": 8.495586315178035e-06
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 104.46312266665988,
+                  "median_surface_km3": 97.02874781501409,
+                  "relative_change": 7.348769308190759e-07
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 1,
+            "n_train": 17,
+            "n_test": 7,
+            "training_row_ids": [
+              12,
+              11,
+              7,
+              10,
+              8,
+              9,
+              5,
+              2,
+              3,
+              6,
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              20,
+              19,
+              17,
+              16,
+              15,
+              23,
+              13
+            ],
+            "model": {
+              "method": "spline",
+              "candidate": {
+                "tail": "exponential",
+                "knot_intervals": 4,
+                "tension": 1.0,
+                "smoothing": 0.01,
+                "trend_strength": 0.01,
+                "noise_ratio": 0.75
+              },
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "knot_intervals_xy": [
+                4,
+                2
+              ],
+              "n_coefficients": 35,
+              "noise_log": 0.5446561594273323,
+              "amplitude_log": 0.7262082125697763,
+              "trend_beta": [
+                4.0695476719148,
+                0.9254410485011597,
+                0.05218511098283498,
+                -0.2720468864912697
+              ],
+              "trend_radius_scale_km": 189.06001731884976,
+              "trend_on_constraint_boundary": false,
+              "effective_df_exact": 6.686685429890095,
+              "newton_decrement": 1.3620485435375919e-27,
+              "newton_iterations": 0,
+              "quadrature_order": 6,
+              "uncertainty": "Conditional Gaussian",
+              "uncertainty_omits": [
+                "fitted trend",
+                "noise and smoothing estimation",
+                "knot/trend selection",
+                "sampling and preservation bias",
+                "vent location error"
+              ],
+              "pseudo_observations": 0
+            },
+            "selection": {
+              "method": "spline",
+              "protocol": "regional-spline-v1",
+              "selected_index": 549,
+              "searches": [
+                {
+                  "tail": "exponential",
+                  "initial_winner_index": 549,
+                  "expanded_winner_index": 549,
+                  "expanded_axes": {}
+                },
+                {
+                  "tail": "power",
+                  "initial_winner_index": 1749,
+                  "expanded_winner_index": 1749,
+                  "expanded_axes": {}
+                }
+              ],
+              "selected_at_explored_boundary": [],
+              "n_evaluated": 2400,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                12,
+                11,
+                7,
+                10,
+                8,
+                9,
+                5,
+                2,
+                3,
+                6,
+                4,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "buffer_km": 80.58613723171388,
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "assessment": "Inner selection diagnostics, not estimates of generalization performance.",
+              "search_limitation": "Minimum over evaluated discrete grids; no continuous global-optimum guarantee.",
+              "candidate_table": "selection/spline-outer-1.csv",
+              "candidate_table_sha256": "11463a23c42d549868fee7c2ec9219aa92d0dfdf41e7acbcd458e81f7042ec79"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 33782.76022850487,
+              "median_surface_km3": 103.52858722343727,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 33787.64023388438,
+                  "median_surface_km3": 103.5248069769812,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 33783.342190922005,
+                  "median_surface_km3": 103.52860579144036,
+                  "relative_change": 0.00012722373464675937
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 33782.76022850487,
+                  "median_surface_km3": 103.52858722343727,
+                  "relative_change": 1.7226609465837814e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 2,
+            "n_train": 17,
+            "n_test": 6,
+            "training_row_ids": [
+              20,
+              19,
+              18,
+              17,
+              16,
+              15,
+              14,
+              23,
+              13,
+              12,
+              7,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "withheld_row_ids": [
+              8,
+              9,
+              5,
+              2,
+              3,
+              6
+            ],
+            "model": {
+              "method": "spline",
+              "candidate": {
+                "tail": "power",
+                "knot_intervals": 4,
+                "tension": 0.0,
+                "smoothing": 1e-06,
+                "trend_strength": 1.0,
+                "noise_ratio": 0.75
+              },
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "knot_intervals_xy": [
+                4,
+                2
+              ],
+              "n_coefficients": 35,
+              "noise_log": 0.43768917158397613,
+              "amplitude_log": 0.5835855621119682,
+              "trend_beta": [
+                5.135555974643541,
+                5.246734649094423,
+                -0.6509031474725827,
+                -0.31860248857192425
+              ],
+              "trend_radius_scale_km": 448.20278330559245,
+              "trend_on_constraint_boundary": false,
+              "effective_df_exact": 10.416071651681536,
+              "newton_decrement": 6.797897911993019e-26,
+              "newton_iterations": 0,
+              "quadrature_order": 6,
+              "uncertainty": "Conditional Gaussian",
+              "uncertainty_omits": [
+                "fitted trend",
+                "noise and smoothing estimation",
+                "knot/trend selection",
+                "sampling and preservation bias",
+                "vent location error"
+              ],
+              "pseudo_observations": 0
+            },
+            "selection": {
+              "method": "spline",
+              "protocol": "regional-spline-v1",
+              "selected_index": 1309,
+              "searches": [
+                {
+                  "tail": "exponential",
+                  "initial_winner_index": 549,
+                  "expanded_winner_index": 549,
+                  "expanded_axes": {}
+                },
+                {
+                  "tail": "power",
+                  "initial_winner_index": 1309,
+                  "expanded_winner_index": 1309,
+                  "expanded_axes": {
+                    "smoothing": [
+                      1e-08,
+                      1e-06,
+                      0.0001,
+                      0.01,
+                      1.0,
+                      100.0
+                    ]
+                  }
+                }
+              ],
+              "selected_at_explored_boundary": [],
+              "n_evaluated": 2640,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ],
+              "row_ids": [
+                20,
+                19,
+                18,
+                17,
+                16,
+                15,
+                14,
+                23,
+                13,
+                12,
+                7,
+                22,
+                24,
+                21,
+                25,
+                27,
+                26
+              ],
+              "buffer_km": 80.58613723171388,
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "assessment": "Inner selection diagnostics, not estimates of generalization performance.",
+              "search_limitation": "Minimum over evaluated discrete grids; no continuous global-optimum guarantee.",
+              "candidate_table": "selection/spline-outer-2.csv",
+              "candidate_table_sha256": "0f41b4ab88a081da0c73a7e6178e0e6b18b187b68d3d38f3cba43cb84e8f9697"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 148.40265659073444,
+              "median_surface_km3": 97.33688247763374,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 148.4611128085133,
+                  "median_surface_km3": 97.32955385119496,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 148.40036376256884,
+                  "median_surface_km3": 97.3368947197095,
+                  "relative_change": 0.00040935914444011984
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 148.40265659073444,
+                  "median_surface_km3": 97.33688247763374,
+                  "relative_change": 1.545004798611383e-05
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          },
+          {
+            "fold": 3,
+            "n_train": 17,
+            "n_test": 7,
+            "training_row_ids": [
+              20,
+              19,
+              18,
+              17,
+              16,
+              15,
+              14,
+              23,
+              13,
+              12,
+              11,
+              7,
+              10,
+              8,
+              9,
+              5,
+              6
+            ],
+            "withheld_row_ids": [
+              4,
+              22,
+              24,
+              21,
+              25,
+              27,
+              26
+            ],
+            "model": {
+              "method": "spline",
+              "candidate": {
+                "tail": "power",
+                "knot_intervals": 6,
+                "tension": 1.0,
+                "smoothing": 0.01,
+                "trend_strength": 1.0,
+                "noise_ratio": 1.5
+              },
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "knot_intervals_xy": [
+                6,
+                3
+              ],
+              "n_coefficients": 54,
+              "noise_log": 0.7721286574369954,
+              "amplitude_log": 0.5147524382913303,
+              "trend_beta": [
+                5.372121785672112,
+                5.778631143818913,
+                -1.5698171167643644,
+                0.6997169691781409
+              ],
+              "trend_radius_scale_km": 338.6322386312705,
+              "trend_on_constraint_boundary": false,
+              "effective_df_exact": 6.158342096435691,
+              "newton_decrement": 1.8361815909743846e-27,
+              "newton_iterations": 0,
+              "quadrature_order": 6,
+              "uncertainty": "Conditional Gaussian",
+              "uncertainty_omits": [
+                "fitted trend",
+                "noise and smoothing estimation",
+                "knot/trend selection",
+                "sampling and preservation bias",
+                "vent location error"
+              ],
+              "pseudo_observations": 0
+            },
+            "selection": {
+              "method": "spline",
+              "protocol": "regional-spline-v1",
+              "selected_index": 1810,
+              "searches": [
+                {
+                  "tail": "exponential",
+                  "initial_winner_index": 561,
+                  "expanded_winner_index": 561,
+                  "expanded_axes": {}
+                },
+                {
+                  "tail": "power",
+                  "initial_winner_index": 1810,
+                  "expanded_winner_index": 1810,
+                  "expanded_axes": {}
+                }
+              ],
+              "selected_at_explored_boundary": [],
+              "n_evaluated": 2400,
+              "folds": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                2,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1,
+                2,
+                1,
+                2,
+                1,
+                1
+              ],
+              "row_ids": [
+                20,
+                19,
+                18,
+                17,
+                16,
+                15,
+                14,
+                23,
+                13,
+                12,
+                11,
+                7,
+                10,
+                8,
+                9,
+                5,
+                6
+              ],
+              "buffer_km": 80.58613723171388,
+              "bounds_km": [
+                -1897.2399941087745,
+                -364.76628403861207,
+                1475.3673376660838,
+                1495.060335109635
+              ],
+              "assessment": "Inner selection diagnostics, not estimates of generalization performance.",
+              "search_limitation": "Minimum over evaluated discrete grids; no continuous global-optimum guarantee.",
+              "candidate_table": "selection/spline-outer-3.csv",
+              "candidate_table_sha256": "47829e0b4d2b803fff2bb4eaba0cf70dc0c44ac4e88dd4d3802818e8c3988e9e"
+            },
+            "regional_deletion_volume": {
+              "expected_km3": 81.16965483714684,
+              "median_surface_km3": 60.55661161068087,
+              "converged": true,
+              "tolerance": 0.001,
+              "refinement": [
+                {
+                  "order": 8,
+                  "n_points": 384,
+                  "expected_km3": 81.18365606724524,
+                  "median_surface_km3": 60.562069653222906,
+                  "relative_change": null
+                },
+                {
+                  "order": 12,
+                  "n_points": 864,
+                  "expected_km3": 81.1693717356643,
+                  "median_surface_km3": 60.556401601081745,
+                  "relative_change": 0.00017598179307654296
+                },
+                {
+                  "order": 20,
+                  "n_points": 2400,
+                  "expected_km3": 81.16965483714684,
+                  "median_surface_km3": 60.55661161068087,
+                  "relative_change": 3.487774872340075e-06
+                }
+              ],
+              "unit_conversion": "cm * km^2 * 1e-5 = km^3",
+              "scope": "Matched observation hull only; no global integral.",
+              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+            }
+          }
+        ],
+        "deletion_interpretation": "Complete retuning after each geographic deletion; sensitivity, not a confidence interval."
+      }
+    },
+    "scope": "All response-dependent fitting and selection repeated in outer training sets. Full survey coordinates supply the common rectangle/hull.",
+    "primary_metric": "equal_region_log_score; lower is better; no automatic preferred method",
+    "paired_fold_score_difference_spline_minus_gp": [
+      0.34288986950284084,
+      0.25768108144594315,
+      0.09887189563749343,
+      -0.9869663597798899
+    ]
+  },
+  "notes": [
+    "All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.",
+    "Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.",
+    "Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals."
+  ],
+  "reproducibility": {
+    "protocol": "regional-spline-v1",
+    "python": "3.13.4",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "3.1.0",
+      "matplotlib": "3.11.2",
+      "pyproj": "3.8.0"
+    },
+    "source_sha256": {
+      "src/Laea.py": "51b3d0775ee44b42f72eceb01d16d73a04df57903ea354b4bcaa84443f3e4d90",
+      "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/empirical_isopach/__init__.py": "11ceb8c69d4e5cf61005bb4c2d019549c7bb95bbc2e452dc121e181887720886",
+      "src/empirical_isopach/cli.py": "6a2721716639baef2157b19ee2d143f95d4edda8b2fa00448926cfd57df2d2e8",
+      "src/empirical_isopach/region.py": "46c7ca4fae80133fd23ba7e36fdef76f8741ef9da8ed4f572ecace85cc2f2d44",
+      "src/empirical_isopach/reporting.py": "3c25b72c45220f08dd82fb940b97089931335585ded219b203e19946d2cc2f1c",
+      "src/empirical_isopach/selection.py": "c44e8b6cc700c78bdce0c7cbd22b6d4c496d79669e80127c0bd2cf8b8d471979",
+      "src/empirical_isopach/spline.py": "87ae795b65cbb0c2a6dc6ede56451fd36e615d288ad71872072c43a0f87336c9",
+      "src/empirical_isopach/validation.py": "d0e922d55aaa0c55e01ca12456c32e6368890ab1b2358ea54ad7757f7b422770",
+      "src/probabilistic_isopach/__init__.py": "0af7147ac62a494e7c8c473c908b59ec144cd65fb2c8f51b8c5e832e4c716baa",
+      "src/probabilistic_isopach/__main__.py": "cb85987ebb21dffaad8d1ddf3c364afadff051f897b5d4c14eaa6051dfe3be6f",
+      "src/probabilistic_isopach/catalog.py": "0c4ec7e2adc89df376d6f456dc6bd751e5777d7fe966d2118fb1ed8bdd376948",
+      "src/probabilistic_isopach/cli.py": "388a29a916dd5e629f9c5029e5fb51b768ef32218efd1cfa4c1a89c294753505",
+      "src/probabilistic_isopach/contours.py": "644383d07c3eec8ea9c793854077ea258bb3bccf7387cc7fd0207a48098d6c8d",
+      "src/probabilistic_isopach/data.py": "d2e888d59351d0aefe69a4eab64a94458e4b0528231c06ddbf6585a0254a1257",
+      "src/probabilistic_isopach/distributions.py": "5a11e991728c24304b35194c0086a94100dd3b6a90f0c091c2757c3bb078c28e",
+      "src/probabilistic_isopach/ensemble.py": "d008a504e6d75ba6dd6fb1457d923b74c6ec354bed3a77f4ca4a1576783818ef",
+      "src/probabilistic_isopach/figures.py": "621312fb660e37e2caea5594d5b75624b7fef87b61b15379842e400480429e22",
+      "src/probabilistic_isopach/global_volume.py": "7b5efee42d520d651d542ba8a8100d3da20c4d5a124a4346c72f424356da2098",
+      "src/probabilistic_isopach/model.py": "37c33c6f4aca2bb6ceed262b10a1d857660fc691b54991205e82954ac1be8054",
+      "src/probabilistic_isopach/publication.py": "0f73428662a29eec0d8cd53c6dfe34575ebbda255c7de02f929466b5105e0f51",
+      "src/probabilistic_isopach/regularized_spline.py": "b88a383a1aa14e8993ef65e7499519cad0ed8b87fc03f629adbb12a9346374f7",
+      "src/probabilistic_isopach/report.py": "b0785f6fb1d91dcb16e1e1f8ac52bc6aebdae79c3551af45eeb42d3506122d45",
+      "src/probabilistic_isopach/validation.py": "8ad38bedc4fb878e916b756a200e18381328f7da1391f40950b92d9f8e30ba02",
+      "src/probabilistic_isopach/volume.py": "2f2908af4187bfa2281995a192e4b076d570b42ff5b7155c54c78504c5a9fc30",
+      "src/research/__init__.py": "0bb9d1326c3a9d83c09f316b44d294718ee5a421db73673bc9dbfb595bc0b892",
+      "src/research/trend_regularized_spline.py": "c6ea9bbf6c15ddf1f4aa1016ef89f74c9d3298f40379eaa5ea055c9bbb8f2949",
+      "src/spline_isopach/Model.py": "0196cc65bb381160f276801269f3b06af2005b3a99a1493496cd2e8b3eb488e2",
+      "src/spline_isopach/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/spline_isopach/__main__.py": "9156d9aaa25e0276eed6332510e15e8f57f9a09e5d6b71a1de3641e04d9395c7",
+      "src/spline_isopach/lsf_bsplines2d.py": "fdb64f03e07d6661f5f5009fa77070d202dd6232980c1fbccd7b995d8c589299"
+    }
+  }
+}

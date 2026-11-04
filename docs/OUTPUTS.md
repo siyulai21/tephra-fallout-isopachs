@@ -4,6 +4,8 @@
 
 The current `compare` workflow shows the GP ensemble and cubic spline side by side. Both maps use the same footprint and colour/contour scale. Contours stop at the observation hull; they are not artificially closed. Triangles mark documented bounds and stars mark the source reference.
 
+Read `support/README.md` first when deciding which parts to use for volume or extrapolation. It distinguishes local interpolation patches from unsampled holes, tests complete contours, and reports unresolved cases explicitly. A hull or closed contour is not automatically supported evidence.
+
 Both expected volumes integrate the same hull. The median-surface integral is separate from the median of random volume. Neither is total eruption volume or DRE. Solid volume bars are conditional joint-surface intervals; dotted ranges show fully retuned geographic deletions and are not confidence intervals. A strongly trend-shrunk spline can have a very narrow conditional interval because trend-estimation uncertainty is omitted.
 
 | Current output | Meaning |
@@ -14,8 +16,14 @@ Both expected volumes integrate the same hull. The median-surface integral is se
 | `heldout_predictions.csv` | Outer fold, prediction, interval and score for every accepted observation |
 | `selection/*.csv` | All candidate parameters, failures and inner fold scores |
 | `predictions.csv` | Regenerable grid, excluded from committed reports |
+| `support/README.md`, `support/support.png` | Local footprints, partial volumes and contour eligibility for both methods |
+| `support/contour_audit.csv` | Each candidate level, policy, stability check and rejection reason |
+| `support/report.json` | Three support policies, deletion sensitivity, training-only support strata, band checks and conditional extrapolation scenarios |
+| `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres; not longitude/latitude |
 
 Read `methods.<method>.regional_volume` for expected and median-surface volumes, `joint_volume` for conditional draws, and `validation.methods.<method>` for outer held-out performance and deletion sensitivity. The labels are `stacked` and `spline`; neither is preferred.
+
+In the support report, `methods.<method>.footprint_volumes` contains partial volumes on the shared local triangles. `contours.policies` records eligible bands and continuation status. `preferred_global_km3` remains null: scenario extrapolations are not validated global estimates. The three policy ranges and geographic-deletion ranges are not confidence intervals. See the [support protocol](methods/supported-isopachs.md).
 
 
 ## Historical GP workflow

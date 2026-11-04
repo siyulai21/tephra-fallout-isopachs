@@ -60,7 +60,7 @@ def fit_method(method, data, bounds, folds, buffer):
 
 
 def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, inner_folds=3,
-                      progress=None):
+                      progress=None, model_callback=None):
     data = data.canonical()
     bounds = survey_bounds(data.xy) if bounds is None else bounds
     if buffer_km is None:
@@ -90,6 +90,8 @@ def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, 
                                "withheld_row_ids": data.row_ids[test].tolist(),
                                "model": model.describe(), "selection": selection,
                                "regional_deletion_volume": integrate_region(model, region)})
+            if model_callback is not None:
+                model_callback(method, fold, model)
             if progress:
                 progress(f"{method_label(method)}: geographic holdout {fold+1}/{outer_folds}")
         metrics = interval_metrics(data, arrays["median"], arrays["lower"], arrays["upper"], arrays["log_score"])

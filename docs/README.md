@@ -18,6 +18,7 @@ Start with [the active method catalogue](../methods/README.md) and [method compa
 - [Gaussian-process model](methods/gaussian-process.md): trend, covariance, censored observations and geographic validation.
 - [GP ensemble](methods/gp-ensemble.md): how `stacked` differs from `selected`.
 - [Matched regional comparison](methods/regional-comparison.md): common footprint, automatic tuning and nested evidence.
+- [Supported isopachs and unresolved volume](methods/supported-isopachs.md): local evidence, pseudo-data as regularization, contour selection and separate proximal/distal scenarios.
 - [Historical global volume integration](methods/global-volume.md): physical domain and extrapolation diagnostics.
 - [Cubic-spline methods](methods/cubic-splines.md): automatic knots/smoothing, bounded likelihood and conditional uncertainty.
 
