@@ -1,22 +1,16 @@
 # Source-code map
 
-[Project home](../README.md) · [Method comparison](../docs/METHODS.md)
+[Project home](../README.md) · [Method guide](../docs/METHODS.md)
 
-**`tephra-isopachs` runs the Gaussian-process workflow. Every published eruption report uses that family.** Spline code is retained for research, not invoked as a step in that workflow.
+`tephra-isopachs compare` runs two peer methods with common regional validation. Existing imports and legacy commands remain available for historical reproduction.
 
-| Directory | Role | Used for current reports? |
-|---|---|---|
-| [probabilistic_isopach/](probabilistic_isopach/README.md) | GP fitting, validation, integration and reporting | Yes |
-| [spline_isopach/](spline_isopach/README.md) | Original cubic B-spline model and optional legacy GUI | No |
-| [research/](research/README.md) | Experimental trend-regularized cubic spline | No |
+| Directory | Role |
+|---|---|
+| [empirical_isopach/](empirical_isopach/README.md) | Active automatic spline, common regional evaluation, integration and comparison reports |
+| [probabilistic_isopach/](probabilistic_isopach/README.md) | Active GP-ensemble fitter and shared probability/data utilities; also the legacy GP/global CLI |
+| [spline_isopach/](spline_isopach/README.md) | Original cubic spline and optional legacy GUI; historical reproduction |
+| [research/](research/README.md) | First fixed-smoothing trend-penalty experiment; historical research |
 
-`Laea.py` supplies shared projection helpers. Existing `src.*` package paths are retained so commands and downstream imports keep working.
+The active spline uses its own cubic basis, trend and penalized mixed-likelihood solver. It never fits a GP residual. The GP ensemble still needs individual GP component fitters internally. Shared parsing, probability scoring and region tools do not make these the same statistical method.
 
-## Dependencies between methods
-
-- The GP workflow uses its own spatial model; it does not import or call the spline solver.
-- The original spline fits cubic basis coefficients with tension and roughness penalties.
-- The research extension uses the original spline solver and borrows trend/noise estimates from the GP module. Its added target is the fitted trend, not the GP residual surface.
-- `probabilistic_isopach/regularized_spline.py` is only a compatibility import. New research code should import from `src.research.trend_regularized_spline`.
-
-See [benchmarks](../benchmarks/README.md) and [tests](../tests/README.md). Folder placement does not imply one method has been proven superior.
+`Laea.py` supplies projection helpers. New method families should use the same accepted observations, geographic splits, prediction contract and regional volume definition. [Benchmark commands](../benchmarks/README.md) · [Tests](../tests/README.md).

@@ -1,65 +1,58 @@
 # Tephra fallout reconstruction
 
-**Turn scattered volcanic-ash thickness measurements into maps of the deposit, estimates of fallout volume, and checks of how much the answer depends on missing data and modeling assumptions.** An *isopach* is a line connecting equal deposit thickness.
+**Fit isopachs from scattered ash-thickness observations, calculate regional fallout volumes, and compare empirical statistical methods on the same evidence.** An isopach connects locations with equal deposit thickness.
 
-The repository contains accepted datasets, source audits, reproducible Python calculations, and illustrated reports for six eruptions. You can read the results on GitHub without installing anything.
+The active workflow reports **one GP ensemble and one trend-regularized cubic spline as peers**, with no preferred method. Both use the same accepted measurements, geographic holdouts and observation footprint. Neither requires invented pseudo-points. Spline smoothing, knots and trend strength are selected automatically.
 
 ## Start here
 
 | I want to… | Go to |
 |---|---|
-| Understand the project in a few minutes | [Newcomer guide](docs/START_HERE.md) |
-| Read an eruption's results | [Report catalogue](reports/README.md) |
-| Compare all six eruptions | [Current volume comparison](reports/global-fallout/README.md) |
-| Understand GP versus spline methods | [Which method does what?](docs/METHODS.md) |
-| Calculate a new eruption or reproduce a run | [Quick start](docs/QUICKSTART.md) |
-| Inspect measurements and source decisions | [Data guide](data/README.md) |
-| Find a particular part of the code | [Source-code map](src/README.md) |
+| Understand the project | [Newcomer guide](docs/START_HERE.md) |
+| Compare the two methods across six eruptions | [Regional comparison and known-truth trials](reports/regional-methods/README.md) |
+| Read a particular eruption | [Report catalogue](reports/README.md) |
+| Understand GP versus cubic spline | [Method guide](docs/METHODS.md) |
+| Calculate a new eruption | [Quick start](docs/QUICKSTART.md) |
+| Inspect inputs and source decisions | [Data guide](data/README.md) |
+| Find code or historical results | [Source map](src/README.md) · [Repository map](docs/REPOSITORY_MAP.md) |
 
-## What method produces the reports?
+![Regional volumes and withheld prediction scores](reports/regional-methods/comparison.png)
 
-**Every current eruption report uses a Gaussian-process (GP) model:** a fitted directional thinning trend plus spatial variation. `selected` chooses one GP configuration using geographic holdouts; `stacked` combines several GP configurations. Neither label means cubic spline.
-
-The [original cubic spline](src/spline_isopach/README.md) and [experimental trend-regularized cubic spline](src/research/README.md) are retained separately for research. They did not produce the current eruption maps and volumes. Their earlier development benchmarks are clearly labelled in the [validation archive](docs/validation/README.md).
+The volume comparison is restricted to each eruption's **observation hull**, shared by both methods. It can contain unsampled gaps and omit proximal deposits: regional bulk fallout is not total eruption volume or dense-rock equivalent. Distant extrapolation is excluded from method comparison. Conditional intervals, geographic-deletion sensitivity and poor predictive coverage remain explicit.
 
 ## Explore an eruption
 
-| Eruption | Measurements / lower bounds | Report | Input provenance |
+| Eruption | Exact measurements / lower bounds | Current comparison | Provenance |
 |---|---:|---|---|
 | Minoan | 92 / 9 | [All fallout fans together](reports/minoan/README.md) | [Source-table audit](data/audits/Minoan/README.md) |
-| YTT | 46 / 0 | [Youngest Toba Tuff](reports/ytt/README.md) | [Reviewed principal selection](data/audits/YTT/README.md) |
-| Mazama | 45 / 0 | [Reconstruction](reports/mazama/README.md) | [Supplied input flags](data/eruptions/README.md) |
-| Tambora | 26 / 0 | [Reconstruction](reports/tambora/README.md) | [Supplied input flags](data/eruptions/README.md) |
-| Aso-4 | 87 / 0 | [Reconstruction](reports/aso-4/README.md) | [Supplied input flags](data/eruptions/README.md) |
-| B-Tm | 84 / 0 | [Reconstruction](reports/b-tm/README.md) | [Supplied input flags](data/eruptions/README.md) |
-
-Each eruption opens with its current results. `global/` contains current complete-Earth calculations; `regional/` preserves the earlier finite-rectangle results and their sensitivities. YTT also has `archive/` for superseded input selections. **These folders describe calculation scope and history, not different model families.**
-
-![Comparison of modeled fallout volumes and extrapolation across six eruptions](reports/global-fallout/comparison.png)
-
-The headline is **model-conditional bulk fallout integrated over the complete Earth**. A complete integration domain does not mean the deposit is well constrained everywhere. Distant tails, unsampled sectors and preservation can dominate the answer; the reports show these failures. Bulk fallout is not automatically total erupted volume or dense-rock equivalent. [How to read the outputs](docs/OUTPUTS.md).
+| YTT | 46 / 0 | [Youngest Toba Tuff](reports/ytt/README.md) | [Reviewed selection](data/audits/YTT/README.md) |
+| Mazama | 45 / 0 | [Two-method report](reports/mazama/README.md) | [Input flags](data/eruptions/README.md) |
+| Tambora | 26 / 0 | [Two-method report](reports/tambora/README.md) | [Input flags](data/eruptions/README.md) |
+| Aso-4 | 87 / 0 | [Two-method report](reports/aso-4/README.md) | [Input flags](data/eruptions/README.md) |
+| B-Tm | 84 / 0 | [Two-method report](reports/b-tm/README.md) | [Input flags](data/eruptions/README.md) |
 
 ## Run a calculation
 
-With Python 3.10 or later, from a repository checkout:
+With Python 3.10 or later:
 
 ```sh
 python -m pip install '.[test]'
-tephra-isopachs fit Minoan --output results/minoan-example --nested-cv
+tephra-isopachs compare Minoan --output results/minoan-regional
 ```
 
-Read `results/minoan-example/README.md`. For your own eruption, supply a CSV in the [documented format](data/README.md), or provide measurements and source notes in chat for review and publication. A new run uses a fresh output directory. The [quick start](docs/QUICKSTART.md) covers installation, custom data and all-eruption reproduction.
+For new data, replace `Minoan` with a CSV path, or supply measurements and source notes in chat for review and publication to GitHub. No browser application or manual statistical tuning is required. Read the generated `README.md` for both methods, shared maps, volumes and nested validation. Existing output directories are protected.
 
 ## Repository map
 
 | Folder | Contents |
 |---|---|
-| [data/](data/README.md) | Accepted inputs, unchanged source files, audits and selection history |
-| [reports/](reports/README.md) | Published eruption results, current calculations and regional history |
-| [docs/](docs/README.md) | Getting started, output interpretation, method derivations and validation |
-| [src/](src/README.md) | Active GP workflow, original spline and separate spline research extension |
-| [benchmarks/](benchmarks/README.md) | Commands that reproduce analyses and research comparisons |
+| [data/](data/README.md) | Accepted inputs, unchanged sources and audits |
+| [reports/](reports/README.md) | Current peer comparisons and clearly separated historical results |
+| [docs/](docs/README.md) | Guides, statistical definitions and validation |
+| [src/](src/README.md) | Regional comparison framework, GP implementation and historical spline code |
+| [benchmarks/](benchmarks/README.md) | Reproducible real-data and known-truth comparisons |
 | [tests/](tests/README.md) | Numerical, statistical and provenance checks |
-| `results/` | Local generated runs and large arrays; excluded from Git |
 
-[Contributing](CONTRIBUTING.md) · [Change history](CHANGELOG.md) · [Source and map attribution](THIRD_PARTY_NOTICES.md) · [Folder and path guide](docs/REPOSITORY_MAP.md)
+Earlier selected-GP, rectangular-region and complete-Earth calculations remain available as historical records. They do not determine the preferred method in this workflow. New empirical families can join the same regional comparison contract.
+
+[Contributing](CONTRIBUTING.md) · [Change history](CHANGELOG.md) · [Attribution](THIRD_PARTY_NOTICES.md)

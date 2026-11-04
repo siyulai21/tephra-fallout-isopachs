@@ -1,30 +1,27 @@
 # Which method does what?
 
-[Project home](../README.md) · [Documentation](README.md) · [Source-code map](../src/README.md)
+[Project home](../README.md) · [Regional evidence](../reports/regional-methods/README.md) · [Source map](../src/README.md)
 
-**Every current eruption report uses a Gaussian-process model.** The repository also preserves two cubic-spline implementations as research alternatives. They are not three stages of one calculation.
+**The active regional workflow reports two peer methods, with no preferred family.** Each produces its own thickness surface, isopachs, regional volumes and geographic validation.
 
-| Implementation | How the surface is represented | Controls | Current eruption reports? |
-|---|---|---|---|
-| [Gaussian process](methods/gaussian-process.md) | Directional thinning trend plus a Matérn spatial residual field | Geographic selection of thinning family, correlation length and noise ratio; smoothness class is fixed | **Yes** |
-| [Original cubic spline](methods/cubic-splines.md) | Cubic B-spline basis coefficients | Tension, roughness and knot layout | No |
-| [Trend-regularized cubic spline](methods/cubic-splines.md) | Original spline plus a penalty toward a fitted thinning trend | Original controls plus a normalized, data-selected trend penalty | No |
+| Public method | Surface | Automatic choices |
+|---|---|---|
+| [GP ensemble (`stacked`)](methods/gp-ensemble.md) | Directional trend plus a mixture of Matérn GP residual fields | Geographic predictive weights across trend, length-scale and noise candidates |
+| [Trend-regularized cubic spline (`spline`)](methods/cubic-splines.md) | Cubic log-thickness surface with derivative and normalized trend penalties | Joint geographic selection of trend, knots, tension, smoothing, trend strength and noise |
 
-## Labels used in the reports
+Both use measurements and documented bounds. Neither treats predictions as new observations. The spline does not use a GP residual surface. They share data parsing, probability scoring, regional integration and reporting conventions.
 
-- **`selected`**: one GP candidate selected using geographic predictive scores. It does not mean the original spline.
-- **`stacked`**: an experimental weighted ensemble of GP candidates. It is not a combination of GP and spline models.
-- **Exponential / power-law**: the broad thinning trend within the GP model, not a different interpolation method.
-- **Global / regional**: the volume integration domain, not the model family.
+```sh
+tephra-isopachs compare Minoan --output results/minoan-regional
+```
 
-Both current strategies use the same accepted observations and explicit treatment of bounds. Their details are in the [GP model](methods/gaussian-process.md) and [ensemble method](methods/gp-ensemble.md). The primary [volume calculation](methods/global-volume.md) integrates the fitted field over the complete Earth, while regional calculations remain diagnostics.
+The [regional protocol](methods/regional-comparison.md) fixes the same observation hull, automatic buffer and nested folds. All results are retained; no global extrapolation decides which near-data fit looks better. Automatic settings remove per-eruption manual tuning, not scientific assumptions. Read conditional intervals with held-out coverage and geographic-deletion sensitivity.
 
-## What remains an assumption?
+## Historical labels
 
-The GP smoothness class, finite candidate grid, directional trend and treatment of preservation remain modeling choices. Selection is reproducible but does not eliminate extrapolation assumptions. Reported uncertainty is conditional on fitted parameters; no global-volume probability interval is estimated.
+- `selected` is one selected GP configuration, retained for historical reproduction. It is not a third method in the new comparison.
+- Individual GP fitters remain necessary internal components of the ensemble.
+- The original spline and first fixed-smoothing extension remain in historical/research packages; neither produces new regional reports.
+- `comparison/` contains current two-method eruption results. `global/` contains earlier GP-only complete-Earth calculations; `regional/` preserves earlier rectangular GP calculations.
 
-The spline extension addresses arbitrary pseudo-point influence by normalizing a trend penalty. It does not turn predictions into independent measurements, jointly optimize every spline control, or provide full uncertainty estimates.
-
-## Where is the comparison evidence?
-
-The [validation catalogue](validation/README.md) separates dated development benchmarks from current eruption reports. Earlier four-eruption experiments include a fixed-default spline comparison; current selected-versus-stacked reports compare GP strategies. Neither establishes that the GP approach outperforms a fully tuned spline for every eruption. [Report catalogue](../reports/README.md).
+The [validation catalogue](validation/README.md) separates current matched comparisons from earlier, less thoroughly tuned spline experiments. None proves universal superiority.

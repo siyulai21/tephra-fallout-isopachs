@@ -2,7 +2,7 @@
 
 [Method overview](../METHODS.md) · [Documentation](../README.md) · [Implementation](../../src/probabilistic_isopach/README.md)
 
-**Used by every published eruption report.** `selected` chooses one GP configuration; `stacked` combines GP configurations. Neither uses cubic splines.
+**Used by the GP side of the current regional comparison and historical GP-only reports.** `selected` chooses one GP configuration; `stacked` combines GP configurations. Neither uses cubic splines.
 
 ## Identifiability comes first
 

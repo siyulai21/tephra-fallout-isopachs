@@ -1,60 +1,48 @@
-# Run a Gaussian-process eruption analysis
+# Calculate and compare a new eruption
 
-[Project home](../README.md) · [Newcomer guide](START_HERE.md) · [Method comparison](METHODS.md)
+[Project home](../README.md) · [Input format](../data/README.md) · [Method guide](METHODS.md)
 
-**These commands run the Gaussian-process workflow.** `selected` means one GP candidate; `stacked` means a GP ensemble. The spline research implementations are separate.
+Supply measurements in chat with the eruption name, units, coordinate reference and available source notes. Accepted data, audit decisions and both method reports can then be published on GitHub. Missing deposits or illustrative equivalents are not automatically measurements or zeros.
 
-Upload your measurements in chat with the eruption name, units, location reference and available source notes. The assistant will preserve the source, check which records are measured thicknesses, run the calculation and add the accepted data and report to GitHub. Missing deposits, cryptotephra occurrence intervals and illustrative equivalents are not automatically treated as measured thickness or zero deposition.
+## Run locally
 
-Reports are Markdown pages with embedded figures. Start with the [Minoan combined-fallout report](../reports/minoan/README.md). You can read published reports directly on GitHub without installing the calculation tools.
-
-## Reproduce a calculation
-
-Use Python 3.10 or later, from a repository checkout:
+Use Python 3.10 or later, in a repository checkout:
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[test]'
-python -m benchmarks.minoan --output results/minoan
+tephra-isopachs compare Minoan --output results/minoan-regional
+tephra-isopachs compare path/to/measurements.csv --output results/new-eruption --name 'New eruption'
 ```
 
-On Windows, activate with `.venv\Scripts\activate`. The Minoan command verifies the source workbook, deposit arithmetic, selections and checksums, then runs a single combined-fallout reconstruction, the ensemble comparison and four data sensitivities. Read `README.md` and `report.json` in each run directory. The [published comparison](../reports/minoan/regional/README.md) explains the single-GP/ensemble decision; the [current overview](../reports/minoan/README.md) gives the global headline.
+On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-For other runs:
+The command fits **both** the GP ensemble and cubic spline, repeats fitting inside geographic holdouts, integrates a common observation hull and writes an illustrated `README.md`. It automatically determines spline knots/smoothing, the validation buffer and regional footprint. The only optional public setting is the report title; no per-eruption pseudo-points or smoothing inputs are requested.
+
+The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. Both methods retain explicit assumptions and conditional uncertainty limitations.
+
+## Reproduce all current evidence
 
 ```sh
-tephra-isopachs fit Minoan --output results/minoan-single --nested-cv
-tephra-isopachs fit path/to/measurements.csv --output results/new-eruption --nested-cv
+python -m benchmarks.regional --output results/regional-methods
+python -m pytest -q
+python scripts/check_repository_navigation.py
 ```
 
-Bundled names are case-insensitive. `python -m src.probabilistic_isopach` is equivalent. Existing nonempty output directories are refused. The statistical workflow requires no map tiles, API keys, Basemap or Cartopy.
+This runs six accepted eruptions and ten fixed trials in each of four synthetic scenarios. Unestimable heavily censored trials are retained with failure reasons, not silently dropped. Candidate tables, input/source hashes, folds and numerical checks make the results auditable.
 
-## Settings and recorded assumptions
+## Read the outputs
 
-| Option | Purpose |
-|---|---|
-| `--method stacked` | Experimental GP ensemble; the single-GP `selected` strategy remains the default |
-| `--name "My deposit"` | Report title |
-| `--levels 0.1 1 2 5 10 20 50` | Positive increasing contour levels in cm |
-| `--map-grid 961` | Refine small features; odd values 65–1201 |
-| `--max-extent-km 7000` | Map limit; does not change the global integral |
-| `--bounds XMIN YMIN XMAX YMAX` | Regional diagnostic rectangle in equal-area kilometres; does not change the global integral |
-| `--volume-grid 48 --draws 1500` | Regional joint-sampling grid and conditional draws; not a global interval |
-| `--buffer-km 50` | Separation for spatial validation |
-| `--grid 128` | Exported prediction-table resolution |
-| `--no-publication` | Compact numerical output for benchmarks |
+- `README.md`: matched maps, regional volumes and interpretation.
+- `report.json`: both fits, nested validation, integration checks and provenance.
+- `heldout_predictions.csv`: every scored location and fold.
+- `accepted_observations.csv`: source-row IDs and preserved bound semantics.
+- `selection/`: every evaluated tuning candidate for final and outer fits.
+- `predictions.csv`: generated grid; kept locally rather than committed as a large artifact.
 
-The Minoan and YTT profiles supply documented validation buffers, regional diagnostic rectangles, map limits and contour levels. Explicit options override them. Profiles match the actual catalogued file path, never a same-named external CSV. Other deposits retain their previous defaults. All resolved settings are recorded.
+See [output definitions](OUTPUTS.md) and the [regional statistical protocol](methods/regional-comparison.md). No map tiles, API keys or browser application are needed.
 
-The report generator writes Markdown, figures, GIS contours, CSV tables and JSON. Each report names its GP method. Large prediction arrays remain in the local run directory and can be regenerated from the recorded command and source/input hashes.
+## Reproduce older analyses
 
-See the [input specification](../data/README.md), [output guide](OUTPUTS.md) and [empirical method](methods/gp-ensemble.md). No hand-entered model weights or invented uncertainty values are required. Unsampled sectors still depend on model assumptions.
-
-Run both GP strategies for every catalogued eruption, geographic-deletion checks and 30 synthetic trials:
-
-```sh
-python -m benchmarks.global_fallout --output results/global-fallout
-```
-
-The [reproduction command catalogue](../benchmarks/README.md) separates current analyses from historical research benchmarks. Source files and inputs stay unchanged when you run an ordinary calculation.
+The legacy `tephra-isopachs fit` command remains available for historical selected/stacked GP and global calculations. Its options and assumptions differ; use the [benchmark catalogue](../benchmarks/README.md) and [historical GP output guide](OUTPUTS.md#historical-gp-workflow). Do not attach historical rectangular or global volumes to the new observation-hull comparison.

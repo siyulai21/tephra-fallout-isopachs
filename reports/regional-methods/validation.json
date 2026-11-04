@@ -1,0 +1,35 @@
+{
+  "protocol": "regional-spline-v1",
+  "package_version": "0.8.0",
+  "base_commit": "65ddebf45e288e353af9483d9c265c66e4e828c3",
+  "tests": {
+    "command": "python -m pytest -q",
+    "passed": 85
+  },
+  "navigation": {
+    "command": "python scripts/check_repository_navigation.py",
+    "local_links_images_checked": 1157,
+    "missing": 0
+  },
+  "real_eruptions": 6,
+  "matched_real_fits": 12,
+  "outer_geographic_fits": 48,
+  "all_real_regional_integrals_converged": true,
+  "all_real_joint_grid_mean_checks_passed": true,
+  "all_spline_penalty_quadrature_checks_passed": true,
+  "synthetic_attempts": 40,
+  "synthetic_completed_pairs": 38,
+  "synthetic_unestimable_pairs": 2,
+  "synthetic_failure_scope": "Insufficient exact observations in required nested geographic training subsets; both methods recorded as unestimable.",
+  "completed_synthetic_numerical_checks_passed": 76,
+  "input_and_current_numerical_module_hashes_verified": true,
+  "unchanged_preexisting_data_and_numerical_artifacts": 378,
+  "wheel": {
+    "version": "0.8.0",
+    "built_without_dependency_download": true,
+    "installed_outside_checkout": true,
+    "six_bundled_datasets_verified": true,
+    "compare_command_verified": true
+  },
+  "scientific_limit": "Spline wins the descriptive outer equal-region score for Tambora; ensemble GP for the other five. No preferred method. Conditional volume intervals are demonstrably undercovered and not calibrated 95% confidence intervals."
+}
