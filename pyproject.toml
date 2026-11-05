@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tephra-fallout-isopachs"
-version = "0.9.0"
-description = "Reproducible empirical tephra isopachs and matched regional volumes"
+version = "0.10.0"
+description = "Reproducible empirical tephra isopachs and probabilistic global fallout volumes"
 requires-python = ">=3.10"
-dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "contourpy>=1.2", "pyproj>=3.6", "shapely>=2.1,<3"]
+dependencies = ["numpy>=2", "scipy>=1.12", "pandas>=2", "matplotlib>=3.8", "contourpy>=1.2", "pyproj>=3.6", "shapely>=2.1,<3", "numpyro>=0.19,<0.23", "arviz>=0.22,<0.23"]
 
 [project.optional-dependencies]
 test = ["pytest>=8"]

@@ -11,8 +11,10 @@
 
 Both use measurements and documented bounds. Neither treats predictions as new observations. The spline does not use a GP residual surface. They share data parsing, probability scoring, regional integration and reporting conventions.
 
+The [global spherical mixture](methods/probabilistic-global.md) is the companion for whole-deposit mass. It fits all accepted fans jointly, normalizes every posterior field over WGS84, and reports conditional credible intervals, seven assumption refits and identical geographic holdouts. A failed local contour gate does not veto this separate global estimate.
+
 ```sh
-tephra-isopachs compare Minoan --output results/minoan-regional
+tephra-isopachs compare Minoan --output results/minoan-complete
 ```
 
 The [regional protocol](methods/regional-comparison.md) fixes the same observation hull, automatic buffer and nested folds. All results are retained; no global extrapolation decides which near-data fit looks better. Automatic settings remove per-eruption manual tuning, not scientific assumptions. Read conditional intervals with held-out coverage and geographic-deletion sensitivity.

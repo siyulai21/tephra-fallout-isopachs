@@ -2,7 +2,7 @@
 
 [Methods](METHODS.md) · [Current reports](../eruptions/README.md) · [Regional protocol](methods/regional-comparison.md)
 
-The current `compare` workflow shows the GP ensemble and cubic spline side by side. Both maps use the same footprint and colour/contour scale. Contours stop at the observation hull; they are not artificially closed. Triangles mark documented bounds and stars mark the source reference.
+The current `compare` workflow shows regional GP and spline results side by side, followed by a separate `global/` companion. Regional maps use the same footprint and colour/contour scale. Their contours stop at the observation hull; they are not artificially closed. Triangles mark documented bounds and stars mark the source reference.
 
 Read `support/README.md` first when deciding which parts to use for volume or extrapolation. It distinguishes local interpolation patches from unsampled holes, tests complete contours, and reports unresolved cases explicitly. A hull or closed contour is not automatically supported evidence.
 
@@ -20,10 +20,17 @@ Both expected volumes integrate the same hull. The median-surface integral is se
 | `support/contour_audit.csv` | Each candidate level, policy, stability check and rejection reason |
 | `support/report.json` | Three support policies, deletion sensitivity, training-only support strata, band checks and conditional extrapolation scenarios |
 | `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres; not longitude/latitude |
+| `global/README.md`, `global/field.png`, `global/volume.png` | Conditional whole-Earth estimates, field uncertainty, assumption sensitivity and unobserved mass |
+| `global/report.json`, `global/estimates.csv` | All global priors, numerical attempts, diagnostics, posterior quantiles and provenance |
+| `global/posterior.npz` | Baseline whole-field parameter draws, retaining independent chain identity |
+| `global/volume_draws.csv.gz` | Global volume draws for all assumptions and chains; no observation noise added |
+| `global/heldout_predictions.csv` | Global-model predictions using the same geographic outer folds as the regional peers |
 
 Read `methods.<method>.regional_volume` for expected and median-surface volumes, `joint_volume` for conditional draws, and `validation.methods.<method>` for outer held-out performance and deletion sensitivity. The labels are `stacked` and `spline`; neither is preferred.
 
 In the support report, `methods.<method>.footprint_volumes` contains partial volumes on the shared local triangles. `contours.policies` records eligible bands and continuation status. `preferred_global_km3` remains null: scenario extrapolations are not validated global estimates. The three policy ranges and geographic-deletion ranges are not confidence intervals. See the [support protocol](methods/supported-isopachs.md).
+
+The global report is separate: `fits.baseline.volume` contains the global median and conditional 95% credible interval. Each alternative in `fits` has its own posterior; `sensitivity_envelope_km3` is not a 95% interval. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` concerns numerical mixing, not model correctness or global identifiability. The old support gate does not suppress these conditional global estimates. See the [global protocol](methods/probabilistic-global.md).
 
 
 ## Historical GP workflow

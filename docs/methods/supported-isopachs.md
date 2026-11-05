@@ -1,5 +1,7 @@
 # Supported isopachs, regularization and unresolved volume
 
+This protocol governs local support and contour-band continuation. The [probabilistic global model](probabilistic-global.md) supplies conditional whole-deposit estimates independently of its eligibility gate.
+
 [Method catalogue](../../methods/README.md) · [Regional protocol](regional-comparison.md) · [Implementation](../../src/empirical_isopach/contour_support.py)
 
 **Smoothness, closure and support are different properties.** A spline may oscillate outside well-sampled ground. A GP may return smoothly to its mean there. Neither behavior supplies missing observations. Version 0.9 adds a shared support audit to both methods; it does not choose a winning family, impose a preferred eruption volume, or manufacture points to close a contour.

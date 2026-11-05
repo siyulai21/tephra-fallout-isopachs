@@ -15,6 +15,8 @@
 
 Start with [the active method catalogue](../methods/README.md) and [method comparison](METHODS.md). Current reports compare the GP ensemble and automatic cubic spline on a shared regional footprint.
 
+The [probabilistic global companion](methods/probabilistic-global.md) estimates whole-deposit mass under explicit assumptions, without an arbitrary calculation region or contour-eligibility veto.
+
 - [Gaussian-process model](methods/gaussian-process.md): trend, covariance, censored observations and geographic validation.
 - [GP ensemble](methods/gp-ensemble.md): how `stacked` differs from `selected`.
 - [Matched regional comparison](methods/regional-comparison.md): common footprint, automatic tuning and nested evidence.
@@ -28,6 +30,7 @@ Start with [the active method catalogue](../methods/README.md) and [method compa
 
 - [Validation catalogue](validation/README.md): current checks and dated development experiments.
 - [Historical reference material](../archive/reference/README.md): original map images and retired reporting history.
-- [Latest all-eruption analysis](../comparisons/regional/README.md): current results and limitations.
+- [Global all-eruption analysis](../comparisons/global/README.md): conditional estimates, sensitivity and validation.
+- [Matched regional analysis](../comparisons/regional/README.md): GP/spline results and limitations.
 
 Earlier documentation URLs retain short pointers where a page moved. Numerical records retain the code hashes and paths from the run that produced them.

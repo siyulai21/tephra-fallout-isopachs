@@ -2,11 +2,13 @@
 
 [Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Method catalogue](../methods/README.md)
 
-Start with the [support and extrapolation audit](support/README.md): which parts of each deposit can be interpolated locally, which complete isopachs survive evidence checks, and why the current data do not supply a preferred global total. This includes twelve new known-truth stress tests and spline fitting-domain sensitivity.
+Start with the [global fallout estimates](global/README.md): conditional whole-Earth volumes, assumption sensitivities, global-model geographic predictions and known-truth tests. The model estimates mass directly without a contour gate or arbitrary region.
+
+Read the [support and extrapolation audit](support/README.md) alongside it: which parts of each deposit can be interpolated locally and which complete isopachs survive evidence checks. Its failed contour gates remain visible as local diagnostics; they no longer veto conditional global inference.
 
 [Read the current regional comparison](regional/README.md): six eruptions, identical within-eruption geographic holdouts, and 40 known-truth attempts (38 completed method pairs and two cases with insufficient exact training support).
 
-Each method receives the same accepted observations and integration footprint. We retain its individual map, volume and diagnostics; there is no default winner. Predictive scores evaluate the entire fitted procedure using held-out regions. Smooth appearance and agreement with a published volume are not selection criteria.
+Each method receives the same accepted observations. The regional peers share an integration footprint; the global companion estimates mass over the whole Earth. We retain individual maps, volumes and diagnostics. Predictive scores evaluate the entire fitted procedure using identical held-out regions. Smooth appearance and agreement with a published volume are not selection criteria.
 
 The known-truth trials test prediction and volume uncertainty. Poor coverage and failures remain in the record. Conditional intervals are not fully calibrated uncertainty intervals, and these development scenarios are not independent external validation.
 
