@@ -4,6 +4,8 @@
 
 A new family joins the same eruption workflow as a peer. It must not silently change the accepted data, the target region or another method's results.
 
+The registry contract below applies to **regional** model families. The [global mass model](methods/probabilistic-global.md) has a separate joint-posterior runner because its whole-Earth volume parameter and uncertainty do not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
+
 ## Implementation boundary
 
 Put the implementation in `src/empirical_isopach/models/<family>/`. Add an adapter and one entry in [registry.py](../src/empirical_isopach/models/registry.py) with a stable identifier, label, description, fitting function and optional diagnostic callback. The registry order only controls presentation. The comparison runner, geographic evaluation, report panels and benchmark summaries iterate registered methods; there is no preferred-method field.

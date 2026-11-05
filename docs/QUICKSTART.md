@@ -12,25 +12,29 @@ Use Python 3.10 or later, in a repository checkout:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[test]'
-tephra-isopachs compare Minoan --output results/minoan-regional
+tephra-isopachs compare Minoan --output results/minoan-complete
 tephra-isopachs compare path/to/measurements.csv --output results/new-eruption --name 'New eruption'
+tephra-isopachs global Minoan --output results/minoan-global
 ```
 
 On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-The command fits **every active method** (currently the GP ensemble and cubic spline), repeats fitting inside geographic holdouts, integrates a common observation hull and writes an illustrated `README.md`. It automatically determines spline knots/smoothing, the validation buffer and regional footprint. The only optional public setting is the report title; no per-eruption pseudo-points or smoothing inputs are requested.
+The comparison fits the **regional GP and cubic spline peers**, repeats fitting inside geographic holdouts, integrates the common hull, and then runs the **global spherical-mixture posterior**, fixed prior sensitivities and matched holdouts. The global reports go in `global/`. Posterior runs can take substantially longer than interpolation; numerical retries and every assumption refit remain auditable. No per-eruption pseudo-points, smoothing inputs or calculation radius are requested. `compare --regional-only` omits the global companion; the separate `global` command supports `--resume` with strict cache verification.
 
-The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. Both methods retain explicit assumptions and conditional uncertainty limitations.
+The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. All methods retain explicit assumptions and conditional uncertainty limitations.
 
 ## Reproduce all current evidence
 
 ```sh
 python -m benchmarks.regional --output results/regional-methods
+python -m benchmarks.global_posterior --output results/global-posteriors
+python -m benchmarks.mass_mixture --output results/global-stress
+python -m benchmarks.global_stress_report --source results/global-stress --output results/global-stress-report
 python -m pytest -q
 python scripts/check_repository_navigation.py
 ```
 
-This runs six accepted eruptions and ten fixed trials in each of four synthetic scenarios. Unestimable heavily censored trials are retained with failure reasons, not silently dropped. Candidate tables, input/source hashes, folds and numerical checks make the results auditable.
+The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with the baseline, seven alternatives and four geographic holdouts each. The global stress suite has twelve baseline trials plus the two declared diffuse-tail alternatives. Unestimable regional trials, poor global coverage and numerical warnings remain visible. Candidate tables, input/source hashes, folds and numerical checks make the results auditable.
 
 ## Read the outputs
 
@@ -40,6 +44,7 @@ This runs six accepted eruptions and ten fixed trials in each of four synthetic 
 - `accepted_observations.csv`: source-row IDs and preserved bound semantics.
 - `selection/`: every evaluated tuning candidate for final and outer fits.
 - `predictions.csv`: generated grid; kept locally rather than committed as a large artifact.
+- `global/`: whole-Earth posterior estimates, sensitivity reports, baseline full-field samples and all sensitivity volume samples.
 
 See [output definitions](OUTPUTS.md) and the [regional statistical protocol](methods/regional-comparison.md). No map tiles, API keys or browser application are needed.
 

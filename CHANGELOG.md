@@ -1,5 +1,12 @@
 # Changes
 
+## 0.10.0 — Conditional global fallout without an arbitrary region
+
+- Replace the complete-contour veto on global inference with a separate positive, analytically mass-normalized spherical mixture. GP and spline remain regional peers; support diagnostics remain visible.
+- Fit all accepted fallout fans jointly. Combine Gaussian, exponential and power thinning, sparse fan/kernel weights, a robust bounded-observation likelihood and full multiple-chain posterior sampling. Add seven fixed prior/model sensitivity refits and matched geographic validation.
+- Publish global posterior intervals separately from assumption-sensitivity envelopes, numerical precision and sampling-geometry mass partitions. Preserve developmental failures and all numerical retry diagnostics; no prior is fitted to a published target volume.
+- Make the ordinary chat-led comparison include a global report, with a resumable standalone `global` command. Keep all accepted observations/audits unchanged and retain the browser-free GitHub workflow.
+
 ## 0.9.0 — Supported isopachs and explicit extrapolation limits
 
 - Added common local interpolation footprints with holes, three fixed geometry policies, and separate per-family partial volumes.

@@ -1,29 +1,30 @@
 # Tephra fallout reconstruction
 
-**From eruption measurements to isopach maps, screened partial volumes, and reproducible comparisons of empirical statistical models.** An isopach joins locations with the same ash thickness.
+**From eruption measurements to isopach maps, conditional global fallout estimates, and reproducible comparisons of empirical statistical models.** An isopach joins locations with the same ash thickness.
 
 The intended workflow is simple: **upload an eruption's data in chat → audit the evidence → run every active method → publish the data and illustrated reports here.** No browser application or manual pseudo-data placement is needed.
 
 | Start with… | What you will find |
 |---|---|
 | [Eruptions](eruptions/README.md) | One home per eruption: accepted data, source decisions, maps, volumes and reliability checks |
-| [Methods](methods/README.md) | The GP ensemble and automatic cubic spline, presented as peers |
+| [Global fallout estimates](comparisons/global/README.md) | Whole-Earth posterior volumes, explicit assumption sensitivity and unobserved-mass diagnostics |
+| [Methods](methods/README.md) | Regional GP/spline peers and the global mass model |
 | [Comparisons](comparisons/README.md) | Matched regional evaluation across eruptions and known-truth trials |
 | [Which contours can be trusted?](comparisons/support/README.md) | Sampling gaps, contour stability, proximal/distal extrapolation and the limits of global estimates |
 | [Add an eruption](docs/NEW_ERUPTION.md) | What to upload and how it becomes an auditable GitHub result |
 | [Start here](docs/START_HERE.md) | A worked reading path for someone new to the project |
 
-**Current finding:** none of the six accepted datasets supplies a complete isopach band that passes the new support and geographic-deletion checks. Local partial volumes remain estimable. The audit withholds a preferred global total; adding pseudo-data to make a contour close would not resolve the missing evidence.
+**Global estimates no longer require a passing contour band.** The old complete-contour screen was too conservative as a prerequisite for conditional extrapolation. A new positive, mass-normalized field estimates total fallout directly on the whole Earth, with no arbitrary calculation rectangle or closing pseudo-data. Its posterior intervals and assumption sensitivities remain explicit: missing deposits cannot be determined from sparse measurements alone. [Results and limitations](comparisons/global/README.md) · [Equations and priors](docs/methods/probabilistic-global.md).
 
-![Local footprints and partial volumes](comparisons/support/comparison.png)
+![Global estimates and matched predictive checks](comparisons/global/comparison.png)
 
 ## One dataset, multiple methods
 
-Each active model fits the same accepted measurements and documented bounds. Each produces its own thickness surface, isopachs and volume. All use the same geographic holdouts and common integration footprints; there is no preferred model or automatic winner.
+Each active model fits the same accepted measurements and documented bounds. Each produces its own thickness surface, isopachs and volume. All use the same geographic holdouts. The two regional methods share integration footprints; the global model integrates over the physical Earth. No automatic winner is selected from the resulting volumes.
 
-Today the catalogue contains one **GP ensemble** and one **trend-regularized cubic spline**. The spline selects its knots, tension, smoothing, trend strength and noise automatically. Future empirical families can join the [same comparison contract](docs/ADDING_METHOD.md).
+For regional reconstruction, the catalogue contains one **GP ensemble** and one **trend-regularized cubic spline**. The spline selects its knots, tension, smoothing, trend strength and noise automatically. The new **mass-normalized spherical mixture** supplies conditional global estimates and is tested on the same geographic holdouts. It fits all accepted fans jointly and varies core thinning, distal tails, fan count, spatial priors, volume priors and observation errors. It is not assumed to outperform both regional families in local prediction.
 
-The new support audit removes long sampling bridges and preserves holes, reports three fixed footprint policies, and tests whole contours before any proximal/distal continuation. The broader observation-hull comparison remains available. Both kinds of volume are **partial bulk fallout volumes**, not complete eruption volumes or dense-rock equivalents. Neither is a certified lower bound. Conditional uncertainty can understate uncertainty; held-out coverage, geographic-deletion sensitivity and failed checks remain visible.
+The support audit removes long sampling bridges and preserves holes, reports three fixed footprint policies, and tests complete contours. It remains a local evidence diagnostic. Its volumes and the broader observation-hull volumes are **partial bulk fallout volumes**; neither is a certified lower bound. The separate global model provides **conditional whole-deposit bulk fallout**, excluding ignimbrite deposits and dense-rock-equivalent conversion. Held-out coverage, known-truth failures and prior dependence remain visible.
 
 ## Explore the current eruptions
 
@@ -45,7 +46,9 @@ With Python 3.10 or later, in a checkout:
 ```sh
 python -m pip install '.[test]'
 tephra-isopachs methods
-tephra-isopachs compare Minoan --output results/minoan-regional
+tephra-isopachs compare Minoan --output results/minoan-complete
+# Global companion only (the same fixed priors and sensitivity protocol):
+tephra-isopachs global Minoan --output results/minoan-global
 ```
 
 For a new upload, measurements and source notes can be supplied in chat. The assistant prepares accepted input, records source decisions, runs the methods, and adds a case home here. [Upload guide and templates](docs/NEW_ERUPTION.md) · [Local installation](docs/QUICKSTART.md).

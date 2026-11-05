@@ -1,8 +1,14 @@
-# Aso-4: data and regional results
+# Aso-4: data, global and regional results
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
-**New support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 929,500 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. No preferred global volume is reported.
+## Global fallout
+
+The joint global posterior has median **1,836 km³** and a **507–49,960 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/global/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
+
+**Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 929,500 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/global/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
+
+## Regional reconstruction
 
 **GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
 
@@ -25,12 +31,13 @@ These volumes cover only the observation hull. It can include unsampled gaps and
 |---|---|
 | Accepted input | [Thickness observations](../../data/eruptions/Aso-4_tephra.csv) |
 | Source decisions | [Audit or supplied-flag status](../../data/eruptions/README.md) |
-| Current maps and interpretation | [Regional report](results/README.md) |
+| Whole-deposit mass and uncertainty | [Global posterior report](results/global/README.md) |
+| Local maps and partial volumes | [Regional report](results/README.md) |
 | Fits, validation and provenance | [Complete numerical record](results/report.json) |
 | Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Automatic tuning | [Candidate tables](results/selection/README.md) |
 
-Both methods were rerun on 2026-11-04. Accepted inputs, fitted settings, held-out predictions and matched-hull volumes reproduce the preceding comparison; the new support audit adds local evidence and extrapolation checks. [Previous matched-hull report](../../archive/2026-11-03-regional/aso-4/README.md).
+The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/global/verification.json). [Previous matched-hull report](../../archive/2026-11-03-regional/aso-4/README.md).
 
 ## Earlier calculations
 

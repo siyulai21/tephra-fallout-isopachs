@@ -6,6 +6,8 @@
 eruptions/                     START HERE for a particular eruption
   <slug>/README.md             Evidence → results → history
   <slug>/results/              Current reviewed report, maps, tables and provenance
+  <slug>/results/global/       Global posterior, assumption refits and sampling checks
+  <slug>/results/support/      Local footprint and contour-support diagnostics
 data/
   datasets.json               Accepted-case catalogue; stable input paths
   eruptions/                  Accepted measurement CSVs
@@ -14,6 +16,8 @@ data/
 methods/                       Active model catalogue and plain-language method cards
 comparisons/
   regional/                   Current six-eruption and known-truth evaluation
+  global/                     Whole-Earth estimates, stress tests and development record
+  support/                    Shared local-support audit
 templates/eruption/            Optional upload notes and empty CSV schema
 docs/
   NEW_ERUPTION.md              Chat upload → audit → calculation → GitHub
@@ -22,11 +26,13 @@ docs/
   organization/               Move manifest and preservation checks
 src/empirical_isopach/
   core/                       Observations, probability, folds and survey geometry
-  models/registry.py          Active families, with no preferred method
+  models/registry.py          Regional peers, with no preferred method
   models/gaussian_process/    GP ensemble and its component implementation
   models/cubic_spline/        Automatic trend-regularized cubic spline
+  models/mass_mixture/        Mass-normalized spherical posterior and sensitivity studies
   validation.py, region.py    Shared nested comparison and regional volumes
   reporting.py, cli.py        Shared maps, reports and command entry point
+  global_reporting.py        Whole-Earth posterior maps, samples and readable reports
 src/probabilistic_isopach/    Compatibility imports and historical GP workflow
 src/spline_isopach/           Historical original spline/desktop implementation
 src/research/                 Historical first trend-penalty experiment
@@ -46,7 +52,7 @@ Original source files, audit and accepted CSV are added under `data/`. The accep
 
 ## What changes when a new method arrives?
 
-Its implementation gets a family directory under `src/empirical_isopach/models/`, one registry entry, a method card and validation evidence. Shared reporting iterates the registry; each family keeps its own surface and volume. [Full method contract](ADDING_METHOD.md).
+Its implementation gets a family directory under `src/empirical_isopach/models/`, documentation and validation evidence. Regional families use the registry and shared reporting contract. The global companion has a separate joint-posterior contract, while retaining the same inputs and geographic holdouts. [Full method contract](ADDING_METHOD.md).
 
 ## Historical paths
 

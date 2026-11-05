@@ -1,5 +1,7 @@
 # Supported isopachs and the limits of global volume
 
+**Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../global/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. The results below are preserved.
+
 [Project home](../../README.md) · [Equations and assumptions](../../docs/methods/supported-isopachs.md) · [Matched-hull comparison](../regional/README.md)
 
 **All six eruptions were rerun. None has a complete isopach band that passes the support checks, even under the permissive policy. No preferred global total is produced.** This does not mean zero fallout or zero useful information: local patches remain estimable. It means the present data do not supply the required complete, stable area–thickness bands.

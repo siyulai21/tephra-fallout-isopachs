@@ -160,3 +160,7 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
+
+## Whole-deposit fallout
+
+Read the [conditional global estimate and assumption sensitivity](global/README.md). Its mass is normalized on the whole Earth; these regional partial volumes and the local contour audit retain their separate meanings.

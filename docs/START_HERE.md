@@ -10,6 +10,7 @@ Field studies recover ash at scattered locations. This project reconstructs a th
 2. The [accepted data](../data/eruptions/Minoan_tephra.csv) contain 92 exact thicknesses and nine lower bounds, combining all accepted Plinian and co-ignimbrite fallout fans.
 3. The [current comparison](../eruptions/minoan/results/README.md) fits a GP ensemble and a cubic spline to those same observations.
 4. Compare their maps, regional volumes, withheld predictions and uncertainty checks. Neither is automatically selected as the winner.
+5. Read the [global fallout analysis](../eruptions/minoan/results/global/README.md) for a joint estimate across all fans, with explicit uncertainty and sensitivity to general modelling assumptions.
 
 ## What happens in a calculation?
 
@@ -35,7 +36,7 @@ Both volumes are integrated over the **convex hull of the accepted locations**. 
 
 Start with the input audit, then inspect withheld predictive scores, errors and coverage. A smooth-looking map alone does not establish accuracy. Conditional intervals omit parameter/selection uncertainty and can be too narrow, especially when a spline strongly follows its fitted trend. Geographic-deletion ranges show a separate sensitivity, not a confidence interval.
 
-Numerical convergence checks arithmetic, not geological correctness. Historical global estimates remain available but do not rank the regional methods.
+Numerical convergence checks arithmetic, not geological correctness. The new global model estimates a positive field with mass normalized on the whole Earth, so no chosen map boundary controls the total. Its conditional credible interval and assumption-sensitivity envelope have different meanings. A failed local contour screen does not veto that global calculation; it highlights the missing evidence. Historical global estimates remain available but do not rank current methods.
 
 ## Navigate the repository
 

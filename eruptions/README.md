@@ -2,9 +2,9 @@
 
 [Project home](../README.md) · [Add an eruption](../docs/NEW_ERUPTION.md) · [Compare methods](../comparisons/README.md)
 
-Start with a case home, then follow its accepted data, source decisions and current results. Each current report compares every active method on the same regional footprint, with no preferred family.
+Start with a case home, then follow its accepted data, source decisions and current results. Regional GP and spline reports share the same footprint. A separate global companion estimates whole-deposit mass with explicit prior sensitivity.
 
-Each case now also has a **local support and complete-contour audit** under `results/support/`. All six current cases lack a qualifying complete thickness band; a preferred global volume is therefore withheld. [What the checks mean and all-eruption findings](../comparisons/support/README.md).
+Each case has a **conditional global posterior report** under `results/global/` and a **local support audit** under `results/support/`. The six failed contour-band gates remain local evidence diagnostics; they no longer veto global estimation under stated assumptions. [Global estimates](../comparisons/global/README.md) · [Local support findings](../comparisons/support/README.md).
 
 | Eruption | Current accepted evidence | Source status |
 |---|---|---|

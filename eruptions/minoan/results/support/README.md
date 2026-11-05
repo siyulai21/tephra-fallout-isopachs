@@ -1,5 +1,7 @@
 # Minoan: which parts of the deposit are supported?
 
+**Scope update:** this local audit remains unchanged numerically. Read the separate [conditional global estimate](../global/README.md); a failed contour screen does not veto that inference.
+
 **A closed or smooth isopach is not sufficient evidence for its enclosed area or a global volume.** This audit applies the same geometric screen to both model families, then checks their contours separately. It does not change the observations or refit to pseudo-data.
 
 ![Sampling support and contour eligibility](support.png)

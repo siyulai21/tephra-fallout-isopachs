@@ -1,6 +1,6 @@
 # Fallout volume without a user-selected calculation region
 
-The current peer-method workflow uses [matched regional volumes](regional-comparison.md). This page describes the retained complete-Earth GP calculation.
+The current global workflow uses the [mass-normalized spherical posterior](probabilistic-global.md), alongside [matched regional peers](regional-comparison.md). This page describes the retained **version 0.7** complete-Earth GP calculation.
 
 [Method overview](../METHODS.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](../../archive/reports/global-fallout/README.md)
 
