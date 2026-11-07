@@ -1,292 +1,257 @@
 {
-  "base_commit": "483c0558c35cf134af5d2cec80d0cb613e696bc5",
-  "accepted_data_and_audits_unchanged": true,
-  "regional_runs": [
-    {
-      "slug": "mazama",
-      "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "fcee5453da2670ac59279c27995969e436731d0b643975e6bbfecee9aa693617",
-      "rerun_report_sha256": "11f5bea336ca100d3720ffdd21c9761ba95246d97465b408d665614069cbad1c"
-    },
-    {
-      "slug": "tambora",
-      "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "bfecef9aa956dac2421c51c8b392335c7a14e9f1fcad4b0ad64de015bfd185c7",
-      "rerun_report_sha256": "f4fe43f16eda21c98dbb10468a1665491ec5e56bda6907d2be5d781eddef433f"
-    },
+  "base_commit": "b4bbbcbe21477a3cd2b2bdfe8930706987cc22cd",
+  "scope": "B-Tm global replacement and B-Tm/Aso-4 development review; all six regional calculations rerun. Not an all-six global rerun.",
+  "source_review_verification": "../source-revision/verification.json",
+  "source_review_verification_sha256": "1e50fbd09ee2b65a5c3964c1c5298829e7c936ab221d4ec9b9c34054fd9b138f",
+  "regional": {
+    "base_commit": "b4bbbcbe21477a3cd2b2bdfe8930706987cc22cd",
+    "regional_runs": [
+      {
+        "slug": "aso-4",
+        "input_sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "53b270fcdee2c02e1b94adc762eedfdfb158aa7a54010bc2684d37ac75cd0488",
+        "rerun_report_sha256": "25c9c12cfb082e84ec422e9633dcbce1ede409dcb27abb06b04976c6d1df5939"
+      },
+      {
+        "slug": "b-tm",
+        "input_sha256": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "6481bf2df062b4a7579941dfd8dd8470de647f1ee021fc951f4335913900b7a6",
+        "rerun_report_sha256": "420a5d10743eda552bb7cd56e21cfd0d2c5c6bc17f5189a293703a154b943818"
+      },
+      {
+        "slug": "mazama",
+        "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "fcee5453da2670ac59279c27995969e436731d0b643975e6bbfecee9aa693617",
+        "rerun_report_sha256": "6a39ad36603bc30d42b18951759a56f8ae7fd8d1ee2d1bf94fbcf8ec0575fe5a"
+      },
+      {
+        "slug": "minoan",
+        "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "726839688001c9711833360cc656fb42afcae239708082a264d964d27ec501ea",
+        "rerun_report_sha256": "57fa0db9ea0f3e404b6657d809d1e352d36e984354a57b35d8b67b3f0388811a"
+      },
+      {
+        "slug": "tambora",
+        "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "bfecef9aa956dac2421c51c8b392335c7a14e9f1fcad4b0ad64de015bfd185c7",
+        "rerun_report_sha256": "e2f1f2cb9d5213d79ff4b5aad66b0c6061725fb592d7a79958b9040070861503"
+      },
+      {
+        "slug": "ytt",
+        "input_sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
+        "regional_fits_exactly_equal": true,
+        "regional_nested_validation_exactly_equal": true,
+        "published_report_sha256": "1f5362dc99a5f00edcc049846e89e1ed904c8582e2a41a6c0db67f4c57f1388f",
+        "rerun_report_sha256": "05e78a4aa63508f130e7bd1c76767bb215f0258befb8e184df311453c7fdebcd"
+      }
+    ],
+    "regional_synthetic": {
+      "attempts": 40,
+      "all_run_records_exactly_equal": true,
+      "published_sha256": "2a0c4f873806ca361556f40a2e939ab6d067100039baa51180e41fc1fcff8644",
+      "rerun_sha256": "aeda07c131a99e2bbfd4fa162a921062b241194c083d3067ae1045761ea5dd89"
+    }
+  },
+  "unchanged_global_reports": [
     {
       "slug": "aso-4",
-      "input_sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "53b270fcdee2c02e1b94adc762eedfdfb158aa7a54010bc2684d37ac75cd0488",
-      "rerun_report_sha256": "43d950dc63892ce2693a2e7a104b7133ad19cd3c94f6c4598493223f1efb37d6"
+      "report_sha256": "ffb08ef8d11c46261ad6471726a32f9215d2e652ab9587c7b1182882baa732f6",
+      "status": "preceding execution retained; Aso-4 explicitly questioned"
     },
-    {
-      "slug": "b-tm",
-      "input_sha256": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "6481bf2df062b4a7579941dfd8dd8470de647f1ee021fc951f4335913900b7a6",
-      "rerun_report_sha256": "fe2bec71af99833e655f71aca0bb55ee0da5ce155793671256594968d240977d"
-    },
-    {
-      "slug": "ytt",
-      "input_sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "1f5362dc99a5f00edcc049846e89e1ed904c8582e2a41a6c0db67f4c57f1388f",
-      "rerun_report_sha256": "a8d5a44ab5a48def2afe868cbb214f47019de2fa4808a024b88e037c419a396f"
-    },
-    {
-      "slug": "minoan",
-      "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
-      "regional_fits_exactly_equal": true,
-      "regional_nested_validation_exactly_equal": true,
-      "published_report_sha256": "726839688001c9711833360cc656fb42afcae239708082a264d964d27ec501ea",
-      "rerun_report_sha256": "628e67c35d35c724e326ac22e096ae730583bfb9b8a5c2b2f87460b1eade8a60"
-    }
-  ],
-  "regional_synthetic": {
-    "attempts": 40,
-    "completed_method_pairs": 38,
-    "unestimable_pairs_retained": 2,
-    "all_run_records_exactly_equal": true,
-    "published_sha256": "2a0c4f873806ca361556f40a2e939ab6d067100039baa51180e41fc1fcff8644",
-    "rerun_sha256": "285c1b35c4eeb5bdae923602376994b2ea9b9a4649954867cd6694f9b1a91c2d"
-  },
-  "tests": {
-    "command": "python -m pytest -q",
-    "result": "148 passed in 22.12 s",
-    "log_sha256": "4961b7b0f59b1323763ffdf70931cdaede30c16640abf82ad02c9eab1225d7fa"
-  },
-  "scope": "Regional code is unchanged; all six complete all-data fits and geographic evaluations plus all 40 synthetic attempts were rerun. Regional numerical reports are preserved because their scientific result objects are exactly identical. Global source identities, priors and numerical settings are recorded in each new report.",
-  "baseline_sample_integrity": [
-    {
-      "slug": "aso-4",
-      "retained_fields": 6000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 2.220446049250313e-16,
-      "volume_quantiles_match_published_summary": true
-    },
-    {
-      "slug": "b-tm",
-      "retained_fields": 24000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 2.220446049250313e-16,
-      "volume_quantiles_match_published_summary": true
-    },
-    {
-      "slug": "mazama",
-      "retained_fields": 12000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 2.220446049250313e-16,
-      "volume_quantiles_match_published_summary": true
-    },
-    {
-      "slug": "minoan",
-      "retained_fields": 12000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 2.220446049250313e-16,
-      "volume_quantiles_match_published_summary": true
-    },
-    {
-      "slug": "tambora",
-      "retained_fields": 6000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 3.3306690738754696e-16,
-      "volume_quantiles_match_published_summary": true
-    },
-    {
-      "slug": "ytt",
-      "retained_fields": 6000,
-      "all_arrays_finite": true,
-      "maximum_weight_sum_error": 2.220446049250313e-16,
-      "maximum_unit_center_error": 2.220446049250313e-16,
-      "volume_quantiles_match_published_summary": true
-    }
-  ],
-  "packaging": {
-    "wheel": "tephra_fallout_isopachs-0.10.0-py3-none-any.whl",
-    "built_without_network": true,
-    "new_modules_and_bundled_audited_data_present": true
-  },
-  "global_stress": {
-    "baseline_trials": 12,
-    "baseline_intervals_containing_truth": 11,
-    "baseline_sampling_passed": 10,
-    "converged_intervals_containing_truth": 9,
-    "interpretation": "Descriptive development counts only, not a calibration claim. Numerically provisional trials remain in the total and are identified separately.",
-    "reporting_source_sha256": "362d85dab793257730383805de7f96a4e4b993469bfe89827724d564473f9a99",
-    "report_sha256": "a809be7cb25ce46fd80b12ee59e002b51520d136ac67dd0ba81e5a350d6cf7d5"
-  },
-  "source_snapshots_verified": true,
-  "global_final_reports": [
     {
       "slug": "mazama",
       "report_sha256": "c347b4a57fae2489d70abfe8b4a5b58e66affe6b21b84c35ad7927724a5fc176",
-      "artifacts_sha256": "0c9803e9a9a818fa705b05a8e63842177d2866b1a23c20cf5b92472caddae3d3",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
+      "status": "preceding execution retained; Aso-4 explicitly questioned"
     },
     {
       "slug": "tambora",
       "report_sha256": "c6f16e8e86e6e68a94165ac44e5351f4128cab2dd66576ff777496d533f3626d",
-      "artifacts_sha256": "e6267aaef9511ae90a15aadf8af3234412ef1813261fdbfaa3f347b034f74418",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
-    },
-    {
-      "slug": "aso-4",
-      "report_sha256": "ffb08ef8d11c46261ad6471726a32f9215d2e652ab9587c7b1182882baa732f6",
-      "artifacts_sha256": "a2f26ac3f90fbd85d5f85ef7d24b48430669ab713435cb6179cddf6e1a509bfe",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
-    },
-    {
-      "slug": "b-tm",
-      "report_sha256": "8e7d8082da91d8d6a99bcedfc8e8bb2134707569ddfee4bb3bef736a8fac0cc7",
-      "artifacts_sha256": "ca4d6a1d8181119525823a8fd577f4005c04ed8413a359a51fa8174041a572bf",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
+      "status": "preceding execution retained; Aso-4 explicitly questioned"
     },
     {
       "slug": "ytt",
       "report_sha256": "3267df63528caf67743878edbf815342a211837801f083558428eb486a803da0",
-      "artifacts_sha256": "7a293cde57157a5438f202e09d3602acfd0a799a42c12d08deec7153342e998f",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
+      "status": "preceding execution retained; Aso-4 explicitly questioned"
     },
     {
       "slug": "minoan",
       "report_sha256": "02c58749be394eefad481a255e28fac36c4e40e019ecdcf99da17eeab8c8e2fa",
-      "artifacts_sha256": "7ba16cd152c61ea841a7708c71c073450786d040ce87cb25d0bd6517428bcafd",
-      "all_artifact_and_current_source_hashes_match": true,
-      "matched_input_and_all_four_outer_training_withheld_sets": true,
-      "same_eight_prior_specifications_across_eruptions": true
+      "status": "preceding execution retained; Aso-4 explicitly questioned"
     }
   ],
-  "remaining_numerically_provisional_fits": [
-    {
-      "eruption": "mazama",
-      "fit": "wide_geography"
+  "checks": {
+    "pytest": "176 passed",
+    "wheel": {
+      "version": "0.11.0",
+      "executed_outside_checkout": true,
+      "installed_source": "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/source-wheel-venv-20261106/lib/python3.13/site-packages/src/__init__.py",
+      "data_directory": "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/source-wheel-venv-20261106/share/tephra-fallout-isopachs",
+      "six_inputs_present": true,
+      "reviewed_btm_geometry": "source-fans",
+      "all_three_geometry_protocols_imported": true,
+      "global_and_compare_cli_help_passed": true,
+      "dependency_scope": "Separate installation prefix; third-party dependencies reused from the analysis environment.",
+      "aso4_review_status": "questioned",
+      "wheel_sha256": "9a6f3f06970d593db23eef2d2e192603e3a5cff219064adb3c96e38d1cae020d",
+      "overview_grid_includes_source": true,
+      "bundled_data_readme_matches_current": true
     },
-    {
-      "eruption": "mazama",
-      "fit": "gaussian_errors"
+    "git_diff_check": "passed",
+    "figure_review": "Source maps, comparison, source-focused stress plot, B-Tm field/volume/sampling panels, B-Tm two-site sensitivity and Aso-4 erosion sensitivity visually inspected.",
+    "github_code_preflight": {
+      "commit": "a6c6dfa8dac0d76a9eab932827e26f4cb42515af",
+      "tree": "d3c7cfe350b8d1a7a48c9ff1f27d438feadd6eaf",
+      "run_id": 42368932772,
+      "url": "https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/42368932772",
+      "conclusion": "success",
+      "files": [
+        {
+          "path": ".github/workflows/tests.yml",
+          "size": 1969,
+          "sha": "ef79a0ec555454ef0fb576bc663705c0ab1f798d"
+        },
+        {
+          "path": "benchmarks/aso_input_review.py",
+          "size": 2831,
+          "sha": "a22a50e2c5f163066c678db3ce334af3b071d732"
+        },
+        {
+          "path": "benchmarks/global_posterior.py",
+          "size": 13740,
+          "sha": "d3486734c8158218f2ab6f1f2f8b51bb8dc88441"
+        },
+        {
+          "path": "benchmarks/global_stress_report.py",
+          "size": 9852,
+          "sha": "347bcce912f4bdfdfe0c95bc437a3d32a7a7da30"
+        },
+        {
+          "path": "benchmarks/source_fans.py",
+          "size": 3437,
+          "sha": "4a8804f05ead370b380ad8db92704427561ec8aa"
+        },
+        {
+          "path": "benchmarks/source_review.py",
+          "size": 2171,
+          "sha": "7462dac3e1f538a1209a812d6163c505ec918aee"
+        },
+        {
+          "path": "benchmarks/source_stress_report.py",
+          "size": 8996,
+          "sha": "c2fd13dd73c187fdeb8ff35861cc9cea05824df3"
+        },
+        {
+          "path": "data/datasets.json",
+          "size": 1681,
+          "sha": "781ec29b334f72d583084f4abd9c1bd26af1ebea"
+        },
+        {
+          "path": "pyproject.toml",
+          "size": 1509,
+          "sha": "fa37f11e622516fab10c30d981af84cfad52caed"
+        },
+        {
+          "path": "src/empirical_isopach/cli.py",
+          "size": 4191,
+          "sha": "d6e23c9c819785a00ead67f60081f9c14c0ac585"
+        },
+        {
+          "path": "src/empirical_isopach/global_reporting.py",
+          "size": 22184,
+          "sha": "5ae53dc46febb64e29b63f9de8eb755c2ec88941"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/__init__.py",
+          "size": 73,
+          "sha": "1fe898b79e5bd0b330d28e44e9b7d7e8094119f0"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/geometry.py",
+          "size": 7049,
+          "sha": "514515ab2f90d6a3ab0269645a06f1f5fb5108ed"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/inference.py",
+          "size": 14988,
+          "sha": "5c7c05950c9a5f912a2ff2532e77d639c606d892"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/posterior.py",
+          "size": 7064,
+          "sha": "d8da8459d4c5dd66515a06fcc323673b83a50390"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/prior.py",
+          "size": 4631,
+          "sha": "2a5427f3ec129359fb2a67a10b4f2862d28cca33"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/source_checks.py",
+          "size": 2797,
+          "sha": "2312b9b80918ff9ade8b32b8876fdc39888d322b"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/source_geometry.py",
+          "size": 6250,
+          "sha": "41eb096161b4058e302737014ef67dc913641619"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/source_protocol.py",
+          "size": 1738,
+          "sha": "4ac9545c5cb75fc86e3efd241c2ea9cc310c14e9"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/study.py",
+          "size": 13877,
+          "sha": "9307dd3ca257857be591cfd1fc3b94d782cabfd9"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/supported_basis.py",
+          "size": 1204,
+          "sha": "044e84bf6bd7c698779bd9eb141a59b78b73aa3e"
+        },
+        {
+          "path": "src/empirical_isopach/models/mass_mixture/vent_envelope.py",
+          "size": 2646,
+          "sha": "c618315b72781fbd2beddd9fa92531578f868308"
+        },
+        {
+          "path": "src/empirical_isopach/source_reporting.py",
+          "size": 2955,
+          "sha": "2016f19b9e631322bcdd5066860d76ed6cb5c5c8"
+        },
+        {
+          "path": "tests/test_method_registry.py",
+          "size": 5794,
+          "sha": "a82a848c19d43bddd82f9e1c4bbef9ba01542a18"
+        },
+        {
+          "path": "tests/test_source_fans.py",
+          "size": 8575,
+          "sha": "b36ea15baf3ddab6dde3f98ed95f9791b42f68ed"
+        },
+        {
+          "path": "tests/test_vent_envelope.py",
+          "size": 7500,
+          "sha": "3daaca7f4af47e53f7319eb12b17fca5757eaf68"
+        },
+        {
+          "path": "benchmarks/btm_input_review.py",
+          "size": 3954,
+          "sha": "cd47fddeaea562fa40dd3ebb0ac35eca25ee75f5"
+        }
+      ]
     },
-    {
-      "eruption": "mazama",
-      "fit": "geographic_holdout",
-      "fold": 2
-    },
-    {
-      "eruption": "b-tm",
-      "fit": "geographic_holdout",
-      "fold": 0
-    }
-  ],
-  "navigation": {
-    "command": "python scripts/check_repository_navigation.py",
-    "local_links_and_images": 1699,
-    "markdown_files": 282,
-    "missing": 0
-  },
-  "independent_btm_cache_assembly": {
-    "policy": "Only complete posterior attempts were reused, after matching input, priors, source/runtime signature and numerical seeds in fit_cached. All attempts retained; no chains selected or trimmed. Redundant independent Gaussian-error runs produced exactly identical arrays. Independently completed geographic folds use the same training and withheld rows as the sequential protocol.",
-    "records": [
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/gaussian_errors/attempt-1.json",
-        "action": "kept existing completed attempt; independent posterior arrays exactly equal"
-      },
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/gaussian_errors/attempt-2.json",
-        "action": "kept existing completed attempt; independent posterior arrays exactly equal"
-      },
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/diffuse_mixture_weights/attempt-1.json",
-        "action": "copied completed independent cache",
-        "posterior_sha256": "f75e83bad7f65f2b5199e165a0c69ec72ce9ca1f9efc057c58637615d7caa488"
-      },
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/validation/fold-1/attempt-1.json",
-        "action": "copied completed independent geographic fold",
-        "posterior_sha256": "af3185c786751e25de63a1bf5791dc3dd36e803197ece45310e6d4050eae51ad"
-      },
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/validation/fold-3/attempt-1.json",
-        "action": "copied completed independent geographic fold",
-        "posterior_sha256": "63cc8d4fde6eb924dd3b323c88d9bdaf4498278060e3f72b57968f6a4b56769f"
-      },
-      {
-        "path": "results/global-mass-20261104/b-tm/posteriors/validation/fold-3/attempt-2.json",
-        "action": "copied completed independent geographic fold",
-        "posterior_sha256": "9f0a0c7beaf1aa00857a3325975fe74b85ea5b0bf7dab5a1367c342b9226955b"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-1.npz",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-1.npz",
-        "sha256": "9a4b7cc853934b2457052f0757b347a55e6d5b9a6cfbbf6c9e8ed6fc559054dc"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-1.json",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-1.json",
-        "sha256": "bee66a58a831e56bddc320a4a230b0e0142b453afc02c6dbca393829a64de912"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-2.npz",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-2.npz",
-        "sha256": "20a2c4fa68cfa63ac58ab87286d3e7aac7a6617aca96757f050e02e522e56e07"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-2.json",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-2.json",
-        "sha256": "a3c237830a808ab59697ab539a3768588e59bd402a976e0c0eb651b10c7628bb"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-3.npz",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-3.npz",
-        "sha256": "2970bc96daf3d4acd8125566d354893791af47baba388023c1ac0d542eb86807"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/posteriors/validation/fold-0/attempt-3.json",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-0/attempt-3.json",
-        "sha256": "0a6baaca74f29ad325b15e76ac08eb016883dc746fd75a691956ea919f1ac671"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/independent-folds/fold-2/attempt-1.npz",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-2/attempt-1.npz",
-        "sha256": "36b15ce3a4802c559bda75035c921f83667f0e3632f46d7ed23fafb6a3d40205"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/independent-folds/fold-2/attempt-1.json",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-2/attempt-1.json",
-        "sha256": "3c75c6bafd6207968159e5150f526efb9dc31699d1eb71fee42f25699ef99320"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/independent-folds/fold-2/attempt-2.npz",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-2/attempt-2.npz",
-        "sha256": "8776a93e1b33faccb79b4b97e9a59a15084b8f1b2f42248f78fc4b409be8f827"
-      },
-      {
-        "source": "results/btm-finish-parallel-20261104/independent-folds/fold-2/attempt-2.json",
-        "destination": "results/global-mass-20261104/b-tm/posteriors/validation/fold-2/attempt-2.json",
-        "sha256": "a4fa7d07271d522a999cd137a44aaedda8af3dc4f22e005b5987c88e32b8745a"
-      }
-    ]
+    "navigation": "Checked 1812 local links/images in 295 Markdown files; 0 missing."
   }
 }

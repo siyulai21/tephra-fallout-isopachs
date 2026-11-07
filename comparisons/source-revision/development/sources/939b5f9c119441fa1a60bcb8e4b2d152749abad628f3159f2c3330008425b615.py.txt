@@ -1,0 +1,138 @@
+"""Authalic-sphere geometry and analytically normalized light/heavy-tail fans.
+
+All densities are per square kilometre of WGS84 surface, not per projected
+pixel. The ellipsoidal equal-area map has unit area Jacobian to this sphere.
+"""
+import numpy as np
+from scipy.special import logsumexp, gammainc, gammaincinv
+
+from src.probabilistic_isopach.global_volume import EarthDomain
+
+RADIUS = EarthDomain.wgs84(0).authalic_radius_km
+AREA = 4*np.pi*RADIUS**2
+
+
+def to_sphere(xy, latitude):
+    domain = EarthDomain.wgs84(latitude)
+    p = np.asarray(xy, float)*[1/domain.axis_scale, domain.axis_scale]
+    r2 = np.sum(p*p, axis=-1)/(4*RADIUS**2)
+    if not np.isfinite(p).all() or np.any(r2 > 1+1e-12):
+        raise ValueError("Coordinates must lie on the physical WGS84 equal-area domain.")
+    a = p/RADIUS*np.sqrt(np.maximum(1-r2, 0))[..., None]
+    return np.concatenate((a, (1-2*r2)[..., None]), axis=-1)
+
+
+def from_sphere(unit, latitude):
+    unit = np.asarray(unit, float)
+    d = EarthDomain.wgs84(latitude)
+    # The antipode has no unique azimuth; it is a measure-zero chart singularity.
+    p = unit[..., :2]*np.sqrt(2/np.maximum(1+unit[..., 2], 1e-300))[..., None]*RADIUS
+    return p*[d.axis_scale, 1/d.axis_scale]
+
+
+def centers(log_scale, offset):
+    """Stereographic source-relative centres; no wrap or longitude seam."""
+    a = np.exp(log_scale)[..., None]*np.asarray(offset)/(2*RADIUS)
+    a2 = np.sum(a*a, axis=-1)
+    return np.concatenate((2*a, (1-a2)[..., None]), axis=-1)/(1+a2)[..., None]
+
+
+def log_exprel(t):
+    """log((exp(t)-1)/t), including its removable singularity at zero."""
+    t = np.asarray(t)
+    small = abs(t) < 1e-4
+    safe = np.where(small, 1., t)
+    value = np.log(abs(np.expm1(np.minimum(safe, 50))))-np.log(abs(safe))
+    value = np.where(safe > 50, safe+np.log1p(-np.exp(-np.maximum(safe, 50)))-np.log(abs(safe)), value)
+    return np.where(small, t/2+t*t/24-t**4/2880, value)
+
+
+def log_normalizers(log_scale, exponent):
+    """Integrate exactly over all solid angle; stable at power exponent one."""
+    l2 = np.exp(2*np.asarray(log_scale))/RADIUS**2
+    q = np.asarray(exponent)
+    if np.any(q <= 0):
+        raise ValueError("Tail exponents must be positive.")
+    kappa = 1/l2
+    gaussian = np.log(2*np.pi*RADIUS**2)+np.log(l2)+np.log(-np.expm1(-2*kappa))
+    b = q*l2
+    h = np.log1p(2/b)
+    power = np.log(2*np.pi*RADIUS**2)+np.log(b)+np.log(h)+log_exprel((1-q)*h)
+    return gaussian, power
+
+
+def exponential_log_normalizer(log_scale):
+    """Radial exponential on chord distance; exact finite-Earth normalizer."""
+    x = 2*RADIUS*np.exp(-np.asarray(log_scale))
+    small = x < 1e-3
+    safe = np.where(small, 1., x)
+    regular = np.log(-np.expm1(np.log1p(safe)-safe))
+    t = np.where(small, x, 0.)
+    series = 2*np.log(x)-np.log(2)+np.log1p(-2*t/3+t*t/4-t**3/15+t**4/72-t**5/420)
+    return np.log(2*np.pi)+2*np.asarray(log_scale)+np.where(small, series, regular)
+
+
+def log_kernel(unit, log_scale, center, exponent, tail_fraction, exponential_fraction=0., kernel_weights=None):
+    """Broadcast component parameters against locations in the final axis."""
+    unit, center = np.asarray(unit), np.asarray(center)
+    u = .5*np.sum((center[..., None, :]-unit)**2, axis=-1)
+    l2 = np.exp(2*np.asarray(log_scale))/RADIUS**2
+    q, eta, zeta = np.asarray(exponent), np.asarray(tail_fraction), np.asarray(exponential_fraction)
+    zg, zp = log_normalizers(log_scale, q)
+    gaussian = -u/l2[..., None]-zg[..., None]
+    exponential = -np.sqrt(2*u/l2[..., None])-exponential_log_normalizer(log_scale)[..., None]
+    heavy = -q[..., None]*np.log1p(u/(q*l2)[..., None])-zp[..., None]
+    with np.errstate(divide="ignore"):
+        if kernel_weights is not None:
+            return logsumexp(np.stack((gaussian, exponential, heavy), axis=-2)
+                             +np.log(kernel_weights)[..., :, None], axis=-2)
+        light = np.logaddexp(np.log1p(-zeta)[..., None]+gaussian, np.log(zeta)[..., None]+exponential)
+        return np.logaddexp(np.log1p(-eta)[..., None]+light, np.log(eta)[..., None]+heavy)
+
+
+def log_field(samples, unit):
+    """Whole-field posterior draws, shape (draw, location), thickness in cm."""
+    if "angular" in samples:
+        from .source_geometry import log_kernel as source_kernel
+        node_counts = np.unique(samples.get("angular_nodes", [256]))
+        if len(node_counts) != 1:
+            raise ValueError("A field batch must share its angular normalization rule.")
+        k = source_kernel(unit, samples["log_scale"], samples["angular"], samples["exponent"][:, None],
+                          samples["kernel_weights"][:, None, :], int(node_counts[0]))
+        return (np.log(1e5)+samples["log_volume"][:, None]
+                +logsumexp(np.log(samples["weights"])[..., None]+k, axis=1))
+    c = centers(samples["log_scale"], samples["offset"])
+    zeta = np.asarray(samples.get("exponential_fraction", np.zeros(len(samples["log_volume"]))))
+    kw = samples["kernel_weights"][:, None, :] if "kernel_weights" in samples else None
+    k = log_kernel(unit, samples["log_scale"], c, samples["exponent"][:, None], samples["tail_fraction"][:, None], zeta[:, None], kw)
+    return (np.log(1e5)+samples["log_volume"][:, None]
+            +logsumexp(np.log(samples["weights"])[..., None]+k, axis=1))
+
+
+def kernel_samples(log_scale, center, exponent, tail_fraction, uniforms, exponential_fraction=0.):
+    """Exact inverse radial CDF plus uniform azimuth; no bounding box/rejection.
+
+uniforms has three columns: mixture component, radial CDF, azimuth.
+Parameters describe one fan. This can also use a fixed Sobol quadrature rule.
+"""
+    u = np.asarray(uniforms, float)
+    l2 = np.exp(2*log_scale)/RADIUS**2
+    radial = -l2*np.log1p(u[:, 1]*np.expm1(-2/l2))
+    b, a = exponent*l2, 1-exponent
+    h = np.log1p(2/b)
+    if abs(a*h) < 1e-7:
+        heavy = b*np.expm1(u[:, 1]*h)
+    else:
+        heavy = b*np.expm1(np.log1p(u[:, 1]*np.expm1(a*h))/a)
+    radial = np.where(u[:, 0] < tail_fraction, heavy, radial)
+    exponential_r = np.exp(log_scale)*gammaincinv(2., u[:, 1]*gammainc(2., 2*RADIUS*np.exp(-log_scale)))
+    is_exp = (u[:, 0] >= tail_fraction) & (u[:, 0] < tail_fraction+(1-tail_fraction)*exponential_fraction)
+    radial = np.where(is_exp, .5*(exponential_r/RADIUS)**2, radial)
+    radial = np.clip(radial, 0., 2.)  # round-off in inverse CDF only
+    az = 2*np.pi*u[:, 2]
+    reference = np.array([0., 0., 1.]) if abs(center[2]) < .9 else np.array([1., 0., 0.])
+    e1 = np.cross(center, reference); e1 /= np.linalg.norm(e1)
+    e2 = np.cross(center, e1)
+    transverse = np.sqrt(radial*(2-radial))
+    return ((1-radial)[:, None]*center+transverse[:, None]
+            *(np.cos(az)[:, None]*e1+np.sin(az)[:, None]*e2))

@@ -4,6 +4,8 @@
 
 Start with the [global fallout estimates](global/README.md): conditional whole-Earth volumes, assumption sensitivities, global-model geographic predictions and known-truth tests. The model estimates mass directly without a contour gate or arbitrary region.
 
+The [B-Tm source correction and Aso-4 review](source-revision/README.md) compares source-focused fans and experimental secondary-peak models. It explains the B-Tm replacement and why smaller Aso-4 estimates were not automatically promoted.
+
 Read the [support and extrapolation audit](support/README.md) alongside it: which parts of each deposit can be interpolated locally and which complete isopachs survive evidence checks. Its failed contour gates remain visible as local diagnostics; they no longer veto conditional global inference.
 
 [Read the current regional comparison](regional/README.md): six eruptions, identical within-eruption geographic holdouts, and 40 known-truth attempts (38 completed method pairs and two cases with insufficient exact training support).

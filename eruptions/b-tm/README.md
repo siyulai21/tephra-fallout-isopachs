@@ -4,7 +4,11 @@
 
 ## Global fallout
 
-The joint global posterior has median **344 km³** and a **79.5–17,485 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/global/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
+The source-focused joint posterior has median **106 km³** and a **53.2–2,159 km³ conditional 95% credible interval** for bulk fallout. Its highest contours now surround the supplied volcano; the preceding displaced field placed its maximum about 94 km southwest in an unsampled area. All accepted fans are fitted together, with no closing pseudo-data or arbitrary calculation region. [Read the corrected global report and sensitivity refits](results/global/README.md) · [Compare every tested geometry and the earlier result](../../comparisons/source-revision/README.md). The broad upper tail remains a material uncertainty.
+
+The geometry comparison preserves the accepted input. A [recovered published source table](../../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) identifies lost thickness qualifications in some entries. The [two-site observation sensitivity](../../comparisons/source-revision/btm-input-sensitivity/README.md) treats Suigetsu's documented upper bound and Kushu's unquantified cryptotephra separately, giving **100 km³ (46–2,390 km³)**. The contour correction does not establish that every accepted thickness is an exact primary-deposit measurement.
+
+![Reviewed B-Tm source-region thickness contours](results/global/source.png)
 
 **Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 52,431 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/global/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
 
@@ -40,6 +44,8 @@ These volumes cover only the observation hull. It can include unsampled gaps and
 The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/global/verification.json). [Previous matched-hull report](../../archive/2026-11-03-regional/b-tm/README.md).
 
 ## Earlier calculations
+
+[Preceding displaced global model: 344 km³](../../archive/reports/b-tm/2026-11-06-displaced-global/README.md).
 
 [GP-only global ensemble](../../archive/reports/b-tm/global/stacked/README.md) · [Earlier selected GP](../../archive/reports/b-tm/global/selected/README.md) · [Rectangular regional history](../../archive/reports/b-tm/regional/README.md)
 

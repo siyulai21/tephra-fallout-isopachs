@@ -4,6 +4,8 @@
 
 Protocol: `mass-normalized-spherical-mixture-v1`, introduced in 0.10. The proposed empirical model estimates **bulk fallout volume**, jointly across accepted fallout fans. It is a research implementation, not a validated physical transport model. Its priors are the same for all eruptions; no wind field, umbrella dynamics, grain-size distribution or published target volume is supplied.
 
+**Version 0.11 adds a source-focused alternative and adopts it for B-Tm after the contour review.** This page documents the preceding displaced geometry, retained for the other five cases; it no longer describes one common geometry for all six published results. See the [source-focused equations](source-anchored-fans.md) and the [B-Tm correction and unresolved Aso-4 comparison](../../comparisons/source-revision/README.md).
+
 ## Why the old screen cannot decide whether to give a global estimate
 
 The complete-contour gate was too conservative as a prerequisite for *conditional* global inference. Its own development tests rejected fully sampled secondary-fan deposits. It is still useful for describing where spline/GP contours are stable. A passing contour does not identify an unobserved proximal cap; a failing contour does not forbid probabilistic extrapolation under explicit assumptions.

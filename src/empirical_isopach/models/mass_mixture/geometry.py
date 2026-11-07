@@ -92,6 +92,20 @@ def log_kernel(unit, log_scale, center, exponent, tail_fraction, exponential_fra
 
 def log_field(samples, unit):
     """Whole-field posterior draws, shape (draw, location), thickness in cm."""
+    if "core_log_scale" in samples:
+        from .vent_envelope import log_shape
+        return samples["log_volume"][:, None]+log_shape(unit, samples["core_log_scale"],
+            samples["log_scale"], samples["offset"], samples["weights"], samples["envelope_strength"],
+            center=samples.get("fixed_center"))
+    if "angular" in samples:
+        from .source_geometry import log_kernel as source_kernel
+        node_counts = np.unique(samples.get("angular_nodes", [256]))
+        if len(node_counts) != 1:
+            raise ValueError("A field batch must share its angular normalization rule.")
+        k = source_kernel(unit, samples["log_scale"], samples["angular"], samples["exponent"][:, None],
+                          samples["kernel_weights"][:, None, :], int(node_counts[0]))
+        return (np.log(1e5)+samples["log_volume"][:, None]
+                +logsumexp(np.log(samples["weights"])[..., None]+k, axis=1))
     c = centers(samples["log_scale"], samples["offset"])
     zeta = np.asarray(samples.get("exponential_fraction", np.zeros(len(samples["log_volume"]))))
     kw = samples["kernel_weights"][:, None, :] if "kernel_weights" in samples else None

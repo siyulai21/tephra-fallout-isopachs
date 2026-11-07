@@ -6,6 +6,8 @@
 
 The joint global posterior has median **1,836 km³** and a **507–49,960 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/global/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
 
+**This high total remains questioned.** Source-focused fans improve geographic prediction but raise the conditional median to about 3,418 km³. Measured-location envelope models give 369–472 km³ but predict withheld observations worse and have lower coverage. None establishes a reliable lower global total. The original calculation is retained for comparison, not endorsed as a precise geological estimate. [All alternatives, maps, uncertainty and source limitations](../../comparisons/source-revision/README.md).
+
 **Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 929,500 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/global/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
 
 ## Regional reconstruction

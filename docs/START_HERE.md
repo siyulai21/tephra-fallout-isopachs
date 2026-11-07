@@ -38,6 +38,8 @@ Start with the input audit, then inspect withheld predictive scores, errors and 
 
 Numerical convergence checks arithmetic, not geological correctness. The new global model estimates a positive field with mass normalized on the whole Earth, so no chosen map boundary controls the total. Its conditional credible interval and assumption-sensitivity envelope have different meanings. A failed local contour screen does not veto that global calculation; it highlights the missing evidence. Historical global estimates remain available but do not rank current methods.
 
+The [B-Tm source review](../comparisons/source-revision/README.md) illustrates a further check: an unsupported highest-thickness contour can lie away from the volcano even when the sampler converges. A source-focused alternative corrects that geometry for B-Tm. Aso-4's alternatives show that better predictions at measured sites can coexist with a higher global total; its unobserved mass remains unresolved.
+
 ## Navigate the repository
 
 - [Eruptions](../eruptions/README.md): evidence, current reports and history for each case.

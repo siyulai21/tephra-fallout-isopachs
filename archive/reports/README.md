@@ -4,6 +4,7 @@
 
 | Historical evidence | Entry point |
 |---|---|
+| Global results preceding the source-geometry review | [B-Tm](b-tm/2026-11-06-displaced-global/README.md) · [Aso-4](aso-4/2026-11-06-displaced-global/README.md) · [Six-eruption comparison](global/2026-11-06-displaced-comparison/README.md) |
 | Complete-Earth GP comparisons across six eruptions | [Global fallout](global-fallout/README.md) |
 | Initial four-eruption regional GP summary | [Regional comparison](regional-comparison/README.md) |
 | Minoan combined-fan GP calculations and source sensitivities | [Global](minoan/global/README.md) · [Rectangular regional](minoan/regional/README.md) |

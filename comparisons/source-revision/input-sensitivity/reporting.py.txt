@@ -1,0 +1,64 @@
+from pathlib import Path
+from hashlib import sha256
+import json,gzip,shutil
+import numpy as np
+import pandas as pd
+from src.empirical_isopach.models.mass_mixture.study import audited_data
+from src.empirical_isopach.models.mass_mixture.posterior import volume_summary
+root=Path('results/source-aso-input-20261107');out=Path('comparisons/source-revision/input-sensitivity');out.mkdir(parents=True,exist_ok=True)
+r=json.loads((root/'report.json').read_text());fit=r['fit']
+a,ma=audited_data('data/eruptions/Aso-4_tephra.csv');b,mb=audited_data(root/'aso-4-row55-lower-bound.csv')
+for key in ('xy','log_value','log_sd','row_ids'):
+ np.testing.assert_allclose(getattr(a,key),getattr(b,key),rtol=0,atol=1e-10)
+assert np.array_equal(np.where(a.censored != b.censored)[0],np.where(a.row_ids==55)[0])
+assert np.array_equal(np.where(a.lower_censored != b.lower_censored)[0],np.where(a.row_ids==55)[0])
+assert r['runner_sha256']==sha256(Path('benchmarks/aso_input_review.py').read_bytes()).hexdigest()
+p=root/'posteriors'/fit['posterior_file'];assert sha256(p.read_bytes()).hexdigest()==fit['posterior_sha256']
+with np.load(p) as z:samples={k:z[k] for k in z.files}
+assert volume_summary(samples)==fit['volume']
+old=json.loads(Path('archive/reports/aso-4/2026-11-06-displaced-global/report.json').read_text())['fits']['baseline']
+with np.load('archive/reports/aso-4/2026-11-06-displaced-global/posterior.npz') as z:oldvol=np.exp(z['log_volume'])
+for name in ['report.json','aso-4-row55-lower-bound.csv']:shutil.copy2(root/name,out/name)
+shutil.copy2(p,out/'posterior.npz')
+vol=np.exp(samples['log_volume']);chain,draw=np.indices(vol.shape)
+frame=pd.DataFrame({'chain':chain.ravel(),'draw':draw.ravel(),'volume_km3':vol.ravel()})
+(out/'volume_draws.csv.gz').write_bytes(gzip.compress(frame.to_csv(index=False).encode(),mtime=0))
+v=fit['volume'];d=fit['diagnostics'];ov=old['volume']
+(out/'README.md').write_text(f'''# Aso-4: a documented erosion sensitivity
+
+[Targeted input review](../input-inventory/README.md) · [Geometry comparison](../README.md)
+
+Changing the source-confirmed eroded row 55 from an exact 7 cm thickness to a 7 cm lower bound gives **{v['median']:,.0f} km³**, with a **{v['lower95']:,.0f}–{v['upper95']:,.0f} km³ conditional 95% interval**, under the preceding displaced geometry. Numerical checks **{'pass' if d['passed'] else 'remain provisional'}**. This one observation interpretation does **not** explain away the high Aso-4 volume.
+
+| Input interpretation | Median bulk km³ | Conditional 95% interval km³ |
+|---|---:|---:|
+| Preceding 87 exact entries | {ov['median']:,.0f} | {ov['lower95']:,.0f}–{ov['upper95']:,.0f} |
+| 86 exact entries + row 55 as a lower bound | {v['median']:,.0f} | {v['lower95']:,.0f}–{v['upper95']:,.0f} |
+
+![Original and lower-bound global posterior](comparison.png)
+
+The source-backed alternative changes one likelihood event, not its coordinates, the reported maximum, the other observations, or the priors. It does not assign an invented amount of erosion or a standard deviation. The principal input remains the preserved original for the controlled geometry comparison; this separate derived input is explicitly labelled. The row's original depositional thickness is not identified by the paper's preserved range, and the remaining records still need a complete source audit.
+
+This is a sensitivity calculation, not a newly validated global model or a new four-fold evaluation. The apparent difference in medians is not a formal test of an erosion effect. Both distributions are broad and conditional; Monte Carlo uncertainty remains in their endpoints. No lower total was used as a target or an acceptance criterion.
+
+The final four-chain calculation has maximum R-hat {d['max_label_invariant_rhat']:.5f}, minimum bulk/tail ESS {d['min_label_invariant_bulk_ess']:.0f}/{d['min_label_invariant_tail_ess']:.0f}, zero divergences and minimum energy BFMI {d['min_energy_bfmi']:.3f}. Original attempt diagnostics and settings are retained in the [report](report.json).
+
+```sh
+python -m benchmarks.aso_input_review --output results/aso-input-review
+```
+
+[Derived CSV](aso-4-row55-lower-bound.csv) · [Whole-field samples](posterior.npz) · [Volume draws by chain](volume_draws.csv.gz). The runner verifies the original input checksum and source coordinates. The [source paper](https://doi.org/10.1186/s40623-025-02230-9) and the exact row correspondence are recorded in the report. Numerical checks confirm that all other accepted coordinates, values, errors and source-row identities are unchanged.
+''')
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from src.probabilistic_isopach.figures import STYLE
+with plt.rc_context(STYLE):
+ fig,ax=plt.subplots(figsize=(8.5,5),layout='constrained')
+ for values,label,color in [(oldvol,'87 exact entries','#7A6B61'),(vol,'Row 55 as a lower bound','#157F88')]:
+  a=np.sort(values.ravel());ax.plot(a,(np.arange(len(a))+.5)/len(a),label=label,color=color)
+ ax.set(xscale='log',xlabel='Whole-Earth bulk fallout (km³; log scale)',ylabel='Posterior cumulative fraction',title='Aso-4 · one source-backed input sensitivity\nBoth estimates remain broad and conditional')
+ ax.legend();ax.grid(alpha=.2);fig.savefig(out/'comparison.png',dpi=170);plt.close(fig)
+(out/'artifacts.json').write_text(json.dumps({p.name:sha256(p.read_bytes()).hexdigest() for p in sorted(out.iterdir()) if p.is_file() and p.name!='artifacts.json'},indent=2)+'\n')
+Path('results/source-dev-20261106/aso-input-verification.json').write_text(json.dumps({'only_row55_bound_flags_changed':True,'all_other_accepted_arrays_unchanged':True,'posterior_checksum_and_volume_quantiles_verified':True,'passed_numerical_checks':d['passed'],'original_input_sha256':ma['input_sha256'],'derived_input_sha256':mb['input_sha256'],'runner_sha256':r['runner_sha256']},indent=2)+'\n')
+print('Published checked input sensitivity:',v)

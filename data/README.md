@@ -15,6 +15,8 @@
 
 For the original four datasets, counts reflect supplied flags, not an independent audit of field publications. YTT includes the two Maninjau primary-fallout beds and source-verified U1445B in its principal selection, with their approximate coordinates explicitly qualified; [read the audit and selection revision](audits/YTT/README.md). Minoan combines all fallout fans using the [documented source decisions](audits/Minoan/README.md). None of these datasets contains explicitly typed upper limits. Unnamed extra columns are ignored and reported. Historical maps in `archive/reference/original-isopachs/` are not fitting inputs.
 
+Subsequent targeted reviews recovered [B-Tm source descriptions and 76 site correspondences](../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) and [Aso-4 source qualifications and reported absences](../comparisons/source-revision/input-inventory/README.md). Some numeric entries encode a range endpoint, an upper bound, a trace or uncertain preservation. The accepted tables remain unchanged for controlled method comparisons; the reviews and separately labelled observation sensitivities must accompany interpretation. These targeted checks do not complete the primary-source audits of those collections.
+
 ## CSV schema
 
 Required: `Lon`, `Lat`, `Thickness`, `Vent Lon`, `Vent Lat`.
