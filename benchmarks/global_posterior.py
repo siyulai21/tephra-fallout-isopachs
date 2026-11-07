@@ -139,7 +139,7 @@ def figures(output, rows):
         axes[0].set(xscale='log', xlabel='Global bulk fallout (km³; log scale)',
             title='Global volumes\nSolid: conditional 95% · dotted: assumption envelope')
         axes[1].set(xlabel='Equal-region negative log score (lower is better)',
-            title='Matched geographic holdouts\nLocal prediction, not global truth · × = provisional sampling')
+            title='Matched geographic holdouts\nLocal prediction, not global volume\n× = provisional sampling')
         axes[1].legend(fontsize=9)
         fig.suptitle('Whole-Earth fallout · explicit assumptions and uncertainty', fontsize=16)
         for suffix in ('png', 'svg'):
