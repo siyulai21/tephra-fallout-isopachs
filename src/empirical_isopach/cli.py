@@ -14,12 +14,14 @@ def compare(argv=None):
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name", help="Report title for a custom CSV")
     parser.add_argument("--regional-only", action="store_true", help="Only the GP/spline regional comparison; omit the global companion")
+    parser.add_argument("--global-geometry", choices=("displaced", "source-fans", "source-envelope"), help="Override the catalogued global geometry; source-envelope remains experimental")
     args = parser.parse_args(argv)
     compare_dataset(resolve_dataset(args.csv), args.output, name=args.name,
                     progress=lambda message: print(message, flush=True))
     if not args.regional_only:
         from .global_reporting import global_dataset
         global_dataset(resolve_dataset(args.csv), args.output/"global", name=args.name,
+                       geometry=args.global_geometry,
                        progress=lambda message: print(message, flush=True))
         with (args.output/"README.md").open("a") as stream:
             stream.write("\n## Whole-deposit fallout\n\nRead the [conditional global estimate and assumption sensitivity](global/README.md). The total is normalized on the whole Earth; the local contour screen is an evidence diagnostic, not a veto on this separate calculation.\n")
@@ -31,9 +33,11 @@ def global_analysis(argv=None):
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name")
     parser.add_argument("--resume", action="store_true", help="Resume only checksum-verified matching posterior caches")
+    parser.add_argument("--geometry", choices=("displaced", "source-fans", "source-envelope"), help="Override the catalogued global geometry; source-envelope remains experimental")
     args = parser.parse_args(argv)
     from .global_reporting import global_dataset
     global_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume,
+                   geometry=args.geometry,
                    progress=lambda message: print(message, flush=True))
 
 

@@ -95,7 +95,7 @@ The reporting command requires all twelve fixed trials and every declared altern
     return report
 
 
-def figures(output, rows):
+def figures(output, rows, scenario_labels=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -108,7 +108,8 @@ def figures(output, rows):
             ax.plot([row["lower95"]/row["truth_km3"], row["upper95"]/row["truth_km3"]], [i, i], color=color, lw=2)
             ax.scatter(row["median"]/row["truth_km3"], i, color=color, s=40,
                        marker="o" if row["sampling_passed"] else "x")
-        labels = [f"{LABELS[r['scenario']]} · {r['seed']}"+(" · diffuse prior" if r["assumption"] != "baseline" else "") for r in rows]
+        names = LABELS if scenario_labels is None else scenario_labels
+        labels = [f"{names[r['scenario']]} · {r['seed']}"+(" · diffuse prior" if r["assumption"] != "baseline" else "") for r in rows]
         ax.set(yticks=range(len(rows)), yticklabels=labels, xscale="log",
                xlabel="Estimated volume / known true volume · log scale",
                title="Whole-Earth volume stress tests\nPoints: posterior medians · lines: conditional 95% intervals")

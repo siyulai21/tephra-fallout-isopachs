@@ -19,7 +19,7 @@ from .posterior import volume_summary, predictions
 def _model_hashes():
     root = Path(__file__).parent
     hashes = {name: sha256((root/name).read_bytes()).hexdigest()
-              for name in ("geometry.py", "prior.py", "inference.py")}
+              for name in ("geometry.py", "prior.py", "inference.py", "source_geometry.py", "vent_envelope.py", "supported_basis.py")}
     hashes["WGS84_EarthDomain"] = sha256((root.parents[2]/"probabilistic_isopach/global_volume.py").read_bytes()).hexdigest()
     return hashes
 
@@ -90,6 +90,21 @@ def assess_posterior(diagnostics, samples):
         d["label_invariant_variables"] = [*d.get("label_invariant_variables", []), "contamination"]
     else:
         d["observation_mixture"] = {"fixed_probability": float(epsilon.flat[0])}
+    if "fixed_center" in samples:
+        import arviz as az
+        weights = np.asarray(samples["weights"])
+        variables = {f"basis_weight_{j}":weights[...,j] for j in range(weights.shape[-1])
+                     if np.ptp(weights[...,j]) > 1e-12}
+        if variables:
+            checked = az.from_dict(posterior=variables)
+            rhat = float(az.rhat(checked,method="rank").to_array().max())
+            bulk = float(az.ess(checked,method="bulk").to_array().min())
+            tail = float(az.ess(checked,method="tail").to_array().min())
+            d["identified_basis_weights"] = {"max_rhat":rhat,"min_bulk_ess":bulk,"min_tail_ess":tail}
+            d["max_label_invariant_rhat"] = max(d["max_label_invariant_rhat"],rhat)
+            d["min_label_invariant_bulk_ess"] = min(d["min_label_invariant_bulk_ess"],bulk)
+            d["min_label_invariant_tail_ess"] = min(d["min_label_invariant_tail_ess"],tail)
+            d["label_invariant_variables"] = list(dict.fromkeys([*d.get("label_invariant_variables",[]),*variables]))
     return assess_diagnostics(d)
 
 
@@ -144,28 +159,65 @@ def fit_cached(data, latitude, prior, directory, settings=Sampling(), attempts=3
         "posterior_file": f"attempt-{len(records)}.npz", "posterior_sha256": record["posterior_sha256"]}
 
 
-def fit_study(path, output, settings=Sampling(), sensitivity=True, validation=True, progress=print):
+def fit_checked(data, latitude, prior, directory, settings=Sampling(), attempts=3, progress=print):
+    """Refine inadequate angular integration without changing physical priors.
+
+    Every rejected resolution retains its complete independent posterior. A
+    refinement reruns the posterior at twice the angular resolution; draws
+    are never renormalized or reweighted after fitting. There is no change
+    to the volume, shape, noise or tail priors, and no volume-based stopping.
+    """
+    from .source_checks import source_checks
+    directory = Path(directory)
+    history = []
+    for refinement in range(4):
+        chosen = replace(prior, angular_nodes=prior.angular_nodes*2**refinement)
+        folder = directory if refinement == 0 else directory/f"quadrature-{chosen.angular_nodes}"
+        samples, fit = fit_cached(data, latitude, chosen, folder, settings, attempts, progress)
+        if not prior.source_anchored:
+            return samples, fit
+        check = source_checks(samples)
+        if check["normalization"]["passed"] or refinement == 3:
+            fit["posterior_file"] = str((folder/fit["posterior_file"]).relative_to(directory))
+            fit["source_checks"] = check
+            fit["normalization_refinements"] = history
+            fit["diagnostics"]["sampling_only_passed"] = fit["diagnostics"]["passed"]
+            fit["diagnostics"]["normalization_passed"] = check["normalization"]["passed"]
+            fit["diagnostics"]["passed"] &= check["normalization"]["passed"]
+            fit["diagnostics"]["assessment"] += " Source-fan normalization must also pass angular refinement at relative tolerance 1e-6."
+            return samples, fit
+        history.append({"angular_nodes":chosen.angular_nodes,"directory":str(folder.relative_to(directory)),
+                        "fit":fit,"source_checks":check})
+        if progress:
+            progress(f"{directory}: angular normalization needs refinement to {2*chosen.angular_nodes} nodes")
+
+
+def fit_study(path, output, settings=Sampling(), sensitivity=True, validation=True, progress=print,
+              baseline_prior=BASELINE, sensitivity_priors=SENSITIVITIES):
     data, meta = audited_data(path)
     if validation:
         automatic_buffer(data)  # Fail insufficient-data holdouts before lengthy fits.
     output = Path(output)
     latitude = meta["vent_lonlat"][1]
     result = {"input": {k: v for k, v in meta.items() if k != "transform_inv"},
-              "protocol": "mass-normalized-spherical-mixture-v1", "fits": {}}
+              "protocol": ("vent-bounded-training-basis-v1" if baseline_prior.supported_basis else
+                           "vent-bounded-free-mixture-v1" if baseline_prior.vent_envelope else
+                           "source-focused-elliptic-mixture-v2" if baseline_prior.source_anchored
+                           else "mass-normalized-spherical-mixture-v1"), "fits": {}}
     baseline = None
-    for prior in (BASELINE, *SENSITIVITIES) if sensitivity else (BASELINE,):
-        samples, fit = fit_cached(data, latitude, prior, output/"posteriors"/prior.name, settings, progress=progress)
+    for prior in (baseline_prior, *sensitivity_priors) if sensitivity else (baseline_prior,):
+        samples, fit = fit_checked(data, latitude, prior, output/"posteriors"/prior.name, settings, progress=progress)
         result["fits"][prior.name] = fit
         if prior.name == "baseline":
             baseline = samples
         (output/"study.json").write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")
     if validation:
-        result["validation"] = cross_validate(data, latitude, output/"posteriors"/"validation", settings, progress)
+        result["validation"] = cross_validate(data, latitude, output/"posteriors"/"validation", settings, progress, baseline_prior)
     (output/"study.json").write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")
     return data, meta, baseline, result
 
 
-def cross_validate(data, latitude, output, settings=Sampling(), progress=print):
+def cross_validate(data, latitude, output, settings=Sampling(), progress=print, baseline_prior=BASELINE):
     data = data.canonical()
     labels = spatial_folds(data.xy, 4)
     buffer, rule = automatic_buffer(data)
@@ -173,7 +225,7 @@ def cross_validate(data, latitude, output, settings=Sampling(), progress=print):
     folds = []
     for fold in range(4):
         train, test = training_mask(data, labels, fold, buffer)
-        samples, fit = fit_cached(data.subset(train), latitude, BASELINE, Path(output)/f"fold-{fold}",
+        samples, fit = fit_checked(data.subset(train), latitude, baseline_prior, Path(output)/f"fold-{fold}",
                                   replace(settings, seed=settings.seed+fold+1), progress=progress)
         for key, value in predictions(samples, data.subset(test), latitude).items():
             arrays[key][test] = value

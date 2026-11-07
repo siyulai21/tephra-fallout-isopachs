@@ -24,9 +24,20 @@ from .support import SupportMesh
 LABELS = {"baseline": "Three fans · baseline", "diffuse_tail": "Allow diffuse global tails",
     "wide_geography": "Broader scales and fan offsets", "volume_prior_shift": "Shift volume prior 100-fold",
     "one_fan": "One fan", "five_fans": "Five fans", "gaussian_errors": "Gaussian observation errors",
-    "diffuse_mixture_weights": "Diffuse fan and kernel weights"}
+    "diffuse_mixture_weights": "Diffuse fan and kernel weights",
+    "six_bases": "Six measured-location bases", "three_bases": "Three measured-location bases",
+    "source_heavy_tails": "Source-focused fans with heavy tails"}
 PARTS = {"local_footprint": "Local sampling footprint", "unsampled_proximal": "Unsampled proximal cap",
     "beyond_farthest_site": "Beyond farthest exact site", "other_gaps_and_sectors": "Other gaps and sectors"}
+
+
+def assumption_label(key, report):
+    if key == "baseline":
+        return {"source-fans": "Source-focused fans · baseline",
+                "source-envelope": "Vent-bounded bases · baseline"}.get(report.get("geometry"), LABELS[key])
+    if key == "wide_geography" and report.get("geometry") != "displaced":
+        return "Broader scale and shape priors"
+    return LABELS[key]
 
 
 def figures(output, name, data, meta, samples, report):
@@ -38,7 +49,10 @@ def figures(output, name, data, meta, samples, report):
     index = np.unique(np.linspace(0, len(flat["log_volume"])-1, min(768, len(flat["log_volume"]))).astype(int))
     flat = {k: v[index] for k, v in flat.items()}
     bounds = survey_bounds(np.vstack([data.xy, [0., 0.]]))
-    x, y = np.linspace(bounds[0], bounds[2], 121), np.linspace(bounds[1], bounds[3], 121)
+    # Include the source exactly: a coarse grid can otherwise move the drawn
+    # innermost contour even when the field itself peaks at the volcano.
+    x = np.unique(np.r_[np.linspace(bounds[0], bounds[2], 121), 0.])
+    y = np.unique(np.r_[np.linspace(bounds[1], bounds[3], 121), 0.])
     xx, yy = np.meshgrid(x, y)
     xy = np.column_stack((xx.ravel(), yy.ravel()))
     from src.probabilistic_isopach.global_volume import EarthDomain
@@ -88,7 +102,7 @@ def figures(output, name, data, meta, samples, report):
             color = "#157F88" if key == "baseline" else "#AD633E"
             axes[0].plot([v["lower95"], v["upper95"]], [i, i], c=color, lw=2)
             axes[0].scatter(v["median"], i, c=color, marker="o" if fit["diagnostics"]["passed"] else "x", s=35)
-        axes[0].set(yticks=range(len(report["fits"])), yticklabels=[LABELS[k] for k in report["fits"]],
+        axes[0].set(yticks=range(len(report["fits"])), yticklabels=[assumption_label(k, report) for k in report["fits"]],
             xscale="log", xlabel="Global bulk fallout (km³; log scale)", title="Assumption sensitivity\nEach line is its own conditional 95% interval")
         axes[0].invert_yaxis()
         for i, (key, entry) in enumerate(report["mass_partition"]["parts"].items()):
@@ -129,7 +143,7 @@ def write_readme(output, name, report):
     rows = []
     for key, item in report["fits"].items():
         q = item["volume"]
-        rows.append(f"| {LABELS[key]} | {q['median']:.3g} | {q['lower95']:.3g}–{q['upper95']:.3g} | {item['training_checks']['rmse_log']:.3f} | {'pass' if item['diagnostics']['passed'] else '**not passed**'} |")
+        rows.append(f"| {assumption_label(key, report)} | {q['median']:.3g} | {q['lower95']:.3g}–{q['upper95']:.3g} | {item['training_checks']['rmse_log']:.3f} | {'pass' if item['diagnostics']['passed'] else '**not passed**'} |")
     validation = report.get("validation")
     validation_text = "Geographic validation was not requested for this run."
     if validation:
@@ -156,7 +170,7 @@ No finite dataset alone can exclude an arbitrarily large deposit in an unsampled
 
 ## Sensitivity to those assumptions
 
-| Assumption | Median km³ | Conditional 95% interval km³ | Fitted-site log-RMSE | Sampling diagnostics |
+| Assumption | Median km³ | Conditional 95% interval km³ | Fitted-site log-RMSE | Numerical checks |
 |---|---:|---:|---:|---|
 {chr(10).join(rows)}
 
@@ -188,16 +202,43 @@ Input SHA-256: `{report['input']['input_sha256']}`. No accepted observations or 
 """
     if not validation:
         text = text.replace("- [Geographic predictions and fold membership](heldout_predictions.csv)\n", "")
+    geometry = report.get("geometry", "displaced")
+    if geometry != "displaced":
+        text = text.replace("exactly equal to", "equal (to the reported normalization tolerance) to")
+        text = text.replace("Uncertainty includes fan positions, sizes, relative masses, tail shape, total volume and observation scatter parameters.",
+            "Uncertainty includes the fitted field geometry, relative strengths, total volume and observation scatter parameters. The source-focused alternative also varies its tail shape; the bounded-envelope alternative has Gaussian tails.")
+        text = text.replace("Several components can form elongated, separated or overlapping fans;", "Several components form overlapping fallout fans;")
+        text = text.replace("analytically normalized total", "separately normalized total")
+        text = text.replace("equal-mass quadrature points per fan", "positive quadrature points per component")
+        text = text.replace("--output results/new-global-run", f"--geometry {geometry} --output results/new-global-run")
+        check = report["source_checks"]
+        normalization = check["normalization"]
+        numerical = (f"The maximum relative change in any posterior component's integral on quadrupling angular resolution was **{normalization['max_relative_component_mass_error']:.3g}** (tolerance 10⁻⁶)."
+            if "max_relative_component_mass_error" in normalization else "The envelope and its Gaussian-product overlap terms have analytical whole-Earth integrals.")
+        source_text = ("## Source constraint\n\nEvery fitted field has its global thickness maximum at the supplied volcano. "
+            "This is an explicit shape assumption, not an invented vent-thickness observation. "
+            + ("Thickness decreases along every source ray, so this family cannot represent a secondary radial maximum. " if geometry == "source-fans" else "Smaller secondary maxima are allowed; Gaussian bases are placed at training sites using coordinates only. ")
+            + "Real deposits can violate a point-source maximum, particularly with distributed sources or secondary deposition. "
+            + numerical+" [Derivation, rejected alternatives and geological limits](../../../../docs/methods/source-anchored-fans.md).\n\n"
+            + "![Source-region thickness contours](source.png)\n\n")
+        text = text.replace("## What the interval means", source_text+"## What the interval means")
     (output/"README.md").write_text(text)
 
 
-def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print):
+def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print, geometry=None):
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh output directory, or --resume for verified posterior caches.")
     record = dataset_record(path)
     name = name or (record["name"] if record else Path(path).stem)
-    data, meta, samples, report = fit_study(path, output, settings, progress=progress)
+    from .models.mass_mixture.source_protocol import protocol
+    from .models.mass_mixture.source_checks import source_checks
+    geometry = geometry or (record or {}).get("global_geometry", "displaced")
+    prior, alternatives = protocol(geometry)
+    data, meta, samples, report = fit_study(path, output, settings, progress=progress,
+        baseline_prior=prior, sensitivity_priors=alternatives)
+    report["geometry"] = geometry
+    report["source_checks"] = source_checks(samples)
     report["name"] = name
     report["mass_partition"] = mass_partition(samples, data, meta["vent_lonlat"][1])
     fits = report["fits"]
@@ -208,7 +249,7 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
         "packages": {k: version(k) for k in ("numpy", "scipy", "pandas", "matplotlib", "pyproj", "shapely", "numpyro", "jax", "jaxlib", "arviz")},
         "report_source_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
         "study_source_sha256": sha256((Path(__file__).parent/"models/mass_mixture/study.py").read_bytes()).hexdigest(),
-        "normalization": "Whole WGS84 Earth, analytical per-fan normalizers; total mass is the volume parameter. No integration bounds or isopach cutoff enter inference."}
+        "normalization": "Whole WGS84 Earth; total mass is the volume parameter. Source fans use analytical radial and checked periodic angular integrals; displaced/envelope models use analytical integrals. No map bounds or isopach cutoff enter inference."}
     root = Path(__file__).resolve().parents[2]
     report["reproducibility"]["source_sha256"] = {str(p.relative_to(root)): sha256(p.read_bytes()).hexdigest()
         for p in sorted((root/"src").rglob("*.py"))}
@@ -218,6 +259,7 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
     for key, fit in fits.items():
         with np.load(output/"posteriors"/key/fit["posterior_file"]) as archive:
             posterior = {k: archive[k] for k in archive.files}
+        fit["source_checks"] = source_checks(posterior)
         values = np.exp(posterior["log_volume"])
         checked_data = data.canonical()
         predictive = predictions(posterior, checked_data, meta["vent_lonlat"][1])
@@ -241,9 +283,11 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
         for file in ("posterior.npz", "volume_draws.csv.gz", "estimates.csv", "heldout_predictions.csv")}
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
     figures(output, name, data, meta, samples, report)
+    from .source_reporting import source_figure
+    source_figure(output, name, data, meta, samples)
     write_readme(output, name, report)
     artifacts = ("README.md", "report.json", "posterior.npz", "volume_draws.csv.gz", "estimates.csv",
-                 "heldout_predictions.csv", "field.png", "volume.png", "sampling.png")
+                 "heldout_predictions.csv", "field.png", "volume.png", "sampling.png", "source.png")
     (output/"artifacts.json").write_text(json.dumps({name: sha256((output/name).read_bytes()).hexdigest()
         for name in artifacts}, indent=2)+"\n")
     return report

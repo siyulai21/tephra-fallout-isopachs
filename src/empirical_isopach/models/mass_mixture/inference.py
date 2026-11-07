@@ -43,54 +43,86 @@ def model_function(prior):
         large = s+jnp.log1p(-jnp.exp(-jnp.maximum(s, 50)))-jnp.log(abs(s))
         return jnp.where(small, t/2+t*t/24-t**4/2880, jnp.where(s > 50, large, value))
 
-    def model(unit, y, known_sd, kinds, mask):
-        k = prior.components
+    def model(unit, y, known_sd, kinds, mask, basis_centers=None, basis_scales=None):
+        k = basis_centers.shape[0] if prior.supported_basis else prior.components
         # This is an exact change of coordinates, not a thickness-derived prior.
         # The factor below cancels this auxiliary normal and restores p(log V).
         level = numpyro.sample("field_level", dist.Normal(0., prior.log_volume_sd))
-        ls = numpyro.sample("log_scale", dist.Normal(prior.log_scale_mean, prior.log_scale_sd).expand((k,)).to_event(1))
-        offset = numpyro.sample("offset", dist.Normal(0., prior.offset_sd).expand((k, 2)).to_event(2))
+        if prior.supported_basis:
+            width = numpyro.sample("basis_width", dist.Normal(prior.basis_width_log_mean, prior.basis_width_log_sd))
+            ls = numpyro.deterministic("log_scale", jnp.log(basis_scales)+width)
+            fixed_center = numpyro.deterministic("fixed_center", basis_centers)
+            offset = numpyro.deterministic("offset", jnp.zeros((k, 2)))
+        else:
+            ls = numpyro.sample("log_scale", dist.Normal(prior.log_scale_mean, prior.log_scale_sd).expand((k,)).to_event(1))
+        if prior.supported_basis:
+            pass
+        elif prior.source_anchored:
+            dimension = 2 if prior.source_shape == "elliptic" else 4
+            angular = numpyro.sample("angular", dist.Normal(0., prior.angular_sd).expand((k, dimension)).to_event(2))
+            numpyro.deterministic("angular_nodes", jnp.array(prior.angular_nodes))
+            offset = numpyro.deterministic("offset", jnp.zeros((k, 2)))
+        else:
+            offset = numpyro.sample("offset", dist.Normal(0., prior.offset_sd).expand((k, 2)).to_event(2))
         weights = numpyro.sample("weights", dist.Dirichlet(jnp.ones(k)*prior.fan_concentration/k)) if k > 1 else numpyro.deterministic("weights", jnp.ones(1))
-        if prior.exponential_core:
+        if prior.vent_envelope:
+            core_log_scale = numpyro.sample("core_log_scale", dist.Normal(prior.log_scale_mean, prior.log_scale_sd))
+            envelope_strength = numpyro.sample("envelope_strength", dist.Beta(1., 1.))
+            kernel_weights = numpyro.deterministic("kernel_weights", jnp.array([1., 0., 0.]))
+        elif prior.exponential_core:
             kernel_weights = numpyro.sample("kernel_weights", dist.Dirichlet(jnp.ones(3)*prior.kernel_concentration/3))
         else:
             two = numpyro.sample("two_kernel_weights", dist.Dirichlet(jnp.ones(2)*prior.kernel_concentration/2))
             kernel_weights = numpyro.deterministic("kernel_weights", jnp.array([two[0], 0., two[1]]))
         numpyro.deterministic("tail_fraction", kernel_weights[2])
         numpyro.deterministic("exponential_fraction", kernel_weights[1]/(kernel_weights[0]+kernel_weights[1]))
-        h = numpyro.sample("tail_log", dist.Normal(prior.tail_log_mean, prior.tail_log_sd))
-        q = numpyro.deterministic("exponent", (1. if prior.integrable_plane_tail else 0.)+jnp.exp(h))
+        if prior.vent_envelope:
+            q = numpyro.deterministic("exponent", 2.)
+        else:
+            h = numpyro.sample("tail_log", dist.Normal(prior.tail_log_mean, prior.tail_log_sd))
+            q = numpyro.deterministic("exponent", (1. if prior.integrable_plane_tail else 0.)+jnp.exp(h))
         sigma = numpyro.sample("noise", dist.HalfNormal(prior.noise_scale))
         epsilon = numpyro.sample("contamination", dist.Beta(1., 9.)) if prior.contamination else numpyro.deterministic("contamination", 0.)
-        a = jnp.exp(ls)[:, None]*offset/(2*RADIUS)
-        a2 = jnp.sum(a*a, axis=-1)
-        center = jnp.concatenate((2*a, (1-a2)[:, None]), axis=1)/(1+a2)[:, None]
-        u = .5*jnp.sum((center[:, None, :]-unit[None, :, :])**2, axis=-1)
-        l2 = jnp.exp(2*ls)/RADIUS**2
-        zg = jnp.log(2*jnp.pi*RADIUS**2)+jnp.log(l2)+jnp.log(-jnp.expm1(-2/l2))
-        b = q*l2
-        hh = jnp.log1p(2/b)
-        zp = jnp.log(2*jnp.pi*RADIUS**2)+jnp.log(b)+jnp.log(hh)+exprel((1-q)*hh)
-        gaussian = -u/l2[:, None]-zg[:, None]
-        if prior.exponential_core:
-            x = 2*RADIUS*jnp.exp(-ls)
-            small = x < 1e-3
-            safe = jnp.where(small, 1., x)
-            regular = jnp.log(-jnp.expm1(jnp.log1p(safe)-safe))
-            t = jnp.where(small, x, 0.)
-            series = 2*jnp.log(x)-jnp.log(2)+jnp.log1p(-2*t/3+t*t/4-t**3/15+t**4/72-t**5/420)
-            ze = jnp.log(2*jnp.pi)+2*ls+jnp.where(small, series, regular)
-            # Define a zero gradient at the measure-zero centre, avoiding 0/0
-            # while retaining the exact exponential density value there.
-            radial = jnp.where(u > 0, jnp.sqrt(2*jnp.where(u > 0, u, 1.)), 0.)
-            exponential = -radial/jnp.sqrt(l2)[:, None]-ze[:, None]
-        heavy = -q*jnp.log1p(u/b[:, None])-zp[:, None]
-        if prior.exponential_core:
-            kernel = jsp.special.logsumexp(jnp.stack((gaussian, exponential, heavy), axis=0)
-                                           +jnp.log(kernel_weights)[:, None, None], axis=0)
+        if prior.vent_envelope:
+            from .vent_envelope import log_shape as envelope_shape
+            log_shape = envelope_shape(unit, core_log_scale, ls, offset, weights, envelope_strength,
+                                       jnp, jsp.special.logsumexp,
+                                       center=fixed_center if prior.supported_basis else None)
         else:
-            kernel = jnp.logaddexp(jnp.log(kernel_weights[0])+gaussian, jnp.log(kernel_weights[2])+heavy)
-        log_shape = jnp.log(1e5)+jsp.special.logsumexp(jnp.log(weights)[:, None]+kernel, axis=0)
+            if prior.source_anchored:
+                from .source_geometry import log_kernel as source_kernel
+                kernel = source_kernel(unit, ls, angular, q*jnp.ones(k), kernel_weights,
+                                       prior.angular_nodes, jnp, jsp.special.logsumexp)
+            else:
+                a = jnp.exp(ls)[:, None]*offset/(2*RADIUS)
+                a2 = jnp.sum(a*a, axis=-1)
+                center = jnp.concatenate((2*a, (1-a2)[:, None]), axis=1)/(1+a2)[:, None]
+                u = .5*jnp.sum((center[:, None, :]-unit[None, :, :])**2, axis=-1)
+                l2 = jnp.exp(2*ls)/RADIUS**2
+                zg = jnp.log(2*jnp.pi*RADIUS**2)+jnp.log(l2)+jnp.log(-jnp.expm1(-2/l2))
+                b = q*l2
+                hh = jnp.log1p(2/b)
+                zp = jnp.log(2*jnp.pi*RADIUS**2)+jnp.log(b)+jnp.log(hh)+exprel((1-q)*hh)
+                gaussian = -u/l2[:, None]-zg[:, None]
+                if prior.exponential_core:
+                    x = 2*RADIUS*jnp.exp(-ls)
+                    small = x < 1e-3
+                    safe = jnp.where(small, 1., x)
+                    regular = jnp.log(-jnp.expm1(jnp.log1p(safe)-safe))
+                    t = jnp.where(small, x, 0.)
+                    series = 2*jnp.log(x)-jnp.log(2)+jnp.log1p(-2*t/3+t*t/4-t**3/15+t**4/72-t**5/420)
+                    ze = jnp.log(2*jnp.pi)+2*ls+jnp.where(small, series, regular)
+                    # Define a zero gradient at the measure-zero centre, avoiding 0/0
+                    # while retaining the exact exponential density value there.
+                    radial = jnp.where(u > 0, jnp.sqrt(2*jnp.where(u > 0, u, 1.)), 0.)
+                    exponential = -radial/jnp.sqrt(l2)[:, None]-ze[:, None]
+                heavy = -q*jnp.log1p(u/b[:, None])-zp[:, None]
+                if prior.exponential_core:
+                    kernel = jsp.special.logsumexp(jnp.stack((gaussian, exponential, heavy), axis=0)
+                                                   +jnp.log(kernel_weights)[:, None, None], axis=0)
+                else:
+                    kernel = jnp.logaddexp(jnp.log(kernel_weights[0])+gaussian, jnp.log(kernel_weights[2])+heavy)
+            log_shape = jnp.log(1e5)+jsp.special.logsumexp(jnp.log(weights)[:, None]+kernel, axis=0)
         centering = jnp.sum(jnp.where(mask, log_shape, 0.))/jnp.sum(mask)
         lv = numpyro.deterministic("log_volume", level-centering)
         numpyro.factor("volume_prior", dist.Normal(prior.log_volume_mean, prior.log_volume_sd).log_prob(lv)
@@ -133,6 +165,18 @@ def diagnostic_summary(samples, extras, data, latitude):
     w, ls = samples["weights"], samples["log_scale"]
     check["weighted_log_scale"] = np.sum(w*ls, axis=-1)
     check["effective_fans"] = 1/np.sum(w*w, axis=-1)
+    if "core_log_scale" in samples:
+        check["core_log_scale"] = samples["core_log_scale"]
+        check["envelope_strength"] = samples["envelope_strength"]
+    if "basis_width" in samples:
+        check["basis_width"] = samples["basis_width"]
+        # Fixed locations identify their labels: weight permutations are not
+        # equivalent fields. Check each weight as well as aggregate summaries.
+        for j in range(w.shape[-1]):
+            check[f"basis_weight_{j}"] = w[..., j]
+    if "angular" in samples:
+        for j in range(samples["angular"].shape[-1]):
+            check[f"weighted_angular_{j}"] = np.sum(w*samples["angular"][..., j], axis=-1)
     index = np.linspace(0, len(data.xy)-1, min(16, len(data.xy))).astype(int)
     fields = log_field(flat, to_sphere(data.xy[index], latitude)).reshape(n_chains, n_draws, -1)
     for j in range(fields.shape[-1]):
@@ -178,7 +222,12 @@ def sample(data, latitude, prior=BASELINE, settings=Sampling(), progress=print):
                 max_tree_depth=settings.max_tree_depth, init_strategy=init_to_median(num_samples=20))
     mcmc = MCMC(nuts, num_warmup=settings.warmup, num_samples=settings.draws,
                 num_chains=settings.chains, chain_method="sequential", progress_bar=False, jit_model_args=True)
-    mcmc.run(jax.random.PRNGKey(settings.seed), *packed_data(data, latitude), extra_fields=("diverging", "num_steps", "accept_prob", "energy"))
+    design = {}
+    if prior.supported_basis:
+        from .supported_basis import design as basis_design
+        center, scales = basis_design(data, latitude, prior.components)
+        design = {"basis_centers": center, "basis_scales": scales}
+    mcmc.run(jax.random.PRNGKey(settings.seed), *packed_data(data, latitude), **design, extra_fields=("diverging", "num_steps", "accept_prob", "energy"))
     samples = {k: np.asarray(v) for k, v in mcmc.get_samples(group_by_chain=True).items()}
     extras = {k: np.asarray(v) for k, v in mcmc.get_extra_fields(group_by_chain=True).items()}
     diagnostics = diagnostic_summary(samples, extras, data, latitude)

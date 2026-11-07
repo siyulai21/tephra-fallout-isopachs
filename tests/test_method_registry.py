@@ -41,6 +41,30 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     assert calls == [("global", True)]
 
 
+@pytest.mark.parametrize("dataset, override, focused", [
+    ("B-Tm", None, True), ("Aso-4", None, False),
+    ("B-Tm", "displaced", False), ("Aso-4", "source-fans", True),
+])
+def test_global_workflow_uses_reviewed_catalogue_geometry_and_explicit_override(
+        tmp_path, monkeypatch, dataset, override, focused):
+    from src.empirical_isopach import cli, global_reporting
+    class ReachedFit(Exception):
+        pass
+    captured = {}
+    def capture(path, output, settings, **kwargs):
+        captured.update(kwargs)
+        raise ReachedFit
+    monkeypatch.setattr(global_reporting, "fit_study", capture)
+    args = ["global", dataset, "--output", str(tmp_path/"run")]
+    if override:
+        args += ["--geometry", override]
+    with pytest.raises(ReachedFit):
+        cli.main(args)
+    assert captured["baseline_prior"].source_anchored is focused
+    assert len(captured["sensitivity_priors"]) == 7
+    assert all(p.source_anchored is focused for p in captured["sensitivity_priors"])
+
+
 def test_third_family_reaches_folds_volumes_figures_and_benchmark(tmp_path, monkeypatch):
     from benchmarks.regional import summarize
     calls = []
