@@ -17,6 +17,7 @@ methods/                       Active model catalogue and plain-language method 
 comparisons/
   regional/                   Current six-eruption and known-truth evaluation
   global/                     Whole-Earth estimates, stress tests and development record
+  source-revision/            B-Tm correction, Aso-4 alternatives and source-focused tests
   support/                    Shared local-support audit
 templates/eruption/            Optional upload notes and empty CSV schema
 docs/

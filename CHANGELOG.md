@@ -1,5 +1,15 @@
 # Changes
 
+## 0.11.0 — Source-focused B-Tm correction and Aso-4 adequacy review
+
+- Add source-focused elliptical fans with a vent maximum, joint Gaussian/exponential/power thinning and whole-Earth normalization. Correct B-Tm's unsupported displaced maximum without inventing vent thickness or closing observations.
+- Verify angular normalization and automatically refit at higher resolution when needed, preserving all lower-resolution attempts. Add independent area, likelihood, partition and refinement tests.
+- Add an experimental bounded envelope that permits smaller secondary peaks, including deterministic training-site bases. Retain its failed or less predictive fits; lower volumes alone do not justify adoption.
+- Publish the B-Tm/Aso-4 geometry comparison, input-reference inventories, uncertainty and known-truth stress tests. Keep Aso-4's unresolved mass sensitivity explicit. Preserve previous reports in dated archives and record the reviewed B-Tm geometry for normal command-line reproduction.
+- Check a source-confirmed eroded Aso-4 site as a separate lower-bound sensitivity, and flag nearby records requiring provenance review. Preserve the principal input and distinguish this targeted check from a complete source audit.
+- Recover Aso-4's original-workbook observation qualifications and a published 76-site B-Tm crosswalk. Keep trace placeholders, ranges, spot occurrences and non-detections distinct; run a separate two-site B-Tm observation sensitivity without rewriting accepted data.
+- Rerun all six regional peers and all 40 regional synthetic attempts; their scientific result objects reproduce exactly. Accepted measurements and source audits remain unchanged.
+
 ## 0.10.0 — Conditional global fallout without an arbitrary region
 
 - Replace the complete-contour veto on global inference with a separate positive, analytically mass-normalized spherical mixture. GP and spline remain regional peers; support diagnostics remain visible.

@@ -1,0 +1,119 @@
+{
+  "scope": "Recover provenance and observation meaning from the published compilation. This is not an independent audit of every underlying paper.",
+  "source": {
+    "doi": "https://doi.org/10.1007/s00445-021-01487-8",
+    "repository": "https://www.repository.cam.ac.uk/handle/1810/330433",
+    "supplement_url": "https://api.repository.cam.ac.uk/server/api/core/bitstreams/2714554e-5376-4f82-a0e7-88bed5218208/content",
+    "archive_sha256": "bde014784db2f8e4419e0f548755f5a232e119dc88ff100e2f9b7b2d32df0626",
+    "original_member": "445_2021_1487_MOESM2_ESM.xlsx",
+    "workbook_sha256": "db8e202ec67150da98bc853b55223362c7a9187bd96d3427eba45ca573201162",
+    "extracted_values_sha256": "7899136a55354df6dde68cc8725f6057d4b274229a5f2e5b05c45325104b5cfe",
+    "range": "thickness_data!A1:F78",
+    "measurement_range": "thickness_data!A2:F77",
+    "supporting_text_member": "445_2021_1487_MOESM1_ESM.docx",
+    "supporting_text_sha256": "fa806414af79a83a41d75cbc00b1311903c6882147fb40ccb2f66a6f69d3c7d3",
+    "license": "CC BY 4.0 as stated on the repository item; workbook copied unchanged, data extracts add row identities and comparison fields."
+  },
+  "accepted_input": {
+    "path": "data/eruptions/B-Tm_tephra.csv",
+    "sha256": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d",
+    "accepted_rows": 84,
+    "unchanged": true
+  },
+  "matching": {
+    "coordinate_tolerance_degrees": 0.00050001,
+    "interpretation": "Checks rounding agreement, not location uncertainty or proof of survey accuracy.",
+    "unique_source_and_current_pairs": 76,
+    "unmatched_current_rows": [
+      {
+        "original_csv_row": 2,
+        "latitude": 42.028,
+        "longitude": 128.0673806,
+        "thickness_cm": 150.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 3,
+        "latitude": 42.01,
+        "longitude": 128.45,
+        "thickness_cm": 110.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 4,
+        "latitude": 42.00154444,
+        "longitude": 128.5582139,
+        "thickness_cm": 50.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 5,
+        "latitude": 42.08,
+        "longitude": 128.4,
+        "thickness_cm": 50.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 6,
+        "latitude": 42.02,
+        "longitude": 128.4,
+        "thickness_cm": 40.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 8,
+        "latitude": 42.20555556,
+        "longitude": 128.3205556,
+        "thickness_cm": 16.0,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 83,
+        "latitude": 43.14055,
+        "longitude": 131.80944,
+        "thickness_cm": 0.1,
+        "status": "Not present in this distal source table; requires another source"
+      },
+      {
+        "original_csv_row": 85,
+        "latitude": 37.0144,
+        "longitude": 130.266,
+        "thickness_cm": 0.038,
+        "status": "Not present in this distal source table; requires another source"
+      }
+    ],
+    "source_kind_counts": {
+      "range": 13,
+      "numeric": 59,
+      "spots": 2,
+      "upper_bound": 1,
+      "presence_without_visible_layer": 1
+    },
+    "numeric_thickness_values_all_equal": true
+  },
+  "private_workbooks_inspected": [
+    {
+      "name": "B-Tm.xlsx",
+      "drive_id": "1_CUQOHNOGwYQtoSWDoHzpEZH7zASvYbv",
+      "url": "https://docs.google.com/spreadsheets/d/1_CUQOHNOGwYQtoSWDoHzpEZH7zASvYbv/edit",
+      "sha256": "1b4ca94b1b3370c52ab3a0bc31991a65de349247ae8379812f4ebb14ec03e72f",
+      "bytes": 15333
+    },
+    {
+      "name": "B-TmR.xlsx",
+      "drive_id": "1Zoo0CsgfHo6UT9-doCbA73EhGVrruno-",
+      "url": "https://docs.google.com/spreadsheets/d/1Zoo0CsgfHo6UT9-doCbA73EhGVrruno-/edit",
+      "sha256": "be9f9c7a91e591e8e57f1e6e23b935519190af2879fb4225cdc023aabed6e173",
+      "bytes": 19190
+    }
+  ],
+  "private_workbook_limitations": "These research copies alter several thickness strings and include additional sites. B-TmR has 89 positive rows and a separate 116-row zero table whose observational status and detection limits were not verified. It is not substituted for the published source.",
+  "source_semantics": {
+    "ranges": "Thirteen source ranges were reduced to single endpoints or midpoints in the accepted table; their geological/measurement interpretation remains to be checked before an interval likelihood is chosen.",
+    "spots": "Two source entries explicitly describe spots; treating them as representative undisturbed thickness is unverified.",
+    "suigetsu": "Source row 49 is <0.1 cm; current CSV row 82 uses exact 0.1 cm.",
+    "kushu": "Source row 48 reports no visible ash layer, with cryptotephra presence described in supporting text; current CSV row 84 uses exact 0.1 cm without a source-established bulk thickness.",
+    "absence": "Supporting text discusses marine preservation and reporting limitations; unreported layered ash is not automatically zero original fallout."
+  },
+  "changes_to_accepted_input": false
+}

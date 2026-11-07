@@ -1,0 +1,54 @@
+"""A bounded deposit with a source maximum and legitimate secondary peaks.
+
+g0 is a source-centred Gaussian/vMF profile with peak one. h is a convex
+mixture of displaced profiles with maximum at most one. For 0 < A < 1,
+f = g0 + (1-g0) A h has its unique maximum one at the source. Products of
+two Gaussian/vMF profiles have analytical whole-Earth integrals, so f does too.
+"""
+import numpy as np
+from scipy.special import logsumexp
+from .geometry import RADIUS
+
+
+def gaussian_log_z(kappa, xp=np):
+    small = kappa < 1e-4
+    safe = xp.where(small, 1., kappa)
+    regular = xp.log(2*xp.pi*RADIUS**2)-xp.log(safe)+xp.log(-xp.expm1(-2*safe))
+    series = xp.log(4*xp.pi*RADIUS**2)-kappa+kappa*kappa/6-kappa**4/180
+    return xp.where(small, series, regular)
+
+
+def component_centers(log_scale, offset, xp=np):
+    a = xp.exp(log_scale)[..., None]*offset/(2*RADIUS)
+    a2 = xp.sum(a*a, axis=-1)
+    return xp.concatenate((2*a, (1-a2)[..., None]), axis=-1)/(1+a2)[..., None]
+
+
+def normalizer(core_log_scale, log_scale, center, weights, strength, xp=np, lse=logsumexp):
+    k0 = RADIUS**2*xp.exp(-2*core_log_scale)
+    k = RADIUS**2*xp.exp(-2*log_scale)
+    u0 = .5*xp.sum((center-xp.array([0., 0., 1.]))**2, axis=-1)
+    combined = xp.sqrt(xp.sum((k[..., None]*center+k0[..., None, None]*xp.array([0., 0., 1.]))**2, axis=-1))
+    correction = -2*k0[..., None]*k*u0/(combined+k0[..., None]+k)
+    z = gaussian_log_z(k, xp)
+    overlap = gaussian_log_z(combined, xp)+correction
+    # Integral of gk*(1-g0), evaluated without subtracting large areas.
+    log_shell = z+xp.log(-xp.expm1(xp.minimum(overlap-z, -xp.finfo(float).eps)))
+    shell = xp.log(strength)+lse(xp.log(weights)+log_shell, axis=-1)
+    return xp.logaddexp(gaussian_log_z(k0, xp), shell)
+
+
+def log_shape(unit, core_log_scale, log_scale, offset, weights, strength, xp=np, lse=logsumexp, center=None):
+    center = component_centers(log_scale, offset, xp) if center is None else center
+    u = .5*xp.sum((center[..., None, :]-unit)**2, axis=-1)
+    u0 = .5*xp.sum((unit-xp.array([0., 0., 1.]))**2, axis=-1)
+    k0 = RADIUS**2*xp.exp(-2*core_log_scale)
+    k = RADIUS**2*xp.exp(-2*log_scale)
+    log_g0 = -k0[..., None]*u0
+    # Keep padded/source points out of log(0)'s derivative calculation.
+    safe = -k0[..., None]*xp.where(u0 > 0, u0, 1.)
+    complement = xp.where(u0 > 0, xp.log(-xp.expm1(safe)), -xp.inf)
+    log_h = lse(xp.log(weights)[..., None]-k[..., None]*u, axis=-2)
+    raw = xp.logaddexp(log_g0, complement+xp.log(strength)[..., None]+log_h)
+    norm = normalizer(core_log_scale, log_scale, center, weights, strength, xp, lse)
+    return xp.log(1e5)+raw-norm[..., None]

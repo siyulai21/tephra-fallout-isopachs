@@ -1,5 +1,7 @@
 # Aso-4 · global fallout estimate
 
+**Source-geometry review (version 0.11):** This high total remains a questioned conditional estimate. Source-focused ellipses predict withheld observations better but raise the median to about 3,418 km³. Two lower-volume envelope candidates give about 472 and 369 km³, but predict withheld data worse and are not adopted. [Full alternatives, maps, provenance and limitations](../../../../comparisons/source-revision/README.md). The numerical results below are the preserved preceding calculation, not a new fit.
+
 [Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/global/README.md)
 
 The baseline posterior median is **1.84e+03 km³**, with a **507–5e+04 km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **passed**.

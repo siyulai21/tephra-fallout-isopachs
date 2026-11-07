@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';
+import {FileBlob, SpreadsheetFile} from '@oai/artifact-tool';
+const folder = 'results/source-dev-20261106';
+const wb = await SpreadsheetFile.importXlsx(await FileBlob.load(`${folder}/20210805_Aso4_Tephra.xlsx`));
+const overview = await wb.inspect({kind:'workbook,sheet,table',maxChars:6000,tableMaxRows:4,tableMaxCols:12});
+console.log(overview.ndjson);
+await fs.writeFile(`${folder}/aso-workbook-overview.txt`,overview.ndjson);
+const sheets = {};
+for (const [name, address] of [['Aso_Tephra','A1:I99'],['DEFNO','A1:D12'],['References','A1:B30'],['Key','A1:D22']]) {
+  const range = wb.worksheets.getItem(name).getRange(address);
+  sheets[name] = {address,values:range.values,formulas:range.formulas};
+}
+await fs.writeFile(`${folder}/aso-workbook-values.json`,JSON.stringify(sheets,null,2)+'\n');

@@ -1,0 +1,143 @@
+{
+  "scope": "Read-only comparison with a user-held source compilation; not a completed primary-source audit or a fit.",
+  "source": {
+    "title": "20210805_Aso4_Tephra.xlsx",
+    "drive_id": "1aYtW7v6AOdAyALz_ZWbQzetms28sIfXO",
+    "url": "https://docs.google.com/spreadsheets/d/1aYtW7v6AOdAyALz_ZWbQzetms28sIfXO/edit",
+    "original_sha256": "88731ee8956aea5e02389c98b0a83418c504d6742fb32824f2fc9ac09f19f5e6",
+    "bytes": 27059,
+    "extracted_values_sha256": "9efd14ac732b8aec7f5e2bb2367403cf759813fdc7179839a3478c11fd9989cd",
+    "ranges": {
+      "Aso_Tephra": "A1:I99",
+      "DEFNO": "A1:D12",
+      "References": "A1:B30",
+      "Key": "A1:D22"
+    },
+    "paper_identity": "Workbook counts are consistent with 98 positive entries plus 11 reported absences; identity to the exact journal analysis input is not established."
+  },
+  "accepted_input": {
+    "path": "data/eruptions/Aso-4_tephra.csv",
+    "sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
+    "rows": 87,
+    "unchanged": true
+  },
+  "inventory": {
+    "source_thickness_rows": 98,
+    "reported_absence_rows": 11,
+    "thickness_quality_counts": {
+      "B": 15,
+      "C": 21,
+      "A": 62
+    },
+    "source_half_centimetre_rows": 18,
+    "current_positive_rows": 87,
+    "current_nondetection_rows": 0
+  },
+  "observation_semantics": {
+    "assigned_trace_value": {
+      "range": "Key!B4",
+      "interpretation": "The 0.5 cm coding includes trace and unspecified thickness with confirmed presence; it is neither automatically an exact thickness nor an established detection threshold."
+    },
+    "quality": {
+      "range": "Key!B8:B9",
+      "interpretation": "Identification and thickness-quality letters describe different uncertainties; no numerical standard deviation is supplied."
+    },
+    "nondetection": {
+      "range": "Key!B13",
+      "interpretation": "The workbook explicitly permits bioturbation, coring loss, or non-reporting despite complete upper-50-m recovery. No detection limit, age coverage, preservation probability or observation likelihood has been invented."
+    }
+  },
+  "matching": {
+    "radius_m": 1000,
+    "purpose": "Audit search radius only, not a duplicate rule or statistical parameter.",
+    "metric": "WGS84 geodesic; direct comparison temporarily treats both coordinate columns as WGS84.",
+    "candidate_pairs": 57,
+    "accepted_rows_with_candidates": 52,
+    "same_thickness_pairs": 48,
+    "same_thickness_accepted_rows": 48,
+    "source_rows_with_multiple_candidates": {
+      "94": 2,
+      "43": 2,
+      "99": 2
+    },
+    "candidate_conflicts_within_75m": [
+      {
+        "csv_row": 29,
+        "csv_reference_label": "",
+        "csv_thickness_cm": 3.0,
+        "source_sheet_row": 43,
+        "source_site": "Core_C9001C",
+        "source_reference_label": "MatsuuraKomatsubara18",
+        "source_thickness_cm": 5.5,
+        "direct_coordinate_distance_m": 44.413226128612706,
+        "same_thickness": false,
+        "source_identification_quality": "A",
+        "source_thickness_quality": "A",
+        "tested_tokyo_datum_distance_m": null,
+        "status": "Candidate correspondence only; no provenance reassigned"
+      },
+      {
+        "csv_row": 54,
+        "csv_reference_label": "U1436",
+        "csv_thickness_cm": 6.0,
+        "source_sheet_row": 80,
+        "source_site": "IODP_350-U1436A-2H-1_25-30_cm",
+        "source_reference_label": "Schindlbeck18",
+        "source_thickness_cm": 5,
+        "direct_coordinate_distance_m": 3.2968274016347747,
+        "same_thickness": false,
+        "source_identification_quality": "A",
+        "source_thickness_quality": "B",
+        "tested_tokyo_datum_distance_m": null,
+        "status": "Candidate correspondence only; no provenance reassigned"
+      },
+      {
+        "csv_row": 54,
+        "csv_reference_label": "U1436",
+        "csv_thickness_cm": 6.0,
+        "source_sheet_row": 81,
+        "source_site": "IODP_350-U1436B-2H-1",
+        "source_reference_label": "MahonyPC19",
+        "source_thickness_cm": 2.5,
+        "direct_coordinate_distance_m": 3.2968274016347747,
+        "same_thickness": false,
+        "source_identification_quality": "B",
+        "source_thickness_quality": "B",
+        "tested_tokyo_datum_distance_m": null,
+        "status": "Candidate correspondence only; no provenance reassigned"
+      },
+      {
+        "csv_row": 56,
+        "csv_reference_label": "Geo99-10",
+        "csv_thickness_cm": 0.7,
+        "source_sheet_row": 45,
+        "source_site": "Ge99-10",
+        "source_reference_label": "Derkachev16",
+        "source_thickness_cm": 1,
+        "direct_coordinate_distance_m": 1.107313672657251e-10,
+        "same_thickness": false,
+        "source_identification_quality": "A",
+        "source_thickness_quality": "A",
+        "tested_tokyo_datum_distance_m": null,
+        "status": "Candidate correspondence only; no provenance reassigned"
+      }
+    ],
+    "datum_hypothesis": {
+      "description": "Tokyo to WGS84 (108), tested for Machida85 candidates only. Not evidence that the source coordinates actually use that datum, and not applied to fitting inputs.",
+      "pipeline": "+proj=pipeline +step +proj=unitconvert +xy_in=deg +xy_out=rad +step +proj=push +v_3 +step +proj=cart +ellps=bessel +step +proj=helmert +x=-146.414 +y=507.337 +z=680.507 +step +inv +proj=cart +ellps=WGS84 +step +proj=pop +v_3 +step +proj=unitconvert +xy_in=rad +xy_out=deg",
+      "same_thickness_candidate_count": 33,
+      "tested_max_distance_m": 444.0684132616032,
+      "original_min_distance_m": 43.02093590663662,
+      "original_max_distance_m": 577.0388048057991,
+      "originally_over_200m_count": 32,
+      "over_200m_then_under_75m_count": 32,
+      "transformation_worsens_count": 1
+    }
+  },
+  "changes_to_fitting_input": false,
+  "effect_on_volume": "Not calculated; no new observation likelihood has been justified.",
+  "runtime": {
+    "pyproj": "3.8.0",
+    "proj": "9.8.1"
+  }
+}

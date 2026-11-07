@@ -1,0 +1,92 @@
+"""Compare a published source table with accepted B-Tm observations, read only."""
+import csv
+from hashlib import sha256
+import json
+from pathlib import Path
+import re
+import shutil
+
+D = Path('results/source-dev-20261106')
+O = Path('comparisons/source-revision/input-inventory/b-tm-workbook-review')
+O.mkdir(parents=True, exist_ok=True)
+accepted = Path('data/eruptions/B-Tm_tephra.csv')
+original_hash = sha256(accepted.read_bytes()).hexdigest()
+source = json.loads((D/'Yang2021-B-Tm-values.json').read_text())['thickness_data']['values']
+rows = []
+for n, values in enumerate(source[1:77], 2):
+    site, longitude, latitude, thickness, reference, location = values
+    try:
+        numeric = float(thickness)
+        kind = 'numeric'
+    except (ValueError, TypeError):
+        numeric = None
+        kind = ('upper_bound' if str(thickness).startswith('<') else
+                'presence_without_visible_layer' if 'No visible' in str(thickness) else
+                'spots' if 'spots' in str(thickness) else 'range')
+    rows.append(dict(source_sheet_row=n, site=site, longitude=longitude, latitude=latitude,
+                     source_thickness_text=str(thickness), source_kind=kind,
+                     numeric_thickness_cm=numeric, reference=reference, source_location=location))
+assert len(rows) == 76
+with accepted.open(encoding='utf-8-sig', newline='') as f:
+    current = [(i, r) for i, r in enumerate(csv.DictReader(f), 2) if r['Pseudo'].lower() != 'yes']
+crosswalk, unmatched = [], []
+for n, r in current:
+    candidates = [s for s in rows if abs(float(r['Lat'])-s['latitude']) <= .00050001
+                  and abs(float(r['Lon'])-s['longitude']) <= .00050001]
+    assert len(candidates) <= 1
+    if not candidates:
+        unmatched.append(dict(original_csv_row=n, latitude=float(r['Lat']), longitude=float(r['Lon']),
+                              thickness_cm=float(r['Thickness']), status='Not present in this distal source table; requires another source'))
+        continue
+    s = candidates[0]
+    crosswalk.append(dict(original_csv_row=n, csv_latitude=float(r['Lat']), csv_longitude=float(r['Lon']),
+                          csv_thickness_cm=float(r['Thickness']), **s,
+                          relationship='Coordinate agreement to the accepted 0.001-degree rounding; unique within this table'))
+assert len(crosswalk) == 76 and len({r['source_sheet_row'] for r in crosswalk}) == 76
+from collections import Counter
+kinds = dict(Counter(r['source_kind'] for r in crosswalk))
+assert all(r['csv_thickness_cm'] == r['numeric_thickness_cm'] for r in crosswalk if r['source_kind'] == 'numeric')
+for path, records in [('source-thickness-records.csv', rows), ('source-crosswalk.csv', crosswalk), ('unmatched-current-rows.csv', unmatched)]:
+    with (O/path).open('w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=list(records[0])); w.writeheader(); w.writerows(records)
+shutil.copy2(D/'Yang2021-B-Tm.xlsx', O/'yang2021-thickness.xlsx')
+private = []
+for name, identifier in [('B-Tm','1_CUQOHNOGwYQtoSWDoHzpEZH7zASvYbv'), ('B-TmR','1Zoo0CsgfHo6UT9-doCbA73EhGVrruno-')]:
+    p = D/(name+'.xlsx')
+    private.append(dict(name=p.name, drive_id=identifier,
+                        url='https://docs.google.com/spreadsheets/d/'+identifier+'/edit',
+                        sha256=sha256(p.read_bytes()).hexdigest(), bytes=p.stat().st_size))
+summary = dict(
+    scope='Recover provenance and observation meaning from the published compilation. This is not an independent audit of every underlying paper.',
+    source=dict(doi='https://doi.org/10.1007/s00445-021-01487-8',
+                repository='https://www.repository.cam.ac.uk/handle/1810/330433',
+                supplement_url='https://api.repository.cam.ac.uk/server/api/core/bitstreams/2714554e-5376-4f82-a0e7-88bed5218208/content',
+                archive_sha256=sha256((D/'yang2021-supplement.bin').read_bytes()).hexdigest(),
+                original_member='445_2021_1487_MOESM2_ESM.xlsx',
+                workbook_sha256=sha256((O/'yang2021-thickness.xlsx').read_bytes()).hexdigest(),
+                extracted_values_sha256=sha256((D/'Yang2021-B-Tm-values.json').read_bytes()).hexdigest(),
+                range='thickness_data!A1:F78', measurement_range='thickness_data!A2:F77',
+                supporting_text_member='445_2021_1487_MOESM1_ESM.docx',
+                supporting_text_sha256=sha256((D/'Yang2021-support.docx').read_bytes()).hexdigest(),
+                license='CC BY 4.0 as stated on the repository item; workbook copied unchanged, data extracts add row identities and comparison fields.'),
+    accepted_input=dict(path=str(accepted), sha256=original_hash, accepted_rows=84, unchanged=True),
+    matching=dict(coordinate_tolerance_degrees=.00050001,
+                  interpretation='Checks rounding agreement, not location uncertainty or proof of survey accuracy.',
+                  unique_source_and_current_pairs=76, unmatched_current_rows=unmatched,
+                  source_kind_counts=kinds, numeric_thickness_values_all_equal=True),
+    private_workbooks_inspected=private,
+    private_workbook_limitations='These research copies alter several thickness strings and include additional sites. B-TmR has 89 positive rows and a separate 116-row zero table whose observational status and detection limits were not verified. It is not substituted for the published source.',
+    source_semantics=dict(
+        ranges='Thirteen source ranges were reduced to single endpoints or midpoints in the accepted table; their geological/measurement interpretation remains to be checked before an interval likelihood is chosen.',
+        spots='Two source entries explicitly describe spots; treating them as representative undisturbed thickness is unverified.',
+        suigetsu='Source row 49 is <0.1 cm; current CSV row 82 uses exact 0.1 cm.',
+        kushu='Source row 48 reports no visible ash layer, with cryptotephra presence described in supporting text; current CSV row 84 uses exact 0.1 cm without a source-established bulk thickness.',
+        absence='Supporting text discusses marine preservation and reporting limitations; unreported layered ash is not automatically zero original fallout.'),
+    changes_to_accepted_input=False,
+)
+(O/'summary.json').write_text(json.dumps(summary, indent=2, allow_nan=False)+'\n')
+shutil.copy2(__file__, O/'audit.py.txt')
+shutil.copy2(D/'inspect-btm-workbooks.mjs', O/'extraction.mjs.txt')
+assert sha256(accepted.read_bytes()).hexdigest() == original_hash
+(O/'artifacts.json').write_text(json.dumps({p.name:sha256(p.read_bytes()).hexdigest() for p in sorted(O.iterdir()) if p.is_file() and p.name!='artifacts.json'}, indent=2)+'\n')
+print(json.dumps({'matched':len(crosswalk),'unmatched':len(unmatched),'kinds':kinds},indent=2))

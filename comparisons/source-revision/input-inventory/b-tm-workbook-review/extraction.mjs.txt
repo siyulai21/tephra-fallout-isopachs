@@ -1,0 +1,16 @@
+import fs from 'node:fs/promises';
+import {FileBlob, SpreadsheetFile} from '@oai/artifact-tool';
+const folder = 'results/source-dev-20261106';
+for (const name of ['B-Tm', 'B-TmR', 'Yang2021-B-Tm']) {
+  const wb = await SpreadsheetFile.importXlsx(await FileBlob.load(`${folder}/${name}.xlsx`));
+  const overview = await wb.inspect({kind:'workbook,sheet,table',maxChars:12000,tableMaxRows:8,tableMaxCols:16});
+  console.log(name, overview.ndjson);
+  await fs.writeFile(`${folder}/${name}-overview.txt`,overview.ndjson);
+  const sheets = {};
+  const ranges = name === 'B-Tm' ? [['thickness_data','A1:F80']] : name === 'B-TmR' ? [['Sheet1','A1:E90'],['DEFNO','A1:F117'],['DEFNO2','A1:D1']] : [['thickness_data','A1:F78']];
+  for (const [sheet, address] of ranges) {
+    const range = wb.worksheets.getItem(sheet).getRange(address);
+    sheets[sheet] = {address,values:range.values,formulas:range.formulas};
+  }
+  await fs.writeFile(`${folder}/${name}-values.json`,JSON.stringify(sheets,null,2)+'\n');
+}

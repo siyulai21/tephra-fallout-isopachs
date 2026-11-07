@@ -1,6 +1,6 @@
 {
-  "protocol": "mass-normalized-spherical-mixture-v1",
-  "summary_source_sha256": "e35c796077337148410776cfb58498570d92d5468c78dfb6bdf90496337256ec",
+  "protocol": "reviewed-global-geometries-v2",
+  "summary_source_sha256": "42b2ac47a20423f2a7843a6b38ecd41954ef54ba43e3144484b448f4477d0f2d",
   "cases": [
     {
       "name": "Mazama",
@@ -27,7 +27,7 @@
       "name": "B-Tm",
       "slug": "b-tm",
       "input_sha256": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d",
-      "global_report_sha256": "8e7d8082da91d8d6a99bcedfc8e8bb2134707569ddfee4bb3bef736a8fac0cc7",
+      "global_report_sha256": "9fd789d6c6aff4482a20488a75637bddfbdfc2e82d469bb65e313cb53206752c",
       "regional_report_sha256": "6481bf2df062b4a7579941dfd8dd8470de647f1ee021fc951f4335913900b7a6"
     },
     {
@@ -49,6 +49,8 @@
     {
       "eruption": "Mazama",
       "slug": "mazama",
+      "geometry": "displaced",
+      "review_status": "conditional",
       "median": 223.1570209385165,
       "lower95": 144.66934967004497,
       "upper95": 3668.8046470496906,
@@ -66,6 +68,8 @@
     {
       "eruption": "Tambora",
       "slug": "tambora",
+      "geometry": "displaced",
+      "review_status": "conditional",
       "median": 179.06605694683046,
       "lower95": 112.93975220450795,
       "upper95": 1284.2051146530378,
@@ -83,6 +87,8 @@
     {
       "eruption": "Aso-4",
       "slug": "aso-4",
+      "geometry": "displaced",
+      "review_status": "questioned",
       "median": 1836.0246894517572,
       "lower95": 507.17311698278155,
       "upper95": 49960.41429319698,
@@ -100,23 +106,27 @@
     {
       "eruption": "B-Tm",
       "slug": "b-tm",
-      "median": 344.24964850315513,
-      "lower95": 79.52970461465974,
-      "upper95": 17485.297861987223,
-      "sensitivity_lower": 42.64813722392019,
-      "sensitivity_upper": 5601726.838521331,
+      "geometry": "source-fans",
+      "review_status": "conditional",
+      "median": 106.27831897590134,
+      "lower95": 53.2124705977219,
+      "upper95": 2159.2195080402103,
+      "sensitivity_lower": 45.84390537253531,
+      "sensitivity_upper": 6492.813502567812,
       "baseline_sampling_passed": true,
-      "all_sensitivity_sampling_passed": true,
-      "all_outer_sampling_passed": false,
-      "median_fraction_outside_local_footprint": 0.9935084296320321,
-      "global_equal_region_negative_log_score": 1.5203303923313516,
-      "global_observation_coverage95": 0.9523809523809523,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.9770078151672995,
+      "global_equal_region_negative_log_score": 1.1618111459985654,
+      "global_observation_coverage95": 0.9285714285714286,
       "stacked_equal_region_negative_log_score": 1.3309438788407917,
       "spline_equal_region_negative_log_score": 1.813707156809931
     },
     {
       "eruption": "YTT",
       "slug": "ytt",
+      "geometry": "displaced",
+      "review_status": "conditional",
       "median": 1674.1685982075578,
       "lower95": 1203.6198216232358,
       "upper95": 54906.94012183604,
@@ -134,6 +144,8 @@
     {
       "eruption": "Minoan",
       "slug": "minoan",
+      "geometry": "displaced",
+      "review_status": "conditional",
       "median": 46.03553729126296,
       "lower95": 28.129074496242126,
       "upper95": 2529.2422583624934,
@@ -285,17 +297,17 @@
     {
       "eruption": "B-Tm",
       "global": {
-        "mean_log_score": 1.520330392331352,
-        "rmse_log": 1.8032893389633444,
-        "coverage95_observations": 0.9523809523809523,
-        "mean_interval_width_log": 5.249517253699066,
+        "mean_log_score": 1.1618111459985652,
+        "rmse_log": 0.8606109788829335,
+        "coverage95_observations": 0.9285714285714286,
+        "mean_interval_width_log": 3.566293647745662,
         "fold_log_scores": [
-          2.237054458335656,
-          1.4299814864874492,
-          1.0941316737566495,
-          1.3201539507456514
+          1.4845055434439458,
+          1.3322537863395303,
+          0.9550486230811767,
+          0.8754366311296082
         ],
-        "equal_region_log_score": 1.5203303923313516
+        "equal_region_log_score": 1.1618111459985654
       },
       "stacked": {
         "mean_log_score": 1.3309438788407917,
@@ -324,7 +336,7 @@
         ]
       },
       "matched_input_folds_buffer_and_training_rows": true,
-      "global_outer_sampling_passed": false
+      "global_outer_sampling_passed": true
     },
     {
       "eruption": "YTT",
@@ -415,5 +427,5 @@
       "global_outer_sampling_passed": true
     }
   ],
-  "scope": "Conditional global bulk fallout, not ignimbrite or DRE. All assumptions fixed across eruptions. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume."
+  "scope": "Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume."
 }

@@ -8,7 +8,7 @@
 |---|---|---|---|
 | GP ensemble (`stacked`) | Directional thinning trends plus correlated Gaussian-process residual fields, combined by predictive stacking | Component candidates and weights from geographic training folds | [GP ensemble](gaussian-process.md) |
 | Trend-regularized cubic spline (`spline`) | Tensor-product cubic basis with integrated derivative and fitted-trend penalties | Trend, knots, tension, smoothing, trend strength and residual noise | [Cubic spline](cubic-spline.md) |
-| Global spherical mixture (`global`) | Positive jointly fitted fans with analytic whole-Earth mass normalization | Full posterior for volume, core thinning, tails, fan geometry and noise; fixed prior sensitivities | [Global method](../docs/methods/probabilistic-global.md) |
+| Global spherical mixture (`global`) | Positive jointly fitted fans with whole-Earth mass normalization and numerical refinement checks | Full posterior for volume, core thinning, tails, fan geometry and noise; fixed prior sensitivities | [Global method](../docs/methods/probabilistic-global.md) · [Source-focused correction](../docs/methods/source-anchored-fans.md) |
 
 Neither needs invented pseudo-observations. Numerical integration points evaluate integrals and penalties; they do not supply additional evidence. Automation removes per-eruption hand tuning, not the model's fixed assumptions or search limits.
 

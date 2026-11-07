@@ -16,6 +16,8 @@ The intended workflow is simple: **upload an eruption's data in chat → audit t
 
 **Global estimates no longer require a passing contour band.** The old complete-contour screen was too conservative as a prerequisite for conditional extrapolation. A new positive, mass-normalized field estimates total fallout directly on the whole Earth, with no arbitrary calculation rectangle or closing pseudo-data. Its posterior intervals and assumption sensitivities remain explicit: missing deposits cannot be determined from sparse measurements alone. [Results and limitations](comparisons/global/README.md) · [Equations and priors](docs/methods/probabilistic-global.md).
 
+**B-Tm's source contour has been corrected.** Its reviewed source-focused reconstruction places the maximum at the volcano and gives a lower conditional central volume. Aso-4's lower-volume alternatives did not establish an improved global estimate; the competing results and remaining uncertainty are explicit. [Source maps, all tested geometries and the B-Tm/Aso-4 review](comparisons/source-revision/README.md).
+
 ![Global estimates and matched predictive checks](comparisons/global/comparison.png)
 
 ## One dataset, multiple methods

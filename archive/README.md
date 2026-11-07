@@ -16,3 +16,5 @@ Historical solvers remain under explicitly labelled compatibility/research packa
 # Latest preserved comparison
 
 The [2026-11-03 matched regional reports](2026-11-03-regional/README.md) retain the results preceding the support audit. Numerical artifacts and source hashes are preserved. Current local support and contour findings are in the [support study](../comparisons/support/README.md).
+
+The [2026-11-06 global comparison](reports/global/2026-11-06-displaced-comparison/README.md) preserves the common displaced geometry before the [B-Tm source correction and Aso-4 review](../comparisons/source-revision/README.md). Its B-Tm and Aso-4 case reports are preserved alongside it. Snapshot manifests verify original file bytes, including original Markdown retained as text files.

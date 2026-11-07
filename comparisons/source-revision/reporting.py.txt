@@ -1,0 +1,214 @@
+from pathlib import Path
+from hashlib import sha256
+import json,gzip,shutil,csv,time
+import numpy as np
+import pandas as pd
+from src.empirical_isopach.models.mass_mixture.study import audited_data,assess_posterior
+from src.empirical_isopach.models.mass_mixture.source_checks import source_checks
+from src.empirical_isopach.source_reporting import source_figure
+D=Path('results/source-dev-20261106');V=Path('results/source-global-20261106');P=Path('results/source-production-20261106')
+O=Path('comparisons/source-revision');O.mkdir(parents=True,exist_ok=True)
+while not (O/'btm-input-sensitivity/report.json').exists():time.sleep(2)
+labels={'displaced':'Previous displaced circles','harmonic':'Anchored harmonic fans','elliptic':'Source-focused ellipses','one_fan':'One source-focused fan','free_envelope':'Vent envelope, free centres','six_bases':'Vent envelope, six site bases','twelve_bases':'Vent envelope, twelve site bases'}
+records={};rows=[];draws=[]
+def read(p):return json.loads(p.read_text())
+def load(p,expected):
+ assert sha256(p.read_bytes()).hexdigest()==expected,str(p)
+ with np.load(p) as a:return {k:a[k] for k in a.files}
+for slug,title,file in [('b-tm','B-Tm','B-Tm'),('aso-4','Aso-4','Aso-4')]:
+ data,meta=audited_data('data/eruptions/'+file+'_tephra.csv')
+ oldfolder=Path('archive/reports')/slug/'2026-11-06-displaced-global'
+ old=read(oldfolder/'report.json');regional=read(Path('eruptions')/slug/'results/report.json')
+ variants={
+  'displaced':(old['fits']['baseline'],oldfolder,old['validation'],None),
+ }
+ for key,suffix in [('harmonic',''),('elliptic','-elliptic'),('one_fan','-elliptic-k1'),('free_envelope','-envelope'),('six_bases','-supported-k6'),('twelve_bases','-supported-k12')]:
+  folder=D/(slug+suffix);f=read(folder/'fit.json');post=folder/'baseline' if key=='twelve_bases' else folder
+  valpath=V/slug/'validation.json' if key=='elliptic' else D/(slug+'-supported-k6-validation')/'validation.json' if key=='six_bases' else folder/'validation.json' if key=='twelve_bases' else None
+  val=read(valpath) if valpath is not None else None
+  valroot=V/slug/'posteriors/validation' if key=='elliptic' else D/(slug+'-supported-k6-validation')/'posteriors' if key=='six_bases' else folder/'validation' if key=='twelve_bases' else None
+  variants[key]=(f,post,val,valroot)
+ entries={}
+ for key,(fit,folder,validation,valroot) in variants.items():
+  path=folder/'posterior.npz' if key=='displaced' else folder/fit['posterior_file']
+  samples=load(path,fit['posterior_sha256'])
+  raw=fit['attempts'][-1]['diagnostics'];diagnostics=assess_posterior(raw,samples)
+  check=source_checks(samples)
+  entry={'historical_fit':fit,'reviewed_diagnostics':diagnostics,'source_checks':check,'validation':validation,
+         'posterior_sha256':fit['posterior_sha256'],'posterior_local_origin':str(path)}
+  if validation is not None:
+   rv=regional['validation']
+   assert validation['row_ids']==rv['row_ids'] and validation['folds']==rv['folds'] and validation['buffer_km']==rv['buffer_km']
+   for f,peer in zip(validation['fits'],rv['methods']['stacked']['selections']):
+    assert f['training_row_ids']==peer['training_row_ids'] and f['withheld_row_ids']==peer['withheld_row_ids']
+   if valroot is not None:
+    reviewed=[]
+    for f in validation['fits']:
+     sf=load(valroot/f"fold-{f['fold']}"/f['fit']['posterior_file'],f['fit']['posterior_sha256'])
+     reviewed.append(assess_posterior(f['fit']['attempts'][-1]['diagnostics'],sf))
+    entry['reviewed_holdout_diagnostics']=reviewed
+    entry['all_holdout_fits_passed']=all(d['passed'] for d in reviewed)
+   else:entry['all_holdout_fits_passed']=validation['all_fits_passed_diagnostics']
+   entry['matched_geographic_inputs_and_training_sets']=True
+  v=fit['volume'];score=validation['metrics']['equal_region_log_score'] if validation else None
+  coverage=validation['metrics']['coverage95_observations'] if validation else None
+  rows.append({'eruption':title,'slug':slug,'candidate':key,'label':labels[key],**{k:v[k] for k in ('median','lower95','upper95')},
+    'source_maximum_guaranteed':check['maximum_at_vent_guaranteed'],'sampling_passed':diagnostics['passed'],
+    'equal_region_negative_log_score':score,'heldout_observation_coverage95':coverage,
+    'all_holdout_sampling_passed':entry.get('all_holdout_fits_passed')})
+  values=np.exp(samples['log_volume']);chain,draw=np.indices(values.shape)
+  draws.append(pd.DataFrame({'eruption':title,'candidate':key,'chain':chain.ravel(),'draw':draw.ravel(),'volume_km3':values.ravel()}))
+  entries[key]=entry
+  if key=='displaced':old_samples=samples
+  if key=='twelve_bases' and slug=='aso-4':
+   shutil.copy2(path,O/'aso-4-experimental-posterior.npz')
+   tmp=D/'aso-4-preview';tmp.mkdir(exist_ok=True);source_figure(tmp,'Aso-4 · experimental',data,meta,samples,old_samples);shutil.copy2(tmp/'source.png',O/'aso-4-source.png')
+ records[slug]={'input':{k:v for k,v in meta.items() if k!='transform_inv'},'candidates':entries}
+shutil.copy2(D/'b-tm-preview/source.png',O/'b-tm-source.png')
+shutil.copytree(D/'input-inventory',O/'input-inventory',dirs_exist_ok=True)
+pd.DataFrame(rows).to_csv(O/'comparison.csv',index=False)
+(O/'volume_draws.csv.gz').write_bytes(gzip.compress(pd.concat(draws).to_csv(index=False).encode(),mtime=0))
+report={'scope':'Source-geometry development review. No published volume is used as a fitting target. Baseline fits and complete geographic evaluations remain separate from sensitivity evidence. Smaller estimates are not automatically adopted.',
+ 'cases':records,'comparison':rows,'previous_geometry_diagnosis':read(D/'old_geometry_diagnosis.json'),
+ 'aso4_mass_partition_comparison':read(D/'aso-partitions.json'),
+ 'aso4_source_workbook_review':read(O/'input-inventory/workbook-review/summary.json'),
+ 'btm_source_workbook_review':read(O/'input-inventory/b-tm-workbook-review/summary.json'),
+ 'btm_input_sensitivity':read(O/'btm-input-sensitivity/report.json'),
+ 'reporting_source_sha256':sha256(Path(__file__).read_bytes()).hexdigest()}
+(O/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+shutil.copy2(Path(__file__),O/'reporting.py.txt')
+source_pool={}
+for p in D.glob('*-snapshot/*.py'):source_pool[sha256(p.read_bytes()).hexdigest()]=p
+for p in Path('src/empirical_isopach/models/mass_mixture').glob('*.py'):source_pool[sha256(p.read_bytes()).hexdigest()]=p
+p=Path('src/probabilistic_isopach/global_volume.py');source_pool[sha256(p.read_bytes()).hexdigest()]=p
+attempts=[];needed={}
+for root in (D,V,P,Path('results/source-aso-input-20261107'),Path('results/source-btm-input-20261107')):
+ for p in sorted(root.rglob('attempt-*.json')):
+  j=read(p);posterior=p.with_suffix('.npz');assert sha256(posterior.read_bytes()).hexdigest()==j['posterior_sha256']
+  attempts.append({'local_path':str(p),'record':j,'manifest_sha256':sha256(p.read_bytes()).hexdigest()})
+  for name,digest in j['signature']['model_source_sha256'].items():
+   assert digest in source_pool,(name,digest,str(p))
+   needed[digest]=source_pool[digest]
+src=O/'development/sources';src.mkdir(parents=True,exist_ok=True)
+manifest={}
+for digest,p in needed.items():
+ target=src/(digest+'.py.txt');shutil.copy2(p,target);manifest[digest]={'original_name':p.name,'stored_path':str(target.relative_to(O))}
+(O/'development/source-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+(O/'development/completed-attempts.json.gz').write_bytes(gzip.compress(json.dumps(attempts,allow_nan=False).encode(),mtime=0))
+print('Published',len(rows),'candidate summaries,',len(attempts),'complete attempts and',len(manifest),'verified model-source snapshots.')
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from src.probabilistic_isopach.figures import STYLE
+shown=[r for r in rows if r['candidate'] in ('displaced','elliptic','six_bases','twelve_bases')]
+with plt.rc_context(STYLE):
+ fig,axes=plt.subplots(1,2,figsize=(13,7),layout='constrained')
+ for i,r in enumerate(shown):
+  color='#157F88' if r['candidate']=='elliptic' else '#9C663E' if 'bases' in r['candidate'] else '#667A87'
+  axes[0].plot([r['lower95'],r['upper95']],[i,i],color=color,lw=2)
+  axes[0].scatter(r['median'],i,color=color,marker='o' if r['sampling_passed'] else 'x',s=36)
+  axes[1].scatter(r['equal_region_negative_log_score'],i,color=color,marker='o' if r['all_holdout_sampling_passed'] else 'x',s=36)
+ for ax in axes:
+  ax.set(yticks=range(len(shown)),yticklabels=[r['eruption']+' · '+r['label'] for r in shown]);ax.invert_yaxis();ax.grid(axis='x',alpha=.2);ax.axhline(3.5,color='#B3BABC',lw=.7)
+ axes[0].set(xscale='log',xlabel='Bulk fallout (km³; log scale)',title='Conditional volumes\nPoint: median · line: 95% interval')
+ axes[1].set(xlabel='Equal-region negative log score (lower is better)',title='Matched geographic prediction\n× indicates unresolved numerical checks')
+ fig.suptitle('Source geometry changes unseen mass\nA smaller or more precise conditional estimate is not automatically better.',fontsize=15)
+ fig.savefig(O/'comparison.png',dpi=170);plt.close(fig)
+partitions=report['aso4_mass_partition_comparison']
+partition_rows=[]
+for key,label in [('displaced','Preceding displaced circles'),('source_fans','Source-focused ellipses'),('six_bases','Six site bases'),('twelve_bases','Twelve site bases')]:
+ part=partitions[key]
+ values=' | '.join(f"{part['parts'][k]['fraction']['median']:.1%}" for k in ('local_footprint','unsampled_proximal','beyond_farthest_site','other_gaps_and_sectors'))
+ partition_rows.append(f'| {label} | {values} |')
+partition_text='''## Where Aso-4\'s inferred mass goes
+
+The preceding model assigns a median **80.3% fraction** to other gaps and sectors outside the local sampling footprint. Source-focused ellipses instead place a median **61.4% beyond the farthest exact site**, roughly 2,909 km from the vent. The twelve-site Gaussian envelope puts only **1.7%** beyond that distance, but still places **84.5%** in other gaps and sectors. Much of the disagreement is extrapolation geometry, not an observed change in deposit mass.
+
+| Geometry | Local sampling footprint | Unsampled proximal cap | Beyond farthest exact site | Other gaps and sectors |
+|---|---:|---:|---:|---:|
+'''+ '\n'.join(partition_rows)+'''
+
+These are posterior median mass fractions, whose separate medians need not add to 100%. The categories are mutually exclusive in each draw and use the same sampling geometry, including a nearest exact site about 88 km from the vent. They are not fractions certified by data or confidence regions. The complete fraction/volume intervals and quadrature refinement errors are retained in `aso4_mass_partition_comparison` in the [review record](report.json). The lower envelope totals depend especially on their Gaussian tails and restricted unseen shape; they do not establish that the unmeasured sectors contain little mass.
+
+'''
+sections=[]
+for slug in ('b-tm','aso-4'):
+ selected=[r for r in rows if r['slug']==slug]
+ title=selected[0]['eruption']
+ lines=[f'## {title} · every tested geometry','', '| Geometry | Median bulk km³ | Conditional 95% interval km³ | Fit numerical checks | Geographic score ↓ | Heldout 95% coverage | Holdout checks |', '|---|---:|---:|---|---:|---:|---|']
+ for r in selected:
+  score='not run' if r['equal_region_negative_log_score'] is None else f"{r['equal_region_negative_log_score']:.3f}"
+  cover='—' if r['heldout_observation_coverage95'] is None else f"{r['heldout_observation_coverage95']:.1%}"
+  status='—' if r['all_holdout_sampling_passed'] is None else 'pass' if r['all_holdout_sampling_passed'] else '**provisional**'
+  lines.append(f"| {r['label']} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {'pass' if r['sampling_passed'] else '**provisional**'} | {score} | {cover} | {status} |")
+ sections.append('\n'.join(lines))
+text='''# B-Tm source correction and Aso-4 volume review
+
+[Project home](../../README.md) · [Current global estimates](../global/README.md) · [Equations and assumptions](../../docs/methods/source-anchored-fans.md)
+
+**The B-Tm problem was the thickest contour, not the volcano coordinates.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.
+
+The source-focused B-Tm fit has a median of **106 km³** and a **53–2,159 km³ conditional 95% interval**, compared with the preceding **344 km³ (80–17,485 km³)**. Its maximum is at the supplied source by construction. Its geographic negative log score improves from **1.520 to 1.162**; lower is better. Coverage changes from **95.2% to 92.9%**, so the improvement is not uniform across every metric. The same-data GP and spline scores are 1.331 and 1.814. The preceding B-Tm score also has one numerically provisional fold, so its exact difference is uncertain. These are development comparisons, not proof of superior global-volume accuracy or independent validation of the subsequent family choice.
+
+![B-Tm source correction](b-tm-source.png)
+
+The [current B-Tm report](../../eruptions/b-tm/results/global/README.md) contains the complete seven-alternative sensitivity protocol, fresh production fit, geographic checks and automatic integration refinement. The catalogue records its reviewed `source-fans` geometry, so the normal B-Tm command reproduces that choice. This changes the geometry, not eruption-specific wind or particle inputs. The upper volume tail remains broad and must be reported.
+
+**Aso-4 does not yet have a defensible lower replacement.** Source-focused ellipses improve its geographic score from **1.644 to 1.421**, with 94.3% coverage, but increase the conditional median to **3,418 km³**. The six- and twelve-site envelope models reduce it to **472 and 369 km³**, but their scores worsen to **1.715 and 1.760**, and coverage falls to **86.2%**. That is not a demonstration that 369–472 km³ is the correct global mass. The preceding 1,836 km³ calculation remains visible as a questioned conditional estimate, alongside these alternatives; it is not endorsed as a precise geological total.
+
+![Competing volumes and geographic predictions](comparison.png)
+
+'''+ '\n\n'.join(sections)+'''
+
+All volumes are bulk fallout, not dense-rock equivalent, PDC/ignimbrite deposit volume, or a whole-eruption total. Each interval is conditional on its own model and priors. They are not probability-weighted alternatives and their combined span is not a 95% interval. No model was selected because its volume agreed with published estimates.
+
+The source-focused model assumes nonincreasing thickness along source rays. The envelope allows smaller secondary peaks and uses Gaussian tails. Fixed measured-location basis centres restrict the functions but do not make every secondary peak data-supported: overlap can create peaks between sites. The narrow envelope intervals omit the possibility of unseen independent fans. All six new geometric variants, including unvalidated exploratory fits and numerical failures, remain in the tables. Only the three new main candidates received the complete geographic comparison; a blank score means no holdout assessment was run.
+
+![Aso-4 experimental envelope, not an adopted replacement](aso-4-source.png)
+
+This Aso-4 image shows the **experimental twelve-site envelope**, not a promoted replacement. A visually reasonable source contour is insufficient evidence of an accurate whole-deposit volume.
+
+## Why uncertainty remains
+
+A smooth, positive deposit can be added inside a completely unsampled proximal cap without changing any observed thickness. Even a vent maximum and monotone thinning do not identify every possible cap. Similarly, sparse distal measurements do not uniquely determine thinning in unmeasured sectors. Proper priors make conditional estimation possible; they cannot convert missing evidence into observed zero deposit. [Known-truth tests](stress-tests.md) challenge these limits explicitly.
+
+Published estimates are context rather than training targets. [Rougier et al. (2022)](https://doi.org/10.1093/gji/ggac131) and [Takarada and Hoshizumi (2020)](https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2020.00170/full) give different Aso-4 bulk-fallout ranges under different data and assumptions. The accepted collection here contains later reference labels, including 2023 and 2025, so it is not a same-data replication of either paper. [Costa et al. (2024)](https://www.nature.com/articles/s43247-023-01162-0) report Paektu fallout in DRE; those values must not be compared directly with bulk fallout or with a total that includes PDC deposits. Real secondary thickness maxima are documented by [Watt et al. (2015)](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015JB012116), so the point-source maximum is an explicit approximation, not a universal law.
+
+## Input and numerical audit
+
+Accepted inputs, source coordinates, centimetre units and exclusion flags are unchanged. The main B-Tm table supplies no reference labels; 52 of Aso-4's 87 accepted rows lack them. The [B-Tm inventory](input-inventory/b-tm.csv), [Aso-4 inventory](input-inventory/aso-4.csv) and [summary](input-inventory/summary.json) preserve supplied row identities and labels. This is an integrity/provenance inventory, not an independent source-table verification. Unlabelled side columns are not silently converted into measurements.
+
+A subsequent [published-source comparison for B-Tm](input-inventory/b-tm-workbook-review/README.md) recovers 76 unique site correspondences and exposes lost observation qualifications: thirteen ranges, two spot occurrences, Suigetsu's upper bound and Kushu's cryptotephra occurrence without a visible layer. The [two-site sensitivity](btm-input-sensitivity/README.md) changes Suigetsu to the documented upper bound and removes Kushu from the quantitative thickness likelihood without treating it as zero. The main 106 km³ result isolates geometry on the preserved input; it is not a claim that all its observation meanings have now been validated. Eight additional sites, including the nearest proximal observation, are not independently verified by that distal compilation.
+
+A targeted source check subsequently confirmed that Aso-4 CSV row 55 matches an eroded site in Shibata et al. (2025). Its exact 7 cm entry needs a separate observation-semantics sensitivity. Nearby records also include potential repeated sites. The [targeted input review](input-inventory/README.md) records the evidence, the lower-bound calculation, and a recovered 2021 source workbook with 98 thickness entries and 11 reported absences. The workbook distinguishes trace placeholders and preservation/reporting uncertainty, so those entries cannot simply be appended as exact thicknesses or zeros. Candidate correspondences and unresolved source differences are retained. No observations were silently dropped or absent-layer records fabricated to reduce a volume.
+
+Each geographic comparison matches the regional accepted rows, four outer folds, buffers and training/withheld sets. Site-basis designs are rebuilt from training coordinates only. Whole-Earth totals do not use the map extent. Source-fan normalization is checked by angular refinement; the production workflow refits at higher resolution when needed and retains the lower-resolution attempts. Source-region plots include the vent exactly in the grid.
+
+The original numerical diagnostics are retained. Review diagnostics also check individual weights of the identified site bases; those labels are not exchangeable. A numerical pass does not prove global mode exploration or geological correctness. No chains are selected, trimmed or pooled to manufacture a pass.
+
+All six regional GP/spline fits and geographic evaluations, and all 40 regional synthetic attempt records, reproduce exactly. [Verification](verification.json). The original four datasets still lack the source-level audit available for YTT and Minoan.
+
+## Reproduce and inspect
+
+```sh
+python -m benchmarks.source_review --dataset b-tm --output results/source-review
+python -m benchmarks.source_review --dataset aso-4 --output results/source-review
+tephra-isopachs global B-Tm --geometry source-fans --output results/btm-source
+python -m benchmarks.source_fans --output results/source-stress
+```
+
+The first commands rerun the three main candidates with current numerical checks. Historical exploratory attempts have their exact model-source snapshots and serialized priors/settings preserved; later changes are not relabelled as their execution source.
+
+- [Full review, priors, predictions and original/reviewed diagnostics](report.json)
+- [Numerical comparison](comparison.csv) and [whole-volume draws by candidate and chain](volume_draws.csv.gz)
+- [Experimental Aso-4 envelope posterior](aso-4-experimental-posterior.npz)
+- [Complete failed and successful attempt manifests](development/completed-attempts.json.gz) and [verified source-code manifest](development/source-manifest.json)
+- [Reporting script snapshot](reporting.py.txt)
+- [Archived B-Tm calculation](../../archive/reports/b-tm/2026-11-06-displaced-global/README.md), [Aso-4 calculation](../../archive/reports/aso-4/2026-11-06-displaced-global/README.md) and [preceding common-geometry comparison](../../archive/reports/global/2026-11-06-displaced-comparison/README.md)
+'''
+text=text.replace('## Why uncertainty remains',partition_text+'## Why uncertainty remains')
+v=report['btm_input_sensitivity']['fit']['volume']
+text=text.replace('The main 106 km³ result isolates geometry on the preserved input;',
+ f"That two-site sensitivity gives **{v['median']:,.0f} km³ ({v['lower95']:,.0f}–{v['upper95']:,.0f} km³ conditional 95% interval)**. The main 106 km³ result isolates geometry on the preserved input;")
+(O/'README.md').write_text(text)
+(O/'artifacts.json').write_text(json.dumps({str(p.relative_to(O)):sha256(p.read_bytes()).hexdigest() for p in sorted(O.rglob('*')) if p.is_file() and p.name!='artifacts.json'},indent=2)+'\n')

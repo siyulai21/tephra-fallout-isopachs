@@ -1,0 +1,125 @@
+"""Read-only source comparison; never writes accepted data or fitting inputs."""
+from collections import Counter
+import csv
+from hashlib import sha256
+import json
+from pathlib import Path
+import shutil
+
+import pyproj
+from pyproj import Geod, Transformer
+
+D = Path('results/source-dev-20261106')
+O = Path('comparisons/source-revision/input-inventory/workbook-review')
+O.mkdir(parents=True, exist_ok=True)
+workbook = D / '20210805_Aso4_Tephra.xlsx'
+extracted = D / 'aso-workbook-values.json'
+accepted = Path('data/eruptions/Aso-4_tephra.csv')
+before = {str(p): sha256(p.read_bytes()).hexdigest() for p in (workbook, extracted, accepted)}
+j = json.loads(extracted.read_text())
+rows = []
+for number, values in enumerate(j['Aso_Tephra']['values'][1:], 2):
+    index, site, thickness, latitude, longitude, reference, identification, quality, notes = values
+    rows.append(dict(sheet='Aso_Tephra', sheet_row=number, source_index=index,
+                     site=site, thickness_cm=thickness, latitude=latitude, longitude=longitude,
+                     reference_label=reference, identification_quality=identification,
+                     thickness_quality=quality, notes=notes))
+assert len(rows) == 98
+absence = []
+for number, values in enumerate(j['DEFNO']['values'][1:], 2):
+    site, thickness, latitude, longitude = values
+    assert thickness == 0
+    absence.append(dict(sheet='DEFNO', sheet_row=number, site=site,
+                        source_value_cm=thickness, latitude=latitude, longitude=longitude,
+                        interpretation='No layer reported; not established zero original fallout',
+                        used_in_current_fit=False))
+assert len(absence) == 11
+
+def write_csv(path, records):
+    with path.open('w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=list(records[0]))
+        writer.writeheader()
+        writer.writerows(records)
+
+write_csv(O / 'source-thickness-records.csv', rows)
+write_csv(O / 'source-nondetections.csv', absence)
+with accepted.open(encoding='utf-8-sig', newline='') as f:
+    current = [(i, r) for i, r in enumerate(csv.DictReader(f), 2) if r['Pseudo'].lower() != 'yes']
+assert len(current) == 87
+geod = Geod(ellps='WGS84')
+# An explicitly hypothetical datum conversion; it changes no accepted coordinates.
+# Freeze the operation, rather than letting PROJ choose by location or installed grids.
+pipeline = ('+proj=pipeline +step +proj=unitconvert +xy_in=deg +xy_out=rad '
+            '+step +proj=push +v_3 +step +proj=cart +ellps=bessel '
+            '+step +proj=helmert +x=-146.414 +y=507.337 +z=680.507 '
+            '+step +inv +proj=cart +ellps=WGS84 +step +proj=pop +v_3 '
+            '+step +proj=unitconvert +xy_in=rad +xy_out=deg')
+transformer = Transformer.from_pipeline(pipeline)
+crosswalk = []
+for number, r in current:
+    longitude, latitude, thickness = float(r['Lon']), float(r['Lat']), float(r['Thickness'])
+    candidates = []
+    for s in rows:
+        distance = geod.inv(longitude, latitude, s['longitude'], s['latitude'])[2]
+        if distance <= 1000:
+            candidate = dict(csv_row=number, csv_reference_label=r['Refs'],
+                             csv_thickness_cm=thickness, source_sheet_row=s['sheet_row'],
+                             source_site=s['site'], source_reference_label=s['reference_label'],
+                             source_thickness_cm=s['thickness_cm'],
+                             direct_coordinate_distance_m=distance,
+                             same_thickness=thickness == float(s['thickness_cm']),
+                             source_identification_quality=s['identification_quality'],
+                             source_thickness_quality=s['thickness_quality'],
+                             tested_tokyo_datum_distance_m=None,
+                             status='Candidate correspondence only; no provenance reassigned')
+            if s['reference_label'] == 'Machida85':
+                x, y = transformer.transform(s['longitude'], s['latitude'])
+                candidate['tested_tokyo_datum_distance_m'] = geod.inv(longitude, latitude, x, y)[2]
+            candidates.append(candidate)
+    crosswalk.extend(sorted(candidates, key=lambda x: (x['direct_coordinate_distance_m'], x['source_sheet_row'])))
+write_csv(O / 'candidate-crosswalk.csv', crosswalk)
+quality = dict(Counter(r['thickness_quality'] for r in rows))
+matches = [r for r in crosswalk if r['same_thickness']]
+datum = [r for r in matches if r['source_reference_label'] == 'Machida85']
+conflicts = [r for r in crosswalk if not r['same_thickness'] and r['direct_coordinate_distance_m'] < 75]
+summary = dict(
+    scope='Read-only comparison with a user-held source compilation; not a completed primary-source audit or a fit.',
+    source=dict(title=workbook.name, drive_id='1aYtW7v6AOdAyALz_ZWbQzetms28sIfXO',
+                url='https://docs.google.com/spreadsheets/d/1aYtW7v6AOdAyALz_ZWbQzetms28sIfXO/edit',
+                original_sha256=before[str(workbook)], bytes=workbook.stat().st_size,
+                extracted_values_sha256=before[str(extracted)],
+                ranges={k: v['address'] for k, v in j.items()},
+                paper_identity='Workbook counts are consistent with 98 positive entries plus 11 reported absences; identity to the exact journal analysis input is not established.'),
+    accepted_input=dict(path=str(accepted), sha256=before[str(accepted)], rows=len(current), unchanged=True),
+    inventory=dict(source_thickness_rows=len(rows), reported_absence_rows=len(absence),
+                   thickness_quality_counts=quality,
+                   source_half_centimetre_rows=sum(r['thickness_cm'] == .5 for r in rows),
+                   current_positive_rows=len(current), current_nondetection_rows=0),
+    observation_semantics=dict(
+        assigned_trace_value=dict(range='Key!B4', interpretation='The 0.5 cm coding includes trace and unspecified thickness with confirmed presence; it is neither automatically an exact thickness nor an established detection threshold.'),
+        quality=dict(range='Key!B8:B9', interpretation='Identification and thickness-quality letters describe different uncertainties; no numerical standard deviation is supplied.'),
+        nondetection=dict(range='Key!B13', interpretation='The workbook explicitly permits bioturbation, coring loss, or non-reporting despite complete upper-50-m recovery. No detection limit, age coverage, preservation probability or observation likelihood has been invented.')),
+    matching=dict(radius_m=1000, purpose='Audit search radius only, not a duplicate rule or statistical parameter.',
+                  metric='WGS84 geodesic; direct comparison temporarily treats both coordinate columns as WGS84.',
+                  candidate_pairs=len(crosswalk), accepted_rows_with_candidates=len(set(r['csv_row'] for r in crosswalk)),
+                  same_thickness_pairs=len(matches), same_thickness_accepted_rows=len(set(r['csv_row'] for r in matches)),
+                  source_rows_with_multiple_candidates={str(k): v for k, v in Counter(r['source_sheet_row'] for r in crosswalk).items() if v > 1},
+                  candidate_conflicts_within_75m=conflicts,
+                  datum_hypothesis=dict(description='Tokyo to WGS84 (108), tested for Machida85 candidates only. Not evidence that the source coordinates actually use that datum, and not applied to fitting inputs.',
+                                        pipeline=pipeline, same_thickness_candidate_count=len(datum),
+                                        tested_max_distance_m=max(r['tested_tokyo_datum_distance_m'] for r in datum),
+                                        original_min_distance_m=min(r['direct_coordinate_distance_m'] for r in datum),
+                                        original_max_distance_m=max(r['direct_coordinate_distance_m'] for r in datum),
+                                        originally_over_200m_count=sum(r['direct_coordinate_distance_m'] > 200 for r in datum),
+                                        over_200m_then_under_75m_count=sum(r['direct_coordinate_distance_m'] > 200 and r['tested_tokyo_datum_distance_m'] < 75 for r in datum),
+                                        transformation_worsens_count=sum(r['tested_tokyo_datum_distance_m'] > r['direct_coordinate_distance_m'] for r in datum))),
+    changes_to_fitting_input=False, effect_on_volume='Not calculated; no new observation likelihood has been justified.',
+    runtime=dict(pyproj=pyproj.__version__, proj=pyproj.proj_version_str),
+)
+(O / 'summary.json').write_text(json.dumps(summary, indent=2, allow_nan=False) + '\n')
+shutil.copy2(__file__, O / 'audit.py.txt')
+shutil.copy2(D / 'inspect-aso-workbook.mjs', O / 'extraction.mjs.txt')
+for path, expected in before.items():
+    assert sha256(Path(path).read_bytes()).hexdigest() == expected
+(O / 'artifacts.json').write_text(json.dumps({p.name: sha256(p.read_bytes()).hexdigest() for p in sorted(O.iterdir()) if p.is_file() and p.name != 'artifacts.json'}, indent=2) + '\n')
+print(json.dumps({'inventory': summary['inventory'], 'matching': summary['matching']}, indent=2))
