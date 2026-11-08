@@ -74,7 +74,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
 
 The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**
 
-**Source-geometry revision:** B-Tm now uses source-focused fans to remove an unsupported off-volcano maximum. The other five entries retain their preceding displaced-field calculations. Aso-4's high total remains questioned: the tested lower-volume source-envelope candidates did not demonstrate improved geographic prediction and are not silently substituted. See the [B-Tm/Aso-4 review, alternative estimates and retained failures](../source-revision/README.md). This table is a record of reviewed case calculations, not a new common-geometry experiment across all six eruptions.
+**Reviewed revisions:** B-Tm uses source-focused fans to remove an unsupported off-volcano maximum. Aso-4 retains the displaced field family but now uses two corrected cruise coordinates and source-qualified bounds. Its high global total remains questioned; the separately tested tighter displacement prior is a development alternative, not a demonstrated global-mass correction. See the [Aso-4 evidence audit](../aso-4-audit/README.md) and [earlier geometry review](../source-revision/README.md). The other four results are unchanged. This table is a record of reviewed case calculations, not a new common-geometry experiment across all six eruptions.
 
 ## Global estimates and uncertainty
 
@@ -110,7 +110,7 @@ Scores use identical accepted inputs, four geographic folds, buffers, training r
 - [Machine-readable estimates](comparison.csv) and [matched comparison record](report.json)
 - [Regional rerun and input-preservation verification](verification.json)
 
-The original four datasets retain their supplied source flags; YTT and Minoan retain their documented audits. No accepted values, bounds, source decisions or input hashes changed. Global uncertainty does not automatically cover unrecorded erosion, reworking, preferential sampling or source misattribution.
+Aso-4 now uses its separately named reviewed input; the original CSV and preceding results remain archived. Mazama, Tambora and B-Tm retain their supplied source flags, while YTT and Minoan retain their documented audits. Global uncertainty does not automatically cover unrecorded erosion, marine transport, preferential sampling or source misattribution. The older rerun-verification record above describes its original date and inputs, not the later Aso-4 revision.
 
 For new data, upload measurements and source notes in chat. The assistant audits them, runs the regional and global protocols, and adds the data and illustrated reports to GitHub. No browser workflow is needed.
 """)

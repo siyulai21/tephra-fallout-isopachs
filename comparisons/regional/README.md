@@ -1,11 +1,11 @@
 # Regional comparison of empirical methods
 
-All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison. Read the separate [support and contour audit](../support/README.md) before treating any hull as well sampled.
+All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison. Aso-4 uses its 2026-11-08 source-qualified revision; the other five case calculations and the synthetic trials are unchanged. Read the [Aso-4 audit](../aso-4-audit/README.md) and [support checks](../support/README.md).
 
 | Eruption | Method | Expected regional volume (km³) | Outer equal-region score ↓ | 95% observation coverage |
 |---|---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/README.md) | GP ensemble | 207.2 | 1.659 | 83.9% |
-| [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 254.1 | 2.066 | 79.3% |
+| [Aso-4](../../eruptions/aso-4/results/README.md) | GP ensemble | 202.7 | 1.514 | 94.0% |
+| [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 248.2 | 1.662 | 90.4% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | GP ensemble | 30.5 | 1.331 | 97.6% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 40.2 | 1.814 | 90.5% |
 | [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 141.6 | 1.272 | 95.6% |

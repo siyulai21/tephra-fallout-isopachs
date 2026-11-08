@@ -1,6 +1,6 @@
 {
   "protocol": "reviewed-global-geometries-v2",
-  "summary_source_sha256": "42b2ac47a20423f2a7843a6b38ecd41954ef54ba43e3144484b448f4477d0f2d",
+  "summary_source_sha256": "884dfa4e458e8794c95227d331371704d0b7f61e07c24a384b4bc8df96dfa32a",
   "cases": [
     {
       "name": "Mazama",
@@ -19,9 +19,9 @@
     {
       "name": "Aso-4",
       "slug": "aso-4",
-      "input_sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
-      "global_report_sha256": "ffb08ef8d11c46261ad6471726a32f9215d2e652ab9587c7b1182882baa732f6",
-      "regional_report_sha256": "53b270fcdee2c02e1b94adc762eedfdfb158aa7a54010bc2684d37ac75cd0488"
+      "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "global_report_sha256": "9b3051ae2eadd00db5a1286a8aca457bb2aae3f12d5d2b130efbe6a03b65291d",
+      "regional_report_sha256": "da1020c7b074baf4e7b971d33fa9a865e99d5c8ac9af0cc41e0ff0e9e2b3fd67"
     },
     {
       "name": "B-Tm",
@@ -89,19 +89,19 @@
       "slug": "aso-4",
       "geometry": "displaced",
       "review_status": "questioned",
-      "median": 1836.0246894517572,
-      "lower95": 507.17311698278155,
-      "upper95": 49960.41429319698,
-      "sensitivity_lower": 482.35535681404286,
-      "sensitivity_upper": 370490935.9451491,
+      "median": 1465.9726218227443,
+      "lower95": 500.9743516440941,
+      "upper95": 44172.93140790358,
+      "sensitivity_lower": 464.6917119073577,
+      "sensitivity_upper": 141265896.8857714,
       "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": true,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.9770340067180928,
-      "global_equal_region_negative_log_score": 1.6443455345658138,
-      "global_observation_coverage95": 0.9425287356321839,
-      "stacked_equal_region_negative_log_score": 1.6585464253174904,
-      "spline_equal_region_negative_log_score": 2.0658162416130184
+      "median_fraction_outside_local_footprint": 0.9807751528938525,
+      "global_equal_region_negative_log_score": 1.6319681853182262,
+      "global_observation_coverage95": 0.9518072289156626,
+      "stacked_equal_region_negative_log_score": 1.5143312927066606,
+      "spline_equal_region_negative_log_score": 1.661543361729549
     },
     {
       "eruption": "B-Tm",
@@ -253,42 +253,42 @@
     {
       "eruption": "Aso-4",
       "global": {
-        "mean_log_score": 1.6341796597056628,
-        "rmse_log": 1.248366646986365,
-        "coverage95_observations": 0.9425287356321839,
-        "mean_interval_width_log": 3.3697895307116013,
+        "mean_log_score": 1.6216184139508656,
+        "rmse_log": 1.2542211900355185,
+        "coverage95_observations": 0.9518072289156626,
+        "mean_interval_width_log": 3.4438459891123987,
         "fold_log_scores": [
-          2.528776647398967,
-          1.3343140962592182,
-          1.1384032203435315,
-          1.5758881742615387
+          2.532398294278614,
+          1.2645652871002537,
+          1.244059129530535,
+          1.4868500303635024
         ],
-        "equal_region_log_score": 1.6443455345658138
+        "equal_region_log_score": 1.6319681853182262
       },
       "stacked": {
-        "mean_log_score": 1.6489784446726339,
-        "rmse_log": 1.0794664854466787,
-        "coverage95_observations": 0.8390804597701149,
-        "mean_interval_width_log": 3.707488982484302,
-        "equal_region_log_score": 1.6585464253174904,
+        "mean_log_score": 1.5069164845138914,
+        "rmse_log": 1.0742241967962216,
+        "coverage95_observations": 0.9397590361445783,
+        "mean_interval_width_log": 4.3510640753016245,
+        "equal_region_log_score": 1.5143312927066606,
         "fold_log_scores": [
-          2.490960741420032,
-          1.5931203594064078,
-          1.1345051400578559,
-          1.4155994603856654
+          2.159419605477563,
+          1.3142089009690108,
+          1.1563135068508517,
+          1.4273831575292173
         ]
       },
       "spline": {
-        "mean_log_score": 2.0470381286108603,
-        "rmse_log": 1.2614562831734313,
-        "coverage95_observations": 0.7931034482758621,
-        "mean_interval_width_log": 4.806436193507056,
-        "equal_region_log_score": 2.0658162416130184,
+        "mean_log_score": 1.655883446616355,
+        "rmse_log": 1.2573722766700282,
+        "coverage95_observations": 0.9036144578313253,
+        "mean_interval_width_log": 5.210191264084091,
+        "equal_region_log_score": 1.661543361729549,
         "fold_log_scores": [
-          3.699512072800771,
-          1.519664601267123,
-          1.1421566030922377,
-          1.901931689291942
+          2.1539559765774166,
+          1.446540740172678,
+          1.2707278539122604,
+          1.7749488762558412
         ]
       },
       "matched_input_folds_buffer_and_training_rows": true,

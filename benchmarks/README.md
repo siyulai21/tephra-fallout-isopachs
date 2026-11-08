@@ -1,5 +1,7 @@
 # Reproduce analyses and evaluate methods
 
+The [Aso-4 evidence study](../comparisons/aso-4-audit/README.md#reproduce) lists the complete source preparation, individual-record, marine-setting, source-conflict and displacement-prior commands, including all retained posterior attempts.
+
 [Project home](../README.md) · [Quick start](../docs/QUICKSTART.md) · [Validation catalogue](../docs/validation/README.md)
 
 Run these commands from the repository root after installing `.[test]`. Use a fresh output directory. Generated runs go to ignored `results/`; reviewed publication artifacts live in `eruptions/<slug>/results/` and `comparisons/`.

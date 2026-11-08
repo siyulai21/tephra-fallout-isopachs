@@ -1,0 +1,42 @@
+{
+  "audit_date": "2026-11-08",
+  "scope": "52 of 87 quantitative records traced to the published Table S2; 35 additional records retain supplied citations, with the Shibata row independently checked. Not a complete certification of every primary measurement.",
+  "original_input": {
+    "file": "data/eruptions/Aso-4_tephra.csv",
+    "sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8"
+  },
+  "source": {
+    "file": "data/audits/Aso-4/Takarada2020-TableS2.xlsx",
+    "sha256": "e03288f9a1074687828baf60031ea5884b9ce420903cf841dc0dd4e19d736781",
+    "doi": "https://doi.org/10.3389/feart.2020.00170.s002",
+    "license": "CC BY 4.0",
+    "authors": "Takarada & Hoshizumi (2020)",
+    "range": "Sheet1!B1:H76"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Aso-4_reviewed.csv",
+      "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "n_measurements": 83,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "definition": "Correct original CSV row 5 latitude to 34.5 N and row 8 longitude to 146 E from Yamamoto & Kanamatsu (2001), p.56 and coring-location maps. Preserve 7 and 6 cm confirmed by Yamamoto & Aoki (2002), Tables 1/2, p.31 and correlations p.32. Encode CSV 43 upper 10 cm; CSV 52 lower 3 cm; CSV 53 lower 6.7 cm following Table S2, retaining the primary-paper 6.5–7 cm conflict; CSV 55 lower 7 cm as a preservation sensitivity. Keep all other quantitative records and the six excluded pseudo rows. Fill S2 source references without changing row order."
+    }
+  },
+  "source_conflict": "CSV row 53 uses the compilation >6.7 cm interpretation in this conditional reference scenario. Danhara et al. (2010), Table 4 instead gives 6.5–7 cm. Neither version has been established as uniquely correct; endpoint and retained-point alternatives are published separately.",
+  "preservation_assumption": "CSV row 55 lower 7 cm assumes erosion did not increase thickness through redeposition.",
+  "coordinate_datum": "Source datums differ according to S2 H76; no unsupported datum conversion was made.",
+  "marine_observation_scope": "A core thickness is not automatically an atmospheric fallout loading. No current-transport correction is inferred from the Kuroshio hypothesis.",
+  "pseudo_rows": "Original CSV rows 89–94 retained for traceability but ignored by every active method. No detection threshold, zero or 0.5 cm value invented for S2 unquantified occurrences.",
+  "original_csv_row_identity": "One-based physical row including header; row order preserved.",
+  "preparation_script": {
+    "file": "benchmarks/aso_revision.py",
+    "sha256": "e6437a7c331accf03d8d8a1410f226768b916cc0e94f8491c6482c3499d512af"
+  },
+  "audit_artifacts": {
+    "row-ledger.csv": "a58d85b958bad0b9449bb1c60c14c2ee3882c206d4171b2289f046ff7862e2ec",
+    "record-review.csv": "3be4218155ad378a0b4861dfd8a35b311d6db0f4a131972aa7771b6e67b7db1a",
+    "s2-unquantified-presences.csv": "4158b16c75083da2b5992688b0a811f01a1b69fec1e87325f1678ecec36d29ee",
+    "sources.json": "6299e93708168566518901b67a35c6d016e877c56bce2af58d1352896e37a34d"
+  }
+}

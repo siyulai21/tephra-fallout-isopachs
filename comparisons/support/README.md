@@ -1,6 +1,6 @@
 # Supported isopachs and the limits of global volume
 
-**Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../global/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. The results below are preserved.
+**Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../global/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. Aso-4 below reflects its 2026-11-08 source revision; the other five case results and historical stress tests are unchanged.
 
 [Project home](../../README.md) · [Equations and assumptions](../../docs/methods/supported-isopachs.md) · [Matched-hull comparison](../regional/README.md)
 
@@ -22,7 +22,7 @@ These are **partial bulk fallout volumes on restricted patches**, not revised to
 |---|---:|---:|---:|---|
 | [Mazama](../../eruptions/mazama/results/support/README.md) | 18.6% | 32.50 | 29.93 | None |
 | [Tambora](../../eruptions/tambora/results/support/README.md) | 1.7% | 12.50 | 11.92 | None |
-| [Aso-4](../../eruptions/aso-4/results/support/README.md) | 25.6% | 39.80 | 41.37 | None |
+| [Aso-4](../../eruptions/aso-4/results/support/README.md) | 20.4% | 27.94 | 26.90 | None |
 | [B-Tm](../../eruptions/b-tm/results/support/README.md) | 5.4% | 2.27 | 2.27 | None |
 | [YTT](../../eruptions/ytt/results/support/README.md) | 6.7% | 249.71 | 214.01 | None |
 | [Minoan](../../eruptions/minoan/results/support/README.md) | 5.4% | 2.62 | 2.34 | None |
@@ -48,7 +48,11 @@ No accepted standard-policy contour in these trials had shape error above 25% ag
 
 [All trials, failures, contour errors and selection tables](stress-tests/README.md). The separate unchanged-method regional benchmark again attempted 40 trials: 38 completed method pairs and two insufficient-training cases, both retained.
 
+The revised Aso-4 spline has an extreme geographic-deletion partial volume (about 192,882 km³ on the standard footprint); this failure is retained in its current report. No passing contour band is inferred. [Source and geometry audit](../aso-4-audit/README.md).
+
 ## Remaining spline fitting-domain dependence
+
+The following padding experiment retains its original 2026-11-04 inputs, including the earlier Aso-4 data. It is historical sensitivity evidence, not a new padding test of the revised Aso-4 input.
 
 The calculation footprint and display window are now separate. Nevertheless the spline basis and penalties depend on its fitting rectangle. Retuning at four padding values while integrating the same standard footprint gives:
 

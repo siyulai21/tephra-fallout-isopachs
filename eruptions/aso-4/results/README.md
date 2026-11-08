@@ -2,18 +2,18 @@
 
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
-**87 exact measurements, 0 lower bounds, 0 upper limits.** The observation hull covers 3,632,243 km². The automatic validation buffer is 37.63 km.
+**83 exact measurements, 3 lower bounds, 1 upper limits.** The observation hull covers 3,482,991 km². The automatic validation buffer is 41.74 km.
 
 ![Matched median isopachs](isopachs.png)
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 207.24 | 254.11 |
-| Integral of median thickness surface (km³) | 174.21 | 203.72 |
-| Conditional 95% volume interval (km³) | 160.33–269.15 | 171.91–463.06 |
-| Outer equal-region negative log score ↓ | 1.659 | 2.066 |
-| Outer log-thickness RMSE ↓ | 1.079 | 1.261 |
-| Outer 95% observation-interval coverage | 83.9% | 79.3% |
+| Expected regional bulk fallout (km³) | 202.65 | 248.15 |
+| Integral of median thickness surface (km³) | 170.96 | 200.94 |
+| Conditional 95% volume interval (km³) | 155.87–266.97 | 168.43–452.02 |
+| Outer equal-region negative log score ↓ | 1.514 | 1.662 |
+| Outer log-thickness RMSE ↓ | 1.074 | 1.257 |
+| Outer 95% observation-interval coverage | 94.0% | 90.4% |
 
 Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.
 
@@ -36,7 +36,7 @@ The mean volume integrates expected thickness. The median-surface integral is a 
   },
   "components": [
     {
-      "weight": 0.8321168321978664,
+      "weight": 0.8378187849979807,
       "model": {
         "candidate": {
           "tail": "power",
@@ -44,22 +44,22 @@ The mean volume integrates expected thickness. The median-surface integral is a 
           "noise_ratio": 0.75
         },
         "beta": [
-          3.1230045367323087,
-          2.065570389900075,
-          0.06556817444968209,
-          0.00039923995342634093
+          3.1489166874013916,
+          2.2830849470306083,
+          0.2822378176018054,
+          0.021870879767620973
         ],
         "radius_scale_km": 897.1034093330701,
-        "length_km": 191.0702850703864,
-        "amplitude_log": 0.8249364637301771,
-        "noise_log": 0.6187023477976329,
-        "jitter": 6.805201691916499e-10,
+        "length_km": 193.4935359781289,
+        "amplitude_log": 0.8291423795114937,
+        "noise_log": 0.6218567846336203,
+        "jitter": 6.874770855019819e-10,
         "trend_on_constraint_boundary": true,
-        "uncertainty": "conditional Gaussian"
+        "uncertainty": "conditional Laplace"
       }
     },
     {
-      "weight": 0.16788316780213366,
+      "weight": 0.16218121500201932,
       "model": {
         "candidate": {
           "tail": "power",
@@ -67,18 +67,18 @@ The mean volume integrates expected thickness. The median-surface integral is a 
           "noise_ratio": 0.75
         },
         "beta": [
-          3.1230045367323087,
-          2.065570389900075,
-          0.06556817444968209,
-          0.00039923995342634093
+          3.1489166874013916,
+          2.2830849470306083,
+          0.2822378176018054,
+          0.021870879767620973
         ],
         "radius_scale_km": 897.1034093330701,
-        "length_km": 573.2108552111592,
-        "amplitude_log": 0.8249364637301771,
-        "noise_log": 0.6187023477976329,
-        "jitter": 6.805201691916499e-10,
+        "length_km": 580.4806079343867,
+        "amplitude_log": 0.8291423795114937,
+        "noise_log": 0.6218567846336203,
+        "jitter": 6.874770855019819e-10,
         "trend_on_constraint_boundary": true,
-        "uncertainty": "conditional Gaussian"
+        "uncertainty": "conditional Laplace"
       }
     }
   ],
@@ -113,21 +113,21 @@ The mean volume integrates expected thickness. The median-surface integral is a 
     3
   ],
   "n_coefficients": 42,
-  "noise_log": 0.6102200455524363,
-  "amplitude_log": 0.8136267274032484,
+  "noise_log": 0.6148007490204961,
+  "amplitude_log": 0.819734332027328,
   "trend_beta": [
-    2.9015868963383684,
-    0.8943578454142023,
-    -0.5434271646828661,
-    -0.7103246325623289
+    2.924932796414287,
+    0.9274117594892165,
+    -0.49729932023918755,
+    -0.7828052777709201
   ],
   "trend_radius_scale_km": 897.1034093330701,
   "trend_on_constraint_boundary": true,
-  "effective_df_exact": 19.571395816024236,
-  "newton_decrement": 1.1037459278046333e-27,
-  "newton_iterations": 0,
+  "effective_df_exact": 18.89479130474338,
+  "newton_decrement": 5.584383097151699e-19,
+  "newton_iterations": 2,
   "quadrature_order": 6,
-  "uncertainty": "Conditional Gaussian",
+  "uncertainty": "Conditional Laplace",
   "uncertainty_omits": [
     "fitted trend",
     "noise and smoothing estimation",
@@ -146,8 +146,6 @@ Every explored candidate is retained in the selection tables. All response-depen
 - All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.
 - Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.
 - Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals.
-- GP ensemble: held-out 95% observation coverage is only 83.9%; uncertainty is undercovered.
-- Trend-regularized cubic spline: held-out 95% observation coverage is only 79.3%; uncertainty is undercovered.
 
 ## Reproduce and inspect
 
@@ -162,7 +160,3 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
-
-## Whole-deposit fallout
-
-Read the [conditional global estimate and assumption sensitivity](global/README.md). Its mass is normalized on the whole Earth; these regional partial volumes and the local contour audit retain their separate meanings.

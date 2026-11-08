@@ -18,6 +18,7 @@ comparisons/
   regional/                   Current six-eruption and known-truth evaluation
   global/                     Whole-Earth estimates, stress tests and development record
   source-revision/            B-Tm correction, Aso-4 alternatives and source-focused tests
+  aso-4-audit/                Aso-4 source corrections, marine checks and geometry diagnosis
   support/                    Shared local-support audit
 templates/eruption/            Optional upload notes and empty CSV schema
 docs/
