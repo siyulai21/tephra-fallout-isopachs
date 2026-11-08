@@ -1,6 +1,7 @@
 """Verify the frozen November 2026 Aso-4 publication; run from repository root."""
 from pathlib import Path
 from hashlib import sha256
+import argparse
 import json, re
 import numpy as np
 import pandas as pd
@@ -21,9 +22,12 @@ for row in ledger.iloc[:52].itertuples():
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
 for f,digest in others.items():assert hashfile(f)==digest,f
-archive=read('archive/2026-11-08-aso-4/manifest.json')
+reference_root = OUT/'reference'
+archive=read(reference_root/'manifest.json')
 for entry in archive['files']:
- if not entry['archive'].endswith('.md'):assert hashfile(entry['archive'])==entry['sha256'],entry['archive']
+ if not entry['archive'].endswith('.md'):
+  relative=Path(entry['archive']).relative_to('archive/2026-11-08-aso-4')
+  assert hashfile(reference_root/relative)==entry['sha256'],entry['archive']
 regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/global/report.json')
 for r in (regional,glob):
  assert r['input']['input_sha256']==hashfile(reviewed)
@@ -78,5 +82,10 @@ checks={
  'scope':'Recomputed Aso-4 only; refreshed cross-eruption indexes. No new scientific method or prior default adopted for other eruptions. The old 40-trial regional method benchmark remains historical because numerical regional methods are unchanged.',
  'verification_script_sha256':hashfile(__file__),
 }
-(OUT/'verification.json').write_text(json.dumps(checks,indent=2,allow_nan=False)+'\n')
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output',type=Path,help='Optionally write a new verification record; default only checks existing artifacts')
+args=parser.parse_args()
+if args.output is not None:
+ args.output.parent.mkdir(parents=True,exist_ok=True)
+ args.output.write_text(json.dumps(checks,indent=2,allow_nan=False)+'\n')
 print('Verified',len(posterior_checks),'posterior attempts,',len(others),'unchanged other-eruption files, and matched current validation.')

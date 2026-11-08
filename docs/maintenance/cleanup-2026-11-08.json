@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-08",
+  "base_commit": "41b8f2f28ac8b1c877810b782005ff243e101c63",
+  "scope": "Navigation, removal of unused historical copies, relocation of required references, and installed Aso-4 audit packaging; no scientific solver or current result change.",
+  "retired_files": 620,
+  "retired_bytes": 57136141,
+  "removed_collections": [
+    "archive/ (required Aso-4 reference moved)",
+    "reports/ redirects",
+    "docs/archive/ redirects",
+    "docs/validation/ redirects (guide promoted to docs/VALIDATION.md)",
+    "docs/organization/ superseded move metadata",
+    "docs/EMPIRICAL_METHODS.md and docs/GLOBAL_VOLUME.md redirects"
+  ],
+  "history_url": "https://github.com/siyulai21/tephra-fallout-isopachs/tree/41b8f2f28ac8b1c877810b782005ff243e101c63",
+  "retained_checks": {
+    "data_non_markdown": {
+      "files": 41,
+      "sha256_of_sorted_path_digest_pairs": "50b7e031d385bfa7ae4f0f4e77920fc01cbaaf9f26a7efe914016967be257be1",
+      "all_bytes_identical_to_base": true
+    },
+    "current_case_outputs_including_markdown": {
+      "files": 206,
+      "sha256_of_sorted_path_digest_pairs": "e5970909adbad5b9b44bdc71430108048422220dcf392ced54ab18e4b0a9365b",
+      "all_bytes_identical_to_base": true
+    },
+    "comparison_scientific_artifacts": {
+      "files": 334,
+      "sha256_of_sorted_path_digest_pairs": "6b82287c33ccf85ecc2552543aa96d201b2e2c8f27b18e791edb74a7ffc9d97a",
+      "all_bytes_identical_to_base": true
+    },
+    "active_and_compatibility_solver_python": {
+      "files": 65,
+      "sha256_of_sorted_path_digest_pairs": "e99eba4a261ca1379d29a769ee2bb7b34ef78d24cb5eb002f002143242b0becd",
+      "all_bytes_identical_to_base": true
+    },
+    "required_aso_reference_non_markdown": {
+      "files": 31,
+      "sha256_of_sorted_path_digest_pairs": "39bd717532b403c9bd545b8792035c111686e7cd4963ab7becc8ff8cd076076e",
+      "all_bytes_identical_to_base": true
+    }
+  },
+  "reference_move": {
+    "from": "archive/2026-11-08-aso-4/",
+    "to": "comparisons/aso-4-audit/reference/",
+    "files": 36,
+    "original_manifest_unchanged": true
+  },
+  "ytt_regression_fixture": {
+    "path": "tests/fixtures/ytt-selected-2026-11-02.json",
+    "model_object_exactly_matches_original": true,
+    "source": "archive/reports/ytt/archive/2026-11-02/main43_selected/report.json"
+  },
+  "checks": {
+    "baseline_tests": "183 passed",
+    "artifact_verifier": "41 posterior attempts; 171 unchanged other-eruption files; matched current folds and inputs. Read-only verification passed.",
+    "tests_after_cleanup": "183 passed",
+    "navigation": "1105 local links/images in 114 Markdown files; zero missing",
+    "pinned_history_links": 26,
+    "installed_package": {
+      "version": "0.11.1",
+      "installed_outside_checkout": true,
+      "all_six_datasets": true,
+      "all_three_catalogued_audits": true,
+      "aso_source_workbook": true,
+      "aso_semantics": [
+        83,
+        3,
+        1
+      ],
+      "command_routes": [
+        "methods",
+        "compare",
+        "global",
+        "fit"
+      ]
+    }
+  },
+  "notes": [
+    "Current numerical failures, stress tests, code snapshots, source uncertainties and development attempts remain local evidence, not retired archives.",
+    "Archived scientific paths inside original manifests are intentionally preserved; the Aso-4 verifier resolves their documented moved prefix.",
+    "All current eruption result files, including Markdown and artifact manifests, are unchanged. Introductory pages and historical-reference navigation were updated."
+  ]
+}

@@ -1,6 +1,6 @@
 # Historical GP workflow and compatibility imports
 
-[Source map](../README.md) · [Active GP implementation](../empirical_isopach/models/gaussian_process/README.md) · [Historical output guide](../../archive/reference/historical-gp-outputs.md)
+[Source map](../README.md) · [Active GP implementation](../empirical_isopach/models/gaussian_process/README.md) · [Historical output guide](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reference/historical-gp-outputs.md)
 
 The active GP ensemble has moved into the shared framework's `models/gaussian_process/` directory. Shared data/probability/scoring utilities live in `empirical_isopach/core/`. Old imports remain valid through thin wrappers; there is one implementation of each solver.
 

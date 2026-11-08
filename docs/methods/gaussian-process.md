@@ -101,7 +101,7 @@ Runs record input/code hashes, versions, seeds, fold/row assignments, candidates
 
 ## Limits shown by the experiments
 
-[VALIDATION.md](../../archive/validation/initial-benchmark.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
+[VALIDATION.md](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/validation/initial-benchmark.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
 
 Before publication-level volume claims: jointly infer trend/covariance uncertainty, model independently documented preservation/detection, compare richer anisotropic or multi-lobe means, and evaluate untouched eruptions with preregistered sector holdouts. Those are research extensions, not implemented features of this version.
 
@@ -115,7 +115,7 @@ pseudo observations, physical inputs, or a new uncertainty model.
 
 See [OUTPUTS.md](../OUTPUTS.md) for numerical definitions, limits, and the
 distinction between the median surface integral and median random volume.
-[Historical reporting validation](../../archive/reference/reporting-0.3-validation.md) records the reporting checks.
+[Historical reporting validation](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reference/reporting-0.3-validation.md) records the reporting checks.
 
 
 ## Lower bounds and combined-fallout observations (0.6)

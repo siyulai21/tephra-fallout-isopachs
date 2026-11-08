@@ -4,7 +4,7 @@
 
 **Two large coordinate errors are corrected. The global volume remains weakly constrained.** The source-qualified reference scenario gives **1,466 km³**, with a **501–44,173 km³ conditional 95% credible interval**. A tighter, separately tested fan-position prior gives **777 km³ [403–6,382]** and better geographic predictions. It remains a development alternative: neither model has independently validated the missing global mass, and neither interval automatically includes unknown marine redistribution.
 
-The accepted input is now [Aso-4_reviewed.csv](../../data/eruptions/Aso-4_reviewed.csv). The [original input](../../data/eruptions/Aso-4_tephra.csv) and [preceding results](../../archive/2026-11-08-aso-4/README.md) remain unchanged scientific records. The reference retains the existing geometry prior so that source corrections are not conflated with choosing a lower-volume prior. All other eruptions' case artifacts are unchanged.
+The accepted input is now [Aso-4_reviewed.csv](../../data/eruptions/Aso-4_reviewed.csv). The [original input](../../data/eruptions/Aso-4_tephra.csv) and [required pre-audit reference](reference/README.md) remain unchanged scientific records. The reference retains the existing geometry prior so that source corrections are not conflated with choosing a lower-volume prior. All other eruptions' case artifacts are unchanged.
 
 ## What the source audit changed
 
@@ -94,3 +94,5 @@ python -m benchmarks.verify_aso_evidence
 ```
 
 The published development runs use seed **20261108**; failed numerical attempts are retained and retried under the fixed numerical policy. The ordinary case command uses its documented default seed. Reproduction on a different runtime may differ within Monte Carlo error; cached draws require matching input arrays, model hashes, priors and runtime. [Verification record](verification.json).
+
+The artifact-verification command is read-only by default. Add `--output results/aso-reproduction/verification.json` to save a fresh check record without rewriting the published verification.

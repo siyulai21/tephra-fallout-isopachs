@@ -51,7 +51,7 @@ def deletion_summary(log_volume, log_likelihood, relative_efficiency):
         "d_mean_log_volume_d_likelihood_power": float(np.cov(log_volume, log_likelihood, ddof=0)[0, 1])}
 
 
-ORIGINAL_GLOBAL = Path("archive/2026-11-08-aso-4/results/global")
+ORIGINAL_GLOBAL = Path("comparisons/aso-4-audit/reference/results/global")
 
 
 def run(output, original_global=ORIGINAL_GLOBAL):

@@ -1,6 +1,6 @@
 # YTT sensitivity inputs
 
-[Principal audit](../README.md) · [Accepted principal input](../../../eruptions/YTT_tephra.csv) · [Regional sensitivity reports](../../../../archive/reports/ytt/regional/sensitivity/README.md)
+[Principal audit](../README.md) · [Accepted principal input](../../../eruptions/YTT_tephra.csv) · [Regional sensitivity reports](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/ytt/regional/sensitivity/README.md)
 
 These are explicitly named alternatives to the 46-record principal selection. They do not silently modify the accepted eruption CSV.
 

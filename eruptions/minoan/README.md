@@ -1,5 +1,7 @@
 # Minoan: data, global and regional results
 
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Conditional global estimate](results/global/README.md)
+
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
 ## Global fallout
@@ -39,10 +41,8 @@ All accepted Plinian and co-ignimbrite fallout fans remain combined in one field
 | Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Automatic tuning | [Candidate tables](results/selection/README.md) |
 
-The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/global/verification.json). [Previous matched-hull report](../../archive/2026-11-03-regional/minoan/README.md).
+The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/global/verification.json).
 
-## Earlier calculations
+## Related evidence and history
 
-[GP-only global ensemble](../../archive/reports/minoan/global/stacked/README.md) · [Earlier selected GP](../../archive/reports/minoan/global/selected/README.md) · [Rectangular regional history](../../archive/reports/minoan/regional/README.md)
-
-Historical numerical artifacts retain their original method, source hashes and integration domain. They are not used to rank the current regional methods.
+[Validation and targeted studies](../../comparisons/README.md) · [Earlier calculations in Git history](../../docs/HISTORY.md)

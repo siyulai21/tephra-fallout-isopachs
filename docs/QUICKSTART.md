@@ -38,7 +38,7 @@ python -m pytest -q
 python scripts/check_repository_navigation.py
 ```
 
-The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with each case's reviewed geometry, its baseline, seven alternatives and four geographic holdouts. Each of the displaced and source-focused stress suites has twelve baseline trials plus two declared diffuse-tail alternatives. The source revision reran all regional calculations and replaced B-Tm's global calculation; the other five current global reports retain their preceding execution provenance. Unestimable regional trials, poor global coverage and numerical warnings remain visible.
+The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with each case's reviewed geometry, its baseline, seven alternatives and four geographic holdouts. Each of the displaced and source-focused stress suites has twelve baseline trials plus two declared diffuse-tail alternatives. The source-geometry revision reran all regional calculations and replaced B-Tm's global calculation. Aso-4 was subsequently rerun with its reviewed source data; the other four global reports retain their preceding execution provenance. Unestimable regional trials, poor global coverage and numerical warnings remain visible.
 
 ## Read the outputs
 
