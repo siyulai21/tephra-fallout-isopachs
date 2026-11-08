@@ -7,7 +7,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import resolve_dataset
 from src.empirical_isopach.models.mass_mixture.prior import BASELINE
 from src.empirical_isopach.models.mass_mixture.study import audited_data, fit_checked
 
@@ -19,7 +18,8 @@ SOURCE = "https://doi.org/10.1186/s40623-025-02230-9"
 def run(output):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
-    original = resolve_dataset("Aso-4")
+    # This historical experiment is intentionally tied to the unrevised input.
+    original = Path("data/eruptions/Aso-4_tephra.csv")
     if sha256(original.read_bytes()).hexdigest() != INPUT_SHA256:
         raise ValueError("Re-audit this sensitivity after any accepted-input revision.")
     table = pd.read_csv(original)

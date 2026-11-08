@@ -125,7 +125,7 @@ def support_figures(output, name, data, meshes, maps, report):
             Line2D([], [], color=INK, marker="o", markerfacecolor="white", ls="", label="Exact measurement"),
             Line2D([], [], color=AMBER, marker="^", markerfacecolor="white", ls="", label="Documented bound")], fontsize=8, loc="lower left")
         fig.suptitle(f"{name} · closure is not evidence\nGaps stay open; rejected curves do not define global volume.", fontsize=15)
-        fig.savefig(output/"support.png", dpi=170)
+        fig.savefig(output/"support.png", dpi=170, bbox_inches="tight")
         plt.close(fig)
 
 

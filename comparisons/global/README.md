@@ -4,7 +4,7 @@
 
 The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**
 
-**Source-geometry revision:** B-Tm now uses source-focused fans to remove an unsupported off-volcano maximum. The other five entries retain their preceding displaced-field calculations. Aso-4's high total remains questioned: the tested lower-volume source-envelope candidates did not demonstrate improved geographic prediction and are not silently substituted. See the [B-Tm/Aso-4 review, alternative estimates and retained failures](../source-revision/README.md). This table is a record of reviewed case calculations, not a new common-geometry experiment across all six eruptions.
+**Reviewed revisions:** B-Tm uses source-focused fans to remove an unsupported off-volcano maximum. Aso-4 retains the displaced field family but now uses two corrected cruise coordinates and source-qualified bounds. Its high global total remains questioned; the separately tested tighter displacement prior is a development alternative, not a demonstrated global-mass correction. See the [Aso-4 evidence audit](../aso-4-audit/README.md) and [earlier geometry review](../source-revision/README.md). The other four results are unchanged. This table is a record of reviewed case calculations, not a new common-geometry experiment across all six eruptions.
 
 ## Global estimates and uncertainty
 
@@ -12,7 +12,7 @@ The complete-contour screen was too conservative as a prerequisite for condition
 |---|---|---:|---:|---:|---|
 | [Mazama](../../eruptions/mazama/results/global/README.md) | displaced | 223 | 145–3.67e+03 | 142–1.52e+05 | pass |
 | [Tambora](../../eruptions/tambora/results/global/README.md) | displaced | 179 | 113–1.28e+03 | 104–4.97e+03 | pass |
-| [Aso-4](../../eruptions/aso-4/results/global/README.md) | displaced · **questioned** | 1.84e+03 | 507–5e+04 | 482–3.7e+08 | pass |
+| [Aso-4](../../eruptions/aso-4/results/global/README.md) | displaced · **questioned** | 1.47e+03 | 501–4.42e+04 | 465–1.41e+08 | pass |
 | [B-Tm](../../eruptions/b-tm/results/global/README.md) | source-fans | 106 | 53.2–2.16e+03 | 45.8–6.49e+03 | pass |
 | [YTT](../../eruptions/ytt/results/global/README.md) | displaced | 1.67e+03 | 1.2e+03–5.49e+04 | 1.14e+03–1.37e+05 | pass |
 | [Minoan](../../eruptions/minoan/results/global/README.md) | displaced | 46 | 28.1–2.53e+03 | 26.4–2.12e+04 | pass |
@@ -35,7 +35,7 @@ Each eruption report includes the baseline field, its uncertainty, all assumptio
 |---|---:|---:|---:|---:|---|
 | Mazama | 1.577 | 1.272 | 1.971 | 91.1% | **provisional** |
 | Tambora | 1.471 | 1.620 | 1.548 | 96.2% | pass |
-| Aso-4 | 1.644 | 1.659 | 2.066 | 94.3% | pass |
+| Aso-4 | 1.632 | 1.514 | 1.662 | 95.2% | pass |
 | B-Tm | 1.162 | 1.331 | 1.814 | 92.9% | pass |
 | YTT | 1.777 | 1.934 | 2.153 | 84.8% | pass |
 | Minoan | 1.570 | 1.451 | 1.601 | 94.6% | pass |
@@ -50,6 +50,6 @@ Scores use identical accepted inputs, four geographic folds, buffers, training r
 - [Machine-readable estimates](comparison.csv) and [matched comparison record](report.json)
 - [Regional rerun and input-preservation verification](verification.json)
 
-The original four datasets retain their supplied source flags; YTT and Minoan retain their documented audits. No accepted values, bounds, source decisions or input hashes changed. Global uncertainty does not automatically cover unrecorded erosion, reworking, preferential sampling or source misattribution.
+Aso-4 now uses its separately named reviewed input; the original CSV and preceding results remain archived. Mazama, Tambora and B-Tm retain their supplied source flags, while YTT and Minoan retain their documented audits. Global uncertainty does not automatically cover unrecorded erosion, marine transport, preferential sampling or source misattribution. The older rerun-verification record above describes its original date and inputs, not the later Aso-4 revision.
 
 For new data, upload measurements and source notes in chat. The assistant audits them, runs the regional and global protocols, and adds the data and illustrated reports to GitHub. No browser workflow is needed.

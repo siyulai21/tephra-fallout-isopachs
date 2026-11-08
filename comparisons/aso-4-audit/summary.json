@@ -1,0 +1,365 @@
+{
+  "experiments": [
+    {
+      "case": "original",
+      "scope": "Original 87 exact records; displacement SD 3",
+      "lower95": 507.17311698278155,
+      "median": 1836.0246894517572,
+      "upper95": 49960.41429319698,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "ab362fe1e2d041c2b77db5da328e9a9045c81399177f75d3287f0da6e53e7e18"
+    },
+    {
+      "case": "bounds_only",
+      "scope": "CSV 43: upper 10 cm; 52: lower 3 cm; 55: lower 7 cm. CSV 53 retains 6.7 cm pending conflicting source interpretations.",
+      "lower95": 530.7856125512782,
+      "median": 1901.3731391419283,
+      "upper95": 48558.118856961904,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "1a0e8941ce57ac402dd3437035bc39cb61203bd8079d10c02ef6315b4a8c0c21"
+    },
+    {
+      "case": "s2_bounds",
+      "scope": "bounds_only, with CSV 53 lower 6.7 cm as explicitly reported in Takarada & Hoshizumi Table S2.",
+      "lower95": 532.6624303541611,
+      "median": 1969.0500051560916,
+      "upper95": 51068.24963479904,
+      "sampling_passed": true,
+      "attempts": 2,
+      "posterior_sha256": "1afe1a8747e672ddfccc2dd71e09080a6ec485da6933f215487f1e9251297247"
+    },
+    {
+      "case": "primary_6p5",
+      "scope": "bounds_only, with CSV 53 fixed at the 6.5 cm endpoint of Danhara et al. Table 4's 6.5–7 cm range.",
+      "lower95": 529.2133798508561,
+      "median": 2003.1328963823992,
+      "upper95": 51105.924186847864,
+      "sampling_passed": true,
+      "attempts": 2,
+      "posterior_sha256": "a62a8c18b3b22d316a97daef90c932ef631a0cebf683e849908d75ae594b9336"
+    },
+    {
+      "case": "primary_7",
+      "scope": "bounds_only, with CSV 53 fixed at the 7 cm endpoint of that range. Endpoints are sensitivities, not a probability distribution or rigorous bounds on total volume.",
+      "lower95": 537.1313671773981,
+      "median": 1998.551039516126,
+      "upper95": 51568.199029871976,
+      "sampling_passed": true,
+      "attempts": 2,
+      "posterior_sha256": "ffc1ad4955697f2baef596f6a5e039ca2cf96b7f5015ed7f0f88126a32f1acc4"
+    },
+    {
+      "case": "omit_ambiguous",
+      "scope": "bounds_only, omitting CSV 4, 6, 14, 20: Machida Table 1 labels these afa?, pfl or afa, afa?, afa?. Classification sensitivity, not evidence that all four are flows.",
+      "lower95": 544.1972582604257,
+      "median": 2363.640324727734,
+      "upper95": 63554.501076893066,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "55fe4f9f74e0a04ae997b11a120d084870d24f850bbcd77e6007d6dcc4f6cad2"
+    },
+    {
+      "case": "omit_row37",
+      "scope": "Original likelihood, omit KH76-2-7 (15 cm) to check the largest downward single-row PSIS influence. A valid influential record is not thereby rejected.",
+      "lower95": 367.2659137708551,
+      "median": 1288.7324711153374,
+      "upper95": 51783.5344269336,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "d1a5be435c4604e535c74c3e351c6bcb231b389643a865ad20fb2ebd21097cf3"
+    },
+    {
+      "case": "omit_row49",
+      "scope": "Original likelihood, omit KH82-4-23 (1 cm) to check the largest upward single-row PSIS influence.",
+      "lower95": 591.9169380418701,
+      "median": 2497.9573474380786,
+      "upper95": 68809.79618198372,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "538b54d630681e18f0d1c8d1e173bf30ab7c620ef0d98147b51631de21d3e2a2"
+    },
+    {
+      "case": "offset_sd1",
+      "scope": "Original observations and priors except the SD of each source-relative centre displacement/scale coordinate: 1 instead of 3. Allows secondary maxima; no pseudo-observation or hard centre boundary.",
+      "lower95": 398.5020391725132,
+      "median": 789.5727298619292,
+      "upper95": 9493.852721864741,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "14695be498771e74e6edbce183b92f402d60870e346735d01f7f8d87b16e6d0e"
+    },
+    {
+      "case": "offset_sd6",
+      "scope": "Original observations and priors except displacement SD 6 instead of 3. Isolates this prior, unlike the older wide_geography case that also changed scale SD.",
+      "lower95": 593.8257586589219,
+      "median": 3415.3634164887767,
+      "upper95": 198803.84070540234,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "400e1c9ea76a7e6cb7ea4444b141e5887cbe0a0182b1548c3a4887744c9dfd85"
+    },
+    {
+      "case": "coordinates_only",
+      "scope": "Only two cruise-coordinate corrections",
+      "lower95": 466.299327261447,
+      "median": 1358.4089577512618,
+      "upper95": 39100.0786888081,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "c43fa0e869e953e94fd0a007d6f40b2cc54c4239bd892770bfd338c27097af72"
+    },
+    {
+      "case": "reviewed",
+      "scope": "Coordinate corrections and four source-qualified bounds; displacement SD 3",
+      "lower95": 500.9743516440941,
+      "median": 1465.9726218227443,
+      "upper95": 44172.93140790358,
+      "sampling_passed": true,
+      "attempts": 2,
+      "posterior_sha256": "406b14f301dacf515fada98fc9ce9637fa4ca0689dff3480107a03829279c5cf"
+    },
+    {
+      "case": "reviewed_offset_sd1",
+      "scope": "Same reviewed data; displacement SD 1",
+      "lower95": 402.99647010196526,
+      "median": 776.5494867552273,
+      "upper95": 6381.652867483749,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "f07bfdcc3c135a2e170f680a3b92af466ed345cb683794bd01965a5bb24a79b8"
+    },
+    {
+      "case": "reviewed_primary_6p5",
+      "scope": "Corrected coordinates and three other bounds; Biwa primary-table exact endpoint",
+      "lower95": 505.22727698064534,
+      "median": 1591.7413240524756,
+      "upper95": 39551.94893740167,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "96d80d20593c71b2e53338f1be953cf32efb194e44015f716dda13529bddf7b4"
+    },
+    {
+      "case": "reviewed_primary_7",
+      "scope": "Corrected coordinates and three other bounds; Biwa primary-table exact endpoint",
+      "lower95": 495.85216984921243,
+      "median": 1535.6324747424114,
+      "upper95": 40377.07353931766,
+      "sampling_passed": true,
+      "attempts": 2,
+      "posterior_sha256": "09a38424df5c267217719bed96dd4e5e8381580a69c7731f2c7b2867b5df1787"
+    },
+    {
+      "case": "omit_marine_offset_sd3",
+      "scope": "Reviewed input, omit all 28 S2 submarine records; 59 retained (not certified land-only)",
+      "lower95": 535.5067772026082,
+      "median": 3184.041730279123,
+      "upper95": 143867.10408668875,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "bc4e5cd979f9960322648b0687808df7ce0c7316171fc8d4b9523bc438d5bf45"
+    },
+    {
+      "case": "omit_marine_offset_sd1",
+      "scope": "Reviewed input, omit all 28 S2 submarine records; 59 retained (not certified land-only)",
+      "lower95": 422.430581636256,
+      "median": 1527.032089414398,
+      "upper95": 23855.796092119035,
+      "sampling_passed": true,
+      "attempts": 1,
+      "posterior_sha256": "debd86290dd8d031842576a918123a04d36be75e7eb710d1cc5239f698fce504"
+    }
+  ],
+  "original_data_validation": {
+    "reference": {
+      "mean_log_score": 1.6341796597056628,
+      "rmse_log": 1.248366646986365,
+      "coverage95_observations": 0.9425287356321839,
+      "mean_interval_width_log": 3.3697895307116013,
+      "fold_log_scores": [
+        2.528776647398967,
+        1.3343140962592182,
+        1.1384032203435315,
+        1.5758881742615387
+      ],
+      "equal_region_log_score": 1.6443455345658138
+    },
+    "alternative": {
+      "mean_log_score": 1.5277519215748825,
+      "rmse_log": 1.174033643071085,
+      "coverage95_observations": 0.9540229885057471,
+      "mean_interval_width_log": 3.4240561686151008,
+      "fold_log_scores": [
+        2.290174717123505,
+        1.3140350961232543,
+        1.0894589029427972,
+        1.4519945517258221
+      ],
+      "equal_region_log_score": 1.5364158169788447
+    },
+    "alternative_minus_reference_fold_scores": [
+      -0.23860193027546206,
+      -0.020279000135963843,
+      -0.04894431740073424,
+      -0.12389362253571656
+    ],
+    "all_alternative_fits_passed": true,
+    "all_reference_fits_passed": true,
+    "interpretation": "Negative differences favour the alternative on matched heldout data. Four overlapping training-fold experiments are not independent external validation or a global-mass accuracy test."
+  },
+  "reviewed_data_validation": {
+    "reference": {
+      "mean_log_score": 1.6216184139508656,
+      "rmse_log": 1.2542211900355185,
+      "coverage95_observations": 0.9518072289156626,
+      "mean_interval_width_log": 3.4438459891123987,
+      "fold_log_scores": [
+        2.532398294278614,
+        1.2645652871002537,
+        1.244059129530535,
+        1.4868500303635024
+      ],
+      "equal_region_log_score": 1.6319681853182262
+    },
+    "alternative": {
+      "mean_log_score": 1.5306926177872275,
+      "rmse_log": 1.201488271478708,
+      "coverage95_observations": 0.9518072289156626,
+      "mean_interval_width_log": 3.4977269770871655,
+      "fold_log_scores": [
+        2.321015177980811,
+        1.263499607258516,
+        1.147232809520033,
+        1.4269466291256216
+      ],
+      "equal_region_log_score": 1.5396735559712456
+    },
+    "alternative_minus_reference_fold_scores": [
+      -0.21138311629780304,
+      -0.0010656798417376656,
+      -0.09682632001050195,
+      -0.05990340123788074
+    ],
+    "all_alternative_fits_passed": true,
+    "all_reference_fits_passed": true,
+    "interpretation": "Negative differences favour the alternative on matched heldout data. Four overlapping training-fold experiments are not independent external validation or a global-mass accuracy test."
+  },
+  "marine_setting_test": {
+    "protocol": {
+      "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "ledger_sha256": "a58d85b958bad0b9449bb1c60c14c2ee3882c206d4171b2289f046ff7862e2ec",
+      "omitted_csv_rows": [
+        2,
+        3,
+        5,
+        7,
+        8,
+        13,
+        15,
+        16,
+        17,
+        19,
+        22,
+        23,
+        24,
+        25,
+        26,
+        29,
+        30,
+        31,
+        32,
+        33,
+        36,
+        37,
+        42,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "displacement_prior_sd": [
+        3.0,
+        1.0
+      ],
+      "sampling": {
+        "warmup": 1000,
+        "draws": 1500,
+        "chains": 4,
+        "target_accept": 0.95,
+        "max_tree_depth": 11,
+        "seed": 20261108
+      },
+      "timing": "Declared after the user identified Machida & Arai (1988) and before either setting-removal fit.",
+      "definition": "Remove every explicitly submarine record in Table S2, irrespective of thickness or residual. Retain the other records, including 35 whose setting is not independently classified by this audit. This is not a certified terrestrial-only sample.",
+      "interpretation": "Structural stress test, not evidence that marine records are wrong, a Kuroshio correction, or a probability-weighted uncertainty bound. Environment and geography are confounded. Predictions at omitted marine sites are unbuffered transfer diagnostics, not the geographic model-comparison score.",
+      "runner_sha256": "b025da7a9772e7c604c9d7abd4295b5cb9e21cfb6bb0015ae9d4f09eb57a0743"
+    },
+    "withheld_metrics": {
+      "offset_sd3": {
+        "mean_log_score": 1.3798910192680311,
+        "rmse_log": 0.852353147083018,
+        "coverage95_observations": 0.9642857142857143,
+        "mean_interval_width_log": 4.250074555746655
+      },
+      "offset_sd1": {
+        "mean_log_score": 1.1711203161341344,
+        "rmse_log": 0.7425380999042858,
+        "coverage95_observations": 0.9642857142857143,
+        "mean_interval_width_log": 3.5679100009782863
+      }
+    }
+  },
+  "source_conflict_test": {
+    "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+    "cases": {
+      "primary_6p5": 6.5,
+      "primary_7": 7.0
+    },
+    "definition": "Change only original CSV row 53 from the S2 lower-bound event to an exact endpoint of Danhara Table 4's 6.5–7 cm range. Keep both corrected coordinates, the other three bounds and all observations.",
+    "interpretation": "Endpoint source sensitivities, not a distribution for the range or bounds on total volume. No selection by volume.",
+    "timing": "Declared after the source revision, before either corrected-coordinate endpoint fit. Earlier endpoint experiments used the original coordinates and are retained separately.",
+    "sampling": {
+      "warmup": 1000,
+      "draws": 1500,
+      "chains": 4,
+      "target_accept": 0.95,
+      "max_tree_depth": 11,
+      "seed": 20261108
+    },
+    "prior": {
+      "name": "baseline",
+      "components": 3,
+      "log_volume_mean": 0.0,
+      "log_volume_sd": 6.0,
+      "log_scale_mean": 5.703782474656201,
+      "log_scale_sd": 1.5,
+      "offset_sd": 3.0,
+      "tail_log_mean": 0.0,
+      "tail_log_sd": 1.0,
+      "integrable_plane_tail": true,
+      "contamination": true,
+      "exponential_core": true,
+      "fan_concentration": 0.3,
+      "kernel_concentration": 0.3,
+      "noise_scale": 1.5,
+      "source_anchored": false,
+      "angular_sd": 0.75,
+      "angular_nodes": 256,
+      "source_shape": "harmonic",
+      "vent_envelope": false,
+      "supported_basis": false,
+      "basis_width_log_mean": -0.6931471805599453,
+      "basis_width_log_sd": 0.7,
+      "weights": "Symmetric Dirichlet(total concentration fan_concentration)",
+      "kernel_weights": "Symmetric Dirichlet(total concentration kernel_concentration) over Gaussian, exponential, power components, shared across fans",
+      "tail_exponent": "1+exp(Normal(tail_log_mean,tail_log_sd))",
+      "noise": "HalfNormal(noise_scale); broad-error fraction Beta(1,9), fourfold residual SD",
+      "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
+    },
+    "runner_sha256": "f4372ec5e0ade7798a16d61d9ab678e30a49907eadc65a58541115b5084f1007"
+  },
+  "interpretation": "Separate conditional credible intervals. The collection of alternatives has no probability weights and is not a joint confidence region. Source revisions, deletions and geometry priors are not interchangeable evidence.",
+  "builder_sha256": "14c271b914fd16c6c502c9234f116137463c74522da3c7cea49f7866645f8d53"
+}

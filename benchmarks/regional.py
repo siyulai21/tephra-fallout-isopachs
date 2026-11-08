@@ -119,6 +119,7 @@ def summarize(output):
         for method, result in report["methods"].items():
             rows.append({"dataset": report["dataset"], "slug": path.parent.name, "method": method, "label": report_label(report, method),
                 "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
+                "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
                 "expected_regional_km3": result["regional_volume"]["expected_km3"],
                 "median_surface_km3": result["regional_volume"]["median_surface_km3"],

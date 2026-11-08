@@ -1,5 +1,7 @@
 # Validation and research benchmarks
 
+[Aso-4 source and observation-process tests](../../comparisons/aso-4-audit/README.md) include matched geometry comparisons, exact deletion refits, explicit marine-setting stress tests and retained source conflicts.
+
 [Documentation](../README.md) · [Method comparison](../METHODS.md)
 
 Read each result with its execution date, input selection and model scope. Historical test counts and regional volumes are records of those runs, not statements about the latest release.

@@ -1,5 +1,7 @@
 # B-Tm source correction and Aso-4 volume review
 
+**Later Aso-4 update:** this review retains its original input and geometry experiments. The subsequent [source audit](../aso-4-audit/README.md) corrects cruise coordinates, recovers bounds and reruns the current case. Its numbers supersede this page only as the current Aso-4 reference, not as a redefinition of these historical experiments.
+
 [Project home](../../README.md) · [Current global estimates](../global/README.md) · [Equations and assumptions](../../docs/methods/source-anchored-fans.md)
 
 **The B-Tm problem was the thickest contour, not the volcano coordinates.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.

@@ -1,0 +1,17 @@
+{
+  "original_sha256": "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8",
+  "cases": {
+    "reviewed": {
+      "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "definition": "Correct original CSV row 5 latitude to 34.5 N and row 8 longitude to 146 E from Yamamoto & Kanamatsu (2001), p.56 and coring-location maps. Preserve 7 and 6 cm confirmed by Yamamoto & Aoki (2002), Tables 1/2, p.31 and correlations p.32. Encode CSV 43 upper 10 cm; CSV 52 lower 3 cm; CSV 53 lower 6.7 cm following Table S2, retaining the primary-paper 6.5–7 cm conflict; CSV 55 lower 7 cm as a preservation sensitivity. Keep all other quantitative records and the six excluded pseudo rows. Fill S2 source references without changing row order."
+    },
+    "coordinate_only": {
+      "sha256": "d822a762c43c69988f7aa037e45d18a7f6866f24211da8eb1359edbcd94872bd",
+      "definition": "Change the same two coordinates only, preserving all 87 original exact likelihood terms; isolates location effects."
+    }
+  },
+  "decision_basis": "Source evidence, not fitted volume. S2 vs Danhara range conflict and uncertain flow/fall records remain explicit. No published volume supplies a prior.",
+  "timing": "Additional experiment declared after identifying cruise-record coordinate errors during the source audit; the earlier nine-case protocol remains unchanged.",
+  "priors": "Reviewed input receives the existing baseline and all seven fixed prior sensitivities, plus a separate offset SD 1 development comparison. Both baseline and SD 1 use identical new geographic folds from revised coordinates. Coordinate-only receives the existing baseline.",
+  "runner_sha256": "e6437a7c331accf03d8d8a1410f226768b916cc0e94f8491c6482c3499d512af"
+}

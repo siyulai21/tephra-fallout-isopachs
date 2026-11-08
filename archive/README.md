@@ -1,5 +1,7 @@
 # Historical analyses and reference material
 
+[Aso-4 before the 2026-11-08 source revision](2026-11-08-aso-4/README.md) preserves its original regional and global scientific artifacts.
+
 [Project home](../README.md) · [Current eruptions](../eruptions/README.md) · [Current comparisons](../comparisons/README.md)
 
 These records preserve earlier methods, input selections and integration domains. They are historical evidence, not the current workflow or a basis for silently choosing a preferred method.

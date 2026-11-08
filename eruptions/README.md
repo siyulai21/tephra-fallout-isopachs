@@ -12,7 +12,7 @@ Each case has a **conditional global posterior report** under `results/global/` 
 | [YTT](ytt/README.md) | 46 exact measurements | [Reviewed selection](../data/audits/YTT/README.md) |
 | [Mazama](mazama/README.md) | 45 exact measurements | [Supplied flags; no new source audit](../data/eruptions/README.md) |
 | [Tambora](tambora/README.md) | 26 exact measurements | [Supplied flags; no new source audit](../data/eruptions/README.md) |
-| [Aso-4](aso-4/README.md) | 87 exact measurements | [Supplied flags; no new source audit](../data/eruptions/README.md) |
+| [Aso-4](aso-4/README.md) | 83 exact, 3 lower bounds, 1 upper bound | [Source-qualified revision and unresolved conflicts](../data/audits/Aso-4/README.md) |
 | [B-Tm](b-tm/README.md) | 84 exact measurements | [Supplied flags; no new source audit](../data/eruptions/README.md) |
 
 ## A case has one home

@@ -6,6 +6,8 @@ Start with the [global fallout estimates](global/README.md): conditional whole-E
 
 The [B-Tm source correction and Aso-4 review](source-revision/README.md) compares source-focused fans and experimental secondary-peak models. It explains the B-Tm replacement and why smaller Aso-4 estimates were not automatically promoted.
 
+The subsequent [Aso-4 evidence audit](aso-4-audit/README.md) corrects two cruise coordinates, recovers source inequalities, tests individual records and marine settings, and diagnoses the geometry behind the high-volume tail. It retains all conflicting sources and conditional alternatives.
+
 Read the [support and extrapolation audit](support/README.md) alongside it: which parts of each deposit can be interpolated locally and which complete isopachs survive evidence checks. Its failed contour gates remain visible as local diagnostics; they no longer veto conditional global inference.
 
 [Read the current regional comparison](regional/README.md): six eruptions, identical within-eruption geographic holdouts, and 40 known-truth attempts (38 completed method pairs and two cases with insufficient exact training support).

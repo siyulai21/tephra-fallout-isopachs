@@ -1,0 +1,49 @@
+{
+  "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+  "cases": {
+    "primary_6p5": 6.5,
+    "primary_7": 7.0
+  },
+  "definition": "Change only original CSV row 53 from the S2 lower-bound event to an exact endpoint of Danhara Table 4's 6.5–7 cm range. Keep both corrected coordinates, the other three bounds and all observations.",
+  "interpretation": "Endpoint source sensitivities, not a distribution for the range or bounds on total volume. No selection by volume.",
+  "timing": "Declared after the source revision, before either corrected-coordinate endpoint fit. Earlier endpoint experiments used the original coordinates and are retained separately.",
+  "sampling": {
+    "warmup": 1000,
+    "draws": 1500,
+    "chains": 4,
+    "target_accept": 0.95,
+    "max_tree_depth": 11,
+    "seed": 20261108
+  },
+  "prior": {
+    "name": "baseline",
+    "components": 3,
+    "log_volume_mean": 0.0,
+    "log_volume_sd": 6.0,
+    "log_scale_mean": 5.703782474656201,
+    "log_scale_sd": 1.5,
+    "offset_sd": 3.0,
+    "tail_log_mean": 0.0,
+    "tail_log_sd": 1.0,
+    "integrable_plane_tail": true,
+    "contamination": true,
+    "exponential_core": true,
+    "fan_concentration": 0.3,
+    "kernel_concentration": 0.3,
+    "noise_scale": 1.5,
+    "source_anchored": false,
+    "angular_sd": 0.75,
+    "angular_nodes": 256,
+    "source_shape": "harmonic",
+    "vent_envelope": false,
+    "supported_basis": false,
+    "basis_width_log_mean": -0.6931471805599453,
+    "basis_width_log_sd": 0.7,
+    "weights": "Symmetric Dirichlet(total concentration fan_concentration)",
+    "kernel_weights": "Symmetric Dirichlet(total concentration kernel_concentration) over Gaussian, exponential, power components, shared across fans",
+    "tail_exponent": "1+exp(Normal(tail_log_mean,tail_log_sd))",
+    "noise": "HalfNormal(noise_scale); broad-error fraction Beta(1,9), fourfold residual SD",
+    "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
+  },
+  "runner_sha256": "f4372ec5e0ade7798a16d61d9ab678e30a49907eadc65a58541115b5084f1007"
+}

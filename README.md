@@ -18,6 +18,8 @@ The intended workflow is simple: **upload an eruption's data in chat → audit t
 
 **B-Tm's source contour has been corrected.** Its reviewed source-focused reconstruction places the maximum at the volcano and gives a lower conditional central volume. Aso-4's lower-volume alternatives did not establish an improved global estimate; the competing results and remaining uncertainty are explicit. [Source maps, all tested geometries and the B-Tm/Aso-4 review](comparisons/source-revision/README.md).
 
+**Aso-4 now has a source-qualified data revision.** Two large cruise-coordinate errors are corrected, source bounds and conflicts are documented, and marine-setting and fan-position tests explain why the global total remains weakly constrained. [Audit, calculations and updated results](comparisons/aso-4-audit/README.md).
+
 ![Global estimates and matched predictive checks](comparisons/global/comparison.png)
 
 ## One dataset, multiple methods
@@ -36,7 +38,7 @@ The support audit removes long sampling bridges and preserves holes, reports thr
 | Youngest Toba Tuff (YTT) | 46 measurements; reviewed source selection | [Data, audit and results](eruptions/ytt/README.md) |
 | Mazama | 45 measurements | [Data and results](eruptions/mazama/README.md) |
 | Tambora | 26 measurements | [Data and results](eruptions/tambora/README.md) |
-| Aso-4 | 87 measurements | [Data and results](eruptions/aso-4/README.md) |
+| Aso-4 | 83 exact + 3 lower + 1 upper bound | [Data and results](eruptions/aso-4/README.md) |
 | B-Tm | 84 measurements | [Data and results](eruptions/b-tm/README.md) |
 
 The original four collections retain their supplied flags; they have not received the source-level audits available for YTT and Minoan.
