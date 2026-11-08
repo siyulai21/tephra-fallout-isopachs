@@ -1,19 +1,28 @@
-# Compare empirical methods
+# Comparisons, validation and targeted studies
 
 [Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Method catalogue](../methods/README.md)
 
-Start with the [global fallout estimates](global/README.md): conditional whole-Earth volumes, assumption sensitivities, global-model geographic predictions and known-truth tests. The model estimates mass directly without a contour gate or arbitrary region.
+Use the first table to compare cases and methods. Use the second to understand specific scientific revisions. A study's old input or experimental prior does not silently become the current case definition.
 
-The [B-Tm source correction and Aso-4 review](source-revision/README.md) compares source-focused fans and experimental secondary-peak models. It explains the B-Tm replacement and why smaller Aso-4 estimates were not automatically promoted.
+## Cross-eruption evidence
 
-The subsequent [Aso-4 evidence audit](aso-4-audit/README.md) corrects two cruise coordinates, recovers source inequalities, tests individual records and marine settings, and diagnoses the geometry behind the high-volume tail. It retains all conflicting sources and conditional alternatives.
+| Collection | Read it for |
+|---|---|
+| [Regional comparison](regional/README.md) | GP/spline peers on matched observation hulls, geographic predictions and known-truth regional trials |
+| [Global estimates](global/README.md) | Whole-Earth conditional posteriors, reviewed case geometry, prior sensitivities and unobserved mass |
+| [Local support audit](support/README.md) | Sampling gaps, partial volumes, contour rejection and extrapolation limits |
 
-Read the [support and extrapolation audit](support/README.md) alongside it: which parts of each deposit can be interpolated locally and which complete isopachs survive evidence checks. Its failed contour gates remain visible as local diagnostics; they no longer veto conditional global inference.
+Regional volumes are not global totals. Predictive comparisons require the same accepted rows and holdouts; read each record's input version. A smaller volume or a smoother map is not a model-selection criterion.
 
-[Read the current regional comparison](regional/README.md): six eruptions, identical within-eruption geographic holdouts, and 40 known-truth attempts (38 completed method pairs and two cases with insufficient exact training support).
+## Targeted scientific studies
 
-Each method receives the same accepted observations. The regional peers share an integration footprint; the global companion estimates mass over the whole Earth. We retain individual maps, volumes and diagnostics. Predictive scores evaluate the entire fitted procedure using identical held-out regions. Smooth appearance and agreement with a published volume are not selection criteria.
+| Study | Current role |
+|---|---|
+| [Aso-4 source and uncertainty audit](aso-4-audit/README.md) | Explains the reviewed input, corrected cruise coordinates, source conflicts, marine-removal tests and questioned global tail |
+| [B-Tm/source-geometry review](source-revision/README.md) | Explains the adopted B-Tm geometry and preserves competing B-Tm/Aso-4 models, source qualifications and failures |
 
-The known-truth trials test prediction and volume uncertainty. Poor coverage and failures remain in the record. Conditional intervals are not fully calibrated uncertainty intervals, and these development scenarios are not independent external validation.
+Aso-4's latest reference uses its reviewed dataset. Its tighter displacement prior remains a development alternative. B-Tm's source-focused geometry is catalogued, while its two-site observation sensitivity remains a separate input scenario. [Current case definitions](../data/datasets.json).
 
-[Regional protocol](../docs/methods/regional-comparison.md) · [Benchmark commands](../benchmarks/README.md) · [Historical comparisons](../archive/README.md)
+## What counts as validation?
+
+[The validation guide](../docs/VALIDATION.md) separates numerical tests, geographic predictive evaluation, known-truth stress tests and source audits. Complete development attempts and poor coverage remain evidence and are retained. Earlier unused report copies have been removed from the working tree; [Git history](../docs/HISTORY.md) preserves them.

@@ -1,5 +1,7 @@
 # Aso-4: data, global and regional results
 
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Conditional global estimate](results/global/README.md)
+
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Source audit and experiments](../../comparisons/aso-4-audit/README.md)
 
 ## Global fallout
@@ -10,7 +12,7 @@ The source-qualified reference posterior is **1,466 km³ [501–44,173]**, a con
 
 A tighter fan-position prior gives **777 km³ [403–6,382]** and improves the matched geographic prediction score from **1.632 to 1.540**. It is published as a development alternative, not a demonstrated correction of the missing global mass. Removing all 28 source-labelled marine records instead raises the reference median to **3,184 km³** and broadens its interval. Ocean transport is plausible but does not justify an arbitrary reduction of core thickness. [All alternatives, influence checks and the Kuroshio literature](../../comparisons/aso-4-audit/README.md).
 
-The [previous 1,836 km³ calculation](../../archive/2026-11-08-aso-4/results/global/README.md) remains archived. Its two coordinate errors and exact-value interpretations are not carried silently into the current reference.
+The [previous 1,836 km³ calculation](../../comparisons/aso-4-audit/reference/results/global/README.md) remains in the required study reference. Its two coordinate errors and exact-value interpretations are not carried silently into the current reference.
 
 ## Regional reconstruction
 
@@ -42,8 +44,6 @@ These volumes cover the **3,482,991 km² observation hull**, which includes unsa
 | Row-by-row predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Numerical and preservation checks | [Revision verification](../../comparisons/aso-4-audit/verification.json) |
 
-## Earlier calculations
+## Related evidence and history
 
-[Before the November 8 audit](../../archive/2026-11-08-aso-4/README.md) · [Earlier source-geometry trials](../../comparisons/source-revision/README.md) · [GP global ensemble](../../archive/reports/aso-4/global/stacked/README.md) · [Earlier selected GP](../../archive/reports/aso-4/global/selected/README.md) · [Rectangular regional history](../../archive/reports/aso-4/regional/README.md)
-
-Historical numerical artifacts retain their source hashes and estimands. They are not mixed with the current results as though the data and calculation domains were identical.
+[Validation and targeted studies](../../comparisons/README.md) · [Earlier calculations in Git history](../../docs/HISTORY.md)

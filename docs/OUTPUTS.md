@@ -38,4 +38,4 @@ Mass fractions use finite positive quadrature. A very small part can receive no 
 
 ## Historical GP workflow
 
-Versions 0.3–0.7 used different domains and report fields. Read the separate [historical output guide](../archive/reference/historical-gp-outputs.md); those conventions do not describe current regional comparisons.
+Versions 0.3–0.7 used different domains and report fields. Read the separate [historical output guide](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reference/historical-gp-outputs.md); those conventions do not describe current regional comparisons.

@@ -24,6 +24,6 @@ The [regional protocol](methods/regional-comparison.md) fixes the same observati
 - `selected` is one selected GP configuration, retained for historical reproduction. It is not a third method in the new comparison.
 - Individual GP fitters remain necessary internal components of the ensemble.
 - The original spline and first fixed-smoothing extension remain in historical/research packages; neither produces new regional reports.
-- `eruptions/<slug>/results/` contains current peer-method results. Earlier global and rectangular-region calculations live under `archive/reports/`.
+- `eruptions/<slug>/results/` contains current peer-method results. Earlier calculations are available through [Git history](HISTORY.md).
 
-The [validation catalogue](validation/README.md) separates current matched comparisons from earlier, less thoroughly tuned spline experiments. None proves universal superiority.
+The [validation catalogue](VALIDATION.md) separates current matched comparisons from earlier, less thoroughly tuned spline experiments. None proves universal superiority.

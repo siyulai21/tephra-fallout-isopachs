@@ -1,36 +1,18 @@
-# Documentation
+# Guides and statistical protocols
 
-[Project home](../README.md) · [Eruption reports](../eruptions/README.md)
+[Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Agent entry point](../AGENTS.md)
 
-## Understand and use the project
+| I want to… | Guide |
+|---|---|
+| Understand one complete calculation | [Start here](START_HERE.md) |
+| Upload a new eruption or revise its evidence | [New eruption workflow](NEW_ERUPTION.md) |
+| Install and run locally | [Quick start](QUICKSTART.md) |
+| Interpret maps, volume fields and uncertainty | [Output definitions](OUTPUTS.md) |
+| Compare model families and domains | [Method catalogue](../methods/README.md) · [Method distinctions](METHODS.md) |
+| Assess what has been validated | [Validation guide](VALIDATION.md) |
+| Find the relevant file or code | [Repository map](REPOSITORY_MAP.md) · [Source map](../src/README.md) |
+| Add a statistical family | [Method contract](ADDING_METHOD.md) |
+| Maintain or clean up the repository | [Maintenance policy](maintenance/README.md) |
+| Recover an older analysis | [History and retained references](HISTORY.md) |
 
-- [Start here](START_HERE.md): the question, workflow, terminology and limitations.
-- [New eruption through chat](NEW_ERUPTION.md): upload, audit, calculate and publish.
-- [Quick start](QUICKSTART.md): install, run an example, supply new data and reproduce analyses.
-- [Read the outputs](OUTPUTS.md): maps, volumes, uncertainty and exported files.
-- [Repository map](REPOSITORY_MAP.md): current results, old results and different methods.
-- [Data guide](../data/README.md): units, CSV columns and provenance.
-
-## Understand the methods
-
-Start with [the active method catalogue](../methods/README.md) and [method comparison](METHODS.md). Current reports compare the GP ensemble and automatic cubic spline on a shared regional footprint.
-
-The [probabilistic global companion](methods/probabilistic-global.md) estimates whole-deposit mass under explicit assumptions, without an arbitrary calculation region or contour-eligibility veto.
-
-- [Gaussian-process model](methods/gaussian-process.md): trend, covariance, censored observations and geographic validation.
-- [GP ensemble](methods/gp-ensemble.md): how `stacked` differs from `selected`.
-- [Matched regional comparison](methods/regional-comparison.md): common footprint, automatic tuning and nested evidence.
-- [Supported isopachs and unresolved volume](methods/supported-isopachs.md): local evidence, pseudo-data as regularization, contour selection and separate proximal/distal scenarios.
-- [Historical global volume integration](methods/global-volume.md): physical domain and extrapolation diagnostics.
-- [Cubic-spline methods](methods/cubic-splines.md): automatic knots/smoothing, bounded likelihood and conditional uncertainty.
-
-[Add a model family](ADDING_METHOD.md) explains the common implementation and validation contract.
-
-## Evidence and history
-
-- [Validation catalogue](validation/README.md): current checks and dated development experiments.
-- [Historical reference material](../archive/reference/README.md): original map images and retired reporting history.
-- [Global all-eruption analysis](../comparisons/global/README.md): conditional estimates, sensitivity and validation.
-- [Matched regional analysis](../comparisons/regional/README.md): GP/spline results and limitations.
-
-Earlier documentation URLs retain short pointers where a page moved. Numerical records retain the code hashes and paths from the run that produced them.
+The [detailed protocols](methods/README.md) define regional fitting, supported isopachs, the global posterior, source-focused geometries and the unfitted marine-observation extension. Source audits and scientific findings belong with their [data](../data/audits/README.md), [case](../eruptions/README.md) or [study](../comparisons/README.md), rather than being duplicated across introductory pages.

@@ -14,4 +14,4 @@ Numerical evaluation points approximate one normalized penalty rather than suppl
 from src.research.trend_regularized_spline import RegularizedSpline, select_spline_prior
 ```
 
-The previous import from `src.probabilistic_isopach.regularized_spline` remains compatible. The [initial benchmark](../../archive/validation/initial-benchmark.md) records what was evaluated, including boundary optima and the absence of independent nested evaluation for the spline-prior selection.
+The previous import from `src.probabilistic_isopach.regularized_spline` remains compatible. The [initial benchmark](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/validation/initial-benchmark.md) records what was evaluated, including boundary optima and the absence of independent nested evaluation for the spline-prior selection.

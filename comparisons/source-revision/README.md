@@ -79,7 +79,7 @@ Each geographic comparison matches the regional accepted rows, four outer folds,
 
 The original numerical diagnostics are retained. Review diagnostics also check individual weights of the identified site bases; those labels are not exchangeable. A numerical pass does not prove global mode exploration or geological correctness. No chains are selected, trimmed or pooled to manufacture a pass.
 
-All six regional GP/spline fits and geographic evaluations, and all 40 regional synthetic attempt records, reproduce exactly. [Verification](verification.json). The original four datasets still lack the source-level audit available for YTT and Minoan.
+All six regional GP/spline fits and geographic evaluations, and all 40 regional synthetic attempt records, reproduce exactly. [Verification](verification.json). At the time of this geometry study, the original four datasets lacked the source-level audit available for YTT and Minoan. Aso-4 subsequently received the separately linked source-qualified revision.
 
 ## Reproduce and inspect
 
@@ -97,4 +97,4 @@ The first commands rerun the three main candidates with current numerical checks
 - [Experimental Aso-4 envelope posterior](aso-4-experimental-posterior.npz)
 - [Complete failed and successful attempt manifests](development/completed-attempts.json.gz) and [verified source-code manifest](development/source-manifest.json)
 - [Reporting script snapshot](reporting.py.txt)
-- [Archived B-Tm calculation](../../archive/reports/b-tm/2026-11-06-displaced-global/README.md), [Aso-4 calculation](../../archive/reports/aso-4/2026-11-06-displaced-global/README.md) and [preceding common-geometry comparison](../../archive/reports/global/2026-11-06-displaced-comparison/README.md)
+- [Archived B-Tm calculation](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/b-tm/2026-11-06-displaced-global/README.md), [Aso-4 calculation](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/aso-4/2026-11-06-displaced-global/README.md) and [preceding common-geometry comparison](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/global/2026-11-06-displaced-comparison/README.md)

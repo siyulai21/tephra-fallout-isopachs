@@ -77,7 +77,7 @@ The current real datasets do not reach that extension step. The historical compl
 
 ## Validation and reproduction
 
-[Numerical parity with previous fits](validation.json) · [Full protocol and primary literature](../../docs/methods/supported-isopachs.md) · [Preserved preceding reports](../../archive/2026-11-03-regional/README.md)
+[Numerical parity with previous fits](validation.json) · [Full protocol and primary literature](../../docs/methods/supported-isopachs.md) · [Preserved preceding reports](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/2026-11-03-regional/README.md)
 
 ```sh
 python -m benchmarks.regional --output results/regional-evaluation

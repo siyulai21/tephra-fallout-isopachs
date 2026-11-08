@@ -30,4 +30,4 @@ Verify that all CSVs rebuild exactly from the workbook, with the documented Mani
 python -c 'from benchmarks.ytt import verify_inputs; print(verify_inputs())'
 ```
 
-Reproduce the complete calculations with `python -m benchmarks.ytt --output results/ytt`. See the [published report and method decision](../../../../../archive/reports/ytt/archive/2026-11-03-maninjau/README.md).
+Reproduce the complete calculations with `python -m benchmarks.ytt --output results/ytt`. See the [published report and method decision](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/ytt/archive/2026-11-03-maninjau/README.md).

@@ -1,5 +1,13 @@
 # Changes
 
+## 0.11.1 — Clear navigation and removal of unused report archives
+
+- Organize the newcomer and agent entry points around accepted evidence, regional reconstruction, local support and conditional global estimates; separate current comparisons from targeted development studies.
+- Remove unused archived report copies, redirect directories and obsolete organization metadata. Preserve Git history, every current scientific artifact and all development failures. Keep the pre-audit Aso-4 reference beside its consuming study and retain only the YTT model parameters needed by its regression test.
+- Make the Aso-4 artifact verifier read-only by default, with an explicit output option and the relocated reference resolver.
+- Include Aso-4's reviewed audit and source files in the installed package, and check all catalogued audits outside the checkout.
+
+
 ## 0.11.0 — Source-focused B-Tm correction and Aso-4 adequacy review
 
 - Add source-focused elliptical fans with a vent maximum, joint Gaussian/exponential/power thinning and whole-Earth normalization. Correct B-Tm's unsupported displaced maximum without inventing vent thickness or closing observations.

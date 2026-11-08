@@ -1,12 +1,15 @@
-# Detailed statistical methods
+# Detailed statistical protocols
 
-[Active method catalogue](../../methods/README.md) · [Documentation](../README.md)
+[Method catalogue](../../methods/README.md) · [Validation evidence](../VALIDATION.md) · [Documentation](../README.md)
 
-- [Matched regional protocol](regional-comparison.md): common data, automatic tuning, nested holdouts and regional volumes.
-- [Gaussian-process model](gaussian-process.md): trend, covariance and bounded observations.
-- [GP ensemble](gp-ensemble.md): predictive stacking and mixture calculations.
-- [Cubic-spline methods](cubic-splines.md): active automatic spline, penalties, uncertainty and historical context.
-- [Probabilistic global fallout](probabilistic-global.md): mass-normalized spherical mixtures, joint posterior uncertainty and generic-prior sensitivity; no contour veto or arbitrary calculation region.
-- [Historical global-volume integration](global-volume.md): retained GP extrapolation and numerical checks.
+| Scope | Protocol |
+|---|---|
+| Shared regional procedure | [Common footprints, automatic tuning and nested holdouts](regional-comparison.md) |
+| Regional GP | [Component model](gaussian-process.md) · [Predictive ensemble](gp-ensemble.md) |
+| Regional cubic spline | [Cubic basis, normalized penalties, tuning and conditional uncertainty](cubic-splines.md) |
+| Local observational support | [Sampling gaps, complete contours and partial volumes](supported-isopachs.md) |
+| Conditional global posterior | [Mass-normalized field, priors and sensitivities](probabilistic-global.md) |
+| Source geometry | [Source-focused fans and experimental alternatives](source-anchored-fans.md) |
+| Marine observation process | [Conceptual transport/preservation extension](marine-observations.md) — not implemented or fitted |
 
-Current reports compare the GP ensemble and automatic cubic spline as peers within the same observation hull. Model family and integration domain are separate choices.
+The [historical GP global integral](global-volume.md) documents a retained compatibility calculation, not the current mass-normalized posterior. Development sections in older GP/spline pages describe their dated experiments; the [case catalogue](../../eruptions/README.md) identifies current reports.
