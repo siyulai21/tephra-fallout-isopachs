@@ -6,6 +6,8 @@ All methods use the same accepted observations, geographic holdouts and integrat
 
 ![Matched median isopachs](isopachs.png)
 
+The full observation hull and every accepted location are visible. The coloured field is clipped to the exact hull; fine coastlines provide context only. [Current display frame](map-display.json) · [Replay and unchanged-volume checks](figure-replay.json).
+
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Expected regional bulk fallout (km³) | 202.65 | 248.15 |
@@ -160,3 +162,9 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
+
+## Four-method visual overview
+
+![Separate regional and global volume domains with matched predictive evidence](overview.png)
+
+The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md).

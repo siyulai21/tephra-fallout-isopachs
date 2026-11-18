@@ -79,21 +79,24 @@ def write_support_analysis(output, name, data, bounds, models, deletion_models, 
         "coordinate_note": "Source-centred LAEA kilometres, NOT longitude/latitude; see report fit/input provenance.",
         "features": [{"type": "Feature", "properties": {"policy": key, "area_km2": mesh.area},
                       "geometry": mapping(mesh.geometry)} for key, mesh in meshes.items()]}, allow_nan=False)+"\n")
-    support_figures(output, name, data, meshes, maps, report)
+    support_figures(output, name, data, meshes, maps, report, vent=base_provenance["input"]["vent_lonlat"])
     support_readme(output, name, report)
     return report
 
 
-def support_figures(output, name, data, meshes, maps, report):
+def support_figures(output, name, data, meshes, maps, report, vent=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
     from src.probabilistic_isopach.figures import STYLE, TEAL, AMBER, INK
+    from .visualization.maps import frame_bounds, panel_layout, setup_map
     mesh = meshes["standard"]
+    display_bounds = frame_bounds(data.xy)
+    shape, size = panel_layout(display_bounds, len(maps))
     with plt.rc_context(STYLE):
-        fig, axes = plt.subplots(1, len(maps), figsize=(6.7*len(maps), 6), layout="constrained", squeeze=False)
-        for ax, (method, (grid, polygons)) in zip(axes[0], maps.items()):
+        fig, axes = plt.subplots(*shape, figsize=size, layout="constrained", squeeze=False)
+        for ax, (method, (grid, polygons)) in zip(axes.flat, maps.items()):
             for triangle in mesh.triangles:
                 ax.fill(*triangle.T, color="#D9EBE7", lw=0, zorder=0)
             for part in get_parts(mesh.geometry):
@@ -118,12 +121,14 @@ def support_figures(output, name, data, meshes, maps, report):
             n = sum(by_level.values())
             ax.set(aspect="equal", xlabel="Easting (km)", ylabel="Northing (km)",
                 title=f"{method_label(method)}\n{n} / {len(records)} contours pass every standard check")
+            if vent is not None:
+                setup_map(ax, display_bounds, vent)
             ax.grid(alpha=.1)
-        axes[0, 0].legend(handles=[Line2D([], [], color=TEAL, lw=6, alpha=.25, label="Local interpolation footprint"),
+        fig.legend(handles=[Line2D([], [], color=TEAL, lw=6, alpha=.25, label="Local interpolation footprint"),
             Line2D([], [], color="#ADAFB2", ls="--", label="Unqualified model contour"),
             Line2D([], [], color=TEAL, lw=1.6, label="Qualified complete contour"),
             Line2D([], [], color=INK, marker="o", markerfacecolor="white", ls="", label="Exact measurement"),
-            Line2D([], [], color=AMBER, marker="^", markerfacecolor="white", ls="", label="Documented bound")], fontsize=8, loc="lower left")
+            Line2D([], [], color=AMBER, marker="^", markerfacecolor="white", ls="", label="Documented bound")], fontsize=8, loc="outside lower center", ncols=3, frameon=False)
         fig.suptitle(f"{name} · closure is not evidence\nGaps stay open; rejected curves do not define global volume.", fontsize=15)
         fig.savefig(output/"support.png", dpi=170, bbox_inches="tight")
         plt.close(fig)

@@ -8,11 +8,10 @@ import numpy as np
 import pandas as pd
 
 from ...core.catalog import dataset_record
-from ...core.geometry import survey_bounds
 from ..mass_mixture.study import audited_data
 from .estimate import estimate
 from .geometry import BASE, COMPASS, POLICIES, Geometry
-from .inference import field, flat
+from .inference import flat
 from .integration import PARTS
 from .study import digest, run_fits, write_json
 
@@ -55,67 +54,10 @@ def figures(output, title, data, meta, g, draws, arcs, result):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.collections import LineCollection, PolyCollection
-    from matplotlib.colors import Normalize
     from matplotlib.lines import Line2D
-    from src.probabilistic_isopach.figures import _coastlines
 
-    points = np.vstack((data.xy, [[0., 0.]]))
-    bounds = survey_bounds(points)
-    x = np.unique(np.r_[np.linspace(bounds[0], bounds[2], 150), 0.])
-    y = np.unique(np.r_[np.linspace(bounds[1], bounds[3], 150), 0.])
-    xx, yy = np.meshgrid(x, y)
-    xy = np.column_stack((xx.ravel(), yy.ravel()))
-    from .geometry import polar, RADIUS
-    physical = polar(xy, g.axis)[0] <= 2*RADIUS
-    all_fields = flat(draws)
-    sel = np.linspace(0, len(all_fields["source"])-1, min(512,len(all_fields["source"]))).astype(int)
-    fields = {k: v[sel] for k, v in all_fields.items()}
-    z = np.full(len(xy), np.nan)
-    local = np.flatnonzero(physical)
-    for loc in np.array_split(local, max(1, (len(local)+399)//400)):
-        z[loc] = field(fields, g, xy[loc]).mean(0)/np.log(10.)
-    z = z.reshape(xx.shape)
-    lo, hi = np.quantile(data.log_value[~data.censored]/np.log(10.), [.02, .98])
-    norm = Normalize(lo-.15, max(hi+.15, lo+.2))
-    cmap = "viridis"
-    ratio = (bounds[2]-bounds[0])/(bounds[3]-bounds[1])
-    fig, axs = plt.subplots(1, 2, figsize=(np.clip(10.*ratio+2., 10.5, 14.), 6.3), layout="compressed")
-    left, right = axs
-    left.add_collection(PolyCollection(g.mesh.triangles, facecolors="#cde5e7", edgecolors="none", zorder=1))
-    selected = arcs[arcs.displayed.astype(bool)]
-    if len(selected):
-        segs = selected[["x1_km","y1_km","x2_km","y2_km"]].to_numpy().reshape(-1,2,2)
-        lines = LineCollection(segs, cmap=cmap, norm=norm, linewidths=2.1, zorder=4)
-        lines.set_array(np.log10(selected.level_cm))
-        left.add_collection(lines)
-    img = right.pcolormesh(x,y,z, cmap=cmap,norm=norm, shading="auto", rasterized=True)
-    levels = np.arange(np.ceil(norm.vmin*2)/2, norm.vmax, .5)
-    if len(levels):
-        cs = right.contour(x,y,z,levels=levels,colors="white",linestyles="dashed",linewidths=.8,alpha=.9)
-        right.clabel(cs, fmt=lambda a:f"{10**a:.2g}",fontsize=8)
-    for shape in getattr(g.mesh.geometry,"geoms",[g.mesh.geometry]):
-        if not shape.is_empty:
-            for ring in [shape.exterior, *shape.interiors]:
-                right.plot(*ring.xy, color="#e0faf2", linewidth=1.1, alpha=.85)
-    for ax in axs:
-        _coastlines(ax, meta["vent_lonlat"])
-        for mask, mark in ((~data.censored,"o"),(data.lower_censored,"^"),(data.censored & ~data.lower_censored,"v")):
-            ax.scatter(*data.xy[mask].T, s=15, marker=mark, c="#202124" if ax is left else "white",
-                       edgecolors="white" if ax is left else "#25282b", linewidths=.45,zorder=5)
-        ax.scatter(0,0,marker="*",s=110,c="#de6137",edgecolors="white",linewidths=.65,zorder=6)
-        ax.set(xlim=bounds[[0,2]], ylim=bounds[[1,3]], aspect="equal",
-               xlabel="Easting from vent (km)", ylabel="Northing from vent (km)")
-    left.set_title("Measured isopach fragments",loc="left",fontweight="bold")
-    right.set_title("Conditional continuation across gaps",loc="left",fontweight="bold")
-    bar = fig.colorbar(img, ax=axs, location="bottom", shrink=.82, pad=.06, aspect=46,
-                       label="Bulk thickness (cm, logarithmic scale)")
-    if len(levels):
-        bar.set_ticks(levels, labels=[f"{10**v:.2g}" for v in levels])
-    fig.suptitle(title+"  |  Directional fallout reconstruction",fontsize=16)
-    fig.savefig(output/"isopachs.png",dpi=150,bbox_inches="tight")
-    plt.close(fig)
-
+    from ...visualization.global_maps import global_maps
+    map_result = global_maps(output, title, data, meta, draws, result, g=g, arcs=arcs)
     fig, ax = plt.subplots(figsize=(8.5, 4.2), layout="constrained")
     for j,s in enumerate(COMPASS):
         item = result["compass"][s]
@@ -130,16 +72,7 @@ def figures(output, title, data, meta, g, draws, arcs, result):
     ax.legend([Line2D([0],[0],c="#235164",marker="o"),Line2D([0],[0],c="#e08548",marker="D",ls="")],
               ["Sector median and conditional 95% interval","Median inside the local footprint"],fontsize=9)
     fig.savefig(output/"directions.png",dpi=145,bbox_inches="tight"); plt.close(fig)
-    peak = int(np.nanargmax(z))
-    from shapely.geometry import Point
-    peak_xy = xy[peak]
-    triangle = g.locate([peak_xy])[0][0]
-    peak_region = ("retained measurement triangles" if g.mesh.geometry.covers(Point(peak_xy))
-                   else "transition" if triangle >= 0 else "background continuation")
-    return {"grid_maximum_chord_distance_km": float(polar(peak_xy, g.axis)[0]),
-            "grid_maximum_region":peak_region, "map_window_xy_km": bounds.tolist(), "posterior_fields_for_map": len(sel),
-            "source_geometric_mean_cm": float(np.exp(field(fields,g,[[0,0]]).mean())),
-            "grid_maximum_cm": float(10**z.ravel()[peak]), "grid_maximum_xy_km": xy[peak].tolist()}
+    return map_result
 
 
 def _range(v):
@@ -221,7 +154,10 @@ def render(path, work, output, name=None):
     lines = [f"# {name} directional fallout estimate", "",
         f"**{_range(base['volume_km3'])} km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. The brackets give the conditional 95% credible interval. A median **{base['parts']['footprint']['fraction']['median']:.1%}** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. {reference_status}", "",
         "![Supported isopach fragments and conditional continuation](isopachs.png)", "",
-        f"The left map shades the interpolation footprint and shows {int(arcs.displayed.sum())} measured-bracketed line segments. The right map shows the geometric mean of posterior thickness with dashed contours. Both panels mark exact observations with circles, lower and upper bounds with up and down triangles, and the source with a star. Volume comes from integration of each complete field to the antipode.", "",
+        f"The first map shades the interpolation footprint and shows {int(arcs.displayed.sum())} measured-bracketed line segments. The second map shows the geometric mean of posterior thickness with labelled contours. The panels deliberately use different extents: every observation is visible locally, while the continuation view expands around the 0.1 cm contour. Circles mark exact observations, triangles mark bounds, and the star marks the source. Volume comes from integration of each complete field to the antipode.", "",
+        "![Local thickness and latent uncertainty](local.png)", "",
+        "![Whole-Earth conditional continuation](world.png)", "",
+        "Local detail can cut contours at its window; longitude edges join in the whole-Earth view. Colours saturate below 0.1 cm and above the displayed upper limit. Fine coastlines supply context, not fitting evidence. [Display bounds, finite-grid edge check and posterior subset](map-display.json).", "",
         f"The displayed grid reaches {map_result['grid_maximum_cm']:,.1f} cm at a source distance of {map_result['grid_maximum_chord_distance_km']:.1f} km ({map_result['grid_maximum_region']}). At the supplied vent it gives {map_result['source_geometric_mean_cm']:,.1f} cm. These are summaries of the fitted map.", "",
         "## Where the volume comes from", "", "| Region | Median bulk km³ [95% interval] | Median fraction |","|---|---:|---:|"]
     for k in PARTS:
@@ -241,7 +177,7 @@ def render(path, work, output, name=None):
         f"The shared whole-contour audit found {sum(v['selected_band'] is not None for v in screen['policies'].values())} policies with a qualifying band out of {len(screen['policies'])}. Its record retains rejected contours, holes and geographic-deletion checks. [Complete contour audit](complete-contour-audit.json)", "",
         "[Numerical report and fold identities](report.json) · [Every contour decision](isopach-fragments.csv) · [Held-out predictions](heldout.csv) · [Assumption estimates](estimates.csv) · [Joint parameter and node draws](posterior.npz) · [Sector and support mass by chain and draw](directional-mass.npz) · [All sensitivity volume draws](volume-draws.npz)", ""]
     (output/"README.md").write_text("\n".join(lines))
-    write_json(output/"artifacts.json", {p:digest(output/p) for p in ("README.md","report.json","complete-contour-audit.json","isopachs.png","directions.png","estimates.csv","posterior.npz","directional-mass.npz","volume-draws.npz","heldout.csv","isopach-fragments.csv")})
+    write_json(output/"artifacts.json", {p:digest(output/p) for p in ("README.md","report.json","complete-contour-audit.json","isopachs.png","local.png","world.png","map-display.json","directions.png","estimates.csv","posterior.npz","directional-mass.npz","volume-draws.npz","heldout.csv","isopach-fragments.csv")})
     from .source_cap import publish as publish_source_cap
     return publish_source_cap(data, g, draws, output, report, work, latitude)
 

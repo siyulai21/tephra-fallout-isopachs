@@ -29,24 +29,9 @@ STYLE = {"font.family": "DejaVu Sans", "font.size": 10, "text.color": INK,
 
 
 def _coastlines(ax, vent):
-    source = Path(__file__).parent/"assets/ne_110m_land.geojson"
-    if not source.exists():
-        return
-    fwd, _, _ = make_laea_transform(*vent)
-    segments = []
-    for feature in json.loads(source.read_text())["features"]:
-        geometry = feature["geometry"]
-        polygons = [geometry["coordinates"]] if geometry["type"] == "Polygon" else geometry["coordinates"]
-        for polygon in polygons:
-            for ring in polygon:
-                p = np.asarray(ring)
-                xy = np.column_stack(fwd.transform(*p.T))
-                pairs = np.stack((xy[:-1], xy[1:]), axis=1)
-                valid = np.isfinite(pairs).all(axis=(1, 2)) & (np.linalg.norm(np.diff(pairs, axis=1)[:, 0], axis=1) < 900)
-                segments.extend(pairs[valid])
-    coast = LineCollection(segments, colors="#A0ADAB", linewidths=.55, zorder=2)
-    coast.set_gid("coastlines")
-    ax.add_collection(coast)
+    """Compatibility entry point for the shared fine-coastline renderer."""
+    from src.empirical_isopach.visualization.maps import coastlines
+    return coastlines(ax, vent)
 
 
 def _draw_ring(ax, ring, model, color, width=1.):

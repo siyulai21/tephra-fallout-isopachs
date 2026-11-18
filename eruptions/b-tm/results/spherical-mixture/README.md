@@ -8,6 +8,15 @@ Every posterior field is positive and has total volume equal (to the reported no
 
 ![Global fallout field and uncertainty](field.png)
 
+The overview expands around the displayed 0.1 cm contour, with a recorded finite-grid edge check. Its window never sets the volume. [Display bounds, posterior subset and coastline provenance](map-display.json).
+
+![Local thickness and uncertainty around every accepted observation](local.png)
+
+![Whole-Earth continuation and coastlines](world.png)
+
+The local detail can cut contours at its edges; the whole-Earth companion shows their wider context, with longitude edges joined. Colours saturate below 0.1 cm and above the displayed upper limit; the lowest colour does not mean an exact 0.1 cm deposit. Fine coastlines supply context, not geological evidence. The 2026-11-17 visual refresh uses the unchanged posterior and numeric report; [replay checks](../figure-replay.json) record their hashes.
+
+
 ## Source constraint
 
 Every fitted field has its global thickness maximum at the supplied volcano. This is an explicit shape assumption, not an invented vent-thickness observation. Thickness decreases along every source ray, so this family cannot represent a secondary radial maximum. Real deposits can violate a point-source maximum, particularly with distributed sources or secondary deposition. The maximum relative change in any posterior component's integral on quadrupling angular resolution was **4.5e-08** (tolerance 10⁻⁶). [Derivation, rejected alternatives and geological limits](../../../../docs/methods/source-anchored-fans.md).

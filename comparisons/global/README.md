@@ -4,6 +4,10 @@
 
 Both families estimate whole-Earth **bulk fallout** from the same accepted observations. Directional continuation is an additional model, not a replacement for the spherical mixture. Neither result includes ignimbrite deposits or a density conversion to dense-rock equivalent.
 
+![Matched geographic prediction scores and exact-site coverage for all four families](method-scores.png)
+
+This graphic adds the regional peers to the matched geographic comparison. Lower prediction scores are better; labels also give exact-site observation coverage. A cross marks a numerical warning or incomplete scoring in a global geographic fit. It does not rank whole-deposit volume accuracy. [How to read the plots](../../docs/maintenance/visuals.md).
+
 | Read this | What it contains |
 |---|---|
 | [Matched directional–spherical comparison](../directional/README.md) | All six eruptions, common geographic holdouts, sector budgets, independent numerical replications, known-volume trials and missing-fan failures |

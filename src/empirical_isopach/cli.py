@@ -6,6 +6,7 @@ import sys
 from .core.catalog import resolve_dataset
 from .models.registry import REGISTRY
 from .reporting import compare_dataset
+from .visualization.summary import saved_case_overview
 
 
 def write_global_index(output):
@@ -49,8 +50,9 @@ def compare(argv=None):
         from .models.directional.reporting import directional_dataset
         directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name)
         write_global_index(args.output)
+        saved_case_overview(args.output, args.name)
         with (args.output/"README.md").open("a") as stream:
-            stream.write("\n## Whole-deposit fallout\n\nCompare the [directional estimate from supported isopach fragments](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions.\n")
+            stream.write("\n## Four-method overview\n\n![Separate volume domains and matched geographic validation](overview.png)\n\nCompare the [directional estimate from supported isopach fragments](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions. Regional volumes cover only the observation hull.\n")
 
 
 def global_analysis(argv=None):

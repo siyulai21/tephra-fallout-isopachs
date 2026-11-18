@@ -14,3 +14,9 @@ Both families use this case's accepted observations and report conditional whole
 The [regional support report](../support/README.md) diagnoses local evidence. Directional complete-contour decisions are in its case report; the matched study retains the spherical-mixture support audit. A failed support screen does not suppress a conditional global calculation.
 
 This shared index occupies the old spherical-only `global/` location. Its scientific outputs now live in `spherical-mixture/`; original execution paths and hashes remain in the provenance records.
+
+## Read the figures
+
+[Four-method overview](../overview.png) · [Directional expanded map](../directional/isopachs.png) · [Spherical-mixture expanded map](../spherical-mixture/field.png)
+
+Both global reports also contain local uncertainty detail and a whole-Earth map. Regional and global volumes use different domains. [Map guide](../../../../docs/OUTPUTS.md).

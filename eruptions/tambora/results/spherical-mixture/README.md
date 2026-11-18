@@ -8,6 +8,15 @@ Every posterior field is positive and has total volume exactly equal to its fitt
 
 ![Global fallout field and uncertainty](field.png)
 
+The overview expands around the displayed 0.1 cm contour, with a recorded finite-grid edge check. Its window never sets the volume. [Display bounds, posterior subset and coastline provenance](map-display.json).
+
+![Local thickness and uncertainty around every accepted observation](local.png)
+
+![Whole-Earth continuation and coastlines](world.png)
+
+The local detail can cut contours at its edges; the whole-Earth companion shows their wider context, with longitude edges joined. Colours saturate below 0.1 cm and above the displayed upper limit; the lowest colour does not mean an exact 0.1 cm deposit. Fine coastlines supply context, not geological evidence. The 2026-11-17 visual refresh uses the unchanged posterior and numeric report; [replay checks](../figure-replay.json) record their hashes.
+
+
 ## What the interval means
 
 Uncertainty includes fan positions, sizes, relative masses, tail shape, total volume and observation scatter parameters. The latent volume excludes observation noise. It remains conditional on general modelling assumptions: a finite mixture of smooth, source-related, radially decreasing components, a proper volume/scale prior and a stated observation model. Several components can form elongated, separated or overlapping fans; they are mathematical components, not independently measured eruption phases.

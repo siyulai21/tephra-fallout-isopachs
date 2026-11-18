@@ -6,6 +6,8 @@ All methods use the same accepted observations, geographic holdouts and integrat
 
 ![Matched median isopachs](isopachs.png)
 
+The full observation hull and every accepted location are visible. The coloured field is clipped to the exact hull; fine coastlines provide context only. [Current display frame](map-display.json) · [Replay and unchanged-volume checks](figure-replay.json).
+
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Expected regional bulk fallout (km³) | 27.21 | 24.78 |
@@ -166,3 +168,9 @@ Read the [local support and complete-contour audit](support/README.md) before ex
 ## Whole-deposit fallout
 
 Read the [conditional global estimate and assumption sensitivity](global/README.md). Its mass is normalized on the whole Earth; these regional partial volumes and the local contour audit retain their separate meanings.
+
+## Four-method visual overview
+
+![Separate regional and global volume domains with matched predictive evidence](overview.png)
+
+The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md).

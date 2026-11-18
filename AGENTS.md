@@ -16,6 +16,7 @@ The user uploads eruption observations and source material in chat. Audit that e
 | Reproduce Aso-4 source/geometry work | [Source audit](data/audits/Aso-4/README.md), [study and commands](comparisons/aso-4-audit/README.md) | [Study runs](comparisons/aso-4-audit/runs/README.md), [required reference](comparisons/aso-4-audit/reference/README.md) |
 | Investigate B-Tm/source geometry | [Study](comparisons/source-revision/README.md), [B-Tm case](eruptions/b-tm/README.md) | [Benchmark command catalogue](benchmarks/README.md) |
 | Reorganize or edit documentation | [Maintenance policy](docs/maintenance/README.md) | [Navigation checker](scripts/check_repository_navigation.py); keep scientific artifacts unchanged |
+| Improve maps and report visuals | [Figure refresh policy](docs/maintenance/visuals.md) | [Shared visualization package](src/empirical_isopach/visualization/README.md); replay into fresh scratch output, verify scientific hashes and regional integral parity |
 
 ## Sources of truth
 

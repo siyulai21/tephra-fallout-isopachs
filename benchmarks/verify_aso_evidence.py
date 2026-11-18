@@ -21,10 +21,14 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
+from .visual_history import verified_revision
+visual_revisions = 0
 # Resolve historical publication paths without changing their signed evidence.
 for f,digest in others.items():
  current=re.sub(r'^(eruptions/[^/]+/results)/global/',r'\1/spherical-mixture/',f)
- assert hashfile(current)==digest,f
+ if hashfile(current) != digest:
+  assert verified_revision(current,digest),f
+  visual_revisions += 1
 reference_root = OUT/'reference'
 archive=read(reference_root/'manifest.json')
 for entry in archive['files']:
@@ -67,7 +71,8 @@ checks={
  'source_workbook_and_audit_artifact_hashes_verified':True,
  'all_52_compiled_thickness_magnitudes_match_original_csv':True,
  'source_inequalities_and_primary_conflicts_preserved_in_audit':True,
- 'other_eruption_files_unchanged_count':len(others),
+ 'other_eruption_files_unchanged_count':len(others)-visual_revisions,
+ 'other_eruption_presentation_revisions_verified_count':visual_revisions,
  'archived_scientific_files_unchanged_count':sum(not e['archive'].endswith('.md') for e in archive['files']),
  'archive_markdown_changes':'Relative navigation and original-input reproduction command only.',
  'same_current_input_row_ids_geographic_folds_buffers_training_and_withheld_rows':True,
@@ -91,4 +96,4 @@ args=parser.parse_args()
 if args.output is not None:
  args.output.parent.mkdir(parents=True,exist_ok=True)
  args.output.write_text(json.dumps(checks,indent=2,allow_nan=False)+'\n')
-print('Verified',len(posterior_checks),'posterior attempts,',len(others),'unchanged other-eruption files, and matched current validation.')
+print('Verified',len(posterior_checks),'posterior attempts,',len(others)-visual_revisions,'unchanged other-eruption files,',visual_revisions,'explicit presentation revisions, and matched current validation.')

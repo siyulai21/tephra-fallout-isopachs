@@ -12,13 +12,10 @@ import numpy as np
 import pandas as pd
 
 from .core.catalog import dataset_record
-from .core.geometry import survey_bounds
 from .core.validation import interval_metrics
 from .models.mass_mixture.study import fit_study
-from .models.mass_mixture.inference import Sampling, flatten
+from .models.mass_mixture.inference import Sampling
 from .models.mass_mixture.posterior import mass_partition, predictions
-from .models.mass_mixture.geometry import log_field, to_sphere
-from .support import SupportMesh
 
 
 LABELS = {"baseline": "Three fans · baseline", "diffuse_tail": "Allow diffuse global tails",
@@ -44,58 +41,10 @@ def figures(output, name, data, meta, samples, report):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE, _coastlines
-    flat = flatten(samples)
-    index = np.unique(np.linspace(0, len(flat["log_volume"])-1, min(768, len(flat["log_volume"]))).astype(int))
-    flat = {k: v[index] for k, v in flat.items()}
-    bounds = survey_bounds(np.vstack([data.xy, [0., 0.]]))
-    # Include the source exactly: a coarse grid can otherwise move the drawn
-    # innermost contour even when the field itself peaks at the volcano.
-    x = np.unique(np.r_[np.linspace(bounds[0], bounds[2], 121), 0.])
-    y = np.unique(np.r_[np.linspace(bounds[1], bounds[3], 121), 0.])
-    xx, yy = np.meshgrid(x, y)
-    xy = np.column_stack((xx.ravel(), yy.ravel()))
-    from src.probabilistic_isopach.global_volume import EarthDomain
-    domain = EarthDomain.wgs84(meta["vent_lonlat"][1])
-    physical = domain.rho(xy) < domain.rho_max
-    unit = to_sphere(xy[physical], meta["vent_lonlat"][1])
-    fields = np.full((3, len(xy)), np.nan)
-    fields[:, physical] = np.concatenate([np.quantile(log_field(flat, unit[i:i+256]), [.025, .5, .975], axis=0)
-                                         for i in range(0, len(unit), 256)], axis=1)
-    mesh = SupportMesh(data)
+    from src.probabilistic_isopach.figures import STYLE
+    from .visualization.global_maps import global_maps
+    global_maps(output, name, data, meta, samples, report)
     with plt.rc_context(STYLE):
-        fig, axes = plt.subplots(1, 2, figsize=(13, 6.5), layout="constrained")
-        median = fields[1].reshape(xx.shape)/np.log(10)
-        lo, hi = np.quantile(data.log_value[~data.censored]/np.log(10), [.02, .98])+[-1., 1.]
-        plot = axes[0].pcolormesh(x, y, median, shading="auto", cmap="viridis", vmin=lo, vmax=hi)
-        fig.colorbar(plot, ax=axes[0], shrink=.7, label="log₁₀ median thickness (cm)")
-        contours = np.arange(np.ceil(lo), np.floor(hi)+.1, .5)
-        lines = axes[0].contour(x, y, median, levels=contours, colors="#233440", linewidths=.55)
-        axes[0].clabel(lines, fmt=lambda v: f"{10**v:.2g}", fontsize=7)
-        plot = axes[1].pcolormesh(x, y, ((fields[2]-fields[0])/np.log(10)).reshape(xx.shape),
-                                  shading="auto", cmap="magma", vmin=0)
-        fig.colorbar(plot, ax=axes[1], shrink=.7, label="log₁₀(upper / lower 95% latent thickness)")
-        for ax in axes:
-            _coastlines(ax, meta["vent_lonlat"])
-            for polygon in getattr(mesh.geometry, "geoms", [mesh.geometry]):
-                if polygon.is_empty:
-                    continue
-                ax.plot(*polygon.exterior.xy, color="#00BAC6", lw=1.3, ls="--")
-                for ring in polygon.interiors:
-                    ax.plot(*ring.xy, color="#00BAC6", lw=1.3, ls="--")
-            for mask, marker in ((~data.censored, "o"), (data.lower_censored, "^"),
-                                 (data.censored & ~data.lower_censored, "v")):
-                if mask.any():
-                    ax.scatter(*data.xy[mask].T, s=15, marker=marker, color="white", edgecolors="#233440", lw=.6)
-            ax.scatter(0, 0, marker="*", s=100, c="#E47445", edgecolors="white")
-            ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
-                   xlabel="Easting from source reference (km)", ylabel="Northing (km)")
-        axes[0].set_title("Joint field across all fallout fans\nContours shown in cm; cyan = sampling footprint")
-        axes[1].set_title("Uncertainty in the latent deposit\nObservation scatter is additional")
-        fig.suptitle(f"{name} · global mass model\nThis map window has no role in calculating the total volume.", fontsize=15)
-        fig.savefig(output/"field.png", dpi=160)
-        plt.close(fig)
-
         fig, axes = plt.subplots(1, 2, figsize=(13, 6), layout="constrained")
         for i, (key, fit) in enumerate(report["fits"].items()):
             v = fit["volume"]
@@ -161,6 +110,14 @@ The baseline posterior median is **{v['median']:.3g} km³**, with a **{v['lower9
 Every posterior field is positive and has total volume exactly equal to its fitted volume parameter on the whole Earth. No closing pseudo-observations, map rectangle, contour cutoff or arbitrary distal radius sets this total. The previous contour screen remains a diagnostic of local support; its rejection does not veto this conditional global estimate.
 
 ![Global fallout field and uncertainty](field.png)
+
+The overview expands around the displayed 0.1 cm contour, with a recorded finite-grid edge check. Its window never sets the volume. Fine coastlines are geographic context only. [Display bounds, posterior subset and coastline provenance](map-display.json).
+
+![Local thickness and uncertainty around every accepted observation](local.png)
+
+![Whole-Earth continuation and coastlines](world.png)
+
+The local detail can cut contours at its edges; the whole-Earth companion shows their wider context. Longitude edges join in that companion. Colours saturate below 0.1 cm and above the displayed upper limit. Neither a smooth surface nor a closed contour establishes geological support.
 
 ## What the interval means
 
@@ -297,7 +254,8 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
     with (output/"README.md").open("a") as page:
         page.write("\n[Complete-contour support and geographic-deletion checks](complete-contour-audit.json).\n")
     artifacts = ("README.md", "report.json", "complete-contour-audit.json", "posterior.npz", "volume_draws.csv.gz", "estimates.csv",
-                 "heldout_predictions.csv", "field.png", "volume.png", "sampling.png", "source.png")
+                 "heldout_predictions.csv", "field.png", "local.png", "world.png", "map-display.json",
+                 "volume.png", "sampling.png", "source.png")
     (output/"artifacts.json").write_text(json.dumps({name: sha256((output/name).read_bytes()).hexdigest()
         for name in artifacts}, indent=2)+"\n")
     return report

@@ -14,6 +14,12 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 
 Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. `comparisons/global/` now introduces both global families. [Repository map](REPOSITORY_MAP.md).
 
+## Visual reading route
+
+Start with `overview.png` for separate regional/global volumes and matched prediction evidence. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `isopachs.png` (directional) or `field.png` (spherical mixture), then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
+
+`map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
+
 ## Regional GP and cubic spline
 
 Both integrate the same observation hull. Regional maps share colour/contour scales, and their contours stop at the hull. Neither a hull nor a smooth contour establishes uniform observational support. The median-surface integral differs from the median of random whole-field volumes.
