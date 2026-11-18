@@ -1,17 +1,19 @@
 # Global fallout from measured isopach fragments
 
+This study retains the original single-structure results and their assumption tests. [Current directional ensemble, six case estimates and median-isopach checks](../directional-ensemble/README.md)
+
 [Visual comparison of all four families on the same geographic holdouts](../global/README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
 
 The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../docs/methods/directional-continuation.md).
 
 | Eruption | Directional median km³ [conditional 95%] | Spherical-mixture median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |
 |---|---:|---:|---:|---:|---:|
-| [Mazama](../../eruptions/mazama/results/directional/README.md) | 203.3 [150.6–370.2] | 223.2 [144.7–3,668.8] | 13.5% | 1.451 / 1.577 | 91.1% / 91.1% |
-| [Tambora](../../eruptions/tambora/results/directional/README.md) | 112.1 [77.2–172.8] | 179.1 [112.9–1,284.2] | 9.9% | 1.953 / 1.471 | 80.8% / 96.2% |
-| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | 743.6 [391.6–2,030.3] | 1,466.0 [501.0–44,172.9] | 3.4% | 1.555 / 1.632 | 86.7% / 95.2% |
-| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | 61.6 [39.7–109.0] | 106.3 [53.2–2,159.2] | 3.6% | 1.316 / 1.162 | 94.0% / 92.9% |
-| [YTT](../../eruptions/ytt/results/directional/README.md) | 1,170.3 [848.9–1,926.9] | 1,674.2 [1,203.6–54,906.9] | 16.9% | 1.811 / 1.777 | 91.3% / 84.8% |
-| [Minoan](../../eruptions/minoan/results/directional/README.md) | 42.5 [26.2–126.9] | 46.0 [28.1–2,529.2] | 6.4% | 1.732 / 1.570 | 91.3% / 94.6% |
+| [Mazama](../../eruptions/mazama/results/directional/single-structure.md) | 203.3 [150.6–370.2] | 223.2 [144.7–3,668.8] | 13.5% | 1.451 / 1.577 | 91.1% / 91.1% |
+| [Tambora](../../eruptions/tambora/results/directional/single-structure.md) | 112.1 [77.2–172.8] | 179.1 [112.9–1,284.2] | 9.9% | 1.953 / 1.471 | 80.8% / 96.2% |
+| [Aso-4](../../eruptions/aso-4/results/directional/single-structure.md) | 743.6 [391.6–2,030.3] | 1,466.0 [501.0–44,172.9] | 3.4% | 1.555 / 1.632 | 86.7% / 95.2% |
+| [B-Tm](../../eruptions/b-tm/results/directional/single-structure.md) | 61.6 [39.7–109.0] | 106.3 [53.2–2,159.2] | 3.6% | 1.316 / 1.162 | 94.0% / 92.9% |
+| [YTT](../../eruptions/ytt/results/directional/single-structure.md) | 1,170.3 [848.9–1,926.9] | 1,674.2 [1,203.6–54,906.9] | 16.9% | 1.811 / 1.777 | 91.3% / 84.8% |
+| [Minoan](../../eruptions/minoan/results/directional/single-structure.md) | 42.5 [26.2–126.9] | 46.0 [28.1–2,529.2] | 6.4% | 1.732 / 1.570 | 91.3% / 94.6% |
 
 Lower scores mean better prediction of held-out thickness or a documented bound. The directional score is lower in **2/6** eruptions overall and **1/4** where both models passed sampling checks on every geographic fold. Each case report lists numerical warnings and quadrant-deletion results. These are development comparisons using four matched outer folds within each eruption. The true global volume of each real eruption remains unknown. Both global estimates are published as conditional alternatives.
 

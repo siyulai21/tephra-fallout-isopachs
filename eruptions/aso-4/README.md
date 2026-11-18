@@ -8,11 +8,13 @@
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Source audit and experiments](../../comparisons/aso-4-audit/README.md)
 
-## Global fallout from measured isopach fragments
+## Directional ensemble
 
-The common directional model gives **743.6 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **391.6–2,030.3 km³**. Within retained measurement triangles it gives **25.3 km³**, a median 3.4% of the total. The remaining volume depends on the continuation. The southeast has 2 exact rows, the south 2 and the west 0. Their median sector volumes are 47.4, 7.6 and 7.3 km³, respectively. [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+The central median isopachs integrate to **740.0 km³ of bulk fallout** over the Earth. Complete simulated deposits give a median of **882.7 km³** and a conditional 95% interval of **397.5–2,931.7 km³**. Measured interpolation triangles account for 24.8 km³ (3.3%) of the central map. [Median isopach maps, member weights, directional budgets and validation](results/directional/ensemble/README.md).
 
-The nearest accepted site is 88 km away and a measurement triangle crosses the vent. A positive ash cap inside that unobserved radius changes the median total to 756 km³. Withholding the entire 90–180° quadrant also makes the reference underpredict a 15 cm offshore deposit. [Directional limitations and the held-out measurement](../../comparisons/directional/README.md).
+The southeast, south and west have 2, 2 and 0 exact rows. These sectors contribute 50.5, 8.3 and 9.5 km³ to the median map. The nearest accepted site is 88 km from the vent. The original missing-cap and omitted-quadrant experiments document additional proximal and marine uncertainty. [Aso-4 evidence audit](../../comparisons/aso-4-audit/README.md) · [Single-structure source-cap study](results/directional/single-structure.md).
+
+[Previous single-structure estimate and 13 sensitivities](results/directional/single-structure.md) · [Six-eruption ensemble comparison](../../comparisons/directional-ensemble/README.md).
 
 ## Spherical-mixture estimate
 

@@ -8,7 +8,7 @@ Every family starts from the **same accepted measurements, bounds and source loc
 |---|---|---|---|---|
 | Regional | **GP ensemble** (`stacked`) | Fitted thinning trends plus correlated GP residuals; predictive stacking combines candidate fields | Common observation hull | [GP ensemble](gaussian-process.md) |
 | Regional | **Automatic cubic spline** (`spline`) | Cubic B-spline basis with normalized derivative and fitted-trend penalties; geographic training folds choose knots and regularization | The same observation hull | [Cubic spline](cubic-spline.md) |
-| Global | **Directional continuation** (`directional`) | Latent log thickness is linear within measurement triangles; a positive directional thinning law continues through gaps and beyond the sampled ground | Whole Earth, partitioned by compass direction and sampling support | [Directional continuation](directional-fallout.md) |
+| Global | **Directional continuation** (`directional`) | Latent log thickness is linear within measurement triangles; a positive directional thinning law continues through gaps and beyond the sampled ground | Whole Earth, partitioned by compass direction and sampling support | [Directional ensemble](directional-fallout.md) |
 | Global | **Spherical mixture** (`spherical-mixture` output folder) | A positive mixture of fallout fans with normalized mass and a joint posterior for volume and geometry | Whole Earth, with explicit prior sensitivities | [Spherical mixture](spherical-mixture.md) |
 
 ## How the newest method relates to the others

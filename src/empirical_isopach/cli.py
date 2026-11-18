@@ -21,7 +21,7 @@ Both families use this case's accepted observations and report conditional whole
 
 | Family | Report and evidence |
 |---|---|
-| Directional continuation | [Field, measured isopach fragments, 13 policies, compass budgets and holdouts](../directional/README.md) |
+| Directional continuation | [Median isopachs, global volume, structural uncertainty and held-out tests](../directional/README.md) |
 | Spherical mixture | [Field, posterior volume, prior sensitivities and matched geographic holdouts](../spherical-mixture/README.md) |
 
 [Matched evidence across eruptions](../../../../comparisons/global/README.md) explains their different extrapolation assumptions and validation limitations. A narrower interval or smaller total does not establish greater global accuracy. Read each report's numerical status, missing-fan assumptions and sensitivity.
@@ -52,7 +52,7 @@ def compare(argv=None):
         write_global_index(args.output)
         saved_case_overview(args.output, args.name)
         with (args.output/"README.md").open("a") as stream:
-            stream.write("\n## Four-method overview\n\n![Separate volume domains and matched geographic validation](overview.png)\n\nCompare the [directional estimate from supported isopach fragments](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions. Regional volumes cover only the observation hull.\n")
+            stream.write("\n## Four-method overview\n\n![Separate volume domains and matched geographic validation](overview.png)\n\nCompare the [directional ensemble median](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions. Regional volumes cover only the observation hull.\n")
 
 
 def global_analysis(argv=None):
@@ -96,7 +96,7 @@ def main(argv=None):
         for key, spec in REGISTRY.items():
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume; fixed prior sensitivities and matched geographic holdouts.")
-        print("directional: Whole-Earth continuation from locally supported isopachs\n  Source-centred thinning, alternative missing fans and directional volume budgets.")
+        print("directional: Whole-Earth continuation from locally supported isopachs\n  Six directional structures, median isopachs and coherent-field volume uncertainty.")
     else:
         parser.print_help()
 

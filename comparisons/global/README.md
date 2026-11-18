@@ -1,5 +1,7 @@
 # Compare the two global families
 
+Use the directional ensemble for the median-isopach volume within the directional family. The spherical mixture independently supplies its own global estimate. [Directional ensemble results and held-out scores](../directional-ensemble/README.md)
+
 [All evidence](../README.md) · [Method relationships](../../methods/README.md) · [Eruption cases](../../eruptions/README.md)
 
 Both families estimate whole-Earth **bulk fallout** from the same accepted observations. Directional continuation is an additional model, not a replacement for the spherical mixture. Neither result includes ignimbrite deposits or a density conversion to dense-rock equivalent.

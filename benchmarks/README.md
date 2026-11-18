@@ -1,5 +1,7 @@
 # Reproduce workflows and studies
 
+Use `python -m benchmarks.directional_ensemble --help` to reproduce structural fits, calibration or ensemble reports. `python -m benchmarks.verify_directional_ensemble` replays published median thickness, complete volumes and geographic tests. [Study](../comparisons/directional-ensemble/README.md)
+
 The directional study refits 13 policies and two geographic deletion schemes per eruption. Its known-volume tests include a deposit that has exactly the same observations as another with a hidden fan. [Results and reproduction commands](../comparisons/directional/README.md).
 
 [Project home](../README.md) · [Installation](../docs/QUICKSTART.md) · [Validation guide](../docs/VALIDATION.md) · [Agent task routes](../AGENTS.md)

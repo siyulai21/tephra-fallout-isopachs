@@ -144,6 +144,19 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical")
         arcs = pd.read_csv(home/"directional/isopach-fragments.csv")
         directional_figures(dest, name, data, meta, g, draws, arcs, directional["fits"]["reference"])
         checks["directional_posterior_sha256"] = digest(dest/"posterior.npz")
+    ensemble_dir = home/"directional"/"ensemble"
+    if (ensemble_dir/"report.json").is_file():
+        directional = read(ensemble_dir/"report.json")
+        assert directional["input"]["input_sha256"] == meta["input_sha256"]
+        checks["source_reports"]["directional/ensemble/report.json"] = digest(ensemble_dir/"report.json")
+        if "directional" in scopes:
+            from src.empirical_isopach.models.directional.ensemble.fields import load_packet
+            from src.empirical_isopach.models.directional.ensemble.maps import render_maps
+            ensemble_dest = target/"directional"/"ensemble"
+            ensemble_dest.mkdir(parents=True,exist_ok=True)
+            fields = load_packet(ensemble_dir,data,meta["vent_lonlat"][1],directional)
+            render_maps(ensemble_dest,name,data,meta,fields)
+            checks["ensemble_fields_sha256"] = digest(ensemble_dir/"map-fields.npz")
     case_overview(target, name, regional, directional, spherical)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")
     print(f"{name}: figures complete", flush=True)

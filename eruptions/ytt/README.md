@@ -8,9 +8,11 @@
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
-## Global fallout from measured isopach fragments
+## Directional ensemble
 
-The common directional model gives **1,170.3 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **848.9–1,926.9 km³**. Within retained measurement triangles it gives **194.3 km³**, a median 16.9% of the total. The remaining volume depends on the continuation. [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+The central median isopachs integrate to **985.7 km³ of bulk fallout** over the Earth. Complete simulated deposits give a median of **1,274.1 km³** and a conditional 95% interval of **765.6–3,514.0 km³**. Measured interpolation triangles account for 193.8 km³ (19.7%) of the central map. [Median isopach maps, member weights, directional budgets and validation](results/directional/ensemble/README.md).
+
+[Previous single-structure estimate and 13 sensitivities](results/directional/single-structure.md) · [Six-eruption ensemble comparison](../../comparisons/directional-ensemble/README.md).
 
 ## Spherical-mixture estimate
 

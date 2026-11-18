@@ -17,13 +17,13 @@ from src.empirical_isopach.models.mass_mixture.inference import Sampling
 from src.empirical_isopach.models.mass_mixture.study import fit_cached
 
 
-def case(scenario, seed):
+def case(scenario, seed, *, return_field=False):
     if scenario in ("smooth", "multi_lobe", "missing_sector", "missing_core"):
-        data, _, volume = synthetic_case(scenario, seed)
+        data, surface, volume = synthetic_case(scenario, seed)
         # Projection-centred latitude zero: equal-area radius r <= 2 R.
         # Exponential/shifted Gaussian omitted beyond the Earth chart are
         # <1e-80 of the integral. The compact proximal cap is exactly inside it.
-        return data, volume
+        return (data, volume, surface) if return_field else (data, volume)
     rng = np.random.default_rng(91400+seed)
     radii, azimuth = np.meshgrid(np.linspace(40, 600, 6), np.arange(12)*np.pi/6)
     xy = np.column_stack((radii.ravel()*np.cos(azimuth.ravel()), radii.ravel()*np.sin(azimuth.ravel())))
@@ -38,7 +38,10 @@ def case(scenario, seed):
              "weights": np.array([weights]), "offset": np.array([offsets]),
              "exponent": np.array([exponent]), "tail_fraction": np.array([eta])}
     value = log_field(truth, to_sphere(xy, 0))[0]+rng.normal(0, .15, len(xy))
-    return Observations(xy, value, np.zeros(len(xy), bool), np.zeros(len(xy)), np.arange(len(xy))).canonical(), volume
+    data = Observations(xy, value, np.zeros(len(xy), bool), np.zeros(len(xy)), np.arange(len(xy))).canonical()
+    if return_field:
+        return data, volume, lambda points: log_field(truth, to_sphere(points, 0))[0]
+    return data, volume
 
 
 SCENARIOS = ("smooth", "multi_lobe", "missing_sector", "missing_core", "matched_two_fans", "diffuse_global_tail")

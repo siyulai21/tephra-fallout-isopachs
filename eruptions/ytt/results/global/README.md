@@ -6,7 +6,7 @@ Both families use this case's accepted observations and report conditional whole
 
 | Family | Report and evidence |
 |---|---|
-| Directional continuation | [Field, measured isopach fragments, 13 policies, compass budgets and holdouts](../directional/README.md) |
+| Directional continuation | [Median isopachs, ensemble volume, measured fragments and holdouts](../directional/README.md) |
 | Spherical mixture | [Field, posterior volume, prior sensitivities and matched geographic holdouts](../spherical-mixture/README.md) |
 
 [Matched evidence across eruptions](../../../../comparisons/global/README.md) explains their different extrapolation assumptions and validation limitations. A narrower interval or smaller total does not establish greater global accuracy. Read each report's numerical status, missing-fan assumptions and sensitivity.
@@ -17,6 +17,6 @@ This shared index occupies the old spherical-only `global/` location. Its scient
 
 ## Read the figures
 
-[Four-method overview](../overview.png) · [Directional expanded map](../directional/isopachs.png) · [Spherical-mixture expanded map](../spherical-mixture/field.png)
+[Four-method overview](../overview.png) · [Directional expanded map](../directional/ensemble/isopachs.png) · [Spherical-mixture expanded map](../spherical-mixture/field.png)
 
 Both global reports also contain local uncertainty detail and a whole-Earth map. Regional and global volumes use different domains. [Map guide](../../../../docs/OUTPUTS.md).

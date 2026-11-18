@@ -8,11 +8,13 @@
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
-## Global fallout from measured isopach fragments
+## Directional ensemble
 
-The common directional model gives **61.6 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **39.7–109.0 km³**. Within retained measurement triangles it gives **2.2 km³**, a median 3.6% of the total. The remaining volume depends on the continuation. On the displayed directional grid the thickness maximum is 0.0 km from the supplied volcano. [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+The central median isopachs integrate to **59.3 km³ of bulk fallout** over the Earth. Complete simulated deposits give a median of **71.0 km³** and a conditional 95% interval of **42.2–410.0 km³**. Measured interpolation triangles account for 2.2 km³ (3.6%) of the central map. [Median isopach maps, member weights, directional budgets and validation](results/directional/ensemble/README.md).
 
-The finer search including all measured sites places the reference maximum 2.6 km from the vent in retained measurement triangles, 0.0 km from a measurement. [Source-region diagnostic](results/directional/README.md).
+The supplied vent has median thickness 130.2 cm. The maximum on the two display grids lies 0.0 km from that vent. The accepted source metadata and sparse directions limit the interpretation. [Median map and observation locations](results/directional/ensemble/isopachs.png).
+
+[Previous single-structure estimate and 13 sensitivities](results/directional/single-structure.md) · [Six-eruption ensemble comparison](../../comparisons/directional-ensemble/README.md).
 
 ## Spherical-mixture estimate
 
