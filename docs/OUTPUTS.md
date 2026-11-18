@@ -8,11 +8,10 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 |---|---|
 | `README.md`, `report.json`, maps and `selection/` | GP ensemble and cubic spline, fitted separately on a common regional hull |
 | `support/` | Local footprints, holes, partial volumes and regional contour decisions |
-| `global/README.md` | Shared reading index for the two global families; no pooled estimate |
-| `directional/` | Directional continuation, whole-Earth posterior and its contour audit |
+| `directional/` | Full directional ensemble report in `README.md`, with its numerical packet and contour audit in `ensemble/` |
 | `spherical-mixture/` | Spherical-mixture whole-Earth posterior and assumption sensitivities |
 
-Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. `comparisons/global/` now introduces both global families. [Repository map](REPOSITORY_MAP.md).
+Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) shows all four families on matched geographic tests.
 
 ## Visual reading route
 
@@ -50,7 +49,7 @@ The regional support report records `methods.<method>.footprint_volumes` and `co
 
 ## Directional ensemble
 
-The active report is `directional/ensemble/README.md`. In its `report.json`, `median_surface.volume_km3` is the integral of the central map. `coherent_fields.volume_km3` gives the median and conditional 95% interval from integrals of complete fields. `median_surface.parts_sectors_km3` partitions the central map into five support classes and eight compass sectors. `map-fields.npz` and `median-grids.npz` reproduce the mapped median and pointwise thickness interval. `coherent-mass.npz` records every real-eruption mass draw. The four-family overview marks the directional median-map volume with a diamond. [Equations, overlap diagnostics and weighting](methods/directional-ensemble.md)
+Open `directional/README.md` for the full report. In `directional/ensemble/report.json`, `median_surface.volume_km3` is the integral of the central map. `coherent_fields.volume_km3` gives the median and conditional 95% interval from integrals of complete fields. `median_surface.parts_sectors_km3` partitions the central map into five support classes and eight compass sectors. `map-fields.npz` and `median-grids.npz` reproduce the mapped median and pointwise thickness interval. `coherent-mass.npz` records every real-eruption mass draw. The four-family overview marks the directional median-map volume with a diamond. [Equations, overlap diagnostics and weighting](methods/directional-ensemble.md)
 
 ## Single-structure directional reference
 

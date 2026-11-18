@@ -2,7 +2,7 @@
 
 The directional median-isopach ensemble and its published comparison were added on 18 November 2026. The prior single-structure reports and posterior draws remain available from each directional case. [Ensemble comparison](../comparisons/directional-ensemble/README.md) · [Dated presentation archive](../comparisons/directional-ensemble/history/2026-11-18/manifest.json)
 
-[Repository map](REPOSITORY_MAP.md) · [Maintenance policy](maintenance/README.md)
+[Repository map](README.md#repository-layout) · [Maintenance policy](maintenance/README.md)
 
 Unused archived report collections, old navigation redirects and the superseded organization manifest were removed from the working tree on 2026-11-08. This does not rewrite Git history or delete current scientific evidence.
 
@@ -25,9 +25,10 @@ Source/audit history in `data/`, current development trials, failed numerical at
 | Automatic trend-regularized cubic spline | Current regional peer of the GP, with training-fold selection and explicit bounds |
 | Spherical mixture | Adds a separate conditional whole-Earth mass posterior; it does not replace regional reconstruction |
 | Directional continuation (0.12) | Adds another global family using local triangles and directional thinning; it does not consume or supersede the other fitted fields |
+| Directional ensemble (0.14) | Six structural fits supply the median-isopach map. Whole-field volume intervals and the earlier single-structure sensitivities are reported separately. |
 
 [PR #16](https://github.com/siyulai21/tephra-fallout-isopachs/pull/16) introduced the directional family. [The exact pre-organization snapshot](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d6b460bc2379dd3e86b86b1ee05fd9b65aeaa8a4) preserves its original paths.
 
-The 2026-11-17 cleanup names spherical outputs `eruptions/<slug>/results/spherical-mixture/` and the study `comparisons/spherical-mixture/`. `global/README.md` now introduces both global families. All original scientific files, posterior samples, figures and execution hashes are retained. Historical manifests resolve their old paths in the verifier instead of changing the evidence.
+The 2026-11-17 cleanup names spherical outputs `eruptions/<slug>/results/spherical-mixture/` and the study `comparisons/spherical-mixture/`. The shared index introduced at that time was retired when the full ensemble reports moved to their family home. All original scientific files, posterior samples, figures and execution hashes are retained. Historical manifests resolve their old paths in the verifier instead of changing the evidence.
 
 The unused original desktop GUI and its optional Basemap extra were removed. The duplicate `docs/METHODS.md` overview was consolidated into the [four-family catalogue](../methods/README.md). Original spline numerical engines, compatibility helpers and full unsuccessful trials remain because current reproduction or verification still uses them. [Organization verification](maintenance/cleanup-2026-11-17.json).

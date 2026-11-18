@@ -1,6 +1,6 @@
 # Maintain a readable and auditable repository
 
-[Repository map](../REPOSITORY_MAP.md) · [Agent entry point](../../AGENTS.md) · [History](../HISTORY.md)
+[Repository map](../README.md#repository-layout) · [Agent entry point](../../AGENTS.md) · [History](../HISTORY.md)
 
 Keep one current home for each case, one accepted-case catalogue, and one method guide per family. Introductory pages should route readers to the evidence, not repeat changing headline numbers or chronological progress notes.
 
@@ -13,6 +13,8 @@ When replacing a result, record the old commit and the new input/method identity
 Historical provenance records retain the paths and hashes from their execution. A moved dependency should have a documented path resolver; do not edit its scientific contents just to make the filenames current. Generated reports with artifact manifests require deliberate checksum handling if their contents change.
 
 For a display-only update, follow the [figure refresh policy](visuals.md): replay recorded fits, verify unchanged numerical evidence, inspect maps, and record exact before/after presentation hashes. Current figures may improve without rewriting frozen historical figures or execution provenance.
+
+The November 18 consolidation promoted each full directional ensemble report to its family home. The [navigation manifest](navigation-2026-11-18.json) identifies exact prior publications, their reviewed destinations and the byte-identical move of the geographic score figure. The adjacent ZIP stores the superseded, checksum-protected text for offline verification.
 
 ## Verify an organization change
 

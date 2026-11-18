@@ -1,30 +1,18 @@
-# Add an eruption through chat
+# Submit an eruption through chat
 
-[Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Input schema](../data/README.md)
+Upload the thickness measurements and available source material with the eruption name. A spreadsheet, CSV or published table is enough to start. Include coordinates, thickness units, a vent location and any evidence for incomplete deposits, detection limits or redeposition. For multiple fallout fans, say which deposit the result should represent. Minoan combines its accepted Plinian and co-ignimbrite fallout in a single field.
 
-Upload the measurements and available source material in chat and identify the eruption. A spreadsheet, CSV or published table can be the starting point. You do not need to run a browser app, choose a model, place pseudo-data or set spline smoothing.
+The [optional intake template](../templates/eruption/README.md) gives the observation schema. Leave unknown values explicit. Decisions about sources and deposit interpretation belong in the audit.
 
-## What to supply
+## From upload to published case
 
-The directional headline uses the volume under the ensemble median isopachs. Use the packaged cross-eruption calibration for each upload and publish the case's new median map, coherent-field volume interval, rejection log and weight sensitivities in `directional/ensemble/`. [Directional ensemble protocol](methods/directional-ensemble.md)
+1. **Audit the sources.** Preserve originals and hashes in `data/sources/`. Record unit conversions, source-row identities, acceptance decisions and documented bounds in `data/audits/`. Review ambiguous evidence before treating it as a measurement.
+2. **Register the accepted input.** Save the reviewed CSV in `data/eruptions/` and register its path, audit and applicable spherical geometry in `data/datasets.json`. Carry the same accepted observations into all four families.
+3. **Fit the models in a fresh scratch directory.** The GP ensemble and spline tune inside training folds and integrate a common hull. The directional ensemble fits six fan structures with predictive weights learned outside the target eruption. Retain its single-structure sensitivities and proximal-cap experiment. The spherical mixture supplies an independent posterior and fixed prior refits. Both global families predict the same geographic holdouts. [Directional ensemble protocol](methods/directional-ensemble.md)
+4. **Inspect the evidence.** Check mapped observation coverage, the source-region maximum, contour rejections, held-out predictions, sampling diagnostics and integration convergence. Preserve unscored folds, failed fits and prior sensitivity. Identify where a global volume relies on extrapolation even when the integral converges. [Output guide](OUTPUTS.md)
+5. **Publish one case home.** Put the reviewed output in `eruptions/<slug>/results/`. On the case home, identify the accepted rows and source audit, show the four estimates with their volume definitions, include `results/overview.png` and link once to each substantive report. Include any material limitation specific to the eruption. Link the case once from the eruption catalogue. Add a cross-eruption study only when the new calculation supports that comparison.
 
-
-- Thickness observations and their locations, with units and coordinate reference if known.
-- The source/vent reference and its provenance.
-- Paper/table/page references, measurement uncertainties, incomplete deposits, detection limits, and any known redeposition or correlation issues.
-- For several fallout fans or phases, identify them and state the intended deposit quantity. Minoan currently combines all accepted Plinian and co-ignimbrite fallout fans in one field.
-
-Use the optional [intake notes](../templates/eruption/INTAKE.md) and [empty CSV schema](../templates/eruption/observations.csv). Unknown information stays explicitly unknown; it is not replaced with invented values. Missing deposits are not automatically zeros or non-detections.
-
-## What the assistant does
-
-1. **Preserve and audit the evidence.** Keep original sources in `data/sources/<slug>/`, record units and coordinate conversions, and document row-level acceptance/exclusion/bound decisions in `data/audits/<name>/`. Record source and accepted-input hashes. Resolve material ambiguities from supplied sources or ask in chat if they cannot be resolved.
-2. **Prepare one accepted input.** Write `data/eruptions/<Name>_tephra.csv` using the strict schema. Record the case in `data/datasets.json`; an audited case includes its audit file and case key. Original sources remain unchanged.
-3. **Run regional peers and both global models.** Use `tephra-isopachs compare` into a fresh local `results/` directory. GP and spline share the accepted evidence, geographic folds and observation hull. The mass-normalized global model follows in `spherical-mixture/`, with fixed generic priors, full sensitivity refits and identical geographic holdouts. The directional model follows in `directional/`. It rebuilds support and bearing geometry within every geographic fold, applies the same 13 policies to every eruption, and reports mass by bearing and by support. Both global families also undergo the shared complete-contour screen. The directional report tests an additional proximal deposit entirely inside the nearest accepted site. Tuning uses training rows only. [Directional protocol](methods/directional-continuation.md).
-4. **Check and interpret.** Inspect maps, withheld predictions, coverage, selection boundaries, integration and posterior sampling diagnostics. Explicitly inspect the thickest contour and source-region maximum: a finite whole-Earth integral does not prevent an unsupported displaced peak. Compare the [source-focused alternative](methods/source-anchored-fans.md) when this problem appears; its maximum-at-vent assumption is not a universal volcanological law. Keep unfavorable results and failures visible. A lower volume alone never justifies replacement. Report partial regional volumes separately from conditional global bulk fallout. A failed contour-support screen is not a veto on the global posterior; unobserved deposits instead require explicit assumptions and sensitivity reporting.
-5. **Publish a case home on GitHub.** Put reviewed output in `eruptions/<slug>/results/` and create the case `README.md` linking data, audit, results and history. Update the eruption index and, when rerun with a common protocol, the cross-eruption comparison. Run tests and navigation checks before publishing.
-
-If a case is revised, identify the preceding immutable Git commit, retain its provenance and explain what changed. Keep a local reference beside the study only when a current calculation or check requires it. Do not duplicate unused archived report trees or present a revised result as the same calculation. [Publication and history policy](maintenance/README.md).
+For a revision, record the prior commit, input and model identity and explain what changed. Preserve the scientific evidence needed to reproduce or challenge the result. [Publication and history policy](maintenance/README.md)
 
 ## Local equivalent
 
@@ -32,6 +20,4 @@ If a case is revised, identify the preceding immutable Git commit, retain its pr
 tephra-isopachs compare path/to/observations.csv --output results/new-eruption --name 'Eruption name'
 ```
 
-The generated report contains the regional peers and two global companions in `directional/` and `spherical-mixture/`, linked by the shared `global/README.md` index. Reviewed artifacts include readable reports, figures, numerical provenance, heldout predictions, candidate tables, baseline global posterior samples and sensitivity volume samples. Large regenerable prediction grids and auxiliary posterior caches remain local. `tephra-isopachs global` can run the global analysis separately; `--resume` verifies the input/model/settings/checksums before resuming a lengthy calculation. [Output definitions](OUTPUTS.md) · [Installation](QUICKSTART.md).
-
-Automatic fitting does not settle geological source selection or guarantee reliable uncertainty. The report must retain those limits alongside the numerical results.
+The full directional report opens at `directional/README.md` inside the output directory. Its ensemble arrays remain under `directional/ensemble/`. The sibling `spherical-mixture/README.md` contains the independent global fit. The regional report is `README.md` and the local audit is `support/README.md`. [Installation and commands](QUICKSTART.md)

@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy.special import logsumexp
 
+from .visual_history import verified_presentation
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.models.directional.study import digest
@@ -116,10 +117,10 @@ def main():
     with ZipFile(archive/"previous-presentation.zip") as previous:
         assert set(previous.namelist())==set(manifest["files"])
         for name,item in manifest["files"].items():
-            assert digest(name)==item["current_sha256"] and sha256(previous.read(name)).hexdigest()==item["prior_sha256"], name
+            assert verified_presentation(name,item["current_sha256"]) and sha256(previous.read(name)).hexdigest()==item["prior_sha256"], name
     files=verification["artifacts"]
     for path,checksum in files.items():
-        assert digest(root/path)==checksum,path
+        assert verified_presentation(root/path,checksum),path
     with gzip.open(root/"simulation-records.json.gz","rt") as f:
         stress=json.load(f)
     assert len(stress)==14

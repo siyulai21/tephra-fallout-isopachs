@@ -6,12 +6,12 @@ The directional headline is the bulk volume obtained by integrating the **pointw
 
 | Eruption | Median-map km³ | Complete-field median [95%], km³ | Median map inside measured triangles | Full structures passing | Map checks |
 |---|---:|---:|---:|---:|---|
-| [Mazama](../../eruptions/mazama/results/directional/ensemble/README.md) | **179.9** | 224.3 [149.1–1,371.9] | 14.6% | 6/6 | passed |
-| [Tambora](../../eruptions/tambora/results/directional/ensemble/README.md) | **105.8** | 119.6 [78.6–184.0] | 10.1% | 2/6 | passed |
-| [Aso-4](../../eruptions/aso-4/results/directional/ensemble/README.md) | **740.0** | 882.7 [397.5–2,931.7] | 3.3% | 6/6 | passed |
-| [B-Tm](../../eruptions/b-tm/results/directional/ensemble/README.md) | **59.3** | 71.0 [42.2–410.0] | 3.6% | 6/6 | passed |
-| [YTT](../../eruptions/ytt/results/directional/ensemble/README.md) | **985.7** | 1,274.1 [765.6–3,514.0] | 19.7% | 6/6 | passed |
-| [Minoan](../../eruptions/minoan/results/directional/ensemble/README.md) | **33.7** | 42.0 [26.6–129.1] | 7.3% | 6/6 | passed |
+| [Mazama](../../eruptions/mazama/results/directional/README.md) | **179.9** | 224.3 [149.1–1,371.9] | 14.6% | 6/6 | passed |
+| [Tambora](../../eruptions/tambora/results/directional/README.md) | **105.8** | 119.6 [78.6–184.0] | 10.1% | 2/6 | passed |
+| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | **740.0** | 882.7 [397.5–2,931.7] | 3.3% | 6/6 | passed |
+| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | **59.3** | 71.0 [42.2–410.0] | 3.6% | 6/6 | passed |
+| [YTT](../../eruptions/ytt/results/directional/README.md) | **985.7** | 1,274.1 [765.6–3,514.0] | 19.7% | 6/6 | passed |
+| [Minoan](../../eruptions/minoan/results/directional/README.md) | **33.7** | 42.0 [26.6–129.1] | 7.3% | 6/6 | passed |
 
 These are model-conditional bulk fallout estimates. A median map can combine common features from incompatible deposits. The joint-field interval describes plausible complete-deposit volumes. Thick unmeasured source caps, hidden lobes, distal tails, reworking and preservation can sit outside it.
 
@@ -56,4 +56,4 @@ The machine-readable records include both indistinguishable truths, all unresolv
 
 [Case comparison](comparison.csv) · [Known volumes](known-volumes.csv) · [Contour overlap by scenario and level](contour-accuracy.csv) · [Complete simulation records](simulation-records.json.gz) · [Verification](verification.json)
 
-[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · [Two global families](../global/README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)
+[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · [Four-method comparison](../README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)

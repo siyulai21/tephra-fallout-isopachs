@@ -1,46 +1,19 @@
 # Tephra fallout reconstruction
 
-**Upload eruption measurements in chat; get audited data, isopach maps, fallout volumes and reproducible reports on GitHub.** Isopachs join places with equal ash thickness.
+This repository turns published ash-thickness measurements into **isopachs** (contours of equal thickness) and estimates of bulk fallout volume. Each eruption has one report home with its measurements, source decisions, maps and results.
 
-The workflow is **source evidence → accepted observations → empirical models → validation → published case**. Statistical settings are fitted systematically; no hand-placed pseudo-data or browser application is needed.
+**[Browse the six eruptions](eruptions/README.md)** · **[Submit a new eruption through chat](docs/NEW_ERUPTION.md)**
 
-| What brings you here? | Start here |
-|---|---|
-| Read results for an eruption | [Eruption cases](eruptions/README.md) — data, source decisions and reports |
-| Understand the project | [Newcomer guide](docs/START_HERE.md) — follow one calculation from evidence to results |
-| Supply new measurements | [Upload and publication workflow](docs/NEW_ERUPTION.md) · [Optional intake templates](templates/README.md) |
-| Understand the models | [Method catalogue](methods/README.md) — how the four independent families relate |
-| Compare performance and uncertainty | [Evidence catalogue](comparisons/README.md) — cross-eruption results, stress tests and targeted studies |
-| Work on the repository as an AI agent | [AGENTS.md](AGENTS.md) — sources of truth, task routes, commands and checks |
+## What a case tells you
 
-## Three different questions
+The **GP ensemble** and **trend-regularized cubic spline** each reconstruct thickness inside the same observation hull. The local support audit shows where observations bracket a contour, including holes inside that hull.
 
-| Report | Question | Meaning of its volume |
-|---|---|---|
-| **Regional reconstruction** | How do GP and cubic spline fit the same observations? | Bulk fallout within their common observation hull; not the complete deposit |
-| **Local support audit** | Which locations and contours have nearby observational support? | Partial volume within a diagnosed footprint; gaps and rejected contours stay visible |
-| **Conditional global estimate** | What whole-deposit fallout is implied under stated assumptions? | Whole-Earth posterior under either directional thinning from measured isopach fragments or a spherical mixture, with sensitivity and numerical checks |
+The **directional ensemble** and **spherical mixture** each extend thickness across the Earth under different assumptions. The directional ensemble fits six possible fan structures. Its headline volume integrates the map you see. Its conditional 95% interval comes from integrating complete simulated deposits. The spherical mixture reports its own whole-deposit posterior. A poorly sampled direction can hold ash that none of the observations reveal.
 
-The regional methods are peers, with no automatic winner. The [two global families](comparisons/global/README.md) use the same accepted evidence and geographic holdouts. Directional continuation is the newest addition; it does not replace the spherical mixture or use the GP/spline fits as input. The directional headline is the volume under the ensemble median isopachs. Case reports show the conditional volume interval across complete simulated deposits and the mass contributed by measured triangles and unsampled directions. [Six-eruption ensemble estimates and missing-direction tests](comparisons/directional-ensemble/README.md). A failed contour-support screen does not prevent a conditional global estimate. It highlights why missing deposits and prior assumptions matter. All volumes are bulk fallout, not dense-rock equivalent or total erupted material including ignimbrite deposits.
+For a worked example, the Minoan case fits the accepted Plinian and co-ignimbrite fallout together. Its case home shows all four volumes and how much ground each covers. [Minoan case](eruptions/minoan/README.md)
 
-## Current eruption cases
+## Methods and evidence
 
-[Minoan](eruptions/minoan/README.md) · [YTT](eruptions/ytt/README.md) · [Mazama](eruptions/mazama/README.md) · [Tambora](eruptions/tambora/README.md) · [Aso-4](eruptions/aso-4/README.md) · [B-Tm](eruptions/b-tm/README.md)
+[How the four models work](methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
 
-Each case links its accepted input, source status, current reports and relevant studies. Minoan fits all accepted fallout fans together. Aso-4's source-qualified revision and questioned global total, and B-Tm's source-focused geometry and remaining input qualifications, are explained on their case pages.
-
-See the [four-family visual comparison](comparisons/global/README.md) and the [map-reading guide](docs/OUTPUTS.md). Each case now includes a complete-hull regional map, wider global views, local uncertainty detail and whole-Earth context.
-
-## Run the same workflow locally
-
-With Python 3.10 or later, in a checkout:
-
-```sh
-python -m pip install '.[test]'
-tephra-isopachs methods
-tephra-isopachs compare Minoan --output results/minoan-complete
-```
-
-`compare` produces regional, support and global reports. Global posterior and sensitivity runs can be lengthy. [Installation and commands](docs/QUICKSTART.md) · [How to read the outputs](docs/OUTPUTS.md).
-
-[Data and provenance](data/README.md) · [Source-code map](src/README.md) · [Repository map](docs/REPOSITORY_MAP.md) · [Contributing](CONTRIBUTING.md) · [Change history](CHANGELOG.md) · [Attribution](THIRD_PARTY_NOTICES.md)
+To run an analysis or contribute code, start with the [guides and repository layout](docs/README.md). AI agents can follow the [intake, publication and verification instructions](AGENTS.md).

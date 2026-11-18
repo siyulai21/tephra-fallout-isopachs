@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from src.empirical_isopach.core.catalog import datasets
-from .visual_history import LEDGER, is_presentation, verified_presentation
+from .visual_history import LEDGER, is_presentation, verified_presentation, verify_navigation_release
 
 
 def digest(path):
@@ -19,6 +19,7 @@ def read(path):
 
 def main():
     root = Path(__file__).resolve().parents[1]
+    verify_navigation_release()
     ledger = read(LEDGER)
     for path, expected in ledger["preserved_scientific_files"].items():
         assert digest(root/path) == expected, path

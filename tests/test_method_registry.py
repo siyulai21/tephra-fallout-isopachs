@@ -45,6 +45,7 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     assert destinations == {"spherical": tmp_path/"a/spherical-mixture", "directional": tmp_path/"a/directional"}
     links = (tmp_path/"a/README.md").read_text()
     assert "(spherical-mixture/README.md)" in links and "(directional/README.md)" in links
+    assert not (tmp_path/"a/global").exists()
     calls.clear()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"b"), "--regional-only"])
     assert calls == ["regional"]

@@ -96,25 +96,39 @@ def test_reference_free_whole_earth_median_integral_against_radial_solution():
     np.testing.assert_allclose(np.sum(answer["parts_sectors_km3"],axis=0),expected/8,rtol=.012)
 
 
-def test_assistant_led_directional_run_creates_ensemble_landing(tmp_path,monkeypatch):
-    from src.empirical_isopach.models.directional import reporting
-    from src.empirical_isopach.models.directional.ensemble import members,report
-    from src.empirical_isopach.models.directional.study import write_json
+def test_assistant_led_directional_run_publishes_full_ensemble_at_root(tmp_path, monkeypatch):
+    from pathlib import Path
+    import json
     import pytest
-    calls=[]
-    def single(path,work,dest,name):
-        (dest/"README.md").write_text("Preserved reference study")
-        write_json(dest/"artifacts.json",{})
-    monkeypatch.setattr(reporting,"run_fits",lambda *args: calls.append("reference fits"))
-    monkeypatch.setattr(reporting,"render",single)
-    monkeypatch.setattr(report,"reuse_reference_fits",lambda *args: calls.append("verified cache import"))
-    monkeypatch.setattr(members,"run_members",lambda *args: calls.append("ensemble fits"))
-    result={"dataset":"Example","median_surface":{"volume_km3":10.},
-            "coherent_fields":{"volume_km3":{"median":12.,"lower95":9.,"upper95":15.}}}
-    monkeypatch.setattr(report,"render",lambda *args:result)
-    assert reporting.directional_dataset(datasets()[0]["path"],tmp_path)==result
-    assert calls==["reference fits","verified cache import","ensemble fits"]
-    assert "10.0 km³" in (tmp_path/"README.md").read_text()
-    assert (tmp_path/"single-structure.md").read_text()=="Preserved reference study"
-    with pytest.raises(ValueError,match="fresh"):
-        reporting.directional_dataset(datasets()[0]["path"],tmp_path)
+    from src.empirical_isopach.models.directional import reporting
+    from src.empirical_isopach.models.directional.ensemble import members, report
+
+    calls = []
+    def single(path, work, dest, name):
+        from src.empirical_isopach.models.directional.study import digest
+        page = dest/"README.md"
+        page.write_text("Preserved reference study")
+        (dest/"artifacts.json").write_text(json.dumps({"README.md": digest(page)}))
+
+    # Exercise the real narrative on a checked-in packet without refitting the posterior.
+    root = Path(__file__).resolve().parents[1]
+    published = root/"eruptions/minoan/results/directional"
+    result = json.loads((published/"ensemble/report.json").read_text())
+
+    def ensemble(path, work, dest, name, *, family_page):
+        dest.mkdir()
+        report.narrative(dest, result, family_page=family_page)
+        return result
+
+    monkeypatch.setattr(reporting, "run_fits", lambda *args: calls.append("reference fits"))
+    monkeypatch.setattr(reporting, "render", single)
+    monkeypatch.setattr(report, "reuse_reference_fits", lambda *args: calls.append("verified cache import"))
+    monkeypatch.setattr(members, "run_members", lambda *args: calls.append("ensemble fits"))
+    monkeypatch.setattr(report, "render", ensemble)
+    assert reporting.directional_dataset(datasets()[0]["path"], tmp_path) == result
+    assert calls == ["reference fits", "verified cache import", "ensemble fits"]
+    assert (tmp_path/"README.md").read_bytes() == (published/"README.md").read_bytes()
+    assert not (tmp_path/"ensemble/README.md").exists()
+    assert (tmp_path/"single-structure.md").read_text() == "Preserved reference study"
+    with pytest.raises(ValueError, match="fresh"):
+        reporting.directional_dataset(datasets()[0]["path"], tmp_path)

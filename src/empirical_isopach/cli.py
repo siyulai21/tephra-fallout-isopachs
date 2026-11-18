@@ -9,29 +9,6 @@ from .reporting import compare_dataset
 from .visualization.summary import saved_case_overview
 
 
-def write_global_index(output):
-    """Keep the shared global entry point separate from either fitted family."""
-    folder = Path(output)/"global"
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder/"README.md").write_text("""# Whole-deposit fallout: two independent estimates
-
-[Eruption home](../../README.md) · [Regional comparison](../README.md) · [Method relationships](../../../../methods/README.md)
-
-Both families use this case's accepted observations and report conditional whole-Earth **bulk fallout**. Neither is a preferred answer; their volumes and intervals remain separate.
-
-| Family | Report and evidence |
-|---|---|
-| Directional continuation | [Median isopachs, global volume, structural uncertainty and held-out tests](../directional/README.md) |
-| Spherical mixture | [Field, posterior volume, prior sensitivities and matched geographic holdouts](../spherical-mixture/README.md) |
-
-[Matched evidence across eruptions](../../../../comparisons/global/README.md) explains their different extrapolation assumptions and validation limitations. A narrower interval or smaller total does not establish greater global accuracy. Read each report's numerical status, missing-fan assumptions and sensitivity.
-
-The [regional support report](../support/README.md) diagnoses local evidence. Directional complete-contour decisions are in its case report; the matched study retains the spherical-mixture support audit. A failed support screen does not suppress a conditional global calculation.
-
-This shared index occupies the old spherical-only `global/` location. Its scientific outputs now live in `spherical-mixture/`; original execution paths and hashes remain in the provenance records.
-""")
-
-
 def compare(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv", help="Catalogued eruption or a CSV of observations and source coordinates")
@@ -49,7 +26,6 @@ def compare(argv=None):
                        progress=lambda message: print(message, flush=True))
         from .models.directional.reporting import directional_dataset
         directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name)
-        write_global_index(args.output)
         saved_case_overview(args.output, args.name)
         with (args.output/"README.md").open("a") as stream:
             stream.write("\n## Four-method overview\n\n![Separate volume domains and matched geographic validation](overview.png)\n\nCompare the [directional ensemble median](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions. Regional volumes cover only the observation hull.\n")

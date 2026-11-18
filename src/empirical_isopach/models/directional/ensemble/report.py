@@ -59,7 +59,9 @@ def formatted(q):
     return f"{q['median']:,.1f} [{q['lower95']:,.1f}–{q['upper95']:,.1f}]"
 
 
-def narrative(output, r):
+def narrative(output, r, *, family_page=False):
+    """Write one full report, at the family root for a normal case run."""
+    prefix = "ensemble/" if family_page else ""
     c, j, w = r["median_surface"], r["coherent_fields"], r["weighting"]
     n, m, g = c["numerical"], np.array(c["parts_sectors_km3"]), r["map"]
     full = [s.replace("_"," ") for s,v in j["members"].items() if not v["passed"]]
@@ -70,13 +72,13 @@ def narrative(output, r):
         f"The measured triangles contain **{m[0].sum():,.1f} km³** ({m[0].sum()/m.sum():.1%}) of the median map. "
         "The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. "
         "Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.", "",
-        "![Measured-bracketed median fragments and expanded median isopachs](isopachs.png)", "",
+        f"![Measured-bracketed median fragments and expanded median isopachs]({prefix}isopachs.png)", "",
         f"The star marks the supplied vent. Its median thickness is {g['vent_median_cm']:,.1f} cm. "
         f"The largest median thickness on the two display grids is {g['max_on_display_grids_cm']:,.1f} cm at a source distance of "
         f"{g['max_source_distance_chord_km']:.1f} km. The evidence panel contains {g['displayed_triangle_levels']} measured-bracketed triangle and level pairs. "
         "The right panel includes conditional continuation.", "",
-        "![Local median thickness and pointwise 95% uncertainty](local.png)", "",
-        "![Median thickness over the Earth](world.png)", "",
+        f"![Local median thickness and pointwise 95% uncertainty]({prefix}local.png)", "",
+        f"![Median thickness over the Earth]({prefix}world.png)", "",
         "## Direction and observational support", "",
         "| Direction | Exact rows | Bounds | Median-map volume (km³) | Complete fields, median [95%] (km³) |",
         "|---|---:|---:|---:|---:|"]
@@ -124,14 +126,18 @@ def narrative(output, r):
               f"The independent same-fields mean-integral discrepancy was {latest['independent_same_draw_mean_relative_error']:.2%}.", "",
               f"The shared complete-contour audit found **{bands} qualifying policies out of {len(r['complete_bands'])}**. "
               "The conditional global estimate remains sensitive to preservation, source-region thickness, distal thinning and possible unseen fans.", "",
-              "[Numerical report, fold identities and weight sensitivity](report.json) · [Complete contour decisions](complete-contour-audit.json) · "
-              "[All fragment decisions](fragment-decisions.csv) · [Mapped fragment vertices](supported-fragments.csv) · [Held-out predictions](heldout.csv)", "",
-              "[Reconstruct the median field](map-fields.npz) · [Map grids and pointwise quantiles](median-grids.npz) · "
-              "[Joint volume by chain, support class and compass sector](coherent-mass.npz) · [Checksums](artifacts.json)", ""]
-    (output/"README.md").write_text("\n".join(lines))
+              f"[Numerical report, fold identities and weight sensitivity]({prefix}report.json) · [Complete contour decisions]({prefix}complete-contour-audit.json) · "
+              f"[All fragment decisions]({prefix}fragment-decisions.csv) · [Mapped fragment vertices]({prefix}supported-fragments.csv) · [Held-out predictions]({prefix}heldout.csv)", "",
+              f"[Reconstruct the median field]({prefix}map-fields.npz) · [Map grids and pointwise quantiles]({prefix}median-grids.npz) · "
+              f"[Joint volume by chain, support class and compass sector]({prefix}coherent-mass.npz) · [Checksums]({prefix}artifacts.json)", ""]
+    if family_page:
+        lines += ["[Single-structure sensitivity study and unmeasured proximal cap](single-structure.md)", ""]
+    page = output.parent/"README.md" if family_page else output/"README.md"
+    page.write_text("\n".join(lines))
+    return page
 
 
-def render(path, work, output, name=None):
+def render(path, work, output, name=None, *, family_page=False):
     data, meta = audited_data(path)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
@@ -162,10 +168,15 @@ def render(path, work, output, name=None):
          "designs":{p.name:json.loads((directory(work,p)/"design.json").read_text()) for p in MEMBERS},
          "policies":[asdict(p) for p in MEMBERS]}
     write_json(output/"report.json",r)
-    narrative(output,r)
-    files = ("report.json","README.md","isopachs.png","world.png","local.png","median-grids.npz","map-fields.npz",
+    page = narrative(output, r, family_page=family_page)
+    files = ("report.json","isopachs.png","world.png","local.png","median-grids.npz","map-fields.npz",
              "coherent-mass.npz","heldout.csv","fragment-decisions.csv","supported-fragments.csv","complete-contour-audit.json")
-    write_json(output/"artifacts.json",{f:digest(output/f) for f in files})
+    hashes = {f:digest(output/f) for f in files}
+    hashes["../README.md" if family_page else "README.md"] = digest(page)
+    write_json(output/"artifacts.json",hashes)
+    if family_page:
+        # Earlier runs placed a second copy of this generated report beside the arrays.
+        (output/"README.md").unlink(missing_ok=True)
     return r
 
 
@@ -182,25 +193,3 @@ def reuse_reference_fits(reference_work, ensemble_work):
         for f in [a/"design.json", *a.glob("attempt-*.json"), *a.glob("attempt-*.npz"), a/"mass.npz", a/"integral.json"]:
             if f.is_file():
                 shutil.copyfile(f,b/f.name)
-
-
-def publish_landing(folder, ensemble_report):
-    folder = Path(folder)
-    index = folder/"README.md"
-    reference = folder/"single-structure.md"
-    if not index.read_text().startswith("# Directional ensemble"):
-        shutil.copyfile(index, reference)
-    c = ensemble_report["median_surface"]
-    j = ensemble_report["coherent_fields"]["volume_km3"]
-    name = ensemble_report["dataset"]
-    lines = [f"# Directional ensemble for {name}", "",
-             f"The central median-isopach map integrates to **{c['volume_km3']:,.1f} km³ of bulk fallout**. "
-             f"Complete simulated deposits have a median of **{j['median']:,.1f} km³** and a conditional 95% interval of "
-             f"**{j['lower95']:,.1f}–{j['upper95']:,.1f} km³**.", "",
-             "[Read the ensemble estimate, compass budgets, predictive tests and numerical qualifications](ensemble/README.md)", "",
-             "![Measured median isopach fragments and global continuation](ensemble/isopachs.png)", "",
-             "[Single-structure reference, 13 prior sensitivities and unobserved proximal-cap experiment](single-structure.md)", ""]
-    index.write_text("\n".join(lines))
-    manifest = json.loads((folder/"artifacts.json").read_text())
-    manifest.update({"README.md":digest(index), "single-structure.md":digest(reference)})
-    write_json(folder/"artifacts.json",manifest)

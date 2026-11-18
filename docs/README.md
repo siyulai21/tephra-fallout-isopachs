@@ -1,18 +1,25 @@
-# Guides and statistical protocols
+# Guides and repository layout
 
-[Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Agent entry point](../AGENTS.md)
+Start at the [eruption catalogue](../eruptions/README.md) for a published result. For a new dataset, use the [intake and publication workflow](NEW_ERUPTION.md).
 
-| I want to… | Guide |
+| Task | Guide |
 |---|---|
-| Understand one complete calculation | [Start here](START_HERE.md) |
-| Upload a new eruption or revise its evidence | [New eruption workflow](NEW_ERUPTION.md) |
-| Install and run locally | [Quick start](QUICKSTART.md) |
-| Interpret maps, volume fields and uncertainty | [Output definitions](OUTPUTS.md) |
-| Compare model families and domains | [Four-family catalogue and relationships](../methods/README.md) |
-| Assess what has been validated | [Validation guide](VALIDATION.md) |
-| Find the relevant file or code | [Repository map](REPOSITORY_MAP.md) · [Source map](../src/README.md) |
-| Add a statistical family | [Method contract](ADDING_METHOD.md) |
-| Maintain or clean up the repository | [Maintenance policy](maintenance/README.md) |
-| Recover an older analysis | [History and retained references](HISTORY.md) |
+| Install the package and run an analysis | [Quick start](QUICKSTART.md) |
+| Interpret a map, volume, interval or output file | [Output guide](OUTPUTS.md) |
+| Understand the evidence behind a claim | [Validation guide](VALIDATION.md) |
+| Look up equations, priors or diagnostics | [Statistical protocols](methods/README.md) |
+| Add a model or contribute a change | [Method contract](ADDING_METHOD.md) · [Contributing](../CONTRIBUTING.md) |
+| Track a replaced result or a move | [History](HISTORY.md) · [Maintenance policy](maintenance/README.md) |
 
-The [detailed protocols](methods/README.md) define regional fitting, supported isopachs, directional continuation, the spherical-mixture posterior, source-focused geometries and the unfitted marine-observation extension. Source audits and scientific findings belong with their [data](../data/audits/README.md), [case](../eruptions/README.md) or [study](../comparisons/README.md), rather than being duplicated across introductory pages.
+## Repository layout
+
+| Location | What belongs there |
+|---|---|
+| `eruptions/<slug>/` | One case home. Its `results/README.md` contains the matched regional fits. `results/directional/README.md` contains the full directional ensemble report. `results/spherical-mixture/` and `results/support/` contain the independent global posterior and local audit. |
+| `data/` | Original sources and hashes, row-level audit decisions and accepted CSVs. [Dataset catalogue](../data/datasets.json) |
+| `methods/` and `docs/methods/` | Introductions to the four empirical models and their detailed protocols. |
+| `comparisons/` | Cross-eruption validation, simulations and targeted scientific studies. |
+| `src/` | Shared observation handling, regional registry, model families and reporting. [Code map](../src/README.md) |
+| `benchmarks/` and `tests/` | Study reproduction, evidence verifiers and regression tests. [Benchmark commands](../benchmarks/README.md) |
+| `templates/eruption/` | Optional notes and empty input schema for a new eruption. |
+| `results/` at the repository root | Ignored scratch output. Reviewed publications live under their eruption. |
