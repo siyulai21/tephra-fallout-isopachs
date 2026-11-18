@@ -1,5 +1,9 @@
 # Changes
 
+## 0.14.0 · 2026-11-18
+
+Directional reconstruction now reports six-structure median isopachs, their integrated volume, coherent-field uncertainty, and leave-one-eruption-out weight calibration. [Results and validation](comparisons/directional-ensemble/README.md)
+
 ## 0.13.0 — Complete map frames and clearer case visuals
 
 - Refresh every current eruption with fine offline coastlines, regional maps containing the complete observation hull, expanded global continuation maps, local uncertainty detail and whole-Earth context.

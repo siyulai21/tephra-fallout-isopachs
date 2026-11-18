@@ -16,7 +16,7 @@ Older records use `global/` for the spherical-only files. Those files were moved
 
 ## Visual reading route
 
-Start with `overview.png` for separate regional/global volumes and matched prediction evidence. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `isopachs.png` (directional) or `field.png` (spherical mixture), then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
+Start with `overview.png` for separate regional/global volumes and matched prediction evidence. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `directional/ensemble/isopachs.png` or `spherical-mixture/field.png`, then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
 
@@ -43,16 +43,20 @@ In `report.json`, read `methods.<method>.regional_volume`, `joint_volume` and `v
 | `support/contour_audit.csv` | Every candidate level, policy, stability check and rejection reason |
 | `support/report.json` | Three policies, deletion sensitivity, band checks and conditional scenarios |
 | `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres |
-| `directional/complete-contour-audit.json` | Same complete-contour screen applied to directional fields |
+| `directional/ensemble/complete-contour-audit.json` | Same complete-contour screen applied to directional fields |
 | [Spherical support packets](../comparisons/directional/spherical-support/) | All six spherical-family screens and checksum-verified posterior field subsets |
 
 The regional support report records `methods.<method>.footprint_volumes` and `contours.policies`. Its `preferred_global_km3` is null: this audit does not select a global total. A zero quadrature fraction is not proof of absent ash. Preserve rejection reasons, unsupported holes and numerical warnings. A failed complete-contour screen is diagnostic, not a veto on conditional global inference. [Support protocol](methods/supported-isopachs.md).
 
-## Directional global posterior
+## Directional ensemble
+
+The active report is `directional/ensemble/README.md`. In its `report.json`, `median_surface.volume_km3` is the integral of the central map. `coherent_fields.volume_km3` gives the median and conditional 95% interval from integrals of complete fields. `median_surface.parts_sectors_km3` partitions the central map into five support classes and eight compass sectors. `map-fields.npz` and `median-grids.npz` reproduce the mapped median and pointwise thickness interval. `coherent-mass.npz` records every real-eruption mass draw. The four-family overview marks the directional median-map volume with a diamond. [Equations, overlap diagnostics and weighting](methods/directional-ensemble.md)
+
+## Single-structure directional reference
 
 | File in `directional/` | Read it for |
 |---|---|
-| `README.md`, `isopachs.png`, `directions.png` | Supported fragments, extrapolated field, sectors, sensitivity and warnings |
+| `single-structure.md`, `isopachs.png`, `directions.png` | Supported fragments, extrapolated field, sectors, sensitivity and warnings |
 | `report.json`, `estimates.csv` | Reference and 12 alternative policies, all attempts, intervals and provenance |
 | `posterior.npz` | Joint reference posterior fields, with chain/draw identity |
 | `volume-draws.npz` | Separate volume samples for all 13 policies |

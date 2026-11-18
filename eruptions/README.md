@@ -1,5 +1,7 @@
 # Eruption cases
 
+Each directional report opens with the ensemble median-isopach map and its integrated volume. [All six estimates and their conditional uncertainty](../comparisons/directional-ensemble/README.md)
+
 [Project home](../README.md) · [Add an eruption](../docs/NEW_ERUPTION.md) · [Method catalogue](../methods/README.md)
 
 Each case has one home linking **accepted evidence → regional reconstruction → local support → two conditional global estimates**. Start with the case home for interpretation; use the direct report links when you already know the question.

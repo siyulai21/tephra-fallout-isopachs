@@ -41,7 +41,7 @@ Publish reviewed output under `eruptions/<slug>/results/`: regional files at the
 
 Preserve original sources, hashes, row identities, units and acceptance/exclusion decisions. Bounds are likelihood events; missing or reworked deposits are not zeros. Never invent measurement errors, geological evidence or training pseudo-observations. Fit all accepted fallout fans jointly for the stated deposit quantity.
 
-Tune response-dependent regional settings within training folds and compare on identical accepted evidence, outer geographic folds and regional footprints. Keep observation noise out of latent volumes. Preserve whole-field correlation in uncertainty draws. Both global posteriors integrate over the physical Earth with declared priors, sensitivity refits and matched holdouts. Directional continuation samples latent measurement triangles and a thinning field; the spherical mixture samples mass-normalized fans. Neither trains on GP/spline predictions or derived isopachs. A support failure is a diagnostic, not a veto on the user-requested conditional global calculation. Numerical convergence is not evidence that missing global mass is identified.
+Tune response-dependent regional settings within training folds and compare on identical accepted evidence, outer geographic folds and regional footprints. Keep observation noise out of latent volumes. Preserve whole-field correlation in uncertainty draws. Both global posteriors integrate over the physical Earth with declared priors, sensitivity refits and matched holdouts. The directional ensemble uses the pointwise median of six weighted structures for its central isopachs and separately integrates complete fields for uncertainty. Use the [ensemble protocol](docs/methods/directional-ensemble.md). Directional continuation samples latent measurement triangles and a thinning field; the spherical mixture samples mass-normalized fans. Neither trains on GP/spline predictions or derived isopachs. A support failure is a diagnostic, not a veto on the user-requested conditional global calculation. Numerical convergence is not evidence that missing global mass is identified.
 
 Retain poor coverage, rejected contours, unsupported holes, search boundaries, unsuccessful numerical attempts and proximal/distal assumptions. Conditional intervals, geographic-deletion ranges and prior-sensitivity envelopes are different quantities.
 
@@ -52,6 +52,7 @@ python -m pytest -q
 python scripts/check_repository_navigation.py
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional
+python -m benchmarks.verify_directional_ensemble
 ```
 
 For historical manifests, resolve the old `results/global/` file paths to `results/spherical-mixture/` without changing the recorded hashes. The old `global/README.md` now introduces both global families.

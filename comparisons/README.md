@@ -1,5 +1,7 @@
 # Comparisons, validation and targeted studies
 
+[Directional ensemble](directional-ensemble/README.md) compares the six median-isopach volumes, matched held-out scores and known-deposit contour errors.
+
 [Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Method catalogue](../methods/README.md)
 
 Use the first table to compare cases and methods. Use the second to understand specific scientific revisions. A study's old input or experimental prior does not silently become the current case definition.

@@ -1,5 +1,9 @@
 # Directional global fallout from measured isopach fragments
 
+The central directional estimate integrates the pointwise median thickness from six plausible fan structures over the Earth. Each report also gives a conditional interval from complete simulated deposits and a measured-fragment map. [Ensemble method and equations](../docs/methods/directional-ensemble.md) · [Case estimates and stress tests](../comparisons/directional-ensemble/README.md)
+
+## Underlying model and single-structure studies
+
 [Method catalogue](README.md) · [Spherical-mixture peer](spherical-mixture.md) · [Implementation map](../src/empirical_isopach/models/directional/README.md)
 
 **Public command: `global --geometry directional`; also included by `compare`.** Output folder: `directional/`.

@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from src.empirical_isopach.core.catalog import datasets
-from .visual_history import LEDGER, is_presentation
+from .visual_history import LEDGER, is_presentation, verified_presentation
 
 
 def digest(path):
@@ -24,9 +24,9 @@ def main():
         assert digest(root/path) == expected, path
     for path, revision in ledger["replaced_presentation_files"].items():
         assert is_presentation(path), path
-        assert digest(root/path) == revision["after_sha256"], path
+        assert verified_presentation(root/path, revision["after_sha256"]), path
     for path, expected in ledger["added_visual_artifacts"].items():
-        assert digest(root/path) == expected, path
+        assert verified_presentation(root/path, expected), path
     for record in datasets():
         home = root/"eruptions"/record["slug"]/"results"
         report = read(home/"report.json")

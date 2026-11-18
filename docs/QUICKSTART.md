@@ -38,11 +38,12 @@ python -m benchmarks.source_fans --output results/source-stress
 python -m benchmarks.source_stress_report --source results/source-stress --output results/source-stress-report
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional
+python -m benchmarks.verify_directional_ensemble
 python -m pytest -q
 python scripts/check_repository_navigation.py
 ```
 
-The [benchmark catalogue](../benchmarks/README.md) and [directional reproduction sequence](../comparisons/directional/README.md#reproduce) list the additional quadrant, stress, replication and comparison-assembly commands. The two verifier commands check published files without fitting. The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with each case's reviewed geometry, its baseline, seven alternatives and four geographic holdouts. Each of the displaced and source-focused stress suites has twelve baseline trials plus two declared diffuse-tail alternatives. The source-geometry revision reran all regional calculations and replaced B-Tm's global calculation. Aso-4 was subsequently rerun with its reviewed source data; the other four global reports retain their preceding execution provenance. Unestimable regional trials, poor global coverage and numerical warnings remain visible.
+The [benchmark catalogue](../benchmarks/README.md) and [directional reproduction sequence](../comparisons/directional/README.md#reproduce) list the additional quadrant, stress, replication and comparison-assembly commands. The verifier commands check published files without fitting. [Directional ensemble reproduction](methods/directional-ensemble.md#reproduction). The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with each case's reviewed geometry, its baseline, seven alternatives and four geographic holdouts. Each of the displaced and source-focused stress suites has twelve baseline trials plus two declared diffuse-tail alternatives. The source-geometry revision reran all regional calculations and replaced B-Tm's global calculation. Aso-4 was subsequently rerun with its reviewed source data; the other four global reports retain their preceding execution provenance. Unestimable regional trials, poor global coverage and numerical warnings remain visible.
 
 ## Read the outputs
 
@@ -52,7 +53,7 @@ The [benchmark catalogue](../benchmarks/README.md) and [directional reproduction
 - `accepted_observations.csv`: source-row IDs and preserved bound semantics.
 - `selection/`: every evaluated tuning candidate for final and outer fits.
 - `predictions.csv`: generated grid; kept locally rather than committed as a large artifact.
-- `directional/`: whole-Earth continuation, fragments, 13 policies, sector mass and geographic/quadrant tests.
+- `directional/`: ensemble median isopachs and map-integrated volume in `ensemble/`, complete-field uncertainty, sector budgets and geographic/quadrant tests. The single-structure report retains 13 policy sensitivities.
 - `spherical-mixture/`: whole-Earth fan posterior, prior sensitivities, field samples and geographic tests.
 - `global/README.md`: links to both global families; no combined or preferred estimate.
 

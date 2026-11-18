@@ -14,6 +14,9 @@ def saved_case_overview(output, name=None):
     output = Path(output)
     reports = [json.loads((output/p).read_text()) for p in
                ("report.json", "directional/report.json", "spherical-mixture/report.json")]
+    ensemble = output/"directional"/"ensemble"/"report.json"
+    if ensemble.is_file():
+        reports[1] = json.loads(ensemble.read_text())
     case_overview(output, name or reports[0]["dataset"], *reports)
 
 
@@ -45,14 +48,24 @@ def case_overview(output, name, regional, directional, spherical):
         axs[0, 0].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(1.6, -.6),
                       xscale="log", xlabel="Hull bulk volume (km³; log scale)",
                       title="Regional question: volume inside the same hull\nCircle = median; diamond = expectation")
+        ensemble = directional.get("median_surface")
+        if ensemble:
+            dq = directional["coherent_fields"]["volume_km3"]
+            passed = directional["coherent_fields"]["all_members_passed"]
+        else:
+            dq = directional["fits"]["reference"]["volume_km3"]
+            passed = directional["fits"]["reference"]["passed"]
         for i, (label, q, passed) in enumerate((
-                ("Directional", directional["fits"]["reference"]["volume_km3"], directional["fits"]["reference"]["passed"]),
+                ("Directional", dq, passed),
                 ("Spherical mixture", spherical["fits"]["baseline"]["volume"], spherical["fits"]["baseline"]["diagnostics"]["passed"]))):
             axs[0, 1].errorbar(q["median"], i, xerr=[[q["median"]-q["lower95"]], [q["upper95"]-q["median"]]],
                               fmt="o" if passed else "x", color=COLORS[label], capsize=4, markersize=7)
+        if ensemble:
+            axs[0, 1].scatter(ensemble["volume_km3"], -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
         axs[0, 1].set(yticks=[0, 1], yticklabels=["Directional", "Spherical mixture"], ylim=(1.6, -.6),
                       xscale="log", xlabel="Whole-Earth bulk volume (km³; log scale)",
-                      title="Global question: conditional whole-deposit volume\nMedian and 95% interval; × = sampling warning")
+                      title=("Whole-deposit volume · diamond = directional median map\nComplete-field median and 95% interval · × = numerical warning"
+                             if ensemble else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
         records = metrics(regional, directional, spherical)
         for i, (label, score, coverage, passed) in enumerate(records):
             axs[1, 0].scatter(score, i, c=COLORS[label], s=60, marker="o" if passed else "x")

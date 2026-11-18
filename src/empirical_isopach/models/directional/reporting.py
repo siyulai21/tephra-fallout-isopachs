@@ -191,4 +191,12 @@ def directional_dataset(path, output, name=None, resume=False):
     from ...validation import automatic_buffer
     automatic_buffer(data)
     run_fits(data, meta["vent_lonlat"][1], output/"work")
-    return render(path, output/"work", output, name)
+    render(path, output/"work", output, name)
+    from .ensemble.report import publish_landing, render as ensemble_report, reuse_reference_fits
+    from .ensemble.members import run_members
+    work = output/"work"/"ensemble"
+    reuse_reference_fits(output/"work", work)
+    run_members(data, meta["vent_lonlat"][1], work)
+    result = ensemble_report(path, work, output/"ensemble", name)
+    publish_landing(output, result)
+    return result

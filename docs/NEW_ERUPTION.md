@@ -6,6 +6,9 @@ Upload the measurements and available source material in chat and identify the e
 
 ## What to supply
 
+The directional headline uses the volume under the ensemble median isopachs. Use the packaged cross-eruption calibration for each upload and publish the case's new median map, coherent-field volume interval, rejection log and weight sensitivities in `directional/ensemble/`. [Directional ensemble protocol](methods/directional-ensemble.md)
+
+
 - Thickness observations and their locations, with units and coordinate reference if known.
 - The source/vent reference and its provenance.
 - Paper/table/page references, measurement uncertainties, incomplete deposits, detection limits, and any known redeposition or correlation issues.

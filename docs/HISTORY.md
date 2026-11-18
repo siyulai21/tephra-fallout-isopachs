@@ -1,5 +1,7 @@
 # History without duplicate working copies
 
+The directional median-isopach ensemble and its published comparison were added on 18 November 2026. The prior single-structure reports and posterior draws remain available from each directional case. [Ensemble comparison](../comparisons/directional-ensemble/README.md) · [Dated presentation archive](../comparisons/directional-ensemble/history/2026-11-18/manifest.json)
+
 [Repository map](REPOSITORY_MAP.md) · [Maintenance policy](maintenance/README.md)
 
 Unused archived report collections, old navigation redirects and the superseded organization manifest were removed from the working tree on 2026-11-08. This does not rewrite Git history or delete current scientific evidence.
