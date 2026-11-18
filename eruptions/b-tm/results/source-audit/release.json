@@ -1,7 +1,11 @@
 {
   "scope": "B-Tm mapped directional field and seven source-data comparisons. Full four-family case release follows the spherical prior and validation runs.",
   "files": {
-    "data/audits/B-Tm/README.md": "54e33a59a193bc0e5064a7d3deaa0a1fe88ed319032ce6c366d33262cd47bc0e",
+    "benchmarks/btm_source_sensitivities.py": "b5b10cf3408de591e21aca931f8bc2b88fa613d64333e4470038fb8c1001ccc4",
+    "benchmarks/btm_thinning.py": "6687bfaf7cecdd5542808914c4924a9115f865c52e68197eaea81a225274e365",
+    "benchmarks/btm_thinning_fit.py": "6e8f01b97332a31aca014a2630c05a0c8b1ba77a5d17832aadc6883c59d50307",
+    "benchmarks/btm_thinning_report.py": "9b4a46d1f90442a4b95d9bcbd7e9ce746ddd5fb99874c55c998350a29b4601e6",
+    "data/audits/B-Tm/README.md": "1e66a4fc0fd873c1e9c808f80a77bdbefb45d3fc5334095b71e7166c3e4f45b3",
     "data/audits/B-Tm/additional-evidence.csv": "ddf07774a2006d57e9f215f1d1a7d825830817f688df274a3b9c02aafd9c0131",
     "data/audits/B-Tm/correlations.csv": "154eb38bb69c5cb8cd028496c5f6dd790319adcab8047502eaf652867aded9f9",
     "data/audits/B-Tm/costa-table-crosswalk.csv": "a4f961a8312fa49a006b2e383fe7d0e4724fec32e3a636bd06ec8986500f617c",
@@ -11,7 +15,7 @@
     "data/audits/B-Tm/range_high.csv": "24506ac90b7af496d7baf98feb548a024e712db5a97f3172d650f1ea7ca197fa",
     "data/audits/B-Tm/range_low.csv": "50fa12e6df834d3abd29fe029debc96a932dcb64dcb6304fb0971a580b3cf647",
     "data/audits/B-Tm/samjiyon-provenance.json": "f2697a1d1e79a0762822d91f897d4965433f6576ab99474903aae5bf492c0158",
-    "data/audits/B-Tm/samjiyon.md": "467375a3bf4f47a7890bd4225302d7359b9e9dd2f478b43ff6aeb193b4f9170d",
+    "data/audits/B-Tm/samjiyon.md": "b511f48f8b46dfbd2271f0b66c0dbf6a4c616a8babf57296093a762b16aa572b",
     "data/audits/B-Tm/samjiyon_160.csv": "a4ea9f722b1514f5501928446619039646cc4203e889fe490e21cd7dcaeeeb0b",
     "data/audits/B-Tm/samjiyon_complete_stack.csv": "ee30a5943f1f76f3d42d658c512c15ab0d715c6bb2ef6bc95e55a144b0690ce9",
     "data/audits/B-Tm/samjiyon_component.csv": "d5d0d2340b5fc8667803468e4157da9c1558557a4ff1ee3e2dccd63f6eba4432",
@@ -22,7 +26,7 @@
     "data/sources/b-tm/costa2024-supplement.pdf": "24786d4bfeae147cda9502343b082479918a44b27eccfa1ef497bb07b97424df",
     "data/sources/b-tm/nakanishi2020-data.xml": "17b7ecc40e71bc7b557b6dfe80450b1eecfc0e41d7eeeff370e0acf3ac8b5662",
     "data/sources/b-tm/yang2021-original-supplement.zip": "bde014784db2f8e4419e0f548755f5a232e119dc88ff100e2f9b7b2d32df0626",
-    "eruptions/b-tm/results/source-audit/README.md": "d0d14dd143ecf17f2785c425671e304043f30aa7496c5ed89e735bde5eea63cc",
+    "eruptions/b-tm/results/source-audit/README.md": "ed22e2398a24f4ec98dae278fba7987fa98dfb5ca3a5f3df6e19a3aa4a73662b",
     "eruptions/b-tm/results/source-audit/correlations/result.json": "d69b26fe5dbba7bdd4613c649d3155e6b0545e78ff57ba4a429ccf889d21ad56",
     "eruptions/b-tm/results/source-audit/correlations/volume-draws.npz": "e9cce780708c72e76f35e2ff468d26147ad9504d2ccfaea429d9c5d93d9798fa",
     "eruptions/b-tm/results/source-audit/matched-regional.csv": "e7c7912973fc024df550e5cba9f4618cf2c2b8aab5965458e267d80621b93bcb",
@@ -31,6 +35,7 @@
     "eruptions/b-tm/results/source-audit/principal/coherent-mass.npz": "53444371b4f45d90a0ade9c8829d368c8d541ffe3e0ce182636b2af9c487ea39",
     "eruptions/b-tm/results/source-audit/principal/isopachs.png": "e8477e3853d631fb14b75d9ab01b9df6b2548823e34276942020b12942b257db",
     "eruptions/b-tm/results/source-audit/principal/report.json": "917f2b87e3c3b74e8cd65ba972c6b5501cb8730de776e1c856a700da5b8265a3",
+    "eruptions/b-tm/results/source-audit/principal/single-reference.json": "7311e8f61f2fa1400254de204a748c1941c4d4af8da5a3aa7beb19f54592de3a",
     "eruptions/b-tm/results/source-audit/range_high/result.json": "8412a5bbfbfbe64e81e1fad999e09a468099372266ce214d4318339f401ff7f3",
     "eruptions/b-tm/results/source-audit/range_high/volume-draws.npz": "d883266148970d1ef07a39810e44e4d3edd5737a9b15cce7c3550815282acef8",
     "eruptions/b-tm/results/source-audit/range_low/result.json": "9ab342ea0f00959356f69d5bba86ad8b23f6fe4abd48c11c6062a53e434b397e",
@@ -47,6 +52,15 @@
     "eruptions/b-tm/results/source-audit/samjiyon_scalar/result.json": "4d0a7b0d7341695062c0870b8792dc5d5f59b29c6b6c24467984ebeb09a2a7f6",
     "eruptions/b-tm/results/source-audit/samjiyon_scalar/volume-draws.npz": "1aaaa75167a987df10189d8474994db0a72e468ecf1b486ef5ad965173ffde26",
     "eruptions/b-tm/results/source-audit/source-scenarios.csv": "665c774fa6e93c26d9af383005b20d2a3d9151fc546a4f90e795e8a01580f060",
-    "eruptions/b-tm/results/source-audit/spline-replay.csv": "c060fa2d87e60dcbeabc4f3cd4ccf2d088e5e56c487b247458a5ff3ab1978c85"
+    "eruptions/b-tm/results/source-audit/spline-replay.csv": "c060fa2d87e60dcbeabc4f3cd4ccf2d088e5e56c487b247458a5ff3ab1978c85",
+    "eruptions/b-tm/results/source-audit/thinning/README.md": "bb27bbb7db4c2526b57a9e4f1ac85e5ab147ff463e79dcba11da58baca90dbfe",
+    "eruptions/b-tm/results/source-audit/thinning/design.json": "4b5fac530fa0785c299e555c68d83be896322d33aef8bc72cbd6ae4e41fda35b",
+    "eruptions/b-tm/results/source-audit/thinning/fits.json": "cc198273f71192368bdec4f7f94a71538ae08efc7a4ae450cabc90604778805f",
+    "eruptions/b-tm/results/source-audit/thinning/heldout.csv": "27f30c5734aa9ed20071a63447fc3c8773d8af0ca652710cdf600cfa6f5db77e",
+    "eruptions/b-tm/results/source-audit/thinning/local-draws.npz": "b8020d3a2aa38d92f0fc109a3ffeb27162475ed3ab2ba61264bffec4126669fd",
+    "eruptions/b-tm/results/source-audit/thinning/nearby-sites.csv": "5316acd6332d198a75c3c9740563900f611f936e7e52b26fa423de0a8bb43fd8",
+    "eruptions/b-tm/results/source-audit/thinning/rays.csv": "12e7166dbceb63c378e4ef4321adef2dbfb573feb2a3ec4d78819b6122fa3894",
+    "eruptions/b-tm/results/source-audit/thinning/summary.csv": "98a80da84aaa3291a17707b387850539221d404922c9da0e47493060c767d77b",
+    "eruptions/b-tm/results/source-audit/thinning/thinning.png": "e51e454b42a4d2fcf9ab448118b2ee93e8ceeb6a87e7b1a4941f75b1d2040b60"
   }
 }

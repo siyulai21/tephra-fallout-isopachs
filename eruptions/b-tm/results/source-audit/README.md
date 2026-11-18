@@ -19,6 +19,10 @@ Each row uses the same six directional structures and the same ensemble weights.
 
 The endpoint cases restore the same twelve positive site ranges. Moving every site to the same end of its own range tests a coordinated change in reporting. The proximal case assigns 150 cm to the summit and 26 cm to Dongfanghong. The four Samjiyon cases each add one site at the alternate workbook position. The lower limit assumes that all 7 m is primary Millennium fall and additional fall could be missing. The upper limit assumes a complete, representative stack that includes all local Millennium fall and may include other material. The 160 cm scenario uses the earlier botanical field account from the Samjiyon area. [Field evidence and stratigraphic assumptions](../../../../data/audits/B-Tm/samjiyon.md)
 
+## Does a change in thinning rate explain 7 m?
+
+All disputed DPRK locality summaries are excluded from both the principal estimate and the thinning test. Allowing one or two breaks puts the conditional probability of a new local observation above 7 m at 0.27%–0.28%. The conditional 95% interval for the shared single break extends from 2.9 to 1,124 km. [Radial profiles, site map and geographic validation](thinning/README.md)
+
 ## Why the directional interval is wide
 
 The principal fit gives every structure a weight learned from the other eruptions. Three structures allow a separate fallout fan in a poorly observed direction. Those structures assign more probability to large totals.
