@@ -1,10 +1,16 @@
 # Aso-4: data, global and regional results
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Conditional global estimate](results/global/README.md)
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/global/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Source audit and experiments](../../comparisons/aso-4-audit/README.md)
 
-## Global fallout
+## Global fallout from measured isopach fragments
+
+The common directional model gives **743.6 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **391.6–2,030.3 km³**. Within retained measurement triangles it gives **25.3 km³**, a median 3.4% of the total. The remaining volume depends on the continuation. The southeast has 2 exact rows, the south 2 and the west 0. Their median sector volumes are 47.4, 7.6 and 7.3 km³, respectively. [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+
+The nearest accepted site is 88 km away and a measurement triangle crosses the vent. A positive ash cap inside that unobserved radius changes the median total to 756 km³. Withholding the entire 90–180° quadrant also makes the reference underpredict a 15 cm offshore deposit. [Directional limitations and the held-out measurement](../../comparisons/directional/README.md).
+
+## Spherical-mixture estimate
 
 The source-qualified reference posterior is **1,466 km³ [501–44,173]**, a conditional median and 95% credible interval for whole-Earth **bulk fallout**. Its high total remains questioned. All accepted fallout fans are fitted together; no closing pseudo-data, calculation rectangle or contour cutoff sets the volume. [Global assumptions, seven sensitivity refits and numerical checks](results/global/README.md).
 

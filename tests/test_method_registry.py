@@ -27,18 +27,23 @@ def test_public_families_and_historical_imports(capsys):
 
 def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, monkeypatch):
     from src.empirical_isopach import cli, global_reporting
+    from src.empirical_isopach.models.directional import reporting as directional
     calls = []
+    monkeypatch.setattr(directional, "directional_dataset", lambda *a, **kw: calls.append("directional"))
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
     monkeypatch.setattr(global_reporting, "global_dataset", lambda *a, **kw: calls.append(("global", kw.get("resume", False))))
     (tmp_path/"a").mkdir()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"a")])
-    assert calls == ["regional", ("global", False)]
+    assert calls == ["regional", ("global", False), "directional"]
     calls.clear()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"b"), "--regional-only"])
     assert calls == ["regional"]
     calls.clear()
     cli.main(["global", "YTT", "--output", str(tmp_path/"c"), "--resume"])
     assert calls == [("global", True)]
+    calls.clear()
+    cli.main(["global", "YTT", "--geometry", "directional", "--output", str(tmp_path/"d")])
+    assert calls == ["directional"]
 
 
 @pytest.mark.parametrize("dataset, override, focused", [

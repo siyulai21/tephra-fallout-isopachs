@@ -1,8 +1,10 @@
 # Reading current maps and volumes
 
+The `directional/` report maps data-bracketed isopach fragments and conditional extrapolation. Its draws split the whole-Earth volume into eight sectors and five support regions. [Definitions and interpretation](methods/directional-continuation.md).
+
 [Methods](METHODS.md) · [Current reports](../eruptions/README.md) · [Regional protocol](methods/regional-comparison.md)
 
-The current `compare` workflow shows regional GP and spline results side by side, followed by a separate `global/` companion. Regional maps use the same footprint and colour/contour scale. Their contours stop at the observation hull; they are not artificially closed. Triangles mark documented bounds and stars mark the source reference.
+The current `compare` workflow shows regional GP and spline results side by side, followed by the `directional/` and `global/` whole-deposit reports. Regional maps use the same footprint and colour/contour scale. Their contours stop at the observation hull; they are not artificially closed. Triangles mark documented bounds and stars mark the source reference.
 
 Read `support/README.md` first when deciding which parts to use for volume or extrapolation. It distinguishes local interpolation patches from unsampled holes, tests complete contours, and reports unresolved cases explicitly. A hull or closed contour is not automatically supported evidence.
 

@@ -78,3 +78,14 @@ def thickness_summaries(model, xy):
     median = distribution.quantile(.5)
     _, variance = distribution.moments()
     return median, distribution.log_expected_thickness(), variance
+
+
+class EmpiricalMarginals:
+    def __init__(self, log_fields):
+        self.values = log_fields
+
+    def quantile(self, probability):
+        return np.quantile(self.values, probability, axis=0)
+
+    def log_expected_thickness(self):
+        return logsumexp(self.values, axis=0)-np.log(len(self.values))

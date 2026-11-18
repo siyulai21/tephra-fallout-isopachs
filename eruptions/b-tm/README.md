@@ -1,10 +1,16 @@
 # B-Tm: data, global and regional results
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Conditional global estimate](results/global/README.md)
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/global/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
-## Global fallout
+## Global fallout from measured isopach fragments
+
+The common directional model gives **61.6 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **39.7–109.0 km³**. Within retained measurement triangles it gives **2.2 km³**, a median 3.6% of the total. The remaining volume depends on the continuation. On the displayed directional grid the thickness maximum is 0.0 km from the supplied volcano. [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+
+The finer search including all measured sites places the reference maximum 2.6 km from the vent in retained measurement triangles, 0.0 km from a measurement. [Source-region diagnostic](results/directional/README.md).
+
+## Spherical-mixture estimate
 
 The source-focused joint posterior has median **106 km³** and a **53.2–2,159 km³ conditional 95% credible interval** for bulk fallout. Its highest contours now surround the supplied volcano; the preceding displaced field placed its maximum about 94 km southwest in an unsampled area. All accepted fans are fitted together, with no closing pseudo-data or arbitrary calculation region. [Read the corrected global report and sensitivity refits](results/global/README.md) · [Compare every tested geometry and the earlier result](../../comparisons/source-revision/README.md). The broad upper tail remains a material uncertainty.
 

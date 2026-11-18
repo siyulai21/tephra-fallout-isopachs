@@ -19,7 +19,7 @@ tephra-isopachs global Minoan --output results/minoan-global
 
 On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-The comparison fits the **regional GP and cubic spline peers**, repeats fitting inside geographic holdouts, integrates the common hull, and then runs the **global spherical-mixture posterior**, fixed prior sensitivities and matched holdouts. The global reports go in `global/`. Posterior runs can take substantially longer than interpolation; numerical retries and every assumption refit remain auditable. No per-eruption pseudo-points, smoothing inputs or calculation radius are requested. `compare --regional-only` omits the global companion; the separate `global` command supports `--resume` with strict cache verification.
+The comparison fits the **regional GP and cubic spline peers**, repeats fitting inside geographic holdouts, integrates the common hull, and then runs the **global spherical-mixture posterior**, fixed prior sensitivities and matched holdouts. It also fits directional continuation from supported triangles, including 13 common policies and geographic and quadrant deletions. The two reports go in `global/` and `directional/`. [Directional model and examples](methods/directional-continuation.md). Posterior runs can take substantially longer than interpolation; numerical retries and every assumption refit remain auditable. No per-eruption pseudo-points, smoothing inputs or calculation radius are requested. `compare --regional-only` omits both global companions; the separate `global` command supports `--resume` with strict cache verification.
 
 The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. All methods retain explicit assumptions and conditional uncertainty limitations.
 
@@ -48,6 +48,7 @@ The regional runner checks six accepted eruptions and 40 synthetic trials. The g
 - `accepted_observations.csv`: source-row IDs and preserved bound semantics.
 - `selection/`: every evaluated tuning candidate for final and outer fits.
 - `predictions.csv`: generated grid; kept locally rather than committed as a large artifact.
+- `directional/` contains isopach fragments, conditional global totals, sector draws and geographic-deletion tests.
 - `global/`: whole-Earth posterior estimates, sensitivity reports, baseline full-field samples and all sensitivity volume samples.
 
 See [output definitions](OUTPUTS.md) and the [regional statistical protocol](methods/regional-comparison.md). No map tiles, API keys or browser application are needed.

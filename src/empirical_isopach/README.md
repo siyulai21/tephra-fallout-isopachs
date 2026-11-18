@@ -2,7 +2,7 @@
 
 [Source map](../README.md) · [Regional protocol](../../docs/methods/regional-comparison.md) · [Adding methods](../../docs/ADDING_METHOD.md)
 
-`tephra-isopachs compare` runs every registered regional model as a peer, followed by the probabilistic global companion. It needs no per-eruption pseudo-points, smoothing inputs or chosen calculation radius.
+`tephra-isopachs compare` runs every registered regional model as a peer, followed by the spherical mixture and the [directional continuation from supported isopachs](models/directional/). It needs no per-eruption pseudo-points, smoothing inputs or chosen calculation radius.
 
 | Path | Responsibility |
 |---|---|

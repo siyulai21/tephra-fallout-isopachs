@@ -1,5 +1,11 @@
 # Changes
 
+## 0.12.0 — Directional fallout from measured isopach fragments
+
+- Added a whole-Earth model that interpolates locally supported triangles, preserves gaps, and learns directional reach and distal thinning under one set of assumptions for all eruptions.
+- Published all six calculations with 13 common policies, explicit sector and support mass, geographic and quadrant deletions, and longer independent reference runs.
+- Compared the spherical mixture and directional model on identical inputs and holdouts. The known-volume trials include an exactly unobservable fan. [Results, limitations and reproduction](comparisons/directional/README.md).
+
 ## 0.11.1 — Clear navigation and removal of unused report archives
 
 - Organize the newcomer and agent entry points around accepted evidence, regional reconstruction, local support and conditional global estimates; separate current comparisons from targeted development studies.

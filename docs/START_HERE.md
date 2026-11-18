@@ -20,7 +20,7 @@ Field studies recover ash at scattered locations. This project fits thickness su
 | Local support audit | Where sampling geometry supports interpolation and which contours survive declared checks | That a closed contour validates its interior, or that partial volume is a certified lower bound |
 | Conditional global posterior | Whole-Earth fallout implied by a fitted field and its priors | That unobserved mass is identified by measurements alone |
 
-The GP ensemble and cubic spline are different statistical methods sharing data and evaluation. The global companion has a different volume domain and uncertainty contract. A low regional prediction error does not by itself resolve extrapolated global mass. [Method catalogue](../methods/README.md).
+The GP ensemble and cubic spline are different statistical methods sharing data and evaluation. The two global models integrate over the Earth. Their assumptions about unsampled regions differ. [Isopach-fragment and spherical-mixture estimates](../comparisons/directional/README.md). A low regional prediction error does not by itself resolve extrapolated global mass. [Method catalogue](../methods/README.md).
 
 All volumes describe **bulk fallout**. Dense-rock equivalent needs independent density information; total eruption volume may also include ignimbrite deposits that are outside this calculation.
 
