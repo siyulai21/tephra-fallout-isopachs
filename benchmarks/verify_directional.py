@@ -1,4 +1,5 @@
 """Verify published directional estimates, mass accounting and paired evidence."""
+import csv
 import gzip
 import json
 from pathlib import Path
@@ -32,10 +33,33 @@ def verify(folder, record, comparison, study, extremes):
     assert study["cases"][record["slug"]] == manifest["report.json"]
     assert report["input"]["input_sha256"] == comparison.input_sha256 == digest(record["path"])
     observations, _ = audited_data(record["path"])
-    assert observations.row_ids.tolist() == report["validation"]["geographic"]["row_ids"]
-    signed_arrays = report["designs"]["reference"]["signature"]["arrays_sha256"]
-    for name, signature in signed_arrays.items():
-        assert sha256(np.ascontiguousarray(getattr(observations,name)).tobytes()).hexdigest() == signature
+    ids = report["validation"]["geographic"]["row_ids"]
+    by_id = {row_id:i for i,row_id in enumerate(observations.row_ids)}
+    assert len(ids) == len(by_id) and set(ids) == set(by_id)
+    observations = observations.subset([by_id[i] for i in ids])
+    # IEEE values from the published round-trip CSV reproduce the signed fitting arrays.
+    # Different PROJ/libm builds can round an independently projected coordinate differently.
+    with (folder.parent/"accepted_observations.csv").open(newline="") as stream:
+        archived = {int(r["row_id"]):r for r in csv.DictReader(stream)}
+    assert set(archived) == set(ids)
+    rows = [archived[i] for i in ids]
+    boolean = {"True":True,"False":False}
+    frozen = {"xy":np.array([[float(r["x_km"]),float(r["y_km"])] for r in rows],dtype="<f8"),
+              "log_value":np.array([float(r["log_value"]) for r in rows],dtype="<f8"),
+              "log_sd":np.array([float(r["known_log_sd"]) for r in rows],dtype="<f8"),
+              "row_ids":np.array(ids,dtype="<i8"),
+              "censored":np.array([boolean[r["censored"]] for r in rows]),
+              "lower_censored":np.array([boolean[r["lower_bound"]] for r in rows])}
+    for name, values in frozen.items():
+        signed = report["designs"]["reference"]["signature"]["arrays_sha256"][name]
+        assert sha256(np.ascontiguousarray(values).tobytes()).hexdigest() == signed, name
+        actual = getattr(observations,name)
+        if name == "xy":
+            np.testing.assert_allclose(actual,values,rtol=1e-12,atol=1e-7)
+        elif name in ("log_value","log_sd"):
+            np.testing.assert_allclose(actual,values,rtol=1e-13,atol=1e-14)
+        else:
+            np.testing.assert_array_equal(actual,values)
     axis = report["designs"]["reference"]["geometry"]["authalic_axis_scale"]
     radius, angle = polar(observations.xy,axis)
     compass = np.array(COMPASS)[np.floor((angle+np.pi/8)/(np.pi/4)).astype(int)%8]
