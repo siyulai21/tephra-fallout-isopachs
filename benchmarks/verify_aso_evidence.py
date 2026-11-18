@@ -21,13 +21,13 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
-from .visual_history import verified_revision
+from .visual_history import verified_presentation, verified_revision
 visual_revisions = 0
 # Resolve historical publication paths without changing their signed evidence.
 for f,digest in others.items():
  current=re.sub(r'^(eruptions/[^/]+/results)/global/',r'\1/spherical-mixture/',f)
  if hashfile(current) != digest:
-  assert verified_revision(current,digest),f
+  assert verified_presentation(current,digest) or verified_revision(current,digest),f
   visual_revisions += 1
 reference_root = OUT/'reference'
 archive=read(reference_root/'manifest.json')

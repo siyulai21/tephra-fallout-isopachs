@@ -1,8 +1,8 @@
-# Global fallout from measured isopach fragments
+# Single-structure directional sensitivity study
 
 This study retains the original single-structure results and their assumption tests. [Current directional ensemble, six case estimates and median-isopach checks](../directional-ensemble/README.md)
 
-[Visual comparison of all four families on the same geographic holdouts](../global/README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+[Four-method geographic prediction comparison](../README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
 
 The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../docs/methods/directional-continuation.md).
 

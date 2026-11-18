@@ -1,62 +1,22 @@
-# B-Tm: data, global and regional results
+# B-Tm fallout reconstruction
 
-![Regional and global volumes with matched geographic validation](results/overview.png)
+The accepted dataset contains 84 exact measurements. The regional fits share an observation hull of 963,645 km². [Accepted thickness CSV](../../data/eruptions/B-Tm_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
-[Read the visual comparison](results/overview.png) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+## Bulk fallout volume
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
+| Model | Area | Volume summary (km³) | Conditional 95% volume interval (km³) |
+|---|---|---:|---:|
+| [Directional ensemble](results/directional/README.md) | Whole Earth | Median-map integral **59.3** · complete-field median 71.0 | 42.2–410.0 |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole Earth | Posterior median **106.3** | 53.2–2,159.2 |
+| GP ensemble | Observation hull | Expected **30.46** | 23.22–41.28 |
+| Cubic spline | Observation hull | Expected **40.16** | 22.81–86.18 |
 
-[All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
+The directional interval summarizes complete simulated deposits. Measured interpolation triangles hold **3.6%** of the central directional map’s volume. The regional intervals condition on the fitted settings. [Paired regional maps and held-out tests](results/README.md)
 
-## Directional ensemble
+![Regional and whole-Earth volumes, with matched geographic prediction scores for B-Tm](results/overview.png)
 
-The central median isopachs integrate to **59.3 km³ of bulk fallout** over the Earth. Complete simulated deposits give a median of **71.0 km³** and a conditional 95% interval of **42.2–410.0 km³**. Measured interpolation triangles account for 2.2 km³ (3.6%) of the central map. [Median isopach maps, member weights, directional budgets and validation](results/directional/ensemble/README.md).
+## Evidence and limitations
 
-The supplied vent has median thickness 130.2 cm. The maximum on the two display grids lies 0.0 km from that vent. The accepted source metadata and sparse directions limit the interpretation. [Median map and observation locations](results/directional/ensemble/isopachs.png).
+The principal calculation treats all 84 supplied thicknesses as exact. The spherical mixture uses source-focused fans. A recovered source table identifies an upper bound at Suigetsu and unquantified cryptotephra at Kushu. The two-site sensitivity gives a spherical-mixture median of about 100 km³. One or more spherical prior refits carry a numerical warning. [Source review and two-site sensitivity](../../comparisons/source-revision/btm-input-sensitivity/README.md)
 
-[Previous single-structure estimate and 13 sensitivities](results/directional/single-structure.md) · [Six-eruption ensemble comparison](../../comparisons/directional-ensemble/README.md).
-
-## Spherical-mixture estimate
-
-The source-focused joint posterior has median **106 km³** and a **53.2–2,159 km³ conditional 95% credible interval** for bulk fallout. Its highest contours now surround the supplied volcano; the preceding displaced field placed its maximum about 94 km southwest in an unsampled area. All accepted fans are fitted together, with no closing pseudo-data or arbitrary calculation region. [Read the corrected global report and sensitivity refits](results/spherical-mixture/README.md) · [Compare every tested geometry and the earlier result](../../comparisons/source-revision/README.md). The broad upper tail remains a material uncertainty.
-
-The geometry comparison preserves the accepted input. A [recovered published source table](../../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) identifies lost thickness qualifications in some entries. The [two-site observation sensitivity](../../comparisons/source-revision/btm-input-sensitivity/README.md) treats Suigetsu's documented upper bound and Kushu's unquantified cryptotephra separately, giving **100 km³ (46–2,390 km³)**. The contour correction does not establish that every accepted thickness is an exact primary-deposit measurement.
-
-![Reviewed B-Tm source-region thickness contours](results/spherical-mixture/source.png)
-
-**Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 52,431 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/spherical-mixture/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
-
-## Regional reconstruction
-
-**GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
-
-[Read the full comparison](results/README.md) · [Compare all six eruptions](../../comparisons/regional/README.md) · [Method definitions](../../methods/README.md)
-
-84 exact measurements and 0 lower bounds; regional area 963,645 km².
-
-| Quantity | GP ensemble | Cubic spline |
-|---|---:|---:|
-| Expected regional bulk fallout (km³) | 30.46 | 40.16 |
-| Outer equal-region negative log score ↓ | 1.331 | 1.814 |
-
-![Paired regional isopachs](results/isopachs.png)
-
-These volumes cover only the observation hull. It can include unsampled gaps and exclude proximal deposits; it is not total eruption volume or dense-rock equivalent. Conditional intervals omit fitted-parameter and selection uncertainty. Read withheld coverage and geographic-deletion sensitivity in the full report.
-
-## Evidence and calculation
-
-| Follow the calculation | File |
-|---|---|
-| Accepted input | [Thickness observations](../../data/eruptions/B-Tm_tephra.csv) |
-| Source decisions | [Audit or supplied-flag status](../../data/eruptions/README.md) |
-| Whole-deposit mass and uncertainty | [Global posterior report](results/spherical-mixture/README.md) |
-| Local maps and partial volumes | [Regional report](results/README.md) |
-| Fits, validation and provenance | [Complete numerical record](results/report.json) |
-| Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
-| Automatic tuning | [Candidate tables](results/selection/README.md) |
-
-The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/spherical-mixture/verification.json).
-
-## Related evidence and history
-
-[Validation and targeted studies](../../comparisons/README.md) · [Earlier calculations in Git history](../../docs/HISTORY.md)
+The standard local-support footprint covers 52,431 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)

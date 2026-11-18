@@ -1,32 +1,24 @@
-# Comparisons, validation and targeted studies
+# Compare the four methods
 
-[Directional ensemble](directional-ensemble/README.md) compares the six median-isopach volumes, matched held-out scores and known-deposit contour errors.
+This figure asks how well each method predicts ash thickness in a withheld region. Lower scores are better. Percentages give the share of exact observations within the 95% predictive interval. A cross marks a global fit with a numerical warning or incomplete scoring. The directional series uses the current six-structure ensemble.
 
-[Project home](../README.md) · [Eruption cases](../eruptions/README.md) · [Method catalogue](../methods/README.md)
+![Geographic prediction scores and exact-site coverage for the four methods across six eruptions](method-scores.png)
 
-Use the first table to compare cases and methods. Use the second to understand specific scientific revisions. A study's old input or experimental prior does not silently become the current case definition.
+## Read the evidence by question
 
-## Cross-eruption evidence
-
-| Collection | Read it for |
+| Question | Study |
 |---|---|
-| [Regional comparison](regional/README.md) | GP/spline peers on matched observation hulls, geographic predictions and known-truth regional trials |
-| [Global families overview](global/README.md) | Relationship between the two global models, their shared inputs and their different extrapolation assumptions |
-| [Global estimates from isopach fragments](directional/README.md) | Matched directional and spherical estimates for six eruptions, sector mass, held-out locations, known-volume tests and hidden fans |
-| [Spherical-mixture estimates](spherical-mixture/README.md) | Whole-Earth conditional posteriors, reviewed case geometry, prior sensitivities and unobserved mass |
-| [Local support audit](support/README.md) | Sampling gaps, partial volumes, contour rejection and extrapolation limits |
+| How sensitive are directional isopachs and whole-Earth volume to the width and presence of fallout fans? | [Directional ensemble](directional-ensemble/README.md) — mapped volumes, complete-field intervals, withheld sectors and known-deposit tests |
+| How much does the choice of regional fit matter inside the same observation hull? | [GP and cubic spline](regional/README.md) — matched geographic folds, hull integrals and synthetic trials |
+| How much do global fan geometry and priors affect the spherical-mixture result? | [Spherical mixture](spherical-mixture/README.md) — separate posterior, prior refits and numerical warnings |
+| Which contours or partial volumes have local observational support? | [Support audit](support/README.md) — sampling gaps, rejected bands and geographic deletions |
 
-Regional volumes are not global totals. Predictive comparisons require the same accepted rows and holdouts; read each record's input version. A smaller volume or a smoother map is not a model-selection criterion.
+The directional ensemble predicted held-out thickness better than its single-structure reference in **five of six** eruptions and better than equal weights in **four of six**. Its conditional volume intervals contained the known total in **7 of 14** simulated trials and missed the larger hidden-fan total in both trials that allowed it. The real eruptions have no known whole-deposit volume against which to rank the methods. [Trial results and limitations](directional-ensemble/README.md#known-deposits-and-unseen-fans)
 
-## Targeted scientific studies
+## Studies that explain specific results
 
-| Study | Current role |
-|---|---|
-| [Aso-4 source and uncertainty audit](aso-4-audit/README.md) | Explains the reviewed input, corrected cruise coordinates, source conflicts, marine-removal tests and questioned global tail |
-| [B-Tm/source-geometry review](source-revision/README.md) | Explains the adopted B-Tm geometry and preserves competing B-Tm/Aso-4 models, source qualifications and failures |
+- The [single-structure directional study](directional/README.md) preserves the original comparison with the spherical mixture, 13 assumption settings, independent numerical replications and an unmeasured source-cap experiment.
+- The [Aso-4 source audit and influence tests](aso-4-audit/README.md) explain the corrected cruise positions, thickness bounds and questioned upper tail.
+- The [B-Tm and Aso-4 source-geometry study](source-revision/README.md) explains B-Tm’s source-focused spherical fit and tests changes to its lake evidence.
 
-Aso-4's latest reference uses its reviewed dataset. Its tighter displacement prior remains a development alternative. B-Tm's source-focused geometry is catalogued, while its two-site observation sensitivity remains a separate input scenario. [Current case definitions](../data/datasets.json).
-
-## What counts as validation?
-
-[The validation guide](../docs/VALIDATION.md) separates numerical tests, geographic predictive evaluation, known-truth stress tests and source audits. Complete development attempts and poor coverage remain evidence and are retained. Earlier unused report copies have been removed from the working tree; [Git history](../docs/HISTORY.md) preserves them.
+For an individual eruption’s maps and estimates, open its [case home](../eruptions/README.md).

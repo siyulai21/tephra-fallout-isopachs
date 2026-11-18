@@ -2,7 +2,7 @@
 
 The active ensemble is implemented in [ensemble/](ensemble/). Its median field and coherent-volume distribution are described in the [protocol](../../../../docs/methods/directional-ensemble.md).
 
-[Family catalogue](../README.md) · [Plain-language guide](../../../../methods/directional-fallout.md) · [Equations](../../../../docs/methods/directional-continuation.md) · [Published evidence](../../../../comparisons/directional/README.md)
+[Family catalogue](../README.md) · [Plain-language guide](../../../../methods/directional-fallout.md) · [Equations](../../../../docs/methods/directional-continuation.md) · [Ensemble validation](../../../../comparisons/directional-ensemble/README.md)
 
 This is an independent global family. It fits latent log thickness on retained measurement triangles and a positive source-centred continuation across the rest of Earth. It does not call the GP or cubic-spline fitter, and it does not use another model's contours as observations.
 

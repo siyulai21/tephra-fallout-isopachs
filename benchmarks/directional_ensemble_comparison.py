@@ -104,7 +104,7 @@ def summarize(known, regional, output, cli_replay=None):
         "| Eruption | Median-map km³ | Complete-field median [95%], km³ | Median map inside measured triangles | Full structures passing | Map checks |",
         "|---|---:|---:|---:|---:|---|"]
     for a in tab.itertuples():
-        lines.append(f"| [{a.dataset}](../../eruptions/{a.slug}/results/directional/ensemble/README.md) | **{a.median_map_km3:,.1f}** | "
+        lines.append(f"| [{a.dataset}](../../eruptions/{a.slug}/results/directional/README.md) | **{a.median_map_km3:,.1f}** | "
                      f"{a.coherent_median_km3:,.1f} [{a.lower95_km3:,.1f}–{a.upper95_km3:,.1f}] | {a.footprint_fraction:.1%} | "
                      f"{a.full_members_passed}/6 | {'passed' if a.median_map_numerical_passed else '**review**'} |")
     lines += ["","These are model-conditional bulk fallout estimates. A median map can combine common features from incompatible deposits. The joint-field interval "
@@ -146,7 +146,7 @@ def summarize(known, regional, output, cli_replay=None):
               "[Case comparison](comparison.csv) · [Known volumes](known-volumes.csv) · [Contour overlap by scenario and level](contour-accuracy.csv) · "
               "[Complete simulation records](simulation-records.json.gz) · [Verification](verification.json)", "",
               "[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · "
-              "[Two global families](../global/README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)",""]
+              "[Four-method comparison](../README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)",""]
     (output/"README.md").write_text("\n".join(lines))
     artifacts = {f:digest(output/f) for f in ("README.md","volumes.png","comparison.csv","known-volumes.csv","contour-accuracy.csv","simulation-records.json.gz")}
     verification = {"regional_benchmark":regional_check,"calibration_sha256":digest(PACKET),"artifacts":artifacts,

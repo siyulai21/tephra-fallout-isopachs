@@ -70,7 +70,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
     n_pass = sum(r['baseline_sampling_passed'] for r in rows)
     (output/'README.md').write_text(f"""# Global fallout estimates across six eruptions
 
-[Both global families](../global/README.md) · [Matched directional comparison](../directional/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
+[Single-structure directional comparison](../directional/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
 
 The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**
 

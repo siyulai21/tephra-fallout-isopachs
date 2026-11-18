@@ -1,6 +1,6 @@
 # Aso-4 · global fallout estimate
 
-[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/global/README.md)
+[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [Spherical-mixture results across eruptions](../../../../comparisons/spherical-mixture/README.md)
 
 **Aso-4 source qualification:** this is the reviewed coordinate-and-bound scenario, including the unresolved Biwa source conflict and an erosion interpretation. The high global total remains questioned. A tighter fan-position alternative predicts heldout regions better but does not independently validate global mass. Read the [source audit, marine-setting tests and all targeted alternatives](../../../../comparisons/aso-4-audit/README.md).
 

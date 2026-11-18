@@ -1,6 +1,6 @@
 # Supported isopachs, regularization and unresolved volume
 
-This protocol governs local support and contour-band continuation. The [probabilistic global model](probabilistic-global.md) supplies conditional whole-deposit estimates independently of its eligibility gate.
+This protocol governs local support and contour-band continuation. The directional ensemble and spherical mixture each supply a conditional whole-deposit estimate even when this screen rejects every band. [Global and regional method definitions](../../methods/README.md)
 
 [Method catalogue](../../methods/README.md) · [Regional protocol](regional-comparison.md) · [Implementation](../../src/empirical_isopach/contour_support.py)
 

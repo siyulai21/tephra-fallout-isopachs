@@ -20,44 +20,15 @@ tephra-isopachs global Minoan --geometry directional --output results/minoan-dir
 
 On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-The comparison fits the **regional GP and cubic spline peers**, repeats fitting inside geographic holdouts, integrates the common hull, and then runs the **global spherical-mixture posterior**, fixed prior sensitivities and matched holdouts. It also fits directional continuation from supported triangles, including 13 common policies and geographic and quadrant deletions. The two reports go in `spherical-mixture/` and `directional/`, with a shared `global/README.md` reading index. [Directional model and examples](methods/directional-continuation.md). Posterior runs can take substantially longer than interpolation; numerical retries and every assumption refit remain auditable. No per-eruption pseudo-points, smoothing inputs or calculation radius are requested. `compare --regional-only` omits both global companions; the separate `global` command supports `--resume` with strict cache verification.
+The comparison fits the **regional GP and cubic spline peers**, repeats fitting inside geographic holdouts, integrates the common hull, and then runs the **global spherical-mixture posterior**, fixed prior sensitivities and matched holdouts. The directional ensemble fits six structures, applies independently calibrated weights and reports the integrated median map and complete-field volume interval. It retains the single-structure sensitivities and geographic and quadrant tests. Open `directional/README.md` or `spherical-mixture/README.md` directly. [Directional ensemble protocol](methods/directional-ensemble.md). Posterior runs can take substantially longer than interpolation; numerical retries and every assumption refit remain auditable. No per-eruption pseudo-points, smoothing inputs or calculation radius are requested. `compare --regional-only` omits both global companions; the separate `global` command supports `--resume` with strict cache verification.
 
 The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. All methods retain explicit assumptions and conditional uncertainty limitations.
 
 For the spherical mixture, the catalogue records B-Tm's reviewed `source-fans` geometry; other cases retain the preceding displaced geometry. `global --geometry source-fans` explicitly requests source-focused ellipses for a comparison, while `--geometry displaced` reproduces the preceding geometry. The source maximum is a shape assumption, not a fabricated vent measurement. Read the [B-Tm correction and unresolved Aso-4 comparison](../comparisons/source-revision/README.md) before interpreting the competing totals.
 
-## Reproduce studies and verify published evidence
+## Find results and verify a run
 
-```sh
-python -m benchmarks.regional --output results/regional-methods
-python -m benchmarks.global_posterior --output results/spherical-posteriors
-python -m benchmarks.directional --output results/directional-study --reports results/directional-cases
-python -m benchmarks.mass_mixture --output results/global-stress
-python -m benchmarks.global_stress_report --source results/global-stress --output results/global-stress-report
-python -m benchmarks.source_fans --output results/source-stress
-python -m benchmarks.source_stress_report --source results/source-stress --output results/source-stress-report
-python -m benchmarks.verify_aso_evidence
-python -m benchmarks.verify_directional
-python -m benchmarks.verify_directional_ensemble
-python -m pytest -q
-python scripts/check_repository_navigation.py
-```
-
-The [benchmark catalogue](../benchmarks/README.md) and [directional reproduction sequence](../comparisons/directional/README.md#reproduce) list the additional quadrant, stress, replication and comparison-assembly commands. The verifier commands check published files without fitting. [Directional ensemble reproduction](methods/directional-ensemble.md#reproduction). The regional runner checks six accepted eruptions and 40 synthetic trials. The global runner fits all six with each case's reviewed geometry, its baseline, seven alternatives and four geographic holdouts. Each of the displaced and source-focused stress suites has twelve baseline trials plus two declared diffuse-tail alternatives. The source-geometry revision reran all regional calculations and replaced B-Tm's global calculation. Aso-4 was subsequently rerun with its reviewed source data; the other four global reports retain their preceding execution provenance. Unestimable regional trials, poor global coverage and numerical warnings remain visible.
-
-## Read the outputs
-
-- `README.md`: matched maps, regional volumes and interpretation.
-- `report.json`: all fits, nested validation, integration checks and provenance.
-- `heldout_predictions.csv`: every scored location and fold.
-- `accepted_observations.csv`: source-row IDs and preserved bound semantics.
-- `selection/`: every evaluated tuning candidate for final and outer fits.
-- `predictions.csv`: generated grid; kept locally rather than committed as a large artifact.
-- `directional/`: ensemble median isopachs and map-integrated volume in `ensemble/`, complete-field uncertainty, sector budgets and geographic/quadrant tests. The single-structure report retains 13 policy sensitivities.
-- `spherical-mixture/`: whole-Earth fan posterior, prior sensitivities, field samples and geographic tests.
-- `global/README.md`: links to both global families; no combined or preferred estimate.
-
-See [output definitions](OUTPUTS.md) and the [regional statistical protocol](methods/regional-comparison.md). No map tiles, API keys or browser application are needed.
+Open the report in the output directory for the regional maps and the links to both global results. The [output guide](OUTPUTS.md) describes the files and volume definitions. For study reproduction or the published checksum and numerical checks, use the [benchmark commands](../benchmarks/README.md).
 
 ## Reproduce older analyses
 

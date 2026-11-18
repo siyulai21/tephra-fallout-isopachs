@@ -1,6 +1,7 @@
 """Isopach fragments, sector budgets and reproducible whole-deposit reports."""
 from dataclasses import asdict
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import json
 import shutil
 
@@ -191,12 +192,21 @@ def directional_dataset(path, output, name=None, resume=False):
     from ...validation import automatic_buffer
     automatic_buffer(data)
     run_fits(data, meta["vent_lonlat"][1], output/"work")
-    render(path, output/"work", output, name)
-    from .ensemble.report import publish_landing, render as ensemble_report, reuse_reference_fits
+    # Keep a previous ensemble page readable while the reference and cap are regenerated.
+    with TemporaryDirectory(dir=output, prefix=".reference-") as temporary:
+        reference = Path(temporary)
+        render(path, output/"work", reference, name)
+        (reference/"README.md").replace(reference/"single-structure.md")
+        manifest_path = reference/"artifacts.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["single-structure.md"] = manifest.pop("README.md")
+        write_json(manifest_path, manifest)
+        for filename in manifest:
+            (reference/filename).replace(output/filename)
+        manifest_path.replace(output/"artifacts.json")
+    from .ensemble.report import render as ensemble_report, reuse_reference_fits
     from .ensemble.members import run_members
     work = output/"work"/"ensemble"
     reuse_reference_fits(output/"work", work)
     run_members(data, meta["vent_lonlat"][1], work)
-    result = ensemble_report(path, work, output/"ensemble", name)
-    publish_landing(output, result)
-    return result
+    return ensemble_report(path, work, output/"ensemble", name, family_page=True)

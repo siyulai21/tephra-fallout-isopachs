@@ -1,62 +1,36 @@
-# Agent entry point
+# Working on tephra-fallout-isopachs
 
-## Intended use
-
-The user uploads eruption observations and source material in chat. Audit that evidence, run the current empirical workflow, and publish accepted data and readable reports to GitHub. Keep every method's result and uncertainty separate. There is no browser/atlas workflow and no preferred volume or model to reproduce.
-
-## Read only what your task needs
-
-| Task | Read first | Implementation / output |
-|---|---|---|
-| Understand the current project | [Newcomer guide](docs/START_HERE.md), [method catalogue](methods/README.md) | [Repository map](docs/REPOSITORY_MAP.md) |
-| Analyze or revise an eruption | [Intake protocol](docs/NEW_ERUPTION.md), its [case home](eruptions/README.md), linked source audit | [Dataset catalogue](data/datasets.json); `eruptions/<slug>/results/` |
-| Change a regional method | [Regional protocol](docs/methods/regional-comparison.md), [method contract](docs/ADDING_METHOD.md) | [Registry](src/empirical_isopach/models/registry.py), `models/gaussian_process/` or `models/cubic_spline/` |
-| Change a global method | [Directional protocol](docs/methods/directional-continuation.md), [Global protocol](docs/methods/probabilistic-global.md), [source-focused protocol](docs/methods/source-anchored-fans.md) | [Directional implementation](src/empirical_isopach/models/directional/README.md), [Mass model](src/empirical_isopach/models/mass_mixture/README.md), [global reporting](src/empirical_isopach/global_reporting.py) |
-| Investigate support or contour closure | [Support protocol](docs/methods/supported-isopachs.md) | [Support calculation](src/empirical_isopach/support.py), [support reporting](src/empirical_isopach/support_reporting.py) |
-| Reproduce Aso-4 source/geometry work | [Source audit](data/audits/Aso-4/README.md), [study and commands](comparisons/aso-4-audit/README.md) | [Study runs](comparisons/aso-4-audit/runs/README.md), [required reference](comparisons/aso-4-audit/reference/README.md) |
-| Investigate B-Tm/source geometry | [Study](comparisons/source-revision/README.md), [B-Tm case](eruptions/b-tm/README.md) | [Benchmark command catalogue](benchmarks/README.md) |
-| Reorganize or edit documentation | [Maintenance policy](docs/maintenance/README.md) | [Navigation checker](scripts/check_repository_navigation.py); keep scientific artifacts unchanged |
-| Improve maps and report visuals | [Figure refresh policy](docs/maintenance/visuals.md) | [Shared visualization package](src/empirical_isopach/visualization/README.md); replay into fresh scratch output, verify scientific hashes and regional integral parity |
+Users submit measurements in chat. Audit the sources, run all active families and publish a readable case on GitHub. Start with the [intake workflow](docs/NEW_ERUPTION.md) for a new eruption or the [repository layout](docs/README.md#repository-layout) for an existing one.
 
 ## Sources of truth
 
-- `data/datasets.json` chooses each accepted CSV, audit/case key and reviewed spherical-mixture geometry (`global_geometry`). Directional policies are independent of that setting. Aso-4 uses `Aso-4_reviewed.csv`; B-Tm uses `source-fans`. Original/sensitivity inputs are not automatic replacements.
-- `src/empirical_isopach/models/registry.py` lists **regional** peers: GP ensemble and automatic cubic spline. The directional and spherical-mixture global families have separate posterior contracts; neither belongs in this fixed-parameter regional registry.
-- Case `report.json`, `directional/report.json`, `spherical-mixture/report.json`, input audits and posterior signatures identify the actual calculation. Read the scope, input hash, geometry and numerical status before using a number. Do not infer current settings from an older study or filename.
-- Read only the relevant report/summary first. Large posterior `.npz`, draw tables and complete attempt records are evidence to inspect when needed, not introductory context. Full development records include failures and must not be pruned as obsolete clutter.
+- `data/datasets.json` identifies the accepted CSV, audit and reviewed spherical-mixture geometry. Aso-4 uses its reviewed input. B-Tm uses source-focused spherical fans. Preserve original units, row identities, hashes, bounds and reasons for inclusion or exclusion. Never invent evidence, observation errors, pseudo-data or zero deposits.
+- `src/empirical_isopach/models/registry.py` lists the regional GP ensemble and cubic spline. Compare them on the same accepted rows, outer geographic folds and observation hull. Tune inside training folds. [Method contract](docs/ADDING_METHOD.md)
+- The global families fit the observations independently. Within `results/directional/`, **`ensemble/report.json` is the current directional calculation**. Its `median_surface.volume_km3` integrates the central isopachs and `coherent_fields.volume_km3` summarizes complete-field volumes. Parent-level `report.json` and `single-structure.md` preserve the single-structure reference and broader sensitivities. Use the target-excluded calibration and retain every fit warning. [Directional ensemble protocol](docs/methods/directional-ensemble.md)
+- `results/spherical-mixture/report.json` contains the independent global posterior. Run its fixed sensitivities and matched geographic tests. Preserve separate conditional intervals, prior-sensitivity envelopes and numerical status. [Spherical-mixture protocol](docs/methods/probabilistic-global.md)
+- Apply the shared support audit to every family. Keep unsupported holes, rejection reasons and assumptions about proximal and distal fallout. Publish conditional global estimates even when no complete band qualifies. [Support protocol](docs/methods/supported-isopachs.md)
 
-## Execution and publication
+## Run and publish
 
-Use a fresh ignored `results/` directory. The usual command is:
+Use a fresh ignored destination. The normal command runs both regional methods, local support, the directional ensemble and its reference sensitivities, and the spherical mixture.
 
 ```sh
 tephra-isopachs compare ERUPTION_OR_CSV --output results/new-case
 ```
 
-It runs the regional peers, local support audit, directional continuation and spherical-mixture posterior. Use the same 13 directional policies for every case. Report the measured footprint, directional extrapolation, and hidden-fan sensitivity. `compare --regional-only` is an explicitly narrower run. `global ... --resume` resumes only matching checksum-verified caches. Geometry overrides are declared experiments; do not silently override the catalogue or adopt a smaller total.
+Publish reviewed outputs under `eruptions/<slug>/results/`. Use **one case home** for the accepted inputs, four volume results, support decision and material source or numerical qualifications. Link directly to the regional, directional ensemble, spherical-mixture and support reports. Add one row to `eruptions/README.md`. A new cross-eruption link belongs in `comparisons/README.md` when it answers a distinct scientific question.
 
-Publish reviewed output under `eruptions/<slug>/results/`: regional files at the root, `support/`, `directional/` and `spherical-mixture/`, plus the shared `global/README.md` index. Keep all four families visible on the case home. Then update its case home and the relevant indexes, and record the source/input/method identity. Aso-4 targeted studies and source-geometry comparisons are development evidence, not independent validation or universal prior selection. Follow [the publication checklist](docs/NEW_ERUPTION.md).
+Preserve earlier result identities, raw evidence, relevant sensitivity studies, failed attempts and hashes when revising a case. Record the preceding immutable revision and retain any locally required historical evidence. Leave unrelated work in progress untouched. [Publication and retention policy](docs/maintenance/README.md)
 
-## Scientific constraints
-
-Preserve original sources, hashes, row identities, units and acceptance/exclusion decisions. Bounds are likelihood events; missing or reworked deposits are not zeros. Never invent measurement errors, geological evidence or training pseudo-observations. Fit all accepted fallout fans jointly for the stated deposit quantity.
-
-Tune response-dependent regional settings within training folds and compare on identical accepted evidence, outer geographic folds and regional footprints. Keep observation noise out of latent volumes. Preserve whole-field correlation in uncertainty draws. Both global posteriors integrate over the physical Earth with declared priors, sensitivity refits and matched holdouts. The directional ensemble uses the pointwise median of six weighted structures for its central isopachs and separately integrates complete fields for uncertainty. Use the [ensemble protocol](docs/methods/directional-ensemble.md). Directional continuation samples latent measurement triangles and a thinning field; the spherical mixture samples mass-normalized fans. Neither trains on GP/spline predictions or derived isopachs. A support failure is a diagnostic, not a veto on the user-requested conditional global calculation. Numerical convergence is not evidence that missing global mass is identified.
-
-Retain poor coverage, rejected contours, unsupported holes, search boundaries, unsuccessful numerical attempts and proximal/distal assumptions. Conditional intervals, geographic-deletion ranges and prior-sensitivity envelopes are different quantities.
-
-## Verification and history
+## Verify
 
 ```sh
 python -m pytest -q
 python scripts/check_repository_navigation.py
+python -m benchmarks.verify_visuals
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional
 python -m benchmarks.verify_directional_ensemble
 ```
 
-For historical manifests, resolve the old `results/global/` file paths to `results/spherical-mixture/` without changing the recorded hashes. The old `global/README.md` now introduces both global families.
-
-The two evidence checks verify the published Aso-4 study and whole-Earth directional partitions. Match additional checks to the task: numerical changes need the relevant regional/global/support benchmarks; organization changes need hash preservation and path checks. Do not rerun expensive posterior studies just to edit navigation.
-
-Unused old report copies and redirect collections have been removed from the working tree. [Git history](docs/HISTORY.md) preserves them. Keep local reference files only when current reproduction or tests need them. Do not rewrite historical execution hashes to match a new folder layout. Leave unrelated working copies and in-progress work untouched.
+For a navigation change, verify scientific artifacts against their pre-change bytes. For a numerical change, run the matched regional benchmark and the relevant global or support studies. New map releases need visual inspection and replay checks. [Study commands](benchmarks/README.md) · [Figure checks](docs/maintenance/visuals.md)

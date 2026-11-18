@@ -2,7 +2,7 @@
 
 Use `python -m benchmarks.directional_ensemble --help` to reproduce structural fits, calibration or ensemble reports. `python -m benchmarks.verify_directional_ensemble` replays published median thickness, complete volumes and geographic tests. [Study](../comparisons/directional-ensemble/README.md)
 
-The directional study refits 13 policies and two geographic deletion schemes per eruption. Its known-volume tests include a deposit that has exactly the same observations as another with a hidden fan. [Results and reproduction commands](../comparisons/directional/README.md).
+The earlier single-structure study refits 13 policies and two geographic deletion schemes per eruption. Its known-volume tests include a deposit that has exactly the same observations as another with a hidden fan. [Results and reproduction commands](../comparisons/directional/README.md).
 
 [Project home](../README.md) · [Installation](../docs/QUICKSTART.md) · [Validation guide](../docs/VALIDATION.md) · [Agent task routes](../AGENTS.md)
 
@@ -12,7 +12,8 @@ For one new eruption, use `tephra-isopachs compare` as described in the [intake 
 
 | Command | What it does | Method family |
 |---|---|---|
-| `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/README.md#reproduce) | Directional continuation |
+| `python -m benchmarks.directional_ensemble --help` | Fit six structures, calibrate predictive weights, render median fields or run known-volume trials | Directional ensemble |
+| `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/README.md#reproduce) | Single-structure directional sensitivity |
 | `python -m benchmarks.directional_comparison --help` | Assemble matched global comparisons from completed cases, stress trials and replications | Both global families |
 | `python -m benchmarks.regional --output results/regional-methods` | Current six-eruption matched regional fits, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
 | `python -m benchmarks.global_posterior --output results/global-posterior` | Six global posteriors using each case's reviewed catalogue geometry, seven sensitivity refits per eruption, matched geographic holdouts and illustrated reports | Spherical mixture; reviewed geometry per case |

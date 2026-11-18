@@ -90,3 +90,32 @@ def test_visual_history_never_exempts_a_scientific_record(tmp_path, monkeypatch)
     assert not visual_history.verified_revision(image, "different-history")
     image.write_bytes(b"unreviewed-change")
     assert not visual_history.verified_revision(image, "old")
+
+
+def test_navigation_retirement_checks_the_archived_page_and_live_replacement(tmp_path, monkeypatch):
+    from zipfile import ZipFile
+    from benchmarks import visual_history
+
+    old = tmp_path/"global"/"README.md"
+    current = tmp_path/"README.md"
+    old.parent.mkdir()
+    current.write_text("Full case report")
+    archived = b"Superseded index"
+    expected = sha256(archived).hexdigest()
+    entry = {"prior_sha256": expected, "current_path": "README.md",
+             "current_sha256": sha256(current.read_bytes()).hexdigest()}
+    ledger = tmp_path/"release.json"
+    ledger.write_text(json.dumps({"files": {"global/README.md": entry}, "unchanged_moves": {}}))
+    monkeypatch.setattr(visual_history, "ROOT", tmp_path)
+    monkeypatch.setattr(visual_history, "NAVIGATION", ledger)
+    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
+        archive.writestr("global/README.md", archived)
+    assert visual_history.verified_navigation(old, expected)
+    assert not visual_history.verified_navigation(old, "different prior")
+    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
+        archive.writestr("global/README.md", b"Wrong archive")
+    assert not visual_history.verified_navigation(old, expected)
+    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
+        archive.writestr("global/README.md", archived)
+    current.write_text("Unreviewed replacement")
+    assert not visual_history.verified_navigation(old, expected)

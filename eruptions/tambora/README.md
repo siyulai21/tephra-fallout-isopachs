@@ -1,56 +1,22 @@
-# Tambora: data, global and regional results
+# Tambora fallout reconstruction
 
-![Regional and global volumes with matched geographic validation](results/overview.png)
+The accepted dataset contains 26 exact measurements. The regional fits share an observation hull of 2,980,287 km². [Accepted thickness CSV](../../data/eruptions/Tambora_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
-[Read the visual comparison](results/overview.png) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+## Bulk fallout volume
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
+| Model | Area | Volume summary (km³) | Conditional 95% volume interval (km³) |
+|---|---|---:|---:|
+| [Directional ensemble](results/directional/README.md) | Whole Earth | Median-map integral **105.8** · complete-field median 119.6 | 78.6–184.0 |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole Earth | Posterior median **179.1** | 112.9–1,284.2 |
+| GP ensemble | Observation hull | Expected **97.91** | 66.61–142.60 |
+| Cubic spline | Observation hull | Expected **107.69** | 79.51–155.23 |
 
-[All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
+The directional interval summarizes complete simulated deposits. Measured interpolation triangles hold **10.1%** of the central directional map’s volume. The regional intervals condition on the fitted settings. [Paired regional maps and held-out tests](results/README.md)
 
-## Directional ensemble
+![Regional and whole-Earth volumes, with matched geographic prediction scores for Tambora](results/overview.png)
 
-The central median isopachs integrate to **105.8 km³ of bulk fallout** over the Earth. Complete simulated deposits give a median of **119.6 km³** and a conditional 95% interval of **78.6–184.0 km³**. Measured interpolation triangles account for 10.7 km³ (10.1%) of the central map. One or more numerical checks require review. [Median isopach maps, member weights, directional budgets and validation](results/directional/ensemble/README.md).
+## Evidence and limitations
 
-[Previous single-structure estimate and 13 sensitivities](results/directional/single-structure.md) · [Six-eruption ensemble comparison](../../comparisons/directional-ensemble/README.md).
+The calculation uses the supplied acceptance flags. An independent row-by-row source review is still outstanding. Four of the six full-data directional fits carry numerical warnings. The median-map integration checks passed, but several held-out fits also carry warnings.
 
-## Spherical-mixture estimate
-
-The joint global posterior has median **179 km³** and a **113–1,284 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/spherical-mixture/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
-
-**Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 49,323 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/spherical-mixture/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
-
-## Regional reconstruction
-
-**GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
-
-[Read the full comparison](results/README.md) · [Compare all six eruptions](../../comparisons/regional/README.md) · [Method definitions](../../methods/README.md)
-
-26 exact measurements and 0 lower bounds; regional area 2,980,287 km².
-
-| Quantity | GP ensemble | Cubic spline |
-|---|---:|---:|
-| Expected regional bulk fallout (km³) | 97.91 | 107.69 |
-| Outer equal-region negative log score ↓ | 1.620 | 1.548 |
-
-![Paired regional isopachs](results/isopachs.png)
-
-These volumes cover only the observation hull. It can include unsampled gaps and exclude proximal deposits; it is not total eruption volume or dense-rock equivalent. Conditional intervals omit fitted-parameter and selection uncertainty. Read withheld coverage and geographic-deletion sensitivity in the full report.
-
-## Evidence and calculation
-
-| Follow the calculation | File |
-|---|---|
-| Accepted input | [Thickness observations](../../data/eruptions/Tambora_tephra.csv) |
-| Source decisions | [Audit or supplied-flag status](../../data/eruptions/README.md) |
-| Whole-deposit mass and uncertainty | [Global posterior report](results/spherical-mixture/README.md) |
-| Local maps and partial volumes | [Regional report](results/README.md) |
-| Fits, validation and provenance | [Complete numerical record](results/report.json) |
-| Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
-| Automatic tuning | [Candidate tables](results/selection/README.md) |
-
-The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/spherical-mixture/verification.json).
-
-## Related evidence and history
-
-[Validation and targeted studies](../../comparisons/README.md) · [Earlier calculations in Git history](../../docs/HISTORY.md)
+The standard local-support footprint covers 49,323 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)

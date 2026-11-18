@@ -1,5 +1,9 @@
 # Changes
 
+## Publication layout · 2026-11-18
+
+Each case now links directly to its full directional ensemble, spherical-mixture, regional and support reports. Earlier single-structure sensitivities and scientific records keep their own identities. [Eruption catalogue](eruptions/README.md)
+
 ## 0.14.0 · 2026-11-18
 
 Directional reconstruction now reports six-structure median isopachs, their integrated volume, coherent-field uncertainty, and leave-one-eruption-out weight calibration. [Results and validation](comparisons/directional-ensemble/README.md)

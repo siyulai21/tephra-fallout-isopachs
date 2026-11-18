@@ -1,15 +1,9 @@
-# Directional global fallout from measured isopach fragments
+# Directional ensemble
 
-The central directional estimate integrates the pointwise median thickness from six plausible fan structures over the Earth. Each report also gives a conditional interval from complete simulated deposits and a measured-fragment map. [Ensemble method and equations](../docs/methods/directional-ensemble.md) · [Case estimates and stress tests](../comparisons/directional-ensemble/README.md)
+A measured site constrains thickness at its location. Nearby sites can bracket a fragment of an isopach. Beyond the sampled triangles, the model continues positive thickness toward the vent, between measured bearings and past the last sites. Those continuations account for much of the volume in the six published cases.
 
-## Underlying model and single-structure studies
+The model fits fan half-widths of **22.5°, 45° and 90°**. For each width it fits one structure following the sampled bearings and another allowing an additional fan in the largest distal gap. Geographic thickness predictions from other calibration eruptions determine their weights. The same rules apply to every eruption.
 
-[Method catalogue](README.md) · [Spherical-mixture peer](spherical-mixture.md) · [Implementation map](../src/empirical_isopach/models/directional/README.md)
+**Read the map and the interval separately.** The contours trace pointwise median thickness and the headline volume integrates that surface across the Earth. For the conditional 95% volume interval, each draw follows one structure across the whole Earth. Its volume can differ from the integral of the median map. The report also partitions mass by bearing and by the extent of observational support. [Equations, weights and numerical checks](../docs/methods/directional-ensemble.md)
 
-**Public command: `global --geometry directional`; also included by `compare`.** Output folder: `directional/`.
-
-This method uses the same observations and bounds as the regional methods. Measured thickness constrains local triangles. Their edges can carry part of an isopach even when the rest of the contour crosses a sampling gap. Each draw integrates all thickness levels inside these triangles.
-
-Across a gap the model uses a positive, source-centred thinning law. Long, closely sampled directions can support a broader fan. An isolated distal measurement can lengthen a narrower range of bearings. In an empty direction the reference reverts to a common, estimated proximal scale. A separate refit allows a previously unseen fan. An additional proximal cap quantifies how much the total can change inside the nearest measurement radius while giving exactly the same thickness at every observed site. None of the fits assigns a zero thickness to missing ground.
-
-The published report shows the bulk volume and its conditional interval, the part inside the triangles, the volume by compass direction, the effects of 12 alternative assumptions and the results of geographic deletion. The same rules apply to every eruption, including deposits with multiple known fans. An entire unseen deposit component remains unidentified by the data. [Model, priors and numerical checks](../docs/methods/directional-continuation.md) · [Six-eruption comparison and known-volume tests](../comparisons/directional/README.md) · [Other global family](spherical-mixture.md).
+Use the [six-eruption study](../comparisons/directional-ensemble/README.md) for predictive scores, known-volume coverage and hidden-fan failures. The [single-structure study](../comparisons/directional/README.md) retains wider prior sensitivities and a separate test of ash hidden inside the nearest measurement. Both apply to bulk fallout.
