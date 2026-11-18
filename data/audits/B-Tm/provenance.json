@@ -1,0 +1,46 @@
+{
+  "audit_date": "2026-11-18",
+  "previous_commit": "2a52e062b7db84699d5229a25b01282c10301b3e",
+  "original_input": {
+    "file": "data/eruptions/B-Tm_tephra.csv",
+    "sha256": "56d82584b2c45fd378d639248416159ffea9350099d1d2009576551d1729cf8d"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/B-Tm_reviewed.csv",
+      "sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "n_measurements": 64,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "definition": "Source-qualified scalars and documented one-sided limits. Site ranges, patch maxima, uncertain positions, alternative correlations and count-only deposits remain in the evidence ledger."
+    },
+    "range_low": {
+      "file": "data/audits/B-Tm/range_low.csv",
+      "sha256": "50fa12e6df834d3abd29fe029debc96a932dcb64dcb6304fb0971a580b3cf647",
+      "n_measurements": 76,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "definition": "Use lower endpoints of reported numerical site ranges as a joint sensitivity."
+    },
+    "range_high": {
+      "file": "data/audits/B-Tm/range_high.csv",
+      "sha256": "24506ac90b7af496d7baf98feb548a024e712db5a97f3172d650f1ea7ca197fa",
+      "n_measurements": 76,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "definition": "Use upper endpoints of the same ranges as a joint sensitivity."
+    },
+    "correlations": {
+      "file": "data/audits/B-Tm/correlations.csv",
+      "sha256": "154eb38bb69c5cb8cd028496c5f6dd790319adcab8047502eaf652867aded9f9",
+      "n_measurements": 66,
+      "n_lower_limits": 1,
+      "n_upper_limits": 1,
+      "definition": "Attribute the whole 150 cm summit stack and both 26 cm Dongfanghong units to primary Millennium fall."
+    }
+  },
+  "ledger_sha256": "1d3bfe9993958c0ee619efca965feebd4805ba198cd2211144b904c6bffeb67b",
+  "target": "Combined Millennium airfall, including primary ash settling from pyroclastic clouds. Preserved thickness can differ from primary ground deposition.",
+  "source_coordinates": "Original coordinate precision varies. No survey datum transformation is claimed.",
+  "original_csv_notes": "84 positive rows, 7 flagged artificial rows (86–92), and 6 off-schema triplets in H:J (rows 1–6). Synthetic rows and orphan values do not enter the principal input."
+}
