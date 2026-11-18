@@ -119,3 +119,62 @@ def test_navigation_retirement_checks_the_archived_page_and_live_replacement(tmp
         archive.writestr("global/README.md", archived)
     current.write_text("Unreviewed replacement")
     assert not visual_history.verified_navigation(old, expected)
+
+
+def test_comparison_reads_both_regional_medians_by_coordinate(tmp_path):
+    import pandas as pd
+    import pytest
+    from src.empirical_isopach.visualization.comparison import saved_regional_grid
+
+    table = pd.DataFrame({"x_km": [3, 0, 3, 0], "y_km": [7, 0, 0, 7],
+                          "stacked_median_cm": [1000, 1, 10, 100], "spline_median_cm": [1, 1000, 100, 10]})
+    path = tmp_path/"predictions.csv"
+    table.to_csv(path, index=False)
+    x, y, fields = saved_regional_grid(path)
+    np.testing.assert_array_equal(x, [0, 3])
+    np.testing.assert_array_equal(y, [0, 7])
+    np.testing.assert_array_equal(fields["stacked"], [[0, 1], [2, 3]])
+    np.testing.assert_array_equal(fields["spline"], [[3, 2], [1, 0]])
+    table.iloc[:-1].to_csv(path, index=False)
+    with pytest.raises(ValueError, match="incomplete"):
+        saved_regional_grid(path)
+
+
+def test_prior_case_map_release_requires_exact_old_and_current_page(tmp_path, monkeypatch):
+    from benchmarks import visual_history
+
+    case = tmp_path/"eruptions"/"example"/"README.md"
+    case.parent.mkdir(parents=True)
+    case.write_text("Four maps and a result table")
+    old = "Earlier case summary"
+    old_hash = sha256(old.encode()).hexdigest()
+    previous = {"previous_markdown": old, "page_sha256": sha256(case.read_bytes()).hexdigest()}
+    ledger = tmp_path/"case-maps.json"
+    ledger.write_text(json.dumps({"cases": {"example": previous}}))
+    monkeypatch.setattr(visual_history, "ROOT", tmp_path)
+    monkeypatch.setattr(visual_history, "CASE_MAPS", ledger)
+    assert visual_history.matches_case_publication(case, old_hash)
+    assert not visual_history.matches_case_publication(case, "wrong prior")
+    case.write_text("Unreviewed case summary")
+    assert not visual_history.matches_case_publication(case, old_hash)
+
+
+def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, monkeypatch):
+    from src.empirical_isopach.visualization import comparison
+
+    home = Path(__file__).resolve().parents[1]/"eruptions"/"tambora"/"results"
+    for name in ("report.json", "directional/ensemble/report.json", "spherical-mixture/report.json"):
+        dest = tmp_path/name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes((home/name).read_bytes())
+    page = tmp_path/"README.md"
+    page.write_text("# Regional comparison\n\nOriginal regional details\n")
+    monkeypatch.setattr(comparison, "draw_comparison", lambda home, dest: None)
+    comparison.add_comparison_to_run(tmp_path)
+    first = page.read_text()
+    assert first.startswith("# Tambora fallout reconstruction\n\n## Isopach fits")
+    assert first.index(comparison.FIGURE) < first.index("Original regional details")
+    assert "| 1.964 † | 84.6% |" in first
+    assert "(directional/ensemble/world.png)" in first and "(spherical-mixture/world.png)" in first
+    comparison.add_comparison_to_run(tmp_path)
+    assert page.read_text() == first

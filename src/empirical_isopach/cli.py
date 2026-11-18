@@ -7,6 +7,7 @@ from .core.catalog import resolve_dataset
 from .models.registry import REGISTRY
 from .reporting import compare_dataset
 from .visualization.summary import saved_case_overview
+from .visualization.comparison import add_comparison_to_run
 
 
 def compare(argv=None):
@@ -27,8 +28,7 @@ def compare(argv=None):
         from .models.directional.reporting import directional_dataset
         directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name)
         saved_case_overview(args.output, args.name)
-        with (args.output/"README.md").open("a") as stream:
-            stream.write("\n## Four-method overview\n\n![Separate volume domains and matched geographic validation](overview.png)\n\nCompare the [directional ensemble median](directional/README.md) with the [spherical-mixture estimate](spherical-mixture/README.md). Each reports a whole-Earth bulk volume under its stated assumptions. Regional volumes cover only the observation hull.\n")
+        add_comparison_to_run(args.output)
 
 
 def global_analysis(argv=None):

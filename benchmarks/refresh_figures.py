@@ -1,6 +1,5 @@
 """Replay published fits into fresh display-only figures, without retuning."""
 import argparse
-import csv
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -10,7 +9,8 @@ import numpy as np
 import pandas as pd
 
 from src.empirical_isopach.core.catalog import datasets
-from src.empirical_isopach.core.observations import Observations
+from src.empirical_isopach.visualization.comparison import draw_comparison, saved_observations, saved_regional_grid
+from src.empirical_isopach.visualization.regional import regional_grid
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.models.gaussian_process.model import SpatialModel, Candidate
 from src.empirical_isopach.models.gaussian_process.ensemble import StackedModel
@@ -34,13 +34,7 @@ digest = lambda p: sha256(Path(p).read_bytes()).hexdigest()
 
 def recorded_observations(record, home):
     current, meta = audited_data(record["path"])
-    with (home/"accepted_observations.csv").open(newline="") as f:
-        rows = list(csv.DictReader(f))
-    boolean = {"True":True, "False":False}
-    data = Observations(np.array([[float(r["x_km"]), float(r["y_km"])] for r in rows]),
-        [float(r["log_value"]) for r in rows], [boolean[r["censored"]] for r in rows],
-        [float(r["known_log_sd"]) for r in rows], [int(r["row_id"]) for r in rows],
-        [boolean[r["lower_bound"]] for r in rows])
+    data = saved_observations(home/"accepted_observations.csv")
     by_id = {v:i for i,v in enumerate(current.row_ids)}
     current = current.subset([by_id[i] for i in data.row_ids])
     np.testing.assert_allclose(current.xy, data.xy, rtol=1e-12, atol=1e-7)
@@ -89,7 +83,7 @@ def regional_models(data, report):
     return fitted, region, checks
 
 
-def refresh_case(record, output, scopes=("regional", "directional", "spherical")):
+def refresh_case(record, output, scopes=("regional", "directional", "spherical", "comparison")):
     slug, name = record["slug"], record["name"]
     home = ROOT/"eruptions"/slug/"results"
     target = Path(output)/slug
@@ -101,10 +95,11 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical")
     assert all(r["input"]["input_sha256"] == meta["input_sha256"] for r in (regional, directional, spherical))
     checks = {"input_sha256":meta["input_sha256"], "source_reports":{
         key:digest(home/key) for key in ("report.json", "directional/report.json", "spherical-mixture/report.json")}}
-    if "regional" in scopes:
+    if "regional" in scopes or "comparison" in scopes:
         print(f"{name}: reconstructing recorded regional fits (no selection)", flush=True)
         models, region, parity = regional_models(data, regional)
         checks["regional_parity"] = parity
+    if "regional" in scopes:
         save_figures(target, name, data, meta, region, models, regional)
         support = target/"support"
         support.mkdir(exist_ok=True)
@@ -157,7 +152,15 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical")
             fields = load_packet(ensemble_dir,data,meta["vent_lonlat"][1],directional)
             render_maps(ensemble_dest,name,data,meta,fields)
             checks["ensemble_fields_sha256"] = digest(ensemble_dir/"map-fields.npz")
-    case_overview(target, name, regional, directional, spherical)
+    if "comparison" in scopes:
+        if "regional" in scopes:
+            comparison_grid = saved_regional_grid(target/"predictions.csv")
+        else:
+            gx, gy, _, fields, _ = regional_grid(regional["fit_bounds_km"], region, models)
+            comparison_grid = gx, gy, fields
+        draw_comparison(home, target, comparison_grid)
+    if set(scopes) != {"comparison"}:
+        case_overview(target, name, regional, directional, spherical)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")
     print(f"{name}: figures complete", flush=True)
     return name, regional, directional, spherical
@@ -167,8 +170,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", required=True, type=Path)
     p.add_argument("--case", help="Optional accepted-case slug")
-    p.add_argument("--scopes", nargs="+", default=["regional", "directional", "spherical"],
-                   choices=["regional", "directional", "spherical"])
+    p.add_argument("--scopes", nargs="+", default=["regional", "directional", "spherical", "comparison"],
+                   choices=["regional", "directional", "spherical", "comparison"])
     args = p.parse_args()
     if args.output.exists() and any(args.output.iterdir()):
         raise ValueError("Choose a fresh scratch destination")
@@ -177,7 +180,7 @@ def main():
         raise ValueError("Unknown case slug")
     args.output.mkdir(parents=True, exist_ok=True)
     cases = [refresh_case(r, args.output, args.scopes) for r in rows]
-    if len(cases) == 6:
+    if len(cases) == 6 and set(args.scopes) != {"comparison"}:
         all_case_scores(args.output, cases)
 
 

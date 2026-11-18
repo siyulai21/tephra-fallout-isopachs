@@ -15,7 +15,7 @@ Older records use `global/` for the spherical-only files. Those files were moved
 
 ## Visual reading route
 
-Start with `overview.png` for separate regional/global volumes and matched prediction evidence. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `directional/ensemble/isopachs.png` or `spherical-mixture/field.png`, then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
+Start on the case home. Its `four-method-isopachs.png` compares pointwise median thickness on the same observation-area frame. The table gives bulk volumes, conditional intervals and held-out predictions. Expand the whole-Earth pair to see distal continuation. The detailed regional report also retains the volume and prediction plot, `overview.png`. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `directional/ensemble/isopachs.png` or `spherical-mixture/field.png`, then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
 

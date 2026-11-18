@@ -17,11 +17,8 @@ from .maps import (ASSET, INK, AMBER, frame_bounds, grid_axes, panel_layout,
                    setup_map, observations, observation_legend, contour_levels, level_labels)
 
 
-def regional_maps(output, name, data, metadata, region, models, report):
-    from ..reporting import report_label
-    output = Path(output)
-    fit_bounds = np.array(report["fit_bounds_km"])
-    bounds = frame_bounds(np.vstack((region.vertices, data.xy)))
+def regional_grid(fit_bounds, region, models):
+    """Evaluate the published regional display grid in the original fitting domain."""
     # Plot frame and spline fitting domain are distinct. Never enlarge or refit
     # a spline merely to include a source outside the observation hull.
     x, y = grid_axes(fit_bounds, longest=361, minimum=121)
@@ -38,6 +35,15 @@ def regional_maps(output, name, data, metadata, region, models, report):
         fields[method] = values[0].reshape(xx.shape)/np.log(10.)
         for key, row in zip(("median", "conditional_mean", "conditional_lower95", "conditional_upper95"), values):
             table[f"{method}_{key}_cm"] = np.exp(row)
+    return x, y, inside, fields, table
+
+
+def regional_maps(output, name, data, metadata, region, models, report):
+    from ..reporting import report_label
+    output = Path(output)
+    fit_bounds = np.array(report["fit_bounds_km"])
+    bounds = frame_bounds(np.vstack((region.vertices, data.xy)))
+    x, y, inside, fields, table = regional_grid(fit_bounds, region, models)
     pd.DataFrame(table).to_csv(output/"predictions.csv", index=False)
     values = np.concatenate([v.ravel()[inside] for v in fields.values()])
     low, high = float(values.min()), max(float(values.max()), float(values.min())+.1)
@@ -52,7 +58,7 @@ def regional_maps(output, name, data, metadata, region, models, report):
             # Clip the raster at the exact polygon, not at cell centres. The
             # complete hull therefore stays filled up to its extreme vertices.
             image.set_clip_path(Polygon(region.vertices, closed=True, transform=ax.transData))
-            z = np.ma.array(fields[method], mask=(~inside).reshape(xx.shape))
+            z = np.ma.array(fields[method], mask=(~inside).reshape(len(y), len(x)))
             levels = contour_levels(z.filled(np.nan))
             if len(levels):
                 lines = ax.contour(x, y, z, levels=levels, colors=INK, linewidths=.65, zorder=4)
@@ -83,7 +89,7 @@ def regional_maps(output, name, data, metadata, region, models, report):
         "display_bounds_km":bounds.tolist(), "unchanged_fit_bounds_km":fit_bounds.tolist(),
         "entire_observation_hull_in_frame":contained, "hull_raster_clip":"Exact polygon, not grid-centre mask",
         "all_accepted_locations_in_frame":bool(np.all(data.xy >= bounds[:2]) and np.all(data.xy <= bounds[2:])),
-        "grid_shape":list(xx.shape), "coastline_scale":"1:10 million", "coastline_sha256":sha256(ASSET.read_bytes()).hexdigest(),
+        "grid_shape":[len(y), len(x)], "coastline_scale":"1:10 million", "coastline_sha256":sha256(ASSET.read_bytes()).hexdigest(),
         "central_statistic":"Posterior median thickness", "volume_calculation_changed":False}
     (output/"map-display.json").write_text(json.dumps(display, indent=2)+"\n")
     return display

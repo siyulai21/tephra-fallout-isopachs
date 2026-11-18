@@ -7,6 +7,7 @@ from zipfile import ZipFile
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = ROOT/"docs/maintenance/visuals-2026-11-17.json"
 NAVIGATION = ROOT/"docs/maintenance/navigation-2026-11-18.json"
+CASE_MAPS = ROOT/"docs/maintenance/case-maps-2026-11-18.json"
 
 
 def is_presentation(path):
@@ -18,15 +19,27 @@ def matches(path, expected):
     return path.is_file() and sha256(path.read_bytes()).hexdigest() == expected
 
 
+
+def matches_case_publication(path, expected):
+    """Resolve a superseded case home only against its exact archived and live text."""
+    if matches(path, expected):
+        return True
+    if path.name != "README.md" or path.parent.parent != ROOT/"eruptions":
+        return False
+    case = json.loads(CASE_MAPS.read_text())["cases"].get(path.parent.name)
+    return bool(case and sha256(case["previous_markdown"].encode()).hexdigest() == expected
+                and matches(path, case["page_sha256"]))
+
+
 def reviewed_destination(path, record):
     target = ROOT/record["current_path"]
     return ((target == path or not path.exists())
-            and matches(target, record["current_sha256"]))
+            and matches_case_publication(target, record["current_sha256"]))
 
 
 def verified_navigation(path, expected):
     """Verify an exact pre-edit publication and the exact page that replaced it."""
-    if matches(path, expected):
+    if matches_case_publication(path, expected):
         return True
     if not path.is_relative_to(ROOT) or not is_presentation(path):
         return False

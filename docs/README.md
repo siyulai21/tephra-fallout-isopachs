@@ -15,11 +15,11 @@ Start at the [eruption catalogue](../eruptions/README.md) for a published result
 
 | Location | What belongs there |
 |---|---|
-| `eruptions/<slug>/` | One case home. Its `results/README.md` contains the matched regional fits. `results/directional/README.md` contains the full directional ensemble report. `results/spherical-mixture/` and `results/support/` contain the independent global posterior and local audit. |
+| `eruptions/<slug>/` | One case home with all four isopach maps, volumes and predictive scores. Its `results/README.md` contains the matched regional fits. `results/directional/README.md` contains the full directional ensemble report. `results/spherical-mixture/` and `results/support/` contain the independent global posterior and local audit. |
 | `data/` | Original sources and hashes, row-level audit decisions and accepted CSVs. [Dataset catalogue](../data/datasets.json) |
 | `methods/` and `docs/methods/` | Introductions to the four empirical models and their detailed protocols. |
 | `comparisons/` | Cross-eruption validation, simulations and targeted scientific studies. |
 | `src/` | Shared observation handling, regional registry, model families and reporting. [Code map](../src/README.md) |
 | `benchmarks/` and `tests/` | Study reproduction, evidence verifiers and regression tests. [Benchmark commands](../benchmarks/README.md) |
-| `templates/eruption/` | Optional notes and empty input schema for a new eruption. |
+| `templates/` | Optional notes and empty input schema for a new eruption. |
 | `results/` at the repository root | Ignored scratch output. Reviewed publications live under their eruption. |

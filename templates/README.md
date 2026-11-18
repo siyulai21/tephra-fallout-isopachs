@@ -1,5 +1,5 @@
-# Input templates
+# Eruption intake templates
 
-[Add an eruption](../docs/NEW_ERUPTION.md) · [Accepted CSV schema](../data/README.md)
+Upload an existing spreadsheet, published table or CSV in chat. For a blank starting point, use the [observation CSV](observations.csv) and [intake notes](INTAKE.md). Include a consistent vent location and record units and source qualifications. Leave unknown values explicit.
 
-[eruption/](eruption/README.md) contains optional intake notes and a header-only observations file. These are blank starting points, not measurements or a completed audit. Existing sources can also be uploaded directly in chat.
+The [intake workflow](../docs/NEW_ERUPTION.md) describes the audit and calculation. The [CSV definitions](../data/README.md) explain accepted measurements and bounds.

@@ -18,7 +18,7 @@ Use a fresh ignored destination. The normal command runs both regional methods, 
 tephra-isopachs compare ERUPTION_OR_CSV --output results/new-case
 ```
 
-Publish reviewed outputs under `eruptions/<slug>/results/`. Use **one case home** for the accepted inputs, four volume results, support decision and material source or numerical qualifications. Link directly to the regional, directional ensemble, spherical-mixture and support reports. Add one row to `eruptions/README.md`. A new cross-eruption link belongs in `comparisons/README.md` when it answers a distinct scientific question.
+Publish reviewed outputs under `eruptions/<slug>/results/`. Use **one case home** for the accepted inputs, the four-panel isopach map and matched results table, the support decision and material source or numerical qualifications. Use the shared comparison section and preserve the case-specific interpretation. Link directly to the regional, directional ensemble, spherical-mixture and support reports. Add one row to `eruptions/README.md`. A new cross-eruption link belongs in `comparisons/README.md` when it answers a distinct scientific question.
 
 Preserve earlier result identities, raw evidence, relevant sensitivity studies, failed attempts and hashes when revising a case. Record the preceding immutable revision and retain any locally required historical evidence. Leave unrelated work in progress untouched. [Publication and retention policy](docs/maintenance/README.md)
 

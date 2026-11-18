@@ -2,18 +2,35 @@
 
 The accepted dataset contains 26 exact measurements. The regional fits share an observation hull of 2,980,287 km². [Accepted thickness CSV](../../data/eruptions/Tambora_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
-## Bulk fallout volume
+## Isopach fits
 
-| Model | Area | Volume summary (km³) | Conditional 95% volume interval (km³) |
-|---|---|---:|---:|
-| [Directional ensemble](results/directional/README.md) | Whole Earth | Median-map integral **105.8** · complete-field median 119.6 | 78.6–184.0 |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole Earth | Posterior median **179.1** | 112.9–1,284.2 |
-| GP ensemble | Observation hull | Expected **97.91** | 66.61–142.60 |
-| Cubic spline | Observation hull | Expected **107.69** | 79.51–155.23 |
+![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Tambora](results/four-method-isopachs.png)
 
-The directional interval summarizes complete simulated deposits. Measured interpolation triangles hold **10.1%** of the central directional map’s volume. The regional intervals condition on the fitted settings. [Paired regional maps and held-out tests](results/README.md)
+All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. Gaps inside the hull can still be poorly constrained.
 
-![Regional and whole-Earth volumes, with matched geographic prediction scores for Tambora](results/overview.png)
+## Volume and predictive performance
+
+| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---|---:|---:|---:|
+| GP ensemble | Hull mean **97.91** | 66.61–142.60 | 1.620 | 96.2% |
+| Cubic spline | Hull mean **107.69** | 79.51–155.23 | 1.548 | 96.2% |
+| [Directional ensemble](results/directional/README.md) | Whole-Earth median map **105.8** · volume median 119.6 | 78.6–184.0 | 1.964 † | 84.6% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **179.1** | 112.9–1,284.2 | 1.471 | 96.2% |
+
+A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
+
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **10.1%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+
+<details>
+<summary>Compare the two whole-Earth maps</summary>
+
+| Directional ensemble | Spherical mixture |
+|---|---|
+| ![Directional ensemble median thickness over the Earth for Tambora](results/directional/ensemble/world.png) | ![Spherical-mixture median thickness over the Earth for Tambora](results/spherical-mixture/world.png) |
+
+Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+
+</details>
 
 ## Evidence and limitations
 
