@@ -2,18 +2,35 @@
 
 The accepted dataset contains 46 exact measurements. The regional fits share an observation hull of 17,719,965 km². [Accepted thickness CSV](../../data/eruptions/YTT_tephra.csv) · [Row-level source audit](../../data/audits/YTT/README.md)
 
-## Bulk fallout volume
+## Isopach fits
 
-| Model | Area | Volume summary (km³) | Conditional 95% volume interval (km³) |
-|---|---|---:|---:|
-| [Directional ensemble](results/directional/README.md) | Whole Earth | Median-map integral **985.7** · complete-field median 1,274.1 | 765.6–3,514.0 |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole Earth | Posterior median **1,674.2** | 1,203.6–54,906.9 |
-| GP ensemble | Observation hull | Expected **1,196.14** | 759.73–1,861.41 |
-| Cubic spline | Observation hull | Expected **1,203.01** | 797.96–1,998.78 |
+![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at YTT](results/four-method-isopachs.png)
 
-The directional interval summarizes complete simulated deposits. Measured interpolation triangles hold **19.7%** of the central directional map’s volume. The regional intervals condition on the fitted settings. [Paired regional maps and held-out tests](results/README.md)
+All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. Gaps inside the hull can still be poorly constrained.
 
-![Regional and whole-Earth volumes, with matched geographic prediction scores for YTT](results/overview.png)
+## Volume and predictive performance
+
+| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---|---:|---:|---:|
+| GP ensemble | Hull mean **1,196.14** | 759.73–1,861.41 | 1.934 | 91.3% |
+| Cubic spline | Hull mean **1,203.01** | 797.96–1,998.78 | 2.153 | 82.6% |
+| [Directional ensemble](results/directional/README.md) | Whole-Earth median map **985.7** · volume median 1,274.1 | 765.6–3,514.0 | 1.777 † | 93.5% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **1,674.2** | 1,203.6–54,906.9 | 1.777 | 84.8% |
+
+A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
+
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **19.7%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+
+<details>
+<summary>Compare the two whole-Earth maps</summary>
+
+| Directional ensemble | Spherical mixture |
+|---|---|
+| ![Directional ensemble median thickness over the Earth for YTT](results/directional/ensemble/world.png) | ![Spherical-mixture median thickness over the Earth for YTT](results/spherical-mixture/world.png) |
+
+Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+
+</details>
 
 ## Evidence and limitations
 
