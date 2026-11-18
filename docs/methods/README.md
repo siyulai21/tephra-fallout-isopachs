@@ -8,7 +8,8 @@
 | Regional GP | [Component model](gaussian-process.md) · [Predictive ensemble](gp-ensemble.md) |
 | Regional cubic spline | [Cubic basis, normalized penalties, tuning and conditional uncertainty](cubic-splines.md) |
 | Local observational support | [Sampling gaps, complete contours and partial volumes](supported-isopachs.md) |
-| Conditional global posterior | [Mass-normalized field, priors and sensitivities](probabilistic-global.md) |
+| Global directional continuation | [Triangles, directional thinning, 13 policies, source cap and sector mass](directional-continuation.md) |
+| Global spherical mixture | [Mass-normalized field, priors and sensitivities](probabilistic-global.md) |
 | Source geometry | [Source-focused fans and experimental alternatives](source-anchored-fans.md) |
 | Marine observation process | [Conceptual transport/preservation extension](marine-observations.md) — not implemented or fitted |
 

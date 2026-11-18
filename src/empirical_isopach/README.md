@@ -12,7 +12,8 @@
 | [region.py](region.py) | Shared observation hull, volume integration and correlated draws |
 | [reporting.py](reporting.py) | Provenance, candidate tables and reports for all fitted methods |
 | [support.py](support.py), [support_reporting.py](support_reporting.py) | Local evidence footprints, rejected contours, partial volumes and support reports |
-| [global_reporting.py](global_reporting.py) | Whole-Earth posterior, sensitivity, sampling diagnostics and global reports |
+| [global_reporting.py](global_reporting.py) | Spherical-mixture posterior reporting; the module keeps its historical name |
+| [models/directional/](models/directional/README.md) | Directional interpolation, whole-Earth posterior, mass budgets, sensitivities and reporting |
 | [models/mass_mixture/](models/mass_mixture/) | Mass-normalized fans, priors, posterior inference and geographic validation |
 | [cli.py](cli.py) | `methods`, `compare`, `global` and historical `fit` dispatch |
 

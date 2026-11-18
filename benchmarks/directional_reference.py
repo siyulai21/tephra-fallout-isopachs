@@ -53,5 +53,5 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", required=True, type=Path)
     args = p.parse_args()
-    write_json(args.output, {r["slug"]:partition(Path("eruptions")/r["slug"]/"results/global")
+    write_json(args.output, {r["slug"]:partition(Path("eruptions")/r["slug"]/"results/spherical-mixture")
                              for r in datasets()})

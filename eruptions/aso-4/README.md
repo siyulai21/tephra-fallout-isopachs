@@ -1,6 +1,6 @@
 # Aso-4: data, global and regional results
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/global/README.md)
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Source audit and experiments](../../comparisons/aso-4-audit/README.md)
 
@@ -12,7 +12,7 @@ The nearest accepted site is 88 km away and a measurement triangle crosses the v
 
 ## Spherical-mixture estimate
 
-The source-qualified reference posterior is **1,466 km³ [501–44,173]**, a conditional median and 95% credible interval for whole-Earth **bulk fallout**. Its high total remains questioned. All accepted fallout fans are fitted together; no closing pseudo-data, calculation rectangle or contour cutoff sets the volume. [Global assumptions, seven sensitivity refits and numerical checks](results/global/README.md).
+The source-qualified reference posterior is **1,466 km³ [501–44,173]**, a conditional median and 95% credible interval for whole-Earth **bulk fallout**. Its high total remains questioned. All accepted fallout fans are fitted together; no closing pseudo-data, calculation rectangle or contour cutoff sets the volume. [Global assumptions, seven sensitivity refits and numerical checks](results/spherical-mixture/README.md).
 
 **Two cruise-coordinate errors are corrected**, moving observations by about 444 and 512 km while retaining their measured thicknesses. Four source-qualified bounds are encoded. The Biwa source conflict and the Hokkaido erosion interpretation remain explicit; 35 separately supplied records are not all independently certified. [Primary sources and every decision](../../data/audits/Aso-4/README.md).
 
@@ -45,7 +45,7 @@ These volumes cover the **3,482,991 km² observation hull**, which includes unsa
 | Unchanged supplied input | [Original observations](../../data/eruptions/Aso-4_tephra.csv) |
 | Source decisions, conflicts and hashes | [Audit](../../data/audits/Aso-4/README.md) |
 | Diagnosis and all targeted experiments | [Aso-4 evidence report](../../comparisons/aso-4-audit/README.md) |
-| Whole-deposit posterior | [Global report](results/global/README.md) |
+| Whole-deposit posterior | [Global report](results/spherical-mixture/README.md) |
 | Regional fits and provenance | [Complete numerical record](results/report.json) |
 | Row-by-row predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Numerical and preservation checks | [Revision verification](../../comparisons/aso-4-audit/verification.json) |

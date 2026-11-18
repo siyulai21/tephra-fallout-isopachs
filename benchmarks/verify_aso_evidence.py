@@ -21,14 +21,17 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
-for f,digest in others.items():assert hashfile(f)==digest,f
+# Resolve historical publication paths without changing their signed evidence.
+for f,digest in others.items():
+ current=re.sub(r'^(eruptions/[^/]+/results)/global/',r'\1/spherical-mixture/',f)
+ assert hashfile(current)==digest,f
 reference_root = OUT/'reference'
 archive=read(reference_root/'manifest.json')
 for entry in archive['files']:
  if not entry['archive'].endswith('.md'):
   relative=Path(entry['archive']).relative_to('archive/2026-11-08-aso-4')
   assert hashfile(reference_root/relative)==entry['sha256'],entry['archive']
-regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/global/report.json')
+regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/spherical-mixture/report.json')
 for r in (regional,glob):
  assert r['input']['input_sha256']==hashfile(reviewed)
  assert r['input']['audit']['sha256']==hashfile('data/audits/Aso-4/provenance.json')
@@ -38,7 +41,7 @@ for key in ('row_ids','folds','buffer_km'):assert glob['validation'][key]==regio
 for method,m in regional['validation']['methods'].items():
  for a,b in zip(glob['validation']['fits'],m['selections']):
   for k in ('training_row_ids','withheld_row_ids'):assert a[k]==b[k]
-for f,digest in read('eruptions/aso-4/results/global/artifacts.json').items():assert hashfile(Path('eruptions/aso-4/results/global')/f)==digest
+for f,digest in read('eruptions/aso-4/results/spherical-mixture/artifacts.json').items():assert hashfile(Path('eruptions/aso-4/results/spherical-mixture')/f)==digest
 support=read('eruptions/aso-4/results/support/report.json')
 assert support['provenance']['parent_report_sha256']==hashfile('eruptions/aso-4/results/report.json')
 for model in support['methods'].values():

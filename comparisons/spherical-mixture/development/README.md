@@ -30,7 +30,7 @@ The centered prototype took 123.8 seconds against 270.4 seconds for the direct p
 ## What is preserved
 
 - [All 38 completed exploratory attempt records](completed-development-attempts.json.gz), including attempts made before superseded workers were stopped. Partial, interrupted chains were never summarized or combined with completed chains.
-- Exact archived source text for [Gaussian/power](sources/gaussian-power/), [exponential/diffuse](sources/exponential-diffuse/), [sparse/direct](sources/sparse-direct/), and the [centered prototype](sources/centered-prototype-inference.py.txt).
+- Exact archived source text for [Gaussian/power](sources/gaussian-power), [exponential/diffuse](sources/exponential-diffuse), [sparse/direct](sources/sparse-direct), and the [centered prototype](sources/centered-prototype-inference.py.txt).
 - [Checksums](source-manifest.json) for the source snapshots and selected prototype records. The `.py.txt` snapshots are evidence, not active model implementations.
 
 Full discarded posterior caches remain in the local development archive. The final baseline whole-field samples and every final sensitivity's volume samples are published in each eruption report. The final stress suite uses seeds 10 and 11, records every outcome, and does not reuse the seed-0 trial as independent validation. Twelve small development trials cannot establish universal 95% coverage or rule out model misspecification.

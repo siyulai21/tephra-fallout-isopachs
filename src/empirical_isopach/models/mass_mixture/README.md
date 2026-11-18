@@ -1,6 +1,6 @@
 # Mass-normalized spherical mixture
 
-[Scientific protocol and priors](../../../../docs/methods/probabilistic-global.md) · [Results](../../../../comparisons/global/README.md)
+[Scientific protocol and priors](../../../../docs/methods/probabilistic-global.md) · [Results](../../../../comparisons/spherical-mixture/README.md)
 
 | Module | Purpose |
 |---|---|

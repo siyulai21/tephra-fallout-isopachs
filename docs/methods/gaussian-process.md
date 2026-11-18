@@ -1,6 +1,6 @@
 # Gaussian-process thickness model
 
-[Method overview](../METHODS.md) · [Documentation](../README.md) · [Implementation](../../src/empirical_isopach/models/gaussian_process/README.md)
+[Method overview](../../methods/README.md) · [Documentation](../README.md) · [Implementation](../../src/empirical_isopach/models/gaussian_process/README.md)
 
 **Used by the GP side of the current regional comparison and historical GP-only reports.** `selected` chooses one GP configuration; `stacked` combines GP configurations. Neither uses cubic splines.
 

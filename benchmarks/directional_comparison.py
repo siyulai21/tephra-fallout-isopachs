@@ -24,7 +24,7 @@ def read(path):
 def matched_rows(record, run, regional, output):
     slug = record["slug"]
     home = Path("eruptions")/slug/"results"
-    old, published = read(home/"global/report.json"), read(home/"report.json")
+    old, published = read(home/"spherical-mixture/report.json"), read(home/"report.json")
     fresh = read(regional/slug/"report.json")
     new = read(output/slug/"report.json")
     val, v0 = new["validation"]["geographic"], old["validation"]
@@ -89,7 +89,7 @@ def matched_rows(record, run, regional, output):
 
 def stress(runs, output):
     records, evidence = [], {}
-    old = pd.read_csv("comparisons/global/stress-comparison.csv").query("assumption == 'baseline'")
+    old = pd.read_csv("comparisons/spherical-mixture/stress-comparison.csv").query("assumption == 'baseline'")
     for scenario in (*SCENARIOS, "invisible_sector"):
         for seed in (10, 11, 70, 71):
             data, truth = trial(scenario,seed)
@@ -316,7 +316,7 @@ def main(argv=None):
     reliable_wins = int((reliable.geographic_score < reliable.previous_score).sum())
     lines = ["# Global fallout from measured isopach fragments", "",
         "The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../docs/methods/directional-continuation.md).", "",
-        "| Eruption | Directional median km³ [conditional 95%] | Previous spherical median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |",
+        "| Eruption | Directional median km³ [conditional 95%] | Spherical-mixture median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |",
         "|---|---:|---:|---:|---:|---:|"]
     for r in rows:
         lines.append(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/directional/README.md) | {r['median']:,.1f} [{r['lower95']:,.1f}–{r['upper95']:,.1f}] | {r['previous_median']:,.1f} [{r['previous_lower95']:,.1f}–{r['previous_upper95']:,.1f}] | {r['footprint_median_fraction']:.1%} | {r['geographic_score']:.3f} / {r['previous_score']:.3f} | {r['exact_coverage']:.1%} / {r['previous_coverage']:.1%} |")
@@ -383,7 +383,7 @@ def main(argv=None):
         "python -m benchmarks.directional_replication --runs results/new-study --output results/new-replication",
         "python -m benchmarks.directional_spherical_support --replay comparisons/directional/spherical-support --output results/new-spherical-support",
         "python -m benchmarks.directional_comparison --spherical-support results/new-spherical-support --runs results/new-study --cases results/new-cases --replication results/new-replication --regional results/new-regional --reference results/new-mixture-sectors.json --output results/new-comparison",
-        "~~~","", "The normal case command produces the complete plots, checks and report. [Case workflow](../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Previous model sector estimates and quadrature refinement](spherical-mixture-sectors.json).",""]
+        "~~~","", "The normal case command produces the complete plots, checks and report. [Case workflow](../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Spherical-mixture sector estimates and quadrature refinement](spherical-mixture-sectors.json).",""]
     (output/"README.md").write_text("\n".join(lines))
 
 

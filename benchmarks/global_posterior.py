@@ -15,7 +15,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
     rows, cases, validation_rows, sensitivity_warnings = [], [], [], []
     for record in datasets():
         slug, name = record['slug'], record['name']
-        folder = Path('eruptions')/slug/'results'/'global' if published else output/slug
+        folder = Path('eruptions')/slug/'results'/'spherical-mixture' if published else output/slug
         path = folder/'report.json'
         if not path.exists():
             raise ValueError(f'Missing completed global report: {path}')
@@ -65,12 +65,12 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
         'cases': cases, 'estimates': rows, 'matched_validation': validation_rows,
         'scope': 'Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume.'}, indent=2, allow_nan=False)+'\n')
     figures(output, rows)
-    table = '\n'.join(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/global/README.md) | {r['geometry']}{' · **questioned**' if r['review_status'] == 'questioned' else ''} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {r['sensitivity_lower']:.3g}–{r['sensitivity_upper']:.3g} | {'pass' if r['baseline_sampling_passed'] else '**provisional**'} |" for r in rows)
+    table = '\n'.join(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/spherical-mixture/README.md) | {r['geometry']}{' · **questioned**' if r['review_status'] == 'questioned' else ''} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {r['sensitivity_lower']:.3g}–{r['sensitivity_upper']:.3g} | {'pass' if r['baseline_sampling_passed'] else '**provisional**'} |" for r in rows)
     predictions = '\n'.join(f"| {r['eruption']} | {r['global_equal_region_negative_log_score']:.3f} | {r['stacked_equal_region_negative_log_score']:.3f} | {r['spline_equal_region_negative_log_score']:.3f} | {r['global_observation_coverage95']:.1%} | {'pass' if r['all_outer_sampling_passed'] else '**provisional**'} |" for r in rows)
     n_pass = sum(r['baseline_sampling_passed'] for r in rows)
     (output/'README.md').write_text(f"""# Global fallout estimates across six eruptions
 
-[Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
+[Both global families](../global/README.md) · [Matched directional comparison](../directional/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
 
 The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**
 

@@ -9,7 +9,7 @@ The workflow is **source evidence → accepted observations → empirical models
 | Read results for an eruption | [Eruption cases](eruptions/README.md) — data, source decisions and reports |
 | Understand the project | [Newcomer guide](docs/START_HERE.md) — follow one calculation from evidence to results |
 | Supply new measurements | [Upload and publication workflow](docs/NEW_ERUPTION.md) · [Optional intake templates](templates/README.md) |
-| Understand the models | [Method catalogue](methods/README.md) — regional GP/spline peers and two global reconstructions |
+| Understand the models | [Method catalogue](methods/README.md) — how the four independent families relate |
 | Compare performance and uncertainty | [Evidence catalogue](comparisons/README.md) — cross-eruption results, stress tests and targeted studies |
 | Work on the repository as an AI agent | [AGENTS.md](AGENTS.md) — sources of truth, task routes, commands and checks |
 
@@ -21,7 +21,7 @@ The workflow is **source evidence → accepted observations → empirical models
 | **Local support audit** | Which locations and contours have nearby observational support? | Partial volume within a diagnosed footprint; gaps and rejected contours stay visible |
 | **Conditional global estimate** | What whole-deposit fallout is implied under stated assumptions? | Whole-Earth posterior under either directional thinning from measured isopach fragments or a spherical mixture, with sensitivity and numerical checks |
 
-The regional methods are peers, with no automatic winner. Both global models use the same accepted evidence and geographic holdouts. The directional reports show how much mass lies inside measured triangles and how much each unsampled direction contributes. [Six-eruption estimates and missing-direction tests](comparisons/directional/README.md). A failed contour-support screen does not prevent a conditional global estimate. It highlights why missing deposits and prior assumptions matter. All volumes are bulk fallout, not dense-rock equivalent or total erupted material including ignimbrite deposits.
+The regional methods are peers, with no automatic winner. The [two global families](comparisons/global/README.md) use the same accepted evidence and geographic holdouts. Directional continuation is the newest addition; it does not replace the spherical mixture or use the GP/spline fits as input. The directional reports show how much mass lies inside measured triangles and how much each unsampled direction contributes. [Six-eruption estimates and missing-direction tests](comparisons/directional/README.md). A failed contour-support screen does not prevent a conditional global estimate. It highlights why missing deposits and prior assumptions matter. All volumes are bulk fallout, not dense-rock equivalent or total erupted material including ignimbrite deposits.
 
 ## Current eruption cases
 

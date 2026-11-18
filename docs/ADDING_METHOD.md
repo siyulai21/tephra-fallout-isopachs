@@ -4,9 +4,9 @@
 
 A new family joins the same eruption workflow as a peer. It must not silently change the accepted data, the target region or another method's results.
 
-The registry contract below applies to **regional** model families. The [global mass model](methods/probabilistic-global.md) has a separate joint-posterior runner because its whole-Earth volume parameter and uncertainty do not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
+The registry contract below applies to **regional** model families. The [directional family](methods/directional-continuation.md) and [spherical mixture](methods/probabilistic-global.md) have separate joint-posterior runners because their complete-field parameter uncertainty does not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
 
-## Implementation boundary
+## Regional implementation boundary
 
 Put the implementation in `src/empirical_isopach/models/<family>/`. Add an adapter and one entry in [registry.py](../src/empirical_isopach/models/registry.py) with a stable identifier, label, description, fitting function and optional diagnostic callback. The registry order only controls presentation. The comparison runner, geographic evaluation, report panels and benchmark summaries iterate registered methods; there is no preferred-method field.
 
@@ -25,6 +25,10 @@ Put the implementation in `src/empirical_isopach/models/<family>/`. Add an adapt
 | Uncertainty labels | State precisely what is conditional and which uncertainties are omitted; do not invent covariance or claim calibrated coverage |
 
 Full outer geographic holdouts rerun the entire tuning procedure. Numerical integration uses the same observation hull and units for every family. Each method keeps its own surface and volume; adding a method does not create an ensemble across families.
+
+## Global integration boundary
+
+Add a global family under `models/<family>/` with a complete-field posterior, its own reporting runner and fixed sensitivity protocol. Wire it into the ordinary `compare` command, the method listing and a clearly named peer output directory. Rebuild all response-dependent geometry within training folds. Retain the shared support screen, numerical attempts, whole-field mass accounting and the matched geographic evaluation. Never turn another fitted surface or derived contour into independent training evidence. Publish a method card, implementation map, assumptions and known-volume challenges; do not describe a new family as validated merely because it runs.
 
 ## Validation and publication
 

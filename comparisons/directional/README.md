@@ -2,7 +2,7 @@
 
 The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../docs/methods/directional-continuation.md).
 
-| Eruption | Directional median km³ [conditional 95%] | Previous spherical median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |
+| Eruption | Directional median km³ [conditional 95%] | Spherical-mixture median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |
 |---|---:|---:|---:|---:|---:|
 | [Mazama](../../eruptions/mazama/results/directional/README.md) | 203.3 [150.6–370.2] | 223.2 [144.7–3,668.8] | 13.5% | 1.451 / 1.577 | 91.1% / 91.1% |
 | [Tambora](../../eruptions/tambora/results/directional/README.md) | 112.1 [77.2–172.8] | 179.1 [112.9–1,284.2] | 9.9% | 1.953 / 1.471 | 80.8% / 96.2% |
@@ -118,4 +118,4 @@ python -m benchmarks.directional_spherical_support --replay comparisons/directio
 python -m benchmarks.directional_comparison --spherical-support results/new-spherical-support --runs results/new-study --cases results/new-cases --replication results/new-replication --regional results/new-regional --reference results/new-mixture-sectors.json --output results/new-comparison
 ~~~
 
-The normal case command produces the complete plots, checks and report. [Case workflow](../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Previous model sector estimates and quadrature refinement](spherical-mixture-sectors.json).
+The normal case command produces the complete plots, checks and report. [Case workflow](../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Spherical-mixture sector estimates and quadrature refinement](spherical-mixture-sectors.json).

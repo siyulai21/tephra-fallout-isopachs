@@ -1,5 +1,12 @@
 # Changes
 
+## 0.12.1 — Four-family navigation and explicit global result names
+
+- Explain directional continuation as an additional global family, independent of the regional GP/spline and spherical-mixture fits. Give both global families equal entry points and retain their different validation limits.
+- Move spherical case outputs to `results/spherical-mixture/` and the study to `comparisons/spherical-mixture/`. Keep `global/README.md` as a shared two-family index; update normal command output and evidence readers. Preserve scientific artifact bytes and original execution provenance.
+- Consolidate the duplicate method overview, remove the unused original desktop GUI and its optional mapping extra, and retain numerical engines and unsuccessful evidence needed for reproduction.
+- Add the missing directional implementation map, complete output/benchmark guides and directional artifact verification in CI.
+
 ## 0.12.0 — Directional fallout from measured isopach fragments
 
 - Added a whole-Earth model that interpolates locally supported triangles, preserves gaps, and learns directional reach and distal thinning under one set of assumptions for all eruptions.
