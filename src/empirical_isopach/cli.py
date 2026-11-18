@@ -13,7 +13,7 @@ def compare(argv=None):
     parser.add_argument("csv", help="Catalogued eruption or a CSV of observations and source coordinates")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name", help="Report title for a custom CSV")
-    parser.add_argument("--regional-only", action="store_true", help="Only the GP/spline regional comparison; omit the global companion")
+    parser.add_argument("--regional-only", action="store_true", help="Run the GP/spline regional comparison and local support audit only")
     parser.add_argument("--global-geometry", choices=("displaced", "source-fans", "source-envelope"), help="Override the catalogued global geometry; source-envelope remains experimental")
     args = parser.parse_args(argv)
     compare_dataset(resolve_dataset(args.csv), args.output, name=args.name,
@@ -23,8 +23,10 @@ def compare(argv=None):
         global_dataset(resolve_dataset(args.csv), args.output/"global", name=args.name,
                        geometry=args.global_geometry,
                        progress=lambda message: print(message, flush=True))
+        from .models.directional.reporting import directional_dataset
+        directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name)
         with (args.output/"README.md").open("a") as stream:
-            stream.write("\n## Whole-deposit fallout\n\nRead the [conditional global estimate and assumption sensitivity](global/README.md). The total is normalized on the whole Earth; the local contour screen is an evidence diagnostic, not a veto on this separate calculation.\n")
+            stream.write("\n## Whole-deposit fallout\n\nCompare the [directional estimate from supported isopach fragments](directional/README.md) with the [spherical-mixture estimate](global/README.md). Each reports a whole-Earth bulk volume under its stated assumptions.\n")
 
 
 def global_analysis(argv=None):
@@ -33,8 +35,11 @@ def global_analysis(argv=None):
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name")
     parser.add_argument("--resume", action="store_true", help="Resume only checksum-verified matching posterior caches")
-    parser.add_argument("--geometry", choices=("displaced", "source-fans", "source-envelope"), help="Override the catalogued global geometry; source-envelope remains experimental")
+    parser.add_argument("--geometry", choices=("directional", "displaced", "source-fans", "source-envelope"), help="Use directional for the common isopach continuation or select a spherical-mixture geometry")
     args = parser.parse_args(argv)
+    if args.geometry == "directional":
+        from .models.directional.reporting import directional_dataset
+        return directional_dataset(resolve_dataset(args.csv), args.output, args.name, args.resume)
     from .global_reporting import global_dataset
     global_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume,
                    geometry=args.geometry,
@@ -65,6 +70,7 @@ def main(argv=None):
         for key, spec in REGISTRY.items():
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("global: Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume; fixed prior sensitivities and matched geographic holdouts.")
+        print("directional: Whole-Earth continuation from locally supported isopachs\n  Source-centred thinning, alternative missing fans and directional volume budgets.")
     else:
         parser.print_help()
 

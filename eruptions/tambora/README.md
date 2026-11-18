@@ -1,10 +1,14 @@
 # Tambora: data, global and regional results
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Conditional global estimate](results/global/README.md)
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/global/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
-## Global fallout
+## Global fallout from measured isopach fragments
+
+The common directional model gives **112.1 km³** of whole-deposit bulk fallout with a conditional 95% credible interval of **77.2–172.8 km³**. Within retained measurement triangles it gives **11.1 km³**, a median 9.9% of the total. The remaining volume depends on the continuation. **The reference retained a numerical warning after its retry.** [Measured isopach fragments, alternative fans and validation](results/directional/README.md) · [Matched six-eruption comparison and independent replications](../../comparisons/directional/README.md).
+
+## Spherical-mixture estimate
 
 The joint global posterior has median **179 km³** and a **113–1,284 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/global/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
 

@@ -1,5 +1,7 @@
 # Reproduce workflows and studies
 
+The directional study refits 13 policies and two geographic deletion schemes per eruption. Its known-volume tests include a deposit that has exactly the same observations as another with a hidden fan. [Results and reproduction commands](../comparisons/directional/README.md).
+
 [Project home](../README.md) · [Installation](../docs/QUICKSTART.md) · [Validation guide](../docs/VALIDATION.md) · [Agent task routes](../AGENTS.md)
 
 For one new eruption, use `tephra-isopachs compare` as described in the [intake workflow](../docs/NEW_ERUPTION.md). These modules reproduce broader method evaluations or specific studies. Run from the repository root into a fresh ignored `results/` directory; reviewed outputs live with cases and comparisons.

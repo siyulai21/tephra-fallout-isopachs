@@ -6,10 +6,10 @@ The workflow is **source evidence → accepted observations → empirical models
 
 | What brings you here? | Start here |
 |---|---|
-| Read results for an eruption | [Eruption cases](eruptions/README.md) — data, source decisions and three clearly separated reports |
+| Read results for an eruption | [Eruption cases](eruptions/README.md) — data, source decisions and reports |
 | Understand the project | [Newcomer guide](docs/START_HERE.md) — follow one calculation from evidence to results |
 | Supply new measurements | [Upload and publication workflow](docs/NEW_ERUPTION.md) · [Optional intake templates](templates/README.md) |
-| Understand the models | [Method catalogue](methods/README.md) — regional GP/spline peers and the global companion |
+| Understand the models | [Method catalogue](methods/README.md) — regional GP/spline peers and two global reconstructions |
 | Compare performance and uncertainty | [Evidence catalogue](comparisons/README.md) — cross-eruption results, stress tests and targeted studies |
 | Work on the repository as an AI agent | [AGENTS.md](AGENTS.md) — sources of truth, task routes, commands and checks |
 
@@ -19,9 +19,9 @@ The workflow is **source evidence → accepted observations → empirical models
 |---|---|---|
 | **Regional reconstruction** | How do GP and cubic spline fit the same observations? | Bulk fallout within their common observation hull; not the complete deposit |
 | **Local support audit** | Which locations and contours have nearby observational support? | Partial volume within a diagnosed footprint; gaps and rejected contours stay visible |
-| **Conditional global estimate** | What whole-deposit fallout is implied under stated assumptions? | Whole-Earth posterior from a mass-normalized model, with prior sensitivity and numerical checks |
+| **Conditional global estimate** | What whole-deposit fallout is implied under stated assumptions? | Whole-Earth posterior under either directional thinning from measured isopach fragments or a spherical mixture, with sensitivity and numerical checks |
 
-The regional methods are peers, with no automatic winner. The global model uses the same accepted evidence and geographic holdouts but answers a different volume question. A failed contour-support screen does not prevent a conditional global estimate. It highlights why missing deposits and prior assumptions matter. All volumes are bulk fallout, not dense-rock equivalent or total erupted material including ignimbrite deposits.
+The regional methods are peers, with no automatic winner. Both global models use the same accepted evidence and geographic holdouts. The directional reports show how much mass lies inside measured triangles and how much each unsampled direction contributes. [Six-eruption estimates and missing-direction tests](comparisons/directional/README.md). A failed contour-support screen does not prevent a conditional global estimate. It highlights why missing deposits and prior assumptions matter. All volumes are bulk fallout, not dense-rock equivalent or total erupted material including ignimbrite deposits.
 
 ## Current eruption cases
 

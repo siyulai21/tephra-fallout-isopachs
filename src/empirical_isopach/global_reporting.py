@@ -281,12 +281,22 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
             **validation["predictions"]}).to_csv(output/"heldout_predictions.csv", index=False)
     report["published_artifact_sha256"] = {file: sha256((output/file).read_bytes()).hexdigest()
         for file in ("posterior.npz", "volume_draws.csv.gz", "estimates.csv", "heldout_predictions.csv")}
+    from .models.mass_mixture.contours import load_surfaces, screen
+    fold_paths = {f["fold"]:output/"posteriors"/"validation"/f"fold-{f['fold']}"/f["fit"]["posterior_file"]
+                  for f in report["validation"]["fits"]}
+    surfaces = load_surfaces(report,base_path,fold_paths)
+    screened = screen(data,meta["vent_lonlat"][1],report,surfaces)
+    audit_path = output/"complete-contour-audit.json"
+    audit_path.write_text(json.dumps(screened,indent=2,allow_nan=False)+"\n")
+    report["published_artifact_sha256"][audit_path.name] = sha256(audit_path.read_bytes()).hexdigest()
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
     figures(output, name, data, meta, samples, report)
     from .source_reporting import source_figure
     source_figure(output, name, data, meta, samples)
     write_readme(output, name, report)
-    artifacts = ("README.md", "report.json", "posterior.npz", "volume_draws.csv.gz", "estimates.csv",
+    with (output/"README.md").open("a") as page:
+        page.write("\n[Complete-contour support and geographic-deletion checks](complete-contour-audit.json).\n")
+    artifacts = ("README.md", "report.json", "complete-contour-audit.json", "posterior.npz", "volume_draws.csv.gz", "estimates.csv",
                  "heldout_predictions.csv", "field.png", "volume.png", "sampling.png", "source.png")
     (output/"artifacts.json").write_text(json.dumps({name: sha256((output/name).read_bytes()).hexdigest()
         for name in artifacts}, indent=2)+"\n")
