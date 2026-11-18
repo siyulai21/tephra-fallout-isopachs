@@ -21,7 +21,15 @@ The monograph’s p. 26 considers the possibility that upper and lower Korean pu
 
 ## Location and map evidence
 
-The alternate project workbook gives **41.82291° N, 128.29277° E**, 28.2 km from the registered vent at an initial azimuth of 136.0° (WGS84 geodesic). That position is about 3.1 km from the gazetteer town point and 3.5 km from the pond point. The agreement with the named locality and the 2002 field party’s approximate distance is good. None of these geographic features identifies the logged outcrop. The other workbook version has a duplicate Suigetsu entry in place of this row. The 7 m entry was absent from the earlier 84-point model. [Samjiyŏn-ŭp, GeoNames 2041442](https://www.geonames.org/2041442/) · [Samji-yŏn, GeoNames 2041444](https://www.geonames.org/2041444/) · [Workbook and source hashes](README.md)
+The 1993 book names Samjiyon. The project workbook supplies a numerical position, and the gazetteer identifies nearby named features. Distances below are WGS84 geodesics. All three positions are consistent with the field party’s description of the area about 30 km southeast of Tianchi.
+
+| Position and purpose | Latitude | Longitude | Distance and bearing from vent | Distance from workbook position |
+|---|---:|---:|---:|---:|
+| Alternate workbook, assigned to the reported 7 m | 41.82291° N | 128.29277° E | 28.2 km, 136.0° | 0 km |
+| Samjiyŏn-ŭp, gazetteer town | 41.80356° N | 128.31886° E | 31.3 km, 135.9° | 3.1 km |
+| Samji-yŏn, gazetteer pond | 41.83084° N | 128.33380° E | 30.1 km, 130.2° | 3.5 km |
+
+The outcrop position remains unknown. The other workbook version has a duplicate Suigetsu entry in place of this row. The 7 m entry was absent from the earlier 84-point model. [Samjiyŏn-ŭp, GeoNames 2041442](https://www.geonames.org/2041442/) · [Samji-yŏn, GeoNames 2041444](https://www.geonames.org/2041444/) · [Workbook and source hashes](README.md)
 
 Figure 10 in the national report maps maximum lithic clast size. Figure 11 is captioned as a thickness map. Neither yielded a surveyed Samjiyon section with described bed contacts in the copy examined. On p. 66 the authors discuss a possible additional southeast thickness maximum in a plume interpretation. That observation does not establish reworking at Samjiyon. The report itself notes sparse field information on the DPRK side. [Source locators and original-file fingerprints](sources.json)
 
