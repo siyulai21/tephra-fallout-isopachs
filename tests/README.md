@@ -7,7 +7,8 @@ Run `python -m pytest -q` after installing `.[test]`. These tests verify numeric
 | Area | Tests |
 |---|---|
 | Active regional models and probability | `test_probabilistic.py`, `test_ensemble.py`, `test_regional_spline.py` |
-| Global posterior, normalization and geometry | `test_mass_mixture.py`, `test_source_fans.py`, `test_vent_envelope.py` |
+| Spherical-mixture posterior, normalization and geometry | `test_mass_mixture.py`, `test_source_fans.py`, `test_vent_envelope.py` |
+| Directional geometry, likelihood, whole-Earth integration and invisible proximal cap | `test_directional.py` |
 | Local footprints and complete-contour diagnostics | `test_support.py` |
 | Source audits and preserved inputs | `test_aso_evidence.py`, `test_minoan.py`, `test_ytt.py` |
 | Reporting and future-family integration | `test_reporting.py`, `test_method_registry.py` |
@@ -15,6 +16,6 @@ Run `python -m pytest -q` after installing `.[test]`. These tests verify numeric
 
 The registry test exercises a test-only third field through common fitting, folds, integration and reports; it does not register a third regional scientific model. The small [YTT fixture](fixtures/README.md) preserves an existing regression reference without retaining its full unused report collection.
 
-`python scripts/check_repository_navigation.py` checks repository-local Markdown links and images. `python -m benchmarks.verify_aso_evidence` verifies source/artifact/posterior checksums and matched geographic folds. GitHub Actions also installs the wheel and checks CLI routes, accepted case data and every catalogued audit outside the checkout.
+`python scripts/check_repository_navigation.py` checks repository-local Markdown links and images. `python -m benchmarks.verify_aso_evidence` verifies source/artifact/posterior checksums and matched geographic folds. `python -m benchmarks.verify_directional` checks all six cases, policy fits, mass budgets, independent replications and known-volume records. GitHub Actions runs both verifiers and checks installed CLI routes, accepted case data and every catalogued audit outside the checkout.
 
 Known-truth stress tests and publication findings live in the [evidence catalogue](../comparisons/README.md). Historical counts describe their original executions; use the current test run for the current code.

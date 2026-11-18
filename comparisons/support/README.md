@@ -1,6 +1,6 @@
 # Supported isopachs and the limits of global volume
 
-**Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../global/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. Aso-4 below reflects its 2026-11-08 source revision; the other five case results and historical stress tests are unchanged.
+**Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../spherical-mixture/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. Aso-4 below reflects its 2026-11-08 source revision; the other five case results and historical stress tests are unchanged.
 
 [Project home](../../README.md) · [Equations and assumptions](../../docs/methods/supported-isopachs.md) · [Matched-hull comparison](../regional/README.md)
 

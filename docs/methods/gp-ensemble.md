@@ -2,7 +2,7 @@
 
 **Current use:** the GP ensemble is one peer in the [regional GP/spline comparison](regional-comparison.md). The version-0.4 release discussion and legacy `fit --method` commands below describe its development history; the new `compare` command always evaluates both current families.
 
-[Method overview](../METHODS.md) · [Validation catalogue](../VALIDATION.md)
+[Method overview](../../methods/README.md) · [Validation catalogue](../VALIDATION.md)
 
 Version 0.4 adds an **experimental spatial predictive ensemble** to the fit workflow. It removes the need to choose a single thinning configuration by hand and carries disagreement among data-supported candidates into maps and joint volume draws. The single-GP `selected` strategy remains the default; use `--method stacked`.
 

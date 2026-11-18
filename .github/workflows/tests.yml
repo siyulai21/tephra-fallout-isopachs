@@ -24,6 +24,8 @@ jobs:
           python -c "from src.empirical_isopach.core.catalog import datasets, data_directory, resolve_dataset; from src.empirical_isopach.models.mass_mixture.study import audited_data; assert all((data_directory()/r['audit']).is_file() for r in datasets() if 'audit' in r); data, meta = audited_data(resolve_dataset('Aso-4')); assert len(data.xy) == 87 and data.censored.sum() == 4 and data.lower_censored.sum() == 3"
       - name: Verify retained Aso-4 evidence and posterior checksums
         run: python -m benchmarks.verify_aso_evidence
+      - name: Verify directional policy fits and whole-Earth mass budgets
+        run: python -m benchmarks.verify_directional
       - run: python -m pytest -q
         env:
           MPLBACKEND: Agg

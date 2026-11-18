@@ -28,13 +28,22 @@ def test_public_families_and_historical_imports(capsys):
 def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, monkeypatch):
     from src.empirical_isopach import cli, global_reporting
     from src.empirical_isopach.models.directional import reporting as directional
-    calls = []
-    monkeypatch.setattr(directional, "directional_dataset", lambda *a, **kw: calls.append("directional"))
+    calls, destinations = [], {}
+    def spherical_run(path, output, **kwargs):
+        destinations["spherical"] = output
+        calls.append(("global", kwargs.get("resume", False)))
+    def directional_run(path, output, *args, **kwargs):
+        destinations["directional"] = output
+        calls.append("directional")
+    monkeypatch.setattr(directional, "directional_dataset", directional_run)
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
-    monkeypatch.setattr(global_reporting, "global_dataset", lambda *a, **kw: calls.append(("global", kw.get("resume", False))))
+    monkeypatch.setattr(global_reporting, "global_dataset", spherical_run)
     (tmp_path/"a").mkdir()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"a")])
     assert calls == ["regional", ("global", False), "directional"]
+    assert destinations == {"spherical": tmp_path/"a/spherical-mixture", "directional": tmp_path/"a/directional"}
+    links = (tmp_path/"a/README.md").read_text()
+    assert "(spherical-mixture/README.md)" in links and "(directional/README.md)" in links
     calls.clear()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"b"), "--regional-only"])
     assert calls == ["regional"]

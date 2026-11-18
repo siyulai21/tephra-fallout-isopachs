@@ -1,20 +1,36 @@
-# Active empirical models
+# Four empirical families, two volume questions
 
-[Project home](../README.md) · [Compare results](../comparisons/README.md) · [Add a model](../docs/ADDING_METHOD.md)
+[Project home](../README.md) · [Eruption results](../eruptions/README.md) · [Validation evidence](../comparisons/README.md) · [Add a family](../docs/ADDING_METHOD.md)
 
-**Two regional peers and two conditional global models.** GP and spline each fit their own regional surface. Directional continuation and the mass-normalized spherical mixture each estimate whole-deposit fallout under explicit assumptions. Shared evidence and geographic evaluation make predictive performance comparable; a regional volume is not a global volume.
+Every family starts from the **same accepted measurements, bounds and source location**. Each fits its own thickness field and calculates its own volume. No family is the preferred answer, and their volumes are never averaged together.
 
-| Method | How the surface is fitted | Automatic choices | Guide |
-|---|---|---|---|
-| GP ensemble (`stacked`) | Directional thinning trends plus correlated Gaussian-process residual fields, combined by predictive stacking | Component candidates and weights from geographic training folds | [GP ensemble](gaussian-process.md) |
-| Trend-regularized cubic spline (`spline`) | Tensor-product cubic basis with integrated derivative and fitted-trend penalties | Trend, knots, tension, smoothing, trend strength and residual noise | [Cubic spline](cubic-spline.md) |
-| Directional continuation (`global --geometry directional`) | Interpolate measured isopach fragments and continue with positive, source-centred thinning | Latent thickness, directional reaches, proximal fraction, distal shape and scatter are fitted jointly | [Directional fallout](directional-fallout.md) |
-| Global spherical mixture (`global`) | Positive jointly fitted fans with whole-Earth mass normalization and numerical refinement checks | Full posterior for volume, core thinning, tails, fan geometry and noise; fixed prior sensitivities | [Global fallout](global-fallout.md) |
+| Scope | Family | How it constructs thickness | Volume reported | Guide |
+|---|---|---|---|---|
+| Regional | **GP ensemble** (`stacked`) | Fitted thinning trends plus correlated GP residuals; predictive stacking combines candidate fields | Common observation hull | [GP ensemble](gaussian-process.md) |
+| Regional | **Automatic cubic spline** (`spline`) | Cubic B-spline basis with normalized derivative and fitted-trend penalties; geographic training folds choose knots and regularization | The same observation hull | [Cubic spline](cubic-spline.md) |
+| Global | **Directional continuation** (`directional`) | Latent log thickness is linear within measurement triangles; a positive directional thinning law continues through gaps and beyond the sampled ground | Whole Earth, partitioned by compass direction and sampling support | [Directional continuation](directional-fallout.md) |
+| Global | **Spherical mixture** (`spherical-mixture` output folder) | A positive mixture of fallout fans with normalized mass and a joint posterior for volume and geometry | Whole Earth, with explicit prior sensitivities | [Spherical mixture](spherical-mixture.md) |
 
-None requires invented pseudo-observations. Numerical integration points evaluate integrals and penalties; they do not supply additional evidence. Automation removes per-eruption hand tuning, not the model's fixed assumptions or search limits.
+## How the newest method relates to the others
 
-The regional peers pass through the same [support and complete-contour audit](../docs/methods/supported-isopachs.md). A smooth GP prediction and a closed spline contour both require spatial evidence. The audit reports local partial volumes, refuses unsupported closure, and keeps proximal/distal continuations as explicit scenarios. [Results across all eruptions](../comparisons/support/README.md).
+The directional family was **added alongside the spherical mixture in version 0.12**. It does not consume GP predictions, spline contours or the spherical posterior as observations. Its isopach fragments are summaries of its own fitted field, not extra independent data. It uses neither a GP residual covariance nor the cubic-spline solver.
 
-The [code registry](../src/empirical_isopach/models/registry.py) lists the regional families. The global families have separate posterior runners. The standard `compare` command runs all four methods. [Directional model](../src/empirical_isopach/models/directional/) · [Spherical mixture](../src/empirical_isopach/models/mass_mixture/). The [contributor contract](../docs/ADDING_METHOD.md) specifies the statistical obligations.
+It reuses shared observation parsing, the local support mesh, geographic folds, probability tools and some spherical geometry/sampling utilities. Sharing those utilities keeps the comparison consistent; it does not make one model a stage of another. [Implementation map](../src/empirical_isopach/models/README.md).
 
-`selected` remains an internal GP strategy and historical reproduction option, not another public family. The original spline and first trend-penalty experiment are historical implementations. [Method history](../docs/METHODS.md) · [Source map](../src/README.md).
+The main scientific change concerns **unsampled directions**. The spherical mixture fits whole-deposit fan shapes. Directional continuation anchors local interpolation to measured triangles and limits how far a measured bearing can influence neighbouring directions. Empty bearings still receive positive fallout. The fixed missing-fan and proximal-cap sensitivities expose alternative deposits that the measurements cannot rule out. [Equations and assumptions](../docs/methods/directional-continuation.md).
+
+The newest family is not a demonstrated replacement: its geographic score is lower in 2/6 eruptions, fresh known-volume intervals cover truth in 4/8 numerically passing trials, and all four invisible-lobe trials miss the larger, observationally indistinguishable deposit. Tambora retains a sampling warning. These are the published development findings, not universal performance rates. [Matched evidence and limitations](../comparisons/directional/README.md).
+
+## Shared rules and different uncertainty
+
+All four use accepted observations and documented likelihood bounds. None requires hand-placed pseudo-observations. Integration nodes, spline penalty points and directional transition vertices supply numerical geometry, not evidence. Automatic fitting removes per-eruption manual tuning; fixed priors, geometry rules and search boundaries remain assumptions.
+
+GP and spline use identical regional hulls and nested geographic selection. Their conditional volume draws omit some fitted-parameter and selection uncertainty. The two global families sample joint parameter/field posteriors under their own priors. Keep each conditional interval separate from geographic-deletion ranges and sensitivity envelopes. A regional volume and a whole-Earth volume answer different questions.
+
+The [support audit](../docs/methods/supported-isopachs.md) applies to every family. It preserves holes and rejected contours; a failure does not veto a conditional global calculation. Held-out prediction, numerical convergence and identification of unseen global mass are different checks.
+
+## Running and extending the catalogue
+
+`tephra-isopachs compare` runs all four families. The [regional registry](../src/empirical_isopach/models/registry.py) lists GP and spline; the two global families use separate joint-posterior runners. This interface distinction is not a ranking. [Commands](../docs/QUICKSTART.md) · [Output paths and keys](../docs/OUTPUTS.md) · [Contributor contract](../docs/ADDING_METHOD.md).
+
+`selected` is an internal GP strategy and historical reproduction option. Individual GP components are still needed by the ensemble. Original and early fixed-smoothing spline engines remain only for regression/reproduction. [Method evolution and retained history](../docs/HISTORY.md).

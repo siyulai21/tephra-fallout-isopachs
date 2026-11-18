@@ -2,7 +2,7 @@
 
 **Later Aso-4 update:** this review retains its original input and geometry experiments. The subsequent [source audit](../aso-4-audit/README.md) corrects cruise coordinates, recovers bounds and reruns the current case. Its numbers supersede this page only as the current Aso-4 reference, not as a redefinition of these historical experiments.
 
-[Project home](../../README.md) · [Current global estimates](../global/README.md) · [Equations and assumptions](../../docs/methods/source-anchored-fans.md)
+[Project home](../../README.md) · [Current global estimates](../spherical-mixture/README.md) · [Equations and assumptions](../../docs/methods/source-anchored-fans.md)
 
 **The B-Tm problem was the thickest contour, not the volcano coordinates.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.
 
@@ -10,7 +10,7 @@ The source-focused B-Tm fit has a median of **106 km³** and a **53–2,159 km³
 
 ![B-Tm source correction](b-tm-source.png)
 
-The [current B-Tm report](../../eruptions/b-tm/results/global/README.md) contains the complete seven-alternative sensitivity protocol, fresh production fit, geographic checks and automatic integration refinement. The catalogue records its reviewed `source-fans` geometry, so the normal B-Tm command reproduces that choice. This changes the geometry, not eruption-specific wind or particle inputs. The upper volume tail remains broad and must be reported.
+The [current B-Tm report](../../eruptions/b-tm/results/spherical-mixture/README.md) contains the complete seven-alternative sensitivity protocol, fresh production fit, geographic checks and automatic integration refinement. The catalogue records its reviewed `source-fans` geometry, so the normal B-Tm command reproduces that choice. This changes the geometry, not eruption-specific wind or particle inputs. The upper volume tail remains broad and must be reported.
 
 **Aso-4 does not yet have a defensible lower replacement.** Source-focused ellipses improve its geographic score from **1.644 to 1.421**, with 94.3% coverage, but increase the conditional median to **3,418 km³**. The six- and twelve-site envelope models reduce it to **472 and 369 km³**, but their scores worsen to **1.715 and 1.760**, and coverage falls to **86.2%**. That is not a demonstration that 369–472 km³ is the correct global mass. The preceding 1,836 km³ calculation remains visible as a questioned conditional estimate, alongside these alternatives; it is not endorsed as a precise geological total.
 

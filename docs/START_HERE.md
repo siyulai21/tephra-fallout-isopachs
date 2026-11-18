@@ -1,37 +1,33 @@
 # Start here: measurements to fallout estimates
 
-[Project home](../README.md) · [Choose an eruption](../eruptions/README.md) · [Add an eruption](NEW_ERUPTION.md)
+[Project home](../README.md) · [Choose an eruption](../eruptions/README.md) · [Upload a dataset](NEW_ERUPTION.md)
 
-Field studies recover ash at scattered locations. This project fits thickness surfaces, draws equal-thickness contours (isopachs), integrates those surfaces, and checks predictions in withheld geographic regions. You can supply a new dataset in chat; its evidence and calculations are then published in this repository.
+Field studies find ash at scattered locations. This project reconstructs thickness surfaces, draws equal-thickness contours (isopachs), integrates each surface and tests predictions in withheld regions. Upload measurements and sources in chat; the assistant audits them and publishes the data, maps and reports here.
 
-## Follow one complete example
+## Follow Minoan from evidence to results
 
-1. Start at [Minoan](../eruptions/minoan/README.md). Its case page links every part of the calculation.
-2. Read the [source audit](../data/audits/Minoan/README.md) and [accepted input](../data/eruptions/Minoan_tephra.csv): 92 exact thicknesses and nine lower bounds, combining all accepted Plinian and co-ignimbrite fallout fans.
-3. Open the [regional report](../eruptions/minoan/results/README.md). GP ensemble and cubic spline fit the same evidence and are assessed on the same withheld regions.
-4. Open the [support audit](../eruptions/minoan/results/support/README.md). It identifies sampling gaps, local footprints and rejected contours.
-5. Open the [global report](../eruptions/minoan/results/global/README.md). A separate mass-normalized model estimates whole-deposit fallout under explicit assumptions, with posterior uncertainty and prior sensitivity.
+1. Open the [Minoan case home](../eruptions/minoan/README.md), then its [source audit](../data/audits/Minoan/README.md) and [accepted table](../data/eruptions/Minoan_tephra.csv). The calculation combines all accepted Plinian and co-ignimbrite fallout: 92 exact thicknesses and nine lower bounds.
+2. Read the [regional comparison](../eruptions/minoan/results/README.md). The GP ensemble and cubic spline independently fit the same observations, share their regional integration hull and use matched geographic holdouts.
+3. Inspect the [local support audit](../eruptions/minoan/results/support/README.md). It preserves unsampled holes and shows why a smooth or closed contour is not automatically supported evidence.
+4. Read **both** whole-deposit reconstructions: [directional continuation](../eruptions/minoan/results/directional/README.md) and [spherical mixture](../eruptions/minoan/results/spherical-mixture/README.md). Each starts from the accepted observations and makes different explicit assumptions across unmeasured ground.
+5. Compare [cross-eruption evidence](../comparisons/README.md), including held-out prediction, known-volume failures, numerical warnings and prior sensitivity.
 
-## Understand the three reports
+## Four families, not a chain of models
 
-| Report | What it can tell you | What it does not establish |
+| Question | Methods | Meaning of the volume |
 |---|---|---|
-| Regional GP/spline comparison | Near-data reconstruction, held-out prediction and volume over the common observation hull | Complete-deposit volume or uniformly supported interpolation inside gaps |
-| Local support audit | Where sampling geometry supports interpolation and which contours survive declared checks | That a closed contour validates its interior, or that partial volume is a certified lower bound |
-| Conditional global posterior | Whole-Earth fallout implied by a fitted field and its priors | That unobserved mass is identified by measurements alone |
+| How does the deposit fit near the observations? | GP ensemble and automatic cubic spline | Bulk fallout within the same observation hull |
+| What whole-deposit fallout follows under stated continuation assumptions? | Directional continuation and spherical mixture | Conditional whole-Earth bulk fallout |
+| Where is there local evidence? | Shared support audit, applied to every family | Diagnosed footprint, partial volumes and rejected contours |
 
-The GP ensemble and cubic spline are different statistical methods sharing data and evaluation. The two global models integrate over the Earth. Their assumptions about unsampled regions differ. [Isopach-fragment and spherical-mixture estimates](../comparisons/directional/README.md). A low regional prediction error does not by itself resolve extrapolated global mass. [Method catalogue](../methods/README.md).
+The directional method is the latest **addition**, not a GP post-processing step, a new cubic spline or a replacement for the spherical mixture. Each family produces its own field and volume. No family is automatically preferred. [How the methods relate](../methods/README.md).
 
-All volumes describe **bulk fallout**. Dense-rock equivalent needs independent density information; total eruption volume may also include ignimbrite deposits that are outside this calculation.
+All volumes describe **bulk fallout**. Dense-rock equivalent needs independent density information. Ignimbrite deposits themselves are outside this calculation, even when co-ignimbrite airborne fallout is included.
 
 ## Read evidence before a headline number
 
-Missing locations are not zeros. A documented detection limit can supply an upper bound; an incomplete deposit can sometimes supply a qualified lower bound. Source selection and geological interpretation remain explicit even though statistical fitting is automated.
+Missing ground is not zero fallout. A documented detection limit can supply an upper bound; an incomplete deposit can sometimes supply a qualified lower bound. Geological source selection remains explicit even when statistical fitting is automatic.
 
-Inspect held-out scores, coverage, numerical warnings and assumption sensitivity. Regional conditional intervals omit fitted-parameter and selection uncertainty. Global credible intervals are conditional on their model and priors; the span across sensitivity refits is not another 95% interval. A failed support screen does not veto the global calculation, but highlights the missing evidence.
+Read conditional intervals alongside held-out coverage, failed runs and sensitivity. Regional intervals omit some fitted-parameter and selection uncertainty. Global intervals depend on model and prior assumptions; their endpoints do not bound every possible hidden deposit. The span across assumption refits is not another 95% interval. A failed contour screen diagnoses missing support without suppressing a conditional global estimate.
 
-For examples of why the audits matter, read [Aso-4's corrected coordinates and unresolved global tail](../comparisons/aso-4-audit/README.md) or [B-Tm's source-contour correction and remaining thickness qualifications](../eruptions/b-tm/README.md).
-
-## Your next step
-
-[Upload measurements](NEW_ERUPTION.md) · [Run locally](QUICKSTART.md) · [Read output fields](OUTPUTS.md) · [Compare validation evidence](VALIDATION.md) · [Find a file](REPOSITORY_MAP.md) · [Agent task routes](../AGENTS.md)
+[Upload measurements](NEW_ERUPTION.md) · [Run locally](QUICKSTART.md) · [Read output fields](OUTPUTS.md) · [Find a file](REPOSITORY_MAP.md) · [Agent task routes](../AGENTS.md)

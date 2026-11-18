@@ -9,8 +9,9 @@ Use the first table to compare cases and methods. Use the second to understand s
 | Collection | Read it for |
 |---|---|
 | [Regional comparison](regional/README.md) | GP/spline peers on matched observation hulls, geographic predictions and known-truth regional trials |
+| [Global families overview](global/README.md) | Relationship between the two global models, their shared inputs and their different extrapolation assumptions |
 | [Global estimates from isopach fragments](directional/README.md) | Matched directional and spherical estimates for six eruptions, sector mass, held-out locations, known-volume tests and hidden fans |
-| [Spherical-mixture estimates](global/README.md) | Whole-Earth conditional posteriors, reviewed case geometry, prior sensitivities and unobserved mass |
+| [Spherical-mixture estimates](spherical-mixture/README.md) | Whole-Earth conditional posteriors, reviewed case geometry, prior sensitivities and unobserved mass |
 | [Local support audit](support/README.md) | Sampling gaps, partial volumes, contour rejection and extrapolation limits |
 
 Regional volumes are not global totals. Predictive comparisons require the same accepted rows and holdouts; read each record's input version. A smaller volume or a smoother map is not a model-selection criterion.

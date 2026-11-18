@@ -1,8 +1,8 @@
-# Conditional global fallout model
+# Spherical-mixture global fallout
 
-[Method catalogue](README.md) · [Global comparison](../comparisons/global/README.md) · [Output definitions](../docs/OUTPUTS.md)
+[Method catalogue](README.md) · [Global comparison](../comparisons/spherical-mixture/README.md) · [Output definitions](../docs/OUTPUTS.md)
 
-**Public command: `global`; also included by `compare`.** This companion fits a positive field of jointly estimated fallout fans with total mass normalized over the whole Earth. Its global volume is independent of a chosen map rectangle or a closing isopach. It uses the same accepted observations and geographic holdouts as the regional peers.
+**Public command: `global` with a spherical geometry (the default); also included by `compare`.** Output folder: `spherical-mixture/`. The same command with `--geometry directional` runs the other global family. This companion fits a positive field of jointly estimated fallout fans with total mass normalized over the whole Earth. Its global volume is independent of a chosen map rectangle or a closing isopach. It uses the same accepted observations and geographic holdouts as the regional peers.
 
 The current catalogue chooses the reviewed geometry: B-Tm uses source-focused fans; the other cases use displaced components. Aso-4's high global total remains questioned. The tighter fan-position prior tested in its evidence study is a development alternative, not the universal default. Source-envelope geometries remain experimental.
 

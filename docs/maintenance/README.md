@@ -20,4 +20,4 @@ Historical provenance records retain the paths and hashes from their execution. 
 - Run the relevant artifact verifier and inspect the staged Git tree, including files in nested `results/` directories. The ignore rule for scratch runs must be anchored to `/results/`.
 - Leave unrelated working copies and untracked files untouched.
 
-[2026-11-08 cleanup verification](cleanup-2026-11-08.json) records the retained content, removed collections and checks. The full pre-cleanup files remain in [Git history](../HISTORY.md).
+[2026-11-17 organization verification](cleanup-2026-11-17.json) records the four-family navigation and path migration. The [2026-11-08 cleanup verification](cleanup-2026-11-08.json) records the retained content, removed collections and checks. The full pre-cleanup files remain in [Git history](../HISTORY.md).

@@ -108,7 +108,7 @@ def verify(folder, record, comparison, study, extremes):
             check_interval(part, base["parts"][r]["volume_km3"])
             check_interval(part/total, base["parts"][r]["fraction"])
     geo = report["validation"]["geographic"]
-    old = read(folder.parent/"global/report.json")["validation"]
+    old = read(folder.parent/"spherical-mixture/report.json")["validation"]
     assert (geo["row_ids"],geo["folds"],geo["buffer_km"]) == (old["row_ids"],old["folds"],old["buffer_km"])
     for current, previous in zip(geo["fits"],old["fits"],strict=True):
         for key in ("training_row_ids","withheld_row_ids"):

@@ -2,7 +2,7 @@
 
 A second whole-Earth model continues measured isopach fragments with directional thinning. Both approaches use the same accepted rows and matched outer holdouts. [Directional protocol](directional-continuation.md) · [Results for all eruptions](../../comparisons/directional/README.md).
 
-[Project home](../../README.md) · [All-eruption results](../../comparisons/global/README.md) · [Implementation](../../src/empirical_isopach/models/mass_mixture/) · [Support diagnostic](supported-isopachs.md)
+[Project home](../../README.md) · [All-eruption results](../../comparisons/spherical-mixture/README.md) · [Implementation](../../src/empirical_isopach/models/mass_mixture/) · [Support diagnostic](supported-isopachs.md)
 
 Protocol: `mass-normalized-spherical-mixture-v1`, introduced in 0.10. The proposed empirical model estimates **bulk fallout volume**, jointly across accepted fallout fans. It is a research implementation, not a validated physical transport model. Its priors are the same for all eruptions; no wind field, umbrella dynamics, grain-size distribution or published target volume is supplied.
 

@@ -14,7 +14,7 @@ from src.empirical_isopach.models.directional.study import digest
 
 def run(record, output, runs=None, replay=None):
     slug = record["slug"]
-    home = Path("eruptions")/slug/"results/global"
+    home = Path("eruptions")/slug/"results/spherical-mixture"
     report = json.loads((home/"report.json").read_text())
     data, meta = audited_data(record["path"])
     assert meta["input_sha256"] == report["input"]["input_sha256"]

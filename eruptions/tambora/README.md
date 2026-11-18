@@ -1,6 +1,6 @@
 # Tambora: data, global and regional results
 
-[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/global/README.md)
+[Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)
 
@@ -10,15 +10,15 @@ The common directional model gives **112.1 km³** of whole-deposit bulk fallout 
 
 ## Spherical-mixture estimate
 
-The joint global posterior has median **179 km³** and a **113–1,284 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/global/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
+The joint global posterior has median **179 km³** and a **113–1,284 km³ conditional 95% credible interval** for bulk fallout. All accepted fans are fitted together. This whole-Earth estimate uses no closing pseudo-data or arbitrary calculation region. [Read the global report, assumptions and sensitivity refits](results/spherical-mixture/README.md). The wide upper tail reflects deposits that remain poorly constrained by observations.
 
-**Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 49,323 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/global/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
+**Local support audit:** no complete isopach band passes the support and deletion checks. The standard local footprint covers 49,323 km². Read the [local partial volumes and rejected-contour checks](results/support/README.md) before interpreting the broader hull results below. The separate [conditional global analysis](results/spherical-mixture/README.md) now estimates the whole deposit under explicit assumptions; this contour-screen decision is unchanged.
 
 ## Regional reconstruction
 
 **GP ensemble and automatic cubic spline are reported as peers.** Both use the same accepted data, geographic holdouts and observation hull.
 
-[Read the full comparison](results/README.md) · [Compare all six eruptions](../../comparisons/regional/README.md) · [Method definitions](../../docs/METHODS.md)
+[Read the full comparison](results/README.md) · [Compare all six eruptions](../../comparisons/regional/README.md) · [Method definitions](../../methods/README.md)
 
 26 exact measurements and 0 lower bounds; regional area 2,980,287 km².
 
@@ -37,13 +37,13 @@ These volumes cover only the observation hull. It can include unsampled gaps and
 |---|---|
 | Accepted input | [Thickness observations](../../data/eruptions/Tambora_tephra.csv) |
 | Source decisions | [Audit or supplied-flag status](../../data/eruptions/README.md) |
-| Whole-deposit mass and uncertainty | [Global posterior report](results/global/README.md) |
+| Whole-deposit mass and uncertainty | [Global posterior report](results/spherical-mixture/README.md) |
 | Local maps and partial volumes | [Regional report](results/README.md) |
 | Fits, validation and provenance | [Complete numerical record](results/report.json) |
 | Row-by-row outer predictions | [Held-out predictions](results/heldout_predictions.csv) |
 | Automatic tuning | [Candidate tables](results/selection/README.md) |
 
-The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/global/verification.json).
+The 2026-11-04 regional rerun reproduced accepted inputs, fitted settings, held-out predictions and matched-hull volumes exactly. The new global companion is published separately. [Rerun verification](../../comparisons/spherical-mixture/verification.json).
 
 ## Related evidence and history
 

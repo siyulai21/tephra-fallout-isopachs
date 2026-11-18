@@ -1,21 +1,25 @@
 # Source-code map
 
-[Project home](../README.md) · [Method catalogue](../methods/README.md) · [Add a family](../docs/ADDING_METHOD.md)
+[Project home](../README.md) · [Method catalogue](../methods/README.md) · [Agent routes](../AGENTS.md)
 
-The active workflow lives in **[empirical_isopach/](empirical_isopach/README.md)**. It contains two regional families and a global companion, with separate implementations and explicit reporting scopes.
+The active workflow is [empirical_isopach/](empirical_isopach/README.md). Its four families fit the same accepted evidence independently. Shared utilities provide consistent units, observation semantics, geometry, evaluation and reporting.
 
-| Directory | Role |
+| Task | Edit here |
 |---|---|
-| [empirical_isopach/core/](empirical_isopach/core/README.md) | Common data, probability, geography and scoring utilities |
-| [empirical_isopach/models/](empirical_isopach/models/README.md) | Regional registry, GP ensemble, automatic cubic spline and global mass model |
-| [empirical_isopach/models/mass_mixture/](empirical_isopach/models/mass_mixture/README.md) | Whole-Earth posterior, generic priors, source geometries and numerical checks |
-| [empirical_isopach/](empirical_isopach/README.md) | Shared comparison runner, volume integration, maps and reports |
-| [probabilistic_isopach/](probabilistic_isopach/README.md) | Old import wrappers, historical GP/global workflow and reused map assets |
-| [spline_isopach/](spline_isopach/README.md) | Historical original spline and optional desktop GUI |
-| [research/](research/README.md) | Historical first fixed-smoothing trend-penalty experiment |
+| Parse accepted data or change shared scoring | [core/](empirical_isopach/core/README.md) |
+| Fit or select the regional GP ensemble | [models/gaussian_process/](empirical_isopach/models/gaussian_process/README.md) |
+| Fit or tune the regional cubic spline | [models/cubic_spline/](empirical_isopach/models/cubic_spline/README.md) |
+| Change directional interpolation, continuation or mass budgets | [models/directional/](empirical_isopach/models/directional/README.md) |
+| Change spherical-mixture fans, priors or posterior | [models/mass_mixture/](empirical_isopach/models/mass_mixture/README.md) |
+| Add a regional peer | [models/registry.py](empirical_isopach/models/registry.py) and the [method contract](../docs/ADDING_METHOD.md) |
+| Change commands, support or report assembly | [Framework map](empirical_isopach/README.md) |
 
-The GP does not call the spline solver. The spline does not fit a GP residual. GP components are internal ingredients of one public ensemble, not extra public methods. Historical source packages are retained for reproduction and are not active registry entries.
+## Compatibility and reproduction
 
-`Laea.py` supplies projection helpers. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md).
+| Retained package | Why it is still here |
+|---|---|
+| [probabilistic_isopach/](probabilistic_isopach/README.md) | Thin imports of active implementations, historical GP-only commands, Earth integration helpers and map assets reused by current reports |
+| [spline_isopach/](spline_isopach/README.md) | Original spline numerical engine and regression references; the unused desktop GUI has been removed |
+| [research/](research/README.md) | First fixed-smoothing spline experiment, needed by historical benchmarks and regression checks |
 
-For task-specific entry points and verification commands, start with [AGENTS.md](../AGENTS.md). Historical packages remain because compatibility and regression tests use them; they are not additional default model families.
+These are not additional default families. Do not delete shared Earth/plotting helpers just because their package name is historical. `Laea.py` still supplies source-coordinate preparation for reproduction. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md) · [History](../docs/HISTORY.md).

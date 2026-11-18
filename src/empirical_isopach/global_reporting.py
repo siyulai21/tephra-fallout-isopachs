@@ -152,9 +152,9 @@ def write_readme(output, name, report):
             f"(lower is better), log-thickness RMSE **{m['rmse_log']:.3f}**, and heldout observation coverage **{m['coverage95_observations']:.1%}**. "
             f"All four posterior fits passed numerical diagnostics: **{validation['all_fits_passed_diagnostics']}**. "
             "These predictions test transfer to withheld observations, not the unobserved whole-deposit volume.")
-    text = f"""# {name} · global fallout estimate
+    text = f"""# {name} · spherical-mixture global fallout estimate
 
-[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/global/README.md)
+[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/spherical-mixture/README.md)
 
 The baseline posterior median is **{v['median']:.3g} km³**, with a **{v['lower95']:.3g}–{v['upper95']:.3g} km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **{'passed' if d['passed'] else 'not passed — provisional numerical summary'}**.
 

@@ -1,6 +1,6 @@
 # Aso-4: source errors, marine observations and the high-volume tail
 
-[Current eruption report](../../eruptions/aso-4/README.md) · [Source audit and primary references](../../data/audits/Aso-4/README.md) · [Global calculation](../../eruptions/aso-4/results/global/README.md) · [Earlier geometry experiments](../source-revision/README.md)
+[Current eruption report](../../eruptions/aso-4/README.md) · [Source audit and primary references](../../data/audits/Aso-4/README.md) · [Global calculation](../../eruptions/aso-4/results/spherical-mixture/README.md) · [Earlier geometry experiments](../source-revision/README.md)
 
 **Two large coordinate errors are corrected. The global volume remains weakly constrained.** The source-qualified reference scenario gives **1,466 km³**, with a **501–44,173 km³ conditional 95% credible interval**. A tighter, separately tested fan-position prior gives **777 km³ [403–6,382]** and better geographic predictions. It remains a development alternative: neither model has independently validated the missing global mass, and neither interval automatically includes unknown marine redistribution.
 
