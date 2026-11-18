@@ -15,6 +15,8 @@ Each case has one home linking **accepted evidence â†’ regional reconstruction â
 
 The regional peers share the same input, geographic holdouts and integration footprint. Global mass is a separate conditional estimate. Support failures remain visible and do not veto that estimate. These are not interchangeable volume definitions.
 
+Each case home includes a four-method visual overview. The global reports have separate wider, local and whole-Earth maps; the regional maps contain the entire observation hull. [Read the map scales and uncertainty](../docs/OUTPUTS.md).
+
 ## What lives in a case?
 
 `README.md` is the maintained case summary. `results/` contains the reviewed regional report, maps, candidate tables and provenance; `support/` contains the local audit, and `directional/` and `spherical-mixture/` contain the two whole-deposit reconstructions. `global/README.md` introduces both. Accepted measurements and source decisions have a single authoritative home under [data/](../data/README.md).

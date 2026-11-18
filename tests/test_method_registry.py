@@ -38,9 +38,10 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     monkeypatch.setattr(directional, "directional_dataset", directional_run)
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
     monkeypatch.setattr(global_reporting, "global_dataset", spherical_run)
+    monkeypatch.setattr(cli, "saved_case_overview", lambda *a: calls.append("overview"))
     (tmp_path/"a").mkdir()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"a")])
-    assert calls == ["regional", ("global", False), "directional"]
+    assert calls == ["regional", ("global", False), "directional", "overview"]
     assert destinations == {"spherical": tmp_path/"a/spherical-mixture", "directional": tmp_path/"a/directional"}
     links = (tmp_path/"a/README.md").read_text()
     assert "(spherical-mixture/README.md)" in links and "(directional/README.md)" in links

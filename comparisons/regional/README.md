@@ -1,5 +1,7 @@
 # Regional comparison of empirical methods
 
+[Visual comparison of all four families on the same geographic holdouts](../global/README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+
 All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison. Aso-4 uses its 2026-11-08 source-qualified revision; the other five case calculations and the synthetic trials are unchanged. Read the [Aso-4 audit](../aso-4-audit/README.md) and [support checks](../support/README.md).
 
 | Eruption | Method | Expected regional volume (km³) | Outer equal-region score ↓ | 95% observation coverage |

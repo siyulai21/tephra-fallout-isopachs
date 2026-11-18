@@ -1,5 +1,7 @@
 # Global fallout from measured isopach fragments
 
+[Visual comparison of all four families on the same geographic holdouts](../global/README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+
 The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../docs/methods/directional-continuation.md).
 
 | Eruption | Directional median km³ [conditional 95%] | Spherical-mixture median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |
@@ -16,6 +18,8 @@ Lower scores mean better prediction of held-out thickness or a documented bound.
 The shared complete-contour screen was also run on both global families, using the same bracketing, support, resolution and four-deletion criteria as the regional peers. The directional model has a qualifying band in 0/6 cases and the spherical mixture in 0/6. Each case contains its directional decisions. The spherical packet includes all rejected levels, numerical fold flags and checksum-verified field subsets for replay. [Spherical support evidence](spherical-support/) · [Regional support evidence](../support/README.md).
 
 ![Vent-centred conditional maps for all six eruptions](compass-maps.png)
+
+These compass plots are local radial windows ending at the farthest accepted site; contours can continue outside them. Each [case report](../../eruptions/README.md) now supplies an expanded global overview, a complete local detail and a whole-Earth view.
 
 Each circle shows all compass directions to the most distant accepted observation in that eruption. White symbols locate the observations and bounds. Dashed contours mark 1, 10 and 100 cm where present. The star marks the vent. Colours in empty sectors show the reference continuation. The circle edge is only a display limit. The bulk-volume integral continues across the whole Earth.
 

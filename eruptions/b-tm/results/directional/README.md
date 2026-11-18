@@ -4,9 +4,18 @@
 
 ![Supported isopach fragments and conditional continuation](isopachs.png)
 
-The left map shades the interpolation footprint and shows 21 measured-bracketed line segments. The right map shows the geometric mean of posterior thickness with dashed contours. Both panels mark exact observations with circles, lower and upper bounds with up and down triangles, and the source with a star. Volume comes from integration of each complete field to the antipode.
+The fragments panel covers every accepted location. The continuation panel expands around the displayed 0.1 cm contour; these panels deliberately have different frames. [Display bounds, finite-grid edge check and posterior subset](map-display.json).
 
-The displayed grid reaches 124.2 cm at a source distance of 0.0 km (transition). At the supplied vent it gives 124.2 cm. These are summaries of the fitted map.
+![Local thickness and latent uncertainty](local.png)
+
+![Whole-Earth conditional continuation](world.png)
+
+Local detail can cut contours at its window; longitude edges join in the whole-Earth view. Colours saturate below 0.1 cm and above the displayed upper limit. Fine coastlines supply context, not fitting evidence. This visual refresh preserves the original posterior and all numerical estimates; [replay checks](../figure-replay.json) record their hashes.
+
+
+The fragments panel shades the interpolation footprint and shows 21 measured-bracketed line segments. The continuation panel shows the geometric mean of posterior thickness with labelled contours. Both panels mark exact observations with circles, lower and upper bounds with up and down triangles, and the source with a star. Volume comes from integration of each complete field to the antipode.
+
+The original execution grid reached 124.2 cm at a source distance of 0.0 km (transition). At the supplied vent it gives 124.2 cm. These original-grid diagnostics remain in `report.json`; the current display grid and posterior subset are recorded separately in [map-display.json](map-display.json).
 
 ## Where the volume comes from
 

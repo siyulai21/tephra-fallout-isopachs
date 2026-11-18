@@ -1,5 +1,9 @@
 # B-Tm: data, global and regional results
 
+![Regional and global volumes with matched geographic validation](results/overview.png)
+
+[Read the visual comparison](results/overview.png) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+
 [Regional fit](results/README.md) · [Local support](results/support/README.md) · [Directional estimate](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
 
 [All eruptions](../README.md) · [Active methods](../../methods/README.md) · [Add or revise data](../../docs/NEW_ERUPTION.md)

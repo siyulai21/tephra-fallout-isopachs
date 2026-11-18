@@ -1,5 +1,11 @@
 # Changes
 
+## 0.13.0 — Complete map frames and clearer case visuals
+
+- Refresh every current eruption with fine offline coastlines, regional maps containing the complete observation hull, expanded global continuation maps, local uncertainty detail and whole-Earth context.
+- Add per-case four-method summaries and matched six-case predictive comparisons. Keep regional/global volume domains separate and retain numerical warnings.
+- Centralize display-only rendering, make it the normal report output, and provide a replay command using recorded regional settings and saved global posteriors. Preserve scientific tables, report records and posterior bytes; verify explicit visual revisions and numerical replay parity in CI.
+
 ## 0.12.1 — Four-family navigation and explicit global result names
 
 - Explain directional continuation as an additional global family, independent of the regional GP/spline and spherical-mixture fits. Give both global families equal entry points and retain their different validation limits.

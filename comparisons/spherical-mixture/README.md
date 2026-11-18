@@ -1,5 +1,7 @@
 # Global fallout estimates across six eruptions
 
+[Visual comparison of all four families on the same geographic holdouts](../global/README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
+
 [Both global families](../global/README.md) · [Matched directional comparison](../directional/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
 
 The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**

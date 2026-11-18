@@ -11,7 +11,6 @@ import pandas as pd
 
 from .core.catalog import dataset_record, data_directory
 from .core.observations import read_observations
-from .core.distributions import predictive_distribution
 from .region import SurveyRegion, integrate_region, regional_draws
 from .core.geometry import survey_bounds
 from .models.registry import active_methods, method_spec, method_label, method_metadata
@@ -60,77 +59,12 @@ def save_figures(output, name, data, metadata, region, models, report):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
-    from src.probabilistic_isopach.figures import STYLE, CMAP, INK, MUTED, TEAL, AMBER, _coastlines
+    from src.probabilistic_isopach.figures import STYLE, MUTED, TEAL, AMBER
     methods = tuple(report["methods"])
     labels = {m: report_label(report, m) for m in methods}
-    bounds = np.array(report["fit_bounds_km"])
-    x, y = np.linspace(bounds[0], bounds[2], 181), np.linspace(bounds[1], bounds[3], 181)
-    xx, yy = np.meshgrid(x, y)
-    xy = np.column_stack((xx.ravel(), yy.ravel()))
-    inside = region.contains(xy)
-    fields, grid = {}, {"x_km": xy[:, 0], "y_km": xy[:, 1], "inside_observation_hull": inside}
-    for method, model in models.items():
-        distribution = predictive_distribution(model, xy)
-        median = distribution.quantile(.5)
-        fields[method] = np.ma.array(median.reshape(xx.shape), mask=(~inside).reshape(xx.shape))
-        grid[method+"_median_cm"] = np.exp(median)
-        grid[method+"_conditional_mean_cm"] = np.exp(distribution.log_expected_thickness())
-        grid[method+"_conditional_lower95_cm"] = np.exp(distribution.quantile(.025))
-        grid[method+"_conditional_upper95_cm"] = np.exp(distribution.quantile(.975))
-    pd.DataFrame(grid).to_csv(output/"predictions.csv", index=False)
-    values = np.concatenate([v.compressed() for v in fields.values()])
-    low, high = float(values.min()), float(values.max())
-    if high <= low:
-        high = low+1
-    levels = np.linspace(low, high, 24)
-    contour_values = np.array([m*10.**k for k in range(-6, 9) for m in (1, 3)])
-    contours = np.log(contour_values)
-    contours = contours[(contours > low) & (contours < high)]
-    boundary = np.vstack((region.vertices, region.vertices[0]))
+    from .visualization.regional import regional_maps
+    regional_maps(output, name, data, metadata, region, models, report)
     with plt.rc_context(STYLE):
-        ncols = min(2, len(methods))
-        nrows = (len(methods)+ncols-1)//ncols
-        fig, grid_axes = plt.subplots(nrows, ncols, figsize=(6.5*ncols, 6.6*nrows),
-            layout="constrained", sharex=True, sharey=True, squeeze=False)
-        axes = list(grid_axes.flat)[:len(methods)]
-        for unused in list(grid_axes.flat)[len(methods):]:
-            unused.set_visible(False)
-        for ax, method in zip(axes, methods):
-            fill = ax.contourf(x, y, fields[method], levels=levels, cmap=CMAP)
-            _coastlines(ax, metadata["vent_lonlat"])
-            if len(contours):
-                lines = ax.contour(x, y, fields[method], levels=contours, colors=INK, linewidths=.65, linestyles="solid")
-                ax.clabel(lines, fmt=lambda v: f"{np.exp(v):g}", fontsize=7)
-            ax.plot(*boundary.T, color=TEAL, ls="--", lw=1.)
-            for mask, marker, color in ((~data.censored, "o", INK),
-                    (data.censored & ~data.lower_censored, "v", AMBER), (data.lower_censored, "^", AMBER)):
-                if mask.any():
-                    ax.scatter(*data.xy[mask].T, s=18, marker=marker, edgecolors=color, facecolors="white", linewidths=.7, zorder=5)
-            ax.scatter([0], [0], marker="*", color="#B9573C", edgecolors="white", s=90, zorder=6)
-            volume = report["methods"][method]["regional_volume"]
-            ax.set(title=f"{labels[method]}\nExpected regional volume: {volume['expected_km3']:.1f} km³",
-                   xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
-                   xlabel="Easting from source reference (km)")
-            ax.grid(alpha=.15)
-        axes[0].set_ylabel("Northing from source reference (km)")
-        handles = [Line2D([], [], marker="o", color=INK, markerfacecolor="white", ls="", label="Measurement"),
-                   Line2D([], [], marker="*", color="#B9573C", ls="", label="Source reference")]
-        if data.lower_censored.any():
-            handles.append(Line2D([], [], marker="^", color=AMBER, markerfacecolor="white", ls="", label="Lower bound"))
-        if (data.censored & ~data.lower_censored).any():
-            handles.append(Line2D([], [], marker="v", color=AMBER, markerfacecolor="white", ls="", label="Upper limit"))
-        axes[0].legend(handles=handles, loc="upper left", fontsize=8, framealpha=.95)
-        cbar = fig.colorbar(fill, ax=axes, shrink=.72, pad=.02)
-        ticks = contours[::max(1, len(contours)//8)] if len(contours) else [low, high]
-        cbar.set_ticks(ticks, labels=[f"{np.exp(t):g}" for t in ticks])
-        cbar.set_label("Median thickness (cm); shared scale")
-        fig.suptitle(f"{name} · same data, same regional footprint\n"
-                     "Isopachs stop at the observation hull; gaps inside remain model-dependent.", fontsize=15)
-        for suffix in ("png", "svg"):
-            fig.savefig(output/f"isopachs.{suffix}", dpi=170)
-        plt.close(fig)
-
         panels = len(methods)+1
         ncols = min(3, panels)
         nrows = (panels+ncols-1)//ncols
@@ -186,6 +120,7 @@ def write_readme(output, name, report):
              f"**{meta['n_measurements']} exact measurements, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper limits.** "
              f"The observation hull covers {region['area_km2']:,.0f} km². The automatic validation buffer is {report['validation']['buffer_km']:.2f} km.", "",
              "![Matched median isopachs](isopachs.png)", "",
+             "The full observation hull and every accepted location are in view. The coloured field is clipped to the exact hull; fine coastlines are context only. [Map frame and rendering provenance](map-display.json).", "",
              "| Quantity | "+" | ".join(labels[m] for m in methods)+" |", "|---|"+"---:|"*len(methods)]
     def pair(label, values, fmt=".2f"):
         lines.append("| "+label+" | "+" | ".join(format(x, fmt) for x in values)+" |")

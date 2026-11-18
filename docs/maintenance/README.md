@@ -12,6 +12,8 @@ When replacing a result, record the old commit and the new input/method identity
 
 Historical provenance records retain the paths and hashes from their execution. A moved dependency should have a documented path resolver; do not edit its scientific contents just to make the filenames current. Generated reports with artifact manifests require deliberate checksum handling if their contents change.
 
+For a display-only update, follow the [figure refresh policy](visuals.md): replay recorded fits, verify unchanged numerical evidence, inspect maps, and record exact before/after presentation hashes. Current figures may improve without rewriting frozen historical figures or execution provenance.
+
 ## Verify an organization change
 
 - Check every current data file and scientific artifact against its pre-change bytes, accounting for any explicitly moved reference.

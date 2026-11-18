@@ -29,6 +29,8 @@ The regional methods are peers, with no automatic winner. The [two global famili
 
 Each case links its accepted input, source status, current reports and relevant studies. Minoan fits all accepted fallout fans together. Aso-4's source-qualified revision and questioned global total, and B-Tm's source-focused geometry and remaining input qualifications, are explained on their case pages.
 
+See the [four-family visual comparison](comparisons/global/README.md) and the [map-reading guide](docs/OUTPUTS.md). Each case now includes a complete-hull regional map, wider global views, local uncertainty detail and whole-Earth context.
+
 ## Run the same workflow locally
 
 With Python 3.10 or later, in a checkout:

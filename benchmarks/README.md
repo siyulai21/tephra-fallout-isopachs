@@ -23,6 +23,8 @@ For one new eruption, use `tephra-isopachs compare` as described in the [intake 
 
 ## Read-only evidence checks
 
+`python -m benchmarks.refresh_figures --output results/new-figures` replays the recorded fits into fresh visual outputs without retuning or resampling. It checks regional parameter and integral parity and uses unchanged global draws. [Rendering and publication policy](../docs/maintenance/visuals.md). `python -m benchmarks.verify_visuals` verifies current figure provenance and preserved scientific hashes.
+
 `python -m benchmarks.verify_directional` verifies all six directional reports, 78 policy fits, mass partitions, six independent replications and 28 known-volume trials. `python -m benchmarks.verify_aso_evidence` verifies the retained source-revision study and posterior checksums. Both run without refitting or changing published evidence.
 
 The directional [reproduction sequence](../comparisons/directional/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay). `directional_development` reproduces earlier experiments; its outcomes are retained as development evidence.

@@ -1,0 +1,105 @@
+"""Reader-facing comparisons from recorded estimates, never new inference."""
+from pathlib import Path
+import numpy as np
+import matplotlib.pyplot as plt
+from src.probabilistic_isopach.figures import STYLE
+
+COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
+          "Directional":"#6657A1", "Spherical mixture":"#346DA4"}
+
+
+def saved_case_overview(output, name=None):
+    """Assemble the common overview only after all four reports are written."""
+    import json
+    output = Path(output)
+    reports = [json.loads((output/p).read_text()) for p in
+               ("report.json", "directional/report.json", "spherical-mixture/report.json")]
+    case_overview(output, name or reports[0]["dataset"], *reports)
+
+
+def metrics(regional, directional, spherical):
+    records = []
+    for key, label in (("stacked", "GP ensemble"), ("spline", "Cubic spline")):
+        m = regional["validation"]["methods"][key]["metrics"]
+        records.append((label, m["equal_region_log_score"], m["coverage95_observations"], True))
+    for label, val in (("Directional", directional["validation"]["geographic"]),
+                       ("Spherical mixture", spherical["validation"])):
+        m = val["metrics"]
+        passed = (val["all_fits_passed_diagnostics"] if "all_fits_passed_diagnostics" in val
+                  else val["all_estimable_passed"] and val["scored_rows"] == val["total_rows"])
+        score = val["equal_region_log_score"] if "equal_region_log_score" in val else m["equal_region_log_score"]
+        records.append((label, score, m["coverage95_observations"], passed))
+    return records
+
+
+def case_overview(output, name, regional, directional, spherical):
+    with plt.rc_context(STYLE):
+        fig, axs = plt.subplots(2, 2, figsize=(12.6, 8.5), layout="constrained")
+        for i, (key, label) in enumerate((("stacked", "GP ensemble"), ("spline", "Cubic spline"))):
+            item = regional["methods"][key]
+            q = item["joint_volume"]["conditional_quantiles_km3"]
+            axs[0, 0].errorbar(q["0.5"], i, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
+                              fmt="o", color=COLORS[label], capsize=4, markersize=7)
+            axs[0, 0].scatter(item["regional_volume"]["expected_km3"], i, marker="D", s=34,
+                             color=COLORS[label], zorder=4)
+        axs[0, 0].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(1.6, -.6),
+                      xscale="log", xlabel="Hull bulk volume (km³; log scale)",
+                      title="Regional question: volume inside the same hull\nCircle = median; diamond = expectation")
+        for i, (label, q, passed) in enumerate((
+                ("Directional", directional["fits"]["reference"]["volume_km3"], directional["fits"]["reference"]["passed"]),
+                ("Spherical mixture", spherical["fits"]["baseline"]["volume"], spherical["fits"]["baseline"]["diagnostics"]["passed"]))):
+            axs[0, 1].errorbar(q["median"], i, xerr=[[q["median"]-q["lower95"]], [q["upper95"]-q["median"]]],
+                              fmt="o" if passed else "x", color=COLORS[label], capsize=4, markersize=7)
+        axs[0, 1].set(yticks=[0, 1], yticklabels=["Directional", "Spherical mixture"], ylim=(1.6, -.6),
+                      xscale="log", xlabel="Whole-Earth bulk volume (km³; log scale)",
+                      title="Global question: conditional whole-deposit volume\nMedian and 95% interval; × = sampling warning")
+        records = metrics(regional, directional, spherical)
+        for i, (label, score, coverage, passed) in enumerate(records):
+            axs[1, 0].scatter(score, i, c=COLORS[label], s=60, marker="o" if passed else "x")
+            axs[1, 0].annotate(f"{score:.3f}", (score, i), xytext=(8, 0), textcoords="offset points", va="center", fontsize=9)
+            axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)
+            axs[1, 1].text(coverage*100-1, i, f"{coverage:.0%}", ha="right", va="center", color="white", fontsize=9)
+        labels = [r[0] for r in records]
+        for ax in axs[1]:
+            ax.set(yticks=range(4), yticklabels=labels, ylim=(3.6, -.6))
+        scores = [r[1] for r in records]
+        span = max(max(scores)-min(scores), .25)
+        axs[1, 0].set(xlim=(min(scores)-.2*span, max(scores)+.65*span),
+                      xlabel="Equal-region negative log predictive score ↓",
+                      title="Matched geographic holdouts\nAll accepted measurements and likelihood bounds")
+        axs[1, 1].axvline(95, color="#566C72", ls="--", lw=1)
+        axs[1, 1].set(xlim=(0, 103), xlabel="Exact-site observation interval coverage (%)",
+                      title="Coverage at withheld measurement sites\nDashed = nominal 95%; not global-volume coverage")
+        for ax in axs.flat:
+            ax.grid(axis="x", alpha=.18)
+            ax.set_axisbelow(True)
+            ax.title.set_fontsize(10.5)
+        fig.suptitle(f"{name} · four methods, two different volume questions", fontsize=16)
+        fig.supxlabel("Each interval is conditional on its own model. Regional and global panels use different domains and axes; no preferred or pooled volume.", fontsize=9)
+        fig.savefig(Path(output)/"overview.png", dpi=190, bbox_inches="tight", pad_inches=.16)
+        plt.close(fig)
+
+
+def all_case_scores(output, cases):
+    from matplotlib.lines import Line2D
+    with plt.rc_context(STYLE):
+        fig, axes = plt.subplots(2, 3, figsize=(13.4, 8.3), layout="constrained")
+        for ax, (name, regional, directional, spherical) in zip(axes.flat, cases):
+            rows = metrics(regional, directional, spherical)
+            for i, (label, score, coverage, passed) in enumerate(rows):
+                ax.scatter(score, i, s=65, c=COLORS[label], marker="o" if passed else "x")
+                ax.annotate(f"{score:.3f}  ·  {coverage:.0%}", (score, i), xytext=(7, 0),
+                            textcoords="offset points", va="center", fontsize=8)
+            scores = [r[1] for r in rows]
+            span = max(max(scores)-min(scores), .3)
+            ax.set(yticks=range(4), yticklabels=[r[0] for r in rows], ylim=(3.5, -.6),
+                   xlim=(min(scores)-.2*span, max(scores)+1.2*span), title=name,
+                   xlabel="Geographic prediction score ↓")
+            ax.grid(axis="x", alpha=.18)
+            ax.tick_params(labelsize=8)
+        fig.suptitle("Six eruptions · matched predictive evidence across all four families\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
+        fig.legend(handles=[Line2D([], [], c="#4B6068", marker="o", ls="", label="Completed geographic fits"),
+                            Line2D([], [], c="#4B6068", marker="x", ls="", label="At least one global geographic fit has a numerical warning")],
+                   loc="outside lower center", ncols=2, frameon=False, fontsize=9)
+        fig.savefig(Path(output)/"method-scores.png", dpi=190, bbox_inches="tight", pad_inches=.16)
+        plt.close(fig)
