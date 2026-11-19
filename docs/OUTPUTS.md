@@ -8,14 +8,14 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 |---|---|
 | `README.md`, `report.json`, maps and `selection/` | GP ensemble and cubic spline, fitted separately on a common regional hull |
 | `support/` | Local footprints, holes, partial volumes and regional contour decisions |
-| `directional/` | Full directional ensemble report in `README.md`, with its numerical packet and contour audit in `ensemble/` |
+| `directional/` | Principal uncertain-fan-direction report in `README.md`, with its quantitative field, whole-Earth volume and contour audit in `azimuth/` |
 | `spherical-mixture/` | Spherical-mixture whole-Earth posterior and assumption sensitivities |
 
 Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) shows all four families on matched geographic tests.
 
 ## Visual reading route
 
-Start on the case home. Its `four-method-isopachs.png` compares pointwise median thickness on the same observation-area frame. The table gives bulk volumes, conditional intervals and held-out predictions. Expand the whole-Earth pair to see distal continuation. The detailed regional report also retains the volume and prediction plot, `overview.png`. Regional `isopachs.png` contains the complete observation hull. For either global family, read the expanded `directional/ensemble/isopachs.png` or `spherical-mixture/field.png`, then `local.png` for every observed location and `world.png` for whole-Earth context. Wide footprints use stacked panels; their captions state when frames differ.
+Start on the case home. Its `four-method-evidence.png` compares four median fields in the same observation frame. The directional panel uses the uncertain-fan-direction field. `directional/azimuth/isopachs.png` shows that field at deposit and near-source scales. Expand the whole-Earth pair for the uncertain-direction and spherical-mixture maps. The four-family volume and prediction plot is `overview.png`.
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
 
@@ -44,14 +44,16 @@ In `report.json`, read `methods.<method>.regional_volume`, `joint_volume` and `v
 | `support/contour_audit.csv` | Every candidate level, policy, stability check and rejection reason |
 | `support/report.json` | Three policies, deletion sensitivity, band checks and conditional scenarios |
 | `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres |
-| `directional/ensemble/complete-contour-audit.json` | Same complete-contour screen applied to directional fields |
+| `directional/azimuth/complete-contour-audit.json` | Complete-contour screen on the principal uncertain-direction field. The fixed-direction screen is in `directional/ensemble/complete-contour-audit.json`. |
 | [Spherical support packets](../comparisons/directional/spherical-support/) | All six spherical-family screens and checksum-verified posterior field subsets |
 
 The regional support report records `methods.<method>.footprint_volumes` and `contours.policies`. Its `preferred_global_km3` is null: this audit does not select a global total. A zero quadrature fraction is not proof of absent ash. Preserve rejection reasons, unsupported holes and numerical warnings. A failed complete-contour screen is diagnostic, not a veto on conditional global inference. [Support protocol](methods/supported-isopachs.md).
 
 ## Directional ensemble
 
-Open `directional/README.md` for the full report. In `directional/ensemble/report.json`, `median_surface.volume_km3` is the integral of the central map. `coherent_fields.volume_km3` gives the median and conditional 95% interval from integrals of complete fields. `median_surface.parts_sectors_km3` partitions the central map into five support classes and eight compass sectors. `map-fields.npz` and `median-grids.npz` reproduce the mapped median and pointwise thickness interval. `coherent-mass.npz` records every real-eruption mass draw. The four-family overview marks the directional median-map volume with a diamond. [Equations, overlap diagnostics and weighting](methods/directional-ensemble.md)
+Open `directional/README.md` for the principal estimate. In `directional/azimuth/report.json`, **`volume.median_map_km3`** integrates the quantitative pointwise median and **`volume.coherent_volume_km3`** summarizes whole-deposit draws. `volume.median_map_parts_by_sector_km3` partitions the central volume into five support classes and eight compass sectors. `fields.npz` stores the coherent draws and their volumes. `median-grids.npz`, `isopachs.png` and `world.png` reproduce the primary maps. The geographic score and exact-site observation coverage in the comparison come from this same model. The overview diamond marks the median-map volume. [Uncertain-fan-direction protocol](methods/uncertain-azimuth.md)
+
+The matched fixed-direction control is `volume.matched_control_map_km3` in the same report. The original fixed-direction weights and volume are recorded separately in `directional/ensemble/report.json`. Archive-conditioned scenarios retain their own assumptions and intervals.
 
 ## Single-structure directional reference
 

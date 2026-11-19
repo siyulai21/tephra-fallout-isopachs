@@ -6,7 +6,7 @@ Each case opens with four maps of pointwise median thickness. All panels share t
 
 - Read the colour key on the figure. Values below its lowest tick share a shade. The scale on a whole-Earth map can differ from the case comparison.
 - Check the bounds, projected positions and clipping against the recorded map design. Inspect the outer contour and any projection-rim warning. The volume calculation uses its stated integration domain.
-- Compare the plotted values with the saved fit. The four-panel PNG records source hashes, coordinates, contour levels and five reference predictions per method. The regional replay uses the selected spline settings and GP weights. Both global maps use saved posterior fields. The single-structure directional reference plots geometric mean thickness.
+- Compare the plotted values with the saved fit. The four-panel PNG records source hashes, coordinates, contour levels and five reference predictions per method. The regional replay uses the selected spline settings and GP weights. The directional panel replays the quantitative uncertain-fan-direction packet and records its median-map volume. The spherical panel uses its independent saved posterior. The single-structure directional reference plots geometric mean thickness.
 - Keep held-out observation coverage, numerical convergence and the local support screen visible. Each answers a different question about an extrapolated contour. [Support protocol](../methods/supported-isopachs.md)
 
 ## Reproduce

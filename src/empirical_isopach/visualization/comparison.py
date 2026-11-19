@@ -19,7 +19,8 @@ from .maps import ASSET, frame_bounds, level_labels, observation_legend, observa
 
 FIGURE = "four-method-evidence.png"
 REGIONAL = {"stacked": "GP ensemble", "spline": "Cubic spline"}
-ENSEMBLE = "directional/ensemble"
+DIRECTIONAL = "directional/azimuth"
+DIRECTIONAL_LABEL = "Uncertain fan direction"
 SPHERICAL = "spherical-mixture"
 
 
@@ -29,8 +30,10 @@ def read_report(path):
 
 def comparison_reports(home):
     regional, ensemble, spherical = [
-        read_report(home/name) for name in ("report.json", f"{ENSEMBLE}/report.json", f"{SPHERICAL}/report.json")
+        read_report(home/name) for name in ("report.json", f"{DIRECTIONAL}/report.json", f"{SPHERICAL}/report.json")
     ]
+    if ensemble["protocol"] != "uncertain-azimuth-v1":
+        raise ValueError("The principal directional report must use uncertain fan direction.")
     if len({r["input"]["input_sha256"] for r in (regional, ensemble, spherical)}) != 1:
         raise ValueError("The four-method comparison requires identical accepted input.")
     return regional, ensemble, spherical
@@ -69,10 +72,9 @@ def draw_comparison(home, destination, regional_grid=None):
     xx, yy = np.meshgrid(rx, ry)
     inside = region.contains(np.column_stack((xx.ravel(), yy.ravel()))).reshape(xx.shape)
 
-    with np.load(home/ENSEMBLE/"median-grids.npz") as packet:
+    with np.load(home/DIRECTIONAL/"median-grids.npz") as packet:
         x, y = packet["local_x_km"], packet["local_y_km"]
-        middle, = np.flatnonzero(np.isclose(packet["probabilities"], 0.5))
-        directional_field = packet["local_log10_cm"][middle]
+        directional_field = packet["local_log10_cm"]
     if not np.allclose([x[0], y[0], x[-1], y[-1]], bounds, rtol=1e-10, atol=1e-6):
         raise ValueError("The directional local grid must cover the common observation frame.")
     if np.any(region.vertices.min(0) < [rx[0], ry[0]]) or np.any(region.vertices.max(0) > [rx[-1], ry[-1]]):
@@ -87,16 +89,20 @@ def draw_comparison(home, destination, regional_grid=None):
         volume = regional["methods"][key]["regional_volume"]["expected_km3"]
         note = "" if regional["methods"][key]["regional_volume"]["converged"] else " · integral warning"
         panels.append((label, f"Hull mean · {volume:,.1f} km³{note}", rx, ry, fields[key], inside))
-    map_volume = ensemble["median_surface"]["volume_km3"]
+    volume = ensemble["volume"]
+    map_volume = volume["median_map_km3"]
     posterior_volume = spherical["fits"]["baseline"]["volume"]["median"]
-    member_checks = ensemble["coherent_fields"]["members"]
-    passed = sum(m["passed"] for m in member_checks.values())
+    member_checks = ensemble["members"]
+    passed = sum(m["diagnostics"]["passed"] for m in member_checks.values())
     direction_note = f" · {passed}/{len(member_checks)} fits passed" if passed < len(member_checks) else ""
-    if not ensemble["median_surface"]["passed"]:
+    checks = volume["numerical"]
+    if not checks["spatial_passed"]:
         direction_note += " · integration warning"
+    elif not checks["split_map_passed"]:
+        direction_note += " · map split warning"
     sphere_note = "" if spherical["fits"]["baseline"]["diagnostics"]["passed"] else " · fit warning"
     panels += [
-        ("Directional ensemble", f"Whole-Earth map integral · {map_volume:,.1f} km³{direction_note}", x, y, directional_field, None),
+        (DIRECTIONAL_LABEL, f"Whole-Earth map integral · {map_volume:,.1f} km³{direction_note}", x, y, directional_field, None),
         ("Spherical mixture", f"Whole-Earth volume median · {posterior_volume:,.1f} km³{sphere_note}", x, y, sphere_field, None),
     ]
     peak = max(np.nanmax(z[mask] if mask is not None else z) for _, _, _, _, z, mask in panels)
@@ -106,14 +112,14 @@ def draw_comparison(home, destination, regional_grid=None):
     norm = colors.Normalize(low, high)
     decades = np.arange(low, high+1)
     levels = np.sort(np.r_[decades, decades[:-1]+np.log10(3.)])
-    inputs = ("report.json", "accepted_observations.csv", f"{ENSEMBLE}/report.json",
-              f"{ENSEMBLE}/median-grids.npz", f"{SPHERICAL}/report.json", f"{SPHERICAL}/posterior.npz")
+    inputs = ("report.json", "accepted_observations.csv", f"{DIRECTIONAL}/report.json",
+              f"{DIRECTIONAL}/median-grids.npz", f"{SPHERICAL}/report.json", f"{SPHERICAL}/posterior.npz")
     # Retain actual plotted values so the four panel assignments can be replayed
     # from the signed fits independently of the rendering backend.
-    from ..models.directional.ensemble.fields import load_packet
+    from ..models.directional.azimuth.primary import read_field
     from ..models.directional.azimuth.maps import supported_lines
-    measured = load_packet(home/ENSEMBLE,data,vent[1],ensemble)
-    inputs += (f"{ENSEMBLE}/map-fields.npz",)
+    measured = read_field(home/DIRECTIONAL,data,ensemble)
+    inputs += (f"{DIRECTIONAL}/fields.npz",)
     check_points = {}
     for label, _, gx, gy, z, mask in panels:
         valid = np.isfinite(z) if mask is None else np.isfinite(z) & mask
@@ -127,6 +133,7 @@ def draw_comparison(home, destination, regional_grid=None):
         "statistic": "pointwise median latent thickness", "panels": [p[0] for p in panels],
         "common_bounds_km": bounds.tolist(), "contour_levels_cm": (10**levels).tolist(),
         "colour_limits_cm": [10**norm.vmin, 10**norm.vmax],
+        "directional_protocol": ensemble["protocol"], "directional_median_map_km3": map_volume,
         "directional_solid": "exact-site bracket in a measured triangle and posterior crossing probability >= 0.9",
         "regional_clip": "exact accepted observation hull", "spherical_display_draws": spherical_view.n,
         "check_points_x_km_y_km_log10_cm": check_points,
@@ -148,8 +155,8 @@ def draw_comparison(home, destination, regional_grid=None):
             visible = levels[(levels > finite.min()) & (levels < finite.max())]
             if len(visible):
                 contours = ax.contour(gx, gy, z, levels=visible, colors="white", linewidths=.8,
-                                      linestyles="dashed" if label=="Directional ensemble" else "solid", zorder=4)
-                if label=="Directional ensemble":
+                                      linestyles="dashed" if label==DIRECTIONAL_LABEL else "solid", zorder=4)
+                if label==DIRECTIONAL_LABEL:
                     supported_lines(ax,data,measured,gx,gy,z,visible,["white"]*len(visible))
                 contours.set_path_effects([effects.withStroke(linewidth=1.6, foreground="#25414b", alpha=.7)])
                 major = visible[np.isclose(visible, np.round(visible))]
@@ -190,9 +197,9 @@ def comparison_section(home, *, prefix=""):
 
     regional, ensemble, spherical = comparison_reports(Path(home))
     name = regional["dataset"]
-    centre = ensemble["median_surface"]
-    volumes = ensemble["coherent_fields"]["volume_km3"]
-    measured = sum(centre["parts_sectors_km3"][0])/centre["volume_km3"]
+    centre = ensemble["volume"]
+    volumes = centre["coherent_volume_km3"]
+    measured = sum(centre["median_map_parts_by_sector_km3"][0])/centre["median_map_km3"]
     mixture = spherical["fits"]["baseline"]["volume"]
     summary = []
     for key, label in REGIONAL.items():
@@ -201,8 +208,8 @@ def comparison_section(home, *, prefix=""):
         summary.append((label, f"Hull mean **{model['regional_volume']['expected_km3']:,.2f}**",
                         f"{q['0.025']:,.2f}–{q['0.975']:,.2f}"))
     summary += [
-        (f"[Directional ensemble]({prefix}directional/README.md)",
-         f"Whole-Earth median map **{centre['volume_km3']:,.1f}** · volume median {volumes['median']:,.1f}",
+        (f"[Directional ensemble · uncertain fan direction]({prefix}directional/README.md)",
+         f"Whole-Earth median map **{centre['median_map_km3']:,.1f}** · volume median {volumes['median']:,.1f}",
          f"{volumes['lower95']:,.1f}–{volumes['upper95']:,.1f}"),
         (f"[Spherical mixture]({prefix}spherical-mixture/README.md)",
          f"Whole-Earth volume median **{mixture['median']:,.1f}**",
@@ -232,29 +239,28 @@ def comparison_section(home, *, prefix=""):
                       "The regional intervals condition on fitted settings."
                       + (f" [Regional maps, fits and diagnostics]({prefix}README.md)" if prefix else ""),
                   "", "<details>", "<summary>Compare the two whole-Earth maps</summary>", "",
-                  "| Directional ensemble | Spherical mixture |", "|---|---|",
-                  f"| ![Directional ensemble median thickness over the Earth for {name}]({prefix}{ENSEMBLE}/world.png) "
+                  "| Uncertain fan direction | Spherical mixture |", "|---|---|",
+                  f"| ![Uncertain-fan-direction median thickness over the Earth for {name}]({prefix}{DIRECTIONAL}/world.png) "
                   f"| ![Spherical-mixture median thickness over the Earth for {name}]({prefix}{SPHERICAL}/world.png) |", "",
                   "Both maps use the vent longitude as their central meridian. Read the thickness key under each map.", "",
                   "</details>", ""])
-    azimuth = Path(home)/"directional/azimuth"
-    if (azimuth/"artifacts.json").is_file():
-        report = read_report(azimuth/"report.json")
-        if report["input"]["input_sha256"] != regional["input"]["input_sha256"]:
-            raise ValueError("Directional extent report and comparison use different measurements.")
-        volume = report["volume"]
-        lines += ["", "## How firmly do the data locate the edge of the deposit?", "",
-                  f"Letting a poorly constrained fan turn gives a median-map volume of **{volume['median_map_km3']:,.1f} km³**. The matched fixed-direction control gives **{volume['matched_control_map_km3']:,.1f} km³**. Both use the same training observations and weights. The established six-structure model retains the primary global estimate because predictive performance across withheld directions was mixed.", "",
-                  f"![Measured and extrapolated isopach segments near the volcano]({prefix}directional/azimuth/median-isopachs.png)", "",
-                  f"[Directional extent, map probabilities, sector areas and held-out tests]({prefix}directional/azimuth/README.md)", ""]
+    from ..models.directional.azimuth.primary import numerical_notes
+    lines += ["", "## Principal directional isopachs", "",
+              f"![Principal uncertain-fan-direction median isopachs for {name}]({prefix}{DIRECTIONAL}/isopachs.png)", "",
+              f"The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **{centre['matched_control_map_km3']:,.1f} km³**. "
+              "Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.", ""]
+    notes = numerical_notes(ensemble)
+    if notes:
+        lines += [" ".join(notes), ""]
+    lines += [f"[Sector areas, exceedance probabilities and alternative assumptions]({prefix}{DIRECTIONAL}/README.md)", ""]
     bearing = Path(home)/"directional/bearing"
     revised = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
     if revised is not None and revised["input_sha256"] == regional["input"]["input_sha256"]:
         lines[0] = "## Four matched thickness-only fits"
-        lines[1:1] = ["", "The directional ensemble in this comparison allows a fan in the largest sampling gap."]
+        lines[1:1] = ["", "The principal directional map uses the quantitative thickness observations and bounds. Inspected archive scenarios appear below."]
         lines.extend(["", "## How far does the fallout extend between sampled directions?", "",
                       "The measured-fan model extends fallout from directions with thickness observations. "
-                      "The four-method comparison above also allows an additional fan in the largest gap.", "",
+                      "The principal uncertain-direction reconstruction above averages over the direction of fallout in unsampled sectors.", "",
                       "| Directional assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |",
                       "|---|---:|---:|---:|"])
         scenarios = [("Measured fan directions", revised)]

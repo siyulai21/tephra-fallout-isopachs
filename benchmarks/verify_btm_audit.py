@@ -166,8 +166,17 @@ def verify_results(manifest):
         "eruptions/b-tm/README.md", "eruptions/b-tm/results/directional/README.md",
         "eruptions/b-tm/results/directional/ensemble/artifacts.json",
     }
+    primary_archive = Path("comparisons/azimuth-continuation/archive/2026-11-18-before-primary")
+    preceding_pages = {"eruptions/b-tm/results/README.md","eruptions/b-tm/results/figure-replay.json"}
     for name, expected in release["files"].items():
-        if name in archived_pages:
+        if name in preceding_pages:
+            with ZipFile(primary_archive/"previous-reports.zip") as previous:
+                assert sha256(previous.read(name)).hexdigest()==expected, name
+            assert digest(Path(name))==current[name], name
+        elif name=="eruptions/b-tm/results/overview.png":
+            assert digest(primary_archive/"figures"/name)==expected, name
+            assert digest(Path(name))==current[name], name
+        elif name in archived_pages:
             with ZipFile("comparisons/azimuth-continuation/archive/2026-11-18/previous-pages.zip") as previous:
                 assert sha256(previous.read(name)).hexdigest()==expected, name
             assert digest(Path(name)) == current[name], name

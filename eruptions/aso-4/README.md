@@ -14,32 +14,32 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 |---|---|---:|---:|---:|
 | GP ensemble | Hull mean **202.65** | 155.87–266.97 | 1.514 | 94.0% |
 | Cubic spline | Hull mean **248.15** | 168.43–452.02 | 1.662 | 90.4% |
-| [Directional ensemble](results/directional/README.md) | Whole-Earth median map **740.0** · volume median 882.7 | 397.5–2,931.7 | 1.507 | 86.7% |
+| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **659.1** · volume median 916.3 | 297.9–3,511.5 | 1.502 | 90.4% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **1,466.0** | 501.0–44,172.9 | 1.632 | 95.2% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.3%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.8%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>
 
-| Directional ensemble | Spherical mixture |
+| Uncertain fan direction | Spherical mixture |
 |---|---|
-| ![Directional ensemble median thickness over the Earth for Aso-4](results/directional/ensemble/world.png) | ![Spherical-mixture median thickness over the Earth for Aso-4](results/spherical-mixture/world.png) |
+| ![Uncertain-fan-direction median thickness over the Earth for Aso-4](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Aso-4](results/spherical-mixture/world.png) |
 
 Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
 
 </details>
 
 
-## How firmly do the data locate the edge of the deposit?
+## Principal directional isopachs
 
-Letting a poorly constrained fan turn gives a median-map volume of **659.1 km³**. The matched fixed-direction control gives **779.7 km³**. Both use the same training observations and weights. The established six-structure model retains the primary global estimate because predictive performance across withheld directions was mixed.
+![Principal uncertain-fan-direction median isopachs for Aso-4](results/directional/azimuth/isopachs.png)
 
-![Measured and extrapolated isopach segments near the volcano](results/directional/azimuth/median-isopachs.png)
+The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **779.7 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
 
-[Directional extent, map probabilities, sector areas and held-out tests](results/directional/azimuth/README.md)
+[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
 
 ## Evidence and limitations
 

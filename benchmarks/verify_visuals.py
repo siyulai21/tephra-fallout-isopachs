@@ -20,9 +20,9 @@ def read(path):
 
 def verify_case_map(record, home):
     from src.empirical_isopach.core.distributions import predictive_distribution
-    from src.empirical_isopach.models.directional.ensemble.fields import load_packet
+    from src.empirical_isopach.models.directional.azimuth.primary import read_field
     from src.empirical_isopach.models.mass_mixture.geometry import log_field, to_sphere
-    from src.empirical_isopach.visualization.comparison import FIGURE, REGIONAL, comparison_section
+    from src.empirical_isopach.visualization.comparison import FIGURE, REGIONAL, DIRECTIONAL_LABEL, comparison_section
     from src.empirical_isopach.visualization.global_maps import PosteriorView
     from src.empirical_isopach.visualization.maps import ASSET, frame_bounds
     from .refresh_figures import recorded_observations, regional_models
@@ -32,8 +32,8 @@ def verify_case_map(record, home):
     assert comparison_section(home, prefix="results/") in page.read_text()
     with Image.open(figure) as image:
         info = json.loads(image.info["Description"])
-    expected = {"accepted_observations.csv", "report.json", "directional/ensemble/report.json",
-                "directional/ensemble/median-grids.npz", "directional/ensemble/map-fields.npz", "spherical-mixture/report.json",
+    expected = {"accepted_observations.csv", "report.json", "directional/azimuth/report.json",
+                "directional/azimuth/median-grids.npz", "directional/azimuth/fields.npz", "spherical-mixture/report.json",
                 "spherical-mixture/posterior.npz"}
     assert set(info["sources_sha256"]) == expected
     assert all(digest(home/path) == checksum for path, checksum in info["sources_sha256"].items())
@@ -41,7 +41,7 @@ def verify_case_map(record, home):
     assert digest(ASSET) == info["coastline_sha256"]
     data, meta = recorded_observations(record, home)
     np.testing.assert_allclose(info["common_bounds_km"], frame_bounds(data.xy))
-    assert info["panels"] == ["GP ensemble", "Cubic spline", "Directional ensemble", "Spherical mixture"]
+    assert info["panels"] == ["GP ensemble", "Cubic spline", DIRECTIONAL_LABEL, "Spherical mixture"]
     samples = {name: np.asarray(rows) for name, rows in info["check_points_x_km_y_km_log10_cm"].items()}
     assert set(samples) == set(info["panels"]) and all(rows.shape == (5, 3) for rows in samples.values())
     regional, region, _ = regional_models(data, read(home/"report.json"))
@@ -51,11 +51,14 @@ def verify_case_map(record, home):
         median = predictive_distribution(regional[key], xy).quantile(.5)
         np.testing.assert_allclose(median/np.log(10.), samples[name][:, 2], rtol=2e-7, atol=2e-7)
     latitude = meta["vent_lonlat"][1]
-    folder = home/"directional/ensemble"
-    ensemble = load_packet(folder, data, latitude, read(folder/"report.json"))
-    xy = samples["Directional ensemble"][:, :2]
-    median = ensemble.distribution(xy).quantile(.5)
-    np.testing.assert_allclose(median/np.log(10.), samples["Directional ensemble"][:, 2], atol=1e-8)
+    folder = home/"directional/azimuth"
+    current = read(folder/"report.json")
+    assert info["directional_protocol"] == current["protocol"] == "uncertain-azimuth-v1"
+    assert info["directional_median_map_km3"] == current["volume"]["median_map_km3"]
+    field = read_field(folder,data,current)
+    xy = samples[DIRECTIONAL_LABEL][:, :2]
+    median = field.distribution(xy).quantile(.5)
+    np.testing.assert_allclose(median/np.log(10.), samples[DIRECTIONAL_LABEL][:, 2], atol=1e-8)
     with np.load(home/"spherical-mixture/posterior.npz") as f:
         view = PosteriorView(dict(f), latitude)
     assert view.n == info["spherical_display_draws"]

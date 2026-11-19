@@ -100,7 +100,7 @@ def save(fig, output, name):
     plt.close(fig)
 
 
-def world_map(output, name, data, meta, view, norm):
+def world_map(output, name, data, meta, view, norm, *, show_contours=True):
     """Mollweide overview: the left and right edges are the same meridian."""
     longitude = np.linspace(-180., 180., 361)
     latitude = np.linspace(-89.95, 89.95, 181)
@@ -115,7 +115,7 @@ def world_map(output, name, data, meta, view, norm):
                               cmap="viridis", shading="auto", rasterized=True)
         levels = contour_levels(z)
         levels = levels[::2]  # 0.1, 1, 10, 100 ...; local figures show intermediate levels.
-        if len(levels):
+        if show_contours and len(levels):
             lines = ax.contour(np.deg2rad(longitude), np.deg2rad(latitude), z,
                                levels=levels, colors="white", linewidths=.6)
             ax.clabel(lines, fmt=level_labels, fontsize=7)
@@ -135,7 +135,8 @@ def world_map(output, name, data, meta, view, norm):
         ax.grid(alpha=.2)
         ax.tick_params(labelsize=8)
         ax.set_xticklabels([""]*len(ax.get_xticks()))
-        ax.set_title(f"{name} · whole-Earth context\n{view.statistic}; contours in cm", fontsize=14, pad=18)
+        legend = "contours in cm" if show_contours else "thickness in cm"
+        ax.set_title(f"{name} · whole-Earth context\n{view.statistic} · {legend}", fontsize=14, pad=18)
         thickness_bar(fig, image, [ax], norm)
         fig.supxlabel("Mollweide overview centred on the source longitude · map edges join · unsampled colour is conditional extrapolation", fontsize=9)
         save(fig, output, "world.png")

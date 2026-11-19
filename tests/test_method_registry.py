@@ -35,6 +35,7 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     def directional_run(path, output, *args, **kwargs):
         destinations["directional"] = output
         calls.append("directional")
+        return {"principal_estimate": "uncertain fan direction"}
     monkeypatch.setattr(directional, "directional_dataset", directional_run)
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
     monkeypatch.setattr(global_reporting, "global_dataset", spherical_run)
@@ -52,7 +53,7 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     cli.main(["global", "YTT", "--output", str(tmp_path/"c"), "--resume"])
     assert calls == [("global", True)]
     calls.clear()
-    cli.main(["global", "YTT", "--geometry", "directional", "--output", str(tmp_path/"d")])
+    assert cli.main(["global", "YTT", "--geometry", "directional", "--output", str(tmp_path/"d")]) is None
     assert calls == ["directional"]
 
 

@@ -1,6 +1,6 @@
 # B-Tm: empirical methods on one regional footprint
 
-[B-Tm case overview](../README.md) · [Directional median isopachs and archive sensitivities](directional/bearing/README.md)
+[B-Tm case overview](../README.md) · [Principal directional median isopachs](directional/README.md) · [Measured-fan archive sensitivities](directional/bearing/README.md)
 
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 

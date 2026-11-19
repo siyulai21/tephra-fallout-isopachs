@@ -152,6 +152,20 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
             fields = load_packet(ensemble_dir,data,meta["vent_lonlat"][1],directional)
             render_maps(ensemble_dest,name,data,meta,fields)
             checks["ensemble_fields_sha256"] = digest(ensemble_dir/"map-fields.npz")
+    primary_dir = home/"directional/azimuth"
+    if (primary_dir/"report.json").is_file():
+        directional = read(primary_dir/"report.json")
+        assert directional["input"]["input_sha256"] == meta["input_sha256"]
+        checks["source_reports"]["directional/azimuth/report.json"] = digest(primary_dir/"report.json")
+        checks["principal_directional_fields_sha256"] = digest(primary_dir/"fields.npz")
+        if "directional" in scopes:
+            from src.empirical_isopach.models.directional.azimuth.primary import read_field, render_primary
+            from src.empirical_isopach.models.directional.archive_readings import load_inventory
+            dest = target/"directional/azimuth"
+            dest.mkdir(parents=True,exist_ok=True)
+            field = read_field(primary_dir,data,directional)
+            inventory,_ = load_inventory(record["path"])
+            render_primary(dest,data,meta,directional,field,inventory,source=primary_dir)
     if "comparison" in scopes:
         if "regional" in scopes:
             comparison_grid = saved_regional_grid(target/"predictions.csv")
@@ -159,8 +173,7 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
             gx, gy, _, fields, _ = regional_grid(regional["fit_bounds_km"], region, models)
             comparison_grid = gx, gy, fields
         draw_comparison(home, target, comparison_grid)
-    if set(scopes) != {"comparison"}:
-        case_overview(target, name, regional, directional, spherical)
+    case_overview(target, name, regional, directional, spherical)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")
     print(f"{name}: figures complete", flush=True)
     return name, regional, directional, spherical
@@ -180,7 +193,7 @@ def main():
         raise ValueError("Unknown case slug")
     args.output.mkdir(parents=True, exist_ok=True)
     cases = [refresh_case(r, args.output, args.scopes) for r in rows]
-    if len(cases) == 6 and set(args.scopes) != {"comparison"}:
+    if len(cases) == len(datasets()):
         all_case_scores(args.output, cases)
 
 
