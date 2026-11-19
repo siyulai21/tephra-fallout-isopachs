@@ -9,7 +9,6 @@ This figure asks how well each method predicts ash thickness in a withheld regio
 | Question | Study |
 |---|---|
 | How sensitive are directional isopachs and whole-Earth volume to the width and presence of fallout fans? | [Directional ensemble](directional-ensemble/README.md) — mapped volumes, complete-field intervals, withheld sectors and known-deposit tests |
-| How much should a directional field extend into an unsampled sector? | [Six-eruption geographic and quadrant tests](bearing-continuation/README.md) and the [B-Tm archive check](../eruptions/b-tm/results/directional/bearing/README.md) |
 | How much does the choice of regional fit matter inside the same observation hull? | [GP and cubic spline](regional/README.md) — matched geographic folds, hull integrals and synthetic trials |
 | How much do global fan geometry and priors affect the spherical-mixture result? | [Spherical mixture](spherical-mixture/README.md) — separate posterior, prior refits and numerical warnings |
 | Which contours or partial volumes have local observational support? | [Support audit](support/README.md) — sampling gaps, rejected bands and geographic deletions |
