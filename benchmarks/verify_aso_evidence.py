@@ -6,12 +6,6 @@ import json, re
 import numpy as np
 import pandas as pd
 
-if __name__ == "__main__":
-    import sys
-    from .publication_history import verify_previous
-    verify_previous("verify_aso_evidence", sys.argv[1:])
-    raise SystemExit(0)
-
 OUT=Path('comparisons/aso-4-audit')
 read=lambda p:json.loads(Path(p).read_text())
 hashfile=lambda p:sha256(Path(p).read_bytes()).hexdigest()
@@ -27,20 +21,27 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
-from .visual_history import verified_presentation, verified_revision
+from .publication import read_hashes, verify_files
+published = read_hashes()
 visual_revisions = 0
-# Resolve historical publication paths without changing their signed evidence.
-for f,digest in others.items():
- current=re.sub(r'^(eruptions/[^/]+/results)/global/',r'\1/spherical-mixture/',f)
- if hashfile(current) != digest:
-  assert verified_presentation(current,digest) or verified_revision(current,digest),f
+updated_btm = 0
+# This study checked neighboring releases before the B-Tm source revision.
+for old_path, expected in others.items():
+ current = re.sub(r'^(eruptions/[^/]+/results)/global/', r'\1/spherical-mixture/', old_path)
+ path = Path(current)
+ if hashfile(path) == expected:
+  continue
+ if path.parts[1] == "b-tm":
+  updated_btm += 1
+ else:
+  assert path.suffix in {".md", ".png", ".svg"} or path.name == "artifacts.json", current
   visual_revisions += 1
+ verify_files({current: published[current]})
 reference_root = OUT/'reference'
-archive=read(reference_root/'manifest.json')
-for entry in archive['files']:
- if not entry['archive'].endswith('.md'):
-  relative=Path(entry['archive']).relative_to('archive/2026-11-08-aso-4')
-  assert hashfile(reference_root/relative)==entry['sha256'],entry['archive']
+diagnosis = read(OUT/'runs/diagnosis/report.json')
+assert hashfile(raw) == diagnosis['input_sha256']
+reference_hashes = {'report.json': diagnosis['original_report_sha256'], 'posterior.npz': diagnosis['posterior_sha256']}
+verify_files(reference_hashes, reference_root)
 regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/spherical-mixture/report.json')
 for r in (regional,glob):
  assert r['input']['input_sha256']==hashfile(reviewed)
@@ -77,10 +78,10 @@ checks={
  'source_workbook_and_audit_artifact_hashes_verified':True,
  'all_52_compiled_thickness_magnitudes_match_original_csv':True,
  'source_inequalities_and_primary_conflicts_preserved_in_audit':True,
- 'other_eruption_files_unchanged_count':len(others)-visual_revisions,
+ 'other_eruption_files_unchanged_count':len(others)-visual_revisions-updated_btm,
+ 'other_eruption_files_replaced_by_reviewed_btm_release':updated_btm,
  'other_eruption_presentation_revisions_verified_count':visual_revisions,
- 'archived_scientific_files_unchanged_count':sum(not e['archive'].endswith('.md') for e in archive['files']),
- 'archive_markdown_changes':'Relative navigation and original-input reproduction command only.',
+ 'pre_audit_influence_reference_sha256':reference_hashes,
  'same_current_input_row_ids_geographic_folds_buffers_training_and_withheld_rows':True,
  'reviewed_counts':{'exact':83,'lower':3,'upper':1,'ignored_pseudo':6},
  'targeted_comparison_cases':17,
@@ -102,4 +103,4 @@ args=parser.parse_args()
 if args.output is not None:
  args.output.parent.mkdir(parents=True,exist_ok=True)
  args.output.write_text(json.dumps(checks,indent=2,allow_nan=False)+'\n')
-print('Verified',len(posterior_checks),'posterior attempts,',len(others)-visual_revisions,'unchanged other-eruption files,',visual_revisions,'explicit presentation revisions, and matched current validation.')
+print('Verified',len(posterior_checks),'posterior attempts,',len(others)-visual_revisions-updated_btm,'unchanged other-eruption files,',visual_revisions,'presentation revisions,',updated_btm,'reviewed B-Tm replacements, and matched current validation.')

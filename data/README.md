@@ -1,25 +1,12 @@
-# Input data
+# Eruption data and sources
 
-[Project home](../README.md) · [Accepted inputs](eruptions/README.md) · [Audits](audits/README.md) · [Preserved sources](sources/README.md) · [Reports](../eruptions/README.md)
+The dataset catalogue pairs each accepted CSV with its source audit and model settings. Use the case home for observation counts and results. [Dataset catalogue](datasets.json) · [Accepted CSVs](eruptions/README.md) · [Eruption results](../eruptions/README.md)
 
-`datasets.json` is the dataset catalogue. The four original CSVs in `eruptions/` were moved from `examples/Data/` **without changing their contents**. YTT was subsequently added from the supplied audited workbook.
-
-| File | Measurements | Excluded pseudo rows |
-|---|---:|---:|
-| `Mazama_tephra.csv` | 45 | 7 |
-| `Tambora_tephra.csv` | 26 | 2 |
-| `Aso-4_reviewed.csv` | 83 exact + 3 lower + 1 upper bound | 6 |
-| `B-Tm_reviewed.csv` | 64 measured + 3 lower + 1 upper bound | 0 in reviewed file (7 in original) |
-| `YTT_tephra.csv` | 46 | 0 |
-| `Minoan_tephra.csv` | 92 exact + 9 lower bounds | 0 |
-
-The unchanged `Aso-4_tephra.csv` is retained for historical reproduction. Its [reviewed replacement](audits/Aso-4/README.md) corrects two cruise coordinates and encodes four qualified bounds, including an explicitly unresolved Biwa source conflict. Mazama and Tambora counts reflect supplied flags. YTT includes the two Maninjau primary-fallout beds and source-verified U1445B with qualified coordinates; [read its audit](audits/YTT/README.md). Minoan combines all fallout fans using [documented source decisions](audits/Minoan/README.md). Unnamed extra columns are ignored and reported. Original historical maps remain in Git history and are not fitting inputs.
-
-Targeted reviews recovered [B-Tm source descriptions and 76 site correspondences](../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) and [earlier Aso-4 source qualifications and reported absences](../comparisons/source-revision/input-inventory/README.md). Some numeric entries encode a range endpoint, an upper bound, a trace or uncertain preservation. The [B-Tm revision](audits/B-Tm/README.md) preserves the original CSV, reconciles both published compilations and tests alternative source readings. Aso-4's later revision and controlled alternatives are documented in its audit. These checks do not certify every primary source.
+The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. Mazama and Tambora use the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
 
 ## CSV schema
 
-Required: `Lon`, `Lat`, `Thickness`, `Vent Lon`, `Vent Lat`.
+The required columns are `Lon`, `Lat`, `Thickness`, `Vent Lon` and `Vent Lat`.
 
 - Coordinates: WGS84 decimal degrees. Thickness: centimetres.
 - Supply a consistent complete vent pair on at least one row.

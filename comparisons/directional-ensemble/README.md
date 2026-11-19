@@ -58,4 +58,4 @@ The machine-readable records include both indistinguishable truths, all unresolv
 
 [Case comparison](comparison.csv) · [Known volumes](known-volumes.csv) · [Contour overlap by scenario and level](contour-accuracy.csv) · [Complete simulation records](simulation-records.json.gz) · [Verification](verification.json)
 
-[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · [Four-method comparison](../README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)
+[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · [Four-method comparison](../README.md)

@@ -19,6 +19,8 @@ Start on the case home. Its `four-method-isopachs.png` compares pointwise median
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
 
+For runs with an inspected-site inventory, the four thickness-only fits appear first. The following directional comparison shows the measured-fan result and the scenarios checked against withheld sites. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm example](../eruptions/b-tm/README.md)
+
 ## Regional GP and cubic spline
 
 Both integrate the same observation hull. Regional maps share colour/contour scales, and their contours stop at the hull. Neither a hull nor a smooth contour establishes uniform observational support. The median-surface integral differs from the median of random whole-field volumes.

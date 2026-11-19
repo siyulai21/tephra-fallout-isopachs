@@ -73,52 +73,22 @@ def test_overview_reads_existing_reports_and_preserves_warning(tmp_path):
     assert before == {p: (tmp_path/p).read_bytes() for p in paths}
 
 
-def test_visual_history_never_exempts_a_scientific_record(tmp_path, monkeypatch):
-    from benchmarks import visual_history
-    path = tmp_path/"report.json"
-    path.write_text('{"changed_volume": 123}')
-    ledger = tmp_path/"ledger.json"
-    ledger.write_text(json.dumps({"replaced_presentation_files": {str(path): {
-        "before_sha256": "old", "after_sha256": sha256(path.read_bytes()).hexdigest()}}}))
-    monkeypatch.setattr(visual_history, "LEDGER", ledger)
-    assert not visual_history.verified_revision(path, "old")
-    image = tmp_path/"map.png"
-    image.write_bytes(b"display")
-    ledger.write_text(json.dumps({"replaced_presentation_files": {str(image): {
-        "before_sha256": "old", "after_sha256": sha256(image.read_bytes()).hexdigest()}}}))
-    assert visual_history.verified_revision(image, "old")
-    assert not visual_history.verified_revision(image, "different-history")
-    image.write_bytes(b"unreviewed-change")
-    assert not visual_history.verified_revision(image, "old")
+def test_publication_check_rejects_changed_or_missing_evidence(tmp_path):
+    import pytest
+    from benchmarks.publication import read_hashes, verify_files
 
-
-def test_navigation_retirement_checks_the_archived_page_and_live_replacement(tmp_path, monkeypatch):
-    from zipfile import ZipFile
-    from benchmarks import visual_history
-
-    old = tmp_path/"global"/"README.md"
-    current = tmp_path/"README.md"
-    old.parent.mkdir()
-    current.write_text("Full case report")
-    archived = b"Superseded index"
-    expected = sha256(archived).hexdigest()
-    entry = {"prior_sha256": expected, "current_path": "README.md",
-             "current_sha256": sha256(current.read_bytes()).hexdigest()}
-    ledger = tmp_path/"release.json"
-    ledger.write_text(json.dumps({"files": {"global/README.md": entry}, "unchanged_moves": {}}))
-    monkeypatch.setattr(visual_history, "ROOT", tmp_path)
-    monkeypatch.setattr(visual_history, "NAVIGATION", ledger)
-    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
-        archive.writestr("global/README.md", archived)
-    assert visual_history.verified_navigation(old, expected)
-    assert not visual_history.verified_navigation(old, "different prior")
-    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
-        archive.writestr("global/README.md", b"Wrong archive")
-    assert not visual_history.verified_navigation(old, expected)
-    with ZipFile(ledger.with_suffix(".zip"), "w") as archive:
-        archive.writestr("global/README.md", archived)
-    current.write_text("Unreviewed replacement")
-    assert not visual_history.verified_navigation(old, expected)
+    result = tmp_path/"report.json"
+    result.write_bytes(b"published")
+    receipt = tmp_path/"evidence.sha256"
+    receipt.write_text(f"{sha256(result.read_bytes()).hexdigest()}  report.json\n")
+    expected = read_hashes(receipt)
+    verify_files(expected, tmp_path)
+    result.write_bytes(b"changed")
+    with pytest.raises(ValueError, match="report.json"):
+        verify_files(expected, tmp_path)
+    result.unlink()
+    with pytest.raises(ValueError, match="report.json"):
+        verify_files(expected, tmp_path)
 
 
 def test_comparison_reads_both_regional_medians_by_coordinate(tmp_path):
@@ -140,23 +110,25 @@ def test_comparison_reads_both_regional_medians_by_coordinate(tmp_path):
         saved_regional_grid(path)
 
 
-def test_prior_case_map_release_requires_exact_old_and_current_page(tmp_path, monkeypatch):
-    from benchmarks import visual_history
+def test_publication_receipt_rejects_conflicting_entries(tmp_path):
+    import pytest
+    from benchmarks.publication import read_hashes
 
-    case = tmp_path/"eruptions"/"example"/"README.md"
-    case.parent.mkdir(parents=True)
-    case.write_text("Four maps and a result table")
-    old = "Earlier case summary"
-    old_hash = sha256(old.encode()).hexdigest()
-    previous = {"previous_markdown": old, "page_sha256": sha256(case.read_bytes()).hexdigest()}
-    ledger = tmp_path/"case-maps.json"
-    ledger.write_text(json.dumps({"cases": {"example": previous}}))
-    monkeypatch.setattr(visual_history, "ROOT", tmp_path)
-    monkeypatch.setattr(visual_history, "CASE_MAPS", ledger)
-    assert visual_history.matches_case_publication(case, old_hash)
-    assert not visual_history.matches_case_publication(case, "wrong prior")
-    case.write_text("Unreviewed case summary")
-    assert not visual_history.matches_case_publication(case, old_hash)
+    receipt = tmp_path/"evidence.sha256"
+    receipt.write_text("first  report.json\nsecond  report.json\n")
+    with pytest.raises(ValueError, match="Duplicate publication path"):
+        read_hashes(receipt)
+
+
+def test_audited_case_leads_with_matching_fits_then_site_evidence():
+    from src.empirical_isopach.visualization.comparison import comparison_section, FIGURE
+
+    home = Path(__file__).resolve().parents[1]/"eruptions/b-tm/results"
+    section = comparison_section(home, prefix="results/")
+    assert section in (home.parent/"README.md").read_text()
+    assert section.index(FIGURE) < section.index("Volume and predictive performance") < section.index("Measured fan directions |")
+    assert "| Measured fan directions | 42.5 | 52.3 |" in section
+    assert "| Comparable visible fallout beds | 35.8 | 43.5 |" in section
 
 
 def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, monkeypatch):

@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image
 
 from src.empirical_isopach.core.catalog import datasets
-from .visual_history import CASE_MAPS, LEDGER, is_presentation, verified_presentation, verify_navigation_release
+from .publication import read_hashes, verify_files
 
 
 def digest(path):
@@ -18,7 +18,7 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
-def verify_case_map(record, home, release):
+def verify_case_map(record, home):
     from src.empirical_isopach.core.distributions import predictive_distribution
     from src.empirical_isopach.models.directional.ensemble.fields import load_packet
     from src.empirical_isopach.models.mass_mixture.geometry import log_field, to_sphere
@@ -29,9 +29,6 @@ def verify_case_map(record, home, release):
 
     page = home.parent/"README.md"
     figure = home/FIGURE
-    if release is not None:
-        assert digest(page) == release["page_sha256"]
-        assert digest(figure) == release["figure_sha256"]
     assert comparison_section(home, prefix="results/") in page.read_text()
     with Image.open(figure) as image:
         info = json.loads(image.info["Description"])
@@ -69,24 +66,11 @@ def verify_case_map(record, home, release):
 
 def main():
     root = Path(__file__).resolve().parents[1]
-    verify_navigation_release()
-    ledger = read(LEDGER)
-    release = read(CASE_MAPS)
-    moves = release["unchanged_moves"]
-    for original, move in moves.items():
-        assert not (root/original).exists() and digest(root/move["path"]) == move["sha256"], original
-    for path, expected in ledger["preserved_scientific_files"].items():
-        current = moves[path]["path"] if path in moves else path
-        assert digest(root/current) == expected, path
-    for path, revision in ledger["replaced_presentation_files"].items():
-        assert is_presentation(path), path
-        assert verified_presentation(root/path, revision["after_sha256"]), path
-    for path, expected in ledger["added_visual_artifacts"].items():
-        assert verified_presentation(root/path, expected), path
-    case_maps = release["cases"]
+    hashes = read_hashes()
+    verify_files(hashes)
     for record in datasets():
         home = root/"eruptions"/record["slug"]/"results"
-        verify_case_map(record, home, case_maps.get(record["slug"]))
+        verify_case_map(record, home)
         report = read(home/"report.json")
         replay = read(home/"figure-replay.json")
         for path, expected in replay["source_reports"].items():
@@ -109,11 +93,9 @@ def main():
             assert not display["volume_calculation_changed"]
             assert display["extent_audit"]["edge_refinements"][-1]["bounds_km"] == display["global_bounds_km"]
             assert np.isfinite(display["global_bounds_km"]).all()
-    assert set(case_maps) <= {r["slug"] for r in datasets()}
-    print(f"Verified {len(ledger['preserved_scientific_files'])} unchanged scientific files, "
-          f"{len(ledger['replaced_presentation_files'])} presentation revisions and {len(datasets())} four-method figures with replayed median thicknesses.")
+    print(f"Verified {len(hashes)} published files and all {len(datasets())} current four-method maps "
+          "against the saved fits.")
 
 
 if __name__ == "__main__":
-    from .publication_history import verify_previous
-    verify_previous("verify_visuals")
+    main()

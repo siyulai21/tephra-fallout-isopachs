@@ -1,12 +1,6 @@
 # Reproduce workflows and studies
 
-Use `python -m benchmarks.directional_ensemble --help` to reproduce structural fits, calibration or ensemble reports. `python -m benchmarks.verify_directional_ensemble` replays published median thickness, complete volumes and geographic tests. [Study](../comparisons/directional-ensemble/README.md)
-
-The earlier single-structure study refits 13 policies and two geographic deletion schemes per eruption. Its known-volume tests include a deposit that has exactly the same observations as another with a hidden fan. [Results and reproduction commands](../comparisons/directional/README.md).
-
-[Project home](../README.md) · [Installation](../docs/QUICKSTART.md) · [Validation guide](../docs/VALIDATION.md) · [Agent task routes](../AGENTS.md)
-
-For one new eruption, use `tephra-isopachs compare` as described in the [intake workflow](../docs/NEW_ERUPTION.md). These modules reproduce broader method evaluations or specific studies. Run from the repository root into a fresh ignored `results/` directory; reviewed outputs live with cases and comparisons.
+For a new case, run the four families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.
 
 ## Current evaluations
 
@@ -24,11 +18,18 @@ For one new eruption, use `tephra-isopachs compare` as described in the [intake 
 | `python -m benchmarks.support --output results/support-trials` | Twelve known-truth tests of local footprints, complete-contour gates and hidden extrapolation | Regional GP and cubic spline |
 | `python -m benchmarks.support_domain --base results/regional-methods --output results/domain-sensitivity` | Retune spline fitting-rectangle padding while keeping the integration footprint fixed | Spline; unchanged GP reference |
 
-## Read-only evidence checks
+## Verify a publication
 
-`python -m benchmarks.refresh_figures --output results/new-figures` replays the recorded fits into fresh visual outputs without retuning or resampling. It checks regional parameter and integral parity and uses unchanged global draws. [Rendering and publication policy](../docs/maintenance/visuals.md). `python -m benchmarks.verify_visuals` verifies current figure provenance and preserved scientific hashes.
+| Command | Evidence checked |
+|---|---|
+| `python -m benchmarks.verify_btm_audit` | Audited B-Tm rows and bounds, the four fits, geographic folds, source sensitivities and thinning experiments |
+| `python -m benchmarks.verify_bearing_continuation` | Measured-fan and inspected-site tests, sector volumes, preserved shard evidence and independent spherical update |
+| `python -m benchmarks.verify_directional` | The six current directional fits and their 78 policy runs, plus the original study’s independent replications and known-volume trials |
+| `python -m benchmarks.verify_directional_ensemble` | Current ensemble maps and complete-field volumes, geographic predictions and the published simulation trials |
+| `python -m benchmarks.verify_aso_evidence` | Aso-4 source records, matched validation and posterior attempts |
+| `python -m benchmarks.verify_visuals` | Published file hashes and the plotted median thicknesses in all six current cases |
 
-`python -m benchmarks.verify_directional` verifies all six directional reports, 78 policy fits, mass partitions, six independent replications and 28 known-volume trials. `python -m benchmarks.verify_aso_evidence` verifies the retained source-revision study and posterior checksums. Both run without refitting or changing published evidence.
+The [SHA-256 inventory](published-evidence.sha256) covers published data, machine-readable results, maps and source files used in regression checks. Verify it from the repository root with `shasum -a 256 -c benchmarks/published-evidence.sha256` or use the Python visual verifier. Earlier suites and their exact inputs can be run at the matching [release commit](../docs/HISTORY.md). [Reproduce figures](../docs/maintenance/visuals.md)
 
 The directional [reproduction sequence](../comparisons/directional/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay). `directional_development` reproduces earlier experiments; its outcomes are retained as development evidence.
 
@@ -40,7 +41,7 @@ Start with the [Aso-4 study's complete reproduction sequence](../comparisons/aso
 |---|---|---|
 | `python -m benchmarks.source_review --dataset b-tm --output results/source-review` | Three source-constrained candidates, complete geographic holdouts and numerical checks; also accepts `--dataset aso-4` | Development comparisons, not automatic model selection |
 | `python -m benchmarks.aso_input_review --output results/aso-input-review` | Treat the source-confirmed eroded Aso-4 row 55 as a 7 cm lower bound in a separate sensitivity, preserving the principal input | Preceding displaced geometry; no model selection or new holdouts |
-| `python -m benchmarks.btm_input_review --output results/btm-input-review` | Use Suigetsu's documented upper bound and omit Kushu's unquantified layer from the thickness likelihood, retaining original row identities | Source-focused geometry; targeted sensitivity, not a complete source audit |
+| `python -m benchmarks.btm_input_review --output results/btm-input-review` | Replay the two-site test in the pinned 84-record B-Tm release | [Historical input and code](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e) |
 
 `python -m benchmarks.aso_diagnosis` uses the required pre-audit posterior in [the study reference](../comparisons/aso-4-audit/reference/README.md). `python -m benchmarks.verify_aso_evidence` checks that reference, current source hashes, matched validation and all retained posterior attempts without writing tracked files. Use `--output results/verification.json` to save a fresh record.
 

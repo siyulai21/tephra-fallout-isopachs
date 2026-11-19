@@ -9,6 +9,7 @@
 | Regional cubic spline | [Cubic basis, normalized penalties, tuning and conditional uncertainty](cubic-splines.md) |
 | Local observational support | [Sampling gaps, complete contours and partial volumes](supported-isopachs.md) |
 | Global directional continuation | [Median isopachs and whole-field ensemble uncertainty](directional-ensemble.md) · [Thinning laws, 13 sensitivities and source cap](directional-continuation.md) |
+| Western and other unsampled bearings | [Measured-fan reach and inspected horizons](archive-evidence.md) |
 | Global spherical mixture | [Mass-normalized field, priors and sensitivities](probabilistic-global.md) |
 | Source geometry | [Source-focused fans and experimental alternatives](source-anchored-fans.md) |
 | Marine observation process | [Conceptual transport/preservation extension](marine-observations.md) — not implemented or fitted |

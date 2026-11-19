@@ -1,14 +1,14 @@
 # B-Tm: recovered source table and observation meanings
 
-[Geometry review](../../README.md) · [Accepted input](../../../../data/eruptions/B-Tm_tephra.csv) · [Two-site sensitivity](../../btm-input-sensitivity/README.md)
+[Geometry review](../../README.md) · [Original input](../../../../data/eruptions/B-Tm_tephra.csv) · [Current source audit](../../../../data/audits/B-Tm/README.md)
 
-The published supporting workbook for [Yang et al. (2021)](https://doi.org/10.1007/s00445-021-01487-8) supplies **76 uniquely corresponding sites** in the current 84-observation B-Tm table. Every source coordinate agrees with its counterpart to the current table's 0.001-degree rounding. This recovers names, reference labels and observation qualifications; it is not an independent verification of all underlying publications or their surveyed locations.
+The published supporting workbook for [Yang et al. (2021)](https://doi.org/10.1007/s00445-021-01487-8) supplies **76 uniquely corresponding sites** in the original 84-observation B-Tm table. Every source coordinate agrees with its counterpart to the original table's 0.001-degree rounding. This recovers names, reference labels and observation qualifications; it is not an independent verification of all underlying publications or their surveyed locations.
 
 The [original workbook](yang2021-thickness.xlsx) was downloaded from the [University of Cambridge repository](https://www.repository.cam.ac.uk/handle/1810/330433) and is preserved unchanged. The repository states a [CC BY 4.0 licence](https://creativecommons.org/licenses/by/4.0/). Attribution: Qingyuan Yang and coauthors, *The Millennium Eruption of Changbaishan Tianchi Volcano is VEI 6, not 7* (2021), Supplementing dataset 1. The extracts add source-row identities and comparison fields; original source descriptions are retained.
 
 ## What the 76 matches reveal
 
-| Published source meaning | Rows | Treatment in current accepted table |
+| Published source meaning | Rows | Treatment in the 84-record input |
 |---|---:|---|
 | Numeric thickness without a qualification in this table | 59 | All 59 numerical values agree |
 | Thickness range | 13 | A single endpoint or midpoint is used |
@@ -16,11 +16,11 @@ The [original workbook](yang2021-thickness.xlsx) was downloaded from the [Univer
 | Lake Suigetsu: less than 0.1 cm | 1 | CSV row 82 treats 0.1 cm as exact |
 | Lake Kushu: no visible ash layer | 1 | CSV row 84 treats 0.1 cm as exact |
 
-Kushu is discussed as cryptotephra in the supporting text. Presence of dispersed shards is not a measured 0.1 cm bulk layer, nor is it a zero deposit. Suigetsu supplies an explicit upper bound. The [separate calculation](../../btm-input-sensitivity/README.md) isolates these two meanings under the source-focused model: Suigetsu enters as an upper bound and Kushu contributes no quantitative thickness likelihood. It does not deny Kushu's reported tephra presence, invent a detection limit, or replace the accepted collection.
+Kushu is discussed as cryptotephra in the supporting text. Presence of dispersed shards is not a measured 0.1 cm bulk layer, nor is it a zero deposit. Suigetsu supplies an explicit upper bound. The [separate calculation](../../btm-input-sensitivity/README.md) isolates these two meanings under the source-focused model: Suigetsu enters as an upper bound and Kushu contributes no quantitative thickness likelihood. The current audit retains Kushu as an occurrence and Suigetsu as an upper bound.
 
-The thirteen ranges include 16–25 cm at `KH69-2-23` (current CSV row 7 uses 25), 3–5 cm at `St.6920` (row 26 uses 5), and 1–4 cm at `KH69-2-25` (row 32 uses 4). Other ranges have been replaced by midpoints. Their meaning may involve within-site variation, preservation or measurement uncertainty. The source papers need review before these can be assigned a common interval likelihood or standard deviation. No arbitrary numerical error has been derived from a range or quality label. The two spot occurrences also remain qualified rather than being silently discarded.
+The thirteen ranges include 16–25 cm at `KH69-2-23` (original CSV row 7 uses 25), 3–5 cm at `St.6920` (row 26 uses 5), and 1–4 cm at `KH69-2-25` (row 32 uses 4). Other ranges have been replaced by midpoints. Their meaning may involve within-site variation, preservation or measurement uncertainty. The source papers need review before these can be assigned a common interval likelihood or standard deviation. No arbitrary numerical error has been derived from a range or quality label. The two spot occurrences also remain qualified rather than being silently discarded.
 
-Eight accepted rows are absent from this distal compilation: six proximal entries and two other sites. Their [original row identities and values](unmatched-current-rows.csv) remain explicit. In particular, this comparison does **not** independently verify the nearest 150 cm observation used to diagnose B-Tm's previous displaced maximum. The vent coordinates and accepted inputs are unchanged.
+Eight rows in that input are absent from this distal compilation: six proximal entries and two other sites. Their [original row identities and values](unmatched-current-rows.csv) remain explicit. In particular, this comparison does **not** independently verify the nearest 150 cm observation used to diagnose B-Tm's previous displaced maximum. The later audit recovered additional records and published a separate accepted input.
 
 ## Research workbooks are not interchangeable with the published table
 

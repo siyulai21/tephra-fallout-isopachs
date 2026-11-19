@@ -1,10 +1,8 @@
 # B-Tm source correction and Aso-4 volume review
 
-**Later Aso-4 update:** this review retains its original input and geometry experiments. The subsequent [source audit](../aso-4-audit/README.md) corrects cruise coordinates, recovers bounds and reruns the current case. Its numbers supersede this page only as the current Aso-4 reference, not as a redefinition of these historical experiments.
+This experiment used the earlier B-Tm and Aso-4 inputs to test how fan geometry changes the thickest contour and the inferred volume. Both eruptions subsequently received source audits. Their case homes give the current estimates. [B-Tm](../../eruptions/b-tm/README.md) · [Aso-4](../../eruptions/aso-4/README.md)
 
-[Project home](../../README.md) · [Current global estimates](../spherical-mixture/README.md) · [Equations and assumptions](../../docs/methods/source-anchored-fans.md)
-
-**The B-Tm problem was the thickest contour, not the volcano coordinates.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.
+**The B-Tm maximum moved when the geometry changed.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.
 
 The source-focused B-Tm fit has a median of **106 km³** and a **53–2,159 km³ conditional 95% interval**, compared with the preceding **344 km³ (80–17,485 km³)**. Its maximum is at the supplied source by construction. Its geographic negative log score improves from **1.520 to 1.162**; lower is better. Coverage changes from **95.2% to 92.9%**, so the improvement is not uniform across every metric. The same-data GP and spline scores are 1.331 and 1.814. The preceding B-Tm score also has one numerically provisional fold, so its exact difference is uncertain. These are development comparisons, not proof of superior global-volume accuracy or independent validation of the subsequent family choice.
 
@@ -12,7 +10,7 @@ The source-focused B-Tm fit has a median of **106 km³** and a **53–2,159 km³
 
 The [current B-Tm report](../../eruptions/b-tm/results/spherical-mixture/README.md) contains the complete seven-alternative sensitivity protocol, fresh production fit, geographic checks and automatic integration refinement. The catalogue records its reviewed `source-fans` geometry, so the normal B-Tm command reproduces that choice. This changes the geometry, not eruption-specific wind or particle inputs. The upper volume tail remains broad and must be reported.
 
-**Aso-4 does not yet have a defensible lower replacement.** Source-focused ellipses improve its geographic score from **1.644 to 1.421**, with 94.3% coverage, but increase the conditional median to **3,418 km³**. The six- and twelve-site envelope models reduce it to **472 and 369 km³**, but their scores worsen to **1.715 and 1.760**, and coverage falls to **86.2%**. That is not a demonstration that 369–472 km³ is the correct global mass. The preceding 1,836 km³ calculation remains visible as a questioned conditional estimate, alongside these alternatives; it is not endorsed as a precise geological total.
+**Aso-4 geometry sensitivities.** Source-focused ellipses improve its geographic score from **1.644 to 1.421**, with 94.3% coverage, but increase the conditional median to **3,418 km³**. The six- and twelve-site envelope models reduce it to **472 and 369 km³**, but their scores worsen to **1.715 and 1.760**, and coverage falls to **86.2%**. That is not a demonstration that 369–472 km³ is the correct global mass. The preceding 1,836 km³ calculation remains visible as a questioned conditional estimate, alongside these alternatives; it is not endorsed as a precise geological total.
 
 ![Competing volumes and geographic predictions](comparison.png)
 

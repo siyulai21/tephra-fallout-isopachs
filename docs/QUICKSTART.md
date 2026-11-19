@@ -24,7 +24,7 @@ The comparison fits the **regional GP and cubic spline peers**, repeats fitting 
 
 The source data still need defensible units, locations, deposit interpretation and documented bounds. Automatic fitting cannot invent that evidence. All methods retain explicit assumptions and conditional uncertainty limitations.
 
-For the spherical mixture, the catalogue records B-Tm's reviewed `source-fans` geometry; other cases retain the preceding displaced geometry. `global --geometry source-fans` explicitly requests source-focused ellipses for a comparison, while `--geometry displaced` reproduces the preceding geometry. The source maximum is a shape assumption, not a fabricated vent measurement. Read the [B-Tm correction and unresolved Aso-4 comparison](../comparisons/source-revision/README.md) before interpreting the competing totals.
+For the spherical mixture, the catalogue records B-Tm's reviewed `source-fans` geometry; other cases retain the preceding displaced geometry. `global --geometry source-fans` explicitly requests source-focused ellipses for a comparison, while `--geometry displaced` reproduces the preceding geometry. The source maximum is a shape assumption, not a fabricated vent measurement. Read the [audited B-Tm case](../eruptions/b-tm/README.md) before interpreting the competing totals.
 
 ## Find results and verify a run
 

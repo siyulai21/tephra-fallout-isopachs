@@ -1,20 +1,10 @@
 # B-Tm fallout reconstruction
 
-The revised input contains **64 thickness measurements, three lower bounds and one upper bound**. All four methods target combined airborne fallout from both phases of the 946 CE Millennium eruption. [Accepted thickness CSV](../../data/eruptions/B-Tm_reviewed.csv) · [Source audit](../../data/audits/B-Tm/README.md)
-
-## Directional reach and archive evidence
-
-The measured-fan median map integrates to **42.5 km³**. The complete-deposit median is 52.3 km³, with a conditional 95% interval of 28.0–120.8 km³. The map shows where the predicted extent of each level changes under the recorded assumptions.
-
-The archive sensitivity **Comparable visible fallout beds** gives a median-map volume of **35.8 km³**. The complete-deposit median is 43.5 km³ (conditional 95% interval 24.8–70.4 km³). This result depends on the stated transfer between local fallout and a recognizable layer.
-
-![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
-
-[Directional estimates, inspected archives and transfer sensitivities](results/directional/bearing/README.md)
+The 946 CE Millennium eruption of Paektu / Changbaishan left fallout from two phases. All four methods fit the combined deposit using **64 measured thicknesses, three lower bounds and one upper bound**. [Accepted observations](../../data/eruptions/B-Tm_reviewed.csv)
 
 ## Four matched thickness-only fits
 
-The directional control in this four-panel comparison includes a possible fan in the largest sampling gap. Its scores and volumes refer to that six-structure model.
+The directional ensemble in this comparison allows a fan in the largest sampling gap.
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-isopachs.png)
 
@@ -45,26 +35,35 @@ Both maps use the vent longitude as their central meridian. Read the thickness k
 </details>
 
 
-## What changed in the data
+## How far does the fallout extend between sampled directions?
 
-The previous calculation fitted 84 scalars. The audit recovered field thicknesses in four Japanese lake cores and six named proximal sections. It recoded Lake Suigetsu as a sub-millimetre upper bound. West of the vent, Sihailongwan and Quanyang establish the presence of ash, with insufficient information to estimate a physical thickness. Costa’s Lake Kushu coordinate was about 314 km from the lake. A measured bed thickness could not be verified there. [Source audit and evidence map](../../data/audits/B-Tm/README.md) · [Original input and case history](history/2026-11-18/README.md)
+The measured-fan model extends fallout from directions with thickness observations. The four-method comparison above also allows an additional fan in the largest gap.
 
-Reintroducing the twelve numerical ranges at their low and high endpoints gives median-map integrals of 50.8 and 59.2 km³. Assigning the two disputed proximal stacks to Millennium fall gives 46.8 km³. [Source alternatives and numerical checks](results/source-audit/README.md)
+| Directional assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
+|---|---:|---:|---:|
+| Measured fan directions | 42.5 | 52.3 | 28.0–120.8 |
+| Comparable visible fallout beds | 35.8 | 43.5 | 24.8–70.4 |
 
-The 1993 Pyongyang edition of *Geology of Korea* records 7 m of pumice at Samjiyon. Its stratigraphy and its chapter on volcanism distinguish bed thickness from clast size. A separate field party confirmed metre-scale pumice in the area in 2002. The exact outcrop, facies and contribution of both phases remain uncertain. Treating 7 m as the combined fallout gives a median-map integral of 63.9 km³. The lower-limit reading gives 66.6 km³ and the complete-stack upper-limit reading gives 53.6 km³. The earlier report of 1.6 m around Samjiyon yields 57.3 km³ under the same total-fall assumption. Each alternative has its own conditional interval. [Samjiyon field evidence](../../data/audits/B-Tm/samjiyon.md) · [Intervals and predictions at Samjiyon](results/source-audit/README.md)
+The inspected-site estimates depend on how much of a local deposit would have been preserved and recognized as a bed.
 
-With the previous 84 scalar records, the directional median-map integral was 59.3 km³. The audited selection gives 54.0 km³. The spherical posterior median changes from 106.3 to 158.1 km³. These changes reflect the entire source revision. The regional integration hull and holdout groups also change with the observations. [Previous release](history/2026-11-18/README.md)
+![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
 
-## Where the estimates are supported
+[Directional maps, held-out tests and site evidence](results/directional/bearing/README.md)
 
-The standard interpolation footprint covers 96,131 km². Of the twelve checks across four methods and three support policies, 0 identified a complete band of supported isopachs. Global totals depend on assumptions about unsampled directions, near-vent deposition and the distal tail. [Regional support](results/support/README.md) · [Directional contour decisions](results/directional/ensemble/complete-contour-audit.json) · [Spherical contour decisions](results/spherical-mixture/complete-contour-audit.json)
+## What the sites constrain
 
-The directional median-map numerical screen passed. 6 of six full-data structures passed every sampling and integral diagnostic. The geographic comparison scored 68 of 68 records, including likelihood bounds. Geographic folds with sampling warnings include 0. Of four source-sector holdouts, 2 had no observations. Sampling warnings remained in 1 of the 2 estimable holdouts. The spherical baseline diagnostic passed. Spherical prior refits with outstanding numerical warnings include wide geography, five fans. Each family report retains its fold diagnostics. [Directional ensemble](results/directional/README.md) · [Spherical mixture](results/spherical-mixture/README.md)
+Six proximal sections and four Japanese lake cores supplied new thickness evidence. At Lake Suigetsu, the description supports an upper bound below 0.1 cm. At Sihailongwan and Quanyang, shards establish that ash reached the west. [Source decisions and site map](../../data/audits/B-Tm/README.md)
 
-## Does segmented thinning explain Samjiyon?
+The western profiles challenge a continuous decimetre bed at those sites. They also leave room for a broader deposit than the comparable-bed map suggests. At an independent Ulleung Basin core, only 3.3% of that model’s predictions reach the thickness implied **if** the published shard-count conversion applies there. The original local thickness is unknown. [Western cores, marine check and independent spherical refit](results/directional/bearing/field-evidence.md)
 
-None of the disputed DPRK locality summaries enters the principal fit. The transect through the workbook position is almost entirely supplied by the extrapolated radial curve. Across the explicit-break refits, the predicted probability above 7 m is 0.27%–0.28% at that location. The break radii remain poorly constrained. [Matched thinning-rate experiment and geographic warnings](results/source-audit/thinning/README.md) · [Which near-vent sections enter the principal estimate](../../data/audits/B-Tm/README.md)
+The standard interpolation footprint covers 96,131 km². None of the twelve checks across four methods and three support policies found a complete band of isopachs bracketed by observations. Every whole-Earth estimate therefore depends on how the model fills unsampled ground. [Local support audit](results/support/README.md)
 
-In the matched single-structure calculation, the smooth median map integrates to 48.4 km³. Adding one shared radial break gives 48.4 km³ and adding two gives 48.6 km³. These are controlled changes to the thinning law at fixed fan geometry. [Whole-deposit intervals, median maps and numerical diagnostics](results/source-audit/thinning/volumes/README.md).
+All six directional structures passed the full-data numerical checks. Geographic fold 0 carried a sampling warning. Only two of four directional-sector holdouts had observations, and one of those fits had a warning. The spherical baseline passed, while the wide-geography and five-fan prior refits retained warnings.
 
-Omitting the 26 thickness values carried from compilations leaves 42 observations. With the same six ensemble structures, the median-map integral becomes 48.9 km³. The predicted local median at the withheld workbook point is 49.7 cm, with probability 0.19% above 7 m. [Which records were removed](../../data/audits/B-Tm/source-class-provenance.json) · [Conditional intervals and full local draws](results/source-audit/README.md)
+## How much do disputed records matter?
+
+The historical 7 m pumice account at Samjiyon has an uncertain section location and fallout attribution. With Samjiyon withheld, the explicit thinning-break models give a 0.27–0.28% probability of observing more than 7 m at the workbook coordinates. Changing the thinning law leaves the median-map integral near 48.4–48.6 km³ in that fixed-geometry experiment. [Field accounts](../../data/audits/B-Tm/samjiyon.md) · [Thinning experiment](results/source-audit/thinning/README.md)
+
+Restoring the twelve reported thickness ranges at their low or high endpoints gives directional median-map volumes of 50.8 and 59.2 km³. Withholding 26 thicknesses carried from compilations gives 48.9 km³. The sensitivity report also gives the four Samjiyon interpretations, disputed proximal stacks and the conditional interval for each fit. [Source-sensitivity results](results/source-audit/README.md)
+
+The earlier 84-record fit used a different observation hull and geographic folds. Its directional median map integrated to 59.3 km³, compared with 54.0 km³ in the audited thickness-only fit. [Earlier B-Tm release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm)

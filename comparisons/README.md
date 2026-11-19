@@ -1,26 +1,19 @@
-# Compare the four methods
+# How well do the four methods predict fallout?
 
-This figure asks how well each method predicts ash thickness in a withheld region. Lower scores are better. Percentages give the share of exact observations within the 95% predictive interval. A cross marks a global fit with a numerical warning or incomplete scoring. The directional series uses the six-structure ensemble. The figure includes the reviewed B-Tm data. The studies below retain the inputs and results of their respective comparisons.
+The figure compares predictions in withheld geographic regions across the six eruptions, including the audited B-Tm input. Each region has equal weight. A lower score means better prediction. Percentages show how often a 95% predictive interval covered an exact held-out thickness. A cross flags a numerical warning or incomplete scoring.
 
-![Geographic prediction scores and exact-site coverage for the four methods across six eruptions](method-scores.png)
+![Geographic prediction scores and exact-site coverage across the six eruptions](method-scores.png)
 
-## Read the evidence by question
+## Find a comparison
 
 | Question | Study |
 |---|---|
-| How sensitive are directional isopachs and whole-Earth volume to the width and presence of fallout fans? | [Directional ensemble](directional-ensemble/README.md) — mapped volumes, complete-field intervals, withheld sectors and known-deposit tests |
-| How much should a directional field extend into an unsampled sector? | [Six-eruption geographic and quadrant tests](bearing-continuation/README.md) and the [B-Tm archive check](../eruptions/b-tm/results/directional/bearing/README.md) |
-| How much does the choice of regional fit matter inside the same observation hull? | [GP and cubic spline](regional/README.md) — matched geographic folds, hull integrals and synthetic trials |
-| How much do global fan geometry and priors affect the spherical-mixture result? | [Spherical mixture](spherical-mixture/README.md) — separate posterior, prior refits and numerical warnings |
-| Which contours or partial volumes have local observational support? | [Support audit](support/README.md) — sampling gaps, rejected bands and geographic deletions |
+| How much does the regional volume depend on interpolation inside the same hull? | [GP ensemble and cubic spline](regional/README.md) |
+| How well do directional fans predict held-out thickness and recover known simulated volumes? | [Six-structure ensemble](directional-ensemble/README.md) · [Single-structure sensitivities](directional/README.md) |
+| How well does fallout continue into an unsampled direction? | [Measured-fan and possible-missing-fan holdouts](bearing-continuation/README.md) |
+| How sensitive is spherical-mixture volume to the fan geometry and priors? | [Whole-Earth posterior and prior refits](spherical-mixture/README.md) · [Source-geometry experiment](source-revision/README.md) |
+| Where do observations support a contour or a partial volume? | [Local support and geographic deletions](support/README.md) |
 
-The directional ensemble predicted held-out thickness better than its single-structure reference in **five of six** eruptions and better than equal weights in **four of six**. Its conditional volume intervals contained the known total in **7 of 14** simulated trials and missed the larger hidden-fan total in both trials that allowed it. The real eruptions have no known whole-deposit volume against which to rank the methods. [Trial results and limitations](directional-ensemble/README.md#known-deposits-and-unseen-fans)
+The directional ensemble’s conditional volume intervals covered the known total in 7 of 14 simulated trials. It missed the larger hidden-fan total in both trials that allowed one. Real-eruption totals are unknown. Each study identifies the measurements it used. Several original comparisons used the previous 84-record B-Tm selection. [Known-deposit trials](directional-ensemble/README.md#known-deposits-and-unseen-fans)
 
-## Studies that explain specific results
-
-- The [single-structure directional study](directional/README.md) preserves the original comparison with the spherical mixture, 13 assumption settings, independent numerical replications and an unmeasured source-cap experiment.
-- The [Aso-4 source audit and influence tests](aso-4-audit/README.md) explain the corrected cruise positions, thickness bounds and questioned upper tail.
-- The [B-Tm source audit](../data/audits/B-Tm/README.md) and [case report](../eruptions/b-tm/README.md) give the current evidence, four fitted results and source sensitivity tests.
-- The [B-Tm and Aso-4 source-geometry study](source-revision/README.md) explains B-Tm’s source-focused spherical fit and tests changes to its lake evidence.
-
-For an individual eruption’s maps and estimates, open its [case home](../eruptions/README.md).
+For a result tied to an individual eruption, start with its case. B-Tm links its current source audit and tests of disputed thicknesses. Aso-4 links its marine-site and influence study. [Eruption catalogue](../eruptions/README.md)

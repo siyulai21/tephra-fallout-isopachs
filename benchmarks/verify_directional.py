@@ -25,13 +25,13 @@ def check_interval(draws, recorded):
     assert all(np.isclose(actual[k], recorded[k], rtol=1e-12, atol=1e-14) for k in actual)
 
 
-def verify(folder, record, comparison, study, extremes):
+def verify(folder, record, expected_input, expected_report, extremes):
     manifest = read(folder/"artifacts.json")
     for name, expected in manifest.items():
         assert digest(folder/name) == expected, f"Changed {folder/name}"
     report = read(folder/"report.json")
-    assert study["cases"][record["slug"]] == manifest["report.json"]
-    assert report["input"]["input_sha256"] == comparison.input_sha256 == digest(record["path"])
+    assert expected_report == manifest["report.json"]
+    assert report["input"]["input_sha256"] == expected_input == digest(record["path"])
     observations, _ = audited_data(record["path"])
     ids = report["validation"]["geographic"]["row_ids"]
     by_id = {row_id:i for i,row_id in enumerate(observations.row_ids)}
@@ -125,16 +125,23 @@ def verify(folder, record, comparison, study, extremes):
 
 
 def main():
-    from .publication_history import ARCHIVE, verify_previous
-    if (ARCHIVE / "manifest.json").is_file():
-        return verify_previous("verify_directional")
     root = Path("comparisons/directional")
     study = read(root/"verification.json")
     cases = pd.read_csv(root/"comparison.csv").set_index("slug")
     extremes = pd.read_csv(root/"octant-extremes.csv")
     for record in datasets():
         slug = record["slug"]
-        verify(Path("eruptions")/slug/"results/directional", record, cases.loc[slug], study, extremes[extremes.slug==slug])
+        home = Path("eruptions")/slug/"results"
+        expected_input = cases.loc[slug].input_sha256
+        expected_report = study["cases"][slug]
+        case_extremes = extremes[extremes.slug == slug]
+        if digest(record["path"]) != expected_input:
+            release = read(home/"source-audit/release.json")
+            expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
+            expected_report = release["files"][str(home/"directional/report.json")]
+            case_extremes = pd.read_csv(home/"source-audit/octant-extremes.csv")
+        verify(home/"directional", record, expected_input, expected_report, case_extremes)
+        # The published comparison and its replications retain their own input identities.
         with gzip.open(root/"spherical-support"/(slug+".json.gz"),"rt") as f:
             screen = json.load(f)
         assert digest(root/"spherical-support"/(slug+".npz")) == screen["surface_samples_sha256"]
@@ -154,8 +161,8 @@ def main():
     for slug, run in replicas.items():
         assert run["design"]["replication"]["input_sha256"] == cases.loc[slug].input_sha256
         assert run["integral"]["passed"] == cases.loc[slug].replication_passed
-    print(f"Verified {len(cases)} published eruptions, {len(cases)*len(POLICIES)} policy fits, "
-          f"{len(replicas)} independent replications and {len(evidence)} known-volume trials.")
+    print(f"Verified {len(cases)} current eruptions, {len(cases)*len(POLICIES)} policy fits, "
+          f"{len(replicas)} original-study replications and {len(evidence)} known-volume trials.")
 
 
 if __name__ == "__main__":
