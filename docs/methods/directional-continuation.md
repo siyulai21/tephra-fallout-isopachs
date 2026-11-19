@@ -2,7 +2,7 @@
 
 This is the underlying directional field and the original single-structure study. The active estimate now combines six field structures. [Median isopachs, weights and volume definitions](directional-ensemble.md)
 
-The input is the accepted fallout thickness table and its vent. The model fits all accepted fans jointly, interpolates latent thickness within locally sampled triangles, and completes the field with a directional thinning law. Every eruption gets the same priors, geometry rules, sensitivities and geographic tests. The integral is over the WGS84 surface. Results are in km³ of bulk fallout. [Cross-eruption results](../../comparisons/directional/README.md) · [Implementation](../../src/empirical_isopach/models/directional/)
+The input is the accepted fallout thickness table and its vent. The model fits all accepted fans jointly, interpolates latent thickness within locally sampled triangles, and completes the field with a directional thinning law. Every eruption gets the same priors, geometry rules, sensitivities and geographic tests. The integral is over the WGS84 surface. Results are in km³ of bulk fallout. [Cross-eruption results](../../comparisons/directional/single-structure/README.md) · [Implementation](../../src/empirical_isopach/models/directional/)
 
 ## What a measured contour contributes
 
@@ -89,4 +89,4 @@ Run the common directional calculation on its own with the following command. Th
 tephra-isopachs global Aso-4 --geometry directional --output results/new-directional
 ~~~
 
-[Case results and stress tests](../../comparisons/directional/README.md) · [Other global estimate](probabilistic-global.md)
+[Case results and stress tests](../../comparisons/directional/single-structure/README.md) · [Other global estimate](probabilistic-global.md)

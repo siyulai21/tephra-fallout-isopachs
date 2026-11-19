@@ -58,7 +58,7 @@ def summarize(known, regional, output, cli_replay=None):
         r = json.loads((folder/"report.json").read_text())
         c, j = r["median_surface"], r["coherent_fields"]
         geo, q = r["validation"]["geographic"], r["validation"]["quadrants"]
-        old = json.loads((home/"directional/report.json").read_text())
+        old = json.loads((home/"directional/single-structure/report.json").read_text())
         m = np.array(c["parts_sectors_km3"])
         v = j["volume_km3"]
         cases.append(dict(slug=rec["slug"], dataset=r["dataset"],input_sha256=r["input"]["input_sha256"],
@@ -96,15 +96,15 @@ def summarize(known, regional, output, cli_replay=None):
     (output/"simulation-records.json.gz").write_bytes(gzip.compress(json.dumps(full,allow_nan=False).encode(),mtime=0))
     signed = int((tab.geographic_score<tab.reference_score).sum())
     wins = int((tab.geographic_score<tab.uniform_score).sum())
-    lines = ["# Directional ensemble results","",
-        "The directional headline is the bulk volume obtained by integrating the **pointwise median isopachs** over the Earth. "
+    lines = ["# Fixed-direction ensemble calibration","",
+        "This study uses the earlier six-structure calibration with fixed fan directions. Its central volume integrates pointwise median thickness over the Earth. The matched control in the principal study instead uses the same structure weights as its uncertain-direction fit. "
         "A second summary gives the median and conditional 95% interval across complete simulated deposits. Each of the six combinations of fan width and gap treatment "
         "is fitted to the same accepted observations. The reported eruption contributes no holdout scores to its own predictive weights.", "",
         "![Central isopach volumes, complete-field intervals and measured shares](volumes.png)","",
         "| Eruption | Median-map km³ | Complete-field median [95%], km³ | Median map inside measured triangles | Full structures passing | Map checks |",
         "|---|---:|---:|---:|---:|---|"]
     for a in tab.itertuples():
-        lines.append(f"| [{a.dataset}](../../eruptions/{a.slug}/results/directional/README.md) | **{a.median_map_km3:,.1f}** | "
+        lines.append(f"| [{a.dataset}](../../../eruptions/{a.slug}/results/directional/ensemble/README.md) | **{a.median_map_km3:,.1f}** | "
                      f"{a.coherent_median_km3:,.1f} [{a.lower95_km3:,.1f}–{a.upper95_km3:,.1f}] | {a.footprint_fraction:.1%} | "
                      f"{a.full_members_passed}/6 | {'passed' if a.median_map_numerical_passed else '**review**'} |")
     lines += ["","These are model-conditional bulk fallout estimates. A median map can combine common features from incompatible deposits. The joint-field interval "
@@ -145,8 +145,8 @@ def summarize(known, regional, output, cli_replay=None):
     lines += ["","The machine-readable records include both indistinguishable truths, all unresolved levels and the sampler and map-integration warnings.", "",
               "[Case comparison](comparison.csv) · [Known volumes](known-volumes.csv) · [Contour overlap by scenario and level](contour-accuracy.csv) · "
               "[Complete simulation records](simulation-records.json.gz) · [Verification](verification.json)", "",
-              "[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · "
-              "[Four-method comparison](../README.md)",""]
+              "[Method and equations](../../../docs/methods/directional-ensemble.md) · [Single-structure studies](../single-structure/README.md) · "
+              "[Principal uncertain-direction comparison](../README.md)",""]
     (output/"README.md").write_text("\n".join(lines))
     artifacts = {f:digest(output/f) for f in ("README.md","volumes.png","comparison.csv","known-volumes.csv","contour-accuracy.csv","simulation-records.json.gz")}
     verification = {"regional_benchmark":regional_check,"calibration_sha256":digest(PACKET),"artifacts":artifacts,

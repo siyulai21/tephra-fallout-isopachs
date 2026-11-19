@@ -191,6 +191,52 @@ def draw_comparison(home, destination, regional_grid=None):
         plt.close(fig)
 
 
+def directional_sensitivities(home, ensemble, prefix):
+    """Tabulate the source evidence and fan assumption for each comparable sensitivity."""
+    bearing = Path(home) / "directional/bearing"
+    measured = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
+    if measured and measured["input_sha256"] != ensemble["input"]["input_sha256"]:
+        measured = None
+    scenarios = []
+    archive = ensemble["volume"].get("archive_conditioned")
+    if archive:
+        scenario = ensemble["archive"]["mapped_scenario"]
+        title = scenario.replace("_", " ")
+        if measured and (bearing/scenario/"result.json").is_file():
+            candidate = read_report(bearing/scenario/"result.json")
+            if (candidate["input_sha256"] == measured["input_sha256"]
+                    and candidate["archive_inventory_sha256"] == ensemble["archive_evidence_sha256"]):
+                title = candidate["scenario"]["title"]
+        scenarios.append(("Uncertain fan direction", title, archive["median_map_km3"], archive["coherent_volume_km3"]))
+    if measured:
+        scenarios.append(("Measured fan directions", "Thicknesses and bounds", measured["median_surface"]["volume_km3"],
+                          measured["coherent_fields"]["volume_km3"]))
+        for validation in sorted(bearing.glob("*/validation.json")):
+            if validation.parent.name != "quantitative":
+                result = read_report(validation.with_name("result.json"))
+                if (result["input_sha256"] == measured["input_sha256"]
+                        and result["archive_inventory_sha256"] == measured["archive_inventory_sha256"]):
+                    scenarios.append(("Measured fan directions", result["scenario"]["title"],
+                                      result["median_surface"]["volume_km3"], result["coherent_fields"]["volume_km3"]))
+    if not scenarios:
+        return []
+    heading = "Directional assumptions and inspected sites" if archive or len(scenarios) > 1 else "Directional assumptions"
+    description = "The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings."
+    if archive or len(scenarios) > 1:
+        description += " A visible-bed scenario also asks how much ash would have been preserved and recognized at inspected sites."
+    lines = [f"## {heading}", "", description, "",
+              "| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |",
+              "|---|---|---:|---:|---:|"]
+    for method, assumption, integral, joint in scenarios:
+        lines.append(f"| {method} | {assumption} | {integral:,.1f} | {joint['median']:,.1f} | "
+                     f"{joint['lower95']:,.1f}–{joint['upper95']:,.1f} |")
+    if measured:
+        lines += ["", "<details>", "<summary>View agreement between the directional sensitivities</summary>", "",
+                  f"![Agreement on median isopach extent]({prefix}directional/bearing/isopach-agreement.png)", "",
+                  "</details>", "", f"[Measured-fan maps, held-out tests and site evidence]({prefix}directional/bearing/README.md)", ""]
+    return lines
+
+
 def comparison_section(home, *, prefix=""):
     """Render the same data-backed section for a run or its published case home."""
     from .summary import metrics
@@ -245,39 +291,18 @@ def comparison_section(home, *, prefix=""):
                   "Both maps use the vent longitude as their central meridian. Read the thickness key under each map.", "",
                   "</details>", ""])
     from ..models.directional.azimuth.primary import numerical_notes
-    lines += ["", "## Principal directional isopachs", "",
-              f"![Principal uncertain-fan-direction median isopachs for {name}]({prefix}{DIRECTIONAL}/isopachs.png)", "",
-              f"The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **{centre['matched_control_map_km3']:,.1f} km³**. "
-              "Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.", ""]
+    lines += [f"With the same observations and structure weights, fixing the fan directions gives a median-map volume "
+              f"of **{centre['matched_control_map_km3']:,.1f} km³**.", ""]
     notes = numerical_notes(ensemble)
     if notes:
         lines += [" ".join(notes), ""]
-    lines += [f"[Sector areas, exceedance probabilities and alternative assumptions]({prefix}{DIRECTIONAL}/README.md)", ""]
-    bearing = Path(home)/"directional/bearing"
-    revised = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
-    if revised is not None and revised["input_sha256"] == regional["input"]["input_sha256"]:
+    lines += ["<details>", "<summary>View the directional deposit extent and source area</summary>", "",
+              f"![Principal uncertain-fan-direction median isopachs for {name}]({prefix}{DIRECTIONAL}/isopachs.png)",
+              "", "</details>", ""]
+    sensitivities = directional_sensitivities(home, ensemble, prefix)
+    if sensitivities:
         lines[0] = "## Four matched thickness-only fits"
-        lines[1:1] = ["", "The principal directional map uses the quantitative thickness observations and bounds. Inspected archive scenarios appear below."]
-        lines.extend(["", "## How far does the fallout extend between sampled directions?", "",
-                      "The measured-fan model extends fallout from directions with thickness observations. "
-                      "The principal uncertain-direction reconstruction above averages over the direction of fallout in unsampled sectors.", "",
-                      "| Directional assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |",
-                      "|---|---:|---:|---:|"])
-        scenarios = [("Measured fan directions", revised)]
-        for validation in sorted(bearing.glob("*/validation.json")):
-            if validation.parent.name != "quantitative":
-                result = read_report(validation.with_name("result.json"))
-                if result["input_sha256"] == revised["input_sha256"]:
-                    scenarios.append((result["scenario"]["title"], result))
-        for title, result in scenarios:
-            volume = result["coherent_fields"]["volume_km3"]
-            lines.append(f"| {title} | {result['median_surface']['volume_km3']:,.1f} | "
-                         f"{volume['median']:,.1f} | {volume['lower95']:,.1f}–{volume['upper95']:,.1f} |")
-        if len(scenarios) > 1:
-            lines.extend(["", "The inspected-site estimates depend on how much of a local deposit "
-                          "would have been preserved and recognized as a bed."])
-        lines.extend(["", f"![Agreement on median isopach extent]({prefix}directional/bearing/isopach-agreement.png)", "",
-                      f"[Directional maps, held-out tests and site evidence]({prefix}directional/bearing/README.md)", ""])
+        lines.extend(sensitivities)
     return "\n".join(lines)
 
 

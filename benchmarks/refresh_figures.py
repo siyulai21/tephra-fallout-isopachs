@@ -90,11 +90,11 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
     target.mkdir(parents=True, exist_ok=True)
     data, meta = recorded_observations(record, home)
     regional = read(home/"report.json")
-    directional = read(home/"directional/report.json")
+    directional = read(home/"directional/single-structure/report.json")
     spherical = read(home/"spherical-mixture/report.json")
     assert all(r["input"]["input_sha256"] == meta["input_sha256"] for r in (regional, directional, spherical))
     checks = {"input_sha256":meta["input_sha256"], "source_reports":{
-        key:digest(home/key) for key in ("report.json", "directional/report.json", "spherical-mixture/report.json")}}
+        key:digest(home/key) for key in ("report.json", "directional/single-structure/report.json", "spherical-mixture/report.json")}}
     if "regional" in scopes or "comparison" in scopes:
         print(f"{name}: reconstructing recorded regional fits (no selection)", flush=True)
         models, region, parity = regional_models(data, regional)
@@ -130,13 +130,13 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
         checks["spherical_posterior_sha256"] = digest(dest/"posterior.npz")
     if "directional" in scopes:
         print(f"{name}: rendering saved directional posterior", flush=True)
-        dest = target/"directional"
-        dest.mkdir(exist_ok=True)
-        shutil.copyfile(home/"directional/posterior.npz", dest/"posterior.npz")
+        dest = target/"directional/single-structure"
+        dest.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(home/"directional/single-structure/posterior.npz", dest/"posterior.npz")
         with np.load(dest/"posterior.npz") as f:
             draws = dict(f)
         g = Geometry(data, meta["vent_lonlat"][1])
-        arcs = pd.read_csv(home/"directional/isopach-fragments.csv")
+        arcs = pd.read_csv(home/"directional/single-structure/isopach-fragments.csv")
         directional_figures(dest, name, data, meta, g, draws, arcs, directional["fits"]["reference"])
         checks["directional_posterior_sha256"] = digest(dest/"posterior.npz")
     ensemble_dir = home/"directional"/"ensemble"

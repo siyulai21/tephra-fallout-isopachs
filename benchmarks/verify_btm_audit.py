@@ -160,28 +160,8 @@ def verify_results(manifest):
         tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
         missing = sorted(set(release["files"]).difference(tracked))
         assert not missing, f"Release files missing from the Git index: {missing}"
-    from .publication import read_hashes
-    current = read_hashes()
-    archived_pages = {
-        "eruptions/b-tm/README.md", "eruptions/b-tm/results/directional/README.md",
-        "eruptions/b-tm/results/directional/ensemble/artifacts.json",
-    }
-    primary_archive = Path("comparisons/azimuth-continuation/archive/2026-11-18-before-primary")
-    preceding_pages = {"eruptions/b-tm/results/README.md","eruptions/b-tm/results/figure-replay.json"}
     for name, expected in release["files"].items():
-        if name in preceding_pages:
-            with ZipFile(primary_archive/"previous-reports.zip") as previous:
-                assert sha256(previous.read(name)).hexdigest()==expected, name
-            assert digest(Path(name))==current[name], name
-        elif name=="eruptions/b-tm/results/overview.png":
-            assert digest(primary_archive/"figures"/name)==expected, name
-            assert digest(Path(name))==current[name], name
-        elif name in archived_pages:
-            with ZipFile("comparisons/azimuth-continuation/archive/2026-11-18/previous-pages.zip") as previous:
-                assert sha256(previous.read(name)).hexdigest()==expected, name
-            assert digest(Path(name)) == current[name], name
-        else:
-            assert digest(Path(name)) == expected, name
+        assert digest(Path(name)) == expected, name
     matched = pd.read_csv(STUDY/"matched-regional.csv").set_index(["slug", "method"])
     historical = pd.read_csv(STUDY/"spline-replay.csv").set_index(["slug", "method"])
     assert set(matched.index) == set(historical.index) == {
@@ -199,7 +179,7 @@ def verify_results(manifest):
         Path("src/empirical_isopach/models/cubic_spline/model.py"))
     rec = next(r for r in datasets() if r["slug"] == "b-tm")
     principal = manifest["cases"]["principal"]
-    reference = read(HOME/"directional/report.json")
+    reference = read(HOME/"directional/single-structure/report.json")
     ensemble = read(HOME/"directional/ensemble/report.json")
     sphere = read(HOME/"spherical-mixture/report.json")
     regional = read(HOME/"report.json")
@@ -209,7 +189,7 @@ def verify_results(manifest):
         assert meta["audit"]["sha256"] == digest(AUDIT/"provenance.json")
         assert (meta["n_measurements"], meta["n_lower_limits"], meta["n_upper_limits"]) == (64, 3, 1)
     extremes = pd.read_csv(STUDY/"octant-extremes.csv")
-    verify_single(HOME/"directional", rec, principal["sha256"], release["files"][str(HOME/"directional/report.json")], extremes)
+    verify_single(HOME/"directional/single-structure", rec, principal["sha256"], release["files"][str(HOME/"directional/single-structure/report.json")], extremes)
     verify_ensemble(rec, principal["sha256"], release["directional_median_map_km3"])
     verify_case_map(rec, HOME.resolve())
     rv, sv = regional["validation"], sphere["validation"]
@@ -284,7 +264,7 @@ def verify_results(manifest):
     variant_runs = read(STUDY/"thinning/volumes/diagnostics.json")["runs"]
     assert all(run["posterior_sha256"] == variant_fits[k]["full_fit"]["attempts"][-1]["posterior_sha256"]
                for k, run in variant_runs.items())
-    with np.load(HOME/"directional/directional-mass.npz") as reference_mass, np.load(STUDY/"thinning/volumes/volume-draws.npz") as variants:
+    with np.load(HOME/"directional/single-structure/directional-mass.npz") as reference_mass, np.load(STUDY/"thinning/volumes/volume-draws.npz") as variants:
         np.testing.assert_allclose(variants["smooth"], reference_mass["mass"].sum(axis=(-1,-2)), rtol=2e-12)
     print("Verified B-Tm sources, segmented thinning, all four fitted methods, geographic folds, contour screens, Samjiyon predictions and eight source sensitivities.")
 

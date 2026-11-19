@@ -4,8 +4,6 @@ The 946 CE Millennium eruption of Paektu / Changbaishan left fallout from two ph
 
 ## Four matched thickness-only fits
 
-The principal directional map uses the quantitative thickness observations and bounds. Inspected archive scenarios appear below.
-
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-evidence.png)
 
 All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.
@@ -34,38 +32,41 @@ Both maps use the vent longitude as their central meridian. Read the thickness k
 
 </details>
 
-
-## Principal directional isopachs
-
-![Principal uncertain-fan-direction median isopachs for B-Tm](results/directional/azimuth/isopachs.png)
-
-The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **56.2 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
+With the same observations and structure weights, fixing the fan directions gives a median-map volume of **56.2 km³**.
 
 Split posterior draws flagged 100 cm (24% area disagreement).
 
-[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
+<details>
+<summary>View the directional deposit extent and source area</summary>
 
+![Principal uncertain-fan-direction median isopachs for B-Tm](results/directional/azimuth/isopachs.png)
 
-## How far does the fallout extend between sampled directions?
+</details>
 
-The measured-fan model extends fallout from directions with thickness observations. The principal uncertain-direction reconstruction above averages over the direction of fallout in unsampled sectors.
+## Directional assumptions and inspected sites
 
-| Directional assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---:|---:|---:|
-| Measured fan directions | 42.5 | 52.3 | 28.0–120.8 |
-| Comparable visible fallout beds | 35.8 | 43.5 | 24.8–70.4 |
+The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings. A visible-bed scenario also asks how much ash would have been preserved and recognized at inspected sites.
 
-The inspected-site estimates depend on how much of a local deposit would have been preserved and recognized as a bed.
+| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
+|---|---|---:|---:|---:|
+| Uncertain fan direction | Comparable visible fallout beds | 40.7 | 59.0 | 28.5–149.7 |
+| Measured fan directions | Thicknesses and bounds | 42.5 | 52.3 | 28.0–120.8 |
+| Measured fan directions | Comparable visible fallout beds | 35.8 | 43.5 | 24.8–70.4 |
+
+<details>
+<summary>View agreement between the directional sensitivities</summary>
 
 ![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
 
-[Directional maps, held-out tests and site evidence](results/directional/bearing/README.md)
+</details>
+
+[Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
 
 ## What the sites constrain
 
 Six proximal sections and four Japanese lake cores supplied new thickness evidence. At Lake Suigetsu, the description supports an upper bound below 0.1 cm. At Sihailongwan and Quanyang, shards establish that ash reached the west. [Source decisions and site map](../../data/audits/B-Tm/README.md)
 
-The western profiles challenge a continuous decimetre bed at those sites. They also leave room for a broader deposit than the comparable-bed map suggests. At an independent Ulleung Basin core, only 3.3% of that model’s predictions reach the thickness implied **if** the published shard-count conversion applies there. The original local thickness is unknown. [Western cores, marine check and independent spherical refit](results/directional/bearing/field-evidence.md)
+The western profiles challenge a continuous decimetre bed at those sites. They also leave room for a broader deposit than the comparable-bed map suggests. At an independent Ulleung Basin core, only 3.3% of the measured-fan comparable-bed predictions reach the thickness implied **if** the published shard-count conversion applies there. The original local thickness is unknown. [Western cores, marine check and independent spherical refit](results/directional/bearing/field-evidence.md)
 
 The standard interpolation footprint covers 96,131 km². None of the twelve checks across four methods and three support policies found a complete band of isopachs bracketed by observations. Every whole-Earth estimate therefore depends on how the model fills unsampled ground. [Local support audit](results/support/README.md)
 

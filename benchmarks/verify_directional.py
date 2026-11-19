@@ -39,7 +39,7 @@ def verify(folder, record, expected_input, expected_report, extremes):
     observations = observations.subset([by_id[i] for i in ids])
     # IEEE values from the published round-trip CSV reproduce the signed fitting arrays.
     # Different PROJ/libm builds can round an independently projected coordinate differently.
-    with (folder.parent/"accepted_observations.csv").open(newline="") as stream:
+    with (folder.parents[1]/"accepted_observations.csv").open(newline="") as stream:
         archived = {int(r["row_id"]):r for r in csv.DictReader(stream)}
     assert set(archived) == set(ids)
     rows = [archived[i] for i in ids]
@@ -108,7 +108,7 @@ def verify(folder, record, expected_input, expected_report, extremes):
             check_interval(part, base["parts"][r]["volume_km3"])
             check_interval(part/total, base["parts"][r]["fraction"])
     geo = report["validation"]["geographic"]
-    old = read(folder.parent/"spherical-mixture/report.json")["validation"]
+    old = read(folder.parents[1]/"spherical-mixture/report.json")["validation"]
     assert (geo["row_ids"],geo["folds"],geo["buffer_km"]) == (old["row_ids"],old["folds"],old["buffer_km"])
     for current, previous in zip(geo["fits"],old["fits"],strict=True):
         for key in ("training_row_ids","withheld_row_ids"):
@@ -125,7 +125,7 @@ def verify(folder, record, expected_input, expected_report, extremes):
 
 
 def main():
-    root = Path("comparisons/directional")
+    root = Path("comparisons/directional/single-structure")
     study = read(root/"verification.json")
     cases = pd.read_csv(root/"comparison.csv").set_index("slug")
     extremes = pd.read_csv(root/"octant-extremes.csv")
@@ -138,9 +138,9 @@ def main():
         if digest(record["path"]) != expected_input:
             release = read(home/"source-audit/release.json")
             expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
-            expected_report = release["files"][str(home/"directional/report.json")]
+            expected_report = release["files"][str(home/"directional/single-structure/report.json")]
             case_extremes = pd.read_csv(home/"source-audit/octant-extremes.csv")
-        verify(home/"directional", record, expected_input, expected_report, case_extremes)
+        verify(home/"directional/single-structure", record, expected_input, expected_report, case_extremes)
         # The published comparison and its replications retain their own input identities.
         with gzip.open(root/"spherical-support"/(slug+".json.gz"),"rt") as f:
             screen = json.load(f)

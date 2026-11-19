@@ -57,7 +57,7 @@ def test_pinned_coastline_is_lossless_and_cannot_change_the_viewport():
 
 def test_overview_reads_existing_reports_and_preserves_warning(tmp_path):
     root = Path(__file__).resolve().parents[1]/"eruptions/tambora/results"
-    paths = ["report.json", "directional/report.json", "spherical-mixture/report.json"]
+    paths = ["report.json", "directional/single-structure/report.json", "spherical-mixture/report.json"]
     reports = []
     for p in paths:
         dest = tmp_path/p
@@ -127,8 +127,9 @@ def test_audited_case_leads_with_matching_fits_then_site_evidence():
     section = comparison_section(home, prefix="results/")
     assert section in (home.parent/"README.md").read_text()
     assert section.index(FIGURE) < section.index("Volume and predictive performance") < section.index("Measured fan directions |")
-    assert "| Measured fan directions | 42.5 | 52.3 |" in section
-    assert "| Comparable visible fallout beds | 35.8 | 43.5 |" in section
+    assert "| Measured fan directions | Thicknesses and bounds | 42.5 | 52.3 |" in section
+    assert "| Measured fan directions | Comparable visible fallout beds | 35.8 | 43.5 |" in section
+    assert "| Uncertain fan direction | Comparable visible fallout beds | 40.7 | 59.0 | 28.5–149.7 |" in section
 
 
 def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, monkeypatch):

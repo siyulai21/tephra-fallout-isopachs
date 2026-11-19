@@ -1,20 +1,53 @@
 {
-  "matched_inputs_folds_buffers_training_and_test_ids": true,
-  "regional_methods_checked": [
-    "stacked",
-    "spline"
+  "release_commit": "efe60416128ca9587bef796f3ab5bb91a50c75ca",
+  "report_keys": [
+    "volume",
+    "weights",
+    "data_rows",
+    "members",
+    "archive"
   ],
-  "regional_volume_and_geographic_score_relative_tolerance": 1e-06,
-  "regional_synthetic_trials": 40,
-  "rebuilt_regional_contour_decisions_match": true,
-  "regional_synthetic_attempt_status_and_interval_decisions_match": true,
+  "validation_keys": [
+    "all_estimated",
+    "passed_only",
+    "folds"
+  ],
   "cases": {
-    "mazama": "f3d3249ea37f6f2cfdcaf0db4a769eee7cb4814a3d5514db56bcd30060d6c1bf",
-    "tambora": "fbf0d57203767524fcf1c53d52e42e65fe468b21104fd45d3f5b5455d41d2ee8",
-    "aso-4": "1d1cc4f477c04603867eec8adce08430ac45a9b8c4d1120d7977bc1ecae0616d",
-    "b-tm": "170ce897e9b1a34a1af1f20ab6f6eac83c469553417dbe4d5e740b31c1c084ef",
-    "ytt": "745233be17ecc6c81708fdf928452973d35ecd5171f7f425552e82ad66ad87f9",
-    "minoan": "3baa5006197e35595f64456745833795d98fde070cb04e26fa0f1c86ba93cf82"
-  },
-  "old_spherical_posterior_inputs_checked": true
+    "aso-4": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "fields_sha256": "4945ae461a76929435844803e19548a3fdd368d59a713e85a735f5dd9fc80351",
+      "estimates_sha256": "5def3242eb3477841cbb12372bc68044613589ad416aca8528c6c9a9fcfcaa12"
+    },
+    "b-tm": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "fields_sha256": "0f9f59b66cd66131a315c2d3907469c81504703ec827dd03015a73da18a09e2c",
+      "estimates_sha256": "351750c0f6b92e96985b9b140d668af91be31fdc0fd453c26fc2e34fe3d449c9"
+    },
+    "mazama": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+      "fields_sha256": "ee150264a2dd687643694eca3d942802cbcde78da6c7e001e8c53593e7fb4132",
+      "estimates_sha256": "f202cc9925eb82faa55499ca4604546776555a298b4a1a0e3b4e66140489e2cc"
+    },
+    "minoan": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+      "fields_sha256": "b32dde97ff37df0914f3d554afbd7055ad05e409ea91d36d2308a75ee4bd1559",
+      "estimates_sha256": "175278cf1493ce88a49453ee48730bf3770749ea4998de949a4c0aa5d1a352ca"
+    },
+    "tambora": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+      "fields_sha256": "53633b53c2ae30fbf4d817d581af1b202157f98eeb46e6dadb66af33addc8b69",
+      "estimates_sha256": "030f1bc9c65da6e16e7209ad7056730ae66a3b4215e67cc2364ea0abd9977183"
+    },
+    "ytt": {
+      "protocol": "uncertain-azimuth-v1",
+      "input_sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
+      "fields_sha256": "3a1d7b097686054b16eaf250d525ae0e0083315daa268bb4fd28d9f6a863a401",
+      "estimates_sha256": "dfa5b0a1076f0bf136df81066cfbe379c52870b56f1deaf2eb535042c239782a"
+    }
+  }
 }

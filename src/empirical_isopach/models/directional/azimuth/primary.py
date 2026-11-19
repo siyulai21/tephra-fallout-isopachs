@@ -136,40 +136,39 @@ def numerical_notes(report):
     return notes
 
 
-def family_page(folder, report):
+def family_page(folder):
+    """Publish the signed standalone report at the directional family entry point."""
     folder = Path(folder)
-    v = report["volume"]
-    joint = v["coherent_volume_km3"]
-    fraction = sum(v["median_map_parts_by_sector_km3"][0])/v["median_map_km3"]
-    rows = [f"# {report['dataset']} directional fallout", "",
-        f"**{v['median_map_km3']:,.1f} km³ of bulk fallout** is the whole-Earth integral of the principal median isopach map. "
-        f"The uncertain-fan-direction ensemble uses {len(report['data_rows'])} quantitative observations and bounds. "
-        f"Integrating complete simulated deposits gives a median of **{joint['median']:,.1f} km³** and a conditional 95% interval of **{joint['lower95']:,.1f}–{joint['upper95']:,.1f} km³**.", "",
-        "![Principal median isopachs with uncertain fan direction](azimuth/isopachs.png)", "",
-        f"Measured triangles account for **{fraction:.1%}** of the map volume. Solid contour fragments cross triangles where observations bracket the thickness. Dashes trace the continuation through gaps. A poorly sampled direction can still contain an unobserved fan.", "",
-        "## Predictive and numerical checks", "",
-        "| Held-out observations | Fixed-direction control | Uncertain fan direction | Exact-site 95% coverage |",
-        "|---|---:|---:|---:|"]
-    for key,label in (("geographic","Geographic regions"),("quadrants","Source quadrants")):
-        group = report["validation"][key]
-        a,c = group["all_estimated"],group["observation_interval"]
-        scores = f"{a['control_score']:.3f} | {a['revised_score']:.3f}" if a else "— | —"
-        coverage = f"{c['covered_exact']}/{c['scored_exact']} ({c['coverage95_exact']:.1%})" if c["scored_exact"] else "—"
-        rows.append(f"| {label} | {scores} | {coverage} |")
-    rows += ["", "Lower scores indicate better predictions. The table includes every estimable fold. Passing-only scores, unscored folds and site-level intervals are available in the detailed report. Across the six benchmark eruptions, uncertain directions slightly improved geographic scores and worsened whole-quadrant scores.", ""]
-    notes = numerical_notes(report)
-    if notes:
-        rows += [" ".join(notes),""]
-    rows += ["[Sector areas, directional reach, support audit and alternative assumptions](azimuth/README.md) · "
-             "[Principal numerical result](azimuth/report.json) · [Whole-Earth map](azimuth/world.png) · "
-             "[Held-out site predictions](azimuth/heldout.csv)", "",
-             "## Directional sensitivities","",
-             f"Fixing fan directions under the same weights gives a median-map integral of {v['matched_control_map_km3']:,.1f} km³. "
-             "The earlier fixed-direction ensemble has its own geographic calibration. "
-             "[Earlier six-structure reconstruction](ensemble/README.md) · [Single-structure and proximal-cap study](single-structure.md)"]
-    if (folder/"bearing/README.md").is_file():
-        rows += ["", "[Measured-fan continuation and archive visibility scenarios](bearing/README.md)"]
-    rows += [""]
-    tmp = folder/"README.md.tmp"
-    tmp.write_text("\n".join(rows))
-    tmp.replace(folder/"README.md")
+    assets = folder / "azimuth"
+    manifest = assets / "artifacts.json"
+    hashes = json.loads(manifest.read_text())
+    standalone = assets / "README.md"
+    page = folder / "README.md"
+    heading = "\n## Related directional studies\n"
+    promote = "README.md" in hashes
+    if promote:
+        if digest(standalone) != hashes.pop("README.md"):
+            raise ValueError("The standalone directional report differs from its saved checksum")
+        content = standalone.read_text()
+        for name in (*hashes, "artifacts.json"):
+            content = content.replace(f"]({name})", f"](azimuth/{name})")
+    else:
+        if digest(page) != hashes["../README.md"]:
+            raise ValueError("The directional family report differs from its saved checksum")
+        content = page.read_text().partition(heading)[0]
+    links = [(name, title) for name, title in (
+        ("ensemble/README.md", "Earlier fixed-direction ensemble and its separate calibration"),
+        ("single-structure/README.md" if (folder/"single-structure/README.md").is_file() else "single-structure.md",
+         "Single-structure and proximal-cap sensitivities"),
+        ("bearing/README.md", "Measured-fan continuation and inspected-site evidence"),
+    ) if (folder / name).is_file()]
+    if links:
+        content = content.rstrip() + "\n" + heading + "\n" + "\n".join(
+            f"- [{title}]({name})" for name, title in links)
+    temporary = page.with_suffix(".md.tmp")
+    temporary.write_text(content.rstrip() + "\n")
+    temporary.replace(page)
+    hashes["../README.md"] = digest(page)
+    write_json(manifest, hashes)
+    if promote:
+        standalone.unlink(missing_ok=True)
