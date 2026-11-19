@@ -5,6 +5,7 @@ from hashlib import sha256
 import gzip
 import json
 from pathlib import Path
+import subprocess
 from types import SimpleNamespace
 from zipfile import ZipFile
 
@@ -156,6 +157,10 @@ def verify_inputs():
 
 def verify_results(manifest):
     release = read(STUDY/"release.json")
+    if Path(".git").exists():
+        tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
+        missing = sorted(set(release["files"]).difference(tracked))
+        assert not missing, f"Release files missing from the Git index: {missing}"
     for name, expected in release["files"].items():
         assert digest(Path(name)) == expected, name
     matched = pd.read_csv(STUDY/"matched-regional.csv").set_index(["slug", "method"])
