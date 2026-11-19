@@ -14,7 +14,7 @@ def saved_case_overview(output, name=None):
     output = Path(output)
     # Old standalone archives can still reproduce their own historical overview.
     directional = next((p for p in ("directional/azimuth/report.json","directional/ensemble/report.json",
-                                    "directional/report.json") if (output/p).is_file()),"directional/azimuth/report.json")
+                                    "directional/single-structure/report.json","directional/report.json") if (output/p).is_file()),"directional/azimuth/report.json")
     reports = [json.loads((output/p).read_text()) for p in ("report.json",directional,"spherical-mixture/report.json")]
     case_overview(output, name or reports[0]["dataset"], *reports)
 

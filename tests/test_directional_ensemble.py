@@ -109,6 +109,7 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
     primary = json.loads((published/"azimuth/report.json").read_text())
     calls = []
     def simulate_reference(path, work, dest, name):
+        dest.mkdir(parents=True, exist_ok=True)
         page = dest/"README.md"
         page.write_text("Preserved reference study")
         (dest/"artifacts.json").write_text(json.dumps({"README.md":digest(page)}))
@@ -121,6 +122,16 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
 
     def simulate_primary(path, work, dest, name, archives):
         assert dest==tmp_path/"azimuth"
+        from shutil import copyfile
+        from src.empirical_isopach.models.directional.azimuth.narrative import case_page
+        dest.mkdir()
+        for name in ("complete-contour-audit.json", "map-display.json"):
+            copyfile(published/"azimuth"/name, dest/name)
+        case_page(dest, primary, {"sites": [], "scenarios": []})
+        hashes = json.loads((published/"azimuth/artifacts.json").read_text())
+        hashes.pop("../README.md", None)
+        hashes["README.md"] = digest(dest/"README.md")
+        (dest/"artifacts.json").write_text(json.dumps(hashes))
         calls.append("principal uncertain fan direction")
         return primary
 
@@ -136,7 +147,13 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
                    "principal uncertain fan direction"]
     page = (tmp_path/"README.md").read_text()
     assert "**28.8 km³ of bulk fallout**" in page and "(azimuth/isopachs.png)" in page
+    assert "Exact-site 95% coverage" in page and "Reach from the volcano" in page
+    assert not (tmp_path/"azimuth/README.md").exists()
+    assert "(single-structure/README.md)" in page and not (tmp_path/"report.json").exists()
+    azimuth.attach_family_page(tmp_path)
+    assert (tmp_path/"README.md").read_text() == page
+    assert json.loads((tmp_path/"azimuth/artifacts.json").read_text())["../README.md"] == digest(tmp_path/"README.md")
     assert (tmp_path/"ensemble/README.md").read_bytes()==(published/"ensemble/README.md").read_bytes()
-    assert (tmp_path/"single-structure.md").read_text()=="Preserved reference study"
+    assert (tmp_path/"single-structure/README.md").read_text()=="Preserved reference study"
     with pytest.raises(ValueError,match="fresh"):
         reporting.directional_dataset(datasets()[0]["path"],tmp_path)

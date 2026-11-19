@@ -32,14 +32,14 @@ Both maps use the vent longitude as their central meridian. Read the thickness k
 
 </details>
 
+With the same observations and structure weights, fixing the fan directions gives a median-map volume of **779.7 km³**.
 
-## Principal directional isopachs
+<details>
+<summary>View the directional deposit extent and source area</summary>
 
 ![Principal uncertain-fan-direction median isopachs for Aso-4](results/directional/azimuth/isopachs.png)
 
-The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **779.7 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
-
-[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
+</details>
 
 ## Evidence and limitations
 

@@ -232,4 +232,4 @@ def attach_family_page(folder):
     """Refresh the family landing page from its principal quantitative report."""
     from .primary import family_page
     folder = Path(folder)
-    family_page(folder,json.loads((folder/"azimuth/report.json").read_text()))
+    family_page(folder)

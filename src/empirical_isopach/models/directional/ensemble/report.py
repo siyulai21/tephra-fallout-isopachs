@@ -60,7 +60,7 @@ def formatted(q):
 
 
 def narrative(output, r, *, family_page=False):
-    """Write one full report, at the family root for a normal case run."""
+    """Write the fixed-direction report, including the earlier family-root layout."""
     prefix = "ensemble/" if family_page else ""
     c, j, w = r["median_surface"], r["coherent_fields"], r["weighting"]
     n, m, g = c["numerical"], np.array(c["parts_sectors_km3"]), r["map"]
@@ -131,7 +131,8 @@ def narrative(output, r, *, family_page=False):
               f"[Reconstruct the median field]({prefix}map-fields.npz) · [Map grids and pointwise quantiles]({prefix}median-grids.npz) · "
               f"[Joint volume by chain, support class and compass sector]({prefix}coherent-mass.npz) · [Checksums]({prefix}artifacts.json)", ""]
     if family_page:
-        lines += ["[Single-structure sensitivity study and unmeasured proximal cap](single-structure.md)", ""]
+        reference = "single-structure/README.md" if (output.parent/"single-structure/README.md").is_file() else "single-structure.md"
+        lines += [f"[Single-structure sensitivity study and unmeasured proximal cap]({reference})", ""]
     if not family_page:
         lines[0] = f"# {r['dataset']} · fixed-direction ensemble"
     page = output.parent/"README.md" if family_page else output/"README.md"

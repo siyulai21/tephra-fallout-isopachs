@@ -86,7 +86,7 @@ def main():
         assert regional["entire_observation_hull_in_frame"] and regional["all_accepted_locations_in_frame"]
         assert regional["unchanged_fit_bounds_km"] == report["fit_bounds_km"]
         assert not regional["volume_calculation_changed"]
-        for family in ("directional", "spherical-mixture"):
+        for family in ("directional/single-structure", "spherical-mixture"):
             folder = home/family
             for path, expected in read(folder/"artifacts.json").items():
                 assert digest(folder/path) == expected, str(folder/path)

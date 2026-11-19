@@ -73,7 +73,7 @@ def verify_case(rec, expected_input, median_map_km3):
             for i,p in enumerate((.025,.5,.975)):
                 np.testing.assert_allclose(d.quantile(p)/np.log(10.),z[i,iy,ix],atol=1e-10)
     assert np.isclose(np.exp(model.distribution([[0.,0.]]).quantile(.5))[0],report["map"]["vent_median_cm"])
-    legacy = read(home/"directional"/"report.json")
+    legacy = read(home/"directional/single-structure/report.json")
     for layout,v in report["validation"].items():
         old = legacy["validation"][layout]
         for key in ("folds","row_ids","buffer_km"):
@@ -100,7 +100,7 @@ def verify_case(rec, expected_input, median_map_km3):
 
 
 def main():
-    root=Path("comparisons/directional-ensemble")
+    root=Path("comparisons/directional/fixed-ensemble")
     tab=pd.read_csv(root/"comparison.csv").set_index("slug")
     verification=read(root/"verification.json")
     for rec in datasets():

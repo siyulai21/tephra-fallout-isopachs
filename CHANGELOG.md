@@ -1,12 +1,16 @@
 # Changes
 
+## Directional reports · 2026-11-19
+
+Each eruption now has one full uncertain-direction report with its paired control, contour reach, held-out predictions and numerical warnings. The cross-eruption study groups the fixed-ensemble, measured-fan and single-structure comparisons in one place. [Directional study](comparisons/directional/README.md) · [Earlier figures and reports](docs/HISTORY.md)
+
 ## Publication layout · 2026-11-18
 
 Each case now links directly to its full directional ensemble, spherical-mixture, regional and support reports. Earlier single-structure sensitivities and scientific records keep their own identities. [Eruption catalogue](eruptions/README.md)
 
 ## 0.14.0 · 2026-11-18
 
-Directional reconstruction now reports six-structure median isopachs, their integrated volume, coherent-field uncertainty, and leave-one-eruption-out weight calibration. [Results and validation](comparisons/directional-ensemble/README.md)
+Directional reconstruction now reports six-structure median isopachs, their integrated volume, coherent-field uncertainty, and leave-one-eruption-out weight calibration. [Results and validation](comparisons/directional/fixed-ensemble/README.md)
 
 ## 0.13.0 — Complete map frames and clearer case visuals
 
@@ -25,7 +29,7 @@ Directional reconstruction now reports six-structure median isopachs, their inte
 
 - Added a whole-Earth model that interpolates locally supported triangles, preserves gaps, and learns directional reach and distal thinning under one set of assumptions for all eruptions.
 - Published all six calculations with 13 common policies, explicit sector and support mass, geographic and quadrant deletions, and longer independent reference runs.
-- Compared the spherical mixture and directional model on identical inputs and holdouts. The known-volume trials include an exactly unobservable fan. [Results, limitations and reproduction](comparisons/directional/README.md).
+- Compared the spherical mixture and directional model on identical inputs and holdouts. The known-volume trials include an exactly unobservable fan. [Results, limitations and reproduction](comparisons/directional/single-structure/README.md).
 
 ## 0.11.1 — Clear navigation and removal of unused report archives
 

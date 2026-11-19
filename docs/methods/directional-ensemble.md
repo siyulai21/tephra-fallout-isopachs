@@ -4,7 +4,7 @@ This protocol describes the six underlying structures and the fixed-direction co
 
 The full directional run also evaluates continuation restricted to measured fan directions and the archive descriptions at their actual locations. The six-structure map provides the sensitivity to a hypothetical unseen fan. [Directional reach and archive evidence](archive-evidence.md)
 
-The central reconstruction is a map of the **pointwise median latent fallout thickness**. Its published bulk volume is the integral of that same map over the Earth. Every case also has a distribution of volumes from complete simulated deposits, a table of how much lies in each compass direction and a comparison against the original directional fit. [Six-eruption results](../../comparisons/directional-ensemble/README.md) · [Underlying directional model](directional-continuation.md)
+The central reconstruction is a map of the **pointwise median latent fallout thickness**. Its published bulk volume is the integral of that same map over the Earth. Every case also has a distribution of volumes from complete simulated deposits, a table of how much lies in each compass direction and a comparison against the original directional fit. [Six-eruption results](../../comparisons/directional/fixed-ensemble/README.md) · [Underlying directional model](directional-continuation.md)
 
 ## Six plausible continuations
 

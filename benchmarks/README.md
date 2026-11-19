@@ -8,7 +8,7 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 |---|---|---|
 | `python -m benchmarks.azimuth_continuation --help` | Fit and check uncertain fan directions, geographic and quadrant holdouts, median maps and joint volumes | Principal directional ensemble |
 | `python -m benchmarks.directional_ensemble --help` | Fit six structures, calibrate predictive weights, render median fields or run known-volume trials | Fixed-direction comparison |
-| `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/README.md#reproduce) | Single-structure directional sensitivity |
+| `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/single-structure/README.md#reproduce) | Single-structure directional sensitivity |
 | `python -m benchmarks.directional_comparison --help` | Assemble matched global comparisons from completed cases, stress trials and replications | Both global families |
 | `python -m benchmarks.regional --output results/regional-methods` | Current six-eruption matched regional fits, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
 | `python -m benchmarks.global_posterior --output results/global-posterior` | Six global posteriors using each case's reviewed catalogue geometry, seven sensitivity refits per eruption, matched geographic holdouts and illustrated reports | Spherical mixture; reviewed geometry per case |
@@ -23,16 +23,17 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 
 | Command | Evidence checked |
 |---|---|
+| `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |
 | `python -m benchmarks.verify_btm_audit` | Audited B-Tm rows and bounds, the four fits, geographic folds, source sensitivities and thinning experiments |
 | `python -m benchmarks.verify_bearing_continuation` | Measured-fan and inspected-site tests, sector volumes, preserved shard evidence and independent spherical update |
 | `python -m benchmarks.verify_directional` | The six current directional fits and their 78 policy runs, plus the original study’s independent replications and known-volume trials |
-| `python -m benchmarks.verify_directional_ensemble` | Current ensemble maps and complete-field volumes, geographic predictions and the published simulation trials |
+| `python -m benchmarks.verify_directional_ensemble` | Earlier fixed-direction maps and complete-field volumes, geographic predictions and the published simulation trials |
 | `python -m benchmarks.verify_aso_evidence` | Aso-4 source records, matched validation and posterior attempts |
 | `python -m benchmarks.verify_visuals` | Published file hashes and the plotted median thicknesses in all six current cases |
 
 The [SHA-256 inventory](published-evidence.sha256) covers published data, machine-readable results, maps and source files used in regression checks. Verify it from the repository root with `shasum -a 256 -c benchmarks/published-evidence.sha256` or use the Python visual verifier. Earlier suites and their exact inputs can be run at the matching [release commit](../docs/HISTORY.md). [Reproduce figures](../docs/maintenance/visuals.md)
 
-The directional [reproduction sequence](../comparisons/directional/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay). `directional_development` reproduces earlier experiments; its outcomes are retained as development evidence.
+The directional [reproduction sequence](../comparisons/directional/single-structure/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay). `directional_development` reproduces earlier experiments; its outcomes are retained as development evidence.
 
 ## Targeted source and geometry studies
 
@@ -63,6 +64,6 @@ These commands are retained for compatibility, audit preparation and regression 
 
 ## Archive evidence and directional reach
 
-The [six-eruption withholding study](../comparisons/bearing-continuation/README.md) tests all shared range ratios. For a complete case run, use `tephra-isopachs compare B-Tm --output results/btm-archive-replay`. The case catalogue selects its audited archive inventory. To repeat the independently initialized spherical check, use `python -m benchmarks.btm_spherical_archive_refit --work results/btm-spherical-archive-check`. Replay the published median fields, volumes and archive weights with `python -m benchmarks.verify_bearing_continuation`.
+The [six-eruption withholding study](../comparisons/directional/measured-fans/README.md) tests all shared range ratios. For a complete case run, use `tephra-isopachs compare B-Tm --output results/btm-archive-replay`. The case catalogue selects its audited archive inventory. To repeat the independently initialized spherical check, use `python -m benchmarks.btm_spherical_archive_refit --work results/btm-spherical-archive-check`. Replay the published median fields, volumes and archive weights with `python -m benchmarks.verify_bearing_continuation`.
 
 After those two fits, regenerate the field interpretation, compare the held-out shard magnitudes and attach the independent spherical refit with `python -m benchmarks.btm_archive_report --case results/btm-archive-replay --spherical-refit results/btm-spherical-archive-check`. The numerical comparisons retain the queried site, source statistic, conversion, original posterior identities and whether the model used the archive to constrain bed visibility. [B-Tm field audit](../eruptions/b-tm/results/directional/bearing/field-evidence.md)

@@ -1,10 +1,12 @@
 # B-Tm sensitivity to source interpretation
 
-Each row uses the same six directional structures and the same ensemble weights. The central estimate integrates the pointwise median thickness over Earth. The interval uses entire simulated deposits with their spatial dependence intact. It covers bulk airfall from both phases in km³.
+This source audit uses the earlier fixed-direction ensemble. Its 68-record reference integrates to 54.0 km³. The current uncertain-direction result on those observations is 44.1 km³. [Principal directional report](../directional/README.md)
+
+Each source variant uses the same six fixed-direction structures and weights. The central estimate integrates the pointwise median thickness over Earth. The interval uses entire simulated deposits with their spatial dependence intact. It covers bulk airfall from both phases in km³.
 
 | Reading | Sites and bounds | Median-map integral | Volume median | Conditional 95% interval | Full-data fits passing | Map integration |
 |---|---:|---:|---:|---:|---:|---|
-| [Principal selection](../directional/ensemble/report.json) | 68 | 54.0 | 73.5 | 31.8–1,211.9 | 6/6 | Pass |
+| [68-record fixed-direction reference](../directional/ensemble/report.json) | 68 | 54.0 | 73.5 | 31.8–1,211.9 | 6/6 | Pass |
 | [Twelve low endpoints](range_low/result.json) | 80 | 50.8 | 67.2 | 33.2–991.1 | 6/6 | Pass |
 | [Twelve high endpoints](range_high/result.json) | 80 | 59.2 | 79.1 | 38.8–1,016.5 | 6/6 | Pass |
 | [Both disputed proximal stacks](correlations/result.json) | 68 | 46.8 | 64.4 | 29.7–1,222.1 | 6/6 | Pass |

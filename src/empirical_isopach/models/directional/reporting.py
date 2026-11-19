@@ -1,7 +1,6 @@
 """Isopach fragments, sector budgets and reproducible whole-deposit reports."""
 from dataclasses import asdict
 from pathlib import Path
-from tempfile import TemporaryDirectory
 import json
 import shutil
 
@@ -152,7 +151,7 @@ def render(path, work, output, name=None):
     score_text = f"{geographic_score:.3f}" if geographic_score is not None else "unavailable"
     coverage = v["metrics"].get("coverage95_observations")
     coverage_text = f"{coverage:.1%}" if coverage is not None else "unavailable"
-    lines = [f"# {name} directional fallout estimate", "",
+    lines = [f"# {name} single-structure directional sensitivity", "",
         f"**{_range(base['volume_km3'])} km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. The brackets give the conditional 95% credible interval. A median **{base['parts']['footprint']['fraction']['median']:.1%}** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. {reference_status}", "",
         "![Supported isopach fragments and conditional continuation](isopachs.png)", "",
         f"The first map shades the interpolation footprint and shows {int(arcs.displayed.sum())} measured-bracketed line segments. The second map shows the geometric mean of posterior thickness with labelled contours. The panels deliberately use different extents: every observation is visible locally, while the continuation view expands around the 0.1 cm contour. Circles mark exact observations, triangles mark bounds, and the star marks the source. Volume comes from integration of each complete field to the antipode.", "",
@@ -192,18 +191,7 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     from ...validation import automatic_buffer
     automatic_buffer(data)
     run_fits(data, meta["vent_lonlat"][1], output/"work")
-    # Keep a previous ensemble page readable while the reference and cap are regenerated.
-    with TemporaryDirectory(dir=output, prefix=".reference-") as temporary:
-        reference = Path(temporary)
-        render(path, output/"work", reference, name)
-        (reference/"README.md").replace(reference/"single-structure.md")
-        manifest_path = reference/"artifacts.json"
-        manifest = json.loads(manifest_path.read_text())
-        manifest["single-structure.md"] = manifest.pop("README.md")
-        write_json(manifest_path, manifest)
-        for filename in manifest:
-            (reference/filename).replace(output/filename)
-        manifest_path.replace(output/"artifacts.json")
+    render(path, output/"work", output/"single-structure", name)
     from .ensemble.report import render as ensemble_report, reuse_reference_fits
     from .ensemble.members import run_members
     work = output/"work"/"ensemble"
@@ -215,5 +203,5 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     from .azimuth.primary import family_page
     measured_bearings(path,work,output/"bearing",archives)
     result = uncertain_azimuth(path,work,output/"azimuth",name,archives)
-    family_page(output,result)
+    family_page(output)
     return result

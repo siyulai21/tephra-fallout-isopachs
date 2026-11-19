@@ -145,7 +145,7 @@ def publish(work, output):
         "all_files":{p.name:digest(p) for p in sorted(output.iterdir()) if p.is_file() and p.name!="design.json"}})
 
 
-def verify(folder=PUBLISHED, reference=HOME/"directional/report.json"):
+def verify(folder=PUBLISHED, reference=HOME/"directional/single-structure/report.json"):
     design=read(folder/"design.json")
     assert design["input_sha256"]==digest(audit_input())
     assert design["fit_code_sha256"]==digest(Path(__file__).with_name("btm_thinning_fit.py"))
@@ -188,7 +188,7 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--work",type=Path,required=True)
     parser.add_argument("--output",type=Path,required=True)
-    parser.add_argument("--reference",type=Path,default=HOME/"directional/report.json",
+    parser.add_argument("--reference",type=Path,default=HOME/"directional/single-structure/report.json",
                         help="Published smooth single-structure report for the same 68 observations")
     args=parser.parse_args()
     publish(args.work,args.output)

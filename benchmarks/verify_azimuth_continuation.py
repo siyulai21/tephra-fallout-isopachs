@@ -3,7 +3,6 @@ import json
 from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
-from zipfile import ZipFile
 
 import numpy as np
 import pandas as pd
@@ -19,29 +18,21 @@ from src.empirical_isopach.models.directional.study import digest
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.visualization.comparison import saved_observations
 
-from .publication import read_hashes
 
-
-def verify_promotion_archive():
-    folder = Path("comparisons/azimuth-continuation/archive/2026-11-18-before-primary")
-    inventory = read_hashes(folder/"previous-files.sha256")
-    with ZipFile(folder/"previous-reports.zip") as previous:
-        assert set(previous.namelist()) == {name for name in inventory if not name.endswith(".png")}
-        for name, expected in inventory.items():
-            content = (folder/"figures"/name).read_bytes() if name.endswith(".png") else previous.read(name)
-            assert sha256(content).hexdigest() == expected, name
-        reports = [Path(name) for name in inventory if name.endswith("/directional/azimuth/report.json")]
-        for path in reports:
-            old = json.loads(previous.read(str(path)))
-            current = json.loads(path.read_text())
-            artifacts = path.with_name("artifacts.json")
-            old_fields = json.loads(previous.read(str(artifacts)))["fields.npz"]
-            if old_fields != digest(path.with_name("fields.npz")) or current["protocol"] != old["protocol"]:
-                continue  # A later scientific refit has its own release evidence.
-            for key in ("volume", "weights", "data_rows", "members", "archive"):
-                assert current[key] == old[key], (path, key)
-            for key, group in old["validation"].items():
-                assert all(current["validation"][key][k] == value for k,value in group.items())
+def verify_published_estimates():
+    """Check the six original fits against their numerical identities before promotion."""
+    baseline = json.loads(Path("comparisons/directional/verification.json").read_text())
+    for slug, expected in baseline["cases"].items():
+        folder = Path("eruptions") / slug / "results/directional/azimuth"
+        report = json.loads((folder/"report.json").read_text())
+        assert report["protocol"] == expected["protocol"], slug
+        assert report["input"]["input_sha256"] == expected["input_sha256"], slug
+        assert digest(folder/"fields.npz") == expected["fields_sha256"], slug
+        values = {key: report[key] for key in baseline["report_keys"]}
+        values["validation"] = {kind: {key: group[key] for key in baseline["validation_keys"]}
+                                for kind, group in report["validation"].items()}
+        canonical = json.dumps(values, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        assert sha256(canonical.encode()).hexdigest() == expected["estimates_sha256"], slug
 
 
 def verify(rec):
@@ -124,7 +115,7 @@ def verify(rec):
 
 
 if __name__=="__main__":
-    verify_promotion_archive()
+    verify_published_estimates()
     for rec in datasets():
         verify(rec)
     print("Verified six paired directional fields, source and site anchors, archives, folds and complete volume intervals.")

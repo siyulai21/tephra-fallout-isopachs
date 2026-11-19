@@ -16,8 +16,8 @@ def case_page(output,r,inventory):
     display = json.loads((output/"map-display.json").read_text())
     failed = [k for k,v in r["members"].items() if not v["diagnostics"]["passed"]]
     n = len(r["data_rows"])
-    rows = [f"# {r['dataset']} · directional extent", "",
-        f"**{volume['median_map_km3']:,.1f} km³** is the principal directional estimate from {n} accepted observations. It integrates the thickness-only, uncertain-fan-direction median map over the Earth. Fixing fan directions with the same data and structure weights gives **{volume['matched_control_map_km3']:,.1f} km³**.", "",
+    rows = [f"# {r['dataset']} directional fallout", "",
+        f"**{volume['median_map_km3']:,.1f} km³ of bulk fallout** is the whole-Earth integral of the median thickness map. The principal fit uses {n} accepted thickness observations and bounds and allows the fan direction to vary in unsampled sectors. Fixing fan directions with the same data and structure weights gives **{volume['matched_control_map_km3']:,.1f} km³**.", "",
         f"Under uncertain azimuth, integrating each complete deposit gives a volume median of **{joint['median']:,.1f} km³** and a conditional 95% range of **{joint['lower95']:,.1f}–{joint['upper95']:,.1f} km³**. Measured interpolation triangles contribute {mass[0].sum()/mass.sum():.1%} of the median-map volume. The rest relies on continuation.", "",
         "![Principal uncertain-fan-direction median isopachs](isopachs.png)", "",
         "Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.", "",
@@ -37,14 +37,17 @@ def case_page(output,r,inventory):
     rows += ["","![Probability that a deposit reaches ten centimetres](exceedance.png)","",
         "The 50% and 90% probability lines answer different questions. At a location on the 90% line, nine in ten model draws reach 10 cm. These are pointwise probabilities conditional on the model. Joint confidence over an entire region requires a different calculation.","",
         "## Withheld observations","",
-        "Each row averages negative log predictive scores over equally weighted folds. Lower scores predict the withheld thicknesses and limits better. The passing-only columns exclude numerical failures. A dash means no fold passed.", "",
-        "| Deletion | All estimable folds | Fixed | Uncertain | Passing folds | Fixed, passing | Uncertain, passing |",
-        "|---|---:|---:|---:|---:|---:|---:|"]
+        "Each row averages negative log predictive scores over equally weighted folds. Lower scores predict the withheld thicknesses and limits better. The passing-only columns exclude numerical failures. Coverage counts exact withheld thicknesses inside the uncertain-direction 95% predictive interval. A dash marks an unavailable score or coverage.", "",
+        "| Deletion | All estimable folds | Fixed | Uncertain | Passing folds | Fixed, passing | Uncertain, passing | Exact-site 95% coverage |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for k,v in r["validation"].items():
         a,p = v["all_estimated"],v["passed_only"]
-        values = [k]
+        values = [{"geographic":"Geographic regions","quadrants":"Source quadrants"}.get(k,k)]
         for item in (a,p):
             values += ([str(item["folds"]),f"{item['control_score']:.3f}",f"{item['revised_score']:.3f}"] if item else ["0","—","—"])
+        coverage = v.get("observation_interval", {})
+        values.append(f"{coverage['covered_exact']}/{coverage['scored_exact']} ({coverage['coverage95_exact']:.1%})"
+                      if coverage.get("scored_exact") else "—")
         rows.append("| "+" | ".join(values)+" |")
     rows += ["","[Predictions for every estimable held-out site](heldout.csv). The numerical record includes all planned folds, row identities, unscorable directions, fit warnings and phase-integration checks.", ""]
     if r["archive"]:

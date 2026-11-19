@@ -32,19 +32,19 @@ Both maps use the vent longitude as their central meridian. Read the thickness k
 
 </details>
 
-
-## Principal directional isopachs
-
-![Principal uncertain-fan-direction median isopachs for Tambora](results/directional/azimuth/isopachs.png)
-
-The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **107.7 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
+With the same observations and structure weights, fixing the fan directions gives a median-map volume of **107.7 km³**.
 
 4 of six full-data structures carry sampling warnings.
 
-[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
+<details>
+<summary>View the directional deposit extent and source area</summary>
+
+![Principal uncertain-fan-direction median isopachs for Tambora](results/directional/azimuth/isopachs.png)
+
+</details>
 
 ## Evidence and limitations
 
-The calculation uses the supplied acceptance flags. An independent row-by-row source review is still outstanding. Four of the six full-data directional fits carry numerical warnings. The median-map integration checks passed, but several held-out fits also carry warnings.
+The calculation uses the supplied acceptance flags. An independent row-by-row source review is still outstanding. The median-map integration checks passed, but several held-out fits also carry warnings.
 
 The standard local-support footprint covers 49,323 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)

@@ -19,7 +19,7 @@ Start on the case home. Its `four-method-evidence.png` compares four median fiel
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
 
-For runs with an inspected-site inventory, the four thickness-only fits appear first. The following directional comparison shows the measured-fan result and the scenarios checked against withheld sites. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm example](../eruptions/b-tm/README.md)
+For runs with an inspected-site inventory, the four thickness-only fits appear first. The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm example](../eruptions/b-tm/README.md)
 
 ## Regional GP and cubic spline
 
@@ -45,7 +45,7 @@ In `report.json`, read `methods.<method>.regional_volume`, `joint_volume` and `v
 | `support/report.json` | Three policies, deletion sensitivity, band checks and conditional scenarios |
 | `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres |
 | `directional/azimuth/complete-contour-audit.json` | Complete-contour screen on the principal uncertain-direction field. The fixed-direction screen is in `directional/ensemble/complete-contour-audit.json`. |
-| [Spherical support packets](../comparisons/directional/spherical-support/) | All six spherical-family screens and checksum-verified posterior field subsets |
+| [Spherical support packets](../comparisons/directional/single-structure/spherical-support/) | All six spherical-family screens and checksum-verified posterior field subsets |
 
 The regional support report records `methods.<method>.footprint_volumes` and `contours.policies`. Its `preferred_global_km3` is null: this audit does not select a global total. A zero quadrature fraction is not proof of absent ash. Preserve rejection reasons, unsupported holes and numerical warnings. A failed complete-contour screen is diagnostic, not a veto on conditional global inference. [Support protocol](methods/supported-isopachs.md).
 
@@ -57,9 +57,9 @@ The matched fixed-direction control is `volume.matched_control_map_km3` in the s
 
 ## Single-structure directional reference
 
-| File in `directional/` | Read it for |
+| File in `directional/single-structure/` | Read it for |
 |---|---|
-| `single-structure.md`, `isopachs.png`, `directions.png` | Supported fragments, extrapolated field, sectors, sensitivity and warnings |
+| `README.md`, `isopachs.png`, `directions.png` | Supported fragments, extrapolated field, sectors, sensitivity and warnings |
 | `report.json`, `estimates.csv` | Reference and 12 alternative policies, all attempts, intervals and provenance |
 | `posterior.npz` | Joint reference posterior fields, with chain/draw identity |
 | `volume-draws.npz` | Separate volume samples for all 13 policies |
