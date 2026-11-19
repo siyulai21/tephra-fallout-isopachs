@@ -12,6 +12,8 @@ Users submit measurements in chat. Audit the sources, run all active families an
 
 - For a broad unsampled direction, publish the measured-fan continuation and its sector volumes under `directional/bearing/`. Retain disagreement with the missing-fan sensitivity. An inspected lake or peat horizon can test a predicted isopach. Record its correlation, sampling, preservation and recognition controls, score it at the actual site, and qualify any bound on primary fallout. Unsurveyed directions supply no absence observation. [Archive evidence protocol](docs/methods/archive-evidence.md)
 
+Use solid directional contour segments only for documented measured brackets. Show conditional continuation with dashes and include the uncertain-azimuth median and exceedance maps for each case. [Directional extent protocol](docs/methods/uncertain-azimuth.md)
+
 ## Run and publish
 
 Use a fresh ignored destination. The normal command runs both regional methods, local support, the directional ensemble and its reference sensitivities, and the spherical mixture.

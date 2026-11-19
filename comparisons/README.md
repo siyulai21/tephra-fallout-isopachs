@@ -8,6 +8,7 @@ The figure compares predictions in withheld geographic regions across the six er
 
 | Question | Study |
 |---|---|
+| How much of an isopach in an unsampled direction is extrapolated? | [Uncertain azimuth, measured contour fragments and hidden-lobe tests](azimuth-continuation/README.md) |
 | How much does the regional volume depend on interpolation inside the same hull? | [GP ensemble and cubic spline](regional/README.md) |
 | How well do directional fans predict held-out thickness and recover known simulated volumes? | [Six-structure ensemble](directional-ensemble/README.md) · [Single-structure sensitivities](directional/README.md) |
 | How well does fallout continue into an unsampled direction? | [Measured-fan and possible-missing-fan holdouts](bearing-continuation/README.md) |

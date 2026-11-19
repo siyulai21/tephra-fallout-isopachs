@@ -1,5 +1,7 @@
 # B-Tm directional ensemble
 
+[Measured and extrapolated directional contours](azimuth/README.md) shows which median contour segments the measurements bracket, how an unsampled fan changes their reach, and how the alternatives predict withheld observations.
+
 [Directional reach and archive evidence](bearing/README.md) gives median isopachs, sector volumes and the sensitivity to unsampled directions. The six-structure calculation below includes a possible additional fan in the largest sampling gap.
 
 **54.0 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **73.5 km³**, with a conditional 95% interval of **31.8–1,211.9 km³**.

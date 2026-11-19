@@ -1,5 +1,7 @@
 # YTT directional ensemble
 
+[Measured and extrapolated directional contours](azimuth/README.md) shows which median contour segments the measurements bracket, how an unsampled fan changes their reach, and how the alternatives predict withheld observations.
+
 **985.7 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **1,274.1 km³**, with a conditional 95% interval of **765.6–3,514.0 km³**.
 
 The measured triangles contain **193.8 km³** (19.7%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.

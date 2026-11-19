@@ -17,7 +17,7 @@ from ..region import SurveyRegion
 from .global_maps import PosteriorView
 from .maps import ASSET, frame_bounds, level_labels, observation_legend, observations, setup_map
 
-FIGURE = "four-method-isopachs.png"
+FIGURE = "four-method-evidence.png"
 REGIONAL = {"stacked": "GP ensemble", "spline": "Cubic spline"}
 ENSEMBLE = "directional/ensemble"
 SPHERICAL = "spherical-mixture"
@@ -110,6 +110,10 @@ def draw_comparison(home, destination, regional_grid=None):
               f"{ENSEMBLE}/median-grids.npz", f"{SPHERICAL}/report.json", f"{SPHERICAL}/posterior.npz")
     # Retain actual plotted values so the four panel assignments can be replayed
     # from the signed fits independently of the rendering backend.
+    from ..models.directional.ensemble.fields import load_packet
+    from ..models.directional.azimuth.maps import supported_lines
+    measured = load_packet(home/ENSEMBLE,data,vent[1],ensemble)
+    inputs += (f"{ENSEMBLE}/map-fields.npz",)
     check_points = {}
     for label, _, gx, gy, z, mask in panels:
         valid = np.isfinite(z) if mask is None else np.isfinite(z) & mask
@@ -123,6 +127,7 @@ def draw_comparison(home, destination, regional_grid=None):
         "statistic": "pointwise median latent thickness", "panels": [p[0] for p in panels],
         "common_bounds_km": bounds.tolist(), "contour_levels_cm": (10**levels).tolist(),
         "colour_limits_cm": [10**norm.vmin, 10**norm.vmax],
+        "directional_solid": "exact-site bracket in a measured triangle and posterior crossing probability >= 0.9",
         "regional_clip": "exact accepted observation hull", "spherical_display_draws": spherical_view.n,
         "check_points_x_km_y_km_log10_cm": check_points,
     }
@@ -143,7 +148,9 @@ def draw_comparison(home, destination, regional_grid=None):
             visible = levels[(levels > finite.min()) & (levels < finite.max())]
             if len(visible):
                 contours = ax.contour(gx, gy, z, levels=visible, colors="white", linewidths=.8,
-                                      linestyles="solid", zorder=4)
+                                      linestyles="dashed" if label=="Directional ensemble" else "solid", zorder=4)
+                if label=="Directional ensemble":
+                    supported_lines(ax,data,measured,gx,gy,z,visible,["white"]*len(visible))
                 contours.set_path_effects([effects.withStroke(linewidth=1.6, foreground="#25414b", alpha=.7)])
                 major = visible[np.isclose(visible, np.round(visible))]
                 if len(major):
@@ -167,7 +174,10 @@ def draw_comparison(home, destination, regional_grid=None):
         bar.set_ticks(levels, labels=[level_labels(v) if len(levels) <= 11 or np.isclose(v, round(v)) else ""
                                      for v in levels])
         bar.set_label("Median thickness (cm, logarithmic scale)")
-        observation_legend(fig, data, [Line2D([], [], color=hull_colour, ls="--", label="Observation hull")])
+        observation_legend(fig, data, [
+            Line2D([], [], color=hull_colour, ls="--", label="Observation hull"),
+            Line2D([], [], color="#354f5a", lw=2., label="Directional · measured bracket"),
+            Line2D([], [], color="#354f5a", ls="--", label="Directional · continuation")])
         destination.mkdir(parents=True, exist_ok=True)
         fig.savefig(destination/FIGURE, dpi=170, bbox_inches="tight", pad_inches=.13,
                     metadata={"Description": json.dumps(provenance, sort_keys=True)})
@@ -204,7 +214,7 @@ def comparison_section(home, *, prefix=""):
         f"![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at {name}]({prefix}{FIGURE})",
         "", "All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. "
         "The regional fits stop there. The global fits also show how thickness continues into unsampled ground. "
-        "Gaps inside the hull can still be poorly constrained.", "",
+        "On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.", "",
         "## Volume and predictive performance", "",
         "| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |",
         "|---|---|---:|---:|---:|",
@@ -227,6 +237,16 @@ def comparison_section(home, *, prefix=""):
                   f"| ![Spherical-mixture median thickness over the Earth for {name}]({prefix}{SPHERICAL}/world.png) |", "",
                   "Both maps use the vent longitude as their central meridian. Read the thickness key under each map.", "",
                   "</details>", ""])
+    azimuth = Path(home)/"directional/azimuth"
+    if (azimuth/"artifacts.json").is_file():
+        report = read_report(azimuth/"report.json")
+        if report["input"]["input_sha256"] != regional["input"]["input_sha256"]:
+            raise ValueError("Directional extent report and comparison use different measurements.")
+        volume = report["volume"]
+        lines += ["", "## How firmly do the data locate the edge of the deposit?", "",
+                  f"Letting a poorly constrained fan turn gives a median-map volume of **{volume['median_map_km3']:,.1f} km³**. The matched fixed-direction control gives **{volume['matched_control_map_km3']:,.1f} km³**. Both use the same training observations and weights. The established six-structure model retains the primary global estimate because predictive performance across withheld directions was mixed.", "",
+                  f"![Measured and extrapolated isopach segments near the volcano]({prefix}directional/azimuth/median-isopachs.png)", "",
+                  f"[Directional extent, map probabilities, sector areas and held-out tests]({prefix}directional/azimuth/README.md)", ""]
     bearing = Path(home)/"directional/bearing"
     revised = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
     if revised is not None and revised["input_sha256"] == regional["input"]["input_sha256"]:

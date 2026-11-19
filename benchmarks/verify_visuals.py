@@ -33,7 +33,7 @@ def verify_case_map(record, home):
     with Image.open(figure) as image:
         info = json.loads(image.info["Description"])
     expected = {"accepted_observations.csv", "report.json", "directional/ensemble/report.json",
-                "directional/ensemble/median-grids.npz", "spherical-mixture/report.json",
+                "directional/ensemble/median-grids.npz", "directional/ensemble/map-fields.npz", "spherical-mixture/report.json",
                 "spherical-mixture/posterior.npz"}
     assert set(info["sources_sha256"]) == expected
     assert all(digest(home/path) == checksum for path, checksum in info["sources_sha256"].items())

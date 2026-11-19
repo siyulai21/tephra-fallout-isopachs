@@ -213,4 +213,7 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     from .bearing_report import run, attach_to_family_page
     run(path, work, output/"bearing", archives)
     attach_to_family_page(output)
+    from .azimuth.report import run as uncertain_azimuth, attach_family_page
+    uncertain_azimuth(path,work,output/"azimuth",name,archives)
+    attach_family_page(output)
     return result

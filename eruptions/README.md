@@ -11,4 +11,6 @@ Choose an eruption for its accepted observations, four volume estimates, maps an
 | [Tambora](tambora/README.md) | 26 exact | Four of six full-data directional fits carry a numerical warning. |
 | [Younger Toba Tuff (YTT)](ytt/README.md) | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
 
+Each case also shows how its directional contours change when unsampled fans can turn. [Compare directional extent across all six](../comparisons/azimuth-continuation/README.md)
+
 For the same geographic prediction test across eruptions, see the [cross-eruption comparison](../comparisons/README.md).

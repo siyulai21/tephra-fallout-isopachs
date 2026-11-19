@@ -42,7 +42,7 @@ class MapView:
         return self.values(xy,(.5,))[0]
 
 
-def fragments(data, model, x, y, log10_median):
+def fragments(data, model, x, y, log10_median, levels_log_cm=None):
     """Clip level lines of the actual median grid to individually qualified triangles."""
     g = model.members[0].geometry
     samples = np.concatenate([m.samples["nodes"] for m in model.members])
@@ -50,7 +50,8 @@ def fragments(data, model, x, y, log10_median):
     low, high = np.quantile(data.log_value[~data.censored],[.05,.95])
     gen = contourpy.contour_generator(x=x,y=y,z=np.ma.masked_invalid(log10_median))
     records, points, segments, levels = [], [], [], []
-    for j, level in enumerate(np.unique(np.linspace(low,high,25))):
+    levels_to_check = np.linspace(low,high,25) if levels_log_cm is None else levels_log_cm
+    for j, level in enumerate(np.unique(levels_to_check)):
         cm = float(np.exp(level))
         lines = [shapely.LineString(s) for s in gen.lines(level/np.log(10.)) if len(s)>1]
         contours = shapely.MultiLineString(lines)
