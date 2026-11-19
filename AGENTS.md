@@ -4,6 +4,8 @@ Users submit measurements in chat. Audit the sources, run all active families an
 
 ## Sources of truth
 
+- Use the [archive evidence protocol](docs/methods/archive-evidence.md) for a securely inspected horizon with dispersed ash or no recognizable bed. Preserve the distinction between a qualitative inspection, a calibrated thickness limit and an unsurveyed direction.
+
 - `data/datasets.json` identifies the accepted CSV, audit and reviewed spherical-mixture geometry. Aso-4 uses its reviewed input. B-Tm uses source-focused spherical fans. Preserve original units, row identities, hashes, bounds and reasons for inclusion or exclusion. Never invent evidence, observation errors, pseudo-data or zero deposits.
 - `src/empirical_isopach/models/registry.py` lists the regional GP ensemble and cubic spline. Compare them on the same accepted rows, outer geographic folds and observation hull. Tune inside training folds. [Method contract](docs/ADDING_METHOD.md)
 - The global families fit the observations independently. Within `results/directional/`, **`ensemble/report.json` is the current directional calculation**. Its `median_surface.volume_km3` integrates the central isopachs and `coherent_fields.volume_km3` summarizes complete-field volumes. Parent-level `report.json` and `single-structure.md` preserve the single-structure reference and broader sensitivities. Use the target-excluded calibration and retain every fit warning. [Directional ensemble protocol](docs/methods/directional-ensemble.md)

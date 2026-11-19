@@ -1,0 +1,699 @@
+{
+  "protocol": "bearing-continuation-1",
+  "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+  "archive_inventory_sha256": "e5b78571e4ec91940b3360118f980f852de68084fb42ea8855b24b11669ac196",
+  "calibration_sha256": "f9dabf690f9be58afa861aba57c799fd35cfcfee5bab5980ad873fcee2f475be",
+  "calibration_eruptions": [
+    "mazama",
+    "tambora",
+    "aso-4",
+    "ytt",
+    "minoan"
+  ],
+  "scenario": {
+    "id": "lake_only",
+    "title": "Hold Quanyang out",
+    "effective_limit_cm": {
+      "longgang": 1
+    },
+    "role": "cross_prediction",
+    "assumption": "Condition on the lake alone at the one-slice scale. Predict the peat independently."
+  },
+  "structural_weights": [
+    0.06375862123066751,
+    0.051561924364392726,
+    0.07236220948641915,
+    0.07327676572426982,
+    0.13260760650124853,
+    0.07083809627453995,
+    0.07957960385595336,
+    0.07637781894365862,
+    0.12892181482975842,
+    0.09043152112234674,
+    0.0838418293851387,
+    0.07644218828160633
+  ],
+  "archive_likelihood": {
+    "log_predictive_probability": -0.8660399133586107,
+    "weights": [
+      0.06375862123066751,
+      0.051561924364392726,
+      0.07236220948641915,
+      0.07327676572426982,
+      0.13260760650124853,
+      0.07083809627453995,
+      0.07957960385595336,
+      0.07637781894365862,
+      0.12892181482975842,
+      0.09043152112234674,
+      0.0838418293851387,
+      0.07644218828160633
+    ],
+    "bridges": [
+      {
+        "policy": "narrow_fans",
+        "ratio": 1.0,
+        "log_probability": -1.9649385396013823,
+        "direct_log_probability": -1.9715145271052634,
+        "four_independent_chain_log_ratios": [
+          -2.0757044553887027,
+          -1.9640472275118697,
+          -1.8640429944709105,
+          -1.9617968517642073
+        ],
+        "chain_log_ratio_span": 0.21166146091779225,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294117,
+            "diagnostics": {
+              "rhat_max": 1.0050096286935783,
+              "bulk_ess_min": 1220.701691247442,
+              "tail_ess_min": 1332.8569219973049,
+              "divergences": 0,
+              "bfmi_min": 0.957459562175215,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "e313d621f7ea90487440dea2df806a306844dee8794dab7e33ee4aa4c18dbb5b",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.5,
+        "log_probability": -0.8204988348367213,
+        "direct_log_probability": -0.8099193693897249,
+        "four_independent_chain_log_ratios": [
+          -0.8615526896033412,
+          -0.8045758489549879,
+          -0.7934018983097051,
+          -0.8232957534802328
+        ],
+        "chain_log_ratio_span": 0.0681507912936361,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294118,
+            "diagnostics": {
+              "rhat_max": 1.004293521832012,
+              "bulk_ess_min": 1422.8006213422054,
+              "tail_ess_min": 1303.0213178200843,
+              "divergences": 2,
+              "bfmi_min": 0.9104155127577954,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "32cc32249668dd8e0ab1dda3891a59ea22b926b9365ae3ed017eaa1bc7272aa4",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295127,
+            "diagnostics": {
+              "rhat_max": 1.0012806294499959,
+              "bulk_ess_min": 3028.55654785913,
+              "tail_ess_min": 3202.3295313067642,
+              "divergences": 0,
+              "bfmi_min": 0.910167787186351,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "a61ed217e22e91153a264a4eba8f0ae43b3fc08318732e3b2a41fb820c86eb15",
+            "file": "attempt-2.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.25,
+        "log_probability": -0.1367722127954316,
+        "direct_log_probability": -0.13508074823557692,
+        "four_independent_chain_log_ratios": [
+          -0.1447589114854786,
+          -0.13484441683414428,
+          -0.12806028921297674,
+          -0.1394507594400789
+        ],
+        "chain_log_ratio_span": 0.01669862227250185,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294119,
+            "diagnostics": {
+              "rhat_max": 1.0060883204599549,
+              "bulk_ess_min": 1543.1421550351479,
+              "tail_ess_min": 1707.4757306481818,
+              "divergences": 0,
+              "bfmi_min": 0.9158777828877122,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "0777db87f983ca49fc8eb0d2a2b3e2adbe86b34a545d9750a0dde4f26c2c163b",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.125,
+        "log_probability": -0.0017473295888343898,
+        "direct_log_probability": -0.0018796779915195572,
+        "four_independent_chain_log_ratios": [
+          -0.001878042050190487,
+          -0.0015824201445919783,
+          -0.0018269821794500984,
+          -0.0017018712969774086
+        ],
+        "chain_log_ratio_span": 0.00029562190559850876,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294120,
+            "diagnostics": {
+              "rhat_max": 1.0033238257113752,
+              "bulk_ess_min": 1839.303719343762,
+              "tail_ess_min": 1848.1068178150472,
+              "divergences": 1,
+              "bfmi_min": 0.9940982717877273,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "77b66a2d93c2ec26b86df45096c746e5a083367faf3b49a323ec7a93fc65de57",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295129,
+            "diagnostics": {
+              "rhat_max": 1.0014444559070912,
+              "bulk_ess_min": 3462.2203129368145,
+              "tail_ess_min": 3609.143604876711,
+              "divergences": 0,
+              "bfmi_min": 0.94518997512921,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "5066a46f1e1d53bf25c3b4cff8b493dd3e947000d70ca9248858d1f2d6d0a5aa",
+            "file": "attempt-2.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 1.0,
+        "log_probability": -1.6770674981955533,
+        "direct_log_probability": -1.685479656432861,
+        "four_independent_chain_log_ratios": [
+          -1.6828616323929566,
+          -1.7405224423957861,
+          -1.594074760461334,
+          -1.6952332962791257
+        ],
+        "chain_log_ratio_span": 0.14644768193445223,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294217,
+            "diagnostics": {
+              "rhat_max": 1.0035449536201846,
+              "bulk_ess_min": 1603.6806503134246,
+              "tail_ess_min": 1311.5417080248128,
+              "divergences": 0,
+              "bfmi_min": 0.8946797250521257,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "f35684f0c8e075f2699166491ddcc54a37267a72e49825ef798a7384d73c8dab",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.5,
+        "log_probability": -0.6128772417568644,
+        "direct_log_probability": -0.612554097390527,
+        "four_independent_chain_log_ratios": [
+          -0.6232678078761982,
+          -0.5963780449089011,
+          -0.6009396530567503,
+          -0.6311772767148867
+        ],
+        "chain_log_ratio_span": 0.03479923180598554,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294218,
+            "diagnostics": {
+              "rhat_max": 1.002799064274505,
+              "bulk_ess_min": 1601.385591546023,
+              "tail_ess_min": 1482.5840492407372,
+              "divergences": 1,
+              "bfmi_min": 0.9949476544526433,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "b1722a347a2f882a735992edb9395d201ab8566d04100433f660b279d4345182",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295227,
+            "diagnostics": {
+              "rhat_max": 1.0014394082886284,
+              "bulk_ess_min": 3511.4548477653225,
+              "tail_ess_min": 3318.827402445407,
+              "divergences": 0,
+              "bfmi_min": 1.005546353563096,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "8b8ac7cf4bc637f9adcbb6c04de379b8bd3c9852131f10be6c779b1c58c1bcdd",
+            "file": "attempt-2.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.25,
+        "log_probability": -0.098894235656239,
+        "direct_log_probability": -0.1014656077170617,
+        "four_independent_chain_log_ratios": [
+          -0.10312582338596954,
+          -0.09044152332630251,
+          -0.09709906301229854,
+          -0.10492279117507941
+        ],
+        "chain_log_ratio_span": 0.014481267848776902,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294219,
+            "diagnostics": {
+              "rhat_max": 1.0038686423558958,
+              "bulk_ess_min": 1097.3402748063709,
+              "tail_ess_min": 512.2092744518598,
+              "divergences": 10,
+              "bfmi_min": 0.9510344504611893,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "c4721921ecca552513b960908c1d470c6f7c35a54cfa606f677f09b3adbacad0",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295228,
+            "diagnostics": {
+              "rhat_max": 1.0014633612281925,
+              "bulk_ess_min": 4431.4035282711275,
+              "tail_ess_min": 3082.7859494726226,
+              "divergences": 0,
+              "bfmi_min": 0.9329126235521639,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "7f85abb92953b6d424382654b7a7ad217c5875ab43e4ff684d67871f954ff2fc",
+            "file": "attempt-2.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.125,
+        "log_probability": -0.0018950789181566563,
+        "direct_log_probability": -0.0017475531639412623,
+        "four_independent_chain_log_ratios": [
+          -0.0021442123018751147,
+          -0.0019042718183897023,
+          -0.0016209160998492678,
+          -0.0019109289139027652
+        ],
+        "chain_log_ratio_span": 0.0005232962020258469,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294220,
+            "diagnostics": {
+              "rhat_max": 1.0033554923065295,
+              "bulk_ess_min": 2342.700938560546,
+              "tail_ess_min": 1572.0765928234537,
+              "divergences": 0,
+              "bfmi_min": 0.8944980920081236,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "6966c7de47ea5da48c8fca66a021a3e18ea5358a66c2f9ea092a508abbbfa67d",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 1.0,
+        "log_probability": -1.0048737377986736,
+        "direct_log_probability": -1.0179811978601512,
+        "four_independent_chain_log_ratios": [
+          -1.0047096224275478,
+          -1.013690216580688,
+          -1.0137170467966161,
+          -0.9875506236997103
+        ],
+        "chain_log_ratio_span": 0.026166423096905866,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294317,
+            "diagnostics": {
+              "rhat_max": 1.0022463135527826,
+              "bulk_ess_min": 1928.0765563908374,
+              "tail_ess_min": 1836.6256216500346,
+              "divergences": 0,
+              "bfmi_min": 0.8912805762578319,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "661a64907f0491b5bfb3266ba5ea93ce09be61c8889352c2b57f7fb84bf9ac5d",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.5,
+        "log_probability": -0.3473109928276994,
+        "direct_log_probability": -0.3449927262284156,
+        "four_independent_chain_log_ratios": [
+          -0.3366924791683159,
+          -0.36403329498360737,
+          -0.34288584403094013,
+          -0.34572228646219116
+        ],
+        "chain_log_ratio_span": 0.027340815815291464,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294318,
+            "diagnostics": {
+              "rhat_max": 1.0017876096799578,
+              "bulk_ess_min": 2044.8806587009103,
+              "tail_ess_min": 1697.5829664071223,
+              "divergences": 0,
+              "bfmi_min": 0.8903986346925452,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "574f0f66f70ec290e3c86de344a15bfe982023ede50e67b4b9d8ffdaa40e9d20",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.25,
+        "log_probability": -0.04709132533363025,
+        "direct_log_probability": -0.04745181550187283,
+        "four_independent_chain_log_ratios": [
+          -0.047649911523315325,
+          -0.04869865235639104,
+          -0.049941605785918775,
+          -0.042089126013072686
+        ],
+        "chain_log_ratio_span": 0.007852479772846088,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294319,
+            "diagnostics": {
+              "rhat_max": 1.0037075661840287,
+              "bulk_ess_min": 2055.0590175869133,
+              "tail_ess_min": 1486.9335707466032,
+              "divergences": 0,
+              "bfmi_min": 0.9804713117580824,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "82360f9698155d8d8ed7456ab0fcd31c5d0ee5ff15ba5b521d1621127928b1da",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.125,
+        "log_probability": -0.0008985514214661094,
+        "direct_log_probability": -0.0009962120120476925,
+        "four_independent_chain_log_ratios": [
+          -0.0006292252695869749,
+          -0.0010817805903329258,
+          -0.0009737613020259772,
+          -0.0009094599834709172
+        ],
+        "chain_log_ratio_span": 0.00045255532074595095,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294320,
+            "diagnostics": {
+              "rhat_max": 1.0026783081792012,
+              "bulk_ess_min": 2402.0778520106865,
+              "tail_ess_min": 1523.7791806594928,
+              "divergences": 0,
+              "bfmi_min": 0.8080987598527257,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "87d2e080d84afe9874f92bb8058c376870270083568b0a43464c623845c9b615",
+            "file": "attempt-1.npz"
+          }
+        ]
+      }
+    ]
+  },
+  "sites": [
+    {
+      "id": "longgang",
+      "site": "Lake Sihailongwan",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 4.507848001703402e-16,
+        "lower90": 2.2775793822442418e-11,
+        "median": 0.035700344621647756,
+        "upper95": 2.2673947009623645
+      },
+      "new_site_cm": {
+        "lower95": 4.557299942143985e-16,
+        "lower90": 2.2043373464145774e-11,
+        "median": 0.033250556797301455,
+        "upper95": 3.559790709938607
+      },
+      "probability_local_below": {
+        "0.1": 0.6109646884320518,
+        "1.0": 0.888232140689202,
+        "10.0": 0.9957851518941366
+      }
+    },
+    {
+      "id": "quanyang",
+      "site": "Quanyang peat",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 1.525738319824528e-05,
+        "lower90": 0.0009314630566856188,
+        "median": 4.264870846912843,
+        "upper95": 28.21010864714797
+      },
+      "new_site_cm": {
+        "lower95": 1.3739825448296189e-05,
+        "lower90": 0.0008338314324911712,
+        "median": 3.692944241052153,
+        "upper95": 59.25303626665093
+      },
+      "probability_local_below": {
+        "0.1": 0.14764868598330433,
+        "1.0": 0.305615075466895,
+        "10.0": 0.7139771777372658
+      }
+    },
+    {
+      "id": "old-084",
+      "site": "Lake Kushu",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 2.538993723385605e-14,
+        "lower90": 2.4685063138422445e-10,
+        "median": 0.44829168742944614,
+        "upper95": 2.4838624664938127
+      },
+      "new_site_cm": {
+        "lower95": 2.425463624953129e-14,
+        "lower90": 2.470762055245901e-10,
+        "median": 0.47832853611633674,
+        "upper95": 7.357949609121203
+      },
+      "probability_local_below": {
+        "0.1": 0.2878083065513055,
+        "1.0": 0.6462559008952136,
+        "10.0": 0.9880653176935047
+      }
+    },
+    {
+      "id": "gushantun",
+      "site": "Gushantun peat",
+      "reading": "attribution_uncertain",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 8.825699559834865e-19,
+        "lower90": 2.6930881312597434e-13,
+        "median": 0.01079707654483807,
+        "upper95": 1.217658267858359
+      },
+      "new_site_cm": {
+        "lower95": 8.345331449881777e-19,
+        "lower90": 2.6525148682304446e-13,
+        "median": 0.010072956597666135,
+        "upper95": 1.8122759216740991
+      },
+      "probability_local_below": {
+        "0.1": 0.7249675223659938,
+        "1.0": 0.9481224766070324,
+        "10.0": 0.9986123244071334
+      }
+    },
+    {
+      "id": "old-085",
+      "site": "Ulleung Basin 13PT-P4_026",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 9.740991983987544e-21,
+        "lower90": 5.79636481991672e-16,
+        "median": 9.535707485113018e-05,
+        "upper95": 0.08428460879044351
+      },
+      "new_site_cm": {
+        "lower95": 9.657328072883233e-21,
+        "lower90": 5.590028519999761e-16,
+        "median": 8.962644994458579e-05,
+        "upper95": 0.1190979694016151
+      },
+      "probability_local_below": {
+        "0.1": 0.9692439367664654,
+        "1.0": 0.9992738458589661,
+        "10.0": 0.9999956808521988
+      }
+    },
+    {
+      "id": "old-045",
+      "site": "YK14-01 PC09",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 0.5694046258167983,
+        "lower90": 0.6156985047461023,
+        "median": 0.9646595317712618,
+        "upper95": 2.0330802661694105
+      },
+      "new_site_cm": {
+        "lower95": 0.17110114333016216,
+        "lower90": 0.22827509902225004,
+        "median": 0.9947329200909187,
+        "upper95": 5.79036321089921
+      },
+      "probability_local_below": {
+        "0.1": 0.005597773448819148,
+        "1.0": 0.5023730433469081,
+        "10.0": 0.9945625317699768
+      }
+    },
+    {
+      "id": "old-069",
+      "site": "NT13-19 PL01",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 0.42617869700726746,
+        "lower90": 0.4684189618655248,
+        "median": 0.8401784982165382,
+        "upper95": 1.982777557963131
+      },
+      "new_site_cm": {
+        "lower95": 0.14008192848054019,
+        "lower90": 0.1885610691265398,
+        "median": 0.8678878261230133,
+        "upper95": 5.383426648066604
+      },
+      "probability_local_below": {
+        "0.1": 0.010344863491261038,
+        "1.0": 0.560959570257272,
+        "10.0": 0.995433368943024
+      }
+    }
+  ],
+  "artifacts": {}
+}

@@ -1,5 +1,7 @@
 # B-Tm sensitivity to source interpretation
 
+[Western isopachs and the independent lake and peat evidence](../directional/bearing/field-evidence.md). The dedicated study uses the reviewed 68-row input and retains all structural and archive sensitivities.
+
 The principal median-map integral is **54.0 km³**, with a conditional whole-deposit interval of **31.8–1,211.9 km³**. All six principal structures pass the full-data sampling and integral checks. One of four geographic holdouts and one of two estimable source-sector holdouts retain numerical warnings. Two sectors contain no observations. The directional contour audit finds no completely supported band under any of its three policies. The accompanying regional estimates over the 549,464 km² observation hull are 24.3 km³ for the GP and 28.5 km³ for the spline. The independent spherical sensitivity calculations are still running. [Audited input](../../../../data/eruptions/B-Tm_reviewed.csv) · [Source decisions](../../../../data/audits/B-Tm/README.md)
 
 ![Directional median isopachs for the 68 audited B-Tm records](principal/isopachs.png)

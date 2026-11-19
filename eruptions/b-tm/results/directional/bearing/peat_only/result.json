@@ -1,0 +1,663 @@
+{
+  "protocol": "bearing-continuation-1",
+  "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+  "archive_inventory_sha256": "e5b78571e4ec91940b3360118f980f852de68084fb42ea8855b24b11669ac196",
+  "calibration_sha256": "f9dabf690f9be58afa861aba57c799fd35cfcfee5bab5980ad873fcee2f475be",
+  "calibration_eruptions": [
+    "mazama",
+    "tambora",
+    "aso-4",
+    "ytt",
+    "minoan"
+  ],
+  "scenario": {
+    "id": "peat_only",
+    "title": "Hold Sihailongwan out",
+    "effective_limit_cm": {
+      "quanyang": 1
+    },
+    "role": "cross_prediction",
+    "assumption": "Condition on the peat alone at the one-slice scale. Predict the lake independently."
+  },
+  "structural_weights": [
+    0.007817302946538462,
+    0.015687577248014783,
+    0.054260707982410804,
+    0.1335396735692081,
+    0.0209801150931423,
+    0.02530696746891619,
+    0.07707478776116025,
+    0.16187034989605953,
+    0.09444862666119024,
+    0.07918299382543871,
+    0.1311087485616793,
+    0.19872214898624135
+  ],
+  "archive_likelihood": {
+    "log_predictive_probability": -2.0588065124193218,
+    "weights": [
+      0.007817302946538462,
+      0.015687577248014783,
+      0.054260707982410804,
+      0.1335396735692081,
+      0.0209801150931423,
+      0.02530696746891619,
+      0.07707478776116025,
+      0.16187034989605953,
+      0.09444862666119024,
+      0.07918299382543871,
+      0.1311087485616793,
+      0.19872214898624135
+    ],
+    "bridges": [
+      {
+        "policy": "narrow_fans",
+        "ratio": 1.0,
+        "log_probability": -5.256469945226682,
+        "direct_log_probability": -5.072960457795557,
+        "four_independent_chain_log_ratios": [
+          -5.272288841394216,
+          -5.460299871615744,
+          -5.117948638181,
+          -5.186413799778949
+        ],
+        "chain_log_ratio_span": 0.3423512334347443,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294117,
+            "diagnostics": {
+              "rhat_max": 1.0030056210033675,
+              "bulk_ess_min": 1272.3924778012738,
+              "tail_ess_min": 1466.799600228442,
+              "divergences": 1,
+              "bfmi_min": 0.9021169412392881,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "97e3a218b2cad619ca20493a3d3eb93596b4a09827166477c02a0cafea43eb70",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295126,
+            "diagnostics": {
+              "rhat_max": 1.0013053102045668,
+              "bulk_ess_min": 3162.601591725181,
+              "tail_ess_min": 3197.337372346382,
+              "divergences": 0,
+              "bfmi_min": 0.9221757139922017,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "a4db07da344ae75791dc3cbd90ce49c80e56ebc154d0ec3af2f8b1c82a8646f5",
+            "file": "attempt-2.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.5,
+        "log_probability": -3.203179793031815,
+        "direct_log_probability": -3.168405325239819,
+        "four_independent_chain_log_ratios": [
+          -3.284151048631518,
+          -3.1854611553610326,
+          -3.166472277275762,
+          -3.181050307492889
+        ],
+        "chain_log_ratio_span": 0.11767877135575588,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294118,
+            "diagnostics": {
+              "rhat_max": 1.0017987286270353,
+              "bulk_ess_min": 1213.098232090034,
+              "tail_ess_min": 1628.121592886159,
+              "divergences": 0,
+              "bfmi_min": 0.9224452124727986,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "361027839e0d024748206e0755a037e4da9f52344a536c62814fe7fc18f662bf",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.25,
+        "log_probability": -1.6174226514477237,
+        "direct_log_probability": -1.593948058665129,
+        "four_independent_chain_log_ratios": [
+          -1.677605184453899,
+          -1.5836838342473154,
+          -1.5853620469881733,
+          -1.625283757278467
+        ],
+        "chain_log_ratio_span": 0.09392135020658365,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294119,
+            "diagnostics": {
+              "rhat_max": 1.0026991937416048,
+              "bulk_ess_min": 1265.8054589374499,
+              "tail_ess_min": 1430.3342658659117,
+              "divergences": 0,
+              "bfmi_min": 0.9447805289260468,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "907cd58fa6ba95a6a6ff4d4a0d62468bb9fa7a75b10c8548e81f703f977a9856",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "narrow_fans",
+        "ratio": 0.125,
+        "log_probability": -0.5943588981979602,
+        "direct_log_probability": -0.5974137597687239,
+        "four_independent_chain_log_ratios": [
+          -0.6085779492118322,
+          -0.596971343271294,
+          -0.5614017016612136,
+          -0.61112602644537
+        ],
+        "chain_log_ratio_span": 0.04972432478415634,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294120,
+            "diagnostics": {
+              "rhat_max": 1.0019809684003913,
+              "bulk_ess_min": 1571.837995799035,
+              "tail_ess_min": 1532.7194829741097,
+              "divergences": 0,
+              "bfmi_min": 0.9955037719857267,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "8ef9de47590ef447325c14e1e0132fdda5971eacc1cfda7780f8dbe0b6fd6cb2",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 1.0,
+        "log_probability": -4.713653448822022,
+        "direct_log_probability": -4.652394122509256,
+        "four_independent_chain_log_ratios": [
+          -4.732636772331293,
+          -4.79482523977115,
+          -4.576290938542144,
+          -4.761417455249106
+        ],
+        "chain_log_ratio_span": 0.2185343012290062,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294217,
+            "diagnostics": {
+              "rhat_max": 1.0039974344375708,
+              "bulk_ess_min": 1429.7091910372774,
+              "tail_ess_min": 1745.6008590867211,
+              "divergences": 0,
+              "bfmi_min": 0.9174211732381609,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "bcc1c5c73198ef904904f5e45a1f5f556b64a58d72ac45319350af795ca277b4",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.5,
+        "log_probability": -2.8349610279284363,
+        "direct_log_probability": -2.8409070671867287,
+        "four_independent_chain_log_ratios": [
+          -2.8783431860625726,
+          -2.8703040541635225,
+          -2.7475117669313853,
+          -2.846992976795212
+        ],
+        "chain_log_ratio_span": 0.13083141913118723,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294218,
+            "diagnostics": {
+              "rhat_max": 1.0044734528670067,
+              "bulk_ess_min": 1292.2446251437482,
+              "tail_ess_min": 1084.7338758691108,
+              "divergences": 0,
+              "bfmi_min": 0.9461316510870875,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "d29ed0936100105cafd768450c557ccce87b91d51a8198250a61f7e37a9dcd1b",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.25,
+        "log_probability": -1.323642441666605,
+        "direct_log_probability": -1.3285899145380649,
+        "four_independent_chain_log_ratios": [
+          -1.3430891750911478,
+          -1.3512288319419916,
+          -1.2700642024183324,
+          -1.3311331691215145
+        ],
+        "chain_log_ratio_span": 0.08116462952365922,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294219,
+            "diagnostics": {
+              "rhat_max": 1.0015671546257081,
+              "bulk_ess_min": 2180.474636232325,
+              "tail_ess_min": 1856.741184155204,
+              "divergences": 0,
+              "bfmi_min": 0.9109149506439053,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "79f57fd3f3dda65ffcdf6c104ffd4a44d8749db8fb830de1969854f992a36873",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "reference",
+        "ratio": 0.125,
+        "log_probability": -0.4435582985050779,
+        "direct_log_probability": -0.43849502001536855,
+        "four_independent_chain_log_ratios": [
+          -0.45441567389113935,
+          -0.43565405357914067,
+          -0.43694070170428567,
+          -0.4473059461938309
+        ],
+        "chain_log_ratio_span": 0.018761620311998684,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294220,
+            "diagnostics": {
+              "rhat_max": 1.003879469173346,
+              "bulk_ess_min": 2172.3273703764617,
+              "tail_ess_min": 1888.959027553113,
+              "divergences": 0,
+              "bfmi_min": 0.9031877948096979,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "7efc685b6f135ab271b327d0b5f5869ac685818834454838a24409fa59a80b66",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 1.0,
+        "log_probability": -2.508790417422645,
+        "direct_log_probability": -2.476531000402897,
+        "four_independent_chain_log_ratios": [
+          -2.5285189044381724,
+          -2.442177265111763,
+          -2.566738997741899,
+          -2.497843363701625
+        ],
+        "chain_log_ratio_span": 0.12456173263013604,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294317,
+            "diagnostics": {
+              "rhat_max": 1.0038154340399132,
+              "bulk_ess_min": 1606.8994629059737,
+              "tail_ess_min": 1440.4418318162227,
+              "divergences": 0,
+              "bfmi_min": 0.9346829731784184,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "d69f4ca937a4ffa3b7e864880c68068c8439641f1712274318f0a90ccca8a939",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.5,
+        "log_probability": -1.672908932154261,
+        "direct_log_probability": -1.6764630678606949,
+        "four_independent_chain_log_ratios": [
+          -1.6411747196253152,
+          -1.6608650406888081,
+          -1.6759794560412935,
+          -1.7136552513965277
+        ],
+        "chain_log_ratio_span": 0.0724805317712125,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294318,
+            "diagnostics": {
+              "rhat_max": 1.0033415520499778,
+              "bulk_ess_min": 1929.802177317806,
+              "tail_ess_min": 1958.5864270787713,
+              "divergences": 0,
+              "bfmi_min": 0.8610594912961794,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "901636f5d950e24390b94b04bcd758ac781accc544ef78ec8d1f4b24965827f9",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.25,
+        "log_probability": -0.7927628441690313,
+        "direct_log_probability": -0.7935720269301241,
+        "four_independent_chain_log_ratios": [
+          -0.7675519320766107,
+          -0.8118701234440566,
+          -0.8113188053976472,
+          -0.7808030168472309
+        ],
+        "chain_log_ratio_span": 0.04431819136744597,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294319,
+            "diagnostics": {
+              "rhat_max": 1.0030363524139363,
+              "bulk_ess_min": 1956.8083278381114,
+              "tail_ess_min": 1561.3998086818679,
+              "divergences": 0,
+              "bfmi_min": 0.9486851408714957,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "672fcac94255d80a05c5cd81bf07acb03da66ea16ddecdffebaf7c0d104b4b89",
+            "file": "attempt-1.npz"
+          }
+        ]
+      },
+      {
+        "policy": "broad_fans",
+        "ratio": 0.125,
+        "log_probability": -0.2382922840573496,
+        "direct_log_probability": -0.23927682224746327,
+        "four_independent_chain_log_ratios": [
+          -0.2483135224105686,
+          -0.25238476943500476,
+          -0.2251005639208028,
+          -0.22753186440465267
+        ],
+        "chain_log_ratio_span": 0.027284205514201965,
+        "sampling_passed": true,
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20294320,
+            "diagnostics": {
+              "rhat_max": 1.0026755098236277,
+              "bulk_ess_min": 2105.2914584734285,
+              "tail_ess_min": 1732.1233083838915,
+              "divergences": 1,
+              "bfmi_min": 0.8912089850734995,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "8c827c29b79bf02bd6892d7cce05bcaa3633d0dc9fa6e8012a75db0bcde35892",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20295329,
+            "diagnostics": {
+              "rhat_max": 1.0016360681421046,
+              "bulk_ess_min": 4006.1044199759813,
+              "tail_ess_min": 2950.3226398479965,
+              "divergences": 0,
+              "bfmi_min": 0.9211631722085087,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "d682c6db2c01f679cecfb2dbe214fe76dd7b65628dd4657adc95181d0c269952",
+            "file": "attempt-2.npz"
+          }
+        ]
+      }
+    ]
+  },
+  "sites": [
+    {
+      "id": "longgang",
+      "site": "Lake Sihailongwan",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 6.714168496786051e-27,
+        "lower90": 9.005269997594954e-20,
+        "median": 8.937157236067647e-06,
+        "upper95": 0.06381625315683383
+      },
+      "new_site_cm": {
+        "lower95": 7.832834871986591e-27,
+        "lower90": 8.650573112360483e-20,
+        "median": 8.598799634231127e-06,
+        "upper95": 0.08134129774747464
+      },
+      "probability_local_below": {
+        "0.1": 0.9791742506714315,
+        "1.0": 0.998421522064032,
+        "10.0": 0.9999541818829419
+      }
+    },
+    {
+      "id": "quanyang",
+      "site": "Quanyang peat",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 1.8344529142527627e-09,
+        "lower90": 7.670800588585272e-07,
+        "median": 0.1307933248056749,
+        "upper95": 3.0499522375304564
+      },
+      "new_site_cm": {
+        "lower95": 1.7315086031723465e-09,
+        "lower90": 6.806961332083059e-07,
+        "median": 0.11795133372826516,
+        "upper95": 5.0434684480855845
+      },
+      "probability_local_below": {
+        "0.1": 0.4781556737022624,
+        "1.0": 0.8321177663189698,
+        "10.0": 0.9920769114478097
+      }
+    },
+    {
+      "id": "old-084",
+      "site": "Lake Kushu",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 2.164791373863066e-14,
+        "lower90": 2.945541527212168e-10,
+        "median": 1.3971522098709643,
+        "upper95": 2.542851266536941
+      },
+      "new_site_cm": {
+        "lower95": 2.152803624046561e-14,
+        "lower90": 2.7689962339203454e-10,
+        "median": 0.7433316761522569,
+        "upper95": 8.328544207786269
+      },
+      "probability_local_below": {
+        "0.1": 0.24066477107310075,
+        "1.0": 0.5635192402197808,
+        "10.0": 0.9840323379167162
+      }
+    },
+    {
+      "id": "gushantun",
+      "site": "Gushantun peat",
+      "reading": "attribution_uncertain",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 1.6214523671875848e-31,
+        "lower90": 3.031846936898578e-23,
+        "median": 8.814010226918385e-07,
+        "upper95": 0.033182571142069
+      },
+      "new_site_cm": {
+        "lower95": 1.7712324452694828e-31,
+        "lower90": 3.362639271672066e-23,
+        "median": 8.65132993415729e-07,
+        "upper95": 0.0415537121932299
+      },
+      "probability_local_below": {
+        "0.1": 0.988459959031997,
+        "1.0": 0.9992523490557739,
+        "10.0": 0.9999787215335955
+      }
+    },
+    {
+      "id": "old-085",
+      "site": "Ulleung Basin 13PT-P4_026",
+      "reading": "cryptotephra_only",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 2.0261341206041362e-31,
+        "lower90": 1.879787386956724e-24,
+        "median": 1.252155612793071e-06,
+        "upper95": 0.031117002214351958
+      },
+      "new_site_cm": {
+        "lower95": 2.0223176974727404e-31,
+        "lower90": 1.6570610011118988e-24,
+        "median": 1.2075989661843709e-06,
+        "upper95": 0.03895152994569262
+      },
+      "probability_local_below": {
+        "0.1": 0.9911610242687241,
+        "1.0": 0.9998262045268556,
+        "10.0": 0.99999965267237
+      }
+    },
+    {
+      "id": "old-045",
+      "site": "YK14-01 PC09",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 0.538174540437303,
+        "lower90": 0.5795954842081571,
+        "median": 0.8981399163939883,
+        "upper95": 1.8679394085516978
+      },
+      "new_site_cm": {
+        "lower95": 0.1592551074930646,
+        "lower90": 0.21244864907187982,
+        "median": 0.9249028371637442,
+        "upper95": 5.391975427623804
+      },
+      "probability_local_below": {
+        "0.1": 0.006940572253162821,
+        "1.0": 0.5350428790066761,
+        "10.0": 0.995605608344354
+      }
+    },
+    {
+      "id": "old-069",
+      "site": "NT13-19 PL01",
+      "reading": "dispersed_no_continuous_bed",
+      "mesh_weight": 0.0,
+      "latent_cm": {
+        "lower95": 0.39775512401725943,
+        "lower90": 0.4351099085952719,
+        "median": 0.7562206801275324,
+        "upper95": 1.836862846805632
+      },
+      "new_site_cm": {
+        "lower95": 0.12783841555594747,
+        "lower90": 0.1719401637421315,
+        "median": 0.7890430593744913,
+        "upper95": 4.92853118145349
+      },
+      "probability_local_below": {
+        "0.1": 0.013253191649038248,
+        "1.0": 0.6011399254749357,
+        "10.0": 0.9964590392573539
+      }
+    }
+  ],
+  "artifacts": {}
+}

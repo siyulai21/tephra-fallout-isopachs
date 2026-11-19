@@ -1,5 +1,7 @@
 # B-Tm source audit
 
+[Western isopachs and the independent lake and peat evidence](../../../eruptions/b-tm/results/directional/bearing/field-evidence.md). The dedicated study uses the reviewed 68-row input and retains all structural and archive sensitivities.
+
 The revised input for the 946 CE Millennium eruption of Paektu / Changbaishan has **64 measured thicknesses, three lower bounds and one upper bound**. The target is the combined bulk airfall from both eruptive phases, including ash that settled from pyroclastic clouds. Thicknesses are in centimetres. Core depth, ignimbrite thickness, lahar thickness and the dimensions of ash pockets have separate meanings in the evidence ledger. [Reviewed input](../../eruptions/B-Tm_reviewed.csv) · [Completed regional fits and source comparisons](../../../eruptions/b-tm/results/source-audit/README.md)
 
 ## What changed
