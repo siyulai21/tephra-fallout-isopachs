@@ -8,9 +8,9 @@ This repository turns published ash-thickness measurements into **isopachs** (co
 
 The **GP ensemble** and **trend-regularized cubic spline** each reconstruct thickness inside the same observation hull. The local support audit shows where observations bracket a contour, including holes inside that hull.
 
-The **directional ensemble** and **spherical mixture** each extend thickness across the Earth under different assumptions. The directional ensemble fits six possible fan structures. Its headline volume integrates the map you see. Its conditional 95% interval comes from integrating complete simulated deposits. The spherical mixture reports its own whole-deposit posterior. A poorly sampled direction can hold ash that none of the observations reveal.
+The **directional ensemble** and **spherical mixture** each extend thickness across the Earth under different assumptions. The principal directional map allows a fan to turn in poorly sampled directions. Its bulk volume integrates the pointwise median thickness over the Earth. Its conditional 95% interval comes from integrating complete simulated deposits. The spherical mixture reports its own whole-deposit posterior. A poorly sampled direction can hold ash that none of the observations reveal.
 
-On the directional maps, solid contour fragments connect measured thicknesses that bracket a level. Dashes show where the deposit edge depends on continuation. The uncertain-azimuth sensitivity tests how far a fan could turn into an unsampled sector. [Six-eruption comparison and maps](comparisons/azimuth-continuation/README.md)
+On the directional maps, solid contour fragments connect measured thicknesses that bracket a level. Dashes show where the deposit edge depends on continuation. Each case compares the primary uncertain-direction reconstruction with a fixed-direction control. [Six-eruption comparison and maps](comparisons/azimuth-continuation/README.md)
 
 Minoan shows how the Plinian and co-ignimbrite fans can be fitted as one deposit. B-Tm shows how identifiable ash in western lake and peat cores can test the predicted reach beyond the measured beds. [Minoan case](eruptions/minoan/README.md) · [B-Tm case](eruptions/b-tm/README.md)
 

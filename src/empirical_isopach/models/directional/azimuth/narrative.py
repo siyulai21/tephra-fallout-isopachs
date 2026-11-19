@@ -13,14 +13,19 @@ def case_page(output,r,inventory):
     mass = np.array(volume["median_map_parts_by_sector_km3"])
     audit = json.loads((output/"complete-contour-audit.json").read_text())
     bands = [k for k,v in audit["policies"].items() if v.get("selected_band")]
+    display = json.loads((output/"map-display.json").read_text())
     failed = [k for k,v in r["members"].items() if not v["diagnostics"]["passed"]]
     n = len(r["data_rows"])
     rows = [f"# {r['dataset']} · directional extent", "",
-        f"The same {n} accepted observations give a **{volume['matched_control_map_km3']:,.1f} km³** median-map integral with fixed fan directions and **{volume['median_map_km3']:,.1f} km³** when an unsampled fan can turn. These two fits use identical observations and structure weights. The primary six-structure estimate on the case home uses its original calibration.", "",
+        f"**{volume['median_map_km3']:,.1f} km³** is the principal directional estimate from {n} accepted observations. It integrates the thickness-only, uncertain-fan-direction median map over the Earth. Fixing fan directions with the same data and structure weights gives **{volume['matched_control_map_km3']:,.1f} km³**.", "",
         f"Under uncertain azimuth, integrating each complete deposit gives a volume median of **{joint['median']:,.1f} km³** and a conditional 95% range of **{joint['lower95']:,.1f}–{joint['upper95']:,.1f} km³**. Measured interpolation triangles contribute {mass[0].sum()/mass.sum():.1%} of the median-map volume. The rest relies on continuation.", "",
-        "![Median isopachs and quantitatively bracketed segments](median-isopachs.png)", "",
+        "![Principal uncertain-fan-direction median isopachs](isopachs.png)", "",
         "Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.", "",
+        ("The deposit panel includes the accepted sites and the display search for the 0.1 cm contour. " +
+         ("The lowest contour reaches the physical map edge in the extent check. " if not display["extent_audit"]["lowest_contour_within_chart"] else "")
+         + "[Whole-Earth thickness map](world.png) · [Display extent and checks](map-display.json)"), "",
         "## Reach from the volcano", "",
+        "![Fixed and uncertain fan directions near the source](median-isopachs.png)", "",
         "Distances are great-circle kilometres to the first outward crossing on each compass ray. The area columns give the entire 10 cm footprint in the corresponding 45° sector, including detached areas. Together they distinguish a long point on a contour from an entire broad lobe.", "",
         "| Bearing | Fixed 10 cm reach (km) | Uncertain 10 cm reach (km) | Fixed ≥10 cm area (km²) | Uncertain ≥10 cm area (km²) |",
         "|---|---:|---:|---:|---:|"]
@@ -77,5 +82,5 @@ def case_page(output,r,inventory):
           ("Resolved contour areas passed the split-packet check." if check["split_map_passed"] else "The split-packet volume check flagged instability."))
         +(" The joint-volume quantiles passed the split check." if check["joint_quantile_split_passed"] else " The joint-volume quantiles changed by over 10% on splitting the draws."),"",
         "Full-fit sampling warnings occurred for "+", ".join(failed)+"." if failed else "All six full fits passed their sampling diagnostics.","",
-        "[Numerical report, all sector volumes and sensitivities](report.json) · [Complete fields and per-field volumes](fields.npz) · [Plotted grids](map-grid.npz) · [Fragment decisions](fragment-decisions.csv) · [Bracketed coordinates](bracketed-fragments.csv) · [File hashes](artifacts.json)",""]
+        "[Numerical report, all sector volumes and sensitivities](report.json) · [Complete fields and per-field volumes](fields.npz) · [Principal map grids](median-grids.npz) · [Near-source comparison grids](map-grid.npz) · [Fragment decisions](fragment-decisions.csv) · [Bracketed coordinates](bracketed-fragments.csv) · [File hashes](artifacts.json)",""]
     (output/"README.md").write_text("\n".join(rows))

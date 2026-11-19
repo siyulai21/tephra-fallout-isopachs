@@ -132,6 +132,8 @@ def narrative(output, r, *, family_page=False):
               f"[Joint volume by chain, support class and compass sector]({prefix}coherent-mass.npz) · [Checksums]({prefix}artifacts.json)", ""]
     if family_page:
         lines += ["[Single-structure sensitivity study and unmeasured proximal cap](single-structure.md)", ""]
+    if not family_page:
+        lines[0] = f"# {r['dataset']} · fixed-direction ensemble"
     page = output.parent/"README.md" if family_page else output/"README.md"
     page.write_text("\n".join(lines))
     return page

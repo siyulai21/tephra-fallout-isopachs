@@ -29,8 +29,9 @@ class MapView:
         xy = np.asarray(xy, float)
         out = np.full((len(probs),len(xy)),np.nan)
         valid = np.flatnonzero(self.domain.rho(xy) < self.domain.rho_max)
-        for start in range(0,len(valid),256):
-            ids = valid[start:start+256]
+        batch = getattr(self.model, "median_grid_batch", 256)
+        for start in range(0,len(valid),batch):
+            ids = valid[start:start+batch]
             d = self.model.distribution(xy[ids])
             out[:,ids] = inverse_cdf(d.values.T, d.weights, probs)/np.log(10.)
         return out

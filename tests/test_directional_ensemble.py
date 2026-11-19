@@ -96,45 +96,47 @@ def test_reference_free_whole_earth_median_integral_against_radial_solution():
     np.testing.assert_allclose(np.sum(answer["parts_sectors_km3"],axis=0),expected/8,rtol=.012)
 
 
-def test_assistant_led_directional_run_publishes_full_ensemble_at_root(tmp_path, monkeypatch):
-    from pathlib import Path
+def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_path, monkeypatch):
     import json
+    from pathlib import Path
     import pytest
-    from src.empirical_isopach.models.directional import reporting
+    from src.empirical_isopach.models.directional import reporting, bearing_report
     from src.empirical_isopach.models.directional.ensemble import members, report
-
-    from src.empirical_isopach.models.directional import bearing_report
     from src.empirical_isopach.models.directional.azimuth import report as azimuth
+    from src.empirical_isopach.models.directional.study import digest
+    published = Path(__file__).resolve().parents[1]/"eruptions/minoan/results/directional"
+    fixed = json.loads((published/"ensemble/report.json").read_text())
+    primary = json.loads((published/"azimuth/report.json").read_text())
     calls = []
-    monkeypatch.setattr(azimuth, "run", lambda *args: calls.append("azimuth sensitivity"))
-    monkeypatch.setattr(bearing_report, "run", lambda *a: calls.append("archive and bearing fits"))
-    monkeypatch.setattr(bearing_report, "attach_to_family_page", lambda *a: calls.append("bearing report link"))
-    def single(path, work, dest, name):
-        from src.empirical_isopach.models.directional.study import digest
+    def simulate_reference(path, work, dest, name):
         page = dest/"README.md"
         page.write_text("Preserved reference study")
-        (dest/"artifacts.json").write_text(json.dumps({"README.md": digest(page)}))
+        (dest/"artifacts.json").write_text(json.dumps({"README.md":digest(page)}))
 
-    # Exercise the real narrative on a checked-in packet without refitting the posterior.
-    root = Path(__file__).resolve().parents[1]
-    published = root/"eruptions/minoan/results/directional"
-    result = json.loads((published/"ensemble/report.json").read_text())
-
-    def ensemble(path, work, dest, name, *, family_page):
+    def simulate_fixed(path, work, dest, name, *, family_page):
+        assert not family_page
         dest.mkdir()
-        report.narrative(dest, result, family_page=family_page)
-        (dest/"artifacts.json").write_text("{}")
-        return result
+        report.narrative(dest,fixed)
+        return fixed
 
-    monkeypatch.setattr(reporting, "run_fits", lambda *args: calls.append("reference fits"))
-    monkeypatch.setattr(reporting, "render", single)
-    monkeypatch.setattr(report, "reuse_reference_fits", lambda *args: calls.append("verified cache import"))
-    monkeypatch.setattr(members, "run_members", lambda *args: calls.append("ensemble fits"))
-    monkeypatch.setattr(report, "render", ensemble)
-    assert reporting.directional_dataset(datasets()[0]["path"], tmp_path) == result
-    assert calls == ["reference fits", "verified cache import", "ensemble fits", "archive and bearing fits", "bearing report link", "azimuth sensitivity"]
-    assert (tmp_path/"README.md").read_bytes() == (published/"README.md").read_bytes()
-    assert not (tmp_path/"ensemble/README.md").exists()
-    assert (tmp_path/"single-structure.md").read_text() == "Preserved reference study"
-    with pytest.raises(ValueError, match="fresh"):
-        reporting.directional_dataset(datasets()[0]["path"], tmp_path)
+    def simulate_primary(path, work, dest, name, archives):
+        assert dest==tmp_path/"azimuth"
+        calls.append("principal uncertain fan direction")
+        return primary
+
+    monkeypatch.setattr(reporting,"run_fits",lambda *args:calls.append("reference fits"))
+    monkeypatch.setattr(reporting,"render",simulate_reference)
+    monkeypatch.setattr(report,"reuse_reference_fits",lambda *args:calls.append("verified cache import"))
+    monkeypatch.setattr(members,"run_members",lambda *args:calls.append("ensemble fits"))
+    monkeypatch.setattr(report,"render",simulate_fixed)
+    monkeypatch.setattr(bearing_report,"run",lambda *args:calls.append("archive and bearing fits"))
+    monkeypatch.setattr(azimuth,"run",simulate_primary)
+    assert reporting.directional_dataset(datasets()[0]["path"],tmp_path)==primary
+    assert calls==["reference fits","verified cache import","ensemble fits","archive and bearing fits",
+                   "principal uncertain fan direction"]
+    page = (tmp_path/"README.md").read_text()
+    assert "**28.8 km³ of bulk fallout**" in page and "(azimuth/isopachs.png)" in page
+    assert (tmp_path/"ensemble/README.md").read_bytes()==(published/"ensemble/README.md").read_bytes()
+    assert (tmp_path/"single-structure.md").read_text()=="Preserved reference study"
+    with pytest.raises(ValueError,match="fresh"):
+        reporting.directional_dataset(datasets()[0]["path"],tmp_path)

@@ -135,7 +135,7 @@ def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, mon
     from src.empirical_isopach.visualization import comparison
 
     home = Path(__file__).resolve().parents[1]/"eruptions"/"tambora"/"results"
-    for name in ("report.json", "directional/ensemble/report.json", "spherical-mixture/report.json"):
+    for name in ("report.json", "directional/azimuth/report.json", "spherical-mixture/report.json"):
         dest = tmp_path/name
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes((home/name).read_bytes())
@@ -146,7 +146,8 @@ def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, mon
     first = page.read_text()
     assert first.startswith("# Tambora fallout reconstruction\n\n## Isopach fits")
     assert first.index(comparison.FIGURE) < first.index("Original regional details")
-    assert "| 1.964 † | 84.6% |" in first
-    assert "(directional/ensemble/world.png)" in first and "(spherical-mixture/world.png)" in first
+    assert "Whole-Earth median map **95.7**" in first
+    assert "| 2.066 † | 84.6% |" in first
+    assert "(directional/azimuth/world.png)" in first and "(spherical-mixture/world.png)" in first
     comparison.add_comparison_to_run(tmp_path)
     assert page.read_text() == first

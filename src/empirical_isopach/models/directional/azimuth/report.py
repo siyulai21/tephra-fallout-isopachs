@@ -1,4 +1,4 @@
-"""Run the uncertain-azimuth sensitivity on the same observed and withheld sites."""
+"""Fit and publish the principal uncertain-azimuth field on the observed and withheld sites."""
 from pathlib import Path
 import json
 import numpy as np
@@ -140,10 +140,17 @@ def heldout_rows(data,latitude,work,r):
             fold = next(f for f in r["validation"][kind]["folds"] if f["fold"]==i)
             if fold["status"]!="estimated":
                 continue
+            current = fold_record(work,kind,i,train,test)
+            attempts = {name:v.get("attempts",[]) for name,v in current["members"].items()}
+            if (attempts!=fold["member_attempts"] or current["training_row_ids"]!=fold["train"]
+                    or current["withheld_row_ids"]!=fold["test"]):
+                raise ValueError("Held-out interval replay differs from the reported directional fits")
             model = model_for(train,latitude,work,r["weights"],128,kind,i)
             for label,field in (("control",model.base),("revised",model)):
                 predictive = field.distribution(test.xy,observation=True,log_sd=test.log_sd)
                 med = np.exp(predictive.quantile(.5))
+                lower = np.exp(predictive.quantile(.025))
+                upper = np.exp(predictive.quantile(.975))
                 chance = 1-predictive.cdf(np.log(10.))
                 for j,row in enumerate(test.row_ids):
                     rows.append({"design":kind,"fold":i,"row_id":int(row),"method":label,
@@ -152,13 +159,48 @@ def heldout_rows(data,latitude,work,r):
                         "reading":"exact" if not test.censored[j] else ("lower" if test.lower_censored[j] else "upper"),
                         "exposure":fold["exposure"][j],"predicted_site_median_cm":float(med[j]),
                         "predictive_probability_ge_10cm":float(chance[j]),
-                        "integrated_log_score":fold[label+"_row_log_density"][j]})
-    return pd.DataFrame(rows)
+                        "integrated_log_score":fold[label+"_row_log_density"][j],
+                        "predictive_lower95_cm":float(lower[j]),"predictive_upper95_cm":float(upper[j])})
+    return pd.DataFrame(rows, columns=("design","fold","row_id","method","fit_passed","phase_passed",
+        "observed_or_limit_cm","reading","exposure","predicted_site_median_cm",
+        "predictive_probability_ge_10cm","integrated_log_score","predictive_lower95_cm","predictive_upper95_cm"))
+
+
+def record_principal(report):
+    folder = Path(__file__).parent
+    report["principal_estimate"] = {"conditioning":"quantitative thicknesses and bounds",
+        "map":"isopachs.png","whole_earth_map":"world.png","volume_key":"volume.median_map_km3",
+        "joint_volume_key":"volume.coherent_volume_km3","heldout_predictions":"heldout.csv",
+        "reporting_sha256":{name:digest(folder/name) for name in ("report.py","primary.py","maps.py","narrative.py")}}
+
+
+def complete_report(output,data,meta,r,model,inventory,work):
+    from .narrative import case_page
+    from .primary import render_primary
+    render_primary(output,data,meta,r,model,inventory)
+    table = heldout_rows(data,meta["vent_lonlat"][1],work,r)
+    for kind,group in r["validation"].items():
+        exact = table[(table.design==kind)&(table.method=="revised")&(table.reading=="exact")]
+        if exact.row_id.duplicated().any():
+            raise ValueError("A held-out site appears twice in one directional validation design")
+        covered = int(exact.observed_or_limit_cm.between(exact.predictive_lower95_cm,exact.predictive_upper95_cm).sum())
+        count = len(exact)
+        group["observation_interval"] = {"covered_exact":covered,"scored_exact":count,
+            "total_exact":int((~data.censored).sum()),"coverage95_exact":covered/count if count else None,
+            "probabilities":[.025,.975],"posterior_draws_per_chain_upper_limit":128}
+    table.to_csv(output/"heldout.csv",index=False)
+    record_principal(r)
+    write_json(output/"report.json",r)
+    case_page(output,r,inventory)
+    files = ("README.md","report.json","fields.npz","complete-contour-audit.json","map-grid.npz",
+             "median-isopachs.png","exceedance.png","fragment-decisions.csv","bracketed-fragments.csv","heldout.csv",
+             "median-grids.npz","isopachs.png","world.png","map-display.json")
+    write_json(output/"artifacts.json",{f:digest(output/f) for f in files})
+    return r
 
 
 def maps(path,work,output,archives=None):
     from .maps import render
-    from .narrative import case_page
     output = Path(output)
     r = json.loads((output/"report.json").read_text())
     data,meta = audited_data(path)
@@ -176,31 +218,18 @@ def maps(path,work,output,archives=None):
         medians = phase_medians(model,positions(sites,meta["vent_lonlat"]))
         r["archive"]["analytic_phase_median_cm"] = {s["id"]:v for s,v in zip(sites,medians,strict=True)}
     r["implementation_sha256"] = {p.name:digest(p) for p in sorted(Path(__file__).parent.glob("*.py"))}
-    write_json(output/"report.json",r)
     render(output,data,meta,r,model,inventory,w)
-    heldout_rows(data,lat,work,r).to_csv(output/"heldout.csv",index=False)
-    case_page(output,r,inventory)
-    files = ("README.md","report.json","fields.npz","complete-contour-audit.json","map-grid.npz",
-             "median-isopachs.png","exceedance.png","fragment-decisions.csv","bracketed-fragments.csv","heldout.csv")
-    write_json(output/"artifacts.json",{f:digest(output/f) for f in files})
+    return complete_report(output,data,meta,r,model,inventory,work)
 
 
 def run(path,work,output,name=None,archives=None):
-    result = numerical(path,work,output,name,archives)
+    numerical(path,work,output,name,archives)
     audit(path,work,output)
-    maps(path,work,output,archives)
-    return result
+    return maps(path,work,output,archives)
+
 
 def attach_family_page(folder):
+    """Refresh the family landing page from its principal quantitative report."""
+    from .primary import family_page
     folder = Path(folder)
-    page = folder/"README.md"
-    link = "[Measured and extrapolated directional contours](azimuth/README.md)"
-    lines = page.read_text().splitlines()
-    if any(link in line for line in lines):
-        return
-    lines[1:1] = ["",link+" shows which median contour segments the measurements bracket, how an unsampled fan changes their reach, and how the alternatives predict withheld observations."]
-    page.write_text("\n".join(lines)+"\n")
-    manifest = folder/"ensemble/artifacts.json"
-    hashes = json.loads(manifest.read_text())
-    hashes["../README.md"] = digest(page)
-    write_json(manifest,hashes)
+    family_page(folder,json.loads((folder/"azimuth/report.json").read_text()))

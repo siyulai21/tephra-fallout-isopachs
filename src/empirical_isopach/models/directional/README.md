@@ -1,6 +1,6 @@
 # Directional continuation: implementation map
 
-The active ensemble is implemented in [ensemble/](ensemble/). Its median field and coherent-volume distribution are described in the [protocol](../../../../docs/methods/directional-ensemble.md).
+The principal field is implemented in [azimuth/](azimuth/). It extends the [six base structures](ensemble/) with an uncertain orientation in unsampled sectors. Its median map and coherent-volume distribution are described in the [principal protocol](../../../../docs/methods/uncertain-azimuth.md).
 
 [Family catalogue](../README.md) · [Plain-language guide](../../../../methods/directional-fallout.md) · [Equations](../../../../docs/methods/directional-continuation.md) · [Ensemble validation](../../../../comparisons/directional-ensemble/README.md)
 

@@ -12,11 +12,10 @@ def saved_case_overview(output, name=None):
     """Assemble the common overview only after all four reports are written."""
     import json
     output = Path(output)
-    reports = [json.loads((output/p).read_text()) for p in
-               ("report.json", "directional/report.json", "spherical-mixture/report.json")]
-    ensemble = output/"directional"/"ensemble"/"report.json"
-    if ensemble.is_file():
-        reports[1] = json.loads(ensemble.read_text())
+    # Old standalone archives can still reproduce their own historical overview.
+    directional = next((p for p in ("directional/azimuth/report.json","directional/ensemble/report.json",
+                                    "directional/report.json") if (output/p).is_file()),"directional/azimuth/report.json")
+    reports = [json.loads((output/p).read_text()) for p in ("report.json",directional,"spherical-mixture/report.json")]
     case_overview(output, name or reports[0]["dataset"], *reports)
 
 
@@ -27,6 +26,13 @@ def metrics(regional, directional, spherical):
         records.append((label, m["equal_region_log_score"], m["coverage95_observations"], True))
     for label, val in (("Directional", directional["validation"]["geographic"]),
                        ("Spherical mixture", spherical["validation"])):
+        if label=="Directional" and directional.get("protocol")=="uncertain-azimuth-v1":
+            scored = val["all_estimated"]
+            passed = bool(scored and scored["rows"]==len(directional["data_rows"]) and
+                          all(f["passed"] and f.get("phase_passed") for f in val["folds"] if f["test"]))
+            score = scored["revised_score"] if scored else None
+            records.append((label,score,val["observation_interval"]["coverage95_exact"],passed))
+            continue
         m = val["metrics"]
         passed = (val["all_fits_passed_diagnostics"] if "all_fits_passed_diagnostics" in val
                   else val["all_estimable_passed"] and val["scored_rows"] == val["total_rows"])
@@ -49,10 +55,18 @@ def case_overview(output, name, regional, directional, spherical):
                       xscale="log", xlabel="Hull bulk volume (km³; log scale)",
                       title="Regional question: volume inside the same hull\nCircle = median; diamond = expectation")
         ensemble = directional.get("median_surface")
-        if ensemble:
+        if directional.get("protocol")=="uncertain-azimuth-v1":
+            volume = directional["volume"]
+            centre = volume["median_map_km3"]
+            dq = volume["coherent_volume_km3"]
+            passed = (all(v["diagnostics"]["passed"] for v in directional["members"].values()) and
+                      volume["numerical"]["spatial_passed"] and volume["numerical"]["joint_quantile_split_passed"])
+        elif ensemble:
+            centre = ensemble["volume_km3"]
             dq = directional["coherent_fields"]["volume_km3"]
             passed = directional["coherent_fields"]["all_members_passed"]
         else:
+            centre = None
             dq = directional["fits"]["reference"]["volume_km3"]
             passed = directional["fits"]["reference"]["passed"]
         for i, (label, q, passed) in enumerate((
@@ -60,22 +74,26 @@ def case_overview(output, name, regional, directional, spherical):
                 ("Spherical mixture", spherical["fits"]["baseline"]["volume"], spherical["fits"]["baseline"]["diagnostics"]["passed"]))):
             axs[0, 1].errorbar(q["median"], i, xerr=[[q["median"]-q["lower95"]], [q["upper95"]-q["median"]]],
                               fmt="o" if passed else "x", color=COLORS[label], capsize=4, markersize=7)
-        if ensemble:
-            axs[0, 1].scatter(ensemble["volume_km3"], -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
+        if centre is not None:
+            axs[0, 1].scatter(centre, -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
         axs[0, 1].set(yticks=[0, 1], yticklabels=["Directional", "Spherical mixture"], ylim=(1.6, -.6),
                       xscale="log", xlabel="Whole-Earth bulk volume (km³; log scale)",
                       title=("Whole-deposit volume · diamond = directional median map\nComplete-field median and 95% interval · × = numerical warning"
-                             if ensemble else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
+                             if centre is not None else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
         records = metrics(regional, directional, spherical)
         for i, (label, score, coverage, passed) in enumerate(records):
+            if coverage is not None:
+                axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)
+                axs[1, 1].text(coverage*100-1, i, f"{coverage:.0%}", ha="right", va="center", color="white", fontsize=9)
+            if score is None:
+                axs[1, 0].text(.02,i,"Unscored",transform=axs[1, 0].get_yaxis_transform())
+                continue
             axs[1, 0].scatter(score, i, c=COLORS[label], s=60, marker="o" if passed else "x")
             axs[1, 0].annotate(f"{score:.3f}", (score, i), xytext=(8, 0), textcoords="offset points", va="center", fontsize=9)
-            axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)
-            axs[1, 1].text(coverage*100-1, i, f"{coverage:.0%}", ha="right", va="center", color="white", fontsize=9)
         labels = [r[0] for r in records]
         for ax in axs[1]:
             ax.set(yticks=range(4), yticklabels=labels, ylim=(3.6, -.6))
-        scores = [r[1] for r in records]
+        scores = [r[1] for r in records if r[1] is not None] or [0.]
         span = max(max(scores)-min(scores), .25)
         axs[1, 0].set(xlim=(min(scores)-.2*span, max(scores)+.65*span),
                       xlabel="Equal-region negative log predictive score ↓",
@@ -100,10 +118,14 @@ def all_case_scores(output, cases):
         for ax, (name, regional, directional, spherical) in zip(axes.flat, cases):
             rows = metrics(regional, directional, spherical)
             for i, (label, score, coverage, passed) in enumerate(rows):
+                if score is None:
+                    ax.text(.02,i,"Unscored",transform=ax.get_yaxis_transform())
+                    continue
+                coverage_label = "—" if coverage is None else f"{coverage:.0%}"
                 ax.scatter(score, i, s=65, c=COLORS[label], marker="o" if passed else "x")
-                ax.annotate(f"{score:.3f}  ·  {coverage:.0%}", (score, i), xytext=(7, 0),
+                ax.annotate(f"{score:.3f}  ·  {coverage_label}", (score, i), xytext=(7, 0),
                             textcoords="offset points", va="center", fontsize=8)
-            scores = [r[1] for r in rows]
+            scores = [r[1] for r in rows if r[1] is not None] or [0.]
             span = max(max(scores)-min(scores), .3)
             ax.set(yticks=range(4), yticklabels=[r[0] for r in rows], ylim=(3.5, -.6),
                    xlim=(min(scores)-.2*span, max(scores)+1.2*span), title=name,

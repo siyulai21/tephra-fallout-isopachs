@@ -209,11 +209,11 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     work = output/"work"/"ensemble"
     reuse_reference_fits(output/"work", work)
     run_members(data, meta["vent_lonlat"][1], work)
-    result = ensemble_report(path, work, output/"ensemble", name, family_page=True)
-    from .bearing_report import run, attach_to_family_page
-    run(path, work, output/"bearing", archives)
-    attach_to_family_page(output)
-    from .azimuth.report import run as uncertain_azimuth, attach_family_page
-    uncertain_azimuth(path,work,output/"azimuth",name,archives)
-    attach_family_page(output)
+    ensemble_report(path, work, output/"ensemble", name, family_page=False)
+    from .bearing_report import run as measured_bearings
+    from .azimuth.report import run as uncertain_azimuth
+    from .azimuth.primary import family_page
+    measured_bearings(path,work,output/"bearing",archives)
+    result = uncertain_azimuth(path,work,output/"azimuth",name,archives)
+    family_page(output,result)
     return result

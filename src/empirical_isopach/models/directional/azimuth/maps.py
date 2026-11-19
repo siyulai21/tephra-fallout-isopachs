@@ -28,6 +28,27 @@ def supported_lines(ax, data, model, x, y, z, levels, colors):
     return table,vertices
 
 
+def mapped_archives(inventory):
+    mapped = next((s for s in inventory["scenarios"] if s["id"]==inventory.get("validation_scenario")),{})
+    return [s for s in inventory["sites"] if s["id"] in mapped.get("effective_limit_cm",{})]
+
+
+def mark_archives(ax, sites, vent, bounds, *, labels=True):
+    centre = (np.asarray(bounds[:2])+bounds[2:])/2
+    half = (np.asarray(bounds[2:])-bounds[:2])/2
+    for index,(site,point) in enumerate(zip(sites,positions(sites,vent),strict=True)):
+        if not np.all(abs(point-centre)<.96*half):
+            continue
+        ax.scatter(*point,marker="D",s=31,color="#f5be45",edgecolors="#332807",lw=.8,zorder=8)
+        if labels:
+            offset = (-5,6) if -.50*half[0]<point[0]-centre[0]<0 else (5,6)
+            if index==len(sites)-1 and len(sites)>1:
+                offset=(4,-12)
+            ax.annotate(site["name"].replace("Lake ","").replace(" peat",""),point,xytext=offset,
+                        textcoords="offset points",ha="right" if offset[0]<0 else "left",fontsize=7,zorder=9,
+                        bbox={"facecolor":"white","edgecolor":"none","alpha":.86,"pad":1})
+
+
 def render(output,data,meta,r,model,inventory,archive_weights):
     output = Path(output)
     reach = [v["first_crossing_great_circle_km"] for v in r["source_connected_reach"]
@@ -54,20 +75,11 @@ def render(output,data,meta,r,model,inventory,archive_weights):
                      z))
     np.savez_compressed(output/"map-grid.npz",x_km=x,y_km=y,**saved)
     vent = meta["vent_lonlat"]
-    mapped = next((s for s in inventory["scenarios"] if s["id"]==inventory.get("validation_scenario")),{})
-    archive_sites = [s for s in inventory["sites"] if s["id"] in mapped.get("effective_limit_cm",{})]
+    archive_sites = mapped_archives(inventory)
     def geography(ax):
         setup_map(ax,bounds,vent)
         observations(ax,data,size=16)
-        for s,point in zip(archive_sites,positions(archive_sites,vent),strict=True):
-            if np.all(abs(point)<span*.96):
-                ax.scatter(*point,marker="D",s=31,color="#f5be45",edgecolors="#332807",lw=.8,zorder=8)
-                # Stack labels on opposite sides when inspected archives are close.
-                offset = (-5,6) if -.50*span<point[0]<0 else (5,6)
-                if s==archive_sites[-1] and len(archive_sites)>1: offset=(4,-12)
-                ax.annotate(s["name"].replace("Lake ","").replace(" peat",""),point,xytext=offset,
-                            textcoords="offset points",ha="right" if offset[0]<0 else "left",fontsize=7,zorder=9,
-                            bbox={"facecolor":"white","edgecolor":"none","alpha":.86,"pad":1})
+        mark_archives(ax,archive_sites,vent,bounds)
     fig,axes = plt.subplots(1,2,figsize=(11.4,5.8),layout="constrained",sharex=True,sharey=True)
     tables,vertices_all=[],[]
     for ax,field,m,label,key in zip(axes,z[:2],(model.base,model),("Fixed fan directions","Uncertain fan direction"),("control","revised"),strict=True):

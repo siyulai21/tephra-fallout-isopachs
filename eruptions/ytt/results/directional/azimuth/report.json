@@ -1719,7 +1719,18 @@
             -1.4827335881659918
           ]
         }
-      ]
+      ],
+      "observation_interval": {
+        "covered_exact": 46,
+        "scored_exact": 46,
+        "total_exact": 46,
+        "coverage95_exact": 1.0,
+        "probabilities": [
+          0.025,
+          0.975
+        ],
+        "posterior_draws_per_chain_upper_limit": 128
+      }
     },
     "quadrants": {
       "all_estimated": {
@@ -2683,7 +2694,18 @@
             -2.2209047442710106
           ]
         }
-      ]
+      ],
+      "observation_interval": {
+        "covered_exact": 19,
+        "scored_exact": 46,
+        "total_exact": 46,
+        "coverage95_exact": 0.41304347826086957,
+        "probabilities": [
+          0.025,
+          0.975
+        ],
+        "posterior_draws_per_chain_upper_limit": 128
+      }
     }
   },
   "source_connected_reach": [
@@ -3177,5 +3199,19 @@
     "maps.py": "e024386d0332dd6f1b0023b11feb90d4b128203ecd3ef1fcc2568ac99be15608",
     "narrative.py": "056aa7faf39dbf06a6f2a86adf8bc5dbc8bf91eea1ab17b491d9cdfeb218bd56",
     "report.py": "f22364f000f3ebb5064dc2e561b25ec748f08ce1efc5436f1c8192188e065f61"
+  },
+  "principal_estimate": {
+    "conditioning": "quantitative thicknesses and bounds",
+    "map": "isopachs.png",
+    "whole_earth_map": "world.png",
+    "volume_key": "volume.median_map_km3",
+    "joint_volume_key": "volume.coherent_volume_km3",
+    "heldout_predictions": "heldout.csv",
+    "reporting_sha256": {
+      "report.py": "95686f92fb5ac333ef9bb120f388c6f6ddb35cee2f83c4fcc6f27114d9fc8c1d",
+      "primary.py": "c758dfb3dc1e9aa65bf8b402d12010f632be99e2e2a9c8c22919dc3b858bf4fb",
+      "maps.py": "aed139c2068ca6973d719e717be74d1ab32000c001f20b44a69438169f1d7a9d",
+      "narrative.py": "9310d029e1fafff408e91c9eb0844312b7bc3fdf59694cbf9698be4ce14cc651"
+    }
   }
 }

@@ -67,7 +67,8 @@ def main(argv=None):
     if argv and argv[0] == "compare":
         return compare(argv[1:])
     if argv and argv[0] == "global":
-        return global_analysis(argv[1:])
+        global_analysis(argv[1:])
+        return
     if argv and argv[0] == "fit":
         from src.probabilistic_isopach.cli import main as historical_fit
         return historical_fit(argv)
@@ -86,7 +87,7 @@ def main(argv=None):
         for key, spec in REGISTRY.items():
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume; fixed prior sensitivities and matched geographic holdouts.")
-        print("directional: Whole-Earth continuation from locally supported isopachs\n  Six directional structures, median isopachs and coherent-field volume uncertainty.")
+        print("directional: Whole-Earth continuation from locally supported isopachs\n  Uncertain fan direction across six structures. The principal bulk volume integrates the pointwise median isopachs.")
     else:
         parser.print_help()
 

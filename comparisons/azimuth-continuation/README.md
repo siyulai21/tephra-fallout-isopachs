@@ -2,11 +2,11 @@
 
 The thickness-only ensemble can carry a broad contour west of Changbaishan or southwest of Mazama without local thickness measurements. In the revised maps, quantitatively bracketed pieces of the median contour are solid. A dashed closure shows where a model carries that contour through a gap.
 
-The existing ensemble anchors a thick deposit at the vent. Its broader fans can carry that thickness sideways, and three of its six structures place a possible fan in the largest distal sampling gap. The centre of that hypothetical fan is determined by the survey geometry. The uncertain-azimuth sensitivity varies the direction of extra fallout coherently across a whole deposit. This shortens several median contours and allows individual draws to reach a withheld direction. The six-eruption results support publishing it as a sensitivity alongside the established global reconstruction.
+The existing ensemble anchors a thick deposit at the vent. Its broader fans can carry that thickness sideways, and three of its six structures place a possible fan in the largest distal sampling gap. The centre of that hypothetical fan is determined by the survey geometry. The principal uncertain-azimuth ensemble varies the direction of extra fallout coherently across a whole deposit. This shortens several median contours and allows individual draws to reach a withheld direction. The project uses its quantitative median isopachs and their whole-Earth integral as the principal directional reconstruction. The fixed-direction control measures how much the assumption matters.
 
 ## The two reported examples
 
-**Western Changbaishan.** At Lake Sihailongwan the published primary map gives 15.8 cm. The paired fixed-direction control gives 16.4 cm and the uncertain-azimuth median gives 8.0 cm. The revised quantitative-only 95% latent range is 0.00015–101 cm. A cryptotephra occurrence without a measured fallout bed still challenges this central prediction. The core description supplies no numerical upper limit. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013) · [Source and site audit](../../eruptions/b-tm/results/directional/bearing/field-evidence.md)
+**Western Changbaishan.** At Lake Sihailongwan the preceding fixed-direction map gave 15.8 cm. The paired fixed-direction control gives 16.4 cm and the uncertain-azimuth median gives 8.0 cm. The principal quantitative-only 95% latent range is 0.00015–101 cm. A cryptotephra occurrence without a measured fallout bed still challenges this central prediction. The core description supplies no numerical upper limit. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013) · [Source and site audit](../../eruptions/b-tm/results/directional/bearing/field-evidence.md)
 
 Conditioning only on an assumed 1 cm recognizable bed at Quanyang gives a Sihailongwan median of 0.0084 cm without conditioning on the lake. Assuming recognizable beds at 1 cm at Sihailongwan and 2 cm at Quanyang gives 0.0052 cm at the lake and 0.11 cm at the peat. Those estimates depend on preservation and detection. The second estimate uses both sites in its likelihood. The fixed record keeps transferred shard-to-thickness conversions outside the quantitative table. [B-Tm maps and all archive sensitivities](../../eruptions/b-tm/results/directional/azimuth/README.md)
 
@@ -16,14 +16,14 @@ Conditioning only on an assumed 1 cm recognizable bed at Quanyang gives a Sihail
 
 The two median maps use identical structure weights and training observations. Their difference measures the effect of uncertain fan direction. Earlier case headlines used their original calibration. Every figure below integrates to the antipode.
 
-| Eruption | Fixed-direction median map (km³) | Uncertain-azimuth median map (km³) | Uncertain-azimuth complete deposits, median [95%] (km³) |
+| Eruption | Principal uncertain-direction median map (km³) | Fixed-direction control (km³) | Uncertain-azimuth complete deposits, median [95%] (km³) |
 |---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/directional/azimuth/README.md) | 779.7 | 659.1 | 916.3 [297.9–3,511.5] |
-| [B-Tm](../../eruptions/b-tm/results/directional/azimuth/README.md) | 56.2 | 44.1 | 72.9 [31.0–1,507.8] |
-| [Mazama](../../eruptions/mazama/results/directional/azimuth/README.md) | 177.0 | 166.1 | 213.5 [138.6–1,265.1] |
-| [Minoan](../../eruptions/minoan/results/directional/azimuth/README.md) | 32.9 | 28.8 | 39.1 [21.3–138.5] |
-| [Tambora](../../eruptions/tambora/results/directional/azimuth/README.md) | 107.7 | 95.7 | 117.5 [73.2–203.8] |
-| [YTT](../../eruptions/ytt/results/directional/azimuth/README.md) | 1,005.6 | 900.6 | 1,272.1 [736.5–3,660.9] |
+| [Aso-4](../../eruptions/aso-4/results/directional/azimuth/README.md) | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
+| [B-Tm](../../eruptions/b-tm/results/directional/azimuth/README.md) | **44.1** | 56.2 | 72.9 [31.0–1,507.8] |
+| [Mazama](../../eruptions/mazama/results/directional/azimuth/README.md) | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
+| [Minoan](../../eruptions/minoan/results/directional/azimuth/README.md) | **28.8** | 32.9 | 39.1 [21.3–138.5] |
+| [Tambora](../../eruptions/tambora/results/directional/azimuth/README.md) | **95.7** | 107.7 | 117.5 [73.2–203.8] |
+| [YTT](../../eruptions/ytt/results/directional/azimuth/README.md) | **900.6** | 1,005.6 | 1,272.1 [736.5–3,660.9] |
 
 ## Do the shorter contours predict withheld observations?
 
@@ -36,7 +36,7 @@ Each eruption learns mixture weights from the other eruptions. Both alternatives
 | Quadrants, all estimable folds | 6 | 1.939 | 2.007 |
 | Quadrants, passing folds only | 5 | 1.854 | 1.912 |
 
-The uncertain-azimuth model improves the pooled geographic score slightly. Its quadrant score worsens, including in the passing-only comparison. This rules out promoting it on predictive grounds across both designs. YTT benefits in both designs. Holding out the target protects calibration weights. The method itself was developed with these six eruptions in view. Tambora has no passing quadrant refit. Some other individual fold fits also carry numerical warnings. The original six-structure model remains the primary quantitative estimate. [Case scores, contributing folds and volumes](case-comparison.csv)
+The uncertain-azimuth model improves the pooled geographic score slightly. Its quadrant score worsens, including in the passing-only comparison. The primary reporting choice favors less extension of the median contour in unsupported directions. YTT benefits in both designs. Holding out the target protects calibration weights. The method itself was developed with these six eruptions in view. Tambora has no passing quadrant refit. Some other individual fold fits also carry numerical warnings. The fixed-direction results remain available as sensitivities. [Case scores, contributing folds and volumes](case-comparison.csv)
 
 ## Known deposits with a deliberate sampling gap
 
@@ -59,4 +59,4 @@ The spatial quadrature check passed in all six eruptions. For B-Tm the 100 cm ar
 
 The matched regional benchmark was rerun on the same six audited inputs. Its twelve empirical rows and its eighty synthetic rows reproduced the published CSVs byte for byte, including the four unsuccessful synthetic fits. [Matched regional results](../../eruptions/b-tm/results/source-audit/matched-regional.csv) · [Regional synthetic results](../regional/synthetic/comparison.csv)
 
-[Mathematical method, map rules and reproduction commands](../../docs/methods/uncertain-azimuth.md) · [Previous measured-fan comparison](../bearing-continuation/README.md) · [Archived report pages](archive/2026-11-18/README.md)
+[Mathematical method, map rules and reproduction commands](../../docs/methods/uncertain-azimuth.md) · [Previous measured-fan comparison](../bearing-continuation/README.md) · [Previous primary maps and reports](archive/2026-11-18-before-primary/README.md) · [Earlier report pages](archive/2026-11-18/README.md)

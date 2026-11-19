@@ -14,32 +14,32 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 |---|---|---:|---:|---:|
 | GP ensemble | Hull mean **141.64** | 109.26–179.21 | 1.272 | 95.6% |
 | Cubic spline | Hull mean **132.61** | 120.25–151.97 | 1.971 | 82.2% |
-| [Directional ensemble](results/directional/README.md) | Whole-Earth median map **179.9** · volume median 224.3 | 149.1–1,371.9 | 1.407 | 95.6% |
+| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **166.1** · volume median 213.5 | 138.6–1,265.1 | 1.408 | 95.6% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **223.2** | 144.7–3,668.8 | 1.577 † | 91.1% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **14.6%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **15.7%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>
 
-| Directional ensemble | Spherical mixture |
+| Uncertain fan direction | Spherical mixture |
 |---|---|
-| ![Directional ensemble median thickness over the Earth for Mazama](results/directional/ensemble/world.png) | ![Spherical-mixture median thickness over the Earth for Mazama](results/spherical-mixture/world.png) |
+| ![Uncertain-fan-direction median thickness over the Earth for Mazama](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Mazama](results/spherical-mixture/world.png) |
 
 Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
 
 </details>
 
 
-## How firmly do the data locate the edge of the deposit?
+## Principal directional isopachs
 
-Letting a poorly constrained fan turn gives a median-map volume of **166.1 km³**. The matched fixed-direction control gives **177.0 km³**. Both use the same training observations and weights. The established six-structure model retains the primary global estimate because predictive performance across withheld directions was mixed.
+![Principal uncertain-fan-direction median isopachs for Mazama](results/directional/azimuth/isopachs.png)
 
-![Measured and extrapolated isopach segments near the volcano](results/directional/azimuth/median-isopachs.png)
+The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **177.0 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
 
-[Directional extent, map probabilities, sector areas and held-out tests](results/directional/azimuth/README.md)
+[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
 
 ## Evidence and limitations
 

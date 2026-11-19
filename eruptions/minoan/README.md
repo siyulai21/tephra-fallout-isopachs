@@ -14,32 +14,32 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 |---|---|---:|---:|---:|
 | GP ensemble | Hull mean **27.21** | 18.21–40.34 | 1.451 | 96.7% |
 | Cubic spline | Hull mean **24.78** | 24.79–25.00 | 1.601 | 96.7% |
-| [Directional ensemble](results/directional/README.md) | Whole-Earth median map **33.7** · volume median 42.0 | 26.6–129.1 | 1.695 | 91.3% |
+| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **28.8** · volume median 39.1 | 21.3–138.5 | 1.782 | 94.6% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **46.0** | 28.1–2,529.2 | 1.570 | 94.6% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **7.3%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **8.5%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>
 
-| Directional ensemble | Spherical mixture |
+| Uncertain fan direction | Spherical mixture |
 |---|---|
-| ![Directional ensemble median thickness over the Earth for Minoan](results/directional/ensemble/world.png) | ![Spherical-mixture median thickness over the Earth for Minoan](results/spherical-mixture/world.png) |
+| ![Uncertain-fan-direction median thickness over the Earth for Minoan](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Minoan](results/spherical-mixture/world.png) |
 
 Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
 
 </details>
 
 
-## How firmly do the data locate the edge of the deposit?
+## Principal directional isopachs
 
-Letting a poorly constrained fan turn gives a median-map volume of **28.8 km³**. The matched fixed-direction control gives **32.9 km³**. Both use the same training observations and weights. The established six-structure model retains the primary global estimate because predictive performance across withheld directions was mixed.
+![Principal uncertain-fan-direction median isopachs for Minoan](results/directional/azimuth/isopachs.png)
 
-![Measured and extrapolated isopach segments near the volcano](results/directional/azimuth/median-isopachs.png)
+The primary map lets the direction of an unsampled fan vary. Fixing the fan directions with the same data and structure weights gives **32.9 km³**. Across the six benchmark eruptions, pooled geographic prediction improved slightly and prediction of withheld quadrants worsened.
 
-[Directional extent, map probabilities, sector areas and held-out tests](results/directional/azimuth/README.md)
+[Sector areas, exceedance probabilities and alternative assumptions](results/directional/azimuth/README.md)
 
 ## Evidence and limitations
 

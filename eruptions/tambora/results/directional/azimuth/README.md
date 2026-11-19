@@ -1,14 +1,18 @@
 # Tambora · directional extent
 
-The same 26 accepted observations give a **107.7 km³** median-map integral with fixed fan directions and **95.7 km³** when an unsampled fan can turn. These two fits use identical observations and structure weights. The primary six-structure estimate on the case home uses its original calibration.
+**95.7 km³** is the principal directional estimate from 26 accepted observations. It integrates the thickness-only, uncertain-fan-direction median map over the Earth. Fixing fan directions with the same data and structure weights gives **107.7 km³**.
 
 Under uncertain azimuth, integrating each complete deposit gives a volume median of **117.5 km³** and a conditional 95% range of **73.2–203.8 km³**. Measured interpolation triangles contribute 11.2% of the median-map volume. The rest relies on continuation.
 
-![Median isopachs and quantitatively bracketed segments](median-isopachs.png)
+![Principal uncertain-fan-direction median isopachs](isopachs.png)
 
 Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.
 
+The deposit panel includes the accepted sites and the display search for the 0.1 cm contour. [Whole-Earth thickness map](world.png) · [Display extent and checks](map-display.json)
+
 ## Reach from the volcano
+
+![Fixed and uncertain fan directions near the source](median-isopachs.png)
 
 Distances are great-circle kilometres to the first outward crossing on each compass ray. The area columns give the entire 10 cm footprint in the corresponding 45° sector, including detached areas. Together they distinguish a long point on a contour from an entire broad lobe.
 
@@ -46,4 +50,4 @@ The spatial integration check passed at 8,192 points per scramble. The map used 
 
 Full-fit sampling warnings occurred for narrow_fans, reference, narrow_missing_fan, possible_missing_fan.
 
-[Numerical report, all sector volumes and sensitivities](report.json) · [Complete fields and per-field volumes](fields.npz) · [Plotted grids](map-grid.npz) · [Fragment decisions](fragment-decisions.csv) · [Bracketed coordinates](bracketed-fragments.csv) · [File hashes](artifacts.json)
+[Numerical report, all sector volumes and sensitivities](report.json) · [Complete fields and per-field volumes](fields.npz) · [Principal map grids](median-grids.npz) · [Near-source comparison grids](map-grid.npz) · [Fragment decisions](fragment-decisions.csv) · [Bracketed coordinates](bracketed-fragments.csv) · [File hashes](artifacts.json)

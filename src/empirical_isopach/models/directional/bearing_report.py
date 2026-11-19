@@ -137,6 +137,10 @@ def run(path,work,output,inventory=None):
 
 def attach_to_family_page(folder):
     folder = Path(folder)
+    if (folder/"azimuth/report.json").is_file():
+        from .azimuth.report import attach_family_page
+        attach_family_page(folder)
+        return
     page = folder/"README.md"
     lines = page.read_text().splitlines()
     link = "[Directional reach and archive evidence](bearing/README.md)"
