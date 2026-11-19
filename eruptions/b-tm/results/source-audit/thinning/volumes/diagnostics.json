@@ -1,0 +1,1283 @@
+{
+  "runs": {
+    "smooth": {
+      "variant": "smooth",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "30fb366871d87f94e9d45e6cbd3d90ca280d51a15ad1dfd0178882fe9fcbe8b8",
+      "totals_sha256": "b62e311f86ef94266cb1dab9b4b5bd7baef3bbdda24eaf1fb5f9702d3a8a993f",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "passed": true,
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.029731547663263108
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.0024744145977896237
+          }
+        ],
+        "area_by_compass_km2": [
+          [
+            0.0,
+            0.0,
+            96130.95248637609,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.332504680366127,
+            600.8576520379851,
+            72421.60692064854,
+            4209.843381832545,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 0.9997805922910648,
+        "bulk_ess": 3580.2662132448863,
+        "tail_ess": 3409.61613099125,
+        "log_quantile_mcse": [
+          0.010426891273767502,
+          0.00822504059642748,
+          0.025980390912183626
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 33.6929538706891,
+        "median": 55.46402109272132,
+        "upper95": 134.6903377605396
+      },
+      "median_map": {
+        "median_map_km3": 48.3618955122676,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 47.17846302831896,
+                "scramble_partition_L1": 0.05898562764270241,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00017408172577093595,
+                "draw_split_relative": 0.009719890841056067
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 47.08672029338075,
+                "scramble_partition_L1": 0.04159579718432686,
+                "nested_partition_L1": 0.02670569548122058,
+                "independent_mean_relative_error": 0.0015453683701626142,
+                "draw_split_relative": 0.009913975643246697
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 47.15304315514552,
+                "scramble_partition_L1": 0.02109816605614478,
+                "nested_partition_L1": 0.013627747619233601,
+                "independent_mean_relative_error": 0.00029162253108538927,
+                "draw_split_relative": 0.009948607611076521
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 48.33071949017715,
+                "scramble_partition_L1": 0.057330724066062724,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.0002688043774063953,
+                "draw_split_relative": 0.02061682770361628
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 48.24284101190657,
+                "scramble_partition_L1": 0.040633990519108765,
+                "nested_partition_L1": 0.02676116509157001,
+                "independent_mean_relative_error": 0.0015549058163386587,
+                "draw_split_relative": 0.020791394303875554
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 48.32693340384291,
+                "scramble_partition_L1": 0.020813657266746288,
+                "nested_partition_L1": 0.013446025537598326,
+                "independent_mean_relative_error": 0.00019220004672004798,
+                "draw_split_relative": 0.020846279731045136
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 48.35128676443597,
+                "scramble_partition_L1": 0.010918874509395554,
+                "nested_partition_L1": 0.004222898474319515,
+                "independent_mean_relative_error": 0.00022124292409264612,
+                "draw_split_relative": 0.02084132852880316
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 48.3618955122676,
+                "scramble_partition_L1": 0.009594093445685162,
+                "nested_partition_L1": 0.004370799075283051,
+                "independent_mean_relative_error": 0.0003738138360709353,
+                "draw_split_relative": 0.020789351806855594
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.457706648115815,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0006002483221006717,
+            0.3080994215511026,
+            2.9234964338812586,
+            0.45579768142095045,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0811617735971383,
+            0.06514826699446825,
+            0.03736999278176204,
+            0.06124415962718406,
+            0.081166179604162,
+            0.08115557090280617,
+            0.08116112421331464,
+            0.08077749682227259
+          ],
+          [
+            1.6540204370348464,
+            2.731916843194408,
+            16.704641949686184,
+            3.575373764457688,
+            1.6546173965675846,
+            1.6546464868103319,
+            1.6546439354474523,
+            1.654985877905188
+          ],
+          [
+            0.0001029610677557927,
+            0.1540958431684104,
+            8.027100190502521,
+            0.18045191409931238,
+            0.00010350497549840335,
+            0.00010295760584042923,
+            0.00010348103443600045,
+            0.0001029708758062794
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    },
+    "one_break": {
+      "variant": "one_break",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "20b680bcdff328f58b4649e0eeabe8183e775aadf14758723a49f41a1220562d",
+      "totals_sha256": "9f88aab0d00ba846c6b33c2f4a8f0efbf472a2eafa860bba4ef4c4a7080757cb",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.030252283216855032
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.0028666144765190893
+          }
+        ],
+        "passed": true,
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 1.000407768480617,
+        "bulk_ess": 3383.368831294315,
+        "tail_ess": 2961.8845130214036,
+        "log_quantile_mcse": [
+          0.008511001714261779,
+          0.008320183171368178,
+          0.02571157119233014
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 33.560752737504764,
+        "median": 55.97296411697313,
+        "upper95": 146.59880285530093
+      },
+      "median_map": {
+        "median_map_km3": 48.38934145487323,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 48.24035413205747,
+                "scramble_partition_L1": 0.05683179332993661,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00010252208171113164,
+                "draw_split_relative": 0.005476926028933571
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 48.17312204921618,
+                "scramble_partition_L1": 0.040093332012056566,
+                "nested_partition_L1": 0.02638584753778132,
+                "independent_mean_relative_error": 0.001481805277494197,
+                "draw_split_relative": 0.00602670816508466
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 48.25014420948561,
+                "scramble_partition_L1": 0.0210159273349758,
+                "nested_partition_L1": 0.013125610298442034,
+                "independent_mean_relative_error": 0.00024471522360758335,
+                "draw_split_relative": 0.006265931536837299
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 48.36212146955323,
+                "scramble_partition_L1": 0.057014423163624504,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00021979696138407778,
+                "draw_split_relative": 0.01318867831554349
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 48.274137660167014,
+                "scramble_partition_L1": 0.040406322849978596,
+                "nested_partition_L1": 0.026694139459066107,
+                "independent_mean_relative_error": 0.0015225862262386869,
+                "draw_split_relative": 0.013187674438249752
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 48.35439838775312,
+                "scramble_partition_L1": 0.02076028704198659,
+                "nested_partition_L1": 0.013324037737324766,
+                "independent_mean_relative_error": 0.00018544072228487973,
+                "draw_split_relative": 0.013277529757111495
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 48.37965122773755,
+                "scramble_partition_L1": 0.010972354819970047,
+                "nested_partition_L1": 0.004116248307008022,
+                "independent_mean_relative_error": 0.00021129725951607448,
+                "draw_split_relative": 0.01325549120725178
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 48.38934145487323,
+                "scramble_partition_L1": 0.009531635073972861,
+                "nested_partition_L1": 0.0043528589756293805,
+                "independent_mean_relative_error": 0.0003667834110165913,
+                "draw_split_relative": 0.013230326837702755
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.459955231233537,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0005981297180302543,
+            0.3091164989916766,
+            2.9243902255991467,
+            0.4566990574798839,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.08057562962236497,
+            0.06471758827594484,
+            0.03721565757843444,
+            0.06086198754012492,
+            0.08058065221737609,
+            0.08057518102138103,
+            0.08058064825589017,
+            0.0801981510822149
+          ],
+          [
+            1.6308070778107653,
+            2.743435774903694,
+            16.707025362972644,
+            3.6010190744475192,
+            1.6314039607991286,
+            1.6313947869785304,
+            1.6313726077861612,
+            1.6317658763038851
+          ],
+          [
+            0.00012122179872229175,
+            0.15915411189588458,
+            8.117113915833936,
+            0.18817710056829545,
+            0.00012177477649771669,
+            0.00012121333232582211,
+            0.00012173489539611025,
+            0.00012122115384067498
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    },
+    "two_breaks": {
+      "variant": "two_breaks",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "21d4866dcf9801a8533a91824c7e75ba1224b7198d8410b40707c29df2639a8a",
+      "totals_sha256": "c3290e759cf23cd08fd72cc40bf0f2f57edf70fcbb1fbeddeda03d42effb32a9",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.030502511458973366
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.003204606745630907
+          }
+        ],
+        "passed": true,
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 1.0012436953331303,
+        "bulk_ess": 3137.9357503975693,
+        "tail_ess": 3179.626970611295,
+        "log_quantile_mcse": [
+          0.005170230945664267,
+          0.008005676085415026,
+          0.02476667665166321
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 33.810162209306554,
+        "median": 57.054937298472524,
+        "upper95": 150.48705224791476
+      },
+      "median_map": {
+        "median_map_km3": 48.58539310823413,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 49.17124364143891,
+                "scramble_partition_L1": 0.057113763740052635,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 1.4136254243068969e-05,
+                "draw_split_relative": 0.0019541390609650877
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 49.07168237337314,
+                "scramble_partition_L1": 0.04019487865402031,
+                "nested_partition_L1": 0.02597916651626852,
+                "independent_mean_relative_error": 0.0014138272548024355,
+                "draw_split_relative": 0.0019648107968853745
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 49.15335627009661,
+                "scramble_partition_L1": 0.021009781993853813,
+                "nested_partition_L1": 0.012903270333304018,
+                "independent_mean_relative_error": 0.00020337980241835751,
+                "draw_split_relative": 0.0015286773751731486
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 48.55698951197124,
+                "scramble_partition_L1": 0.05699346985898769,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00014708366964866215,
+                "draw_split_relative": 0.005574475840501858
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 48.4676726713691,
+                "scramble_partition_L1": 0.04040364190222431,
+                "nested_partition_L1": 0.026406222174090277,
+                "independent_mean_relative_error": 0.0014890790961952227,
+                "draw_split_relative": 0.005613541195956362
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 48.54904756731672,
+                "scramble_partition_L1": 0.020740523801261606,
+                "nested_partition_L1": 0.01322362165123651,
+                "independent_mean_relative_error": 0.00018093234347460463,
+                "draw_split_relative": 0.005494163692504772
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 48.574160163953714,
+                "scramble_partition_L1": 0.010937384820164854,
+                "nested_partition_L1": 0.004079495392985906,
+                "independent_mean_relative_error": 0.00020049393206411636,
+                "draw_split_relative": 0.005496258305715207
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 48.58539310823413,
+                "scramble_partition_L1": 0.009464914346459114,
+                "nested_partition_L1": 0.004359287519136832,
+                "independent_mean_relative_error": 0.0003563512506796762,
+                "draw_split_relative": 0.005520671305139668
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.471088928943633,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0005961902622770295,
+            0.3081267128216588,
+            2.9263679346177174,
+            0.45606460217751665,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.08112447890093166,
+            0.06521618485870102,
+            0.03753570162551616,
+            0.061361172799489334,
+            0.08113008178452139,
+            0.08112164087727779,
+            0.08112136223318482,
+            0.080738988486279
+          ],
+          [
+            1.635610746223438,
+            2.7762984486679443,
+            16.741039329494228,
+            3.629445965557619,
+            1.6362050082605637,
+            1.636233988494892,
+            1.6362534451488582,
+            1.6365968585405122
+          ],
+          [
+            0.00015497798927975487,
+            0.1662690611576404,
+            8.169423277383945,
+            0.18964646316583092,
+            0.0001557167229450589,
+            0.00015501961028621184,
+            0.00015580024409883887,
+            0.0001550211833423938
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    },
+    "exponential": {
+      "variant": "exponential",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "ad7b6a5aea55a8847a851f8ea77c055943526a11681c51998e60b2f0b077a8cc",
+      "totals_sha256": "983057e25f51a984d14a3d7206c91c72e4f1184d143b2ac8c8fb37dc051821fd",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "passed": true,
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.029207568113920668
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.002690179497391957
+          }
+        ],
+        "area_by_compass_km2": [
+          [
+            0.0,
+            0.0,
+            96130.95248637609,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.332504680366127,
+            600.8576520379851,
+            72421.60692064854,
+            4209.843381832545,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 1.0016064596064014,
+        "bulk_ess": 2257.789548728451,
+        "tail_ess": 1893.8322616764333,
+        "log_quantile_mcse": [
+          0.006611366869915258,
+          0.01017396662460901,
+          0.030256217461557267
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 32.30255506467713,
+        "median": 49.62213502744464,
+        "upper95": 125.50221032671298
+      },
+      "median_map": {
+        "median_map_km3": 45.72534352049534,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 45.474962862162506,
+                "scramble_partition_L1": 0.06045713739276365,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.0003722283833376139,
+                "draw_split_relative": 0.008634777752582812
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 45.38044846575833,
+                "scramble_partition_L1": 0.041913279456311625,
+                "nested_partition_L1": 0.026601730788817543,
+                "independent_mean_relative_error": 0.0018333344213968816,
+                "draw_split_relative": 0.008365244963666196
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 45.47671538918512,
+                "scramble_partition_L1": 0.021448976653101404,
+                "nested_partition_L1": 0.014004107368810598,
+                "independent_mean_relative_error": 0.00038062542950301204,
+                "draw_split_relative": 0.00876604506698031
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 45.68403109516232,
+                "scramble_partition_L1": 0.06003263376142612,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.0004384405741186814,
+                "draw_split_relative": 0.010832440729059867
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 45.590931297880125,
+                "scramble_partition_L1": 0.0425933615695659,
+                "nested_partition_L1": 0.027236705971408634,
+                "independent_mean_relative_error": 0.0018473901289303152,
+                "draw_split_relative": 0.010973374841017458
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 45.67792635288087,
+                "scramble_partition_L1": 0.02164777556590422,
+                "nested_partition_L1": 0.013834386170823278,
+                "independent_mean_relative_error": 0.00033464657115578333,
+                "draw_split_relative": 0.0110802833912097
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 45.70500456038781,
+                "scramble_partition_L1": 0.011624759226503368,
+                "nested_partition_L1": 0.004476191444061486,
+                "independent_mean_relative_error": 0.00013843767419330355,
+                "draw_split_relative": 0.011061330991161467
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 45.72040765379555,
+                "scramble_partition_L1": 0.010008076020081658,
+                "nested_partition_L1": 0.004648404439227725,
+                "independent_mean_relative_error": 0.00035497055351618734,
+                "draw_split_relative": 0.011042265019351793
+              },
+              {
+                "points_per_scramble": 65536,
+                "median_map_km3": 45.72534352049534,
+                "scramble_partition_L1": 0.009114390368342665,
+                "nested_partition_L1": 0.005041117187530944,
+                "independent_mean_relative_error": 0.0004484668209310261,
+                "draw_split_relative": 0.01105072232026938
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.569378566392336,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.00031594484927932793,
+            0.3177463810938246,
+            2.847571094192374,
+            0.4574514694338231,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.079529995985555,
+            0.06302168960519755,
+            0.03499537711682513,
+            0.05910893953975995,
+            0.07953519375102769,
+            0.07953106174940638,
+            0.07953171150076993,
+            0.0793373298121512
+          ],
+          [
+            1.734187142258901,
+            2.770400567253929,
+            16.75925496223413,
+            3.523939717000871,
+            1.734501431245958,
+            1.7344992887080044,
+            1.7345003217495722,
+            1.7346869352317518
+          ],
+          [
+            1.971556816787091e-10,
+            0.06828275931663258,
+            5.128351514547351,
+            0.0556841249400192,
+            1.987251003379801e-10,
+            1.955927347011356e-10,
+            1.9882291718175333e-10,
+            1.9560038902919822e-10
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    },
+    "broken_exponential": {
+      "variant": "broken_exponential",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "922dcbf6e04357747d3fe649f232f7e6bd90624a85bf466179e1b91467c85a27",
+      "totals_sha256": "7b6b29aa67be589d94994fad1667ae5865c11dfb5a8c85132c363fa9fe4a87c8",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.029216759169932823
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.003103284561511881
+          }
+        ],
+        "passed": true,
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 1.000614075238525,
+        "bulk_ess": 3265.7821280512885,
+        "tail_ess": 3201.935918022704,
+        "log_quantile_mcse": [
+          0.009108202061463011,
+          0.008944786810415106,
+          0.021498501115117197
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 31.812271306812207,
+        "median": 48.98642190690559,
+        "upper95": 122.92543486276995
+      },
+      "median_map": {
+        "median_map_km3": 45.42664544020412,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": false,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 44.47622636143039,
+                "scramble_partition_L1": 0.06170859139916434,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00032512950712471067,
+                "draw_split_relative": 0.03889031157758194
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 44.37925637093283,
+                "scramble_partition_L1": 0.043272331432537774,
+                "nested_partition_L1": 0.02695028937376722,
+                "independent_mean_relative_error": 0.001854911344257304,
+                "draw_split_relative": 0.039189178324491536
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 44.45542327986069,
+                "scramble_partition_L1": 0.02218129621778401,
+                "nested_partition_L1": 0.014131643111502992,
+                "independent_mean_relative_error": 0.0003983790987364122,
+                "draw_split_relative": 0.039431504151129615
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 45.397686119757914,
+                "scramble_partition_L1": 0.060316649125579616,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00039236261443897913,
+                "draw_split_relative": 0.0052240979830159295
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 45.29989691579761,
+                "scramble_partition_L1": 0.04272297896968277,
+                "nested_partition_L1": 0.02703291360313855,
+                "independent_mean_relative_error": 0.0018693179886898337,
+                "draw_split_relative": 0.005464705672040937
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 45.386265934354746,
+                "scramble_partition_L1": 0.021705847498814778,
+                "nested_partition_L1": 0.013878041661297852,
+                "independent_mean_relative_error": 0.00035551745677286917,
+                "draw_split_relative": 0.005554644394112018
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 45.41183383475662,
+                "scramble_partition_L1": 0.01168894081349741,
+                "nested_partition_L1": 0.004400361865801073,
+                "independent_mean_relative_error": 0.00011602092702789335,
+                "draw_split_relative": 0.005595025322372771
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 45.42664544020412,
+                "scramble_partition_L1": 0.009987925172686325,
+                "nested_partition_L1": 0.004697883651033403,
+                "independent_mean_relative_error": 0.0003491849462498031,
+                "draw_split_relative": 0.005551103245824307
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.503960959756014,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0006286208014474816,
+            0.31815562949191756,
+            2.9367079067293753,
+            0.4620226394518773,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.07931015432252383,
+            0.06319092046083347,
+            0.03519834750020686,
+            0.059187266741962036,
+            0.07931714386226225,
+            0.07930820441657396,
+            0.07931305908641646,
+            0.07892631146764642
+          ],
+          [
+            1.7288420803032172,
+            2.771713524765886,
+            16.708183845741683,
+            3.5053869631297,
+            1.7294801494701486,
+            1.7294419912645664,
+            1.7293979405741857,
+            1.7298125066956143
+          ],
+          [
+            5.466705956644609e-11,
+            0.06807489811825669,
+            4.900736713957386,
+            0.05034766181906885,
+            5.5663691136610296e-11,
+            5.469827748191612e-11,
+            5.562117863640547e-11,
+            5.4697004628388146e-11
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    },
+    "wide_prior": {
+      "variant": "wide_prior",
+      "input_sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "posterior_sha256": "29c55e35cb7692d034a0df3006a491c85fa176a925b0107fa7a1806f0046fd75",
+      "totals_sha256": "9a1fea20fdeb852b0f3de29779b1bf7af0eedf362a8eabfa8c0a6606c215c6ba",
+      "volume_draw_shape": [
+        4,
+        1000
+      ],
+      "sampler_passed": true,
+      "quadrature": {
+        "history": [
+          {
+            "angular_order": 1,
+            "radial_order": 3,
+            "area_relative_error": 0.0008952317392172031,
+            "ray_count": 195
+          },
+          {
+            "angular_order": 2,
+            "radial_order": 5,
+            "area_relative_error": 2.028962290666646e-05,
+            "ray_count": 390,
+            "max_partition_L1_change_over_total": 0.036365602968473916
+          },
+          {
+            "angular_order": 4,
+            "radial_order": 8,
+            "area_relative_error": 1.2683380676999647e-08,
+            "ray_count": 780,
+            "max_partition_L1_change_over_total": 0.0038744487066234377
+          }
+        ],
+        "passed": true,
+        "volume_draws_per_chain": 1000
+      },
+      "volume_chain": {
+        "rhat": 1.000365460539461,
+        "bulk_ess": 2977.239061558925,
+        "tail_ess": 2563.450715269396,
+        "log_quantile_mcse": [
+          0.007307708731515872,
+          0.009572797952525747,
+          0.04432525264740583
+        ],
+        "passed": true
+      },
+      "volume_km3": {
+        "lower95": 33.57962052721519,
+        "median": 57.304847778705735,
+        "upper95": 160.58874407178232
+      },
+      "median_map": {
+        "median_map_km3": 48.78001335135236,
+        "passed": true,
+        "packets": [
+          {
+            "draws_per_chain": 64,
+            "passed": false,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 50.629808406117704,
+                "scramble_partition_L1": 0.05466074825638741,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00010884667239396961,
+                "draw_split_relative": 0.03578412462724945
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 50.53403243840566,
+                "scramble_partition_L1": 0.037911424533111096,
+                "nested_partition_L1": 0.024643254709693193,
+                "independent_mean_relative_error": 0.001324583533346968,
+                "draw_split_relative": 0.03595320934206514
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 50.62507808586093,
+                "scramble_partition_L1": 0.019635040985341266,
+                "nested_partition_L1": 0.012533907563543898,
+                "independent_mean_relative_error": 0.00014912099381259036,
+                "draw_split_relative": 0.03569891536438363
+              }
+            ],
+            "thresholds": {
+              "nested": 0.015,
+              "scramble": 0.025,
+              "mean": 0.01,
+              "split": 0.025
+            }
+          },
+          {
+            "draws_per_chain": 1000,
+            "passed": true,
+            "history": [
+              {
+                "points_per_scramble": 2048,
+                "median_map_km3": 48.751953595283865,
+                "scramble_partition_L1": 0.056359655064315,
+                "nested_partition_L1": null,
+                "independent_mean_relative_error": 0.00018186626594951516,
+                "draw_split_relative": 0.001895560325466783
+              },
+              {
+                "points_per_scramble": 4096,
+                "median_map_km3": 48.66063205610469,
+                "scramble_partition_L1": 0.039983318366943174,
+                "nested_partition_L1": 0.026202269968564628,
+                "independent_mean_relative_error": 0.0014465567500298038,
+                "draw_split_relative": 0.001862695905372358
+              },
+              {
+                "points_per_scramble": 8192,
+                "median_map_km3": 48.74402770500551,
+                "scramble_partition_L1": 0.020475662423257015,
+                "nested_partition_L1": 0.013122110573744083,
+                "independent_mean_relative_error": 0.00013571128362133145,
+                "draw_split_relative": 0.001805066684174017
+              },
+              {
+                "points_per_scramble": 16384,
+                "median_map_km3": 48.769664416324524,
+                "scramble_partition_L1": 0.010783961123160895,
+                "nested_partition_L1": 0.004041370397247605,
+                "independent_mean_relative_error": 0.000208053530994734,
+                "draw_split_relative": 0.0017790289328591946
+              },
+              {
+                "points_per_scramble": 32768,
+                "median_map_km3": 48.78001335135236,
+                "scramble_partition_L1": 0.009382568004297133,
+                "nested_partition_L1": 0.004341671671574838,
+                "independent_mean_relative_error": 0.0003609353685494199,
+                "draw_split_relative": 0.001797910994942531
+              }
+            ],
+            "thresholds": {
+              "nested": 0.0075,
+              "scramble": 0.01,
+              "mean": 0.005,
+              "split": 0.025
+            }
+          }
+        ],
+        "parts_sectors_km3": [
+          [
+            0.0,
+            0.0,
+            4.471141862934365,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0005931519292451864,
+            0.3070680942698824,
+            2.920589548317776,
+            0.4558015354349993,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.07983900922089486,
+            0.06423530037058311,
+            0.037031615321034834,
+            0.06045862928598948,
+            0.07984409502566406,
+            0.07984071677483272,
+            0.07984296760572487,
+            0.07946358997858224
+          ],
+          [
+            1.6679000176440346,
+            2.8163618745042176,
+            16.651322971010224,
+            3.673319040324435,
+            1.6684964534371174,
+            1.6684992872027098,
+            1.6684646176992108,
+            1.6688435207575343
+          ],
+          [
+            0.0002475846636542327,
+            0.16905935817501225,
+            8.217327632350441,
+            0.19342847635409238,
+            0.00024862666442592633,
+            0.00024758864147803847,
+            0.00024859572461656044,
+            0.00024758972957286576
+          ]
+        ],
+        "scramble_seeds": [
+          41791,
+          80627
+        ]
+      }
+    }
+  },
+  "code_sha256": {
+    "btm_thinning_mass.py": "2aa89681a5ee06daaf027b0f58342a6ca760c34b252ca4c2e2f26d70ef491980",
+    "btm_thinning_volume_report.py": "f02f30bee1f276029cc274dd382764fe95d3f2a1e74169912e40f8afbc1502da"
+  },
+  "files": {
+    "README.md": "3440b98905a887208899e8b9330c636a09b4c30db4f7e8f6844350ad9f681e9c",
+    "volume-draws.npz": "cca25d63c776a288f40b5a7f1a25fb536797054cfe4b817799f871e2d422b4be",
+    "volumes.csv": "a777cedef3b238ceae3c0f93a10e8479062bdfc070ec950451a70d0071594ef1"
+  }
+}

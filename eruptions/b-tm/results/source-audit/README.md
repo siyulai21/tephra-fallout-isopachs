@@ -23,6 +23,8 @@ The endpoint cases restore the same twelve positive site ranges. Moving every si
 
 All disputed DPRK locality summaries are excluded from both the principal estimate and the thinning test. Allowing one or two breaks puts the conditional probability of a new local observation above 7 m at 0.27%–0.28%. The conditional 95% interval for the shared single break extends from 2.9 to 1,124 km. [Radial profiles, site map and geographic validation](thinning/README.md)
 
+With the same 68 observations and the reference fan geometry, the smooth, one-break and two-break median maps integrate to 48.4, 48.4 and 48.6 km³. Their respective whole-deposit medians are 55.5, 56.0 and 57.1 km³. All full-posterior map and integral checks passed. [Global volumes, intervals and numerical checks](thinning/volumes/README.md)
+
 ## Why the directional interval is wide
 
 The principal fit gives every structure a weight learned from the other eruptions. Three structures allow a separate fallout fan in a poorly observed direction. Those structures assign more probability to large totals.

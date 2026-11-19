@@ -10,6 +10,8 @@ The workbook position is 28.2 km from the vent at 136.1°. It lies in the interp
 
 The classical segmented-exponential relation uses log thickness and the square root of enclosed isopach area. A source-to-site radial transect is a different quantity. This deposit has no accepted complete directional isopach band from which to identify an observed area-space breakpoint. The comparison here tests the consequence a radial slope change would have at the disputed site. [Pyle (1989)](https://doi.org/10.1007/BF01086757) · [Fierstein and Nathenson (1992)](https://pubs.usgs.gov/publication/70017275) · [Bonadonna et al. (1998)](https://doi.org/10.1016/S0377-0273(98)00007-9)
 
+Yang and colleagues tested this distinction on B-Tm itself. With the Horn and Schmincke isopachs, they obtained 32.99 km³ using one exponential segment and 26.69 km³ using two. Using their contour-by-contour integration, the Horn and Schmincke areas gave 26.66 km³ and the second set of reconstructed areas gave 62.48 km³. The change of mapped footprint produced the larger difference in that comparison. These bulk ash calculations include a proximal contribution inferred from distal contours. The authors estimated proximal tephra separately when assembling the total eruption volume. Their selected contour sets share source evidence with this audit and do not provide independent validation of the 54.0 km³ directional median-map estimate. [Yang et al. (2021), pp. 4–6 and Table 2](https://doi.org/10.1007/s00445-021-01487-8)
+
 ## Predictions and geographic validation
 
 | Radial model | Local median, cm | Conditional 95% local interval, cm | Probability above 700 cm | Equal-fold negative log score | Proximal negative log score | Folds with sampling warnings |
@@ -27,6 +29,10 @@ The one-break model’s change in negative log score relative to the published s
 
 ![Radial comparison and locations of nearby accepted measurements](thinning.png)
 
+## Effect on global volume
+
+The same full-data draws were integrated over Earth for all six curves. The results give the integral of each pointwise median map, the median and conditional interval of whole-deposit volumes, and independent integration checks. [Global volume sensitivity to the thinning law](volumes/README.md)
+
 ## Experimental design
 
 The comparison preserves the reference fan width, training-derived directions, two deposition scales, mesh, Gaussian local effects and censored observation likelihood. Distance along each ray uses the source-centred authalic chord from the published geometry. A continuous change in effective radial distance gives each segment a positive slope. For one breakpoint at distance b, the effective distance is min(r,b) + q max(r−b,0). Thus q=1 reproduces the original radial curve. The slope can steepen or flatten. With exponential kernels each component is exponential within each segment. Both break distances are shared across bearings in the two-break model. These are tests of one directional structure, with all other assumptions held fixed. No experimental volume is substituted for the published ensemble.
@@ -39,5 +45,5 @@ From the repository root, repeat the experiment in a fresh directory.
 for v in smooth one_break two_breaks exponential broken_exponential wide_prior; do
   python -m benchmarks.btm_thinning --work results/btm-break-check --variant "$v"
 done
-python -m benchmarks.btm_thinning_report --work results/btm-break-check --output results/btm-break-report --reference eruptions/b-tm/results/source-audit/principal/single-reference.json
+python -m benchmarks.btm_thinning_report --work results/btm-break-check --output results/btm-break-report
 ```
