@@ -61,6 +61,9 @@ def independent_archive_prediction(training, model, sites, vent, scenario, held,
         remaining={k:u for (k,u),d in zip(remaining.items(),distances.query(rxy)[0],strict=True) if d>buffer}
     meta={"archive_ids":list(held),"archive_training_ids":list(remaining),
           "quantitative_training_row_ids":training.row_ids[keep].tolist()}
+    if not keep.any():
+        return {**meta,"status":"insufficient buffered support",
+                "reason":"No quantitative training site remains outside the archive buffer."}
     if not np.all(keep) or remaining!=original_remaining:
         training=training.subset(keep)
         try:

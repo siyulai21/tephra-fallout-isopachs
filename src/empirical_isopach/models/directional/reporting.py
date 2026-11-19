@@ -183,7 +183,7 @@ def render(path, work, output, name=None):
     return publish_source_cap(data, g, draws, output, report, work, latitude)
 
 
-def directional_dataset(path, output, name=None, resume=False):
+def directional_dataset(path, output, name=None, resume=False, *, archives=None):
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh directional output directory or request resume.")
@@ -209,4 +209,8 @@ def directional_dataset(path, output, name=None, resume=False):
     work = output/"work"/"ensemble"
     reuse_reference_fits(output/"work", work)
     run_members(data, meta["vent_lonlat"][1], work)
-    return ensemble_report(path, work, output/"ensemble", name, family_page=True)
+    result = ensemble_report(path, work, output/"ensemble", name, family_page=True)
+    from .bearing_report import run, attach_to_family_page
+    run(path, work, output/"bearing", archives)
+    attach_to_family_page(output)
+    return result

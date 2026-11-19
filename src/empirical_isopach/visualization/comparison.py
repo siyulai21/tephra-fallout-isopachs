@@ -227,6 +227,23 @@ def comparison_section(home, *, prefix=""):
                   f"| ![Spherical-mixture median thickness over the Earth for {name}]({prefix}{SPHERICAL}/world.png) |", "",
                   "Both maps use the vent longitude as their central meridian. Read the thickness key under each map.", "",
                   "</details>", ""])
+    bearing = Path(home)/"directional/bearing"
+    revised = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
+    if revised is not None and revised["input_sha256"] == regional["input"]["input_sha256"]:
+        value = revised["median_surface"]["volume_km3"]
+        q = revised["coherent_fields"]["volume_km3"]
+        lines[0] = "## Four matched thickness-only fits"
+        lines[1:1] = ["", "The directional control in this four-panel comparison includes a possible fan in the largest sampling gap. Its scores and volumes refer to that six-structure model."]
+        lines[:0] = ["## Directional reach and archive evidence", "",
+                    f"The measured-fan median map integrates to **{value:,.1f} km³**. The complete-deposit median is {q['median']:,.1f} km³, with a conditional 95% interval of {q['lower95']:,.1f}–{q['upper95']:,.1f} km³. The map shows where the predicted extent of each level changes under the recorded assumptions.", "",
+                    f"![Agreement on median isopach extent]({prefix}directional/bearing/isopach-agreement.png)", "",
+                    f"[Directional estimates, inspected archives and transfer sensitivities]({prefix}directional/bearing/README.md)", ""]
+        checked = sorted(f for f in bearing.glob("*/validation.json") if f.parent.name!="quantitative")
+        if checked:
+            scored=read_report(checked[0].with_name("result.json"))
+            conditional=scored["median_surface"]["volume_km3"]
+            joint=scored["coherent_fields"]["volume_km3"]
+            lines[3:3]=["", f"The archive sensitivity **{scored['scenario']['title']}** gives a median-map volume of **{conditional:.1f} km³**. The complete-deposit median is {joint['median']:.1f} km³ (conditional 95% interval {joint['lower95']:.1f}–{joint['upper95']:.1f} km³). This result depends on the stated transfer between local fallout and a recognizable layer."]
     return "\n".join(lines)
 
 

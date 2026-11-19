@@ -18,15 +18,27 @@ The colour scale is shared across panels. Values below 0.01 cm share the lowest 
 
 Each segment lies inside an accepted interpolation triangle with measurements on both sides of the level and at least 90% conditional probability that the level crosses its nodes. Gaps and disconnected patches remain. Candidate narrow rays in the full-field panels can extend beyond the station that fixes their bearing. Only the segments here passed the local bracketing test.
 
-| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | SW + W + NW on median map (km³) | Numerical checks |
-|---|---:|---:|---:|---|
-| Measured fan directions | 42.46 | 52.3 (28.0–120.8) | 2.32 | Passed |
-| One-slice effective visibility | 38.34 | 43.4 (24.4–68.3) | 0.07 | 1 member diagnostics |
-| Ten-slice effective visibility | 36.18 | 44.8 (25.6–82.6) | 0.29 | Passed |
-| Sub-slice visibility at the varved lake | 38.99 | 43.2 (24.4–67.1) | 0.07 | Passed |
-| Comparable visible fallout beds | 35.77 | 43.5 (24.8–70.4) | 0.09 | Passed |
+| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | Numerical checks |
+|---|---:|---:|---|
+| Measured fan directions | 42.46 | 52.3 (28.0–120.8) | Passed |
+| One-slice effective visibility | 38.34 | 43.4 (24.4–68.3) | 1 member diagnostics |
+| Ten-slice effective visibility | 36.18 | 44.8 (25.6–82.6) | Passed |
+| Sub-slice visibility at the varved lake | 38.99 | 43.2 (24.4–67.1) | Passed |
+| Comparable visible fallout beds | 35.77 | 43.5 (24.8–70.4) | Passed |
 
-All eight compass sectors and their chain-resolved draws are saved per scenario. The western subtotal uses the three named 45° sectors. Bulk volumes sum through the antipode and contain extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. Agreement among medians cannot establish an observation-supported closed band.
+### Bulk volume of the median map by direction
+
+Each entry is km³ in a 45° sector centred on the named bearing from the vent.
+
+| Continuation | N | NE | E | SE | S | SW | W | NW |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Measured fan directions | 1.19 | 3.72 | 30.4 | 3.83 | 0.998 | 0.762 | 0.758 | 0.803 |
+| One-slice effective visibility | 0.156 | 5.73 | 30.1 | 2.22 | 0.0647 | 0.0212 | 0.0208 | 0.0265 |
+| Ten-slice effective visibility | 0.356 | 2.79 | 29.8 | 2.7 | 0.204 | 0.0919 | 0.0904 | 0.109 |
+| Sub-slice visibility at the varved lake | 0.162 | 6.38 | 30 | 2.28 | 0.0657 | 0.0213 | 0.0209 | 0.0265 |
+| Comparable visible fallout beds | 0.196 | 3.11 | 29.9 | 2.35 | 0.0834 | 0.0294 | 0.0288 | 0.0365 |
+
+The sector volumes sum through the antipode and include extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. The sector draws are retained for each fitted deposit. Agreement among medians cannot establish an observation-supported closed band.
 
 ## Field readings and transfer assumptions
 

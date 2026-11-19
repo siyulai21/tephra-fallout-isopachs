@@ -1,5 +1,6 @@
 """Replay numerical claims in the published B-Tm directional and archive audit."""
 import argparse
+import csv
 from pathlib import Path
 import json
 
@@ -89,6 +90,41 @@ def verify(folder,posterior=None):
                 np.testing.assert_allclose(1/(w@w),r["raw_weight_ess"])
                 for q,x in interval(volume,w).items():
                     np.testing.assert_allclose(x,r["full_field_volume_km3"][q],rtol=1e-11)
+    transfer = folder/"shard-transfer-comparison.csv"
+    if transfer.is_file():
+        provenance = read(folder/"shard-transfer-provenance.json")
+        assert provenance["file_sha256"] == digest(transfer)
+        assert provenance["input_sha256"] == meta["input_sha256"]
+        with transfer.open() as stream:
+            rows = list(csv.DictReader(stream))
+        assert len(rows) == 42
+        for row in rows:
+            value = float(row["transfer_equivalent_cm"])
+            if row["shards_per_g_dry"]:
+                np.testing.assert_allclose(value,float(row["shards_per_g_dry"])/25_000/10)
+            assert 0 <= float(row["p_local_at_or_below_equivalent"]) <= 1
+        if posterior:
+            from scipy.special import ndtr
+            from src.empirical_isopach.models.directional.archive_readings import positions
+            from src.empirical_isopach.models.mass_mixture.geometry import log_field,to_sphere
+            from src.empirical_isopach.models.mass_mixture.inference import flatten
+            ids = sorted({r["archive_id"] for r in rows})
+            by_id = {s["id"]:s for s in inv["sites"]}
+            xy = positions([by_id[i] for i in ids],meta["vent_lonlat"])
+            unit = to_sphere(xy,meta["vent_lonlat"][1])
+            with np.load(posterior) as raw:
+                samples = flatten(dict(raw))
+            mu = np.concatenate([log_field({k:v[i:i+128] for k,v in samples.items()},unit)
+                                 for i in range(0,len(samples["noise"]),128)])
+            with np.load(folder/"spherical-archive-weights.npz") as saved:
+                for row in rows:
+                    if row["model"] != "spherical":
+                        continue
+                    idx = ids.index(row["archive_id"])
+                    z = (np.log(float(row["transfer_equivalent_cm"])) - mu[:,idx])/samples["noise"]
+                    eps = samples["contamination"]
+                    cdf = saved[row["scenario"]].ravel() @ ((1-eps)*ndtr(z) + eps*ndtr(z/4))
+                    np.testing.assert_allclose(cdf,float(row["p_local_at_or_below_equivalent"]),rtol=1e-10)
     print("Verified angular calibration, archive holdouts, pointwise median fields, eight-sector mass budgets, preservation sensitivities and the independent spherical update.")
 
 

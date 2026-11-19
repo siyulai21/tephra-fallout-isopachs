@@ -30,8 +30,9 @@ def load_inventory(path, supplied=None):
     if len(sites) != len(inventory["sites"]):
         raise ValueError("Repeated archive identifier")
     for row in sites.values():
-        if row["reading"] not in READINGS or not row.get("reference") or not row.get("inspection"):
-            raise ValueError("Archive reading, inspection and source locator required")
+        if (row["reading"] not in READINGS or not row.get("name") or not row.get("confidence")
+                or not row.get("reference") or not row.get("inspection")):
+            raise ValueError("Archive name, reading, confidence, inspection and source locator required")
         if not (-90 <= row["latitude"] <= 90 and -180 <= row["longitude"] <= 180):
             raise ValueError("Invalid archive coordinates")
     used = set()
@@ -41,18 +42,26 @@ def load_inventory(path, supplied=None):
             raise ValueError("Invalid or repeated archive scenario identifier")
         used.add(key)
         limits = scenario["effective_limit_cm"]
-        if not limits or not scenario.get("assumption") or scenario["role"] not in ("sensitivity","cross_prediction"):
+        if (not limits or not scenario.get("title") or not scenario.get("assumption")
+                or scenario["role"] not in ("sensitivity","cross_prediction")):
             raise ValueError("Explicit effective scales and their scientific assumptions required")
         groups = []
         for sid, limit in limits.items():
+            if sid not in sites:
+                raise ValueError(f"Unknown archive site in {key}: {sid}")
             row = sites[sid]
             if row["reading"] not in ELIGIBLE or row["confidence"] != "secure":
                 raise ValueError("Unresolved, uninspected or presence-only horizons cannot constrain visibility")
-            if not np.isfinite(limit) or limit <= 0:
+            if isinstance(limit,bool) or not isinstance(limit,(int,float)) or not np.isfinite(limit) or limit <= 0:
                 raise ValueError("Visibility scale must be positive and finite")
             groups.append(row.get("dependency_group",sid))
         if len(groups) != len(set(groups)):
             raise ValueError("The same archive horizon cannot supply two independent visibility terms")
+    reference = inventory.get("validation_scenario")
+    if reference is not None and reference not in {
+        s["id"] for s in inventory["scenarios"] if s["role"] == "sensitivity"
+    }:
+        raise ValueError("The archive validation scenario must identify a full sensitivity with a mapped deposit")
     return inventory, file
 
 

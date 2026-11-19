@@ -1,6 +1,5 @@
 """Independent spherical-posterior checks at audited archive horizons."""
 from pathlib import Path
-import json
 
 import arviz as az
 import numpy as np
@@ -15,7 +14,7 @@ from .geometry import log_field,to_sphere
 from .inference import flatten
 
 
-def archive_checks(samples, data, vent, inventory):
+def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.)):
     sites = inventory["sites"]
     xy = positions(sites,vent)
     p = flatten(samples)
@@ -59,7 +58,7 @@ def archive_checks(samples, data, vent, inventory):
             latent=np.exp(inverse_cdf(mu.T,weights,[prob])[0]);loc=np.exp(observation.quantile(prob))
             for i,row in enumerate(pred):
                 row["latent_cm"][label] = float(latent[i]);row["new_site_cm"][label] = float(loc[i])
-        for scale in (.1,1.,10.):
+        for scale in cutoffs:
             for row,v in zip(pred,observation.cdf(np.log(scale)),strict=True):
                 row["p_local_below_scale"][str(scale)] = float(v)
         all_models[key]={"sites":pred,"scenario":scenario,"full_field_volume_km3":dict(zip(("lower95","median","upper95"),q,strict=True)),
@@ -86,3 +85,25 @@ def publish(posterior, data, meta, inventory, output):
             "scenarios":info}
     write_json(output/"spherical-archive-checks.json",report)
     return report
+
+
+def write_summary(report, output):
+    if report is None:
+        return
+    lines = ["# Spherical fallout estimates at inspected archives", "",
+             "Each row integrates complete deposits over the Earth. The intervals are conditional on the spherical model and, where specified, on the assumed response of the archive.", "",
+             "| Archive interpretation | Median bulk volume (km³) | Conditional 95% interval (km³) | Numerical check |",
+             "|---|---:|---:|---|"]
+    for result in report["scenarios"].values():
+        scenario = result["scenario"]
+        title = scenario["title"] if scenario else "Quantitative thickness evidence"
+        interval = result["full_field_volume_km3"]
+        check = "Passed" if result["importance_checks_passed"] else "Independent refit required"
+        lines.append(f"| {title} | {interval['median']:,.1f} | {interval['lower95']:,.1f}–{interval['upper95']:,.1f} | {check} |")
+    lines.extend(["", "## Assumptions", ""])
+    for result in report["scenarios"].values():
+        if result["scenario"]:
+            scenario = result["scenario"]
+            lines.append(f"- **{scenario['title']}**. {scenario['assumption']}")
+    lines.extend(["", "[Site predictions, effective scales and convergence checks](spherical-archive-checks.json) · [Weights of the complete posterior draws](spherical-archive-weights.npz)", ""])
+    (Path(output)/"README.md").write_text("\n".join(lines))

@@ -37,3 +37,5 @@ Test the new numerical solver against an independent reference or known case, te
 Add a method card under `methods/`, its mathematical protocol under `docs/methods/`, and reviewed comparative evidence under `comparisons/`. When the active protocol changes, rerun before describing a comparison as current. Reports record their own method identities and labels so older artifacts remain readable after the registry changes.
 
 The registry is a navigation and dispatch mechanism, not evidence that a newly registered method is scientifically validated. New predictive distributions or new data requirements may require extending the shared contract deliberately.
+
+For a method that extrapolates across a sampling gap, test archived no-bed readings at their own coordinates. Show the inferred response to an intact visible bed and its sensitivity to loss or mixing. Use the same audited quantitative input for the geographic benchmark. [Archive observation and continuation protocol](methods/archive-evidence.md)

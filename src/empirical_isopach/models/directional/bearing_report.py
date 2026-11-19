@@ -98,6 +98,11 @@ def run(path,work,output,inventory=None):
     from .bearing_maps import render_bearing_reports
     data,meta,inv,source,base,_ = configuration(path,work,inventory)
     output = Path(output)
+    archive_sha = digest(source) if source else None
+    for existing in output.glob("*/result.json"):
+        saved = json.loads(existing.read_text())
+        if saved["archive_inventory_sha256"] != archive_sha or saved["input_sha256"] != meta["input_sha256"]:
+            raise ValueError("Source or archive inventory changed. Use a fresh output directory for the new study.")
     scenarios = [None,*inv["scenarios"]]
     reports = {}
     for scenario in scenarios:
@@ -121,6 +126,10 @@ def run(path,work,output,inventory=None):
     companion = output.parent.parent/'spherical-mixture'/'posterior.npz'
     if companion.exists() and inv['sites']:
         from ..mass_mixture.archive_check import publish
+        report = json.loads(companion.with_name("report.json").read_text())
+        if report["input"]["input_sha256"] != meta["input_sha256"] or (
+                report["published_artifact_sha256"][companion.name] != digest(companion)):
+            raise ValueError("The adjacent spherical posterior does not match the current source data and report")
         publish(companion,data,meta,inv,output)
     render_bearing_reports(path,output,source,companion if companion.exists() else None)
     return reports

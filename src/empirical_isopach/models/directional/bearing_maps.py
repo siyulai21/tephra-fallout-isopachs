@@ -224,20 +224,24 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
            "Each panel compares the same thickness level across the mapped scenarios. Ochre marks locations where changing the assumptions changes which side of an isopach the site occupies. The dashed outline encloses the measured interpolation footprint. The diamond marks an inspected archive where one is available. A scenario median below a level still permits ash at that site.","",
            "![Conditional median isopachs on a common scale](conditional-isopachs.png)","","![Median isopachs across the complete survey region](median-deposit.png)","","The colour scale is shared across panels. Values below 0.01 cm share the lowest colour. Diamonds mark inspected archives. The full-deposit integrals extend beyond the displayed survey area through the antipode.","",
            "![Median isopach segments bracketed by measured sites](measured-fragments.png)","","Each segment lies inside an accepted interpolation triangle with measurements on both sides of the level and at least 90% conditional probability that the level crosses its nodes. Gaps and disconnected patches remain. Candidate narrow rays in the full-field panels can extend beyond the station that fixes their bearing. Only the segments here passed the local bracketing test.","",
-           "| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | SW + W + NW on median map (km³) | Numerical checks |",
-           "|---|---:|---:|---:|---|"]
+           "| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | Numerical checks |",
+           "|---|---:|---:|---|"]
+    sector_rows = ["| Continuation | " + " | ".join(COMPASS) + " |", "|---|" + "---:|"*len(COMPASS)]
     for key in ["quantitative",*(s["id"] for s in inv["scenarios"])]:
         r=reports[key]
         if "median_surface" not in r:continue
         m,j=r["median_surface"],r["coherent_fields"]
         q=j["volume_km3"]
-        west=np.asarray(m["parts_sectors_km3"])[:,[5,6,7]].sum()
+        sector_volumes=np.asarray(m["parts_sectors_km3"]).sum(axis=0)
+        sector_rows.append("| " + labels[key] + " | " + " | ".join(f"{v:,.3g}" for v in sector_volumes) + " |")
         flags=[]
         if not m["passed"]:flags.append("median integral")
         bad=sum(not b["passed"] for b in j["members"].values())
         if bad:flags.append(f"{bad} member diagnostics")
-        lines.append(f"| {labels[key]} | {m['volume_km3']:,.2f} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {west:,.2f} | {', '.join(flags) or 'Passed'} |")
-    lines+=["","All eight compass sectors and their chain-resolved draws are saved per scenario. The western subtotal uses the three named 45° sectors. Bulk volumes sum through the antipode and contain extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. Agreement among medians cannot establish an observation-supported closed band.",""]
+        lines.append(f"| {labels[key]} | {m['volume_km3']:,.2f} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {', '.join(flags) or 'Passed'} |")
+    lines+=["","### Bulk volume of the median map by direction","",
+            "Each entry is km³ in a 45° sector centred on the named bearing from the vent.","",*sector_rows,"",
+            "The sector volumes sum through the antipode and include extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. The sector draws are retained for each fitted deposit. Agreement among medians cannot establish an observation-supported closed band.",""]
     if inv["scenarios"]:
         lines+=["## Field readings and transfer assumptions",""]
         lines.extend(f"- **{s['title']}.** {s['assumption']}" for s in inv["scenarios"])

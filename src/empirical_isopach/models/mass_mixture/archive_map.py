@@ -1,6 +1,7 @@
 """Independent spherical median maps under stated archive-visibility assumptions."""
 import numpy as np
 import matplotlib.pyplot as plt
+from src.probabilistic_isopach.global_volume import EarthDomain
 
 from ...visualization.maps import grid_axes,observations,setup_map
 from ..directional.archive_readings import positions
@@ -25,11 +26,14 @@ def selected_fields(samples,weights,count):
 
 
 def median(p,w,xy,lat):
-    parts=[]
-    for start in range(0,len(xy),128):
-        z=log_field(p,to_sphere(xy[start:start+128],lat))
-        parts.extend(inverse_cdf(z.T,w)[0]/np.log(10))
-    return np.asarray(parts)
+    domain = EarthDomain.wgs84(lat)
+    valid = np.flatnonzero(domain.rho(xy) < domain.rho_max)
+    values = np.full(len(xy),np.nan)
+    for start in range(0,len(valid),128):
+        rows = valid[start:start+128]
+        z = log_field(p,to_sphere(xy[rows],lat))
+        values[rows] = inverse_cdf(z.T,w)[0]/np.log(10)
+    return values
 
 
 def render(samples,weight_file,report,data,meta,inventory,output,bounds):
@@ -61,7 +65,7 @@ def render(samples,weight_file,report,data,meta,inventory,output,bounds):
         image=ax.pcolormesh(x,y,z,cmap="viridis",vmin=-2,vmax=3,shading="auto",rasterized=True)
         for level in (.1,1.,10.,100.):
             l=np.log10(level)
-            if z.min()<l<z.max():
+            if np.nanmin(z)<l<np.nanmax(z):
                 cs=ax.contour(x,y,z,levels=[l],colors="white",linestyles="--",linewidths=.9)
                 ax.clabel(cs,fmt={l:f"{level:g}"},fontsize=7)
         setup_map(ax,bounds,vent)

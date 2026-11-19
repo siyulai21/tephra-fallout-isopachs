@@ -53,6 +53,20 @@ The B-Tm glass peak in Ulleung Basin core 13PT-P4_026 contains 9,529 shards/g in
 
 Two additional Pacific core records consist of spots. The comparable-bed reconstruction gives 0.914 cm at YK14-01 PC09 and 0.777 cm at NT13-19 PL01. Their patch dimensions cannot calibrate original bulk fallout. These sites and Lake Kushu remain independent probes in all western refits. [Ikehara et al., Tables 1 and 3](https://doi.org/10.1016/j.quaint.2017.08.022)
 
+## Does western narrowing conflict with the positive shard counts?
+
+Costa et al. transferred a Lake Suigetsu relation of 25,000 shards/g per millimetre to other sediment archives. The published equivalents and the equivalents obtained by applying the same conversion to the audited primary peak concentrations are separate comparisons. A peak in a single slice is sensitive to dilution and size selection. Each number below is the percentile of the transferred value in the model’s predictive distribution for a new local observation. The count magnitudes were held out throughout. Sihailongwan supplied a bed-visibility reading in the comparable-bed fit. The two other archives supplied no fitted reading. [Costa et al., Table S1 and footnote](../../../../../data/sources/b-tm/costa2024-supplement.pdf)
+
+| Held-out transferred equivalent | Thickness used for comparison (cm) | Directional, thickness only | Directional, comparable beds | Spherical, comparable beds |
+|---|---:|---:|---:|---:|
+| Sihailongwan, published equivalent | 0.00256 | 13.6% | 71.9% | 19.8% |
+| Sihailongwan, primary colourless peak | 0.02126 | 19.3% | 86.5% | 51.5% |
+| Kushu, published equivalent | 0.00144 | 16.1% | 16.9% | 3.8% |
+| Kushu, primary peak | 0.1227 | 33.3% | 26.8% | 72.1% |
+| Ulleung Basin, primary peak | 0.03812 | 64.2% | 96.7% | 76.6% |
+
+At the independent marine core, only 3.3% of the comparable-bed directional predictions reach the equivalent implied by its measured concentration. The same equivalent is close to the middle of the spherical thickness-only distribution. This is evidence of possible excessive narrowing if the Suigetsu conversion transfers to the marine core. The counts alone do not establish that transfer. Sihailongwan’s colourless and brown peaks are evaluated at their respective depths. [All 42 comparisons and identification of the conditioned archives](shard-transfer-comparison.csv) · [Source and posterior hashes](shard-transfer-provenance.json) · [Marine counts and sample dimensions](https://doi.org/10.1029/2021JB023243)
+
 ## Independent spherical refit
 
 A fresh four-chain fit using the comparable-bed scenario gives **55.2 km³** (conditional 95% interval **32.9–503.7 km³**). Updating the independent thickness-only posterior gave 56.2 km³ (33.0–618.1). The upper-tail estimates differ by 114 km³. Both numerical results are retained. The direct sampler and angular-normalization assessment passed. [Independent posterior and diagnostics](spherical-refit/report.json) · [All direct-refit draws](spherical-refit/posterior.npz)

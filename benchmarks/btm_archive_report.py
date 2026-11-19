@@ -1,4 +1,5 @@
 """Rebuild the field interpretation for the B-Tm western archive probes."""
+import csv
 import json
 from pathlib import Path
 
@@ -70,6 +71,26 @@ def publish(output):
     rows+=["## Independent marine occurrences","",
            "The B-Tm glass peak in Ulleung Basin core 13PT-P4_026 contains 9,529 shards/g in the 25–27 cm interval. Conditioning on the two western archives also lowers the predicted median at this independent core from "+format_cm(select(base,"old-085")["latent_cm"]["median"])+" cm to "+format_cm(select(ref,"old-085")["latent_cm"]["median"])+" cm. This illustrates the risk of shrinking several poorly sampled bearings together. A measured loading could test that particularly thin tail. [Chen et al., Table 1](https://doi.org/10.1029/2021JB023243)","",
            "Two additional Pacific core records consist of spots. The comparable-bed reconstruction gives "+format_cm(select(ref,"old-045")["latent_cm"]["median"])+" cm at YK14-01 PC09 and "+format_cm(select(ref,"old-069")["latent_cm"]["median"])+" cm at NT13-19 PL01. Their patch dimensions cannot calibrate original bulk fallout. These sites and Lake Kushu remain independent probes in all western refits. [Ikehara et al., Tables 1 and 3](https://doi.org/10.1016/j.quaint.2017.08.022)",""]
+    transferred = output/"shard-transfer-comparison.csv"
+    if transferred.exists():
+        with transferred.open() as stream:
+            ranks = list(csv.DictReader(stream))
+        rows += ["## Does western narrowing conflict with the positive shard counts?", "",
+                 "Costa et al. transferred a Lake Suigetsu relation of 25,000 shards/g per millimetre to other sediment archives. The published equivalents and the equivalents obtained by applying the same conversion to the audited primary peak concentrations are separate comparisons. A peak in a single slice is sensitive to dilution and size selection. Each number below is the percentile of the transferred value in the model’s predictive distribution for a new local observation. The count magnitudes were held out throughout. Sihailongwan supplied a bed-visibility reading in the comparable-bed fit. The two other archives supplied no fitted reading. [Costa et al., Table S1 and footnote](../../../../../data/sources/b-tm/costa2024-supplement.pdf)", "",
+                 "| Held-out transferred equivalent | Thickness used for comparison (cm) | Directional, thickness only | Directional, comparable beds | Spherical, comparable beds |",
+                 "|---|---:|---:|---:|---:|"]
+        for src, title in (("Costa P36","Sihailongwan, published equivalent"),
+                           ("Sun T2 colourless peak, 53 cm","Sihailongwan, primary colourless peak"),
+                           ("Costa P35","Kushu, published equivalent"),
+                           ("Chen RK12-0151 peak","Kushu, primary peak"),
+                           ("Chen core 13PT-P4_026, 25–27 cm","Ulleung Basin, primary peak")):
+            items = {(r["model"],r["scenario"]):r for r in ranks if r["source_statistic"]==src}
+            values = [items[k] for k in (("directional","quantitative"),("directional","visible_analogs"),
+                                         ("spherical","visible_analogs"))]
+            rows.append(f"| {title} | {float(values[0]['transfer_equivalent_cm']):.4g} | " +
+                        " | ".join(f"{float(r['p_local_at_or_below_equivalent']):.1%}" for r in values) + " |")
+        marine = next(r for r in ranks if r["model"]=="directional" and r["scenario"]=="visible_analogs" and r["source_statistic"].startswith("Chen core"))
+        rows += ["", f"At the independent marine core, only {1-float(marine['p_local_at_or_below_equivalent']):.1%} of the comparable-bed directional predictions reach the equivalent implied by its measured concentration. The same equivalent is close to the middle of the spherical thickness-only distribution. This is evidence of possible excessive narrowing if the Suigetsu conversion transfers to the marine core. The counts alone do not establish that transfer. Sihailongwan’s colourless and brown peaks are evaluated at their respective depths. [All 42 comparisons and identification of the conditioned archives](shard-transfer-comparison.csv) · [Source and posterior hashes](shard-transfer-provenance.json) · [Marine counts and sample dimensions](https://doi.org/10.1029/2021JB023243)", ""]
     direct=output/"spherical-refit/report.json"
     if direct.exists():
         d=read(direct)

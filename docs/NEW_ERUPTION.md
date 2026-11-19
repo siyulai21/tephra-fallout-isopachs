@@ -2,6 +2,8 @@
 
 Upload the thickness measurements and available source material with the eruption name. A spreadsheet, CSV or published table is enough to start. Include coordinates, thickness units, a vent location and any evidence for incomplete deposits, detection limits or redeposition. For multiple fallout fans, say which deposit the result should represent. Minoan combines its accepted Plinian and co-ignimbrite fallout in a single field.
 
+For a documented search with no continuous bed, supply the core description, eruption correlation, inspection method and any visibility or preservation controls. An archive inventory can accompany a new CSV using `--archives path/to/archives.json`. The directional run publishes measured-fan continuations, site probabilities and sensitivity to those controls. A full comparison applies the same archive readings to the independent spherical posterior. A spherical-only run accepts an explicit archive inventory through the same option. [How archive evidence can challenge an isopach](methods/archive-evidence.md)
+
 The [optional intake template](../templates/README.md) gives the observation schema. Leave unknown values explicit. Decisions about sources and deposit interpretation belong in the audit.
 
 ## From upload to published case
