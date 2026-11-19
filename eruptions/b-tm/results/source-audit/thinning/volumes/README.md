@@ -1,6 +1,6 @@
 # How much do thinning breaks change global B-Tm fallout volume?
 
-These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The median and conditional interval in the next columns come from integrating each coherent deposit separately. Volumes are bulk km³. All disputed DPRK locality summaries are withheld. [Source-interpretation sensitivities and principal ensemble](../../README.md) · [Local predictions and held-out geographic scores](../README.md)
+These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The median and conditional interval in the next columns come from integrating each coherent deposit separately. Volumes are bulk km³. [Source-interpretation sensitivities](../../README.md) · [Held-out geographic scores and inferred breaks](../README.md)
 
 | Radial thinning | Median-map integral | Whole-deposit median | Conditional 95% interval | Warnings |
 |---|---:|---:|---:|---|
@@ -11,7 +11,7 @@ These six fits use the same 68 audited observations and the reference directiona
 | Exponential kernels, one break | 45.4 | 49.0 | 31.8–122.9 | None |
 | One break, wider slope prior | 48.8 | 57.3 | 33.6–160.6 | None |
 
-The matched smooth, one-break and two-break median maps integrate to 48.4–48.6 km³. The differences are small relative to posterior uncertainty and the numerical precision of the comparison. All three share one fan geometry. The principal six-structure ensemble also represents uncertainty about the presence and width of fans in poorly sampled directions. Its 54.0 km³ median-map estimate has separate draws and diagnostics. A break in the regional thinning rate, a separate fallout fan and the local stratigraphic interpretation of a 7 m formation make different predictions.
+The matched smooth, one-break and two-break median maps integrate to 48.4–48.6 km³. The differences are small relative to posterior uncertainty and the numerical precision of the comparison. All three share one fan geometry. The principal directional report gives the six-structure estimate with uncertain fan directions on these observations. [Principal directional fit](../../../directional/README.md)
 
 ## Numerical integration
 

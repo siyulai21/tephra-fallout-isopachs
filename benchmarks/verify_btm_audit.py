@@ -11,15 +11,13 @@ from zipfile import ZipFile
 import numpy as np
 import pandas as pd
 
-from benchmarks.btm_source_sensitivities import SAMJIYON_CASES, SOURCE_CASES, local_summaries, predict_samjiyon
+from benchmarks.btm_source_sensitivities import SOURCE_CASES
 from benchmarks.btm_thinning_report import verify as verify_thinning
 from benchmarks.btm_thinning_volume_report import verify as verify_thinning_volumes
-from benchmarks.refresh_figures import recorded_observations
 from benchmarks.verify_directional import verify as verify_single
 from benchmarks.verify_directional_ensemble import verify_case as verify_ensemble
 from benchmarks.verify_visuals import verify_case_map
 from src.empirical_isopach.core.catalog import datasets
-from src.empirical_isopach.core.distributions import LogMixture
 from src.empirical_isopach.models.directional.ensemble.fields import draw_weights
 from src.empirical_isopach.models.directional.ensemble.integrals import interval
 from src.empirical_isopach.models.directional.ensemble.members import NAMES
@@ -110,31 +108,8 @@ def verify_inputs():
     assert all_cases["range_low"]["old-066"]["Thickness"] == "0.5"
     assert all_cases["range_high"]["old-066"]["Thickness"] == "1"
     supplemental = table(AUDIT/"additional-evidence.csv")
-    assert len(supplemental) == len({r["id"] for r in supplemental}) == 27
+    assert len(supplemental) == len({r["id"] for r in supplemental}) == 23
     assert not {r["id"] for r in supplemental} & set(all_cases["principal"])
-    newer = read(AUDIT/"samjiyon-provenance.json")
-    assert newer["principal_input_sha256"] == manifest["cases"]["principal"]["sha256"]
-    assert newer["source_report_sha256"] == sources["LiuReport"]["source_bytes_sha256"]
-    assert newer["original_1993_sha256"] == sources["Ri93"]["source_bytes_sha256"]
-    assert newer["additional_source_sha256"] == sources["Hoang87"]["source_bytes_sha256"]
-    assert set(newer["cases"]) == set(SAMJIYON_CASES)
-    sam = next(row for row in supplemental if row["id"] == "alternate-700")
-    assert sam["reported_quantity"] == "700" and sam["evidence"] == "locality_thickness"
-    expected = (("measurement", "700", ""), ("lower_limit", "", "700"), ("upper_limit", "", "700"), ("measurement", "160", ""))
-    for name, reading in zip(SAMJIYON_CASES, expected, strict=True):
-        case = newer["cases"][name]
-        path = Path(case["file"])
-        assert digest(path) == case["sha256"]
-        rows = table(path)
-        assert rows[:-1] == list(all_cases["principal"].values()) and len(rows) == 69
-        row = rows[-1]
-        evidence_id = "hoang-samjiyon" if name == "samjiyon_160" else sam["id"]
-        assert (row["EvidenceID"], row["Lat"], row["Lon"]) == (evidence_id, sam["latitude"], sam["longitude"])
-        assert (row["Kind"], row["Thickness"], row["Limit_cm"]) == reading
-        kinds = Counter(row["Kind"] for row in rows)
-        for kind, key in (("measurement","n_measurements"), ("lower_limit","n_lower_limits"), ("upper_limit","n_upper_limits")):
-            assert kinds[kind] == case[key]
-    manifest["cases"].update(newer["cases"])
     source_class = read(AUDIT/"source-class-provenance.json")
     assert source_class["principal_input_sha256"] == manifest["cases"]["principal"]["sha256"]
     assert source_class["ledger_sha256"] == digest(AUDIT/"evidence.csv")
@@ -212,19 +187,14 @@ def verify_results(manifest):
     assert screen["input_sha256"] == principal["sha256"]
     assert screen["surface_samples_sha256"] == digest(sfolder/"b-tm.npz")
     assert {k:v for k,v in screen.items() if k != "surface_samples_sha256"} == read(HOME/"spherical-mixture/complete-contour-audit.json")
-    data, meta = recorded_observations(rec, HOME)
-    predicted = predict_samjiyon(data, meta, HOME/"directional/ensemble", STUDY/"samjiyon-local-draws.npz")
-    recorded = read(STUDY/"samjiyon-prediction.json")
-    assert predicted["principal_input_sha256"] == recorded["principal_input_sha256"] == principal["sha256"]
-    assert predicted["full_draws_by_structure"] == recorded["full_draws_by_structure"]
-    for row, saved in zip(predicted["positions"] + predicted["map_packet_positions"],
-                          recorded["positions"] + recorded["map_packet_positions"], strict=True):
-        assert row["position"] == saved["position"]
-        for key in row.keys()-{"position"}:
-            if isinstance(row[key], dict):
-                np.testing.assert_allclose(list(row[key].values()), list(saved[key].values()), rtol=1e-8)
-            else:
-                np.testing.assert_allclose(row[key], saved[key], rtol=1e-8, atol=1e-12)
+    scenarios = pd.read_csv(STUDY/"source-scenarios.csv").set_index("case")
+    assert scenarios.index.is_unique
+    assert set(scenarios.index) == set(manifest["cases"]) == {"principal", *SOURCE_CASES}
+    assert {p.parent.name for p in STUDY.glob("*/result.json")} == set(SOURCE_CASES)
+    for name, row in scenarios.iterrows():
+        case = manifest["cases"][name]
+        assert row.input_sha256 == case["sha256"] and row.n == sum(case[k] for k in (
+            "n_measurements", "n_lower_limits", "n_upper_limits"))
     for name in SOURCE_CASES:
         folder = STUDY/name
         report = read(folder/"result.json")
@@ -241,23 +211,13 @@ def verify_results(manifest):
         actual = interval(np.concatenate([a.ravel() for a in draws]), weights)
         np.testing.assert_allclose(list(actual.values()), list(observed.values()), rtol=1e-12)
         centre = report["median_surface"]
+        row = scenarios.loc[name]
+        np.testing.assert_allclose([centre["volume_km3"], observed["median"], observed["lower95"], observed["upper95"]],
+                                   row[["median_map_km3","volume_median_km3","lower95","upper95"]].astype(float))
+        assert row.map_integral_passed == centre["passed"]
+        assert row.full_members_passed == sum(m["attempts"][-1]["diagnostics"]["passed"]
+                                             for m in report["coherent_fields"]["members"].values())
         np.testing.assert_allclose(np.asarray(centre["parts_sectors_km3"]).sum(), centre["volume_km3"])
-        if name == "omit_compilation_values":
-            local = read(folder/"samjiyon-prediction.json")
-            assert local["input_sha256"] == report["input"]["sha256"]
-            assert local["ensemble_weights"] == report["weighting"]["weights"]
-            with np.load(folder/"samjiyon-local-draws.npz") as values:
-                arrays = {}
-                for field in ("mean_log_thickness", "variance_log_thickness"):
-                    packets = [values[m+"__"+field] for m in NAMES]
-                    assert all(a.shape == (*b.shape, 3) for a,b in zip(packets,draws,strict=True))
-                    arrays[field] = np.concatenate([a.reshape(-1,3) for a in packets])
-            mixture = LogMixture(weights, arrays["mean_log_thickness"], arrays["variance_log_thickness"])
-            for recalculated, stored in zip(local_summaries(mixture),local["positions"],strict=True):
-                for field in ("lower95","median","upper95"):
-                    np.testing.assert_allclose(recalculated["local_prediction_cm"][field],stored["local_prediction_cm"][field])
-                np.testing.assert_allclose(recalculated["local_prediction_probability_above_700cm"],
-                                           stored["local_prediction_probability_above_700cm"])
     verify_thinning()
     verify_thinning_volumes(STUDY/"thinning/volumes")
     variant_fits = read(STUDY/"thinning/fits.json")
@@ -266,7 +226,7 @@ def verify_results(manifest):
                for k, run in variant_runs.items())
     with np.load(HOME/"directional/single-structure/directional-mass.npz") as reference_mass, np.load(STUDY/"thinning/volumes/volume-draws.npz") as variants:
         np.testing.assert_allclose(variants["smooth"], reference_mass["mass"].sum(axis=(-1,-2)), rtol=2e-12)
-    print("Verified B-Tm sources, segmented thinning, all four fitted methods, geographic folds, contour screens, Samjiyon predictions and eight source sensitivities.")
+    print("Verified B-Tm sources, segmented thinning, all four fitted methods, geographic folds, contour screens and four source sensitivities.")
 
 
 if __name__ == "__main__":

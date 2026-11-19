@@ -23,6 +23,8 @@ jobs:
           python -c "from src.empirical_isopach.core.catalog import datasets; from src.empirical_isopach.models.mass_mixture.source_protocol import protocol; assert next(r for r in datasets() if r['slug'] == 'b-tm')['global_geometry'] == 'source-fans'; assert protocol('source-fans')[0].source_anchored; assert protocol('source-envelope')[0].supported_basis; assert not protocol('displaced')[0].source_anchored"
           python -c "from src.empirical_isopach.core.catalog import datasets, data_directory, resolve_dataset; from src.empirical_isopach.models.mass_mixture.study import audited_data; assert all((data_directory()/r['audit']).is_file() for r in datasets() if 'audit' in r); data, meta = audited_data(resolve_dataset('Aso-4')); assert len(data.xy) == 87 and data.censored.sum() == 4 and data.lower_censored.sum() == 3"
           python -c "from src.empirical_isopach.visualization.maps import ASSET, coast_rings; assert ASSET.is_file() and (ASSET.parent/'coastline-source.json').is_file(); assert len(coast_rings()) > 1000"
+      - name: Verify B-Tm evidence, source sensitivities and thinning comparisons
+        run: python -m benchmarks.verify_btm_audit
       - name: Verify retained Aso-4 evidence and posterior checksums
         run: python -m benchmarks.verify_aso_evidence
       - name: Verify directional policy fits and whole-Earth mass budgets

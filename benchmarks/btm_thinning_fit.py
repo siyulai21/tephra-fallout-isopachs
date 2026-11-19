@@ -1,4 +1,4 @@
-"""Matched change-in-slope experiment for a withheld B-Tm locality.
+"""Radial thinning laws for the accepted B-Tm fallout observations.
 
 Only the radial argument of the published reference likelihood changes. Distances,
 fan geometry, local effects, bounds and observation noise keep their original units.
