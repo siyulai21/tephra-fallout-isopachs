@@ -72,10 +72,8 @@ The standard interpolation footprint covers 96,131 km². None of the twelve chec
 
 All six underlying structures passed the full-data sampling checks. Geographic fold 0 carried a sampling warning. Only two of four directional-sector holdouts had observations, and one of those fits had a warning. The spherical baseline passed, while the wide-geography and five-fan prior refits retained warnings.
 
-## How much do disputed records matter?
+## How do alternative source readings affect volume?
 
-The historical 7 m pumice account at Samjiyon has an uncertain section location and fallout attribution. With Samjiyon withheld, the explicit thinning-break models give a 0.27–0.28% probability of observing more than 7 m at the workbook coordinates. Changing the thinning law leaves the median-map integral near 48.4–48.6 km³ in that fixed-geometry experiment. [Field accounts](../../data/audits/B-Tm/samjiyon.md) · [Thinning experiment](results/source-audit/thinning/README.md)
-
-In the fixed-direction source-sensitivity study, restoring the twelve thickness ranges at their low or high endpoints gives median-map volumes of 50.8 and 59.2 km³. Withholding 26 thicknesses carried from compilations gives 48.9 km³. The sensitivity report also gives the four Samjiyon interpretations, disputed proximal stacks and the conditional interval for each fit. [Source-sensitivity results](results/source-audit/README.md)
+In the fixed-direction source-sensitivity study, restoring the twelve thickness ranges at their low or high endpoints gives median-map volumes of 50.8 and 59.2 km³. Withholding 26 thicknesses carried from compilations gives 48.9 km³. The report also tests alternative thicknesses at Tianwenfeng and Dongfanghong and gives the conditional interval for each fit. [Source-sensitivity results](results/source-audit/README.md)
 
 The earlier 84-record fit used a different observation hull and geographic folds. Its directional median map integrated to 59.3 km³, compared with 54.0 km³ in the audited fixed-direction fit. [Earlier B-Tm release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm)

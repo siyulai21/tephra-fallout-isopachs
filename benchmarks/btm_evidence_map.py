@@ -45,7 +45,7 @@ def panel(ax, points, bounds):
              and ring[:, 1].max() >= south and ring[:, 1].min() <= north]
     ax.add_collection(LineCollection(coast, colors="#9aa8ad", linewidths=.55))
     for label, (shape, color, size) in reversed(STYLES.items()):
-        xy = np.array([(x, y) for x, y, group in points if group == label])
+        xy = np.array([(x, y) for x, y, group in points if group == label]).reshape(-1, 2)
         edges = {} if shape == "x" else {"edgecolors": "white", "linewidths": .45}
         ax.scatter(*xy.T, marker=shape, c=color, s=size, alpha=.92, **edges)
     ax.scatter(128.057, 42.006, c="#20282a", marker="*", s=130, edgecolors="white", linewidths=.6, zorder=9)
@@ -59,7 +59,7 @@ def panel(ax, points, bounds):
 def render(path):
     points = read_points()
     fig, axes = plt.subplots(1, 2, figsize=(12.1, 5.9), gridspec_kw={"width_ratios": [1.72, 1]})
-    zoom = (127.98, 128.64, 41.77, 42.28)
+    zoom = (127.98, 128.64, 41.94, 42.28)
     panel(axes[0], points, (125.7, 146, 34.8, 46.2))
     panel(axes[1], points, zoom)
     axes[0].add_patch(Rectangle((zoom[0], zoom[2]), zoom[1]-zoom[0], zoom[3]-zoom[2],
@@ -73,11 +73,11 @@ def render(path):
         (axes[1], "Tianwenfeng", (128.066667, 42.025833), (4, 7)),
         (axes[1], "Dongfanghong", (128.318139, 42.192278), (5, 5)),
         (axes[1], "Yuanchi", (128.539, 41.998), (-26, -14)),
-        (axes[1], "Samjiyon · 7 m", (128.29277, 41.82291), (4, 5)),
     ]:
         ax.annotate(label, point, xytext=offset, textcoords="offset points", fontsize=8, color="#30373a")
+    present = {label for _, _, label in points}
     handles = [Line2D([], [], marker=shape, linestyle="none", color=color, label=label)
-               for label, (shape, color, _) in STYLES.items()]
+               for label, (shape, color, _) in STYLES.items() if label in present]
     handles.append(Line2D([], [], marker="*", linestyle="none", color="#20282a", label="Vent"))
     fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False)
     fig.subplots_adjust(bottom=.2, top=.93, wspace=.23)
