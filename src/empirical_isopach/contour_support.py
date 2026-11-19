@@ -26,8 +26,9 @@ def median_grid(model, bounds, resolution=257):
     x, y = [np.linspace(bounds[k], bounds[k+2], resolution) for k in (0, 1)]
     xx, yy = np.meshgrid(x, y)
     xy = np.column_stack((xx.ravel(), yy.ravel()))
-    values = [predictive_distribution(model, xy[i:i+2048]).quantile(.5)
-              for i in range(0, len(xy), 2048)]
+    batch = getattr(model, "median_grid_batch", 2048)
+    values = [predictive_distribution(model, xy[i:i+batch]).quantile(.5)
+              for i in range(0, len(xy), batch)]
     return x, y, np.concatenate(values).reshape(xx.shape)
 
 

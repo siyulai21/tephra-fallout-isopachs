@@ -1,5 +1,7 @@
 # Tambora directional ensemble
 
+[Measured and extrapolated directional contours](azimuth/README.md) shows which median contour segments the measurements bracket, how an unsampled fan changes their reach, and how the alternatives predict withheld observations.
+
 **105.8 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **119.6 km³**, with a conditional 95% interval of **78.6–184.0 km³**.
 
 The measured triangles contain **10.7 km³** (10.1%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.

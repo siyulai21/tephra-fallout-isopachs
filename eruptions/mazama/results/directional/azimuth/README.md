@@ -1,0 +1,49 @@
+# Mazama · directional extent
+
+The same 45 accepted observations give a **177.0 km³** median-map integral with fixed fan directions and **166.1 km³** when an unsampled fan can turn. These two fits use identical observations and structure weights. The primary six-structure estimate on the case home uses its original calibration.
+
+Under uncertain azimuth, integrating each complete deposit gives a volume median of **213.5 km³** and a conditional 95% range of **138.6–1,265.1 km³**. Measured interpolation triangles contribute 15.7% of the median-map volume. The rest relies on continuation.
+
+![Median isopachs and quantitatively bracketed segments](median-isopachs.png)
+
+Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.
+
+## Reach from the volcano
+
+Distances are great-circle kilometres to the first outward crossing on each compass ray. The area columns give the entire 10 cm footprint in the corresponding 45° sector, including detached areas. Together they distinguish a long point on a contour from an entire broad lobe.
+
+| Bearing | Fixed 10 cm reach (km) | Uncertain 10 cm reach (km) | Fixed ≥10 cm area (km²) | Uncertain ≥10 cm area (km²) |
+|---|---:|---:|---:|---:|
+| N | 370.9 | 370.9 | 71,676 | 71,634 |
+| NE | 808.5 | 790.2 | 212,064 | 206,238 |
+| E | 336.8 | 325.9 | 48,837 | 47,328 |
+| SE | 115.0 | 106.1 | 5,981 | 5,106 |
+| S | 131.5 | 114.5 | 7,181 | 5,293 |
+| SW | 198.9 | 134.5 | 13,559 | 6,635 |
+| W | 125.7 | 114.3 | 6,341 | 5,256 |
+| NW | 134.0 | 134.3 | 7,038 | 6,894 |
+
+![Probability that a deposit reaches ten centimetres](exceedance.png)
+
+The 50% and 90% probability lines answer different questions. At a location on the 90% line, nine in ten model draws reach 10 cm. These are pointwise probabilities conditional on the model. Joint confidence over an entire region requires a different calculation.
+
+## Withheld observations
+
+Each row averages negative log predictive scores over equally weighted folds. Lower scores predict the withheld thicknesses and limits better. The passing-only columns exclude numerical failures. A dash means no fold passed.
+
+| Deletion | All estimable folds | Fixed | Uncertain | Passing folds | Fixed, passing | Uncertain, passing |
+|---|---:|---:|---:|---:|---:|---:|
+| geographic | 4 | 1.420 | 1.408 | 4 | 1.420 | 1.408 |
+| quadrants | 3 | 1.961 | 1.982 | 2 | 1.550 | 1.558 |
+
+[Predictions for every estimable held-out site](heldout.csv). The numerical record includes all planned folds, row identities, unscorable directions, fit warnings and phase-integration checks.
+
+## Checks and reproducibility
+
+The shared contour audit found eligible bands under none of the screened support policies. Audit status is completed. [All contour decisions and deletion failures](complete-contour-audit.json)
+
+The spatial integration check passed at 16,384 points per scramble. The map used up to 64 posterior draws per chain and structure. Resolved contour areas passed the split-packet check. The joint-volume quantiles passed the split check.
+
+All six full fits passed their sampling diagnostics.
+
+[Numerical report, all sector volumes and sensitivities](report.json) · [Complete fields and per-field volumes](fields.npz) · [Plotted grids](map-grid.npz) · [Fragment decisions](fragment-decisions.csv) · [Bracketed coordinates](bracketed-fragments.csv) · [File hashes](artifacts.json)

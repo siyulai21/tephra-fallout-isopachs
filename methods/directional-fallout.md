@@ -9,3 +9,7 @@ The model fits fan half-widths of **22.5°, 45° and 90°**. For each width it f
 The measured-fan sensitivity asks how the mapped extent changes when fallout follows sampled bearings. At B-Tm, two inspected western horizons contain ash shards without a measurable bed. Testing the predicted contours at these sites requires an assumption about how much local fallout would leave a recognizable layer. A separate marine core tests whether a narrowed map assigns too little ash offshore. [B-Tm field evidence](../eruptions/b-tm/results/directional/bearing/field-evidence.md)
 
 Use the [six-eruption study](../comparisons/directional-ensemble/README.md) for predictive scores, known-volume coverage and hidden-fan failures. The [single-structure study](../comparisons/directional/README.md) retains wider prior sensitivities and a separate test of ash hidden inside the nearest measurement. Both apply to bulk fallout.
+
+## Reading the edge of a directional isopach
+
+A solid fragment on the case-home map requires measured thicknesses bracketing that level. The dashed continuation can move substantially if an unsampled fan turns. Compare the paired median maps and the probability of exceeding 10 cm before reading an edge in a gap. [Uncertain-azimuth method](../docs/methods/uncertain-azimuth.md) · [Six-eruption evidence](../comparisons/azimuth-continuation/README.md)

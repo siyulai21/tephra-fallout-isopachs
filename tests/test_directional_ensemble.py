@@ -104,7 +104,9 @@ def test_assistant_led_directional_run_publishes_full_ensemble_at_root(tmp_path,
     from src.empirical_isopach.models.directional.ensemble import members, report
 
     from src.empirical_isopach.models.directional import bearing_report
+    from src.empirical_isopach.models.directional.azimuth import report as azimuth
     calls = []
+    monkeypatch.setattr(azimuth, "run", lambda *args: calls.append("azimuth sensitivity"))
     monkeypatch.setattr(bearing_report, "run", lambda *a: calls.append("archive and bearing fits"))
     monkeypatch.setattr(bearing_report, "attach_to_family_page", lambda *a: calls.append("bearing report link"))
     def single(path, work, dest, name):
@@ -121,6 +123,7 @@ def test_assistant_led_directional_run_publishes_full_ensemble_at_root(tmp_path,
     def ensemble(path, work, dest, name, *, family_page):
         dest.mkdir()
         report.narrative(dest, result, family_page=family_page)
+        (dest/"artifacts.json").write_text("{}")
         return result
 
     monkeypatch.setattr(reporting, "run_fits", lambda *args: calls.append("reference fits"))
@@ -129,7 +132,7 @@ def test_assistant_led_directional_run_publishes_full_ensemble_at_root(tmp_path,
     monkeypatch.setattr(members, "run_members", lambda *args: calls.append("ensemble fits"))
     monkeypatch.setattr(report, "render", ensemble)
     assert reporting.directional_dataset(datasets()[0]["path"], tmp_path) == result
-    assert calls == ["reference fits", "verified cache import", "ensemble fits", "archive and bearing fits", "bearing report link"]
+    assert calls == ["reference fits", "verified cache import", "ensemble fits", "archive and bearing fits", "bearing report link", "azimuth sensitivity"]
     assert (tmp_path/"README.md").read_bytes() == (published/"README.md").read_bytes()
     assert not (tmp_path/"ensemble/README.md").exists()
     assert (tmp_path/"single-structure.md").read_text() == "Preserved reference study"

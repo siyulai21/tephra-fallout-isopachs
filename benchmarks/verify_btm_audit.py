@@ -160,8 +160,19 @@ def verify_results(manifest):
         tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
         missing = sorted(set(release["files"]).difference(tracked))
         assert not missing, f"Release files missing from the Git index: {missing}"
+    from .publication import read_hashes
+    current = read_hashes()
+    archived_pages = {
+        "eruptions/b-tm/README.md", "eruptions/b-tm/results/directional/README.md",
+        "eruptions/b-tm/results/directional/ensemble/artifacts.json",
+    }
     for name, expected in release["files"].items():
-        assert digest(Path(name)) == expected, name
+        if name in archived_pages:
+            with ZipFile("comparisons/azimuth-continuation/archive/2026-11-18/previous-pages.zip") as previous:
+                assert sha256(previous.read(name)).hexdigest()==expected, name
+            assert digest(Path(name)) == current[name], name
+        else:
+            assert digest(Path(name)) == expected, name
     matched = pd.read_csv(STUDY/"matched-regional.csv").set_index(["slug", "method"])
     historical = pd.read_csv(STUDY/"spline-replay.csv").set_index(["slug", "method"])
     assert set(matched.index) == set(historical.index) == {
