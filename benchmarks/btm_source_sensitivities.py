@@ -28,6 +28,7 @@ def save_volume_draws(folder):
 
 BASE_CASES = ("range_low", "range_high", "correlations")
 SAMJIYON_CASES = ("samjiyon_scalar", "samjiyon_component", "samjiyon_complete_stack", "samjiyon_160")
+SOURCE_CASES = BASE_CASES + SAMJIYON_CASES + ("omit_compilation_values",)
 
 
 SAMJIYON_POSITIONS = (
@@ -56,6 +57,7 @@ def save_samjiyon_draws(data, meta, fit_work, weights, path):
         arrays[name+"__variance_log_thickness"] = predicted.variances[start:end].reshape(chains, draws, -1)
         start = end
     np.savez_compressed(path, **arrays)
+    return local_summaries(predicted)
 
 
 def local_summaries(prediction):
@@ -129,11 +131,20 @@ def write_local_predictions(directional, output):
     write_json(output/"samjiyon-prediction.json", prediction)
 
 
-def run(work, cases=BASE_CASES + SAMJIYON_CASES):
+def write_source_class_prediction(data, meta, folder, weights):
+    """Check the withheld Samjiyon prediction when compilation-carried thicknesses are omitted."""
+    samples = folder/"samjiyon-local-draws.npz"
+    positions = save_samjiyon_draws(data, meta, folder, weights, samples)
+    write_json(folder/"samjiyon-prediction.json", {"input_sha256":meta["input_sha256"],
+               "ensemble_weights":weights, "positions":positions})
+
+
+def run(work, cases=SOURCE_CASES):
     root = data_directory()
     audit = json.loads((root / "audits/B-Tm/provenance.json").read_text())
     samjiyon = json.loads((root / "audits/B-Tm/samjiyon-provenance.json").read_text())
-    inputs = {**audit["cases"], **samjiyon["cases"]}
+    source_class = json.loads((root / "audits/B-Tm/source-class-provenance.json").read_text())
+    inputs = {**audit["cases"], **samjiyon["cases"], **source_class["cases"]}
     for name in cases:
         case = inputs[name]
         data, meta = audited_data(root.parent / case["file"])
@@ -150,6 +161,8 @@ def run(work, cases=BASE_CASES + SAMJIYON_CASES):
                   "weighting": weights, "median_surface": centre, "coherent_fields": joint}
         write_json(folder / "result.json", report)
         save_volume_draws(folder)
+        if name == "omit_compilation_values":
+            write_source_class_prediction(data, meta, folder, weights["weights"])
         print(name, centre["volume_km3"], joint["volume_km3"], flush=True)
 
 
@@ -158,8 +171,7 @@ if __name__ == "__main__":
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--principal-directional", type=Path,
                         help="Completed principal directional directory with its work/ensemble fits")
-    parser.add_argument("--cases", nargs="*", choices=BASE_CASES + SAMJIYON_CASES,
-                        default=BASE_CASES + SAMJIYON_CASES)
+    parser.add_argument("--cases", nargs="*", choices=SOURCE_CASES, default=SOURCE_CASES)
     args = parser.parse_args()
     if not args.cases and not args.principal_directional:
         parser.error("Select a source case or supply --principal-directional for local predictions")

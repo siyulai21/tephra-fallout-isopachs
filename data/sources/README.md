@@ -2,6 +2,7 @@
 
 [Data guide](../README.md) · [Audits](../audits/README.md)
 
+- [B-Tm published sources](b-tm/README.md) include the Yang supporting archive, Costa phase table and Hokkaido field data.
 - [Minoan published workbook and catalogue](minoan/README.md): source downloads, attribution and their distinct roles in the audit.
 - The supplied YTT workbook remains in [the YTT audit](../audits/YTT/README.md), alongside its original provenance. It has not been moved or rewritten.
 

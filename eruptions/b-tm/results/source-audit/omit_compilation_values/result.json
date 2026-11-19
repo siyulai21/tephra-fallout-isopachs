@@ -1,0 +1,1140 @@
+{
+  "case": "omit_compilation_values",
+  "definition": "Omit the 25 accepted scalar thicknesses explicitly flagged as compilation values with an independently unverified primary log, and the separate Utasai scalar whose coordinates and core interval were checked but whose 4 cm thickness is carried from the compilation. Keep all other principal rows and bounds, including approximate mapped sites.",
+  "input": {
+    "file": "data/audits/B-Tm/omit_compilation_values.csv",
+    "sha256": "6f7f63719507a4dd50e127fe6d2b5945df8c04da577392ed1384e0869ff5a60d",
+    "n_measurements": 38,
+    "n_lower_limits": 3,
+    "n_upper_limits": 1,
+    "definition": "Omit the 25 accepted scalar thicknesses explicitly flagged as compilation values with an independently unverified primary log, and the separate Utasai scalar whose coordinates and core interval were checked but whose 4 cm thickness is carried from the compilation. Keep all other principal rows and bounds, including approximate mapped sites."
+  },
+  "weighting": {
+    "members": [
+      "narrow_fans",
+      "reference",
+      "broad_fans",
+      "narrow_missing_fan",
+      "possible_missing_fan",
+      "broad_missing_fan"
+    ],
+    "weights": [
+      0.1574000878195048,
+      0.16560066434292156,
+      0.11872459695396564,
+      0.14921867095125357,
+      0.22857361755168473,
+      0.18048236238066973
+    ],
+    "uniform": [
+      0.16666666666666666,
+      0.16666666666666666,
+      0.16666666666666666,
+      0.16666666666666666,
+      0.16666666666666666,
+      0.16666666666666666
+    ],
+    "unregularized": [
+      0.10884282214873701,
+      9.999999999999994e-10,
+      1.0000000382899454e-09,
+      9.999999999999994e-10,
+      0.6451305778931979,
+      0.24602659695806503
+    ],
+    "eruption_bootstrap_90pct": [
+      [
+        0.12732537481830913,
+        0.14536733684228487,
+        0.08425140489090471,
+        0.12349106369096356,
+        0.16608153267490228,
+        0.13455401669906483
+      ],
+      [
+        0.2070600736447245,
+        0.18699685146672257,
+        0.1683124627750693,
+        0.189218912844278,
+        0.30835410356258103,
+        0.24489583466525516
+      ]
+    ],
+    "calibration_cases": [
+      "mazama",
+      "tambora",
+      "aso-4",
+      "ytt",
+      "minoan"
+    ],
+    "excluded_cases": {
+      "b-tm": "target or same recorded source"
+    },
+    "penalty_eruption_equivalents": 1.0
+  },
+  "median_surface": {
+    "volume_km3": 48.91386775716462,
+    "parts_sectors_km3": [
+      [
+        0.0,
+        0.0,
+        0.17458678573284625,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.12842691042285456,
+        0.7708287199463234,
+        0.017910401484814473,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.08044713475121573,
+        0.07863332995228786,
+        0.0552532551273768,
+        0.07797614541602275,
+        0.08105722964339947,
+        0.08524952703029043,
+        0.08686685757328005,
+        0.084939569257945
+      ],
+      [
+        2.0739295531221003,
+        3.4671110509358893,
+        16.50367476298193,
+        2.5364340677825075,
+        2.1085911347594815,
+        2.897591301367218,
+        5.239470474060017,
+        2.7712164182571697
+      ],
+      [
+        0.0011066198014560284,
+        0.2766544221456172,
+        9.09114607861141,
+        0.01651406144139348,
+        0.0012482472294749727,
+        0.009152408749208906,
+        0.19083082134202403,
+        0.007020468239061952
+      ]
+    ],
+    "weight_sensitivity_km3": {
+      "central": 48.91386775716462,
+      "uniform": 47.313386895148284,
+      "without_extra_fan": 43.05711964038066,
+      "with_extra_fan": 66.46378268544021
+    },
+    "numerical": {
+      "history": [
+        {
+          "points_per_scramble": 2048,
+          "central_km3": 49.038730641906184,
+          "scramble_partition_L1_relative": 0.03864135887688433,
+          "nested_partition_L1_relative": null,
+          "independent_same_draw_mean_relative_error": 0.0008049741856634984,
+          "split_draw_central_relative_change": 0.01823175699504853
+        },
+        {
+          "points_per_scramble": 4096,
+          "central_km3": 48.91386775716462,
+          "scramble_partition_L1_relative": 0.017803103925580707,
+          "nested_partition_L1_relative": 0.0137490317126468,
+          "independent_same_draw_mean_relative_error": 0.0001652096778641532,
+          "split_draw_central_relative_change": 0.018350125187729605
+        }
+      ],
+      "spatial_passed": true,
+      "draw_split_passed": true,
+      "level_split_checks": [
+        {
+          "level_cm": 0.4357917486978081,
+          "median_exceedance_area_km2": 1642666.4084085957,
+          "split_symmetric_difference_over_union": 0.027319890070834726,
+          "weighted_union_ess": 345.7964660907492,
+          "union_points": 3557,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 0.9948033568510202,
+          "median_exceedance_area_km2": 883025.2149015397,
+          "split_symmetric_difference_over_union": 0.03768331334084235,
+          "weighted_union_ess": 372.2402782140635,
+          "union_points": 3210,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 2.270886775069029,
+          "median_exceedance_area_km2": 405719.4857174258,
+          "split_symmetric_difference_over_union": 0.03726047888794114,
+          "weighted_union_ess": 410.72463772955183,
+          "union_points": 2803,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 5.183865444028358,
+          "median_exceedance_area_km2": 149427.20556769124,
+          "split_symmetric_difference_over_union": 0.04097159994011839,
+          "weighted_union_ess": 625.3467483375991,
+          "union_points": 2347,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 11.833465779452817,
+          "median_exceedance_area_km2": 50811.21432081638,
+          "split_symmetric_difference_over_union": 0.05383515832885079,
+          "weighted_union_ess": 760.5416273938202,
+          "union_points": 1825,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 27.012837016206095,
+          "median_exceedance_area_km2": 13563.377792399424,
+          "split_symmetric_difference_over_union": 0.04223226547903767,
+          "weighted_union_ess": 691.4592448720489,
+          "union_points": 1236,
+          "resolved_for_split_check": true
+        },
+        {
+          "level_cm": 61.66353773812629,
+          "median_exceedance_area_km2": 1609.9007882238984,
+          "split_symmetric_difference_over_union": 0.029012541465602643,
+          "weighted_union_ess": 352.8705677706189,
+          "union_points": 549,
+          "resolved_for_split_check": true
+        }
+      ],
+      "resolved_level_splits_passed": true,
+      "thresholds": {
+        "resolved_level_split_symmetric_difference": 0.1,
+        "minimum_weighted_union_ess": 64,
+        "nested_partition_L1": 0.015,
+        "scramble_partition_L1": 0.025,
+        "mean_integral_relative": 0.01,
+        "split_draw_relative": 0.025
+      },
+      "scramble_seeds": [
+        41791,
+        80627
+      ],
+      "maximum_power": 16
+    },
+    "passed": true,
+    "refinement": [
+      {
+        "draws_per_chain": 64,
+        "volume_km3": 47.61736617885407,
+        "history": [
+          {
+            "points_per_scramble": 2048,
+            "central_km3": 47.750440591082445,
+            "scramble_partition_L1_relative": 0.040070620882563204,
+            "nested_partition_L1_relative": null,
+            "independent_same_draw_mean_relative_error": 0.0007882136224210967,
+            "split_draw_central_relative_change": 0.0242270718424189
+          },
+          {
+            "points_per_scramble": 4096,
+            "central_km3": 47.61736617885407,
+            "scramble_partition_L1_relative": 0.018072357997062864,
+            "nested_partition_L1_relative": 0.013653395127070759,
+            "independent_same_draw_mean_relative_error": 0.00015369034488532662,
+            "split_draw_central_relative_change": 0.02374105440701202
+          }
+        ],
+        "spatial_passed": true,
+        "draw_split_passed": true,
+        "level_split_checks": [
+          {
+            "level_cm": 0.4357917486978081,
+            "median_exceedance_area_km2": 1595609.5773044224,
+            "split_symmetric_difference_over_union": 0.023484315090106407,
+            "weighted_union_ess": 333.32391231576236,
+            "union_points": 3508,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 0.9948033568510202,
+            "median_exceedance_area_km2": 858419.6556292698,
+            "split_symmetric_difference_over_union": 0.039418216191975664,
+            "weighted_union_ess": 363.02649996414704,
+            "union_points": 3172,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 2.270886775069029,
+            "median_exceedance_area_km2": 405332.23114999384,
+            "split_symmetric_difference_over_union": 0.03982882039173848,
+            "weighted_union_ess": 402.90682537376796,
+            "union_points": 2784,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 5.183865444028358,
+            "median_exceedance_area_km2": 146501.84235539386,
+            "split_symmetric_difference_over_union": 0.08809081499646852,
+            "weighted_union_ess": 573.8620836390279,
+            "union_points": 2332,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 11.833465779452817,
+            "median_exceedance_area_km2": 49100.74501514307,
+            "split_symmetric_difference_over_union": 0.12431483677755224,
+            "weighted_union_ess": 748.5287136071341,
+            "union_points": 1824,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 27.012837016206095,
+            "median_exceedance_area_km2": 13130.168289755351,
+            "split_symmetric_difference_over_union": 0.14899380508360655,
+            "weighted_union_ess": 685.8450698110979,
+            "union_points": 1253,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 61.66353773812629,
+            "median_exceedance_area_km2": 1671.3980189802835,
+            "split_symmetric_difference_over_union": 0.10865405056871602,
+            "weighted_union_ess": 374.70958510559467,
+            "union_points": 569,
+            "resolved_for_split_check": true
+          }
+        ],
+        "resolved_level_splits_passed": false,
+        "thresholds": {
+          "resolved_level_split_symmetric_difference": 0.1,
+          "minimum_weighted_union_ess": 64,
+          "nested_partition_L1": 0.015,
+          "scramble_partition_L1": 0.025,
+          "mean_integral_relative": 0.01,
+          "split_draw_relative": 0.025
+        },
+        "scramble_seeds": [
+          41791,
+          80627
+        ],
+        "maximum_power": 16
+      },
+      {
+        "draws_per_chain": 128,
+        "volume_km3": 48.91386775716462,
+        "history": [
+          {
+            "points_per_scramble": 2048,
+            "central_km3": 49.038730641906184,
+            "scramble_partition_L1_relative": 0.03864135887688433,
+            "nested_partition_L1_relative": null,
+            "independent_same_draw_mean_relative_error": 0.0008049741856634984,
+            "split_draw_central_relative_change": 0.01823175699504853
+          },
+          {
+            "points_per_scramble": 4096,
+            "central_km3": 48.91386775716462,
+            "scramble_partition_L1_relative": 0.017803103925580707,
+            "nested_partition_L1_relative": 0.0137490317126468,
+            "independent_same_draw_mean_relative_error": 0.0001652096778641532,
+            "split_draw_central_relative_change": 0.018350125187729605
+          }
+        ],
+        "spatial_passed": true,
+        "draw_split_passed": true,
+        "level_split_checks": [
+          {
+            "level_cm": 0.4357917486978081,
+            "median_exceedance_area_km2": 1642666.4084085957,
+            "split_symmetric_difference_over_union": 0.027319890070834726,
+            "weighted_union_ess": 345.7964660907492,
+            "union_points": 3557,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 0.9948033568510202,
+            "median_exceedance_area_km2": 883025.2149015397,
+            "split_symmetric_difference_over_union": 0.03768331334084235,
+            "weighted_union_ess": 372.2402782140635,
+            "union_points": 3210,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 2.270886775069029,
+            "median_exceedance_area_km2": 405719.4857174258,
+            "split_symmetric_difference_over_union": 0.03726047888794114,
+            "weighted_union_ess": 410.72463772955183,
+            "union_points": 2803,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 5.183865444028358,
+            "median_exceedance_area_km2": 149427.20556769124,
+            "split_symmetric_difference_over_union": 0.04097159994011839,
+            "weighted_union_ess": 625.3467483375991,
+            "union_points": 2347,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 11.833465779452817,
+            "median_exceedance_area_km2": 50811.21432081638,
+            "split_symmetric_difference_over_union": 0.05383515832885079,
+            "weighted_union_ess": 760.5416273938202,
+            "union_points": 1825,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 27.012837016206095,
+            "median_exceedance_area_km2": 13563.377792399424,
+            "split_symmetric_difference_over_union": 0.04223226547903767,
+            "weighted_union_ess": 691.4592448720489,
+            "union_points": 1236,
+            "resolved_for_split_check": true
+          },
+          {
+            "level_cm": 61.66353773812629,
+            "median_exceedance_area_km2": 1609.9007882238984,
+            "split_symmetric_difference_over_union": 0.029012541465602643,
+            "weighted_union_ess": 352.8705677706189,
+            "union_points": 549,
+            "resolved_for_split_check": true
+          }
+        ],
+        "resolved_level_splits_passed": true,
+        "thresholds": {
+          "resolved_level_split_symmetric_difference": 0.1,
+          "minimum_weighted_union_ess": 64,
+          "nested_partition_L1": 0.015,
+          "scramble_partition_L1": 0.025,
+          "mean_integral_relative": 0.01,
+          "split_draw_relative": 0.025
+        },
+        "scramble_seeds": [
+          41791,
+          80627
+        ],
+        "maximum_power": 16
+      }
+    ]
+  },
+  "coherent_fields": {
+    "volume_km3": {
+      "lower95": 27.839335969893817,
+      "median": 75.31708172531846,
+      "upper95": 1246.9233626458135
+    },
+    "parts": [
+      {
+        "lower95": 0.20204763834605993,
+        "median": 0.25623821603492103,
+        "upper95": 0.3355800977210149
+      },
+      {
+        "lower95": 0.5484849230658999,
+        "median": 0.7585031657823867,
+        "upper95": 1.120814751508504
+      },
+      {
+        "lower95": 0.29829387608793706,
+        "median": 0.6404860542296786,
+        "upper95": 1.5481934789693095
+      },
+      {
+        "lower95": 17.728985006473625,
+        "median": 45.79151747388519,
+        "upper95": 285.54283087181216
+      },
+      {
+        "lower95": 2.56709560398797,
+        "median": 19.9323355157175,
+        "upper95": 996.6513338720006
+      }
+    ],
+    "sectors": [
+      {
+        "lower95": 0.27164050614202884,
+        "median": 2.4495835594462467,
+        "upper95": 12.466082253344867
+      },
+      {
+        "lower95": 0.6254820864204707,
+        "median": 5.531775475180317,
+        "upper95": 17.387314727050168
+      },
+      {
+        "lower95": 18.66733173724558,
+        "median": 31.085581358059812,
+        "upper95": 123.59526208156072
+      },
+      {
+        "lower95": 0.33517491332336474,
+        "median": 3.190886887105095,
+        "upper95": 13.962799862798235
+      },
+      {
+        "lower95": 0.28509639837545664,
+        "median": 2.511198715339975,
+        "upper95": 13.429259338048158
+      },
+      {
+        "lower95": 0.3491463796669656,
+        "median": 3.7164779424849166,
+        "upper95": 200.876958122715
+      },
+      {
+        "lower95": 0.3954114024020625,
+        "median": 7.000482521002206,
+        "upper95": 834.4396774782009
+      },
+      {
+        "lower95": 0.34800164662878197,
+        "median": 3.481259593528939,
+        "upper95": 158.75349756014103
+      }
+    ],
+    "uniform_volume_km3": {
+      "lower95": 27.482319854191548,
+      "median": 71.1961890014411,
+      "upper95": 1103.0829128943283
+    },
+    "field_mean_volume_km3": 207.49823664794104,
+    "all_members_passed": true,
+    "members": {
+      "narrow_fans": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261122,
+            "diagnostics": {
+              "rhat_max": 1.0031720767109737,
+              "bulk_ess_min": 1042.3313568383826,
+              "tail_ess_min": 1073.7601410578538,
+              "divergences": 4,
+              "bfmi_min": 0.9282080145467395,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "59c24d7e6b1c338da8bfd3dac4738f2d2d85593fe1479740f7dd49b591db3fce",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20262131,
+            "diagnostics": {
+              "rhat_max": 1.0022881467193847,
+              "bulk_ess_min": 2266.105788384975,
+              "tail_ess_min": 2911.7667719634387,
+              "divergences": 0,
+              "bfmi_min": 0.8948364855794406,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "ce39465b2928ee7f016f1358ee36a090e41965d9fdafc5ac545bda14f9e3d3f6",
+            "file": "attempt-2.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0002914934857786506,
+              "ray_count": 135
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 6.923297272779001e-06,
+              "ray_count": 270,
+              "max_partition_L1_change_over_total": 0.013500020967816568
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 8.738116011684705e-09,
+              "ray_count": 540,
+              "max_partition_L1_change_over_total": 0.0005820065717878373
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.962052727971,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842634563802,
+              15153.150053987692,
+              22.951575315492953,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 2000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 1.0010047652284462,
+          "bulk_ess": 4382.553046490845,
+          "tail_ess": 4172.43915063658,
+          "log_quantile_mcse": [
+            0.008171030466856966,
+            0.009468936273365758,
+            0.0320565110442983
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "ce39465b2928ee7f016f1358ee36a090e41965d9fdafc5ac545bda14f9e3d3f6",
+          "design_sha256": "b58bba9208c36881e056b03b9d636ab04dcf777108f3138f1736c99b721ec8c7"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 22.710332649314577,
+          "median": 48.74967878509538,
+          "upper95": 169.69389677397473
+        }
+      },
+      "reference": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261117,
+            "diagnostics": {
+              "rhat_max": 1.0026829941156676,
+              "bulk_ess_min": 1446.4276694443092,
+              "tail_ess_min": 925.9614185217569,
+              "divergences": 0,
+              "bfmi_min": 0.9674406650671153,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "5defd8d332992fde8f91a29c4604fa448a8e6091f0bc29d4241402f689a47e8b",
+            "file": "attempt-1.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0004268221202210599,
+              "ray_count": 133
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 1.1683029027650622e-05,
+              "ray_count": 266,
+              "max_partition_L1_change_over_total": 0.030404511846418385
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 2.964718482433869e-08,
+              "ray_count": 532,
+              "max_partition_L1_change_over_total": 0.0034181763062169717
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.96205272797,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842639001042,
+              15153.150053987745,
+              22.951039277477378,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 1000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 1.0008907915113059,
+          "bulk_ess": 1822.0054089943399,
+          "tail_ess": 2568.531400197536,
+          "log_quantile_mcse": [
+            0.010800457934008634,
+            0.01862391755107895,
+            0.029203493882552056
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "5defd8d332992fde8f91a29c4604fa448a8e6091f0bc29d4241402f689a47e8b",
+          "design_sha256": "bdde71f200edd68773e9523f6ac495c6f3b9413d44e096bbb1722d2fb79f65b6"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 31.275113979791247,
+          "median": 63.35384282347944,
+          "upper95": 196.96164543778036
+        }
+      },
+      "broad_fans": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261123,
+            "diagnostics": {
+              "rhat_max": 1.0019510740344597,
+              "bulk_ess_min": 1867.407705231087,
+              "tail_ess_min": 1675.4817473295793,
+              "divergences": 0,
+              "bfmi_min": 0.9087958360413593,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "3433b71c1c99d369ae1f42dffe6c206a3c08d40c5ba6845a8476ab8e1903bd61",
+            "file": "attempt-1.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0004268221202210599,
+              "ray_count": 131
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 1.2516735960285508e-05,
+              "ray_count": 262,
+              "max_partition_L1_change_over_total": 0.005923338705358693
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 2.9687874221447437e-08,
+              "ray_count": 524,
+              "max_partition_L1_change_over_total": 9.4905993100955e-05
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.96205272797,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842576401908,
+              15153.150053987663,
+              22.951039277477378,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 1000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 1.0004426127358168,
+          "bulk_ess": 3238.3008684626125,
+          "tail_ess": 2939.6988164888166,
+          "log_quantile_mcse": [
+            0.009223935112594228,
+            0.007687861318486311,
+            0.0383248445301656
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "3433b71c1c99d369ae1f42dffe6c206a3c08d40c5ba6845a8476ab8e1903bd61",
+          "design_sha256": "77a915b5766d40f77abc37fd3d5eb7d3add75c2caa9de2dc11162575e860a382"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 29.66250080769791,
+          "median": 51.247848724485614,
+          "upper95": 144.7228265021717
+        }
+      },
+      "narrow_missing_fan": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261130,
+            "diagnostics": {
+              "rhat_max": 1.0025658161054445,
+              "bulk_ess_min": 1585.9452958312445,
+              "tail_ess_min": 1492.9830031997317,
+              "divergences": 3,
+              "bfmi_min": 0.9337171643103621,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "8a0e4bb926d63e77a1398d2d23463716c44062f5a13c639127e0d5da1a6953ac",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20262139,
+            "diagnostics": {
+              "rhat_max": 1.0013936591872845,
+              "bulk_ess_min": 2183.8612798263994,
+              "tail_ess_min": 2423.356624564299,
+              "divergences": 0,
+              "bfmi_min": 0.8899068183042642,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "d4df1d03a64998340dd938f69f453d6809276b7541df8c352624d4cbb1b1e3f5",
+            "file": "attempt-2.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0002914934857786506,
+              "ray_count": 138
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 6.923297272779001e-06,
+              "ray_count": 276,
+              "max_partition_L1_change_over_total": 0.02301127264412606
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 8.738116011684705e-09,
+              "ray_count": 552,
+              "max_partition_L1_change_over_total": 0.003165917149952283
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.962052727971,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842634563802,
+              15153.150053987692,
+              22.951575315492953,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 2000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 1.000604267342593,
+          "bulk_ess": 6510.98105535872,
+          "tail_ess": 5769.631674046006,
+          "log_quantile_mcse": [
+            0.015454879211830752,
+            0.010388104107967866,
+            0.051365957389383876
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "d4df1d03a64998340dd938f69f453d6809276b7541df8c352624d4cbb1b1e3f5",
+          "design_sha256": "00abf296f61cd574a41a80bb75cce2fe5eccc315bdd153c1d9c9c84eda678a9c"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 27.218906397354445,
+          "median": 79.27018520944299,
+          "upper95": 708.7395239396741
+        }
+      },
+      "possible_missing_fan": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261124,
+            "diagnostics": {
+              "rhat_max": 1.005581811804453,
+              "bulk_ess_min": 2412.5811022795415,
+              "tail_ess_min": 2158.426088391201,
+              "divergences": 1,
+              "bfmi_min": 1.0101201608667587,
+              "max_depth_fraction": 0.0,
+              "passed": false
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "c9e2fef59fe4ff7744402369faa6dcee688806688771e780ac8cc877af952a9c",
+            "file": "attempt-1.npz"
+          },
+          {
+            "attempt": 2,
+            "seed": 20262133,
+            "diagnostics": {
+              "rhat_max": 1.0011701103509751,
+              "bulk_ess_min": 3238.847396310406,
+              "tail_ess_min": 2535.639659620961,
+              "divergences": 0,
+              "bfmi_min": 0.931139501174818,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 1200,
+            "draws_per_chain": 2000,
+            "posterior_sha256": "a0431523b875d672d8e8b4aaf55c114ce50f12a186fa2cded789cdc813113c33",
+            "file": "attempt-2.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0004268221202210599,
+              "ray_count": 136
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 1.1683029027650622e-05,
+              "ray_count": 272,
+              "max_partition_L1_change_over_total": 0.03050857605977683
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 2.964718482433869e-08,
+              "ray_count": 544,
+              "max_partition_L1_change_over_total": 0.0033101227886900395
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.96205272797,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842639001042,
+              15153.150053987745,
+              22.951039277477378,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 2000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 1.0000826443925486,
+          "bulk_ess": 7699.542639161157,
+          "tail_ess": 5501.420480528622,
+          "log_quantile_mcse": [
+            0.011557225052664988,
+            0.009299165743813731,
+            0.07683492313859741
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "a0431523b875d672d8e8b4aaf55c114ce50f12a186fa2cded789cdc813113c33",
+          "design_sha256": "294b7fa16ce897f82c065b1d429c6609df05049e75e6ee6b9694bc3ace36feda"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 37.59216088754387,
+          "median": 105.72072914003658,
+          "upper95": 1106.1528040930275
+        }
+      },
+      "broad_missing_fan": {
+        "attempts": [
+          {
+            "attempt": 1,
+            "seed": 20261131,
+            "diagnostics": {
+              "rhat_max": 1.002457185182867,
+              "bulk_ess_min": 1660.7434148264736,
+              "tail_ess_min": 1725.5951496728671,
+              "divergences": 0,
+              "bfmi_min": 0.9053330981555355,
+              "max_depth_fraction": 0.0,
+              "passed": true
+            },
+            "chains": 4,
+            "warmup": 600,
+            "draws_per_chain": 1000,
+            "posterior_sha256": "949432bd6bc99b4a2134ad3ae9fe3debc4a98374f956a34f00d9fcf685cefb52",
+            "file": "attempt-1.npz"
+          }
+        ],
+        "quadrature": {
+          "passed": true,
+          "history": [
+            {
+              "angular_order": 1,
+              "radial_order": 3,
+              "area_relative_error": 0.0004268221202210599,
+              "ray_count": 134
+            },
+            {
+              "angular_order": 2,
+              "radial_order": 5,
+              "area_relative_error": 1.2516735960285508e-05,
+              "ray_count": 268,
+              "max_partition_L1_change_over_total": 0.00663037867001546
+            },
+            {
+              "angular_order": 4,
+              "radial_order": 8,
+              "area_relative_error": 2.9687874221447437e-08,
+              "ray_count": 536,
+              "max_partition_L1_change_over_total": 7.679739803517385e-05
+            }
+          ],
+          "area_by_compass_km2": [
+            [
+              0.0,
+              0.0,
+              9457.96205272797,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              210.56842576401908,
+              15153.150053987663,
+              22.951039277477378,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "volume_draws_per_chain": 1000
+        },
+        "posterior_diagnostics_passed": true,
+        "volume_diagnostics": {
+          "rhat": 0.9999222900387814,
+          "bulk_ess": 3522.330081111017,
+          "tail_ess": 2749.291361709112,
+          "log_quantile_mcse": [
+            0.017479672310622085,
+            0.0219362713946456,
+            0.08558124733785366
+          ],
+          "passed": true
+        },
+        "signature": {
+          "integration_source_sha256": {
+            "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+            "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+          },
+          "posterior_sha256": "949432bd6bc99b4a2134ad3ae9fe3debc4a98374f956a34f00d9fcf685cefb52",
+          "design_sha256": "cd84db5ce98fefe7ec3c9a3d4fc0e4172bd71e68da05734301543a82b1b11b35"
+        },
+        "passed": true,
+        "volume_km3": {
+          "lower95": 39.07173305407153,
+          "median": 141.2263612911392,
+          "upper95": 4390.366721926313
+        }
+      }
+    }
+  }
+}

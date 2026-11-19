@@ -1,8 +1,6 @@
 # B-Tm source audit
 
-[Western isopachs and the independent lake and peat evidence](../../../eruptions/b-tm/results/directional/bearing/field-evidence.md). The dedicated study uses the reviewed 68-row input and retains all structural and archive sensitivities.
-
-The revised input for the 946 CE Millennium eruption of Paektu / Changbaishan has **64 measured thicknesses, three lower bounds and one upper bound**. The target is the combined bulk airfall from both eruptive phases, including ash that settled from pyroclastic clouds. Thicknesses are in centimetres. Core depth, ignimbrite thickness, lahar thickness and the dimensions of ash pockets have separate meanings in the evidence ledger. [Reviewed input](../../eruptions/B-Tm_reviewed.csv) · [Completed regional fits and source comparisons](../../../eruptions/b-tm/results/source-audit/README.md)
+The revised input for the 946 CE Millennium eruption of Paektu / Changbaishan has **64 measured thicknesses, three lower bounds and one upper bound**. The target is the combined bulk airfall from both eruptive phases, including ash that settled from pyroclastic clouds. Thicknesses are in centimetres. Core depth, ignimbrite thickness, lahar thickness and the dimensions of ash pockets have separate meanings in the evidence ledger. [Reviewed input](../../eruptions/B-Tm_reviewed.csv) · [Updated estimates, maps and geographic tests](../../../eruptions/b-tm/README.md)
 
 ## What changed
 
@@ -39,6 +37,8 @@ There are eight accepted observations within 100 km of the vent. Tianwenfeng and
 
 ### What Longgang and the other cryptotephras measure
 
+These sites also test the geometry of the western isopachs. The archive inventory records the actual observations, the source of each visibility assumption and the evidence for preservation. [Archive inventory](archive-observations.json) · [Revised isopachs and conditional volumes](../../../eruptions/b-tm/results/directional/bearing/README.md)
+
 | Site | Original observation | Use in this revision |
 |---|---|---|
 | Lake Sihailongwan, Longgang | Colourless peak of 2,657 shards per 0.5 g dry sediment at 53 cm depth and brown peak of 669 per 0.5 g at 52 cm. The protocol discarded the fraction below 30 µm. | A geochemically attributed occurrence west of the vent. The two colour-specific peaks correspond to 5,314 and 1,338 shards/g in different samples. They cannot be summed as a whole-deposit loading. [Sun et al., sections 2–4 and Fig. 2](https://doi.org/10.1016/j.gr.2015.01.013) |
@@ -62,7 +62,7 @@ Lee et al. subsequently measured the compositions of glass recovered from two NG
 
 ### Reproduction and limits
 
-The [manifest](provenance.json) pins the original and revised CSVs, the original three source scenarios and the [main evidence ledger](evidence.csv). Evidence IDs join every fitted site to its source row. Positive scalar values and explicit one-sided bounds enter the principal likelihood. The twelve [low](range_low.csv) and [high](range_high.csv) endpoints are fitted as joint alternative readings. The [alternative proximal correlations](correlations.csv) change only the summit and Dongfanghong. Their differences measure sensitivity to those stated choices. The [Samjiyon supplement](samjiyon-provenance.json) pins three conditional readings of the newly sourced 7 m record and the separate 1.6 m account. Together the seven alternatives do not span all preservation, site-registration or source uncertainties. [Source-sensitivity fits](../../../eruptions/b-tm/results/source-audit/README.md)
+The [manifest](provenance.json) pins the original and revised CSVs, the original three source scenarios and the [main evidence ledger](evidence.csv). Evidence IDs join every fitted site to its source row. Positive scalar values and explicit one-sided bounds enter the principal likelihood. The twelve [low](range_low.csv) and [high](range_high.csv) endpoints are fitted as joint alternative readings. The [alternative proximal correlations](correlations.csv) change only the summit and Dongfanghong. Their differences measure sensitivity to those stated choices. The [Samjiyon supplement](samjiyon-provenance.json) pins three conditional readings of the newly sourced 7 m record and the separate 1.6 m account. A further [source-provenance sensitivity](source-class-provenance.json) omits the 25 explicitly flagged compilation scalars and the separate Utasai thickness. Its 42-row selection retains the other measurements and all four bounds. These eight alternatives leave additional uncertainty about preservation, site registration and source identification. [Source-sensitivity fits](../../../eruptions/b-tm/results/source-audit/README.md)
 
 Both copies of the private `B-Tm.xlsx` have SHA-256 `1b4ca94b1b3370c52ab3a0bc31991a65de349247ae8379812f4ebb14ec03e72f`. The Changbaishan and alternate `B-TmR.xlsx` files have hashes `be9f9c7a91e591e8e57f1e6e23b935519190af2879fb4225cdc023aabed6e173` and `b2aca67c1d70db5305d3dc3820a43313c0a5cfc4aa687b1e32fdbdb3c9731177`. Their positive tables differ by a Suigetsu row versus the 700 cm entry. Both zero tables list the same 116 nominal locations. Without site-specific recovery, chronology and detection information, these entries supply no measured zeros or censoring thresholds. [Historical workbook inventory](../../../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md)
 

@@ -1,5 +1,7 @@
 # Supported isopachs and the limits of global volume
 
+The B-Tm rows in this study use the earlier 84-record dataset. The [current B-Tm case](../../eruptions/b-tm/README.md) uses the [revised source evidence](../../data/audits/B-Tm/README.md).
+
 **Scope update (0.10):** this remains the local contour-support audit. The [new conditional global estimates](../spherical-mixture/README.md) use a separate mass-normalized posterior; failing this screen no longer vetoes global inference. Aso-4 below reflects its 2026-11-08 source revision; the other five case results and historical stress tests are unchanged.
 
 [Project home](../../README.md) · [Equations and assumptions](../../docs/methods/supported-isopachs.md) · [Matched-hull comparison](../regional/README.md)
@@ -23,7 +25,7 @@ These are **partial bulk fallout volumes on restricted patches**, not revised to
 | [Mazama](../../eruptions/mazama/results/support/README.md) | 18.6% | 32.50 | 29.93 | None |
 | [Tambora](../../eruptions/tambora/results/support/README.md) | 1.7% | 12.50 | 11.92 | None |
 | [Aso-4](../../eruptions/aso-4/results/support/README.md) | 20.4% | 27.94 | 26.90 | None |
-| [B-Tm](../../eruptions/b-tm/results/support/README.md) | 5.4% | 2.27 | 2.27 | None |
+| [B-Tm](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm/results/support/README.md) | 5.4% | 2.27 | 2.27 | None |
 | [YTT](../../eruptions/ytt/results/support/README.md) | 6.7% | 249.71 | 214.01 | None |
 | [Minoan](../../eruptions/minoan/results/support/README.md) | 5.4% | 2.62 | 2.34 | None |
 

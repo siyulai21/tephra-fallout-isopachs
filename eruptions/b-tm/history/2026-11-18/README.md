@@ -1,0 +1,5 @@
+# B-Tm before the source revision
+
+The previous case treated 84 thicknesses as measured. This archive holds its full case report, maps, posterior packets, selection tables, support decisions and the shared files replaced in the revision. Files retain their original bytes and SHA-256. Old Markdown pages have a trailing `.txt` to preserve their original link text. The old CSV remains available in the data directory. [Browsable prior case](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm) · [Archived files](files/) · [Hash manifest](manifest.json) · [Original observations](../../../../data/eruptions/B-Tm_tephra.csv)
+
+The frozen six-eruption and visual verifiers restore these bytes to a temporary directory. Each continues to test the scientific claims it published. The current B-Tm source audit and calculations have a separate verification command, `python -m benchmarks.verify_btm_audit`. [Current case](../../README.md) · [Source audit](../../../../data/audits/B-Tm/README.md)

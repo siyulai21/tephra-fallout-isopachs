@@ -11,6 +11,6 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 | [Mazama](Mazama_tephra.csv) | [Report](../../eruptions/mazama/README.md) | Supplied flags; 45 accepted measurements, seven excluded pseudo rows |
 | [Tambora](Tambora_tephra.csv) | [Report](../../eruptions/tambora/README.md) | Supplied flags; 26 accepted measurements, two excluded pseudo rows |
 | [Aso-4](Aso-4_reviewed.csv) | [Report](../../eruptions/aso-4/README.md) | [Source-qualified audit](../audits/Aso-4/README.md); 83 exact, three lower and one upper bound; six excluded pseudo rows |
-| [B-Tm](B-Tm_tephra.csv) | [Report](../../eruptions/b-tm/README.md) | Supplied flags; 84 accepted measurements, seven excluded pseudo rows |
+| [B-Tm](B-Tm_reviewed.csv) | [Report](../../eruptions/b-tm/README.md) | [Row-level source audit](../audits/B-Tm/README.md) with 65 measurements, three lower bounds and one upper bound |
 
-The four originally supplied CSVs retain their original bytes. Aso-4's revised input has a separate filename; its source conflict and preservation assumptions remain explicit. Supplied flags alone are not an independent re-audit of every field source. Do not replace blanks or missing deposits with invented zero thicknesses.
+The four originally supplied CSVs retain their original bytes. Aso-4 and B-Tm have separately named reviewed inputs and source ledgers. Supplied flags alone are not an independent re-audit of every field source. Do not replace blanks or missing deposits with invented zero thicknesses.

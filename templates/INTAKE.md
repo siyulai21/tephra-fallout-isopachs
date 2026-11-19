@@ -1,5 +1,7 @@
 # Eruption intake — fill only what is known
 
+For a securely investigated horizon without a clear bed, include archive type, coordinates, age or correlation, sampling interval, recovery method, visible control beds and the original reference or figure. Identify unsurveyed or ambiguous sites explicitly. [Archive intake and modeling rules](../docs/methods/archive-evidence.md)
+
 - Eruption name and proposed short identifier:
 - Intended deposit quantity and included fans/phases:
 - Source publication, DOI/URL, table/page/sheet:

@@ -125,6 +125,9 @@ def verify(folder, record, comparison, study, extremes):
 
 
 def main():
+    from .publication_history import ARCHIVE, verify_previous
+    if (ARCHIVE / "manifest.json").is_file():
+        return verify_previous("verify_directional")
     root = Path("comparisons/directional")
     study = read(root/"verification.json")
     cases = pd.read_csv(root/"comparison.csv").set_index("slug")

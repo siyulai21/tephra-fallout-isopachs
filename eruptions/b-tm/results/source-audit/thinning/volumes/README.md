@@ -1,6 +1,6 @@
 # How much do thinning breaks change global B-Tm fallout volume?
 
-These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The median and conditional interval in the next columns come from integrating each coherent deposit separately. Volumes are bulk km³. All disputed DPRK locality summaries are withheld. [Seven source-interpretation sensitivities and principal ensemble](../../README.md) · [Local predictions and held-out geographic scores](../README.md)
+These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The median and conditional interval in the next columns come from integrating each coherent deposit separately. Volumes are bulk km³. All disputed DPRK locality summaries are withheld. [Source-interpretation sensitivities and principal ensemble](../../README.md) · [Local predictions and held-out geographic scores](../README.md)
 
 | Radial thinning | Median-map integral | Whole-deposit median | Conditional 95% interval | Warnings |
 |---|---:|---:|---:|---|

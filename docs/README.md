@@ -23,3 +23,5 @@ Start at the [eruption catalogue](../eruptions/README.md) for a published result
 | `benchmarks/` and `tests/` | Study reproduction, evidence verifiers and regression tests. [Benchmark commands](../benchmarks/README.md) |
 | `templates/` | Optional notes and empty input schema for a new eruption. |
 | `results/` at the repository root | Ignored scratch output. Reviewed publications live under their eruption. |
+
+[How an inspected core without a measurable bed can test an isopach](methods/archive-evidence.md) · [Six-eruption validation of cross-bearing reach](../comparisons/bearing-continuation/README.md)

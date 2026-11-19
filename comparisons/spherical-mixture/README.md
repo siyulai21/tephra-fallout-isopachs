@@ -1,5 +1,7 @@
 # Global fallout estimates across six eruptions
 
+The B-Tm rows in this study use the earlier 84-record dataset. The [current B-Tm case](../../eruptions/b-tm/README.md) uses the [revised source evidence](../../data/audits/B-Tm/README.md).
+
 [Four-method geographic prediction comparison](../README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
 
 [Single-structure directional comparison](../directional/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
@@ -15,7 +17,7 @@ The complete-contour screen was too conservative as a prerequisite for condition
 | [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | displaced | 223 | 145–3.67e+03 | 142–1.52e+05 | pass |
 | [Tambora](../../eruptions/tambora/results/spherical-mixture/README.md) | displaced | 179 | 113–1.28e+03 | 104–4.97e+03 | pass |
 | [Aso-4](../../eruptions/aso-4/results/spherical-mixture/README.md) | displaced · **questioned** | 1.47e+03 | 501–4.42e+04 | 465–1.41e+08 | pass |
-| [B-Tm](../../eruptions/b-tm/results/spherical-mixture/README.md) | source-fans | 106 | 53.2–2.16e+03 | 45.8–6.49e+03 | pass |
+| [B-Tm](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm/results/spherical-mixture/README.md) | source-fans | 106 | 53.2–2.16e+03 | 45.8–6.49e+03 | pass |
 | [YTT](../../eruptions/ytt/results/spherical-mixture/README.md) | displaced | 1.67e+03 | 1.2e+03–5.49e+04 | 1.14e+03–1.37e+05 | pass |
 | [Minoan](../../eruptions/minoan/results/spherical-mixture/README.md) | displaced | 46 | 28.1–2.53e+03 | 26.4–2.12e+04 | pass |
 

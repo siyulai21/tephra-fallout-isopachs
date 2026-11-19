@@ -1,21 +1,23 @@
 # B-Tm: empirical methods on one regional footprint
 
+[B-Tm case overview](../README.md) · [Directional median isopachs and archive sensitivities](directional/bearing/README.md)
+
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
-**84 exact measurements, 0 lower bounds, 0 upper limits.** The observation hull covers 963,645 km². The automatic validation buffer is 24.95 km.
+**64 reported thicknesses, three lower bounds and one upper bound.** The observation hull covers 549,464 km². The automatic validation buffer is 23.12 km.
 
 ![Matched median isopachs](isopachs.png)
 
-The full observation hull and every accepted location are visible. The coloured field is clipped to the exact hull; fine coastlines provide context only. [Current display frame](map-display.json) · [Replay and unchanged-volume checks](figure-replay.json).
+The full observation hull and every accepted location are in view. The coloured field is clipped to the exact hull; fine coastlines are context only. [Map frame and rendering provenance](map-display.json).
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 30.46 | 40.16 |
-| Integral of median thickness surface (km³) | 27.12 | 32.93 |
-| Conditional 95% volume interval (km³) | 23.22–41.28 | 22.81–86.18 |
-| Outer equal-region negative log score ↓ | 1.331 | 1.814 |
-| Outer log-thickness RMSE ↓ | 0.926 | 1.715 |
-| Outer 95% observation-interval coverage | 97.6% | 90.5% |
+| Expected regional bulk fallout (km³) | 24.33 | 28.47 |
+| Integral of median thickness surface (km³) | 22.82 | 19.82 |
+| Conditional 95% volume interval (km³) | 15.66–37.07 | 15.52–66.18 |
+| Outer equal-region negative log score ↓ | 1.512 | 1.803 |
+| Outer log-thickness RMSE ↓ | 1.129 | 2.026 |
+| Outer 95% observation-interval coverage | 89.1% | 98.4% |
 
 Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.
 
@@ -38,77 +40,31 @@ The mean volume integrates expected thickness. The median-surface integral is a 
   },
   "components": [
     {
-      "weight": 0.14863732999553306,
+      "weight": 1.0,
       "model": {
         "candidate": {
           "tail": "exponential",
           "length_factor": 1.5,
-          "noise_ratio": 0.75
+          "noise_ratio": 1.5
         },
         "beta": [
-          2.839044355405908,
-          20.304294531178392,
-          18.563184707830878,
-          -2.687108901429034
+          3.9177286079299813,
+          55.40464843434249,
+          52.48647992938348,
+          0.8300496222510045
         ],
-        "radius_scale_km": 989.3479460818735,
-        "length_km": 610.629239559499,
-        "amplitude_log": 0.8655528692716252,
-        "noise_log": 0.6491646519537189,
-        "jitter": 7.491817695043432e-10,
+        "radius_scale_km": 1006.0864065815343,
+        "length_km": 475.50338644035037,
+        "amplitude_log": 0.7705951264423287,
+        "noise_log": 1.1558926896634931,
+        "jitter": 5.938168488966687e-10,
         "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
-      }
-    },
-    {
-      "weight": 0.36427496972485834,
-      "model": {
-        "candidate": {
-          "tail": "power",
-          "length_factor": 0.25,
-          "noise_ratio": 0.75
-        },
-        "beta": [
-          3.1843385611166455,
-          28.06273615287081,
-          24.96750560783616,
-          -4.0157741774027915
-        ],
-        "radius_scale_km": 989.3479460818735,
-        "length_km": 101.77153992658316,
-        "amplitude_log": 0.8313179264251255,
-        "noise_log": 0.6234884448188441,
-        "jitter": 6.910894947957703e-10,
-        "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
-      }
-    },
-    {
-      "weight": 0.48708770027960857,
-      "model": {
-        "candidate": {
-          "tail": "power",
-          "length_factor": 0.75,
-          "noise_ratio": 0.75
-        },
-        "beta": [
-          3.1843385611166455,
-          28.06273615287081,
-          24.96750560783616,
-          -4.0157741774027915
-        ],
-        "radius_scale_km": 989.3479460818735,
-        "length_km": 305.3146197797495,
-        "amplitude_log": 0.8313179264251255,
-        "noise_log": 0.6234884448188441,
-        "jitter": 6.910894947957703e-10,
-        "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
+        "uncertainty": "conditional Laplace"
       }
     }
   ],
-  "dominant_tail": "power",
-  "observation_discrepancy_variance_log": 0.024416553524290452,
+  "dominant_tail": "exponential",
+  "observation_discrepancy_variance_log": 0.0,
   "trend_on_constraint_boundary": false,
   "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
 }
@@ -121,38 +77,38 @@ The mean volume integrates expected thickness. The median-surface integral is a 
   "method": "spline",
   "candidate": {
     "tail": "power",
-    "knot_intervals": 2,
+    "knot_intervals": 4,
     "tension": 1.0,
     "smoothing": 0.01,
     "trend_strength": 0.0,
     "noise_ratio": 0.75
   },
   "bounds_km": [
-    -66.53192309995278,
-    -738.353888107619,
-    1416.0829900285985,
-    515.432164069246
+    -63.74505584038474,
+    -726.5355653390515,
+    1356.259254032856,
+    268.37692857282343
   ],
   "knot_intervals_xy": [
-    2,
-    2
+    4,
+    3
   ],
-  "n_coefficients": 25,
-  "noise_log": 0.6234884448193408,
-  "amplitude_log": 0.8313179264257878,
+  "n_coefficients": 42,
+  "noise_log": 0.5770175291541332,
+  "amplitude_log": 0.7693567055388443,
   "trend_beta": [
-    3.184337972256187,
-    28.06272965398631,
-    24.96749990596912,
-    -4.015780750531823
+    4.176338941581743,
+    66.47628657095107,
+    61.81082745448926,
+    0.11142004025306854
   ],
-  "trend_radius_scale_km": 989.3479460818735,
+  "trend_radius_scale_km": 1006.0864065815343,
   "trend_on_constraint_boundary": false,
-  "effective_df_exact": 13.969031309908255,
-  "newton_decrement": 5.037227214025059e-26,
-  "newton_iterations": 0,
+  "effective_df_exact": 14.456080512758048,
+  "newton_decrement": 6.334009274419097e-17,
+  "newton_iterations": 6,
   "quadrature_order": 6,
-  "uncertainty": "Conditional Gaussian",
+  "uncertainty": "Conditional Laplace",
   "uncertainty_omits": [
     "fitted trend",
     "noise and smoothing estimation",
@@ -171,6 +127,7 @@ Every explored candidate is retained in the selection tables. All response-depen
 - All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.
 - Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.
 - Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals.
+- GP ensemble: held-out 95% observation coverage is only 89.1%; uncertainty is undercovered.
 
 ## Reproduce and inspect
 
@@ -185,9 +142,3 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
-
-## Four-method visual overview
-
-![Separate regional and global volume domains with matched predictive evidence](overview.png)
-
-The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md).

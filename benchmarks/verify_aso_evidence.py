@@ -6,6 +6,12 @@ import json, re
 import numpy as np
 import pandas as pd
 
+if __name__ == "__main__":
+    import sys
+    from .publication_history import verify_previous
+    verify_previous("verify_aso_evidence", sys.argv[1:])
+    raise SystemExit(0)
+
 OUT=Path('comparisons/aso-4-audit')
 read=lambda p:json.loads(Path(p).read_text())
 hashfile=lambda p:sha256(Path(p).read_bytes()).hexdigest()

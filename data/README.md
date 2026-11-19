@@ -9,13 +9,13 @@
 | `Mazama_tephra.csv` | 45 | 7 |
 | `Tambora_tephra.csv` | 26 | 2 |
 | `Aso-4_reviewed.csv` | 83 exact + 3 lower + 1 upper bound | 6 |
-| `B-Tm_tephra.csv` | 84 | 7 |
+| `B-Tm_reviewed.csv` | 64 measured + 3 lower + 1 upper bound | 0 in reviewed file (7 in original) |
 | `YTT_tephra.csv` | 46 | 0 |
 | `Minoan_tephra.csv` | 92 exact + 9 lower bounds | 0 |
 
-The unchanged `Aso-4_tephra.csv` is retained for historical reproduction. Its [reviewed replacement](audits/Aso-4/README.md) corrects two cruise coordinates and encodes four qualified bounds, including an explicitly unresolved Biwa source conflict. Mazama, Tambora and B-Tm counts still reflect supplied flags. YTT includes the two Maninjau primary-fallout beds and source-verified U1445B with qualified coordinates; [read its audit](audits/YTT/README.md). Minoan combines all fallout fans using [documented source decisions](audits/Minoan/README.md). Unnamed extra columns are ignored and reported. Original historical maps remain in Git history and are not fitting inputs.
+The unchanged `Aso-4_tephra.csv` is retained for historical reproduction. Its [reviewed replacement](audits/Aso-4/README.md) corrects two cruise coordinates and encodes four qualified bounds, including an explicitly unresolved Biwa source conflict. Mazama and Tambora counts reflect supplied flags. YTT includes the two Maninjau primary-fallout beds and source-verified U1445B with qualified coordinates; [read its audit](audits/YTT/README.md). Minoan combines all fallout fans using [documented source decisions](audits/Minoan/README.md). Unnamed extra columns are ignored and reported. Original historical maps remain in Git history and are not fitting inputs.
 
-Targeted reviews recovered [B-Tm source descriptions and 76 site correspondences](../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) and [earlier Aso-4 source qualifications and reported absences](../comparisons/source-revision/input-inventory/README.md). Some numeric entries encode a range endpoint, an upper bound, a trace or uncertain preservation. B-Tm's accepted table remains unchanged; Aso-4's later revision and controlled alternatives are documented in its audit. These checks do not certify every primary source.
+Targeted reviews recovered [B-Tm source descriptions and 76 site correspondences](../comparisons/source-revision/input-inventory/b-tm-workbook-review/README.md) and [earlier Aso-4 source qualifications and reported absences](../comparisons/source-revision/input-inventory/README.md). Some numeric entries encode a range endpoint, an upper bound, a trace or uncertain preservation. The [B-Tm revision](audits/B-Tm/README.md) preserves the original CSV, reconciles both published compilations and tests alternative source readings. Aso-4's later revision and controlled alternatives are documented in its audit. These checks do not certify every primary source.
 
 ## CSV schema
 

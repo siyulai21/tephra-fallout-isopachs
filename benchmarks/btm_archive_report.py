@@ -18,6 +18,47 @@ def format_cm(value):
     return f"{value:.3g}"
 
 
+def control_predictions(work, ensemble, folder):
+    from src.empirical_isopach.models.directional.archive_readings import load_inventory,positions
+    from src.empirical_isopach.models.directional.ensemble.fields import Ensemble,load_members,load_packet
+    from src.empirical_isopach.models.directional.geometry import polar
+    from src.empirical_isopach.models.mass_mixture.study import audited_data
+
+    path = Path("data/eruptions/B-Tm_reviewed.csv")
+    data,meta = audited_data(path)
+    data = data.canonical()
+    inventory,_ = load_inventory(path,Path("data/audits/B-Tm/archive-observations.json"))
+    sites = [s for s in inventory["sites"] if s["id"] in {"longgang","quanyang","old-084","gushantun"}]
+    xy = positions(sites,meta["vent_lonlat"])
+    report = read(ensemble/"report.json")
+    if report["input"]["input_sha256"] != meta["input_sha256"]:
+        raise ValueError("The control map must use the reviewed B-Tm thickness data")
+    latitude = meta["vent_lonlat"][1]
+    surface = load_packet(ensemble,data,latitude,report)
+    members = load_members(data,latitude,work,n=None)
+    distribution = Ensemble(members,report["weighting"]["weights"])
+    field = distribution.distribution(xy)
+    local = distribution.distribution(xy,observation=True)
+    geometry = members[0].geometry
+    radius,angle = polar(xy,geometry.axis)
+    triangles,_,bary = geometry.locate(xy)
+    quantiles = (.025,.5,.975)
+    field_q = np.exp([field.quantile(q) for q in quantiles])
+    local_q = np.exp([local.quantile(q) for q in quantiles])
+    map_median = np.exp(surface.distribution(xy).quantile(.5))
+    probabilities = np.array([local.cdf(np.log(t)) for t in (.1,1.)])
+    member_medians = {m.geometry.policy.name:np.exp(Ensemble([m],[1.]).distribution(xy).quantile(.5)) for m in members}
+    out = {}
+    for i,s in enumerate(sites):
+        out[s["id"]] = {"site":s["name"],"r":float(radius[i]),"bearing":float(np.rad2deg(angle[i])),
+            "mesh_weight":float(bary[i].sum()),"triangle":int(triangles[i]),
+            "nearest_real_km":float(np.linalg.norm(data.xy-xy[i],axis=1).min()),
+            "map_field_cm":float(map_median[i]),"field_cm":field_q[:,i].tolist(),
+            "local_cm":local_q[:,i].tolist(),"prob_local_under_1mm_or_1cm":probabilities[:,i].tolist(),
+            "member_medians_cm":{k:float(v[i]) for k,v in member_medians.items()}}
+    write_json(folder/"published-map-at-archives.json",out)
+
+
 def publish(output):
     output=Path(output)
     scenarios={f.parent.name:read(f) for f in output.glob("*/result.json")}
@@ -48,7 +89,11 @@ def publish(output):
                          ("Directional, condition on Sihailongwan alone",scenarios["lake_only"]),
                          ("Directional, condition on Quanyang alone",scenarios["peat_only"])]:
         rows.append(f"| {title} | "+" | ".join(format_cm(select(source,k)["latent_cm"]["median"]) for k in ids)+" |")
-    rows+=["","The previous six-structure map assigns "+f"{west(original):.2f} km³ to SW, W and NW combined. Restricting the central structures to measured fans and allowing shorter cross-bearing reach gives {west(base):.2f} km³. The comparable-bed scenario gives {west(ref):.2f} km³. The same 68 quantitative observations enter all three. Ten-slice, one-slice and other archive assumptions remain separate sensitivities. Their scenario membership, weights and numerical warnings are visible in the main report.","",
+    def mapped_pair(result):
+        m={s["id"]:s["latent_cm"]["median"] for s in result["map_sites"]}
+        return f"{format_cm(m['longgang'])} cm at Sihailongwan and {format_cm(m['quanyang'])} cm at Quanyang"
+    rows+=["",f"The rendered directional maps use a chain-balanced sample of posterior fields. Evaluated at the exact core coordinates, the measured-fan map gives **{mapped_pair(base)}**. The comparable-bed map gives **{mapped_pair(ref)}**. In the table, the historical map row uses its archived rendering sample. The remaining rows summarize the full posterior at each site. [Measured-fan site and map values](quantitative/result.json) · [Comparable-bed site and map values](visible_analogs/result.json)","",
+           "The previous six-structure map assigns "+f"{west(original):.2f} km³ to SW, W and NW combined. Restricting the central structures to measured fans and allowing shorter cross-bearing reach gives {west(base):.2f} km³. The comparable-bed scenario gives {west(ref):.2f} km³. The same 68 quantitative observations enter all three. Ten-slice, one-slice and other archive assumptions remain separate sensitivities. Their scenario membership, weights and numerical warnings are visible in the main report.","",
            "The lake and peat limits in the comparable-bed sensitivity come from identifiable B-Tm in Lake Ogawara (1 cm) and a peat-bog margin in Primorye (up to 2 cm). They test an assumption about equivalent preservation and visual recognition at the two western sites. The Primorye investigators recovered only cryptotephra at the centre of that same bog, direct evidence that local preservation can change the result. [Ogawara, Figs. 1c and 2](https://doi.org/10.2343/geochemj.2.0619) · [Razjigaeva et al., ash-layer distributions](https://sciencejournals.ru/view-article/?a=DANZem2010014Razzhigaeva&j=danzem&n=2&v=494&y=2020)","",
            "An upper-only fit can also make the western lake extremely thin. Sihailongwan preserved abundant glass in the extraction fraction. The smallest fitted thicknesses require an explicit check against shard loading before a physical interpretation. Costa’s published Sihailongwan equivalent is 0.00256 cm under a transferred shard-count calibration. The necessary site-specific conversion from the counted fraction to original fallout remains unresolved. The transfer alternatives also disagree at independent Lake Kushu. These facts limit any claim of a uniquely located western isopach. [Reported equivalents and count audit](../../../../../data/audits/B-Tm/README.md)","",
            "## What the field evidence can reject","",
@@ -108,3 +153,21 @@ def publish(output):
     if lead not in s:s[1:1]=["",lead]
     p.write_text("\n".join(s)+"\n")
     write_json(output/"artifacts.json",{p.relative_to(output).as_posix():digest(p) for p in output.rglob("*") if p.is_file() and p!=output/"artifacts.json"})
+
+
+if __name__=="__main__":
+    import argparse
+    from .btm_shard_compatibility import compare
+    from .btm_spherical_archive_refit import publish_refit
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--case",type=Path,required=True,help="Completed full B-Tm comparison directory")
+    parser.add_argument("--spherical-refit",type=Path,help="Independent spherical archive refit directory")
+    args=parser.parse_args()
+    ensemble=args.case/"directional/ensemble"
+    work=args.case/"directional/work/ensemble"
+    output=args.case/"directional/bearing"
+    control_predictions(work,ensemble,output)
+    compare(work,work/"archive-refits",args.case/"spherical-mixture/posterior.npz",output)
+    if args.spherical_refit:
+        publish_refit(args.spherical_refit,output)
+    publish(output)

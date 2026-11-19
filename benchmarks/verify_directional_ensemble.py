@@ -132,4 +132,5 @@ def main():
 
 
 if __name__=="__main__":
-    main()
+    from .publication_history import verify_previous
+    verify_previous("verify_directional_ensemble")

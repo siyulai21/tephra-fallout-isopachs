@@ -230,6 +230,16 @@ class TrendRegularizedSpline:
                 else:
                     if decrement < 1e-8:
                         break
+                    # Strong curvature penalties can lose the small objective
+                    # decrease to cancellation. For this convex fit, certify
+                    # the full Newton proposal by its own gradient and Hessian.
+                    proposed = coefficients - step
+                    _, new_gradient, new_hessian = objective(proposed, True)
+                    new_factor = cho_factor(new_hessian, lower=True)
+                    new_decrement = float(new_gradient @ cho_solve(new_factor, new_gradient))
+                    if 0 <= new_decrement < 1e-12:
+                        coefficients = proposed
+                        break
                     raise RuntimeError("Censored spline Newton line search failed.")
             else:
                 raise RuntimeError("Censored spline did not converge in 80 Newton steps.")

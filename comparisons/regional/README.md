@@ -1,5 +1,7 @@
 # Regional comparison of empirical methods
 
+The B-Tm rows in this study use the earlier 84-record dataset. The [current B-Tm case](../../eruptions/b-tm/README.md) uses the [revised source evidence](../../data/audits/B-Tm/README.md).
+
 [Four-method geographic prediction comparison](../README.md) · [Map and uncertainty guide](../../docs/OUTPUTS.md)
 
 All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison. Aso-4 uses its 2026-11-08 source-qualified revision; the other five case calculations and the synthetic trials are unchanged. Read the [Aso-4 audit](../aso-4-audit/README.md) and [support checks](../support/README.md).
@@ -8,8 +10,8 @@ All methods are reported as peers. Every eruption uses its accepted data, identi
 |---|---|---:|---:|---:|
 | [Aso-4](../../eruptions/aso-4/results/README.md) | GP ensemble | 202.7 | 1.514 | 94.0% |
 | [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 248.2 | 1.662 | 90.4% |
-| [B-Tm](../../eruptions/b-tm/results/README.md) | GP ensemble | 30.5 | 1.331 | 97.6% |
-| [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 40.2 | 1.814 | 90.5% |
+| [B-Tm](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm/results/README.md) | GP ensemble | 30.5 | 1.331 | 97.6% |
+| [B-Tm](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 40.2 | 1.814 | 90.5% |
 | [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 141.6 | 1.272 | 95.6% |
 | [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 132.6 | 1.971 | 82.2% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 27.2 | 1.451 | 96.7% |

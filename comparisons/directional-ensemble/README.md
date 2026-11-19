@@ -1,5 +1,7 @@
 # Directional ensemble results
 
+The B-Tm rows in this study use the earlier 84-record dataset. The [current B-Tm case](../../eruptions/b-tm/README.md) uses the [revised source evidence](../../data/audits/B-Tm/README.md).
+
 The directional headline is the bulk volume obtained by integrating the **pointwise median isopachs** over the Earth. A second summary gives the median and conditional 95% interval across complete simulated deposits. Each of the six combinations of fan width and gap treatment is fitted to the same accepted observations. The reported eruption contributes no holdout scores to its own predictive weights.
 
 ![Central isopach volumes, complete-field intervals and measured shares](volumes.png)
@@ -9,7 +11,7 @@ The directional headline is the bulk volume obtained by integrating the **pointw
 | [Mazama](../../eruptions/mazama/results/directional/README.md) | **179.9** | 224.3 [149.1–1,371.9] | 14.6% | 6/6 | passed |
 | [Tambora](../../eruptions/tambora/results/directional/README.md) | **105.8** | 119.6 [78.6–184.0] | 10.1% | 2/6 | passed |
 | [Aso-4](../../eruptions/aso-4/results/directional/README.md) | **740.0** | 882.7 [397.5–2,931.7] | 3.3% | 6/6 | passed |
-| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | **59.3** | 71.0 [42.2–410.0] | 3.6% | 6/6 | passed |
+| [B-Tm](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm/results/directional/README.md) | **59.3** | 71.0 [42.2–410.0] | 3.6% | 6/6 | passed |
 | [YTT](../../eruptions/ytt/results/directional/README.md) | **985.7** | 1,274.1 [765.6–3,514.0] | 19.7% | 6/6 | passed |
 | [Minoan](../../eruptions/minoan/results/directional/README.md) | **33.7** | 42.0 [26.6–129.1] | 7.3% | 6/6 | passed |
 

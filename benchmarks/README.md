@@ -58,3 +58,9 @@ These commands are retained for compatibility, audit preparation and regression 
 | `python -m benchmarks.summarize_empirical results/empirical/benchmark.json --output results/comparison` | Summarize an existing ensemble benchmark | Reporting only |
 
 `minoan --prepare-only` and `ytt --prepare-only` reconstruct audited inputs and are maintenance operations. Normal analysis commands verify existing accepted data. `ytt_inputs.py` supplies the reviewed YTT reconstruction. A report made with current code must record current hashes; do not relabel a new run as the original historical execution.
+
+## Archive evidence and directional reach
+
+The [six-eruption withholding study](../comparisons/bearing-continuation/README.md) tests all shared range ratios. For a complete case run, use `tephra-isopachs compare B-Tm --output results/btm-archive-replay`. The case catalogue selects its audited archive inventory. To repeat the independently initialized spherical check, use `python -m benchmarks.btm_spherical_archive_refit --work results/btm-spherical-archive-check`. Replay the published median fields, volumes and archive weights with `python -m benchmarks.verify_bearing_continuation`.
+
+After those two fits, regenerate the field interpretation, compare the held-out shard magnitudes and attach the independent spherical refit with `python -m benchmarks.btm_archive_report --case results/btm-archive-replay --spherical-refit results/btm-spherical-archive-check`. The numerical comparisons retain the queried site, source statistic, conversion, original posterior identities and whether the model used the archive to constrain bed visibility. [B-Tm field audit](../eruptions/b-tm/results/directional/bearing/field-evidence.md)
