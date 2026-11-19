@@ -146,7 +146,7 @@ def summarize(known, regional, output, cli_replay=None):
               "[Case comparison](comparison.csv) · [Known volumes](known-volumes.csv) · [Contour overlap by scenario and level](contour-accuracy.csv) · "
               "[Complete simulation records](simulation-records.json.gz) · [Verification](verification.json)", "",
               "[Method and equations](../../docs/methods/directional-ensemble.md) · [Single-structure studies](../directional/README.md) · "
-              "[Four-method comparison](../README.md) · [Dated presentation archive](history/2026-11-18/manifest.json)",""]
+              "[Four-method comparison](../README.md)",""]
     (output/"README.md").write_text("\n".join(lines))
     artifacts = {f:digest(output/f) for f in ("README.md","volumes.png","comparison.csv","known-volumes.csv","contour-accuracy.csv","simulation-records.json.gz")}
     verification = {"regional_benchmark":regional_check,"calibration_sha256":digest(PACKET),"artifacts":artifacts,

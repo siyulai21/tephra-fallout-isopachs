@@ -1,8 +1,10 @@
 # Historical YTT selections
 
-These inputs document earlier decisions. Current accepted inputs and sensitivities are one level above. Historical provenance JSON and manifests preserve the paths and hashes used at the time; those path strings are historical records, not current file locations.
+The original audit and its intermediate revision record the selection decisions that led to the current 46 observations. The original workbook is stored once with the [current audit](../README.md).
 
-- `2026-11-02/`: original audit provenance and manifest; `without_maninjau_43.csv` is the former principal input; `no_md161_38.csv` and `with_maninjau_45.csv` are the original sensitivity inputs.
-- `2026-11-03-maninjau/`: the intermediate 45-record principal input, its provenance and manifest, and the 40-record MD161 exclusion input. Its 43-record exclusion input is the same original CSV stored in the preceding directory.
+| Revision | Evidence kept here |
+|---|---|
+| [Original provenance](2026-11-02/provenance.json) | The 43-record selection and its 38- and 45-record alternatives. Input verification checks all three against their recorded hashes. |
+| [Intermediate provenance](2026-11-03-maninjau/provenance.json) | The row manifest and 40-record exclusion. The 45-record principal selection is byte-identical to the [current sensitivity without U1445B](../sensitivity/without_u1445b.csv). |
 
-The source workbook is preserved once in the parent directory. Current `verify_inputs()` checks the original three input hashes against their historical provenance. Earlier README files are retained as historical narratives; use this index for relocated inputs and the [report archive](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/ytt/archive/README.md) for calculations.
+[Published calculations for the earlier selections](https://github.com/siyulai21/tephra-fallout-isopachs/tree/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/ytt/archive)

@@ -6,9 +6,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+from .publication import read_hashes, verify_files
 from scipy.special import logsumexp
 
-from .visual_history import verified_presentation
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.models.directional.study import digest
@@ -22,14 +23,14 @@ def read(p):
     return json.loads(p.read_text())
 
 
-def verify_case(rec, summary):
+def verify_case(rec, expected_input, median_map_km3):
     home = Path("eruptions")/rec["slug"]/"results"
     folder = home/"directional"/"ensemble"
     report = read(folder/"report.json")
     for f,h in read(folder/"artifacts.json").items():
         assert digest(folder/f)==h,(rec["slug"],f)
     data,meta = audited_data(rec["path"])
-    assert digest(rec["path"]) == report["input"]["input_sha256"] == summary.input_sha256
+    assert digest(rec["path"]) == report["input"]["input_sha256"] == expected_input
     assert digest(PACKET)==report["calibration_sha256"]
     correct = calibrate(meta,rec["slug"])
     np.testing.assert_allclose(correct["weights"],report["weighting"]["weights"],rtol=1e-7)
@@ -44,7 +45,7 @@ def verify_case(rec, summary):
     model = load_packet(folder,data,meta["vent_lonlat"][1],report)
     centre = report["median_surface"]
     central = centre["volume_km3"]
-    assert np.isclose(central,summary.median_map_km3)
+    assert np.isclose(central,median_map_km3)
     cells = np.array(centre["parts_sectors_km3"])
     assert cells.shape==(5,8) and (cells>=0).all() and np.isclose(cells.sum(),central)
     assert centre["passed"] == all(centre["numerical"][x] for x in ("spatial_passed","draw_split_passed","resolved_level_splits_passed"))
@@ -101,26 +102,30 @@ def verify_case(rec, summary):
 def main():
     root=Path("comparisons/directional-ensemble")
     tab=pd.read_csv(root/"comparison.csv").set_index("slug")
-    for rec in datasets():
-        verify_case(rec,tab.loc[rec["slug"]])
     verification=read(root/"verification.json")
     for rec in datasets():
-        assert digest(Path("eruptions")/rec["slug"]/"results/directional/ensemble/report.json")==verification["case_reports"][rec["slug"]]
+        slug = rec["slug"]
+        home = Path("eruptions")/slug/"results"
+        expected_input = tab.loc[slug].input_sha256
+        median_map = tab.loc[slug].median_map_km3
+        expected_report = verification["case_reports"][slug]
+        if digest(rec["path"]) != expected_input:
+            release = read(home/"source-audit/release.json")
+            expected_input = release["files"][rec["path"].relative_to(Path.cwd()).as_posix()]
+            median_map = release["directional_median_map_km3"]
+            expected_report = release["files"][str(home/"directional/ensemble/report.json")]
+        assert digest(home/"directional/ensemble/report.json") == expected_report
+        verify_case(rec, expected_input, median_map)
     assert digest(PACKET)==verification["calibration_sha256"]
     assert all(check["identical"] and check["rerun_sha256"]==check["published_sha256"]
                for check in verification["regional_benchmark"].values())
-    archive=root/"history/2026-11-18"
-    manifest=read(archive/"manifest.json")
-    assert digest(archive/"previous-presentation.zip")==manifest["archive_sha256"]
-    from zipfile import ZipFile
-    from hashlib import sha256
-    with ZipFile(archive/"previous-presentation.zip") as previous:
-        assert set(previous.namelist())==set(manifest["files"])
-        for name,item in manifest["files"].items():
-            assert verified_presentation(name,item["current_sha256"]) and sha256(previous.read(name)).hexdigest()==item["prior_sha256"], name
-    files=verification["artifacts"]
-    for path,checksum in files.items():
-        assert verified_presentation(root/path,checksum),path
+    # The study retains the hashes of its original publication, including its old text.
+    for path, checksum in verification["artifacts"].items():
+        if path == "README.md":
+            name = str(root/path)
+            verify_files({name: read_hashes()[name]})
+        else:
+            assert digest(root/path) == checksum, path
     with gzip.open(root/"simulation-records.json.gz","rt") as f:
         stress=json.load(f)
     assert len(stress)==14
@@ -132,5 +137,4 @@ def main():
 
 
 if __name__=="__main__":
-    from .publication_history import verify_previous
-    verify_previous("verify_directional_ensemble")
+    main()

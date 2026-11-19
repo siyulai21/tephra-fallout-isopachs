@@ -4,13 +4,13 @@ Users submit measurements in chat. Audit the sources, run all active families an
 
 ## Sources of truth
 
-- For a broad unsampled direction, publish the measured-fan continuation and its sector volumes under `directional/bearing/`. Retain disagreement with the missing-fan sensitivity. A source-supported cryptotephra or inspected horizon without a bed can challenge a predicted isopach. Record its correlation, sampling, preservation and recognition controls, score it at the actual site, and qualify any bound on primary fallout. Unsurveyed directions supply no absence observation. [Archive evidence protocol](docs/methods/archive-evidence.md)
-
 - `data/datasets.json` identifies the accepted CSV, audit and reviewed spherical-mixture geometry. Aso-4 uses its reviewed input. B-Tm uses source-focused spherical fans. Preserve original units, row identities, hashes, bounds and reasons for inclusion or exclusion. Never invent evidence, observation errors, pseudo-data or zero deposits.
 - `src/empirical_isopach/models/registry.py` lists the regional GP ensemble and cubic spline. Compare them on the same accepted rows, outer geographic folds and observation hull. Tune inside training folds. [Method contract](docs/ADDING_METHOD.md)
 - The global families fit the observations independently. Within `results/directional/`, **`ensemble/report.json` records the six-structure directional calculation**, including a hypothetical fan in the widest gap. Its `median_surface.volume_km3` integrates the central isopachs and `coherent_fields.volume_km3` summarizes complete-field volumes. Parent-level `report.json` and `single-structure.md` preserve the single-structure reference and broader sensitivities. Use the target-excluded calibration and retain every fit warning. [Directional ensemble protocol](docs/methods/directional-ensemble.md)
 - `results/spherical-mixture/report.json` contains the independent global posterior. Run its fixed sensitivities and matched geographic tests. Preserve separate conditional intervals, prior-sensitivity envelopes and numerical status. [Spherical-mixture protocol](docs/methods/probabilistic-global.md)
 - Apply the shared support audit to every family. Keep unsupported holes, rejection reasons and assumptions about proximal and distal fallout. Publish conditional global estimates even when no complete band qualifies. [Support protocol](docs/methods/supported-isopachs.md)
+
+- For a broad unsampled direction, publish the measured-fan continuation and its sector volumes under `directional/bearing/`. Retain disagreement with the missing-fan sensitivity. An inspected lake or peat horizon can test a predicted isopach. Record its correlation, sampling, preservation and recognition controls, score it at the actual site, and qualify any bound on primary fallout. Unsurveyed directions supply no absence observation. [Archive evidence protocol](docs/methods/archive-evidence.md)
 
 ## Run and publish
 
@@ -30,6 +30,8 @@ Preserve earlier result identities, raw evidence, relevant sensitivity studies, 
 python -m pytest -q
 python scripts/check_repository_navigation.py
 python -m benchmarks.verify_visuals
+python -m benchmarks.verify_btm_audit
+python -m benchmarks.verify_bearing_continuation
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional
 python -m benchmarks.verify_directional_ensemble

@@ -1,5 +1,6 @@
 """Protect the audited input chain and dataset-specific analysis defaults."""
 import json
+from hashlib import sha256
 from pathlib import Path
 import shutil
 
@@ -75,7 +76,8 @@ def test_reviewed_principal_uses_one_u1445_hole_and_preserves_source_values():
     files, _ = prepared_files()
     for name, content in files.items():
         assert (ROOT/name).read_bytes() == content
-    assert (audit/'sensitivity/without_u1445b.csv').read_bytes() == (audit/'history/2026-11-03-maninjau/principal_45.csv').read_bytes()
+    earlier = json.loads((audit/'history/2026-11-03-maninjau/provenance.json').read_text())
+    assert sha256((audit/'sensitivity/without_u1445b.csv').read_bytes()).hexdigest() == earlier['cases']['main45']['sha256']
 
 
 def test_review_membership_cannot_drift_from_selection_rules(tmp_path):

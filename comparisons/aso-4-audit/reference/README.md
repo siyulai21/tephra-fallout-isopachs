@@ -1,7 +1,5 @@
-# Aso-4 before the 2026-11-08 source audit
+# Aso-4 reference for the influence study
 
-[Current Aso-4 report](../../../eruptions/aso-4/README.md) · [Regional calculation](results/README.md) · [Original global posterior](results/global/README.md) · [Original source hashes](manifest.json)
+The influence study uses the posterior fitted to the original 87 exact observations. Its report records which input, prior and sampler produced those draws. [Original observations](../../../data/eruptions/Aso-4_tephra.csv) · [Fit report](report.json) · [Posterior draws](posterior.npz)
 
-These results use the original 87 exact records, including two subsequently corrected cruise coordinates. Their scientific artifacts are retained unchanged; only relative Markdown navigation was adjusted. They are historical comparisons, not the current source-qualified calculation.
-
-This reference is retained because `benchmarks.aso_diagnosis` reads its baseline global posterior and report, and `benchmarks.verify_aso_evidence` checks its original scientific hashes. The manifest keeps its original `archive/2026-11-08-aso-4/` paths; the verifier resolves that prefix to this reference directory. It is not an additional current eruption result.
+The [published influence calculation](../runs/diagnosis/report.json) records the SHA-256 of each file. The older maps, tables and full manifest can be browsed at the revision that contained the full reference. [Original publication files](https://github.com/siyulai21/tephra-fallout-isopachs/tree/207bb5a304718fe706953c9ad7c8d2771aefe21c/comparisons/aso-4-audit/reference) · [Audited Aso-4 case](../../../eruptions/aso-4/README.md)

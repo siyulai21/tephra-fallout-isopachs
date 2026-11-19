@@ -1,27 +1,12 @@
-# Maintain a readable and auditable repository
+# Publish and revise a case
 
-[Repository map](../README.md#repository-layout) · [Agent entry point](../../AGENTS.md) · [History](../HISTORY.md)
+The case home is the reading copy. It shows the four maps, volumes, validation and material limitations. The audit owns source decisions. The result directories own the fitted fields, volume draws, geographic tests and diagnostics. Cite those files from related studies.
 
-Keep one current home for each case, one accepted-case catalogue, and one method guide per family. Introductory pages should route readers to the evidence, not repeat changing headline numbers or chronological progress notes.
+## Revising a result
 
-## Retain what is still used
+1. Record the previous commit and input identity before publishing the revised case. Link the previous result at that commit. A historical comparison keeps its own input, folds and reported values.
+2. Preserve original sources, row decisions, input hashes, failed fits and alternatives that support a scientific claim. Keep an older file locally when an active study or regression test uses it.
+3. Store each result once. Check SHA-256 equality before retiring a duplicate and update its readers and manifests to use the canonical file. Record the reviewed fingerprints for new or replaced evidence in the [publication inventory](../../benchmarks/published-evidence.sha256).
+4. Run the numerical checks for the affected families, the case verifier and the Markdown navigation check. For an editorial change, compare the scientific files with the preceding release. For a figure change, replay the fitted values and inspect the maps.
 
-Preserve accepted inputs, original sources, row decisions and their hashes. Preserve current reports, posterior samples, candidate tables, full development attempts and unfavorable outcomes. A failed or superseded scientific alternative can still be necessary evidence; it is not automatically unused clutter.
-
-When replacing a result, record the old commit and the new input/method identity. Retain an explicit local reference only when current calculation, audit or testing needs its files. Otherwise link to an immutable Git snapshot instead of copying an entire old report tree or adding redirect directories.
-
-Historical provenance records retain the paths and hashes from their execution. A moved dependency should have a documented path resolver; do not edit its scientific contents just to make the filenames current. Generated reports with artifact manifests require deliberate checksum handling if their contents change.
-
-For a display-only update, follow the [figure refresh policy](visuals.md): replay recorded fits, verify unchanged numerical evidence, inspect maps, and record exact before/after presentation hashes. Current figures may improve without rewriting frozen historical figures or execution provenance.
-
-The November 18 consolidation promoted each full directional ensemble report to its family home. The [navigation manifest](navigation-2026-11-18.json) identifies exact prior publications, their reviewed destinations and the byte-identical move of the geographic score figure. The adjacent ZIP stores the superseded, checksum-protected text for offline verification.
-
-## Verify an organization change
-
-- Check every current data file and scientific artifact against its pre-change bytes, accounting for any explicitly moved reference.
-- Confirm active solver code is unchanged, or validate numerical changes separately.
-- Run tests and the local Markdown navigation checker.
-- Run the relevant artifact verifier and inspect the staged Git tree, including files in nested `results/` directories. The ignore rule for scratch runs must be anchored to `/results/`.
-- Leave unrelated working copies and untracked files untouched.
-
-[2026-11-17 organization verification](cleanup-2026-11-17.json) records the four-family navigation and path migration. The [2026-11-08 cleanup verification](cleanup-2026-11-08.json) records the retained content, removed collections and checks. The full pre-cleanup files remain in [Git history](../HISTORY.md).
+[Figure verification](visuals.md) · [Earlier releases](../HISTORY.md) · [Study commands](../../benchmarks/README.md)

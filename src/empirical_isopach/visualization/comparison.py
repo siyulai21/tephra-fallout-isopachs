@@ -230,20 +230,28 @@ def comparison_section(home, *, prefix=""):
     bearing = Path(home)/"directional/bearing"
     revised = read_report(bearing/"quantitative/result.json") if (bearing/"artifacts.json").is_file() else None
     if revised is not None and revised["input_sha256"] == regional["input"]["input_sha256"]:
-        value = revised["median_surface"]["volume_km3"]
-        q = revised["coherent_fields"]["volume_km3"]
         lines[0] = "## Four matched thickness-only fits"
-        lines[1:1] = ["", "The directional control in this four-panel comparison includes a possible fan in the largest sampling gap. Its scores and volumes refer to that six-structure model."]
-        lines[:0] = ["## Directional reach and archive evidence", "",
-                    f"The measured-fan median map integrates to **{value:,.1f} km³**. The complete-deposit median is {q['median']:,.1f} km³, with a conditional 95% interval of {q['lower95']:,.1f}–{q['upper95']:,.1f} km³. The map shows where the predicted extent of each level changes under the recorded assumptions.", "",
-                    f"![Agreement on median isopach extent]({prefix}directional/bearing/isopach-agreement.png)", "",
-                    f"[Directional estimates, inspected archives and transfer sensitivities]({prefix}directional/bearing/README.md)", ""]
-        checked = sorted(f for f in bearing.glob("*/validation.json") if f.parent.name!="quantitative")
-        if checked:
-            scored=read_report(checked[0].with_name("result.json"))
-            conditional=scored["median_surface"]["volume_km3"]
-            joint=scored["coherent_fields"]["volume_km3"]
-            lines[3:3]=["", f"The archive sensitivity **{scored['scenario']['title']}** gives a median-map volume of **{conditional:.1f} km³**. The complete-deposit median is {joint['median']:.1f} km³ (conditional 95% interval {joint['lower95']:.1f}–{joint['upper95']:.1f} km³). This result depends on the stated transfer between local fallout and a recognizable layer."]
+        lines[1:1] = ["", "The directional ensemble in this comparison allows a fan in the largest sampling gap."]
+        lines.extend(["", "## How far does the fallout extend between sampled directions?", "",
+                      "The measured-fan model extends fallout from directions with thickness observations. "
+                      "The four-method comparison above also allows an additional fan in the largest gap.", "",
+                      "| Directional assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |",
+                      "|---|---:|---:|---:|"])
+        scenarios = [("Measured fan directions", revised)]
+        for validation in sorted(bearing.glob("*/validation.json")):
+            if validation.parent.name != "quantitative":
+                result = read_report(validation.with_name("result.json"))
+                if result["input_sha256"] == revised["input_sha256"]:
+                    scenarios.append((result["scenario"]["title"], result))
+        for title, result in scenarios:
+            volume = result["coherent_fields"]["volume_km3"]
+            lines.append(f"| {title} | {result['median_surface']['volume_km3']:,.1f} | "
+                         f"{volume['median']:,.1f} | {volume['lower95']:,.1f}–{volume['upper95']:,.1f} |")
+        if len(scenarios) > 1:
+            lines.extend(["", "The inspected-site estimates depend on how much of a local deposit "
+                          "would have been preserved and recognized as a bed."])
+        lines.extend(["", f"![Agreement on median isopach extent]({prefix}directional/bearing/isopach-agreement.png)", "",
+                      f"[Directional maps, held-out tests and site evidence]({prefix}directional/bearing/README.md)", ""])
     return "\n".join(lines)
 
 

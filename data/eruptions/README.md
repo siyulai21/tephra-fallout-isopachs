@@ -4,13 +4,13 @@
 
 These are the CSVs read by the named dataset profiles in [datasets.json](../datasets.json). A familiar filename outside this folder does not automatically inherit a dataset's profile.
 
-| Input | Report | Provenance |
+| Eruption | Accepted CSV | Source decisions |
 |---|---|---|
-| [Minoan](Minoan_tephra.csv) | [Report](../../eruptions/minoan/README.md) | [Source-table audit](../audits/Minoan/README.md); 92 measurements and nine lower bounds |
-| [YTT](YTT_tephra.csv) | [Report](../../eruptions/ytt/README.md) | [Reviewed selection](../audits/YTT/README.md); 46 measurements |
-| [Mazama](Mazama_tephra.csv) | [Report](../../eruptions/mazama/README.md) | Supplied flags; 45 accepted measurements, seven excluded pseudo rows |
-| [Tambora](Tambora_tephra.csv) | [Report](../../eruptions/tambora/README.md) | Supplied flags; 26 accepted measurements, two excluded pseudo rows |
-| [Aso-4](Aso-4_reviewed.csv) | [Report](../../eruptions/aso-4/README.md) | [Source-qualified audit](../audits/Aso-4/README.md); 83 exact, three lower and one upper bound; six excluded pseudo rows |
-| [B-Tm](B-Tm_reviewed.csv) | [Report](../../eruptions/b-tm/README.md) | [Row-level source audit](../audits/B-Tm/README.md) with 65 measurements, three lower bounds and one upper bound |
+| Aso-4 | [Aso-4_reviewed.csv](Aso-4_reviewed.csv) | [Cruise coordinates and thickness bounds](../audits/Aso-4/README.md) |
+| B-Tm | [B-Tm_reviewed.csv](B-Tm_reviewed.csv) | [Combined airborne fallout from both phases](../audits/B-Tm/README.md) |
+| Mazama | [Mazama_tephra.csv](Mazama_tephra.csv) | Supplied inclusion flags |
+| Minoan | [Minoan_tephra.csv](Minoan_tephra.csv) | [Combined fallout and incomplete-core bounds](../audits/Minoan/README.md) |
+| Tambora | [Tambora_tephra.csv](Tambora_tephra.csv) | Supplied inclusion flags |
+| Younger Toba Tuff | [YTT_tephra.csv](YTT_tephra.csv) | [Core selection and sensitivity inputs](../audits/YTT/README.md) |
 
-The four originally supplied CSVs retain their original bytes. Aso-4 and B-Tm have separately named reviewed inputs and source ledgers. Supplied flags alone are not an independent re-audit of every field source. Do not replace blanks or missing deposits with invented zero thicknesses.
+The supplied Aso-4 and B-Tm CSVs remain here as source records. The registry selects the reviewed versions. Each case home gives the accepted counts and model results. [Eruption catalogue](../../eruptions/README.md)

@@ -6,7 +6,6 @@ import gzip
 import json
 from pathlib import Path
 import subprocess
-from types import SimpleNamespace
 from zipfile import ZipFile
 
 import numpy as np
@@ -171,7 +170,7 @@ def verify_results(manifest):
         assert bool(row.same_input) == (key[0] != "b-tm")
         np.testing.assert_allclose(row.current_score, matched.at[key,"equal_region_log_score"])
         np.testing.assert_allclose(row.current_hull_km3, matched.at[key,"expected_regional_km3"])
-    trials = pd.read_csv(STUDY/"matched-synthetic.csv")
+    trials = pd.read_csv("comparisons/regional/synthetic/comparison.csv")
     assert len(trials) == 80 and not trials.duplicated(["method", "scenario", "seed"]).any()
     assert trials.groupby(["method","scenario"]).size().eq(10).all()
     if trials.completed.eq(0).any():
@@ -189,11 +188,10 @@ def verify_results(manifest):
         assert meta["input_sha256"] == principal["sha256"] == digest(rec["path"])
         assert meta["audit"]["sha256"] == digest(AUDIT/"provenance.json")
         assert (meta["n_measurements"], meta["n_lower_limits"], meta["n_upper_limits"]) == (64, 3, 1)
-    summary = SimpleNamespace(input_sha256=principal["sha256"], median_map_km3=release["directional_median_map_km3"])
     extremes = pd.read_csv(STUDY/"octant-extremes.csv")
-    verify_single(HOME/"directional", rec, summary, {"cases":{"b-tm":digest(HOME/"directional/report.json")}}, extremes)
-    verify_ensemble(rec, summary)
-    verify_case_map(rec, HOME.resolve(), None)
+    verify_single(HOME/"directional", rec, principal["sha256"], release["files"][str(HOME/"directional/report.json")], extremes)
+    verify_ensemble(rec, principal["sha256"], release["directional_median_map_km3"])
+    verify_case_map(rec, HOME.resolve())
     rv, sv = regional["validation"], sphere["validation"]
     for key in ("row_ids","folds","buffer_km"):
         assert rv[key] == sv[key]

@@ -1,12 +1,14 @@
 # B-Tm: two source-backed distal observation changes
 
+This two-site experiment used the earlier 84-record input. The later source audit revisited all 84 records and fitted all four methods. [Audited B-Tm case](../../../eruptions/b-tm/README.md)
+
 [Published source and row crosswalk](../input-inventory/b-tm-workbook-review/README.md) · [Geometry comparison](../README.md)
 
 Treating Suigetsu as the published **<0.1 cm upper bound**, and removing Kushu's unsupported exact 0.1 cm value from the quantitative likelihood, gives **100 km³** with a **46–2,390 km³ conditional 95% interval**. Numerical checks **pass**. The unchanged-input source-focused calculation gives **106 km³ (53–2,159 km³)**.
 
 | Input interpretation | Quantitative observations | Median bulk km³ | Conditional 95% interval km³ |
 |---|---:|---:|---:|
-| Preserved accepted input | 84 exact entries | 106 | 53–2,159 |
+| Original 84-record input | 84 exact entries | 106 | 53–2,159 |
 | Two-site source sensitivity | 82 exact entries + 1 upper bound | 100 | 46–2,390 |
 
 ![The two source-focused posterior distributions](comparison.png)
@@ -15,7 +17,7 @@ This is an observation-semantics sensitivity, not a full source-audited replacem
 
 The [published workbook](../input-inventory/b-tm-workbook-review/yang2021-thickness.xlsx), `thickness_data!A48:F49`, distinguishes Kushu's cryptotephra occurrence without a visible layer from Suigetsu's upper-bound thickness. Excluding Kushu from this thickness likelihood does not assert zero original fallout or deny its presence. No 0.1 cm detection limit is invented. Thirteen other reported ranges, two spot occurrences, and eight sites absent from this distal compilation still need further source interpretation. Their values are not silently changed here.
 
-Original CSV row 82 changes from an exact value to an upper-bound event; row 84 is omitted from quantitative fitting. Every retained coordinate, numerical value, error and original row identity is unchanged. The [used-observation table](used-observations.csv) retains `OriginalCSVRow`; it is an audit table, not a drop-in intake CSV. Use the runner below to reproduce the transformation with original identities intact.
+Original CSV row 82 changes from an exact value to an upper-bound event; row 84 is omitted from quantitative fitting. Every retained coordinate, numerical value, error and original row identity is unchanged. The [used-observation table](used-observations.csv) retains `OriginalCSVRow`; it is an audit table, not a drop-in intake CSV. Run the following command in the checkout that published the 84-record input. [Reproduction revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e)
 
 ```sh
 python -m benchmarks.btm_input_review --output results/btm-input-review

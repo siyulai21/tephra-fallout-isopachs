@@ -1,33 +1,21 @@
-# Refresh scientific figures without changing the calculation
+# Reproduce and check a map
 
-[Maintenance policy](README.md) · [Figure implementation](../../src/empirical_isopach/visualization/README.md) · [Case catalogue](../../eruptions/README.md)
+Each case opens with four maps of pointwise median thickness. All panels share the same contours, colour scale and geographic frame for that eruption. The full observation hull and every accepted site are in view. The regional fields end at the hull boundary. For the directional ensemble and spherical mixture, the whole-Earth maps show where contours continue beyond the comparison frame.
 
-The 2026-11-17 refresh adds fine offline coastlines and reader-oriented comparisons to all six current cases. It changes display grids, framing and layout. Accepted inputs, source audits, selected model settings, held-out predictions, numeric volume tables, support decisions and saved posterior arrays remain unchanged. Original execution provenance remains in each `report.json`.
+## What to check
 
-## Read the maps
+- Read the colour key on the figure. Values below its lowest tick share a shade. The scale on a whole-Earth map can differ from the case comparison.
+- Check the bounds, projected positions and clipping against the recorded map design. Inspect the outer contour and any projection-rim warning. The volume calculation uses its stated integration domain.
+- Compare the plotted values with the saved fit. The four-panel PNG records source hashes, coordinates, contour levels and five reference predictions per method. The regional replay uses the selected spline settings and GP weights. Both global maps use saved posterior fields. The single-structure directional reference plots geometric mean thickness.
+- Keep held-out observation coverage, numerical convergence and the local support screen visible. Each answers a different question about an extrapolated contour. [Support protocol](../methods/supported-isopachs.md)
 
-- Regional maps contain every accepted location, the complete hull and the source. The raster is clipped to the exact hull. Display padding does not enlarge the spline fitting domain or regional integration domain. Gaps inside the hull still depend on the model.
-- Each global family has a wider overview, a local-detail view covering all observations, and a whole-Earth Mollweide companion. The wider view searches the physical Earth for the displayed **0.1 cm** central-field contour and pads/checks its edges. Long-tailed fields can reach the projection rim; those cases are explicitly marked. Longitude edges join in the whole-Earth view. These are finite-grid display checks, not proofs of contour support or total-volume identification.
-- Global colour represents pointwise median thickness for the current directional ensemble and spherical mixture. The retained single-structure directional maps use geometric means. The uncertainty map shows the ratio of upper to lower latent-thickness quantiles in orders of magnitude. Observation scatter is additional. Every global plotting subset is deterministic and spans the saved chains; it is recorded separately from the posterior used for volume.
-- A local detail or source-region zoom can cut a contour by design. Follow the wider overview and whole-Earth companion. The plot window, colour limits and displayed thickness levels never set the volume.
-- Global colours saturate below 0.1 cm and above the displayed upper limit. The lowest colour represents all values at or below that display threshold, not an exact 0.1 cm deposit. Published numerical records retain the full continuous fields through their posterior parameters.
-- Case overviews keep regional hull volumes and conditional whole-Earth volumes in separate panels. Geographic scores compare identical accepted rows and outer folds. Withheld observation coverage is not coverage of unknown global volume. Numerical warnings remain visible.
+## Reproduce
 
-The coastline is Natural Earth 1:10-million, bundled with a pinned source commit, public-domain attribution and original/compressed checksums. [Source record](../../src/empirical_isopach/assets/coastline-source.json).
-
-The case-home comparison uses one frame, one logarithmic thickness scale and the same contour levels for all four fits. Its expandable global pair retains the original whole-Earth maps and their individually labeled scales. Replay the four-panel figure alone with `python -m benchmarks.refresh_figures --scopes comparison --output results/new-comparison`. The PNG Description records the source hashes, frame, contour levels, spherical display sample size and five median-thickness checks per panel. The [case-map release](case-maps-2026-11-18.json) preserves exact prior case summaries and the new page and figure hashes.
-
-## Reproduce and verify
+From the repository root, choose a fresh output directory. For example, to render the B-Tm comparison and verify the published figures, run
 
 ```sh
-python -m benchmarks.refresh_figures --output results/new-figures
-python -m pytest -q
-python scripts/check_repository_navigation.py
+python -m benchmarks.refresh_figures --case b-tm --scopes comparison --output results/btm-figures
 python -m benchmarks.verify_visuals
-python -m benchmarks.verify_aso_evidence
-python -m benchmarks.verify_directional
 ```
 
-Use `--case minoan` for one case, or `--scopes regional` to render only the regional figures. Always choose a fresh ignored destination. The replay reconstructs the recorded regional candidate settings and GP weights without repeating selection, checks model descriptions and hull integrals, and reads the original global posterior arrays. It does not sample, retune or change report values.
-
-Before publication, inspect all map frames and figure labels. Copy only the reviewed images and new `map-display.json` / `figure-replay.json` records; retain numerical tables unchanged. Update current artifact manifests explicitly. The [revision ledger](visuals-2026-11-17.json) records before/after presentation hashes, unchanged scientific files and the original Git snapshot. Frozen historical figures and source-study records retain their original bytes. The Aso evidence verifier permits only exact, named presentation revisions and still rejects numerical-file changes.
+Before publishing, inspect labels, coastline, observations and extent. Verify the artifact manifests and compare numerical reports, tables and draws with the preceding release. [Bundled coastline source](../../src/empirical_isopach/assets/coastline-source.json) · [Publication policy](README.md)

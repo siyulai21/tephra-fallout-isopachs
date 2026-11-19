@@ -10,7 +10,7 @@ The **GP ensemble** and **trend-regularized cubic spline** each reconstruct thic
 
 The **directional ensemble** and **spherical mixture** each extend thickness across the Earth under different assumptions. The directional ensemble fits six possible fan structures. Its headline volume integrates the map you see. Its conditional 95% interval comes from integrating complete simulated deposits. The spherical mixture reports its own whole-deposit posterior. A poorly sampled direction can hold ash that none of the observations reveal.
 
-For a worked example, the Minoan case fits the accepted Plinian and co-ignimbrite fallout together. Its case home shows all four volumes and how much ground each covers. [Minoan case](eruptions/minoan/README.md)
+Minoan shows how the Plinian and co-ignimbrite fans can be fitted as one deposit. B-Tm shows how identifiable ash in western lake and peat cores can test the predicted reach beyond the measured beds. [Minoan case](eruptions/minoan/README.md) · [B-Tm case](eruptions/b-tm/README.md)
 
 ## Methods and evidence
 
