@@ -1,44 +1,30 @@
-# Directional fallout across six eruptions
+# How much does uncertain fan direction change the fit?
 
-This design study keeps its original 68-site B-Tm input. The [current B-Tm reconstruction](../../eruptions/b-tm/README.md) includes three interpreted archive bounds. Its [before-and-after comparison](../../eruptions/b-tm/results/cryptotephra/README.md) measures the change in western contours.
+Each pair uses the same observations and structure weights. The control fixes fan direction. The principal fit lets it vary across possible deposits. Integrating the pointwise median map gives the first volume. Integrating each complete deposit gives the volume median and conditional interval in the last column.
 
-Six eruptions test how much the assumed fan direction changes a contour, a bulk volume and predictions at withheld sites. The principal fit allows extra fallout to point in different directions across possible deposits. The control fixes the direction and uses the same observations and structure weights.
+| Eruption | Accepted observations | Uncertain median map (km³) | Fixed median map (km³) | Complete-deposit median [95%] (km³) |
+|---|---:|---:|---:|---:|
+| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | 87 | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
+| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | 71 | **33.6** | 34.6 | 37.2 [23.5–77.1] |
+| [Mazama](../../eruptions/mazama/results/directional/README.md) | 45 | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
+| [Minoan](../../eruptions/minoan/results/directional/README.md) | 101 | **28.8** | 32.9 | 39.1 [21.3–138.5] |
+| [Tambora](../../eruptions/tambora/results/directional/README.md) | 26 | **95.7** | 107.7 | 117.5 [73.2–203.8] |
+| [YTT](../../eruptions/ytt/results/directional/README.md) | 46 | **900.6** | 1,005.6 | 1,272.1 [736.5–3,660.9] |
 
-Solid pieces of a median contour cross triangles where measured thicknesses bracket the level and the fitted crossing probability reaches 90%. Dashes trace continuation through gaps. A fan can extend into an unsampled direction in an individual simulated deposit even where the median contour retreats.
+At B-Tm the source review adds two lake limits and one peat limit to the directly measured thicknesses and bounds. The before-and-after study isolates how those interpretations move the western contours. Each eruption report above gives all eight compass bearings, supported contour fragments and numerical warnings. [B-Tm occurrence study](../../eruptions/b-tm/results/cryptotephra/README.md)
 
-## Western Changbaishan and southwestern Mazama
+## Predictions in withheld regions
 
-**Western Changbaishan.** At Lake Sihailongwan the preceding fixed-direction map gave 15.8 cm. The paired fixed-direction control gives 16.4 cm and the uncertain-azimuth median gives 8.0 cm. The principal quantitative-only 95% latent range is 0.00015–101 cm. A cryptotephra occurrence without a measured fallout bed still challenges this central prediction. The core description supplies no numerical upper limit. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013) · [Source and site audit](../../archive/2026-11-19-b-tm-thickness-only/results/directional/bearing/field-evidence.md)
-
-Conditioning only on an assumed 1 cm recognizable bed at Quanyang gives a Sihailongwan median of 0.0084 cm without conditioning on the lake. Assuming recognizable beds at 1 cm at Sihailongwan and 2 cm at Quanyang gives 0.0052 cm at the lake and 0.11 cm at the peat. Those estimates depend on preservation and detection. The second estimate uses both sites in its likelihood. The fixed record keeps transferred shard-to-thickness conversions outside the quantitative table. [B-Tm maps and all archive sensitivities](../../archive/2026-11-19-b-tm-thickness-only/results/directional/README.md)
-
-**Southwestern Mazama.** Along the 225° ray the 10 cm median crossing moves from 199 to 135 km. The ≥10 cm area across the entire southwest octant falls from 13,559 to 6,635 km². The accepted observations do not locate an actual southwest deposit edge. [Mazama maps and all eight bearings](../../eruptions/mazama/results/directional/README.md)
-
-## Global bulk volume
-
-The two median maps use identical structure weights and training observations. Their difference measures the effect of uncertain fan direction. Earlier case headlines used their original calibration. Every figure below integrates to the antipode.
-
-| Eruption | Principal uncertain-direction median map (km³) | Fixed-direction control (km³) | Uncertain-azimuth complete deposits, median [95%] (km³) |
-|---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
-| [B-Tm](../../archive/2026-11-19-b-tm-thickness-only/results/directional/README.md) | **44.1** | 56.2 | 72.9 [31.0–1,507.8] |
-| [Mazama](../../eruptions/mazama/results/directional/README.md) | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
-| [Minoan](../../eruptions/minoan/results/directional/README.md) | **28.8** | 32.9 | 39.1 [21.3–138.5] |
-| [Tambora](../../eruptions/tambora/results/directional/README.md) | **95.7** | 107.7 | 117.5 [73.2–203.8] |
-| [YTT](../../eruptions/ytt/results/directional/README.md) | **900.6** | 1,005.6 | 1,272.1 [736.5–3,660.9] |
-
-## Do the shorter contours predict withheld observations?
-
-Each eruption learns mixture weights from the other eruptions. Both alternatives are scored on exactly the same withheld rows and limits. Lower negative log predictive scores are better. Averages give each available fold equal weight, then each eruption equal weight.
+Each score gives equal weight to available folds within an eruption, then equal weight to eruptions. Lower is better. The weights for a target exclude that eruption. The table uses each published fit’s recorded calibration. The passing-only rows show how sampling warnings affect the comparison.
 
 | Deletion design | Eruptions contributing | Fixed | Uncertain azimuth |
 |---|---:|---:|---:|
-| Geographic, all estimable folds | 6 | 1.602 | 1.597 |
-| Geographic, passing folds only | 6 | 1.777 | 1.706 |
-| Quadrants, all estimable folds | 6 | 1.939 | 2.007 |
-| Quadrants, passing folds only | 5 | 1.854 | 1.912 |
+| Geographic, all estimable folds | 6 | 1.597 | 1.589 |
+| Geographic, passing folds only | 6 | 1.764 | 1.692 |
+| Quadrants, all estimable folds | 6 | 2.144 | 2.094 |
+| Quadrants, passing folds only | 5 | 2.139 | 2.047 |
 
-The uncertain-azimuth model improves the pooled geographic score slightly. Its quadrant score worsens, including in the passing-only comparison. The primary reporting choice favors less extension of the median contour in unsupported directions. YTT benefits in both designs. Holding out the target protects calibration weights. The method itself was developed with these six eruptions in view. Tambora has no passing quadrant refit. Some other individual fold fits also carry numerical warnings. The fixed-direction results remain available as sensitivities. [Case scores, contributing folds and volumes](case-comparison.csv)
+A quadrant with no test observations has no score. The download gives input hashes, fold and row counts, and both scores for every eruption. In the original 68-site B-Tm analysis, only two quadrants could be scored. Adding observations can change which sectors contribute to a pooled comparison. The same six eruptions informed model development. [Paired scores and volumes](case-comparison.csv) · [Original 68-site comparison](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/directional)
 
 ## Known deposits with a deliberate sampling gap
 
@@ -55,15 +41,9 @@ Fourteen previously specified simulated datasets cover seven designs and two see
 
 Across the resolved high-exposure tests, the revised 1 cm contour cuts false extension at the cost of some missed area. For 10 cm there was already no false extension in those tests, and shortening the contour misses more true fallout. The stricter 90% exceedance outline misses still more. Nine of the fourteen synthetic datasets had a sampling warning in at least one base structure. All four datasets with resolved high-exposure 1 cm and 10 cm comparisons had such a warning. The passing-only subset therefore provides no resolved test of those high-exposure comparisons. These patterns describe a trade-off under the simulated assumptions. They cannot establish the unseen shape of a real deposit. [False-positive and false-negative areas for every trial and threshold](synthetic-areas.csv) · [True volumes and base-fit warnings](synthetic-trials.json)
 
-## Numerical checks and regional comparison
+## Methods and earlier controls
 
-The spatial quadrature check passed in all six eruptions. For B-Tm the 100 cm area differs by 24% between split posterior packets at the 512-draw-per-chain ceiling, although the integrated median-map volume differs by about 1%. The thickest contour therefore remains numerically sensitive. Passing integration checks do not identify ash volume outside the measurements.
-
-The matched regional benchmark was rerun on the same six audited inputs. Its twelve empirical rows and its eighty synthetic rows reproduced the published CSVs byte for byte, including the four unsuccessful synthetic fits. [Matched regional results](../../archive/2026-11-19-b-tm-thickness-only/results/source-audit/matched-regional.csv) · [Regional synthetic results](../regional/synthetic/comparison.csv)
-
-[Statistical protocol and reproduction commands](../../docs/methods/uncertain-azimuth.md) · [Numerical identities of the six original fits](verification.json)
-
-## Related directional studies
+[Equations and calibration](../../docs/methods/uncertain-azimuth.md) · [Original six-fit identities before the B-Tm revision](verification.json)
 
 - [Fixed-direction ensemble](fixed-ensemble/README.md) examines the earlier weight calibration, geographic prediction and volume coverage on known deposits. Its fixed-direction estimates use different weights from the paired control above.
 - [Measured fans and inspected sites](measured-fans/README.md) tests continuation along sampled bearings and links the B-Tm evidence for recognizable beds.

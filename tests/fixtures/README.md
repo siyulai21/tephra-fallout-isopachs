@@ -1,6 +1,6 @@
 # Required regression references
 
-[Test guide](../README.md) · [History](../../docs/HISTORY.md)
+[Test guide](../README.md) · [History](../../CHANGELOG.md#earlier-results)
 
 [ytt-selected-2026-11-02.json](ytt-selected-2026-11-02.json) retains only the model-parameter object needed by `test_old_ytt_selected_fit_remains_numerically_unchanged`. The values are copied exactly from the original 43-row YTT report, whose commit, path and SHA-256 are recorded in the fixture. Its audited historical input remains under `data/audits/YTT/history/`.
 

@@ -1,6 +1,6 @@
 # Automatic cubic-spline implementation
 
-[Families](../README.md) · [Method card](../../../../methods/cubic-spline.md)
+[Families](../README.md) · [Method card](../../../../docs/methods/README.md#regional-cubic-spline)
 
 - [model.py](model.py): cubic tensor basis, normalized penalties, mixed likelihood and conditional coefficient uncertainty.
 - [selection.py](selection.py): geographic tuning and bounded search expansion.

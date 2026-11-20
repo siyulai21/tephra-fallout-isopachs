@@ -388,7 +388,7 @@ def main(argv=None):
         "python -m benchmarks.regional --output results/new-regional",
         "python -m benchmarks.directional_reference --output results/new-mixture-sectors.json",
         "python -m benchmarks.directional_replication --runs results/new-study --output results/new-replication",
-        "python -m benchmarks.directional_spherical_support --replay comparisons/directional/single-structure/spherical-support --output results/new-spherical-support",
+        "python -m benchmarks.directional_spherical_support --published --output results/new-spherical-support",
         "python -m benchmarks.directional_comparison --spherical-support results/new-spherical-support --runs results/new-study --cases results/new-cases --replication results/new-replication --regional results/new-regional --reference results/new-mixture-sectors.json --output results/new-comparison",
         "~~~","", "The normal case command produces the complete plots, checks and report. [Case workflow](../../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Spherical-mixture sector estimates and quadrature refinement](spherical-mixture-sectors.json).",""]
     (output/"README.md").write_text("\n".join(lines))

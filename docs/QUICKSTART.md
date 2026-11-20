@@ -1,6 +1,6 @@
 # Calculate and compare a new eruption
 
-[Project home](../README.md) · [Input format](../data/README.md) · [Method guide](../methods/README.md)
+[Project home](../README.md) · [Input format](../data/README.md) · [Method guide](methods/README.md)
 
 Supply measurements in chat with the eruption name, units, coordinate reference and available source notes. Accepted data, audit decisions and each method report can then be published on GitHub. Missing deposits or illustrative equivalents are not automatically measurements or zeros.
 

@@ -22,7 +22,7 @@ Use a fresh ignored destination. The normal command runs both regional methods, 
 tephra-isopachs compare ERUPTION_OR_CSV --output results/new-case
 ```
 
-Publish reviewed outputs under `eruptions/<slug>/results/`. Use **one case home** for the accepted inputs, the four-panel isopach map and matched results table, the support decision and material source or numerical qualifications. Use the shared comparison section and preserve the case-specific interpretation. Link directly to the regional, directional ensemble, spherical-mixture and support reports. Add one row to `eruptions/README.md`. Group directional validation and sensitivity studies under `comparisons/directional/`. Link each distinct family once from the comparison index.
+Publish reviewed outputs under `eruptions/<slug>/results/`. Use **one case home** for the accepted inputs, the four-panel isopach map and matched results table, the support decision and material source or numerical qualifications. Use the shared comparison section and preserve the case-specific interpretation. Link directly to the regional, directional ensemble, spherical-mixture and support reports. Add one row to `eruptions/README.md`. Refresh each cross-eruption summary from the registered case reports when replacing an input. Publish the current regional table at `comparisons/regional/comparison.csv`. Keep the matched benchmark used by a dated case study with that study. Group directional validation and sensitivity studies under `comparisons/directional/`. Link each distinct family once from the comparison index.
 
 Preserve earlier result identities, raw evidence, relevant sensitivity studies, failed attempts and hashes when revising a case. Record the preceding immutable revision and retain any locally required historical evidence. Leave unrelated work in progress untouched. [Publication and retention policy](docs/maintenance/README.md)
 
@@ -32,6 +32,7 @@ Preserve earlier result identities, raw evidence, relevant sensitivity studies, 
 python -m pytest -q
 python scripts/check_repository_navigation.py
 python -m benchmarks.verify_visuals
+python -m benchmarks.verify_btm_cryptotephra
 python -m benchmarks.verify_btm_audit
 python -m benchmarks.verify_bearing_continuation
 python -m benchmarks.verify_aso_evidence
@@ -40,4 +41,4 @@ python -m benchmarks.verify_directional_ensemble
 python -m benchmarks.verify_azimuth_continuation
 ```
 
-For a navigation change, verify scientific artifacts against their pre-change bytes. For a numerical change, run the matched regional benchmark and the relevant global or support studies. New map releases need visual inspection and replay checks. [Study commands](benchmarks/README.md) · [Figure checks](docs/maintenance/visuals.md)
+For a navigation change, verify scientific artifacts against their pre-change bytes. For a numerical change, run the matched regional benchmark and the relevant global or support studies. New map releases need visual inspection and replay checks. [Study commands](benchmarks/README.md) · [Figure checks](docs/maintenance/README.md#checking-a-map)

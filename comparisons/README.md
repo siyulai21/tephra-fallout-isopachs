@@ -1,6 +1,6 @@
 # How well do the four methods predict fallout?
 
-The figure compares all four fits on withheld geographic regions across the six eruptions. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
+The figure compares the four published fits on withheld geographic regions for each eruption. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
 
 ![Geographic prediction scores and exact-site coverage for the four methods](method-scores.png)
 
@@ -11,4 +11,4 @@ The figure compares all four fits on withheld geographic regions across the six 
 | How sensitive is whole-deposit volume to spherical fan geometry and priors? | [Spherical-mixture prior refits](spherical-mixture/README.md) · [Source-geometry experiment](source-revision/README.md) |
 | Where do measurements support a contour or a partial volume? | [Local footprints and geographic deletions](support/README.md) |
 
-For maps, volumes and source decisions on an individual eruption, open its case. Studies using an earlier selection identify that input in the study itself. [Eruption catalogue](../eruptions/README.md)
+The B-Tm worked comparison shows how the contours change when the three interpreted bounds are included, weakened or omitted. Earlier model-development experiments identify their own inputs. [B-Tm before and after](../eruptions/b-tm/results/cryptotephra/README.md) · [All eruption reports](../eruptions/README.md)

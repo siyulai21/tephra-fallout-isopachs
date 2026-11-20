@@ -2,7 +2,7 @@
 
 The current global workflow uses the [mass-normalized spherical posterior](probabilistic-global.md), alongside [matched regional peers](regional-comparison.md). This page describes the retained **version 0.7** complete-Earth GP calculation.
 
-[Method overview](../../methods/README.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/global-fallout/README.md)
+[Method overview](README.md) · [Output definitions](../OUTPUTS.md) · [Historical GP comparison](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reports/global-fallout/README.md)
 
 Version 0.7 makes the **complete-Earth integral** the primary fallout-volume estimate. `--bounds` controls only a regional diagnostic and prediction export. Map extent and contour thresholds cannot change the global estimate. The accepted observations, likelihoods, selected models and nested validation are unchanged by this integration revision.
 

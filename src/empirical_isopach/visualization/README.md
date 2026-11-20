@@ -1,6 +1,6 @@
 # Report figures and offline cartography
 
-[Shared framework](../README.md) · [Output guide](../../../docs/OUTPUTS.md) · [Rendering policy](../../../docs/maintenance/visuals.md)
+[Shared framework](../README.md) · [Output guide](../../../docs/OUTPUTS.md) · [Rendering policy](../../../docs/maintenance/README.md#checking-a-map)
 
 This package presents recorded fits. It does not choose models, alter observations, or integrate global volume.
 

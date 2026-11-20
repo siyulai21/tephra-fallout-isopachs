@@ -4,9 +4,11 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 from PIL import Image
 
 from src.empirical_isopach.core.catalog import datasets
+from .azimuth_summary import case_table
 from .publication import read_hashes, verify_files
 
 
@@ -67,8 +69,54 @@ def verify_case_map(record, home):
     np.testing.assert_allclose(median/np.log(10.), samples["Spherical mixture"][:, 2], atol=1e-8)
 
 
+def verify_comparison_tables(root):
+    """Check that readers of the cross-eruption summaries see the registered case fits."""
+    summaries = root/"comparisons"
+    directional = pd.read_csv(summaries/"directional/case-comparison.csv")
+    pd.testing.assert_frame_equal(directional, case_table(published_root=root/"eruptions"),
+                                  check_dtype=False, rtol=1e-12, atol=1e-12)
+
+    regional = pd.read_csv(summaries/"regional/comparison.csv").set_index(["slug", "method"])
+    spherical = pd.read_csv(summaries/"spherical-mixture/comparison.csv").set_index("slug")
+    sources = read(summaries/"spherical-mixture/report.json")["cases"]
+    registered = {r["slug"]: r for r in datasets()}
+    assert spherical.index.is_unique and set(spherical.index) == set(registered)
+    assert len(sources) == len(registered) and {s["slug"] for s in sources} == set(registered)
+    expected_rows = set()
+    for source in sources:
+        slug = source["slug"]
+        home = root/"eruptions"/slug/"results"
+        assert source["input_sha256"] == digest(registered[slug]["path"])
+        assert source["regional_report_sha256"] == digest(home/"report.json")
+        assert source["global_report_sha256"] == digest(home/"spherical-mixture/report.json")
+        reg = read(home/"report.json")
+        for method, fit in reg["methods"].items():
+            expected_rows.add((slug, method))
+            row = regional.loc[(slug, method)]
+            metric = reg["validation"]["methods"][method]["metrics"]
+            assert (row.n_exact, row.n_lower, row.n_upper) == tuple(
+                reg["input"][key] for key in ("n_measurements", "n_lower_limits", "n_upper_limits"))
+            vol = fit["regional_volume"]
+            np.testing.assert_allclose(
+                [row.median_surface_km3, row.expected_regional_km3, row.equal_region_log_score, row.coverage95_observations],
+                [vol["median_surface_km3"], vol["expected_km3"], metric["equal_region_log_score"], metric["coverage95_observations"]],
+                rtol=1e-12)
+            assert row.volume_converged == vol["converged"]
+        sphere = read(home/"spherical-mixture/report.json")
+        row = spherical.loc[slug]
+        volume = sphere["fits"]["baseline"]["volume"]
+        np.testing.assert_allclose(
+            [row["median"], row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
+             row.global_equal_region_negative_log_score, row.global_observation_coverage95],
+            [volume["median"], volume["lower95"], volume["upper95"], *sphere["sensitivity_envelope_km3"],
+             sphere["validation"]["metrics"]["equal_region_log_score"], sphere["validation"]["metrics"]["coverage95_observations"]],
+            rtol=1e-12)
+    assert regional.index.is_unique and set(regional.index) == expected_rows
+
+
 def main():
     root = Path(__file__).resolve().parents[1]
+    verify_comparison_tables(root)
     hashes = read_hashes()
     verify_files(hashes)
     for record in datasets():
@@ -97,7 +145,7 @@ def main():
             assert display["extent_audit"]["edge_refinements"][-1]["bounds_km"] == display["global_bounds_km"]
             assert np.isfinite(display["global_bounds_km"]).all()
     print(f"Verified {len(hashes)} published files and all {len(datasets())} current four-method maps "
-          "against the saved fits.")
+          "and three comparison tables against the saved fits.")
 
 
 if __name__ == "__main__":

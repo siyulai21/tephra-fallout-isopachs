@@ -1,6 +1,6 @@
 # Historical spline research
 
-[Source map](../README.md) · [Method comparison](../../methods/README.md) · [Mathematical description](../../docs/methods/cubic-splines.md)
+[Source map](../README.md) · [Method comparison](../../docs/methods/README.md) · [Mathematical description](../../docs/methods/cubic-splines.md)
 
 **For current fitting, use the [automatic spline and regional comparison](../empirical_isopach/README.md).**
 

@@ -21,6 +21,10 @@ The complete run writes `four-method-evidence.png` and opens its output README w
 
 For a revision, record the prior commit, input and model identity and explain what changed. Preserve the scientific evidence needed to reproduce or challenge the result. [Publication and history policy](maintenance/README.md)
 
+Publish the spherical contour decisions and their field samples under `results/spherical-mixture/support/` within the case. The published-packet replay checks their hashes against that case’s accepted input and posterior.
+
+When a case changes, rebuild the three cross-eruption summaries from the saved fits and refresh the four-method score figure. The summary-only commands retain the original fold scores and numerical warnings. [Comparison commands](../benchmarks/README.md#current-evaluations)
+
 ## Local equivalent
 
 ```sh

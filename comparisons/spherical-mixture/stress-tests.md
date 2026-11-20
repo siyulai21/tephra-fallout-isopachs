@@ -45,4 +45,4 @@ python -m benchmarks.mass_mixture --output results/global-stress
 python -m benchmarks.global_stress_report --source results/global-stress --output results/global-stress-report
 ```
 
-The reporting command requires all twelve fixed trials and every declared alternative. [Complete priors, attempts, diagnostics and source identities](stress-report.json) · [Numerical table](stress-comparison.csv). The regional benchmark was also rerun: all six eruption fits/holdouts and all 40 regional synthetic trial records reproduce exactly; see [verification](verification.json).
+The reporting command requires all twelve fixed trials and every declared alternative. [Complete priors, attempts, diagnostics and source identities](stress-report.json) · [Numerical table](stress-comparison.csv). The regional benchmark was also rerun: all six eruption fits/holdouts and all 40 regional synthetic trial records reproduce exactly; see [verification at the original publication](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/spherical-mixture/verification.json).

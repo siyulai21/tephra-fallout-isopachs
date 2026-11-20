@@ -142,11 +142,20 @@ def main():
             expected_report = release["files"][str(home/"directional/single-structure/report.json")]
             case_extremes = pd.read_csv(release_path.with_name("octant-extremes.csv"))
         verify(home/"directional/single-structure", record, expected_input, expected_report, case_extremes)
-        # The published comparison and its replications retain their own input identities.
-        with gzip.open(root/"spherical-support"/(slug+".json.gz"),"rt") as f:
-            screen = json.load(f)
-        assert digest(root/"spherical-support"/(slug+".npz")) == screen["surface_samples_sha256"]
-        assert screen["input_sha256"] == cases.loc[slug].input_sha256
+        spherical = home/"spherical-mixture"
+        packet = spherical/"support"
+        with gzip.open(packet/(slug+".json.gz"), "rt") as stream:
+            screen = json.load(stream)
+        assert screen["input_sha256"] == digest(record["path"])
+        assert screen["baseline_posterior_sha256"] == digest(spherical/"posterior.npz")
+        assert screen["surface_samples_sha256"] == digest(packet/(slug+".npz"))
+        # A superseded input has a distinct packet in the original design study.
+        if screen["input_sha256"] != cases.loc[slug].input_sha256:
+            original = root/"original-spherical-screens"
+            with gzip.open(original/(slug+".json.gz"), "rt") as stream:
+                screen = json.load(stream)
+            assert screen["input_sha256"] == cases.loc[slug].input_sha256
+            assert screen["surface_samples_sha256"] == digest(original/(slug+".npz"))
     trials = pd.read_csv(root/"known-volumes.csv")
     with gzip.open(root/"known-volume-fits.json.gz","rt") as f:
         evidence = json.load(f)
