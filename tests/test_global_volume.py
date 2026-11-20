@@ -1,5 +1,4 @@
 """Independent geometric/analytic controls for complete-Earth integration."""
-import json
 from types import SimpleNamespace
 
 import numpy as np
@@ -100,16 +99,3 @@ def test_infinite_plane_background_has_analytic_directional_integral():
     assert infinite_plane_background(model)['background_mean_km3'] is None
     model.candidate.tail='exponential';model.beta[1]=3
     assert infinite_plane_background(model)['background_mean_km3']==pytest.approx(2*np.exp(.08)*100**2*2*np.pi/9*1e-5)
-
-
-def test_global_result_is_independent_of_cli_diagnostic_bounds(tmp_path):
-    from src.probabilistic_isopach.cli import main
-    rows=[]
-    for i,bounds in enumerate([['-400','-850','1200','1100'],['-1000','-1500','2000','2000']]):
-        out=tmp_path/str(i)
-        main(['Minoan','--output',str(out),'--no-publication','--grid','8','--volume-grid','8','--draws','20','--bounds',*bounds])
-        rows.append(json.loads((out/'report.json').read_text()))
-    assert rows[0]['model']==rows[1]['model']
-    assert rows[0]['global_fallout']==rows[1]['global_fallout']
-    assert rows[0]['volume']['mean_km3']!=rows[1]['volume']['mean_km3']
-    assert rows[0]['primary_volume']=='global_fallout.selected'

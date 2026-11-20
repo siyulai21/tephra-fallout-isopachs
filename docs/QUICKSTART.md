@@ -29,7 +29,3 @@ For the spherical mixture, the catalogue records B-Tm's reviewed `source-fans` g
 ## Find results and verify a run
 
 Open the report in the output directory for the regional maps and the links to both global results. The [output guide](OUTPUTS.md) describes the files and volume definitions. For study reproduction or the published checksum and numerical checks, use the [benchmark commands](../benchmarks/README.md).
-
-## Reproduce older analyses
-
-The legacy `tephra-isopachs fit` command remains available for historical selected/stacked GP and global calculations. Its options and assumptions differ; use the [benchmark catalogue](../benchmarks/README.md) and [historical GP output guide](OUTPUTS.md#historical-gp-workflow). Do not attach historical rectangular or global volumes to the new observation-hull comparison.

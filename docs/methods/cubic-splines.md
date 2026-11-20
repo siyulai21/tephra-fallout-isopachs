@@ -62,8 +62,6 @@ One coefficient draw determines a complete correlated surface. Exponentiating an
 
 Intervals omit fitted-trend, noise, hyperparameter/selection, preservation, sampling-process and vent-location uncertainty. Strong trend shrinkage can produce extremely narrow conditional intervals without establishing precise volume. Reports flag this case, display fully retuned geographic-deletion ranges separately and assess empirical coverage. Deletion ranges are sensitivity diagnostics, not confidence intervals. Unfavorable validation outcomes remain visible.
 
-## Historical implementations
+## Method history
 
-The [original spline](../../src/spline_isopach/README.md) and [first trend-penalty experiment](../../src/research/README.md) remain for historical reproduction. The original already included tension/roughness regularization. The first extension kept smoothing fixed, rejected bounds, returned point predictions only and borrowed a GP module's trend estimator.
-
-Version 0.8 retains the cubic-basis and normalized-penalty ideas but implements the basis, derivatives and mixed likelihood afresh in `src/empirical_isopach/`. It does not claim numerical equivalence to the historical solver or invention of penalized splines. Old imports and report artifacts remain available.
+The original spline used tension and roughness penalties. The first trend-penalty experiment held smoothing fixed and returned point estimates for exact measurements. The current implementation tunes the penalties, fits measured values and bounds, and draws joint surfaces for regional volumes. [Earlier spline implementations and benchmark](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/src)

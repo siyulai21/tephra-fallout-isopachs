@@ -11,7 +11,7 @@ from matplotlib.patches import Polygon
 import numpy as np
 import pandas as pd
 
-from src.probabilistic_isopach.figures import STYLE
+from src.empirical_isopach.visualization.style import STYLE
 from ..core.observations import Observations
 from ..region import SurveyRegion
 from .global_maps import PosteriorView

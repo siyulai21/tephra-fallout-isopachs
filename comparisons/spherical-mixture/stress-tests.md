@@ -1,6 +1,6 @@
 # Global-volume known-truth stress tests
 
-[All-eruption results](README.md) · [Method and assumptions](../../docs/methods/probabilistic-global.md) · [Earlier development failures](development/README.md)
+[All-eruption results](README.md) · [Method and assumptions](../../docs/methods/probabilistic-global.md) · [Earlier development failures](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/spherical-mixture/development)
 
 The final physical model and priors were fixed before these runs. There are **12 baseline trials**, six scenarios with fresh seeds 10 and 11. The two diffuse-tail cases also receive the predeclared diffuse-tail sensitivity. No trial is omitted because its interval misses the truth or its sampler fails a numerical check.
 

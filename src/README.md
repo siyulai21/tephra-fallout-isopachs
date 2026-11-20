@@ -14,12 +14,8 @@ The active workflow is [empirical_isopach/](empirical_isopach/README.md). Its fo
 | Add a regional peer | [models/registry.py](empirical_isopach/models/registry.py) and the [method contract](../docs/ADDING_METHOD.md) |
 | Change commands, support or report assembly | [Framework map](empirical_isopach/README.md) |
 
-## Compatibility and reproduction
+## Shared dependencies
 
-| Retained package | Why it is still here |
-|---|---|
-| [probabilistic_isopach/](probabilistic_isopach/README.md) | Thin imports of active implementations, historical GP-only commands, Earth integration helpers and map assets reused by current reports |
-| [spline_isopach/](spline_isopach/README.md) | Original spline numerical engine and regression references; the unused desktop GUI has been removed |
-| [research/](research/README.md) | First fixed-smoothing spline experiment, needed by historical benchmarks and regression checks |
+The WGS84 Earth-domain implementation is part of the recorded identity of both global models. The projection helper sets the vent-centred coordinates for all four fits. The older GP import paths also expose the active component model and probability utilities. [Earth geometry and compatibility imports](probabilistic_isopach/README.md) · [Coordinate transform](Laea.py)
 
-These are not additional default families. Do not delete shared Earth/plotting helpers just because their package name is historical. `Laea.py` still supplies source-coordinate preparation for reproduction. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md) · [History](../CHANGELOG.md#earlier-results).
+The original spline, its first trend-penalty experiment and the GP-only command can be reproduced from the release listed in the [project history](../CHANGELOG.md#earlier-results).

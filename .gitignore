@@ -35,17 +35,11 @@ conda-env/
 htmlcov/
 .tox/
 
-# Directory
-spline_isopach(failed)/
-
 # Reproducible scratch runs; reviewed comparisons are in comparisons/ and eruptions/.
 /results/
 
 # Large regenerable grids stay in local run folders.
-reports/**/predictions.csv
-reports/**/virtual_predictions.npz
 eruptions/**/predictions.csv
-eruptions/**/virtual_predictions.npz
 
 # The B-Tm source audit signs this regional grid as a release artifact.
 !eruptions/b-tm/results/predictions.csv

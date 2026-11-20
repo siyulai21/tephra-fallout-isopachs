@@ -12,7 +12,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
 
 from ..core.distributions import predictive_distribution
-from src.probabilistic_isopach.figures import STYLE, CMAP
+from src.empirical_isopach.visualization.style import STYLE, CMAP
 from .maps import (ASSET, INK, AMBER, frame_bounds, grid_axes, panel_layout,
                    setup_map, observations, observation_legend, contour_levels, level_labels)
 

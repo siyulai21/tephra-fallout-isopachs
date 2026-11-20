@@ -1,9 +1,4 @@
-"""Audit and jointly reconstruct all Minoan fallout fans from Karstens et al. (2023).
-
-python -m benchmarks.minoan --output results/minoan
-No fan is fitted separately. Each site contributes one total fallout measurement
-or a documented lower bound. Turbidite thickness never enters the fallout total.
-"""
+"""Verify or rebuild Minoan combined-fallout inputs from the original core table."""
 import argparse
 import csv
 from hashlib import sha256
@@ -15,12 +10,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 import numpy as np
-import pandas as pd
-
-from src.probabilistic_isopach.cli import main as fit
-from src.probabilistic_isopach.data import read_observations
-from src.probabilistic_isopach.report import domain_bounds
-from src.probabilistic_isopach.publication import write_short_report
+from src.empirical_isopach.core.observations import read_observations
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT/'data/sources/minoan/supplementary_data_2.xlsx'
@@ -148,7 +138,11 @@ def prepare_inputs(write=False):
             raise ValueError(f'Audited input does not reproduce exactly: {file}')
     data, _ = read_observations(ROOT/CASES['combined'][0])
     # Same rectangle for every sensitivity: primary-data bounding box + 25%, rounded outward to 25 km.
-    bounds = domain_bounds(data.xy)
+    sites = np.vstack((data.xy, [0., 0.]))
+    lo, hi = sites.min(axis=0), sites.max(axis=0)
+    span = hi - lo
+    padding = .25 * np.maximum(span, max(span.max(), 1.) * .05)
+    bounds = np.r_[lo - padding, hi + padding]
     bounds = np.r_[np.floor(bounds[:2]/25)*25, np.ceil(bounds[2:]/25)*25].tolist()
     provenance = {'audit_date': '2026-11-03', 'source': {'file': str(SOURCE.relative_to(ROOT)),
         'sha256': SOURCE_SHA, 'sheet': 'Tabelle1', 'rows': 105,
@@ -176,60 +170,11 @@ def prepare_inputs(write=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--prepare-only', action='store_true')
-    parser.add_argument('--output', type=Path)
+    parser.add_argument("--prepare-only", action="store_true", help="Rebuild the reviewed input tables and provenance.")
     args = parser.parse_args(argv)
-    if args.prepare_only:
-        print(json.dumps(prepare_inputs(write=True), indent=2)); return
-    if args.output is None: parser.error('--output is required')
-    if args.output.exists() and any(args.output.iterdir()): parser.error('Choose an empty output directory.')
-    provenance = prepare_inputs()
-    for case, method in [('combined','selected'), ('combined','stacked'),
-                         ('exact_only','selected'), ('component_conflicts','selected'),
-                         ('total_conflicts','selected'), ('without_pos513_41','selected')]:
-        name = case+'_'+method; output = args.output/name
-        fit([str(ROOT/CASES[case][0]), '--output', str(output), '--name', 'Minoan · '+case.replace('_',' '),
-             '--method', method, '--nested-cv', '--buffer-km', '10', '--folds', '4',
-             '--bounds', *map(str, provenance['bounds_km']), '--grid', '128', '--map-grid', '481',
-             '--volume-grid', '48', '--draws', '1500', '--seed', '1729', '--max-extent-km', '3000',
-             '--levels', '.1', '.3', '1', '3', '10', '30', '100'])
-        report = json.loads((output/'report.json').read_text())
-        report['input']['audit'] = {'provenance_file': 'data/audits/Minoan/provenance.json',
-            'provenance_sha256': sha256((AUDIT/'provenance.json').read_bytes()).hexdigest(),
-            'source_workbook_sha256': SOURCE_SHA, 'selection': provenance['cases'][case]['definition'],
-            'preserved_semantics': provenance['preserved_semantics']}
-        report['reproducibility']['benchmark_sha256'] = sha256(Path(__file__).read_bytes()).hexdigest()
-        (output/'report.json').write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-        write_short_report(output, report['dataset'], report)
-    summarize(args.output)
+    provenance = prepare_inputs(write=args.prepare_only)
+    print(f"Verified {provenance['source']['rows']} Minoan source rows and {len(provenance['cases'])} reviewed selections.")
 
 
-def summarize(output):
-    rows, sites = [], []
-    manifest = pd.read_csv(AUDIT/'selection_manifest.csv')
-    for path in sorted(output.glob('*/report.json')):
-        report = json.loads(path.read_text()); name = path.parent.name
-        case = name.rsplit('_',1)[0]; validation = report['nested_validation']
-        regional = report['volume_analysis']['regional']
-        rows.append({'run': name, 'measurements': report['input']['n_measurements'],
-                     'lower_limits': report['input']['n_lower_limits'],
-                     **{k: validation[k] for k in ('mean_log_score','equal_region_log_score','rmse_log','coverage95_observations','mean_interval_width_log')},
-                     'expected_regional_bulk_km3': regional['mean_km3'],
-                     'median_surface_km3': regional['median_surface_km3'],
-                     'volume_outside_hull_fraction': regional['fraction_expected_volume_outside_data_hull'],
-                     'converged': regional['converged']})
-        lookup = manifest[manifest[case+'_csv_row'].notna()].set_index(case+'_csv_row')
-        for index, rowid in enumerate(validation['row_ids']):
-            source = lookup.loc[rowid]; kind = source[case+'_kind']; value = source[case+'_value_cm']
-            low, median, high = np.exp([validation['lower95_log'][index],validation['median_log'][index],validation['upper95_log'][index]])
-            sites.append({'run':name,'map_id':int(source.map_id),'core_id':source.core_id,'location':source.location,
-                          'source_row':rowid,'kind':kind,'observed_or_bound_cm':value,'fold':validation['folds'][index],
-                          'predicted_median_cm':median,'lower95_cm':low,'upper95_cm':high,
-                          'covered':bool(low <= value <= high) if kind=='measurement' else None,
-                          'negative_log_score':-validation['point_log_scores'][index]})
-    pd.DataFrame(rows).to_csv(output/'comparison.csv',index=False)
-    pd.DataFrame(sites).to_csv(output/'site_holdouts.csv',index=False)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -57,7 +57,7 @@ def publish(source, output):
     s = report["summary"]
     (output/"stress-tests.md").write_text(f"""# Global-volume known-truth stress tests
 
-[All-eruption results](README.md) · [Method and assumptions](../../docs/methods/probabilistic-global.md) · [Earlier development failures](development/README.md)
+[All-eruption results](README.md) · [Method and assumptions](../../docs/methods/probabilistic-global.md) · [Earlier development failures](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/spherical-mixture/development)
 
 The final physical model and priors were fixed before these runs. There are **12 baseline trials**, six scenarios with fresh seeds 10 and 11. The two diffuse-tail cases also receive the predeclared diffuse-tail sensitivity. No trial is omitted because its interval misses the truth or its sampler fails a numerical check.
 
@@ -100,7 +100,7 @@ def figures(output, rows, scenario_labels=None):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
-    from src.probabilistic_isopach.figures import STYLE
+    from src.empirical_isopach.visualization.style import STYLE
     with plt.rc_context(STYLE):
         fig, ax = plt.subplots(figsize=(12, 8.5), layout="constrained")
         for i, row in enumerate(rows):

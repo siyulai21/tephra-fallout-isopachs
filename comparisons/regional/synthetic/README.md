@@ -20,3 +20,5 @@ Metrics describe completed trials only; unestimable censored trials remain in th
 These small development experiments cannot certify coverage for real eruptions. Poor conditional coverage is retained rather than repaired after seeing test outcomes.
 
 [All synthetic results and design](synthetic.json) · [Per-run comparison](comparison.csv)
+
+[Exact benchmark script used for these published results](https://github.com/siyulai21/tephra-fallout-isopachs/blob/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/regional/synthetic/benchmark-at-execution.py)

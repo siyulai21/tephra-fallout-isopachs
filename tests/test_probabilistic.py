@@ -6,7 +6,7 @@ from scipy.optimize._numdiff import approx_derivative
 from src.probabilistic_isopach import Observations, Candidate, SpatialModel, read_observations
 from src.probabilistic_isopach.model import matern32, censored_terms, condition_independent_evidence
 from src.probabilistic_isopach.validation import spatial_folds, select_model, nested_validate
-from src.probabilistic_isopach.report import integrate, grid_cells
+from src.empirical_isopach.region import SurveyRegion, integrate_region, regional_draws
 
 
 def synthetic(n=40, seed=7):
@@ -136,13 +136,15 @@ def test_training_fits_do_not_use_heldout_values(monkeypatch):
 
 def test_reproducible_joint_volume_and_unit_conversion():
     model = SpatialModel().fit(synthetic())
-    bounds = [-100, -100, 100, 100]
-    a = integrate(model, bounds, resolution=8, draws=100, seed=11)
-    b = integrate(model, bounds, resolution=8, draws=100, seed=11)
+    region = SurveyRegion(model.data.xy)
+    volume = integrate_region(model, region)
+    nodes, weights = region.quadrature(volume["refinement"][-1]["order"])
+    mean, variance = model.predict_log(nodes)
+    expected = np.dot(weights, np.exp(mean + variance/2)) * 1e-5
+    assert volume["expected_km3"] == pytest.approx(expected)
+    a = regional_draws(model, region, expected, draws=100, seed=11)
+    b = regional_draws(model, region, expected, draws=100, seed=11)
     assert a == b
-    xy, area = grid_cells(bounds, 8)
-    m, v = model.predict_log(xy)
-    assert a["mean_km3"] == pytest.approx(np.exp(m+v/2).sum()*area*1e-5)
     assert a["conditional_quantiles_km3"]["0.025"] < a["conditional_quantiles_km3"]["0.975"]
 
 

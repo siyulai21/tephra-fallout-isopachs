@@ -89,7 +89,7 @@ def support_figures(output, name, data, meshes, maps, report, vent=None):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
-    from src.probabilistic_isopach.figures import STYLE, TEAL, AMBER, INK
+    from src.empirical_isopach.visualization.style import STYLE, TEAL, AMBER, INK
     from .visualization.maps import frame_bounds, panel_layout, setup_map
     mesh = meshes["standard"]
     display_bounds = frame_bounds(data.xy)

@@ -26,4 +26,4 @@ A fitted mixture of spatial fans integrates to its volume parameter over the Ear
 
 ## Interpreting the maps
 
-The support audit tests where measurements bracket each contour and records holes, rejected bands and partially supported volumes. Each global extrapolation depends on assumptions about unsampled areas. A marine transport and preservation model is documented as a proposed extension. The earlier GP global integral is available for historical reproduction. [Support protocol](supported-isopachs.md) · [Marine observation proposal](marine-observations.md) · [Earlier GP integral](global-volume.md)
+The support audit tests where measurements bracket each contour and records holes, rejected bands and partially supported volumes. Each global extrapolation depends on assumptions about unsampled areas. A marine transport and preservation model is documented as a proposed extension. [Support protocol](supported-isopachs.md) · [Marine observation proposal](marine-observations.md)

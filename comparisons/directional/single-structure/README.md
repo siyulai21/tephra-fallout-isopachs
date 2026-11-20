@@ -110,7 +110,7 @@ Of 12 matched trials, 5 passed for both families. Their median absolute log volu
 
 The additional paired-truth experiment has *identical observations*: a smooth deposit of **33.6 km³**, or the same deposit with a compact lobe wholly inside the unsampled northeast, giving **72.8 km³**. The true NE sector changes from 4.2 to 43.5 km³. Each data realization yields exactly one posterior for either truth. Across 4 passing realizations, 0 intervals include the larger hidden deposit. A weakly identified lobe remains a separate structural uncertainty even when plotted isopachs look convincing.
 
-[Complete paired results](known-volumes.csv) · [All stress-test fits, policies and retry diagnostics](known-volume-fits.json.gz) · [Development models and failures](development/README.md)
+[Complete paired results](known-volumes.csv) · [All stress-test fits, policies and retry diagnostics](known-volume-fits.json.gz) · [Development models and failures](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/directional/single-structure/development)
 
 ## Reproduce
 

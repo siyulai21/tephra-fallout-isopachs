@@ -97,7 +97,7 @@ Scores use the same observations, training and withheld rows, geographic folds a
 
 ## Geometry and validation
 
-The displaced and source-focused geometries have separate known-deposit trials, including failed fits. Sensitivity to the shape of an unmeasured deposit limits interpretation of whole-Earth volumes. [Displaced-geometry trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Geometry study](../source-revision/README.md) · [Model development](development/README.md) · [Equations and priors](../../docs/methods/probabilistic-global.md)
+The displaced and source-focused geometries have separate known-deposit trials, including failed fits. Sensitivity to the shape of an unmeasured deposit limits interpretation of whole-Earth volumes. [Displaced-geometry trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Geometry study](../source-revision/README.md) · [Model development](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/spherical-mixture/development) · [Equations and priors](../../docs/methods/probabilistic-global.md)
 """)
     return rows
 
@@ -106,7 +106,7 @@ def figures(output, rows):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE
+    from src.empirical_isopach.visualization.style import STYLE
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 2, figsize=(13, 6.5), layout='constrained')
         for i, row in enumerate(rows):

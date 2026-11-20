@@ -15,7 +15,7 @@ from src.empirical_isopach.models.directional.ensemble.weights import PACKET
 def volume_figure(table, output):
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
-    from src.probabilistic_isopach.figures import STYLE
+    from src.empirical_isopach.visualization.style import STYLE
     tab=table.sort_values("median_map_km3")
     with plt.rc_context(STYLE):
         fig,(volume,support)=plt.subplots(1,2,figsize=(11.8,5.5),layout="constrained",

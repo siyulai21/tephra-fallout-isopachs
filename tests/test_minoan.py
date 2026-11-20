@@ -98,17 +98,12 @@ def test_old_ytt_selected_fit_remains_numerically_unchanged():
         np.testing.assert_allclose(model[key],previous[key],rtol=1e-12,atol=0)
 
 
-def test_minoan_publication_preserves_bound_types_and_writes_no_html(tmp_path):
-    from src.probabilistic_isopach.cli import main
-    main(['Minoan','--output',str(tmp_path/'run'),'--grid','8',
-          '--volume-grid','8','--draws','20','--map-grid','65'])
-    output=tmp_path/'run'
-    report=json.loads((output/'report.json').read_text())
-    assert report['settings']['buffer_km']==10
-    assert report['settings']['bounds']==[-400,-850,1200,1100]
-    assert report['input']['n_lower_limits']==9
-    assert not (output/'index.html').exists()
-    assert (output/'README.md').is_file()
-    observations=pd.read_csv(output/'observations_used.csv')
-    bounds=observations[observations.Kind=='lower_limit']
-    assert len(bounds)==9 and bounds.Thickness_cm.isna().all() and (bounds.Limit_cm>0).all()
+def test_published_minoan_bounds_match_the_audited_rows():
+    home = Path(__file__).resolve().parents[1] / "eruptions/minoan/results"
+    data, _ = read_observations("data/eruptions/Minoan_tephra.csv")
+    observations = pd.read_csv(home / "accepted_observations.csv").set_index("row_id")
+    bounds = observations.loc[observations.lower_bound]
+    assert len(bounds) == 9 and bounds.censored.all()
+    expected = {row: value for row, value, lower in zip(data.row_ids, data.log_value, data.lower_censored) if lower}
+    assert set(bounds.index) == set(expected)
+    np.testing.assert_allclose(bounds.log_value, [expected[row] for row in bounds.index])

@@ -69,15 +69,11 @@ def main(argv=None):
     if argv and argv[0] == "global":
         global_analysis(argv[1:])
         return
-    if argv and argv[0] == "fit":
-        from src.probabilistic_isopach.cli import main as historical_fit
-        return historical_fit(argv)
-    if argv and argv[0] not in ("methods", "-h", "--help"):
+    if argv and argv[0] not in ("fit", "methods", "-h", "--help"):
         # Preserve the module's original CSV-first regional comparison command.
         return compare(argv)
     parser = argparse.ArgumentParser(description=__doc__,
-        epilog="New data: tephra-isopachs compare observations.csv --output results/new-run. "
-               "The legacy GP-only command remains available as 'fit'.")
+        epilog="Run tephra-isopachs compare observations.csv --output results/new-run to fit all four families.")
     subparsers = parser.add_subparsers(dest="command")
     subparsers.add_parser("compare", help="Compare every active method; no preferred family")
     subparsers.add_parser("global", help="Global fallout posterior with explicit assumption sensitivity")

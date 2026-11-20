@@ -7,6 +7,7 @@ This package presents recorded fits. It does not choose models, alter observatio
 | File | Responsibility |
 |---|---|
 | [maps.py](maps.py) | Pinned fine coastlines, complete observation frames, aspect-aware layouts and global display-edge checks |
+| [style.py](style.py) | Shared colours and typography for report figures |
 | [regional.py](regional.py) | Common-scale median fields clipped to the exact observation hull |
 | [global_maps.py](global_maps.py) | Wider global continuation, complete local detail, whole-Earth context and latent uncertainty |
 | [comparison.py](comparison.py) | Four median isopach maps in a common observation-area frame and the case results table |

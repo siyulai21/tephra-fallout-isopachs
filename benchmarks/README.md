@@ -44,7 +44,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 
 The [SHA-256 inventory](published-evidence.sha256) covers published data, machine-readable results, maps and source files used in regression checks. Verify it from the repository root with `shasum -a 256 -c benchmarks/published-evidence.sha256` or use the Python visual verifier. Earlier suites and their exact inputs can be run at the matching [release commit](../CHANGELOG.md#earlier-results). [Reproduce figures](../docs/maintenance/README.md#checking-a-map)
 
-The directional [reproduction sequence](../comparisons/directional/single-structure/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay). `directional_development` reproduces earlier experiments; its outcomes are retained as development evidence.
+The directional [reproduction sequence](../comparisons/directional/single-structure/README.md#reproduce) also lists `directional_reference` (spherical sector budgets), `directional_replication` (fresh chains) and `directional_spherical_support` (shared contour audit or replay).
 
 ## B-Tm core evidence and directional reach
 
@@ -59,21 +59,10 @@ Start with the [Aso-4 study's complete reproduction sequence](../comparisons/aso
 | Command | What it does | Method family |
 |---|---|---|
 | `python -m benchmarks.source_review --dataset b-tm --output results/source-review` | Three source-constrained candidates, complete geographic holdouts and numerical checks; also accepts `--dataset aso-4` | Development comparisons, not automatic model selection |
-| `python -m benchmarks.aso_input_review --output results/aso-input-review` | Treat the source-confirmed eroded Aso-4 row 55 as a 7 cm lower bound in a separate sensitivity, preserving the principal input | Preceding displaced geometry; no model selection or new holdouts |
 
 `python -m benchmarks.aso_diagnosis` uses the required pre-audit posterior in [the study reference](../comparisons/aso-4-audit/reference/README.md). `python -m benchmarks.verify_aso_evidence` checks that reference, current source hashes, matched validation and all retained posterior attempts without writing tracked files. Use `--output results/verification.json` to save a fresh record.
 
-## Historical reproduction utilities
 
-These commands are retained for compatibility, audit preparation and regression work; they are not the new-eruption workflow. Old published results are available in [Git history](../CHANGELOG.md#earlier-results), not a second active report collection.
+## Verify the Minoan and YTT source tables
 
-| Command | What it does | Method family |
-|---|---|---|
-| `python -m benchmarks.global_fallout --output results/global-fallout` | Historical six-eruption selected/stacked GP fits, global integrals, geographic deletions and 30 known-truth trials | GP |
-| `python -m benchmarks.minoan --output results/minoan` | Verify source arithmetic and rerun combined fallout, ensemble and source sensitivities | GP |
-| `python -m benchmarks.ytt --output results/ytt` | Verify the reviewed principal selection and rerun its comparisons/sensitivities | GP |
-| `python -m benchmarks.empirical --output results/empirical --repeats 10` | Four-eruption and synthetic selected-versus-stacked development benchmark | GP |
-| `python -m benchmarks.run --output results/benchmark --repeats 10` | Initial GP/fixed-default spline comparisons and separate trend-regularized spline selection diagnostics | GP and spline research |
-| `python -m benchmarks.summarize_empirical results/empirical/benchmark.json --output results/comparison` | Summarize an existing ensemble benchmark | Reporting only |
-
-`minoan --prepare-only` and `ytt --prepare-only` reconstruct audited inputs and are maintenance operations. Normal analysis commands verify existing accepted data. `ytt_inputs.py` supplies the reviewed YTT reconstruction. A report made with current code must record current hashes; do not relabel a new run as the original historical execution.
+Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the published inputs against their workbooks. Both commands check the principal selection and four alternatives. Add `--prepare-only` to rebuild the reviewed tables and provenance. Fit either eruption with the ordinary `tephra-isopachs compare` command. [Minoan audit](../data/audits/Minoan/README.md) · [YTT audit](../data/audits/YTT/README.md)

@@ -11,8 +11,8 @@ Run `python -m pytest -q` after installing `.[test]`. These tests verify numeric
 | Directional geometry, likelihood, whole-Earth integration and invisible proximal cap | `test_directional.py` |
 | Local footprints and complete-contour diagnostics | `test_support.py` |
 | Source audits and preserved inputs | `test_aso_evidence.py`, `test_minoan.py`, `test_ytt.py` |
-| Reporting and future-family integration | `test_reporting.py`, `test_method_registry.py` |
-| Historical numerical and import compatibility | `test_global_volume.py`, `test_spline_numerics.py`, `test_spline_prior.py` |
+| Reporting and future-family integration | `test_report_cartography.py`, `test_method_registry.py` |
+| Shared Earth geometry and whole-Earth integrals | `test_global_volume.py` |
 
 The registry test exercises a test-only third field through common fitting, folds, integration and reports; it does not register a third regional scientific model. The small [YTT fixture](fixtures/README.md) preserves an existing regression reference without retaining its full unused report collection.
 

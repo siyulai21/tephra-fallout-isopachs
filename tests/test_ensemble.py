@@ -1,5 +1,4 @@
 """Check mixture mathematics, data isolation and the limits of calibration."""
-import json
 import numpy as np
 import pytest
 from scipy.special import ndtri, log_ndtr
@@ -9,7 +8,7 @@ from src.probabilistic_isopach.distributions import LogMixture, predictive_distr
 from src.probabilistic_isopach.ensemble import StackedModel, stack_weights, observation_discrepancy
 from src.probabilistic_isopach.model import Candidate
 from src.probabilistic_isopach.validation import select_model, nested_validate, spatial_folds
-from src.probabilistic_isopach.report import integrate, expected_volume
+from src.empirical_isopach.region import SurveyRegion, integrate_region, regional_draws
 
 
 def observations(n=32):
@@ -63,9 +62,10 @@ def test_whole_field_draws_and_volume_preserve_model_disagreement():
     assert cov[0, 1] == pytest.approx(.01+.4*.6*np.log(10.)**2)
     np.testing.assert_allclose(stacked.predict_log(xy)[1], np.diag(cov))
     expected = (.4+.6*10)*np.exp(.005)*4e-5
-    assert expected_volume(stacked, [-1, -1, 1, 1], 8) == pytest.approx(expected)
-    result = integrate(stacked, [-1, -1, 1, 1], 8, 10000, 123)
-    assert result['mean_km3'] == pytest.approx(expected)
+    region = SurveyRegion(np.array([[-1., -1.], [1., -1.], [1., 1.], [-1., 1.]]))
+    estimate = integrate_region(stacked, region)
+    assert estimate['expected_km3'] == pytest.approx(expected)
+    result = regional_draws(stacked, region, expected, draws=10000, seed=123)
     assert result['conditional_quantiles_km3']['0.025'] < 5e-5
     assert result['conditional_quantiles_km3']['0.975'] > 4e-4
     unadjusted = predictive_distribution(stacked, xy, observation=True)
@@ -107,22 +107,3 @@ def test_outer_responses_cannot_change_their_own_weights_or_calibration():
     for key in ('median_log', 'lower95_log', 'upper95_log', 'discrepancy_adjusted_upper95_log'):
         np.testing.assert_array_equal(np.array(before[key])[folds == 0], np.array(after[key])[folds == 0])
     assert before['mean_log_score'] != after['mean_log_score']
-
-
-def test_cli_exports_a_joint_mixture_and_separate_observation_intervals(tmp_path):
-    from src.probabilistic_isopach.cli import main
-    main(['Tambora', '--output', str(tmp_path/'run'), '--method', 'stacked', '--no-publication',
-          '--grid', '8', '--volume-grid', '8', '--draws', '20'])
-    output = tmp_path/'run'
-    report = json.loads((output/'report.json').read_text())
-    assert report['settings']['method'] == 'stacked'
-    joint = np.load(output/'virtual_predictions.npz')
-    weights = joint['component_weights']
-    means = joint['component_mean_log']
-    mean = weights@means
-    covariance = sum(w*(cov+np.outer(m-mean, m-mean)) for w, m, cov in
-                     zip(weights, means, joint['component_covariance_log']))
-    np.testing.assert_allclose(joint['mean_log'], mean)
-    np.testing.assert_allclose(joint['covariance_log'], covariance)
-    assert 'only moments' in str(joint['distribution'])
-    assert 'diagnostic_adjusted_observation_upper95_cm' in (output/'predictions.csv').read_text().splitlines()[0]

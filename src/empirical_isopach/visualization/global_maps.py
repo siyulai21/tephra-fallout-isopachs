@@ -10,7 +10,7 @@ from matplotlib.colors import Normalize
 
 from src.Laea import make_laea_transform
 from src.probabilistic_isopach.global_volume import EarthDomain
-from src.probabilistic_isopach.figures import STYLE
+from src.empirical_isopach.visualization.style import STYLE
 from .maps import (ASSET, INK, TEAL, THICKNESS_LEVELS, frame_bounds, grid_axes, global_frame,
                    panel_layout, setup_map, observations, observation_legend,
                    coast_rings, level_labels, contour_levels)
