@@ -17,6 +17,20 @@ def previous_btm_file(name):
     return path
 
 
+SPHERICAL_REFERENCE = Path("archive/2026-11-20-spherical-continuation")
+
+
+def preceding_spherical_bytes(name,root=ROOT):
+    """Read a replaced artifact under its original repository-relative name."""
+    from zipfile import ZipFile
+    folder = root/SPHERICAL_REFERENCE
+    if Path(name).suffix in {".md",".py"}:
+        archive = "pages.zip" if Path(name).suffix==".md" else "implementation.zip"
+        with ZipFile(folder/archive) as pages:
+            return pages.read(str(name))
+    return (folder/"files"/name).read_bytes()
+
+
 def read_hashes(path=INVENTORY):
     hashes = {}
     for line in path.read_text().splitlines():

@@ -70,13 +70,13 @@ def footprint(ax, mesh, color=TEAL, lw=1.):
                 ax.plot(*ring.xy, color=color, lw=lw, ls="--", zorder=5)
 
 
-def field_panel(ax, x, y, z, bounds, data, meta, norm, mesh=None):
+def field_panel(ax, x, y, z, bounds, data, meta, norm, mesh=None, conditional=False):
     image = ax.pcolormesh(x, y, z, shading="auto", cmap="viridis", norm=norm,
                           rasterized=True, zorder=1)
     levels = contour_levels(z)
     if len(levels):
         contour = ax.contour(x, y, z, levels=levels, colors="white", linewidths=.75,
-                             linestyles="solid", zorder=4)
+                             linestyles="dashed" if conditional else "solid", zorder=4)
         ax.clabel(contour, fmt=level_labels, fontsize=8, inline_spacing=5)
     if mesh is not None:
         footprint(ax, mesh, color="#9BE3DB", lw=.9)
@@ -149,7 +149,13 @@ def world_map(output, name, data, meta, view, norm, *, show_contours=True):
 def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
     from ..support import SupportMesh
     output = Path(output)
-    view = PosteriorView(samples, meta["vent_lonlat"][1], geometry=g)
+    from ..models.mass_mixture.bearings.field import PROTOCOL
+    bearing = g is None and report.get("protocol")==PROTOCOL
+    if bearing:
+        from ..models.mass_mixture.bearings.maps import BearingView
+        view = BearingView(samples,data,meta["vent_lonlat"][1],report["bearing"]["map_draw_check"]["draws_per_chain"])
+    else:
+        view = PosteriorView(samples, meta["vent_lonlat"][1], geometry=g)
     bounds, audit = global_frame(data.xy, view.latitude, view.central)
     local_bounds = frame_bounds(data.xy)
     x, y, q = grid(view, bounds)
@@ -168,8 +174,8 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
             shape, size = panel_layout(bounds)
             fig, axes = plt.subplots(*shape, figsize=size, layout="constrained", squeeze=False)
             left, right = axes.flat
-            image = field_panel(left, x, y, q[1], bounds, data, meta, norm, mesh)
-            left.set_title("Whole-deposit field\nPosterior median; contours in cm", fontsize=11)
+            image = field_panel(left, x, y, q[1], bounds, data, meta, norm, mesh, conditional=bearing)
+            left.set_title("Median thickness in cm\nDashed spherical isopachs are conditional" if bearing else "Whole-deposit field\nPosterior median; contours in cm", fontsize=11)
             uncertainty = right.pcolormesh(x, y, q[2]-q[0], shading="auto", cmap="magma", vmin=0, rasterized=True)
             setup_map(right, bounds, meta["vent_lonlat"])
             observations(right, data, meta=meta)
@@ -218,7 +224,7 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
         shape, size = panel_layout(local_bounds)
         fig, axes = plt.subplots(*shape, figsize=size, layout="constrained", squeeze=False)
         left, right = axes.flat
-        image = field_panel(left, lx, ly, lq[1], local_bounds, data, meta, norm, mesh)
+        image = field_panel(left, lx, ly, lq[1], local_bounds, data, meta, norm, mesh, conditional=bearing)
         left.set_title(f"Near-observation field\n{view.statistic}", fontsize=11)
         uncertainty = right.pcolormesh(lx, ly, lq[2]-lq[0], shading="auto", cmap="magma", vmin=0, rasterized=True)
         setup_map(right, local_bounds, meta["vent_lonlat"])
@@ -231,7 +237,7 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
         fig.suptitle(f"{name} · local detail{warning}\nA detail window is not the global integration boundary; contours can continue outside it.", fontsize=13)
         observation_legend(fig, data, meta=meta)
         save(fig, output, "local.png")
-    world = world_map(output, name, data, meta, view, norm)
+    world = world_map(output, name, data, meta, view, norm, show_contours=not bearing)
     provenance = {"protocol":"report-cartography-v1", "input_sha256":meta["input_sha256"],
         "posterior_sha256":sha256((output/"posterior.npz").read_bytes()).hexdigest() if (output/"posterior.npz").exists() else None,
         "coastline_sha256":sha256(ASSET.read_bytes()).hexdigest(), "coastline_scale":"1:10 million",
@@ -242,6 +248,9 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
         "extent_audit":audit, "whole_earth_view":world,
         "volume_calculation_changed":False,
         "note":"Finite plotting grids summarize saved fields. Thresholds and map windows do not enter inference or volume."}
+    if bearing:
+        provenance.update(field_protocol=report["protocol"],gap_half_reach_degrees=report["bearing"]["half_reach_degrees"],
+                          assumptions_sha256=report["bearing"]["model_sha256"],display_orientation_seed=report["bearing"]["orientation_seed"])
     (output/"map-display.json").write_text(json.dumps(provenance, indent=2, allow_nan=False)+"\n")
     if g is not None:
         index = int(np.nanargmax(q[1]))

@@ -1,63 +1,53 @@
-# Mazama · global fallout estimate
+# Mazama spherical-mixture fallout
 
-[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [Spherical-mixture results across eruptions](../../../../comparisons/spherical-mixture/README.md)
+**212.9 km³ of bulk fallout** is the principal whole-Earth volume. The conditional 95% interval is **140.1–2,614.3 km³**. Each simulated deposit carries one fan direction through the unsampled ground. The map shows median thickness at each location. The volume and its interval summarize the integrals of complete deposits.
 
-The baseline posterior median is **223 km³**, with a **145–3.67e+03 km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **passed**.
+![Principal spherical mixture with uncertain continuation across unsampled bearings](field.png)
 
-Every posterior field is positive and has total volume exactly equal to its fitted volume parameter on the whole Earth. No closing pseudo-observations, map rectangle, contour cutoff or arbitrary distal radius sets this total. The previous contour screen remains a diagnostic of local support; its rejection does not veto this conditional global estimate.
+The underlying spherical mixture gave 223.2 [144.7–3,668.8] km³. The extension leaves thickness at each accepted site and inside supported interpolation triangles unchanged. Beyond finite measured bearings it averages three assumptions with equal weight. A deposit can retain the original broad field, or continue preferentially along one broad or narrower fan. A site carrying only an upper limit constrains its own location and supplies no positive ray.
 
-![Global fallout field and uncertainty](field.png)
+[Near-observation field](local.png) · [Source region](source.png) · [Whole-Earth map](world.png) · [Sector-by-sector isopach areas](bearing/sector-areas.csv) · [All crossings along eight bearings](bearing/ray-crossings.json)
 
-The overview expands around the displayed 0.1 cm contour, with a recorded finite-grid edge check. Its window never sets the volume. [Display bounds, posterior subset and coastline provenance](map-display.json).
+## What the unobserved directions contribute
 
-![Local thickness and uncertainty around every accepted observation](local.png)
+| Continuation assumption | Whole-deposit median [conditional 95%], km³ |
+|---|---:|
+| Broad parent continuation | 223.3 [145.3–3,628.7] |
+| Unknown fan, 90° half-thickness angle | 209.9 [139.6–2,514.1] |
+| Unknown fan, 47° half-thickness angle | 204.5 [137.4–1,849.3] |
+| Enhanced narrow hidden fan, separate sensitivity | 219.9 [143.8–3,181.3] |
 
-![Whole-Earth continuation and coastlines](world.png)
+The three principal assumptions allow local thickness up to the parent prediction in the same draw. The enhanced-fan sensitivity allows extra ash along a hidden axis. Changing the angular spread of measured reach also changes the inferred mass.
 
-The local detail can cut contours at its edges; the whole-Earth companion shows their wider context, with longitude edges joined. Colours saturate below 0.1 cm and above the displayed upper limit; the lowest colour does not mean an exact 0.1 cm deposit. Fine coastlines supply context, not geological evidence. The 2026-11-17 visual refresh uses the unchanged posterior and numeric report; [replay checks](../figure-replay.json) record their hashes.
+| Angle at which measured reach halves | Whole-deposit median [conditional 95%], km³ | Numerical checks |
+|---|---:|---|
+| 11.25° | 204.1 [132.1–2,511.4] | Passed |
+| 45° | 219.3 [144.0–2,957.4] | Passed |
 
+The median fraction inside the screened measurement footprint is **15.5%**. The median fraction beyond the farthest exact site is **0.2%**. Other mass lies in the intervening gaps and the unmeasured proximal cap. These are sampling classes.
 
-## What the interval means
+## Prediction and uncertainty
 
-Uncertainty includes fan positions, sizes, relative masses, tail shape, total volume and observation scatter parameters. The latent volume excludes observation noise. It remains conditional on general modelling assumptions: a finite mixture of smooth, source-related, radially decreasing components, a proper volume/scale prior and a stated observation model. Several components can form elongated, separated or overlapping fans; they are mathematical components, not independently measured eruption phases.
+The equal-region held-out log score is **1.561**, compared with 1.577 for the original geometry. Lower scores indicate better predictions. The 95% predictive interval covered **88.9%** of exact held-out thicknesses. Every buffered training fold builds its own bearing support. Censored sites contribute their reported limit events to the score.
 
-No finite dataset alone can exclude an arbitrarily large deposit in an unsampled region. The proper prior makes inference possible; it does not create geological evidence. Unrecorded erosion, reworking, preferential sampling and source misattribution are not automatically covered by this interval. If residual scatter is unresolved areal deposition variability rather than observation/preservation error, central-field volume can differ from area-mean physical mass; that structural correction is not automatically included. Bounds retain their documented likelihood meaning.
+Across 3 held-out readings with gap exposure of at least 0.5, mean negative log score was 2.315 for the principal field and 2.900 for its parent. This subset weights individual sites equally.
 
-## Sensitivity to those assumptions
+The shared contour audit identified no qualifying standard-policy band. [Complete decisions and geographic deletions](complete-contour-audit.json)
 
-| Assumption | Median km³ | Conditional 95% interval km³ | Fitted-site log-RMSE | Sampling diagnostics |
-|---|---:|---:|---:|---|
-| Three fans · baseline | 223 | 145–3.67e+03 | 0.485 | pass |
-| Allow diffuse global tails | 222 | 143–3.74e+03 | 0.478 | pass |
-| Broader scales and fan offsets | 282 | 143–2.83e+04 | 0.530 | **not passed** |
-| Shift volume prior 100-fold | 230 | 143–7.94e+03 | 0.487 | pass |
-| One fan | 1.47e+03 | 245–1.52e+05 | 1.142 | pass |
-| Five fans | 239 | 146–4.77e+03 | 0.463 | pass |
-| Gaussian observation errors | 231 | 156–1.54e+03 | 0.457 | **not passed** |
-| Diffuse fan and kernel weights | 206 | 142–658 | 0.492 | pass |
+| Spherical prior | Whole-deposit median [conditional 95%], km³ | Numerical checks |
+|---|---:|---|
+| baseline | 212.9 [140.1–2,614.3] | Passed |
+| diffuse tail | 212.1 [138.8–2,819.2] | Passed |
+| wide geography | 260.4 [138.1–24,588.4] | parent sampler, volume draw split warning |
+| volume prior shift | 216.1 [137.0–5,742.4] | Passed |
+| one fan | 1,025.3 [208.9–92,709.0] | volume draw split warning |
+| five fans | 224.7 [141.5–3,537.7] | Passed |
+| gaussian errors | 222.9 [152.3–1,320.5] | parent sampler warning |
+| diffuse mixture weights | 198.0 [137.7–592.0] | Passed |
 
-The range across the lower and upper interval endpoints is **142–1.52e+05 km³**. This is an assumption-sensitivity envelope, **not** a 95% interval, a probability-weighted model average, or an exhaustive bound. Every alternative remains visible, including those that differ substantially; none was selected because its volume matched a published target.
+The resolved 1, 10 and 100 cm contour areas passed the split-draw test at 384 parent draws per chain. Sparsely represented or empty contour unions remain unresolved.
 
-Fitted-site log-RMSE compares the posterior predictive median with the exact measurements used for fitting; bounds contribute their likelihood events instead. These training checks can expose a restrictive alternative, but are optimistic and **not validation or a model-selection rule**. Only the baseline receives the full matched geographic holdout analysis below. Alternatives have not been given probability weights or declared equally plausible.
+Geographic folds with sampling warnings (numbered from one) include 3.
+The tail and overall scale can remain weakly identified even when numerical checks pass. The reference-amplitude prior induces a prior on retained volume. Reworking, incomplete sampling and source attribution can add uncertainty beyond these conditional intervals.
 
-![Volume sensitivity and mass partition](volume.png)
-
-## Validation and numerical precision
-
-Four buffered geographic holdouts: equal-region negative log score **1.577** (lower is better), log-thickness RMSE **1.501**, and heldout observation coverage **91.1%**. All four posterior fits passed numerical diagnostics: **False**. These predictions test transfer to withheld observations, not the unobserved whole-deposit volume.
-
-Baseline chains: maximum rank-normalized split R-hat **1.0088**, minimum bulk/tail effective sample sizes **465/1104**, minimum energy BFMI **0.301**, divergences **0**. Diagnostics cover label-invariant global, observed-site and unsampled-field summaries. Passing them is evidence of numerical mixing, not proof of complete mode exploration. All shorter failed attempts are retained in the report. Monte Carlo standard errors of volume log-quantiles are recorded separately; rounded interval endpoints are estimates. [Inspect the chain traces and distributions](sampling.png).
-
-Mass partition uses 1024 whole posterior fields and 4096 equal-mass quadrature points per fan. The largest fraction change on doubling that integration rule is **0.0058**. This numerical partition never changes the analytically normalized total. Its local footprint is a sampling screen, not a confidence region.
-
-## Reproduce and inspect
-
-Use `tephra-isopachs global data/eruptions/Mazama_tephra.csv --output results/new-global-run`. Use `--resume` only for the same run; caches verify inputs, priors, numerical settings, source hashes, runtime versions and posterior checksums. The ordinary `compare` command runs the regional comparison followed by this global analysis.
-
-- [Full report, priors, diagnostics, all attempts and provenance](report.json)
-- [Baseline whole-field posterior samples](posterior.npz)
-- [Volume samples for every assumption and chain](volume_draws.csv.gz)
-- [Assumption summary](estimates.csv)
-- [Geographic predictions and fold membership](heldout_predictions.csv)
-
-Input SHA-256: `2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39`. No accepted observations or source audits were changed for this calculation.
+[Prior sensitivity and mass partition](volume.png) · [Derived-volume chains](sampling.png) · [Numerical report](report.json) · [Held-out sites](heldout_predictions.csv) · [Whole-deposit draws](volume_draws.csv.gz) · [Joint sector and support-class volumes](bearing/baseline.npz) · [Original spherical fit and all attempts](bearing/parent-report.json)

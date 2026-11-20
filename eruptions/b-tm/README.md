@@ -8,7 +8,7 @@ The principal uncertain-direction median map integrates to **33.6 km³**. At Lak
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-evidence.png)
 
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.
+All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
 
 ## Volume and predictive performance
 
@@ -17,11 +17,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | GP ensemble | Hull mean **29.59** | 18.88–46.13 | 1.459 | 89.1% |
 | Cubic spline | Hull median map **50.75** · volume median 64.64 · unstable mean 6.1e+11 | 33.03–664.44 | 4.295 | 75.0% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **33.6** · volume median 37.2 | 23.5–77.1 | 1.243 † | 93.8% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **49.1** | 30.7–341.7 | 1.492 † | 93.8% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **47.0** | 30.2–275.5 | 1.487 † | 93.8% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>

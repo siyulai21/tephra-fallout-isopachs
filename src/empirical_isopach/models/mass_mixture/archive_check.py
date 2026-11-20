@@ -1,4 +1,5 @@
 """Independent spherical-posterior checks at audited archive horizons."""
+import json
 from pathlib import Path
 
 import arviz as az
@@ -14,9 +15,13 @@ from .geometry import log_field,to_sphere
 from .inference import flatten
 
 
-def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.)):
+def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.), *, bearing=None):
     sites = inventory["sites"]
     xy = positions(sites,vent)
+    used = {sid for scenario in inventory["scenarios"] for sid in scenario["effective_limit_cm"]}
+    for site, point in zip(sites, xy, strict=True):
+        if site["id"] in used and np.any(np.linalg.norm(data.xy-point,axis=1)<1e-6):
+            raise ValueError("An archive likelihood overlaps an accepted site. Review dependence before combining readings.")
     p = flatten(samples)
     unit = to_sphere(xy,vent[1])
     n = len(p["noise"])
@@ -24,6 +29,19 @@ def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.)):
     mu = np.concatenate(values)
     noise,eps = p["noise"][:,None],p["contamination"][:,None]
     shape = samples["log_volume"].shape
+    volume = np.exp(p["log_volume"])
+    multiplicity = 1
+    if bearing is not None:
+        from .bearings.field import BearingSupport, POWERS, multiplier
+        idx,phi = bearing["flat_index"],bearing["azimuth_rad"]
+        h,theta = BearingSupport(data,vent[1]).evaluate(xy)
+        means = [mu[idx]+np.log(multiplier(h,theta,phi[:,None],power)) for power in POWERS]
+        multiplicity = len(means)
+        mu = np.stack(means,axis=1).reshape(-1,len(sites))
+        noise,eps = (np.repeat(a[idx],multiplicity,axis=0) for a in (noise,eps))
+        volume = bearing["volume_km3"].ravel()
+        n = len(volume)
+        shape = (shape[0],n//shape[0])
     all_models,archive_weights = {},{}
     maps = {s["id"]:i for i,s in enumerate(sites)}
     within = SurveyRegion(data.xy).contains(xy)
@@ -37,10 +55,14 @@ def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.)):
                     score += np.logaddexp(np.log1p(-eps[:,0])+log_ndtr(z),np.log(eps[:,0])+log_ndtr(z/4))
         normalized = score-logsumexp(score)
         weights = np.exp(normalized)
-        volume = np.exp(p["log_volume"])
-        q = inverse_cdf(volume,weights,(.025,.5,.975)).tolist()
-        ess = float(1/(weights@weights))
-        pareto = float(az.psislw(score)[1]) if np.ptp(score)>1e-12 else 0.
+        if bearing is not None and scenario is None:
+            q = np.quantile(volume,(.025,.5,.975)).tolist()
+        else:
+            q = inverse_cdf(volume,weights,(.025,.5,.975)).tolist()
+        cluster_mass = weights.reshape(-1,multiplicity).sum(axis=1)
+        ess = float(1/(cluster_mass@cluster_mass))
+        cluster_score = logsumexp(score.reshape(-1,multiplicity),axis=1)
+        pareto = float(az.psislw(cluster_score)[1]) if np.ptp(cluster_score)>1e-12 else 0.
         chain_scores = score.reshape(shape)
         chain_p = np.exp(logsumexp(chain_scores,axis=1)-np.log(shape[1]))
         chain_volume = [float(inverse_cdf(v,np.exp(s-logsumexp(s)))[0])
@@ -70,14 +92,18 @@ def archive_checks(samples, data, vent, inventory, cutoffs=(.1,1.,10.)):
     return all_models,archive_weights
 
 
-def publish(posterior, data, meta, inventory, output):
+def publish(posterior, data, meta, inventory, output, *, bearing_packet=None):
     if not inventory["sites"]:
         return None
     output=Path(output)
     output.mkdir(parents=True,exist_ok=True)
     cutoffs = sorted({.1, 1., 10., *(s["limit_cm"] for s in meta.get("interpreted_upper_limits", []))})
+    bearing = None
+    if bearing_packet is not None:
+        with np.load(bearing_packet) as saved:
+            bearing = dict(saved)
     with np.load(posterior) as source:
-        info,weights=archive_checks(dict(source),data,meta["vent_lonlat"],inventory,cutoffs)
+        info,weights=archive_checks(dict(source),data,meta["vent_lonlat"],inventory,cutoffs,bearing=bearing)
     path=output/"spherical-archive-weights.npz"
     np.savez_compressed(path,**weights)
     report={"posterior_sha256":digest(posterior),"weights_sha256":digest(path),"input_sha256":meta["input_sha256"],
@@ -85,6 +111,10 @@ def publish(posterior, data, meta, inventory, output):
                       if inventory["scenarios"] else "Predictions using the original equal weights of the fitted spherical posterior"),
             "diagnostic_policy":"ESS at least 400, Pareto k under 0.7, each chain supplies 10–40% of mass, each chain volume median within 15% of pooled. Raw weights used; instability is retained.",
             "scenarios":info}
+    if bearing_packet is not None:
+        report["bearing_packet_sha256"] = digest(bearing_packet)
+        report["accepted_archive_bounds_cm"] = {s["id"]:float(s["limit_cm"]) for s in meta.get("interpreted_upper_limits",[])}
+        report["method"] = "Whole-deposit bearing continuation with any additional inspected-archive likelihood. Effective size groups the three widths of each parent draw."
     write_json(output/"spherical-archive-checks.json",report)
     return report
 
@@ -102,10 +132,48 @@ def write_summary(report, output):
         interval = result["full_field_volume_km3"]
         check = "Passed" if result["importance_checks_passed"] else "Independent refit required"
         lines.append(f"| {title} | {interval['median']:,.1f} | {interval['lower95']:,.1f}–{interval['upper95']:,.1f} | {check} |")
-    lines.extend(["", "## Assumptions", ""])
+    if "bearing_packet_sha256" in report:
+        lines += ["", "## Thickness at the inspected horizons", "",
+                  "These predictions use the accepted thicknesses and bounds. The final column gives the probability that a new local reading would lie below a fitted bound, conditional on its archive interpretation.", "",
+                  "| Site | Median latent thickness (cm) | Conditional 95% (cm) | Interpreted upper bound (cm) | Probability below bound |",
+                  "|---|---:|---:|---:|---:|"]
+        bounds = report["accepted_archive_bounds_cm"]
+        for site in report["scenarios"]["quantitative"]["sites"]:
+            q = site["latent_cm"]
+            limit = bounds.get(site["id"])
+            bound = f"{limit:g}" if limit is not None else "—"
+            prob = f"{site['p_local_below_scale'][str(float(limit))]:.1%}" if limit is not None else "—"
+            lines.append(f"| {site['name']} | {q['median']:.3g} | {q['lower95']:.3g}–{q['upper95']:.3g} | {bound} | {prob} |")
+    if any(result["scenario"] for result in report["scenarios"].values()):
+        lines.extend(["", "## Assumptions", ""])
     for result in report["scenarios"].values():
         if result["scenario"]:
             scenario = result["scenario"]
             lines.append(f"- **{scenario['title']}**. {scenario['assumption']}")
     lines.extend(["", "[Site predictions, effective scales and convergence checks](spherical-archive-checks.json) · [Weights of the complete posterior draws](spherical-archive-weights.npz)", ""])
     (Path(output)/"README.md").write_text("\n".join(lines))
+
+
+def case_archives(path, output, data, meta, supplied=None):
+    """Attach the catalogue's inspected sites to the principal spherical case, when available."""
+    from ..directional.archive_readings import load_inventory
+    inventory, source = load_inventory(path,supplied)
+    if not inventory["sites"]:
+        return
+    output = Path(output)
+    folder = output/"archive-evidence"
+    report = publish(output/"posterior.npz",data,meta,inventory,folder,bearing_packet=output/"bearing/baseline.npz")
+    report["archive_inventory_sha256"] = digest(source)
+    write_json(folder/"spherical-archive-checks.json",report)
+    write_summary(report,folder)
+    page = output/"README.md"
+    link = "[Thickness and predictive intervals at inspected archives](archive-evidence/README.md)"
+    if link not in page.read_text():
+        with page.open("a") as stream:
+            stream.write("\n"+link+"\n")
+    manifest = output/"artifacts.json"
+    files = json.loads(manifest.read_text())
+    files["README.md"] = digest(page)
+    for name in ("README.md","spherical-archive-checks.json","spherical-archive-weights.npz"):
+        files["archive-evidence/"+name] = digest(folder/name)
+    write_json(manifest,files)

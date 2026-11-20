@@ -21,8 +21,9 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
-from .publication import read_hashes, verify_files
+from .publication import read_hashes, verify_files, preceding_spherical_bytes, SPHERICAL_REFERENCE
 published = read_hashes()
+preceding_spherical = read_hashes(SPHERICAL_REFERENCE/"previous-files.sha256")
 visual_revisions = 0
 updated_btm = 0
 # This study checked neighboring releases before the B-Tm source revision.
@@ -31,6 +32,13 @@ for old_path, expected in others.items():
  path = Path(current)
  if hashfile(path) == expected:
   continue
+ if current in preceding_spherical:
+  # The 2026-11-08 study checks the prior result at its original scientific identity.
+  prior_hash = sha256(preceding_spherical_bytes(current)).hexdigest()
+  assert prior_hash == preceding_spherical[current]
+  verify_files({current:published[current]})
+  if prior_hash == expected:
+   continue
  if path.parts[1] == "b-tm":
   updated_btm += 1
  else:
@@ -42,7 +50,8 @@ diagnosis = read(OUT/'runs/diagnosis/report.json')
 assert hashfile(raw) == diagnosis['input_sha256']
 reference_hashes = {'report.json': diagnosis['original_report_sha256'], 'posterior.npz': diagnosis['posterior_sha256']}
 verify_files(reference_hashes, reference_root)
-regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/spherical-mixture/report.json')
+regional=read('eruptions/aso-4/results/report.json');glob=read('eruptions/aso-4/results/spherical-mixture/bearing/parent-report.json')
+assert hashfile("eruptions/aso-4/results/spherical-mixture/bearing/parent-report.json")==preceding_spherical["eruptions/aso-4/results/spherical-mixture/report.json"]
 for r in (regional,glob):
  assert r['input']['input_sha256']==hashfile(reviewed)
  assert r['input']['audit']['sha256']==hashfile('data/audits/Aso-4/provenance.json')

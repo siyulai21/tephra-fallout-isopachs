@@ -22,7 +22,7 @@ The measured-fan sensitivity follows sampled bearings. Earlier experiments isola
 
 ## Spherical mixture
 
-A fitted mixture of spatial fans integrates to its volume parameter over the Earth. The reported volume median and conditional interval use complete deposits. Fixed changes to the priors and fan geometry produce a separate sensitivity envelope. B-Tm uses source-focused fans. The catalogue identifies the geometry used in each case. [Likelihood, priors and numerical checks](probabilistic-global.md) · [Source-focused fans](source-anchored-fans.md) · [Six-eruption estimates](../../comparisons/spherical-mixture/README.md)
+The principal spherical field integrates the retained kernel mass along measured and uncertain bearings over the Earth. The reported volume median and conditional interval use complete deposits. Fixed changes to the priors and fan geometry produce a separate sensitivity envelope. B-Tm uses source-focused fans. The catalogue identifies the geometry used in each case. [Finite bearing reach and uncertain continuation](spherical-bearings.md) · [Likelihood, priors and numerical checks](probabilistic-global.md) · [Source-focused fans](source-anchored-fans.md) · [Six-eruption estimates](../../comparisons/spherical-mixture/README.md)
 
 ## Interpreting the maps
 

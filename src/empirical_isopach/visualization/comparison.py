@@ -79,8 +79,11 @@ def draw_comparison(home, destination, regional_grid=None):
         raise ValueError("The directional local grid must cover the common observation frame.")
     if np.any(region.vertices.min(0) < [rx[0], ry[0]]) or np.any(region.vertices.max(0) > [rx[-1], ry[-1]]):
         raise ValueError("The regional prediction grid must contain the complete observation hull.")
+    from ..models.mass_mixture.bearings.field import PROTOCOL
+    from ..models.mass_mixture.bearings.maps import BearingView
+    bearing = spherical.get("protocol")==PROTOCOL
     with np.load(home/SPHERICAL/"posterior.npz") as packet:
-        spherical_view = PosteriorView(dict(packet), vent[1])
+        spherical_view = BearingView(dict(packet),data,vent[1],spherical["bearing"]["map_draw_check"]["draws_per_chain"]) if bearing else PosteriorView(dict(packet),vent[1])
     xx, yy = np.meshgrid(x, y)
     sphere_field = spherical_view.central(np.column_stack((xx.ravel(), yy.ravel()))).reshape(xx.shape)
 
@@ -138,6 +141,7 @@ def draw_comparison(home, destination, regional_grid=None):
         "statistic": "pointwise median latent thickness", "panels": [p[0] for p in panels],
         "common_bounds_km": bounds.tolist(), "contour_levels_cm": (10**levels).tolist(),
         "colour_limits_cm": [10**norm.vmin, 10**norm.vmax],
+        "spherical_protocol": spherical["protocol"], "spherical_volume_km3": posterior_volume,
         "directional_protocol": ensemble["protocol"], "directional_median_map_km3": map_volume,
         "directional_solid": "exact-site bracket in a measured triangle and posterior crossing probability >= 0.9",
         "regional_clip": "exact accepted observation hull", "spherical_display_draws": spherical_view.n,
@@ -160,7 +164,7 @@ def draw_comparison(home, destination, regional_grid=None):
             visible = levels[(levels > finite.min()) & (levels < finite.max())]
             if len(visible):
                 contours = ax.contour(gx, gy, z, levels=visible, colors="white", linewidths=.8,
-                                      linestyles="dashed" if label==DIRECTIONAL_LABEL else "solid", zorder=4)
+                                      linestyles="dashed" if label==DIRECTIONAL_LABEL or (bearing and label=="Spherical mixture") else "solid", zorder=4)
                 if label==DIRECTIONAL_LABEL:
                     supported_lines(ax,data,measured,gx,gy,z,visible,["white"]*len(visible))
                 contours.set_path_effects([effects.withStroke(linewidth=1.6, foreground="#25414b", alpha=.7)])
@@ -278,7 +282,7 @@ def comparison_section(home, *, prefix=""):
         f"![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at {name}]({prefix}{FIGURE})",
         "", "All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. "
         "The regional fits stop there. The global fits also show how thickness continues into unsampled ground. "
-        "On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.", "",
+        + ("On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs." if spherical.get("bearing") else "On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle.") + " Gaps inside the hull can still be poorly constrained.", "",
         "## Volume and predictive performance", "",
         "| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |",
         "|---|---|---:|---:|---:|",
@@ -293,7 +297,7 @@ def comparison_section(home, *, prefix=""):
                          if any(not r[3] for r in performance) else ""),
                   "", f"The directional map integrates pointwise median thickness. Measured interpolation triangles account for **{measured:.1%}** "
                       "of its volume. The directional volume interval comes from complete simulated deposits. "
-                      "The regional intervals condition on fitted settings."
+                      + ("The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. " if spherical.get("bearing") else "") + "The regional intervals condition on fitted settings."
                       + (f" [Regional maps, fits and diagnostics]({prefix}README.md)" if prefix else ""),
                   "", "<details>", "<summary>Compare the two whole-Earth maps</summary>", "",
                   "| Uncertain fan direction | Spherical mixture |", "|---|---|",

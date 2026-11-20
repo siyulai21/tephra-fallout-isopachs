@@ -25,7 +25,8 @@ def verify_case_map(record, home):
     from src.empirical_isopach.models.directional.azimuth.primary import read_field
     from src.empirical_isopach.models.mass_mixture.geometry import log_field, to_sphere
     from src.empirical_isopach.visualization.comparison import FIGURE, REGIONAL, DIRECTIONAL_LABEL, comparison_section
-    from src.empirical_isopach.visualization.global_maps import PosteriorView
+    from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL
+    from src.empirical_isopach.models.mass_mixture.bearings.maps import BearingView
     from src.empirical_isopach.visualization.maps import ASSET, frame_bounds
     from .refresh_figures import recorded_observations, regional_models
 
@@ -61,11 +62,19 @@ def verify_case_map(record, home):
     xy = samples[DIRECTIONAL_LABEL][:, :2]
     median = field.distribution(xy).quantile(.5)
     np.testing.assert_allclose(median/np.log(10.), samples[DIRECTIONAL_LABEL][:, 2], atol=1e-8)
-    with np.load(home/"spherical-mixture/posterior.npz") as f:
-        view = PosteriorView(dict(f), latitude)
-    assert view.n == info["spherical_display_draws"]
+    sphere = read(home/"spherical-mixture/report.json")
     xy = samples["Spherical mixture"][:, :2]
-    median = np.median(log_field(view.samples, to_sphere(xy, latitude)), axis=0)
+    with np.load(home/"spherical-mixture/posterior.npz") as f:
+        if sphere["protocol"]==PROTOCOL:
+            assert info["spherical_protocol"]==PROTOCOL
+            assert info["spherical_volume_km3"]==sphere["fits"]["baseline"]["volume"]["median"]
+            view = BearingView(dict(f),data,latitude,sphere["bearing"]["map_draw_check"]["draws_per_chain"])
+            median = np.median(np.concatenate(view.field.components(xy)),axis=0)
+        else:
+            from src.empirical_isopach.visualization.global_maps import PosteriorView
+            view = PosteriorView(dict(f),latitude)
+            median = np.median(log_field(view.samples,to_sphere(xy,latitude)),axis=0)
+    assert view.n == info["spherical_display_draws"]
     np.testing.assert_allclose(median/np.log(10.), samples["Spherical mixture"][:, 2], atol=1e-8)
 
 

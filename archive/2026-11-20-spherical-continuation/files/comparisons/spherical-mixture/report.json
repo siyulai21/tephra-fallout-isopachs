@@ -1,0 +1,431 @@
+{
+  "protocol": "reviewed-global-geometries-v2",
+  "summary_source_sha256": "5c0bff92378c45f35d70aedac46a975e0fc6555adb0670bb4d1824ce7c1badc7",
+  "cases": [
+    {
+      "name": "Aso-4",
+      "slug": "aso-4",
+      "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+      "global_report_sha256": "9b3051ae2eadd00db5a1286a8aca457bb2aae3f12d5d2b130efbe6a03b65291d",
+      "regional_report_sha256": "da1020c7b074baf4e7b971d33fa9a865e99d5c8ac9af0cc41e0ff0e9e2b3fd67"
+    },
+    {
+      "name": "B-Tm",
+      "slug": "b-tm",
+      "input_sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+      "global_report_sha256": "8afdc66e0a582929788c222a58f33dc970380b46fc56428a4c6e8e06fb792c85",
+      "regional_report_sha256": "12ecd1f1df3236066a33bd59398d192ca076e919bf14694e8abcacb245be3156"
+    },
+    {
+      "name": "Mazama",
+      "slug": "mazama",
+      "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+      "global_report_sha256": "c347b4a57fae2489d70abfe8b4a5b58e66affe6b21b84c35ad7927724a5fc176",
+      "regional_report_sha256": "fcee5453da2670ac59279c27995969e436731d0b643975e6bbfecee9aa693617"
+    },
+    {
+      "name": "Minoan",
+      "slug": "minoan",
+      "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+      "global_report_sha256": "02c58749be394eefad481a255e28fac36c4e40e019ecdcf99da17eeab8c8e2fa",
+      "regional_report_sha256": "726839688001c9711833360cc656fb42afcae239708082a264d964d27ec501ea"
+    },
+    {
+      "name": "Tambora",
+      "slug": "tambora",
+      "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+      "global_report_sha256": "c6f16e8e86e6e68a94165ac44e5351f4128cab2dd66576ff777496d533f3626d",
+      "regional_report_sha256": "bfecef9aa956dac2421c51c8b392335c7a14e9f1fcad4b0ad64de015bfd185c7"
+    },
+    {
+      "name": "YTT",
+      "slug": "ytt",
+      "input_sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
+      "global_report_sha256": "3267df63528caf67743878edbf815342a211837801f083558428eb486a803da0",
+      "regional_report_sha256": "1f5362dc99a5f00edcc049846e89e1ed904c8582e2a41a6c0db67f4c57f1388f"
+    }
+  ],
+  "estimates": [
+    {
+      "eruption": "Aso-4",
+      "slug": "aso-4",
+      "geometry": "displaced",
+      "review_status": "questioned",
+      "median": 1465.9726218227443,
+      "lower95": 500.9743516440941,
+      "upper95": 44172.93140790358,
+      "sensitivity_lower": 464.6917119073577,
+      "sensitivity_upper": 141265896.8857714,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": true,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.9807751528938525,
+      "global_equal_region_negative_log_score": 1.6319681853182262,
+      "global_observation_coverage95": 0.9518072289156626,
+      "stacked_equal_region_negative_log_score": 1.5143312927066606,
+      "spline_equal_region_negative_log_score": 1.661543361729549
+    },
+    {
+      "eruption": "B-Tm",
+      "slug": "b-tm",
+      "geometry": "source-fans",
+      "review_status": "conditional",
+      "median": 49.05616321533527,
+      "lower95": 30.65268241256439,
+      "upper95": 341.6876889029925,
+      "sensitivity_lower": 25.60520039487937,
+      "sensitivity_upper": 1225.6233747745534,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": false,
+      "median_fraction_outside_local_footprint": 0.8825245099716739,
+      "global_equal_region_negative_log_score": 1.4917608805495164,
+      "global_observation_coverage95": 0.9375,
+      "stacked_equal_region_negative_log_score": 1.458667324756736,
+      "spline_equal_region_negative_log_score": 4.294670376580042
+    },
+    {
+      "eruption": "Mazama",
+      "slug": "mazama",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 223.1570209385165,
+      "lower95": 144.66934967004497,
+      "upper95": 3668.8046470496906,
+      "sensitivity_lower": 142.0278466121303,
+      "sensitivity_upper": 152270.62638060487,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": false,
+      "median_fraction_outside_local_footprint": 0.8494875494033733,
+      "global_equal_region_negative_log_score": 1.5768964606324076,
+      "global_observation_coverage95": 0.9111111111111111,
+      "stacked_equal_region_negative_log_score": 1.2722152078519842,
+      "spline_equal_region_negative_log_score": 1.9712502424004417
+    },
+    {
+      "eruption": "Minoan",
+      "slug": "minoan",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 46.03553729126296,
+      "lower95": 28.129074496242126,
+      "upper95": 2529.2422583624934,
+      "sensitivity_lower": 26.41300294508804,
+      "sensitivity_upper": 21238.5640835921,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": true,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.9463778355010989,
+      "global_equal_region_negative_log_score": 1.569936956394324,
+      "global_observation_coverage95": 0.9456521739130435,
+      "stacked_equal_region_negative_log_score": 1.450521534669888,
+      "spline_equal_region_negative_log_score": 1.600616075530494
+    },
+    {
+      "eruption": "Tambora",
+      "slug": "tambora",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 179.06605694683046,
+      "lower95": 112.93975220450795,
+      "upper95": 1284.2051146530378,
+      "sensitivity_lower": 104.12852348350394,
+      "sensitivity_upper": 4967.886330776555,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": true,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.9350003698181107,
+      "global_equal_region_negative_log_score": 1.4706245946224963,
+      "global_observation_coverage95": 0.9615384615384616,
+      "stacked_equal_region_negative_log_score": 1.6197644505043818,
+      "spline_equal_region_negative_log_score": 1.5478835722059785
+    },
+    {
+      "eruption": "YTT",
+      "slug": "ytt",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 1674.1685982075578,
+      "lower95": 1203.6198216232358,
+      "upper95": 54906.94012183604,
+      "sensitivity_lower": 1136.3932000968005,
+      "sensitivity_upper": 136950.8968814816,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": true,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.8750960257846486,
+      "global_equal_region_negative_log_score": 1.77700914938177,
+      "global_observation_coverage95": 0.8478260869565217,
+      "stacked_equal_region_negative_log_score": 1.9342567871449574,
+      "spline_equal_region_negative_log_score": 2.1527132079420115
+    }
+  ],
+  "matched_validation": [
+    {
+      "eruption": "Aso-4",
+      "global": {
+        "mean_log_score": 1.6216184139508656,
+        "rmse_log": 1.2542211900355185,
+        "coverage95_observations": 0.9518072289156626,
+        "mean_interval_width_log": 3.4438459891123987,
+        "fold_log_scores": [
+          2.532398294278614,
+          1.2645652871002537,
+          1.244059129530535,
+          1.4868500303635024
+        ],
+        "equal_region_log_score": 1.6319681853182262
+      },
+      "stacked": {
+        "mean_log_score": 1.5069164845138914,
+        "rmse_log": 1.0742241967962216,
+        "coverage95_observations": 0.9397590361445783,
+        "mean_interval_width_log": 4.3510640753016245,
+        "equal_region_log_score": 1.5143312927066606,
+        "fold_log_scores": [
+          2.159419605477563,
+          1.3142089009690108,
+          1.1563135068508517,
+          1.4273831575292173
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.655883446616355,
+        "rmse_log": 1.2573722766700282,
+        "coverage95_observations": 0.9036144578313253,
+        "mean_interval_width_log": 5.210191264084091,
+        "equal_region_log_score": 1.661543361729549,
+        "fold_log_scores": [
+          2.1539559765774166,
+          1.446540740172678,
+          1.2707278539122604,
+          1.7749488762558412
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
+    },
+    {
+      "eruption": "B-Tm",
+      "global": {
+        "mean_log_score": 1.4865216079150916,
+        "rmse_log": 1.4899564451538556,
+        "coverage95_observations": 0.9375,
+        "mean_interval_width_log": 4.252627563855927,
+        "fold_log_scores": [
+          1.8637492375936882,
+          0.9827856595079179,
+          1.584881572527548,
+          1.5356270525689117
+        ],
+        "equal_region_log_score": 1.4917608805495164
+      },
+      "stacked": {
+        "mean_log_score": 1.4548547018012652,
+        "rmse_log": 1.0845639061876307,
+        "coverage95_observations": 0.890625,
+        "mean_interval_width_log": 5.042674797904541,
+        "equal_region_log_score": 1.458667324756736,
+        "fold_log_scores": [
+          1.7293635545951864,
+          1.3112799779067446,
+          1.5146794235639698,
+          1.2793463429610437
+        ]
+      },
+      "spline": {
+        "mean_log_score": 4.181780322653809,
+        "rmse_log": 2.2023981535510875,
+        "coverage95_observations": 0.75,
+        "mean_interval_width_log": 4.326028596003535,
+        "equal_region_log_score": 4.294670376580042,
+        "fold_log_scores": [
+          12.30986420534259,
+          1.68024790839805,
+          1.5023588574663316,
+          1.6862105351131966
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": false
+    },
+    {
+      "eruption": "Mazama",
+      "global": {
+        "mean_log_score": 1.5806573221464946,
+        "rmse_log": 1.5014969976366273,
+        "coverage95_observations": 0.9111111111111111,
+        "mean_interval_width_log": 4.156925330279708,
+        "fold_log_scores": [
+          2.2568891512448945,
+          1.4048959948323043,
+          0.8996654676861217,
+          1.7461352287663097
+        ],
+        "equal_region_log_score": 1.5768964606324076
+      },
+      "stacked": {
+        "mean_log_score": 1.2758639297888945,
+        "rmse_log": 0.8837441331341291,
+        "coverage95_observations": 0.9555555555555556,
+        "mean_interval_width_log": 3.5712674146552024,
+        "equal_region_log_score": 1.2722152078519842,
+        "fold_log_scores": [
+          1.647694880175793,
+          0.9519039870734732,
+          1.0528542691457323,
+          1.4364076950129387
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.954384498492424,
+        "rmse_log": 1.7001764750868522,
+        "coverage95_observations": 0.8222222222222222,
+        "mean_interval_width_log": 3.294654483788919,
+        "equal_region_log_score": 1.9712502424004417,
+        "fold_log_scores": [
+          1.4435028952024886,
+          3.8437583713716132,
+          1.3854479364880026,
+          1.2122917665396613
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": false
+    },
+    {
+      "eruption": "Minoan",
+      "global": {
+        "mean_log_score": 1.5684498741138013,
+        "rmse_log": 1.224430951555375,
+        "coverage95_observations": 0.9456521739130435,
+        "mean_interval_width_log": 5.586188544815003,
+        "fold_log_scores": [
+          1.9357143307129383,
+          1.66650099901429,
+          1.257790849788542,
+          1.4197416460615253
+        ],
+        "equal_region_log_score": 1.569936956394324
+      },
+      "stacked": {
+        "mean_log_score": 1.4498497577721863,
+        "rmse_log": 1.0950849827173175,
+        "coverage95_observations": 0.967391304347826,
+        "mean_interval_width_log": 5.344418772890675,
+        "equal_region_log_score": 1.450521534669888,
+        "fold_log_scores": [
+          1.730567383207416,
+          1.4879590197180752,
+          1.2008876677520455,
+          1.3826720680020164
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.6001088207242118,
+        "rmse_log": 1.2819465610299074,
+        "coverage95_observations": 0.967391304347826,
+        "mean_interval_width_log": 5.9767721076586415,
+        "equal_region_log_score": 1.600616075530494,
+        "fold_log_scores": [
+          1.7021336466894568,
+          1.8426444543561953,
+          1.3083028609803344,
+          1.5493833400959893
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
+    },
+    {
+      "eruption": "Tambora",
+      "global": {
+        "mean_log_score": 1.4783040758738595,
+        "rmse_log": 0.9694060786312464,
+        "coverage95_observations": 0.9615384615384616,
+        "mean_interval_width_log": 5.785184532306645,
+        "fold_log_scores": [
+          1.253041776028341,
+          1.412149766681758,
+          1.488540900681209,
+          1.7287659350986768
+        ],
+        "equal_region_log_score": 1.4706245946224963
+      },
+      "stacked": {
+        "mean_log_score": 1.6532091908348556,
+        "rmse_log": 1.215903230923939,
+        "coverage95_observations": 0.9615384615384616,
+        "mean_interval_width_log": 4.536520886595215,
+        "equal_region_log_score": 1.6197644505043818,
+        "fold_log_scores": [
+          1.2415765390903524,
+          1.4045370761130633,
+          1.1283891133260882,
+          2.704555073488023
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.558808177085024,
+        "rmse_log": 1.18595378540484,
+        "coverage95_observations": 0.9615384615384616,
+        "mean_interval_width_log": 5.605885758884473,
+        "equal_region_log_score": 1.5478835722059785,
+        "fold_log_scores": [
+          1.5844664085931932,
+          1.6622181575590065,
+          1.2272610089635816,
+          1.717588713708133
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
+    },
+    {
+      "eruption": "YTT",
+      "global": {
+        "mean_log_score": 1.7654501519688452,
+        "rmse_log": 1.3615210152275081,
+        "coverage95_observations": 0.8478260869565217,
+        "mean_interval_width_log": 3.986308069024689,
+        "fold_log_scores": [
+          2.6356900765256523,
+          1.499793909243173,
+          1.4500421032324282,
+          1.5225105085258255
+        ],
+        "equal_region_log_score": 1.77700914938177
+      },
+      "stacked": {
+        "mean_log_score": 1.9102817850930547,
+        "rmse_log": 1.2286920789973363,
+        "coverage95_observations": 0.9130434782608695,
+        "mean_interval_width_log": 4.787565755194067,
+        "equal_region_log_score": 1.9342567871449574,
+        "fold_log_scores": [
+          3.516025414848204,
+          1.4225826115153521,
+          1.455338253829244,
+          1.3430808683870292
+        ]
+      },
+      "spline": {
+        "mean_log_score": 2.1197450601115584,
+        "rmse_log": 1.6336294685572046,
+        "coverage95_observations": 0.8260869565217391,
+        "mean_interval_width_log": 4.964770500761531,
+        "equal_region_log_score": 2.1527132079420115,
+        "fold_log_scores": [
+          3.247889473501166,
+          1.2764055920873054,
+          2.574071742583691,
+          1.5124860235958844
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
+    }
+  ],
+  "scope": "Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume."
+}

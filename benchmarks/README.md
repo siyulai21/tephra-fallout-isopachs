@@ -2,6 +2,10 @@
 
 For a new case, run the four families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.
 
+## Spherical continuation across unsampled bearings
+
+The [paired spherical study](../comparisons/spherical-mixture/bearings/README.md) reuses the verified full-data and geographic-fold posteriors because the extension preserves their training likelihood. The ordinary global command computes all seven prior sensitivities and the new principal field. Use `python -m benchmarks.spherical_bearings --help` for the two known-volume suites and `python -m benchmarks.verify_spherical_bearings` to verify the six published cases.
+
 ## Current evaluations
 
 | Command | What it does | Method family |

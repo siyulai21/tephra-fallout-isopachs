@@ -4,14 +4,14 @@
   "posterior_sha256": "965e2839cab986c91e7d17f0c4d696aa9799478226776adbd57857370f0484cc",
   "coastline_sha256": "db8b8a451c11fa91b6cd36f457d238f204f1ade8f337ef2da9f6cd84a30e6f8e",
   "coastline_scale": "1:10 million",
-  "central_statistic": "Posterior median thickness",
-  "posterior_fields": 512,
-  "posterior_flat_indices_sha256": "15dca43c21ae490b99027226630314aef6e36159b03564291b1213ca3f92a5e3",
+  "central_statistic": "Bearing-conditioned spherical median",
+  "posterior_fields": 1536,
+  "posterior_flat_indices_sha256": "dcb79adf6845fa831a822bb61dfb110ce628986692abb3b0ad32d3b882fb7ef8",
   "global_bounds_km": [
-    -686.5952841888022,
-    -673.7287758000153,
-    1502.7599483876495,
-    1577.6767733968868
+    -590.4229093567701,
+    -585.9164981286759,
+    1456.8513610336274,
+    1562.864331739335
   ],
   "local_bounds_km": [
     -212.78997821759958,
@@ -21,7 +21,7 @@
   ],
   "global_grid_shape": [
     322,
-    314
+    307
   ],
   "local_grid_shape": [
     322,
@@ -33,15 +33,15 @@
     "edge_refinements": [
       {
         "bounds_km": [
-          -686.5952841888022,
-          -673.7287758000153,
-          1502.7599483876495,
-          1577.6767733968868
+          -590.4229093567701,
+          -585.9164981286759,
+          1456.8513610336274,
+          1562.864331739335
         ],
-        "maximum_edge_log10_cm": -1.4795686139308963
+        "maximum_edge_log10_cm": -1.4632552383820348
       }
     ],
-    "physical_rim_maximum_log10_cm": -8.310066844325245,
+    "physical_rim_maximum_log10_cm": -8.760770172291537,
     "lowest_contour_within_chart": true,
     "scope": "Display-only finite-grid extent audit, not contour-support validation or an integration boundary."
   },
@@ -54,5 +54,17 @@
     "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
   },
   "volume_calculation_changed": false,
-  "note": "Finite plotting grids summarize saved fields. Thresholds and map windows do not enter inference or volume."
+  "note": "Finite plotting grids summarize saved fields. Thresholds and map windows do not enter inference or volume.",
+  "field_protocol": "spherical-mixture-bearing-continuation-v1",
+  "gap_half_reach_degrees": 22.5,
+  "assumptions_sha256": {
+    "__init__.py": "f399301519b7d3ecc72639937328fc7aeecb474833d74b656f2308a0bf8b1e90",
+    "field.py": "862f5c54765c2645b9d4495d172f40f3fde4926046aaa9e1ee891beef5effb56",
+    "maps.py": "4b62dad506dc4b15e90c9e356f7624fc85898a26298263a9c0ebab6b78a19140",
+    "narrative.py": "eeb161c39881ea1cc07b6158ad9ee943d4c0328d1e15d6ed64741b81ead56b7f",
+    "report.py": "01da617bdd02891b9ffee489245e93323cea0ffba84db415c59fc04aa1427d74",
+    "study.py": "8b0fffeafcd63d1cacc601b6d07cb70023d4e6d4be491cce5be1ab8c47e9fdd0",
+    "volume.py": "b3a1412c81b3b654c35b87ba1eee5c443754bf4c1a8f603c0efea36d56b75fb2"
+  },
+  "display_orientation_seed": 204917
 }

@@ -2,6 +2,8 @@
 
 [Scientific protocol and priors](../../../../docs/methods/probabilistic-global.md) · [Results](../../../../comparisons/spherical-mixture/README.md)
 
+The [bearing continuation](bearings/) supplies the principal field on every registered geometry. [Equations, uncertainty and checks](../../../../docs/methods/spherical-bearings.md)
+
 | Module | Purpose |
 |---|---|
 | [geometry.py](geometry.py) | Equal-area sphere, normalized Gaussian/exponential/power kernels, whole fields and inverse radial CDFs |

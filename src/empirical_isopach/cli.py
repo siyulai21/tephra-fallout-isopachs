@@ -26,7 +26,7 @@ def compare(argv=None):
     if not args.regional_only:
         from .global_reporting import global_dataset
         global_dataset(resolve_dataset(args.csv), args.output/"spherical-mixture", name=args.name,
-                       geometry=args.global_geometry,
+                       geometry=args.global_geometry, archives=args.archives,
                        progress=lambda message: print(message, flush=True))
         from .models.directional.reporting import directional_dataset
         directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name, archives=args.archives)
@@ -48,18 +48,8 @@ def global_analysis(argv=None):
         return directional_dataset(resolve_dataset(args.csv), args.output, args.name, args.resume, archives=args.archives)
     from .global_reporting import global_dataset
     global_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume,
-                   geometry=args.geometry,
+                   geometry=args.geometry, archives=args.archives,
                    progress=lambda message: print(message, flush=True))
-    if args.archives:
-        from .models.directional.archive_readings import load_inventory
-        from .models.mass_mixture.archive_check import publish,write_summary
-        from .models.mass_mixture.study import audited_data
-        path=resolve_dataset(args.csv)
-        data,meta=audited_data(path)
-        inventory,_=load_inventory(path,args.archives)
-        folder = args.output/"archive-evidence"
-        result = publish(args.output/"posterior.npz",data,meta,inventory,folder)
-        write_summary(result,folder)
 
 
 def main(argv=None):
@@ -82,7 +72,7 @@ def main(argv=None):
     if args.command == "methods":
         for key, spec in REGISTRY.items():
             print(f"{key}: {spec.label}\n  {spec.description}")
-        print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume; fixed prior sensitivities and matched geographic holdouts.")
+        print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume with bearing-dependent continuation, fixed prior sensitivities and matched geographic holdouts.")
         print("directional: Whole-Earth continuation from locally supported isopachs\n  Uncertain fan direction across six structures. The principal bulk volume integrates the pointwise median isopachs.")
     else:
         parser.print_help()
