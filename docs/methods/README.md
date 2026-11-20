@@ -4,6 +4,7 @@
 
 | Scope | Protocol |
 |---|---|
+| Source review for every new or revised input | [Sites without a measured thickness, quantitative bounds and justified omissions](sites-without-measured-thickness.md) |
 | Shared regional procedure | [Common footprints, automatic tuning and nested holdouts](regional-comparison.md) |
 | Regional GP | [Component model](gaussian-process.md) · [Predictive ensemble](gp-ensemble.md) |
 | Regional cubic spline | [Cubic basis, normalized penalties, tuning and conditional uncertainty](cubic-splines.md) |

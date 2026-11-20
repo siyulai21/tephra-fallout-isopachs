@@ -17,7 +17,7 @@ This equation is a proposed framework, **not a transport model fitted in this re
 ## What is implemented now
 
 1. Retain setting and primary-source evidence independently of the thickness residual. Do not classify a record as reworked merely because a model predicts it poorly.
-2. Use documented upper/lower observations through their likelihood events. Do not convert dispersed shards, patches or missing horizons to a numerical thickness or a known detection limit.
+2. Review dispersed shards, patches or an incomplete horizon in the primary core description. A defensible bound on original local fallout enters the common likelihood. If transport or recovery prevents that inference, preserve any quantitative constraint on the recovered component and use the site to check the map. [Site review and conversion rules](sites-without-measured-thickness.md)
 3. Report the reference whole-deposit posterior with its geometry/prior sensitivities and explicit omission of unidentified transport uncertainty.
 4. Refit after removing every source-labelled submarine record. Compare both volume and predictions at the omitted records. This tests dependence on the marine subset without supplying a correction factor.
 5. Keep the standard buffered geographic validation separate. Setting removal confounds observation process with spatial coverage and is not a causal transport test or a replacement predictive ranking.
