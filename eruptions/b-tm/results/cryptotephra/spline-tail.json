@@ -1,0 +1,89 @@
+{
+  "quadrature_order": 48,
+  "share_expected_volume_outside_original_hull": 0.07525787925194825,
+  "share_expected_volume_from_top_one_percent_area": 0.9999970009088598,
+  "peak_expected_thickness_lonlat": [
+    135.8870155785899,
+    35.586528833585476
+  ],
+  "peak_node_latent_log_sd": 9.704947358860402,
+  "peak_node_median_cm": 4.955479216990944e-06,
+  "joint_draw_check": [
+    {
+      "order": 12,
+      "draws": 20000,
+      "conditional_quantiles_km3": [
+        33.43350502123311,
+        65.90848004300324,
+        679.8888704534371
+      ],
+      "half_sample_quantiles": [
+        [
+          33.52393208046122,
+          66.24754063760972,
+          707.7374311366049
+        ],
+        [
+          33.31255035120457,
+          65.53826039755276,
+          666.7685907529634
+        ]
+      ]
+    },
+    {
+      "order": 24,
+      "draws": 20000,
+      "conditional_quantiles_km3": [
+        33.45518929855511,
+        65.95831207947128,
+        683.8697567974948
+      ],
+      "half_sample_quantiles": [
+        [
+          33.470714055136426,
+          66.3247354171809,
+          708.029321577299
+        ],
+        [
+          33.305569966003574,
+          65.50784032387313,
+          665.0515541372483
+        ]
+      ]
+    },
+    {
+      "order": 36,
+      "draws": 20000,
+      "conditional_quantiles_km3": [
+        33.45490037524091,
+        65.95380284088863,
+        683.8472199226619
+      ],
+      "half_sample_quantiles": [
+        [
+          33.47088866286331,
+          66.31986137691858,
+          708.019020057441
+        ],
+        [
+          33.30530652181181,
+          65.50411388403029,
+          665.0613601305341
+        ]
+      ]
+    }
+  ],
+  "previous_settings_on_principal_data": {
+    "candidate": {
+      "tail": "power",
+      "knot_intervals": 4,
+      "tension": 1.0,
+      "smoothing": 0.01,
+      "trend_strength": 0.0,
+      "noise_ratio": 0.75
+    },
+    "expected_km3": 101.78262981233742,
+    "median_surface_km3": 60.898237356392094,
+    "interpretation": "All 71 observations and the expanded hull, keeping the pre-revision tuning settings fixed."
+  }
+}

@@ -2,7 +2,7 @@
 
 [Data guide](../README.md) · [Accepted CSVs](../eruptions/README.md) · [Reports](../../eruptions/README.md)
 
-- [B-Tm](B-Tm/README.md) covers 84 previously fitted records, 83 Costa Table S1 entries, additional primary field sites, bounds and alternative source readings.
+- [B-Tm](B-Tm/README.md) derives three site-specific cryptotephra limits and tests alternative archive responses. Its earlier review covers 84 previously fitted records, 83 Costa Table S1 entries and additional primary field sites.
 - [Minoan](Minoan/README.md): the complete published table, combined-fallout arithmetic, incomplete-core bounds and conflicting-row sensitivities.
 - [YTT](YTT/README.md): all 88 reviewed source records, the principal 46-record selection, separate sensitivity inputs and [selection history](YTT/history/README.md).
 - [Aso-4](Aso-4/README.md): Table S2 lineage, two cruise-coordinate corrections, source-qualified bounds, unresolved primary-source conflicts and marine transport limitations.

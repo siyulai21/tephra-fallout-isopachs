@@ -1,0 +1,129 @@
+{
+  "audit_date": "2026-11-19",
+  "previous_commit": "d06ba279911f46767fb8c5bb50cfcc9094adbd90",
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/B-Tm_cryptotephra.csv",
+      "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+      "n_measurements": 64,
+      "n_lower_limits": 3,
+      "n_upper_limits": 4,
+      "definition": "Sixty-eight directly quantitative source rows plus three inferred upper limits on local bulk fallout. Lake bounds condition on a concentration-depth response at least as high as the published B-Tm reference at Suigetsu. The peat bound conditions on a three-slice mass budget and a bulk-density floor. Each interpreted site enters once."
+    },
+    "thickness_only": {
+      "file": "data/eruptions/B-Tm_reviewed.csv",
+      "sha256": "1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17",
+      "n_measurements": 64,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "definition": "Preceding quantitative-only case, including the reported Suigetsu upper bound."
+    },
+    "one_tenth_response": {
+      "file": "data/audits/B-Tm/cryptotephra-one_tenth_response.csv",
+      "sha256": "9d92663ff96362f47b383599f5c8a42b270e3072bff2e450148ca3779c29ef63",
+      "n_measurements": 64,
+      "n_lower_limits": 3,
+      "n_upper_limits": 4,
+      "definition": "Tenfold weaker limits at the three inferred sites only. This tests changes in preservation, count yield and the peat mass budget. The factor is a sensitivity assumption."
+    },
+    "recognition_analogs": {
+      "file": "data/audits/B-Tm/cryptotephra-recognition_analogs.csv",
+      "sha256": "cbc48f1281325304dcb7375951e6fca2b48af24e10cb323a43b824c612cbba42",
+      "n_measurements": 64,
+      "n_lower_limits": 3,
+      "n_upper_limits": 4,
+      "definition": "Conditional recognition scales from visible lake and bog beds, as a comparison to the site-derived principal constraints."
+    }
+  },
+  "original_source_audit": {
+    "file": "data/audits/B-Tm/provenance.json",
+    "sha256": "c0c57ec041c210295f9b7919fdc1e4e331bf037bc378dab775371532aa26f64b"
+  },
+  "archive_inventory": {
+    "file": "data/audits/B-Tm/archive-observations.json",
+    "sha256": "e5b78571e4ec91940b3360118f980f852de68084fb42ea8855b24b11669ac196"
+  },
+  "principal_limits": [
+    {
+      "evidence_id": "longgang",
+      "interpreted_upper_cm": 0.06,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_concentration_depth_yield",
+      "unconditional_upper_cm": null
+    },
+    {
+      "evidence_id": "quanyang",
+      "interpreted_upper_cm": 0.64,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_mass_budget",
+      "unconditional_upper_cm": null
+    },
+    {
+      "evidence_id": "old-084",
+      "interpreted_upper_cm": 0.45,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_concentration_depth_yield",
+      "unconditional_upper_cm": null
+    }
+  ],
+  "source_definitions": {
+    "lake_reference": {
+      "value": 25000,
+      "units": "shards/g in one cm of host sediment per 1 mm of bulk B-Tm",
+      "site": "Lake Suigetsu SG06/SG14",
+      "sources": [
+        "https://doi.org/10.1016/j.quascirev.2016.08.022",
+        "https://doi.org/10.1038/s43247-023-01162-0"
+      ],
+      "interpretation": "The measured Suigetsu bed was <1 mm. Costa et al. report the 25,000/g one-centimetre calibration. It is one shared calibration. Different recovery, grain-size sorting or host density change the ratio."
+    },
+    "peat_budget": {
+      "window_cm": 3,
+      "evidence": "Han et al., secs. 1.1 and 3, 1 cm samples at depths 63, 64 and 65 cm. Only the centre contained large pumices. Fines in adjacent peat were not counted.",
+      "pumices_per_cm3": [
+        20,
+        25
+      ],
+      "maximum_reported_diameter_cm": 0.3,
+      "counted_coarse_volume_max_cm": 0.3534291735288517,
+      "analogue_QY3_dry_density_range_g_cm3": [
+        0.031,
+        0.127
+      ],
+      "analogue_age": "QY3 bottoms near AD 1800. The nearby core is younger and shallower than QY64. Transferring its maximum is a condition, not an observation at the eruption horizon.",
+      "bulk_density_floor_scenario_g_cm3": 0.6,
+      "sources": [
+        "https://www.dzdz.ac.cn/article/2019/0253-4967-41-1-225.html",
+        "https://doi.org/10.11928/j.issn.1001-7410.2025.03.02",
+        "https://doi.org/10.1007/s00445-021-01487-8"
+      ]
+    },
+    "profile_readings": {
+      "path": "data/audits/B-Tm/cryptotephra-count-profiles.csv",
+      "sha256": "93f10f0087486e117878f58f0f8d4ffc8f395d70f5c872d781308e0a0f5a7d40",
+      "units": "shards cm per gram dry sediment",
+      "meanings": "Paired colour classes are integrated within each slice. Only nonoverlapping point samples enter. Peak exact counts take precedence over figure picks. Two original pixels bound each edge reading. Raster error is separate from transfer uncertainty."
+    }
+  },
+  "analogue_sensitivity_controls": [
+    {
+      "site": "Lake Ogawara OG12-2",
+      "measurement": "1 cm identifiable B-Tm bed",
+      "source": "Nara et al. (2021), Figs. 1c and 2",
+      "url": "https://doi.org/10.2343/geochemj.2.0619"
+    },
+    {
+      "site": "Larchenkov bog margin",
+      "measurement": "B-Tm ash up to 2 cm at the margin. The centre has only cryptotephra.",
+      "source": "Razjigaeva et al. (2020), distribution of the ash layer",
+      "url": "https://doi.org/10.31857/S268673972010014X"
+    }
+  ],
+  "interpretation": "All three are positive occurrences. No finite upper bound on original fallout follows without assumptions on the archive response. Upper limits are censored events. The model includes local scatter, so the median smooth field can exceed a limit. The finite scenarios have no assigned probabilities."
+}

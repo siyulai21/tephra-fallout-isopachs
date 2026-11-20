@@ -3,6 +3,7 @@ import json
 from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
+from benchmarks.publication import previous_btm_file
 
 import numpy as np
 import pandas as pd
@@ -23,7 +24,7 @@ def verify_published_estimates():
     """Check the six original fits against their numerical identities before promotion."""
     baseline = json.loads(Path("comparisons/directional/verification.json").read_text())
     for slug, expected in baseline["cases"].items():
-        folder = Path("eruptions") / slug / "results/directional/azimuth"
+        folder = previous_btm_file(Path("eruptions") / slug / "results/directional/azimuth")
         report = json.loads((folder/"report.json").read_text())
         assert report["protocol"] == expected["protocol"], slug
         assert report["input"]["input_sha256"] == expected["input_sha256"], slug
@@ -65,11 +66,14 @@ def verify(rec):
             inventory,file = load_inventory(rec["path"])
             assert r["archive_evidence_sha256"]==digest(file)
             site,ww = assess(model,data,inventory,meta["vent_lonlat"])
-            np.testing.assert_allclose(a["archive_weights"],ww,rtol=1e-8)
+            if ww is None:
+                assert "archive_weights" not in a
+            else:
+                np.testing.assert_allclose(a["archive_weights"],ww,rtol=1e-8)
             exact = phase_medians(model,positions(inventory["sites"],meta["vent_lonlat"]))
             np.testing.assert_allclose(exact,list(r["archive"]["analytic_phase_median_cm"].values()),rtol=1e-8)
             for s in site["scenarios"].values():
-                assert 1 <= s["effective_draws"] <= len(ww)+1e-8
+                assert 1 <= s["effective_draws"] <= len(model.weights)+1e-8
     np.testing.assert_allclose(np.sum(report_volume["median_map_parts_by_sector_km3"]),report_volume["median_map_km3"])
     with np.load(folder/"map-grid.npz") as grid:
         x,y,z = [grid[k] for k in ("x_km","y_km","revised_log10_cm")]

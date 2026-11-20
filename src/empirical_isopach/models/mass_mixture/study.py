@@ -7,8 +7,7 @@ import json
 import platform
 import numpy as np
 
-from ...core.observations import read_observations
-from ...core.catalog import dataset_record, data_directory
+from ...core.audit import audited_data
 from ...core.validation import spatial_folds, training_mask, interval_metrics
 from ...validation import automatic_buffer
 from .prior import BASELINE, SENSITIVITIES
@@ -33,21 +32,6 @@ _RUNTIME = {"python": platform.python_version(),
 
 def model_hashes():
     return dict(_LOADED_MODEL_HASHES)
-
-
-def audited_data(path):
-    data, meta = read_observations(path)
-    record = dataset_record(path)
-    if record and record.get("audit"):
-        audit_path = data_directory()/record["audit"]
-        audit = json.loads(audit_path.read_text())
-        case = audit["cases"][record["audit_case"]]
-        if meta["input_sha256"] != case["sha256"]:
-            raise ValueError("Accepted input differs from its recorded audit.")
-        meta["audit"] = {"file": record["audit"], "sha256": sha256(audit_path.read_bytes()).hexdigest(),
-                         "case": record["audit_case"], "definition": case["definition"]}
-    meta["source"] = "data/"+record["file"] if record else Path(path).name
-    return data, meta
 
 
 def assess_diagnostics(diagnostics):

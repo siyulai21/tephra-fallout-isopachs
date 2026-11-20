@@ -2,7 +2,7 @@
 import argparse
 from pathlib import Path
 
-from src.empirical_isopach.core.catalog import resolve_dataset
+from benchmarks.btm_cryptotephra import OLD as THICKNESS_ONLY_INPUT
 from src.empirical_isopach.models.directional.archive_readings import load_inventory,positions
 from src.empirical_isopach.models.directional.bearing_support import BearingGeometry,RATIOS,include_visibility_readings
 from src.empirical_isopach.models.directional.ensemble.members import MEMBERS
@@ -12,7 +12,7 @@ from src.empirical_isopach.models.mass_mixture.study import audited_data
 
 
 def fit_case(root, scenario, index):
-    path = resolve_dataset("B-Tm")
+    path = THICKNESS_ONLY_INPUT
     observations,meta = audited_data(path)
     data = observations.canonical()
     inventory,_ = load_inventory(path)
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     parser.add_argument("--index",type=int,choices=range(3),required=True)
     parser.add_argument("--scenarios",nargs="+")
     args=parser.parse_args()
-    scenarios = load_inventory(resolve_dataset("B-Tm"))[0]["scenarios"]
+    scenarios = load_inventory(THICKNESS_ONLY_INPUT)[0]["scenarios"]
     requested = set(args.scenarios or (s["id"] for s in scenarios))
     if requested - {s["id"] for s in scenarios}:
         parser.error("Unknown archive scenario")

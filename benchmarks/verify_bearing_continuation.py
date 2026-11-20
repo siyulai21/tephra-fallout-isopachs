@@ -2,6 +2,7 @@
 import argparse
 import csv
 from pathlib import Path
+from benchmarks.publication import BTM_THICKNESS_ONLY
 import json
 
 import numpy as np
@@ -130,6 +131,6 @@ def verify(folder,posterior=None):
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--folder",type=Path,default=Path("eruptions/b-tm/results/directional/bearing"))
-    parser.add_argument("--posterior",type=Path,default=Path("eruptions/b-tm/results/spherical-mixture/posterior.npz"))
+    parser.add_argument("--folder",type=Path,default=BTM_THICKNESS_ONLY/"results/directional/bearing")
+    parser.add_argument("--posterior",type=Path,default=BTM_THICKNESS_ONLY/"results/spherical-mixture/posterior.npz")
     a=parser.parse_args();verify(a.folder,a.posterior)

@@ -24,6 +24,7 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 | Command | Evidence checked |
 |---|---|
 | `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |
+| `python -m benchmarks.verify_btm_cryptotephra` | Current B-Tm profile integrals, upper-limit identities, four fitted families, matched holdouts and archive-response sensitivity volumes |
 | `python -m benchmarks.verify_btm_audit` | Audited B-Tm rows and bounds, the four fits, geographic folds, source sensitivities and thinning experiments |
 | `python -m benchmarks.verify_bearing_continuation` | Measured-fan and inspected-site tests, sector volumes, preserved shard evidence and independent spherical update |
 | `python -m benchmarks.verify_directional` | The six current directional fits and their 78 policy runs, plus the original study’s independent replications and known-volume trials |
@@ -62,8 +63,8 @@ These commands are retained for compatibility, audit preparation and regression 
 
 `minoan --prepare-only` and `ytt --prepare-only` reconstruct audited inputs and are maintenance operations. Normal analysis commands verify existing accepted data. `ytt_inputs.py` supplies the reviewed YTT reconstruction. A report made with current code must record current hashes; do not relabel a new run as the original historical execution.
 
-## Archive evidence and directional reach
+## B-Tm core evidence and directional reach
 
-The [six-eruption withholding study](../comparisons/directional/measured-fans/README.md) tests all shared range ratios. For a complete case run, use `tephra-isopachs compare B-Tm --output results/btm-archive-replay`. The case catalogue selects its audited archive inventory. To repeat the independently initialized spherical check, use `python -m benchmarks.btm_spherical_archive_refit --work results/btm-spherical-archive-check`. Replay the published median fields, volumes and archive weights with `python -m benchmarks.verify_bearing_continuation`.
+Rebuild the three audited inputs and the digitized sample table with `python -m benchmarks.btm_cryptotephra --output results/btm-counts`. The [current B-Tm study](../eruptions/b-tm/results/cryptotephra/README.md) gives the four-family run, the weaker archive assumptions and the separate regional footprints.
 
-After those two fits, regenerate the field interpretation, compare the held-out shard magnitudes and attach the independent spherical refit with `python -m benchmarks.btm_archive_report --case results/btm-archive-replay --spherical-refit results/btm-spherical-archive-check`. The numerical comparisons retain the queried site, source statistic, conversion, original posterior identities and whether the model used the archive to constrain bed visibility. [B-Tm field audit](../eruptions/b-tm/results/directional/bearing/field-evidence.md)
+The earlier [measured-fan study](../comparisons/directional/measured-fans/README.md) tested visible-bed transfer scenarios on 68 directly quantitative sites. Its [field report](../archive/2026-11-19-b-tm-thickness-only/results/directional/bearing/field-evidence.md) retains the original fit identities. The [matching release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d06ba279911f46767fb8c5bb50cfcc9094adbd90) contains that study’s reproduction commands.

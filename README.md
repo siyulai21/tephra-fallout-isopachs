@@ -12,7 +12,7 @@ The **directional ensemble** and **spherical mixture** each extend thickness acr
 
 On the directional maps, solid contour fragments connect measured thicknesses that bracket a level. Dashes show where the deposit edge depends on continuation. Each directional report compares the principal map with a control that fixes fan direction using the same observations and weights. [Six-eruption comparison and maps](comparisons/directional/README.md)
 
-Minoan shows how the Plinian and co-ignimbrite fans can be fitted as one deposit. B-Tm shows how identifiable ash in western lake and peat cores can test the predicted reach beyond the measured beds. [Minoan case](eruptions/minoan/README.md) · [B-Tm case](eruptions/b-tm/README.md)
+Minoan shows how the Plinian and co-ignimbrite fans can be fitted as one deposit. B-Tm shows how glass-shard profiles and a peat mass budget constrain the reach of fallout contours. The case compares the resulting maps with the original thickness survey and two weaker archive interpretations. [Minoan case](eruptions/minoan/README.md) · [B-Tm case](eruptions/b-tm/README.md)
 
 ## Methods and evidence
 

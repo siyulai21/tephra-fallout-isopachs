@@ -1,8 +1,10 @@
 # B-Tm fallout reconstruction
 
-The 946 CE Millennium eruption of Paektu / Changbaishan left fallout from two phases. All four methods fit the combined deposit using **64 measured thicknesses, three lower bounds and one upper bound**. [Accepted observations](../../data/eruptions/B-Tm_reviewed.csv)
+The 946 CE Millennium eruption of Paektu / Changbaishan deposited fallout in two phases. The four families fit their combined airborne deposit using **64 measured thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The gold diamonds locate the interpreted cores. [Accepted observations](../../data/eruptions/B-Tm_cryptotephra.csv) · [Source descriptions and calculations](../../data/audits/B-Tm/README.md)
 
-## Four matched thickness-only fits
+The principal uncertain-direction median map integrates to **33.6 km³**. At Lake Sihailongwan, west of the volcano, its median thickness falls from **8.02 cm to 0.0146 cm**. The conditional limits used at Sihailongwan, Quanyang and Kushu are 0.06, 0.64 and 0.45 cm. The peat and lakes require different transfer assumptions. [Before-and-after contours, weaker assumptions and the independent marine check](results/cryptotephra/README.md)
+
+## Four fits with interpreted archive limits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-evidence.png)
 
@@ -12,14 +14,14 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 
 | Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
 |---|---|---:|---:|---:|
-| GP ensemble | Hull mean **24.33** | 15.66–37.07 | 1.512 | 89.1% |
-| Cubic spline | Hull mean **28.47** | 15.52–66.18 | 1.803 | 98.4% |
-| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **44.1** · volume median 72.9 | 31.0–1,507.8 | 1.293 † | 93.8% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **158.1** | 40.7–4,461.6 | 1.490 † | 93.8% |
+| GP ensemble | Hull mean **29.59** | 18.88–46.13 | 1.459 | 89.1% |
+| Cubic spline | Hull median map **50.75** · volume median 64.64 · unstable mean 6.1e+11 | 33.03–664.44 | 4.295 | 75.0% |
+| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **33.6** · volume median 37.2 | 23.5–77.1 | 1.243 † | 93.8% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **49.1** | 30.7–341.7 | 1.492 † | 93.8% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **10.0%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>
@@ -32,9 +34,7 @@ Both maps use the vent longitude as their central meridian. Read the thickness k
 
 </details>
 
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **56.2 km³**.
-
-Split posterior draws flagged 100 cm (24% area disagreement).
+With the same observations and structure weights, fixing the fan directions gives a median-map volume of **34.6 km³**.
 
 <details>
 <summary>View the directional deposit extent and source area</summary>
@@ -43,15 +43,13 @@ Split posterior draws flagged 100 cm (24% area disagreement).
 
 </details>
 
-## Directional assumptions and inspected sites
+## Directional assumptions
 
-The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings. A visible-bed scenario also asks how much ash would have been preserved and recognized at inspected sites.
+Both fits include the same interpreted archive limits. The measured-fan sensitivity fixes the directions of the continuation to the sampled bearings.
 
 | Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
 |---|---|---:|---:|---:|
-| Uncertain fan direction | Comparable visible fallout beds | 40.7 | 59.0 | 28.5–149.7 |
-| Measured fan directions | Thicknesses and bounds | 42.5 | 52.3 | 28.0–120.8 |
-| Measured fan directions | Comparable visible fallout beds | 35.8 | 43.5 | 24.8–70.4 |
+| Measured fan directions | Thicknesses and bounds | 34.2 | 36.9 | 23.6–62.7 |
 
 <details>
 <summary>View agreement between the directional sensitivities</summary>
@@ -62,18 +60,9 @@ The principal fit above uses quantitative thicknesses and bounds. The measured-f
 
 [Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
 
-## What the sites constrain
 
-Six proximal sections and four Japanese lake cores supplied new thickness evidence. At Lake Suigetsu, the description supports an upper bound below 0.1 cm. At Sihailongwan and Quanyang, shards establish that ash reached the west. [Source decisions and site map](../../data/audits/B-Tm/README.md)
+## Evidence, coverage and history
 
-The western profiles challenge a continuous decimetre bed at those sites. They also leave room for a broader deposit than the comparable-bed map suggests. At an independent Ulleung Basin core, only 3.3% of the measured-fan comparable-bed predictions reach the thickness implied **if** the published shard-count conversion applies there. The original local thickness is unknown. [Western cores, marine check and independent spherical refit](results/directional/bearing/field-evidence.md)
+The exact sites define a standard interpolation footprint of 96,131 km². The three bounds constrain the likelihood across the larger 796,162 km² observation hull. The complete global field also includes deposits in unsampled ground. [Footprint and support decisions](results/support/README.md) · [Principal directional maps](results/directional/README.md) · [Spherical assumptions and validation](results/spherical-mixture/README.md)
 
-The standard interpolation footprint covers 96,131 km². None of the twelve checks across four methods and three support policies found a complete band of isopachs bracketed by observations. Every whole-Earth estimate therefore depends on how the model fills unsampled ground. [Local support audit](results/support/README.md)
-
-All six underlying structures passed the full-data sampling checks. Geographic fold 0 carried a sampling warning. Only two of four directional-sector holdouts had observations, and one of those fits had a warning. The spherical baseline passed, while the wide-geography and five-fan prior refits retained warnings.
-
-## How do alternative source readings affect volume?
-
-In the fixed-direction source-sensitivity study, restoring the twelve thickness ranges at their low or high endpoints gives median-map volumes of 50.8 and 59.2 km³. Withholding 26 thicknesses carried from compilations gives 48.9 km³. The report also tests alternative thicknesses at Tianwenfeng and Dongfanghong and gives the conditional interval for each fit. [Source-sensitivity results](results/source-audit/README.md)
-
-The earlier 84-record fit used a different observation hull and geographic folds. Its directional median map integrated to 59.3 km³, compared with 54.0 km³ in the audited fixed-direction fit. [Earlier B-Tm release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2a52e062b7db84699d5229a25b01282c10301b3e/eruptions/b-tm)
+The spline's arithmetic mean is dominated by an extremely uncertain area near Suigetsu. Geographic cross-validation and 20,000 complete-surface draws quantify the effect. [Spline analysis and other sensitivities](results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail) · [Archived 68-site fit](../../archive/2026-11-19-b-tm-thickness-only/README.md)

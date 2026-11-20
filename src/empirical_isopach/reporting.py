@@ -9,8 +9,8 @@ import shlex
 import numpy as np
 import pandas as pd
 
-from .core.catalog import dataset_record, data_directory
-from .core.observations import read_observations
+from .core.catalog import dataset_record
+from .core.audit import audited_data
 from .region import SurveyRegion, integrate_region, regional_draws
 from .core.geometry import survey_bounds
 from .models.registry import active_methods, method_spec, method_label, method_metadata
@@ -103,6 +103,10 @@ def save_figures(output, name, data, metadata, region, models, report):
         volume_ax.set(yticks=range(len(methods)), yticklabels=[labels[m] for m in methods], ylim=(-.6, len(methods)-.4),
                     xlabel="Bulk fallout within observation hull (km³)",
                     title="Regional volume\nDotted: geographic-deletion range")
+        if any(report["methods"][m]["regional_volume"]["expected_km3"] >
+               report["methods"][m]["joint_volume"]["conditional_quantiles_km3"]["0.975"] for m in methods):
+            volume_ax.set_xscale("log")
+            volume_ax.set_title("Hull volumes on a log scale\nDiamond · analytical mean")
         volume_ax.grid(axis="x", alpha=.15)
         fig.suptitle(f"{name} · geographic holdouts and conditional 95% intervals\n"
                      "Intervals omit parameter/selection uncertainty; bounds contribute scores, not RMSE.", fontsize=13)
@@ -138,6 +142,10 @@ def write_readme(output, name, report):
               "The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.", "",
               "The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.", "",
               "## Fitted methods", ""]
+    for method, q in zip(methods, interval, strict=True):
+        item = report["methods"][method]
+        if item["regional_volume"]["expected_km3"] > q["0.975"]:
+            lines.extend([f"The {labels[method]} analytical mean lies above the 97.5th percentile of the complete-surface volumes. Rare thick surfaces dominate that expectation. The complete-volume median is {q['0.5']:,.2f} km³ and its conditional interval is {q['0.025']:,.2f}–{q['0.975']:,.2f} km³.", ""])
     for method in methods:
         lines += [f"### {labels[method]}", "", "```json",
                   json.dumps(report["methods"][method]["model"], indent=2), "```", ""]
@@ -156,19 +164,10 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     output = Path(output)
     if output.exists() and any(output.iterdir()):
         raise ValueError("Output directory is not empty; use a fresh destination.")
-    data, meta = read_observations(path)
+    data, meta = audited_data(path)
     record = dataset_record(path)
     name = name or (record["name"] if record else Path(path).stem)
-    if record and record.get("audit"):
-        audit_path = data_directory()/record["audit"]
-        audit = json.loads(audit_path.read_text())
-        case = audit["cases"][record["audit_case"]]
-        if meta["input_sha256"] != case["sha256"]:
-            raise ValueError("Accepted input differs from its recorded audit.")
-        meta["audit"] = {"file": record["audit"], "sha256": sha256(audit_path.read_bytes()).hexdigest(),
-                         "case": record["audit_case"], "definition": case["definition"]}
     meta.pop("transform_inv")
-    meta["source"] = "data/"+record["file"] if record else Path(path).name
     region, bounds = SurveyRegion(data.xy), survey_bounds(data.xy)
     deletion_models = {m: [] for m in active_methods()}
     validation = nested_comparison(data, region, bounds, progress=lambda s: progress(f"{name}: {s}"),
@@ -185,6 +184,8 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
         models[method] = model
         methods[method] = {"model": model.describe(), "selection": selection,
                            "regional_volume": volume, "joint_volume": joint}
+        if volume["expected_km3"] > joint["conditional_quantiles_km3"]["0.975"]:
+            notes.append(f"{labels[method]}: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields dominate the expectation. See the integral of the median map and the complete-volume quantiles.")
         if not volume["converged"]:
             notes.append(f"{labels[method]} regional integration did not reach the stated refinement tolerance.")
         if not joint["expected_grid_converged"]:

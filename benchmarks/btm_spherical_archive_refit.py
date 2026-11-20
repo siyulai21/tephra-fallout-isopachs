@@ -3,7 +3,7 @@ import argparse
 from dataclasses import replace
 from pathlib import Path
 
-from src.empirical_isopach.core.catalog import resolve_dataset
+from benchmarks.btm_cryptotephra import OLD as THICKNESS_ONLY_INPUT
 from src.empirical_isopach.models.directional.archive_readings import load_inventory,positions
 from src.empirical_isopach.models.directional.bearing_support import include_visibility_readings
 from src.empirical_isopach.models.directional.study import write_json
@@ -14,7 +14,7 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--work",type=Path,required=True)
     args=parser.parse_args()
-    path=resolve_dataset("B-Tm")
+    path=THICKNESS_ONLY_INPUT
     data,meta=audited_data(path)
     inv,_=load_inventory(path)
     s=next(x for x in inv["scenarios"] if x["id"]==inv["validation_scenario"])
@@ -37,7 +37,7 @@ def publish_refit(work, output):
     from src.empirical_isopach.models.directional.study import digest
 
     work,output=Path(work),Path(output)
-    path=resolve_dataset("B-Tm")
+    path=THICKNESS_ONLY_INPUT
     data,meta=audited_data(path)
     inventory,_=load_inventory(path)
     design=json.loads((work/"archive-refit.json").read_text())

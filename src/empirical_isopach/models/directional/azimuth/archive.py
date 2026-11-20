@@ -33,7 +33,7 @@ def assess(model, data, inventory, vent):
         q = np.exp(inverse_cdf(local.means.T,w,(.025,.5,.975))).T
         measures = {}
         for i,s in enumerate(sites):
-            measures[s["id"]]={"name":s["name"],"reading":s["reading"],"in_likelihood":s["id"] in limits,
+            measures[s["id"]]={"name":s["name"],"reading":s["reading"],"in_likelihood":s["id"] in limits or s.get("in_principal_as") == "interpreted_upper_limit",
                         "exposure":float(h[i]),"latent_cm_p025_p50_p975":q[i].tolist(),
                         "predictive_probability_below_1cm":float(w@np.exp(log_ndtr(-local.means[:,i]/sd[:,i])))}
         summaries[label]={"assumed_effective_scales_cm":limits,"log_predictive_probability":float(logz),

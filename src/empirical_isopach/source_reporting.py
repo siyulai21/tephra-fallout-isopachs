@@ -9,13 +9,15 @@ def source_figure(output, name, data, meta, samples, previous=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    from .visualization.maps import observations, observation_legend
     from src.probabilistic_isopach.figures import STYLE, _coastlines
     distance = np.linalg.norm(data.xy, axis=1)
     extent = min(400., max(50., .25*distance.max(), 3*distance.min()))
     axis = np.linspace(-extent, extent, 161)
     xx, yy = np.meshgrid(axis, axis)
     unit = to_sphere(np.column_stack((xx.ravel(), yy.ravel())), meta["vent_lonlat"][1])
-    panels = [("Current reconstruction", samples)] if previous is None else [("Previous displaced model", previous), ("Source-constrained reconstruction", samples)]
+    panels = [("", samples)] if previous is None else [("Previous displaced model", previous), ("Source-constrained reconstruction", samples)]
     medians = []
     for _, posterior in panels:
         flat = flatten(posterior)
@@ -33,14 +35,14 @@ def source_figure(output, name, data, meta, samples, previous=None):
             lines = ax.contour(axis,axis,field,levels=levels,colors="white",linewidths=.65)
             ax.clabel(lines,fmt=lambda v:f"{10**v:.2g}",fontsize=8)
             _coastlines(ax,meta["vent_lonlat"])
-            ax.scatter(*data.xy.T,s=22,c="white",edgecolors="#253B43",linewidths=.7,zorder=4)
-            ax.scatter(0,0,s=170,marker="*",c="#E47445",edgecolors="white",zorder=6,label="Source volcano")
+            observations(ax,data,size=22,meta=meta)
             maximum = np.unravel_index(np.argmax(field),field.shape)
-            ax.scatter(axis[maximum[1]],axis[maximum[0]],s=80,marker="+",c="#EE5666",zorder=7,label="Grid maximum")
+            ax.scatter(axis[maximum[1]],axis[maximum[0]],s=80,marker="+",c="#EE5666",zorder=9,label="Grid maximum")
             ax.set(xlim=(-extent,extent),ylim=(-extent,extent),aspect="equal",title=title,
                    xlabel="Easting from source (km)",ylabel="Northing (km)")
-            ax.legend(loc="lower left",fontsize=8)
-        fig.colorbar(plot,ax=axes[0].tolist(),shrink=.7,label="log₁₀ median thickness (cm); contours in cm")
-        fig.suptitle(f"{name} · source-region check\nPoints are accepted observations; map extent does not set volume.",fontsize=14)
+        maximum_symbol = Line2D([],[],ls="",marker="+",color="#EE5666",markersize=9,label="Grid maximum")
+        observation_legend(fig,data,[maximum_symbol],meta=meta,columns=3)
+        fig.colorbar(plot,ax=axes[0].tolist(),shrink=.7,label="log₁₀ median thickness (cm)")
+        fig.suptitle(f"{name} · spherical mixture near the vent\nContours show median thickness in cm.",fontsize=14)
         fig.savefig(Path(output)/"source.png",dpi=170)
         plt.close(fig)

@@ -89,7 +89,7 @@ def draw_primary(folder,data,meta,report,model,inventory,source):
         handles = [Line2D([],[],color="#324851",lw=2,label="Measured bracket"),
                    Line2D([],[],color="#324851",ls="--",label="Model continuation")]
         if sites:
-            handles.append(Line2D([],[],ls="",marker="D",color="#b88917",label="Inspected archive"))
+            handles.append(Line2D([],[],ls="",marker="D",color="#b88917",label="Interpreted archive limit" if meta.get("interpreted_upper_limits") else "Inspected archive"))
         observation_legend(fig,data,handles)
         save(fig,folder,"isopachs.png")
     return norm,near

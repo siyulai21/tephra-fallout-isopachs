@@ -25,10 +25,19 @@
       "name": "B-Tm",
       "slug": "b-tm",
       "global_geometry": "source-fans",
-      "file": "eruptions/B-Tm_reviewed.csv",
-      "audit": "audits/B-Tm/provenance.json",
+      "file": "eruptions/B-Tm_cryptotephra.csv",
+      "audit": "audits/B-Tm/cryptotephra-principal.json",
       "audit_case": "principal",
-      "archive_evidence": "audits/B-Tm/archive-observations.json"
+      "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+      "release_receipt": "cryptotephra/release.json",
+      "previous_inputs": [
+        {
+          "file": "eruptions/B-Tm_reviewed.csv",
+          "audit": "audits/B-Tm/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/B-Tm/archive-observations.json"
+        }
+      ]
     },
     {
       "name": "YTT",
