@@ -73,16 +73,18 @@ The matched fixed-direction control is `volume.matched_control_map_km3` in the s
 
 ## Spherical-mixture global posterior
 
+The principal volume in `fits.baseline.volume` integrates complete bearing-conditioned fields. Each fit’s `training_checks.rmse_log` gives its in-sample thickness error. The raw `posterior.npz` describes parent amplitudes and kernel parameters. The baseline packet `bearing/baseline.npz` pairs them with retained volumes, orientations, sectors and support classes. `bearing/parent-report.json` stores the original broad spherical result. [Calculation and assumptions](methods/spherical-bearings.md)
+
 | File in `spherical-mixture/` | Read it for |
 |---|---|
 | `README.md`, `field.png`, `volume.png`, `sampling.png` | Conditional field/volume, sensitivity, unobserved mass and chain diagnostics |
 | `report.json`, `estimates.csv` | Priors, baseline and sensitivities, all numerical attempts and provenance |
 | `posterior.npz` | Baseline whole-field parameter samples, retaining chain identity |
-| `volume_draws.csv.gz` | Separate volume samples for every assumption and chain |
+| `volume_draws.csv.gz` | Integrated volumes by assumption and chain. Within an assumption, the parent draw index and fan-width power jointly identify a deposit. The three widths share one kernel draw and orientation. |
 | `heldout_predictions.csv` | Matched geographic outer-fold predictions |
 | `source.png` when present | Source-region shape and maximum checks |
 | `artifacts.json` | Published file hashes |
 
-`fits.baseline.volume` contains its conditional median and 95% credible interval. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` concerns mixing and, where applicable, normalization accuracy. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
+`fits.baseline.volume` contains its conditional median and 95% credible interval. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` combines the parent sampling status, retained-mass integration check and split-draw volume check. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
 
 All volumes are **bulk fallout**, not dense-rock equivalent or total erupted material including ignimbrite deposits. Regional conditional intervals, global credible intervals, geographic-deletion ranges and prior-sensitivity envelopes remain separate. Passing numerical checks does not identify an unseen deposit.

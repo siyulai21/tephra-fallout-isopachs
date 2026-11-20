@@ -1,5 +1,7 @@
 # Global fallout as a mass-normalized random field
 
+The [principal spherical bearing continuation](spherical-bearings.md) uses the kernels and observation likelihood documented here. It integrates their bearing-dependent retained mass. The amplitude parameter and volumes on this page describe the parent mixture.
+
 A second whole-Earth model continues measured isopach fragments with directional thinning. Both approaches use the same accepted rows and matched outer holdouts. [Directional ensemble protocol](directional-ensemble.md) · [Four-method geographic comparison](../../comparisons/README.md).
 
 [Project home](../../README.md) · [All-eruption results](../../comparisons/spherical-mixture/README.md) · [Implementation](../../src/empirical_isopach/models/mass_mixture/) · [Support diagnostic](supported-isopachs.md)

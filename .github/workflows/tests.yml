@@ -31,6 +31,8 @@ jobs:
         run: python -m benchmarks.verify_directional
       - name: Verify ensemble medians, joint fields and geographic calibration
         run: python -m benchmarks.verify_directional_ensemble
+      - name: Verify spherical bearing continuation, mass and missing-fan tests
+        run: python -m benchmarks.verify_spherical_bearings
       - name: Verify visual revisions preserve scientific evidence
         run: python -m benchmarks.verify_visuals
       - name: Verify directional extent and archive sensitivity

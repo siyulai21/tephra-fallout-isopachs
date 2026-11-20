@@ -68,19 +68,27 @@ def figures(output, name, data, meta, samples, report):
         plt.close(fig)
 
         fig, axes = plt.subplots(1, 2, figsize=(12, 4.7), layout="constrained")
-        values = np.exp(samples["log_volume"])
+        from .models.mass_mixture.bearings.field import PROTOCOL
+        bearing = report.get("protocol")==PROTOCOL
+        if bearing:
+            with np.load(output/"bearing/baseline.npz") as packet:
+                masses = packet["volume_km3"].reshape(len(samples["log_volume"]),-1,3)
+            values = masses[:,:,1]
+        else:
+            values = np.exp(samples["log_volume"])
         for chain, value in enumerate(values):
             index = np.linspace(0, len(value)-1, min(2000, len(value))).astype(int)
             axes[0].plot(index, value[index], lw=.55, alpha=.65, label=f"Chain {chain+1}")
-            axes[1].plot(np.sort(value), (np.arange(len(value))+.5)/len(value), lw=1.2)
+            distribution = masses[chain].ravel() if bearing else value
+            axes[1].plot(np.sort(distribution), (np.arange(len(distribution))+.5)/len(distribution), lw=1.2)
         axes[0].set(yscale="log", xlabel="Retained iteration", ylabel="Global bulk fallout (km³)",
-                    title="Independent chains · log volume scale")
+                    title="Broad-fan volume within each chain" if bearing else "Independent chains · log volume scale")
         axes[1].set(xscale="log", xlabel="Global bulk fallout (km³)", ylabel="Cumulative posterior fraction",
                     title="Per-chain volume distributions")
         for ax in axes:
             ax.grid(alpha=.2)
         axes[0].legend(fontsize=8)
-        fig.suptitle(f"{name} · baseline sampling diagnostics", fontsize=15)
+        fig.suptitle(f"{name} · whole-deposit volume by chain", fontsize=15)
         fig.savefig(output/"sampling.png", dpi=160)
         plt.close(fig)
 
@@ -182,7 +190,7 @@ Input SHA-256: `{report['input']['input_sha256']}`. No accepted observations or 
     (output/"README.md").write_text(text)
 
 
-def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print, geometry=None):
+def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print, geometry=None, archives=None):
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh output directory, or --resume for verified posterior caches.")
@@ -238,24 +246,11 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
             **validation["predictions"]}).to_csv(output/"heldout_predictions.csv", index=False)
     report["published_artifact_sha256"] = {file: sha256((output/file).read_bytes()).hexdigest()
         for file in ("posterior.npz", "volume_draws.csv.gz", "estimates.csv", "heldout_predictions.csv")}
-    from .models.mass_mixture.contours import load_surfaces, screen
-    fold_paths = {f["fold"]:output/"posteriors"/"validation"/f"fold-{f['fold']}"/f["fit"]["posterior_file"]
-                  for f in report["validation"]["fits"]}
-    surfaces = load_surfaces(report,base_path,fold_paths)
-    screened = screen(data,meta["vent_lonlat"][1],report,surfaces)
-    audit_path = output/"complete-contour-audit.json"
-    audit_path.write_text(json.dumps(screened,indent=2,allow_nan=False)+"\n")
-    report["published_artifact_sha256"][audit_path.name] = sha256(audit_path.read_bytes()).hexdigest()
-    (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
-    figures(output, name, data, meta, samples, report)
-    from .source_reporting import source_figure
-    source_figure(output, name, data, meta, samples)
-    write_readme(output, name, report)
-    with (output/"README.md").open("a") as page:
-        page.write("\n[Complete-contour support and geographic-deletion checks](complete-contour-audit.json).\n")
-    artifacts = ("README.md", "report.json", "complete-contour-audit.json", "posterior.npz", "volume_draws.csv.gz", "estimates.csv",
-                 "heldout_predictions.csv", "field.png", "local.png", "world.png", "map-display.json",
-                 "volume.png", "sampling.png", "source.png")
-    (output/"artifacts.json").write_text(json.dumps({name: sha256((output/name).read_bytes()).hexdigest()
-        for name in artifacts}, indent=2)+"\n")
-    return report
+    from .models.mass_mixture.bearings.report import assemble
+    parent = output/"bearing"/"parent-report.json"
+    parent.parent.mkdir(parents=True,exist_ok=True)
+    parent.write_text(json.dumps(report,indent=2,allow_nan=False)+"\n")
+    principal = assemble(output,data,meta,report,output/"posteriors",output/"posteriors"/"bearing-integration")
+    from .models.mass_mixture.archive_check import case_archives
+    case_archives(path,output,data,meta,archives)
+    return principal

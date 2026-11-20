@@ -62,7 +62,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
             'regional_report_sha256': sha256(regional_path.read_bytes()).hexdigest()})
     output.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output/'comparison.csv', index=False)
-    (output/'report.json').write_text(json.dumps({'protocol': 'reviewed-global-geometries-v2',
+    (output/'report.json').write_text(json.dumps({'protocol': 'reviewed-spherical-bearing-mixtures-v1',
         'summary_source_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
         'cases': cases, 'estimates': rows, 'matched_validation': validation_rows,
         'scope': 'Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume.'}, indent=2, allow_nan=False)+'\n')
@@ -70,18 +70,18 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
     table = '\n'.join(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/spherical-mixture/README.md) | {r['geometry']}{' · **questioned**' if r['review_status'] == 'questioned' else ''} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {r['sensitivity_lower']:.3g}–{r['sensitivity_upper']:.3g} | {'pass' if r['baseline_sampling_passed'] else '**provisional**'} |" for r in rows)
     predictions = '\n'.join(f"| {r['eruption']} | {r['global_equal_region_negative_log_score']:.3f} | {r['stacked_equal_region_negative_log_score']:.3f} | {r['spline_equal_region_negative_log_score']:.3f} | {r['global_observation_coverage95']:.1%} | {'pass' if r['all_outer_sampling_passed'] else '**provisional**'} |" for r in rows)
     n_pass = sum(r['baseline_sampling_passed'] for r in rows)
-    warnings = ("Sampling warnings occurred in " + ", ".join(sensitivity_warnings) +
+    warnings = ("Numerical warnings occurred in " + ", ".join(sensitivity_warnings) +
                 ". Their results contribute to the envelope." if sensitivity_warnings
-                else "All alternative refits passed the sampling checks.")
+                else "All alternative refits passed their numerical checks.")
     (output/'README.md').write_text(f"""# Spherical-mixture estimates across eruptions
 
-Each case uses its registered source geometry and accepted observations. Every fitted deposit integrates to its own volume over the Earth. A credible interval summarizes the baseline posterior. The sensitivity envelope spans the baseline and seven declared changes to geometry, priors or noise.
+The principal spherical mixture keeps each case’s registered kernel geometry and fits the accepted thicknesses and bounds. In directions without comparable measurements, a complete deposit can continue broadly or follow one unknown fan. The reported volume is the median integral of these complete deposits over the Earth. A credible interval summarizes the baseline posterior. The sensitivity envelope spans the baseline and seven declared changes to geometry, priors or noise. [Bearing protocol and mass normalization](../../docs/methods/spherical-bearings.md) · [Extent, prediction and known-volume tests](bearings/README.md)
 
-| Eruption | Geometry | Baseline median (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) | Baseline sampling |
+| Eruption | Geometry | Baseline median (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) | Baseline checks |
 |---|---|---:|---:|---:|---|
 {table}
 
-{n_pass} of {len(rows)} baseline fits passed the sampling checks. {warnings} Aso-4's high volume remains qualified by its source audit. At B-Tm, the source-focused fit includes three interpreted upper bounds. [Aso-4 audit](../aso-4-audit/README.md) · [B-Tm occurrence evidence](../../data/audits/B-Tm/README.md)
+{n_pass} of {len(rows)} baseline fits passed the sampling and integration checks. {warnings} Aso-4's high volume remains qualified by its source audit. At B-Tm, the source-focused fit includes three interpreted upper bounds. [Aso-4 audit](../aso-4-audit/README.md) · [B-Tm occurrence evidence](../../data/audits/B-Tm/README.md)
 
 ![Spherical whole-deposit intervals, prior envelopes and withheld-region scores](comparison.png)
 

@@ -19,7 +19,7 @@
       "definition": "Principal 46: original 43 plus qualified Maninjau N001/N002 and source-verified U1445B N005."
     }
   },
-  "protocol": "mass-normalized-spherical-mixture-v1",
+  "protocol": "spherical-mixture-bearing-continuation-v1",
   "fits": {
     "baseline": {
       "prior": {
@@ -45,12 +45,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1203.6198216232358,
-        "median": 1674.1685982075578,
-        "upper95": 54906.94012183604,
+        "lower95": 1054.2841197801843,
+        "median": 1510.5219018854154,
+        "upper95": 48708.465410675635,
         "unit": "km3 bulk fallout",
-        "draws": 6000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 12288
       },
       "diagnostics": {
         "volume": {
@@ -155,7 +154,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -427,6 +429,130 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 3.0267849495525847,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1203.6198216232358,
+        "median": 1674.1685982075578,
+        "upper95": 54906.94012183604,
+        "unit": "km3 bulk fallout",
+        "draws": 6000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 512,
+          "volume": {
+            "lower95": 1059.3328487325548,
+            "median": 1507.6649279328167,
+            "upper95": 53597.05683294641,
+            "unit": "km3 bulk fallout",
+            "draws": 6144
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0035073168408771183,
+                "max_relative_quantile_doubling_difference": 0.0013236728405170428,
+                "p99_absolute_draw_fraction_difference": 0.009165082194616932,
+                "max_absolute_draw_fraction_difference": 0.013874512105602976,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.20996683423553386,
+            "draw_split_relative": [
+              0.0027579367127870697,
+              0.003379383034118475,
+              0.42390503827015347
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 1024,
+          "volume": {
+            "lower95": 1054.2841197801843,
+            "median": 1510.5219018854154,
+            "upper95": 48708.465410675635,
+            "unit": "km3 bulk fallout",
+            "draws": 12288
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.003156703349905415,
+                "max_relative_quantile_doubling_difference": 0.0009729126643498454,
+                "p99_absolute_draw_fraction_difference": 0.009638809446925176,
+                "max_absolute_draw_fraction_difference": 0.015683588621748346,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.019239395486046584,
+            "draw_split_relative": [
+              0.008489489283814735,
+              0.0065072205015079924,
+              0.006283406117669235
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.003156703349905415,
+            "max_relative_quantile_doubling_difference": 0.0009729126643498454,
+            "p99_absolute_draw_fraction_difference": 0.009638809446925176,
+            "max_absolute_draw_fraction_difference": 0.015683588621748346,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.019239395486046584,
+        "draw_split_relative": [
+          0.008489489283814735,
+          0.0065072205015079924,
+          0.006283406117669235
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1200.8508003657025,
+          "median": 1672.820362365476,
+          "upper95": 53850.56378590336
+        },
+        "1": {
+          "lower95": 1066.8693744187685,
+          "median": 1463.8744165494393,
+          "upper95": 47785.234867262516
+        },
+        "4": {
+          "lower95": 1008.7525139286782,
+          "median": 1368.8711434503973,
+          "upper95": 42654.02190316934
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1148.7883533455604,
+        "median": 1660.6389567366264,
+        "upper95": 53847.186520575764
       }
     },
     "diffuse_tail": {
@@ -453,12 +579,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1218.6192625549625,
-        "median": 1651.8554544478998,
-        "upper95": 43284.65293201329,
+        "lower95": 1062.2301869771643,
+        "median": 1480.1235653306553,
+        "upper95": 43259.951856400476,
         "unit": "km3 bulk fallout",
-        "draws": 12000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 12288
       },
       "diagnostics": {
         "volume": {
@@ -563,7 +688,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -1095,6 +1223,164 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 2.9959877576767946,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1218.6192625549625,
+        "median": 1651.8554544478998,
+        "upper95": 43284.65293201329,
+        "unit": "km3 bulk fallout",
+        "draws": 12000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1072.9000724565817,
+            "median": 1496.3514821303916,
+            "upper95": 32691.715986607433,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0008966483348180667,
+                "max_relative_quantile_doubling_difference": 0.0009506341262742746,
+                "p99_absolute_draw_fraction_difference": 0.009122640181010505,
+                "max_absolute_draw_fraction_difference": 0.01648761404478194,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.08978458184709392,
+            "draw_split_relative": [
+              0.021947247598564337,
+              0.038099270107245835,
+              0.8998878678901544
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 512,
+          "volume": {
+            "lower95": 1062.515077534291,
+            "median": 1490.9074371564602,
+            "upper95": 29281.944968762877,
+            "unit": "km3 bulk fallout",
+            "draws": 6144
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0025356604801284035,
+                "max_relative_quantile_doubling_difference": 0.002440854921469393,
+                "p99_absolute_draw_fraction_difference": 0.00956833820108468,
+                "max_absolute_draw_fraction_difference": 0.023115621632506356,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.13595202655103844,
+            "draw_split_relative": [
+              0.009091514332373941,
+              0.0014764242576293454,
+              0.39095533899411594
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 1024,
+          "volume": {
+            "lower95": 1062.2301869771643,
+            "median": 1480.1235653306553,
+            "upper95": 43259.951856400476,
+            "unit": "km3 bulk fallout",
+            "draws": 12288
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.002612728014072288,
+                "max_relative_quantile_doubling_difference": 0.00040832698227788455,
+                "p99_absolute_draw_fraction_difference": 0.009542639126138225,
+                "max_absolute_draw_fraction_difference": 0.017778039020412528,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.08524914430854191,
+            "draw_split_relative": [
+              0.0009159502150547425,
+              0.0016224830265625478,
+              0.08534260356736305
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.002612728014072288,
+            "max_relative_quantile_doubling_difference": 0.00040832698227788455,
+            "p99_absolute_draw_fraction_difference": 0.009542639126138225,
+            "max_absolute_draw_fraction_difference": 0.017778039020412528,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.08524914430854191,
+        "draw_split_relative": [
+          0.0009159502150547425,
+          0.0016224830265625478,
+          0.08534260356736305
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1215.997715586507,
+          "median": 1640.9980950874374,
+          "upper95": 46974.63255615964
+        },
+        "1": {
+          "lower95": 1078.879057243319,
+          "median": 1438.1316366687236,
+          "upper95": 42323.60251120992
+        },
+        "4": {
+          "lower95": 1011.490371399411,
+          "median": 1347.7983234892909,
+          "upper95": 36782.785593001834
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1152.5895029915418,
+        "median": 1620.6540746726414,
+        "upper95": 43126.98920742335
       }
     },
     "wide_geography": {
@@ -1121,12 +1407,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1226.9881978818387,
-        "median": 1765.4463300015186,
-        "upper95": 136950.8968814816,
+        "lower95": 1083.7769630246596,
+        "median": 1579.1432462720968,
+        "upper95": 109462.58239836305,
         "unit": "km3 bulk fallout",
-        "draws": 12000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 3072
       },
       "diagnostics": {
         "volume": {
@@ -1231,7 +1516,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": true,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -1763,6 +2051,96 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 2.997901095022464,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1226.9881978818387,
+        "median": 1765.4463300015186,
+        "upper95": 136950.8968814816,
+        "unit": "km3 bulk fallout",
+        "draws": 12000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1083.7769630246596,
+            "median": 1579.1432462720968,
+            "upper95": 109462.58239836305,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0013358553647267134,
+                "max_relative_quantile_doubling_difference": 0.0013311711573877893,
+                "p99_absolute_draw_fraction_difference": 0.0094420752363221,
+                "max_absolute_draw_fraction_difference": 0.014584958731788,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.019241798670654786,
+            "draw_split_relative": [
+              0.010200045073332584,
+              0.028061633195140375,
+              0.07897670666632466
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0013358553647267134,
+            "max_relative_quantile_doubling_difference": 0.0013311711573877893,
+            "p99_absolute_draw_fraction_difference": 0.0094420752363221,
+            "max_absolute_draw_fraction_difference": 0.014584958731788,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.019241798670654786,
+        "draw_split_relative": [
+          0.010200045073332584,
+          0.028061633195140375,
+          0.07897670666632466
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1250.5976577567506,
+          "median": 1766.3261973320234,
+          "upper95": 134511.26834223274
+        },
+        "1": {
+          "lower95": 1104.5926513255763,
+          "median": 1533.2544965875268,
+          "upper95": 106289.5048718235
+        },
+        "4": {
+          "lower95": 1031.0082927660087,
+          "median": 1424.5734278684595,
+          "upper95": 89515.99589813201
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1168.6924954924546,
+        "median": 1754.7184484667732,
+        "upper95": 133065.12880833392
       }
     },
     "volume_prior_shift": {
@@ -1789,12 +2167,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1214.457192611504,
-        "median": 1725.4172311076277,
-        "upper95": 99291.71249233479,
+        "lower95": 1069.1531716336665,
+        "median": 1560.5166673577455,
+        "upper95": 96043.95561563318,
         "unit": "km3 bulk fallout",
-        "draws": 12000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 24576
       },
       "diagnostics": {
         "volume": {
@@ -1899,7 +2276,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -2431,6 +2811,198 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 3.0328030266433204,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1214.457192611504,
+        "median": 1725.4172311076277,
+        "upper95": 99291.71249233479,
+        "unit": "km3 bulk fallout",
+        "draws": 12000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1081.4492054812317,
+            "median": 1573.1514172153209,
+            "upper95": 84767.56489188108,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.001498508503554715,
+                "max_relative_quantile_doubling_difference": 0.0023930112058607733,
+                "p99_absolute_draw_fraction_difference": 0.010028798591809693,
+                "max_absolute_draw_fraction_difference": 0.017711714234115328,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.020940053678310866,
+            "draw_split_relative": [
+              0.003284723828811371,
+              0.04660972256724903,
+              0.8932250841027314
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 512,
+          "volume": {
+            "lower95": 1079.5364681960407,
+            "median": 1548.1570182957385,
+            "upper95": 89056.48869007506,
+            "unit": "km3 bulk fallout",
+            "draws": 6144
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0011183786081750522,
+                "max_relative_quantile_doubling_difference": 0.0013717035422406987,
+                "p99_absolute_draw_fraction_difference": 0.009737225213556437,
+                "max_absolute_draw_fraction_difference": 0.017425849123188897,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.1472787385589176,
+            "draw_split_relative": [
+              0.008139199679593338,
+              0.02484552638240657,
+              0.3577760058047696
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 1024,
+          "volume": {
+            "lower95": 1068.727335664436,
+            "median": 1565.4418846904575,
+            "upper95": 77382.24042353746,
+            "unit": "km3 bulk fallout",
+            "draws": 12288
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0023478168093345533,
+                "max_relative_quantile_doubling_difference": 0.0012001696855887811,
+                "p99_absolute_draw_fraction_difference": 0.009556211769122257,
+                "max_absolute_draw_fraction_difference": 0.020172390092198733,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.13312214665671962,
+            "draw_split_relative": [
+              0.006082054828928197,
+              0.0083958418193354,
+              0.012291468961544122
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 2048,
+          "volume": {
+            "lower95": 1069.1531716336665,
+            "median": 1560.5166673577455,
+            "upper95": 96043.95561563318,
+            "unit": "km3 bulk fallout",
+            "draws": 24576
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0020071212663258764,
+                "max_relative_quantile_doubling_difference": 0.00036677862694245444,
+                "p99_absolute_draw_fraction_difference": 0.009494094193402414,
+                "max_absolute_draw_fraction_difference": 0.020209982824068606,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.0466836678657363,
+            "draw_split_relative": [
+              0.010689810293898497,
+              0.0005645012281591594,
+              0.09095824344176744
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0020071212663258764,
+            "max_relative_quantile_doubling_difference": 0.00036677862694245444,
+            "p99_absolute_draw_fraction_difference": 0.009494094193402414,
+            "max_absolute_draw_fraction_difference": 0.020209982824068606,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0466836678657363,
+        "draw_split_relative": [
+          0.010689810293898497,
+          0.0005645012281591594,
+          0.09095824344176744
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1213.1497866975596,
+          "median": 1736.2489500728218,
+          "upper95": 103927.01382014713
+        },
+        "1": {
+          "lower95": 1079.011821238776,
+          "median": 1510.8675325627714,
+          "upper95": 94193.49997220212
+        },
+        "4": {
+          "lower95": 1015.38333526948,
+          "median": 1410.219538434181,
+          "upper95": 86655.86808850436
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1159.3769491510304,
+        "median": 1715.1947910177587,
+        "upper95": 112252.80718042966
       }
     },
     "one_fan": {
@@ -2457,12 +3029,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1136.3932000968005,
-        "median": 1446.809086125808,
-        "upper95": 1880.108748200677,
+        "lower95": 1013.3652552528649,
+        "median": 1312.547361908105,
+        "upper95": 1771.2642577887452,
         "unit": "km3 bulk fallout",
-        "draws": 12000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 3072
       },
       "diagnostics": {
         "volume": {
@@ -2566,7 +3137,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -3094,6 +3668,96 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 3.1280472053682002,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1136.3932000968005,
+        "median": 1446.809086125808,
+        "upper95": 1880.108748200677,
+        "unit": "km3 bulk fallout",
+        "draws": 12000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1013.3652552528649,
+            "median": 1312.547361908105,
+            "upper95": 1771.2642577887452,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0021683501454427935,
+                "max_relative_quantile_doubling_difference": 0.0006170272301406765,
+                "p99_absolute_draw_fraction_difference": 0.006901461128380987,
+                "max_absolute_draw_fraction_difference": 0.009674987195533946,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.023248023145731267,
+            "draw_split_relative": [
+              0.007437896619902846,
+              0.0020496654680445064,
+              0.0023256054130592506
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0021683501454427935,
+            "max_relative_quantile_doubling_difference": 0.0006170272301406765,
+            "p99_absolute_draw_fraction_difference": 0.006901461128380987,
+            "max_absolute_draw_fraction_difference": 0.009674987195533946,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.023248023145731267,
+        "draw_split_relative": [
+          0.007437896619902846,
+          0.0020496654680445064,
+          0.0023256054130592506
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1158.103726438485,
+          "median": 1444.4938982331641,
+          "upper95": 1923.817559895338
+        },
+        "1": {
+          "lower95": 1029.2142707392475,
+          "median": 1286.4025881745924,
+          "upper95": 1683.815223276355
+        },
+        "4": {
+          "lower95": 971.8211659783728,
+          "median": 1211.8822809157587,
+          "upper95": 1574.775518251487
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1093.3203210374245,
+        "median": 1441.534279011988,
+        "upper95": 2006.6197587627441
       }
     },
     "five_fans": {
@@ -3120,12 +3784,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1216.8084677852878,
-        "median": 1739.4682584034222,
-        "upper95": 52632.61413673357,
+        "lower95": 1071.692474508728,
+        "median": 1553.867327931961,
+        "upper95": 45159.14284794407,
         "unit": "km3 bulk fallout",
-        "draws": 6000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 3072
       },
       "diagnostics": {
         "volume": {
@@ -3230,7 +3893,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -3502,6 +4168,96 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 3.0058024885700227,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1216.8084677852878,
+        "median": 1739.4682584034222,
+        "upper95": 52632.61413673357,
+        "unit": "km3 bulk fallout",
+        "draws": 6000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1071.692474508728,
+            "median": 1553.867327931961,
+            "upper95": 45159.14284794407,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0025735747338179677,
+                "max_relative_quantile_doubling_difference": 0.0018212877509904413,
+                "p99_absolute_draw_fraction_difference": 0.009708347097766225,
+                "max_absolute_draw_fraction_difference": 0.014349960284905872,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.013292126311812424,
+            "draw_split_relative": [
+              0.0347691631234066,
+              0.01731837932621152,
+              0.012496262133920577
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0025735747338179677,
+            "max_relative_quantile_doubling_difference": 0.0018212877509904413,
+            "p99_absolute_draw_fraction_difference": 0.009708347097766225,
+            "max_absolute_draw_fraction_difference": 0.014349960284905872,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.013292126311812424,
+        "draw_split_relative": [
+          0.0347691631234066,
+          0.01731837932621152,
+          0.012496262133920577
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1218.5288135302399,
+          "median": 1716.3470265973356,
+          "upper95": 52112.553489193415
+        },
+        "1": {
+          "lower95": 1090.8966499018504,
+          "median": 1506.6646626569163,
+          "upper95": 43110.69870573292
+        },
+        "4": {
+          "lower95": 1017.373554886526,
+          "median": 1402.3477745964956,
+          "upper95": 39399.124196865916
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1172.8889594029238,
+        "median": 1716.9428409014188,
+        "upper95": 69019.69243608745
       }
     },
     "gaussian_errors": {
@@ -3528,12 +4284,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1157.3885483343179,
-        "median": 1593.6452126335093,
-        "upper95": 46335.180275496,
+        "lower95": 1022.0494492373836,
+        "median": 1443.805226921042,
+        "upper95": 44551.48639619444,
         "unit": "km3 bulk fallout",
-        "draws": 6000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 6144
       },
       "diagnostics": {
         "volume": {
@@ -3635,7 +4390,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -3904,6 +4662,130 @@
         "coverage95_observations": 0.9565217391304348,
         "mean_interval_width_log": 2.75936841952953,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1157.3885483343179,
+        "median": 1593.6452126335093,
+        "upper95": 46335.180275496,
+        "unit": "km3 bulk fallout",
+        "draws": 6000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1020.6922137069603,
+            "median": 1432.0957512525188,
+            "upper95": 57796.97732312076,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0018073412987061957,
+                "max_relative_quantile_doubling_difference": 0.000581729177569601,
+                "p99_absolute_draw_fraction_difference": 0.010001060789176988,
+                "max_absolute_draw_fraction_difference": 0.014482892187527407,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.2607741209762229,
+            "draw_split_relative": [
+              0.0005796950523917136,
+              0.0059416317379642584,
+              0.18939351274765306
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 512,
+          "volume": {
+            "lower95": 1022.0494492373836,
+            "median": 1443.805226921042,
+            "upper95": 44551.48639619444,
+            "unit": "km3 bulk fallout",
+            "draws": 6144
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.002435469427097142,
+                "max_relative_quantile_doubling_difference": 0.0008329284011663329,
+                "p99_absolute_draw_fraction_difference": 0.009247564766369586,
+                "max_absolute_draw_fraction_difference": 0.014504513599753244,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.06480563168210907,
+            "draw_split_relative": [
+              0.004813659066411267,
+              0.007190252651454403,
+              0.02064920230169923
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.002435469427097142,
+            "max_relative_quantile_doubling_difference": 0.0008329284011663329,
+            "p99_absolute_draw_fraction_difference": 0.009247564766369586,
+            "max_absolute_draw_fraction_difference": 0.014504513599753244,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.06480563168210907,
+        "draw_split_relative": [
+          0.004813659066411267,
+          0.007190252651454403,
+          0.02064920230169923
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1161.445739799501,
+          "median": 1605.5862529090643,
+          "upper95": 49337.96090235392
+        },
+        "1": {
+          "lower95": 1036.569853828428,
+          "median": 1398.8231694599594,
+          "upper95": 41445.07652450675
+        },
+        "4": {
+          "lower95": 975.2602666316417,
+          "median": 1310.8828450293909,
+          "upper95": 37903.54688088443
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1105.7700632328751,
+        "median": 1599.383102934928,
+        "upper95": 47349.90881590706
       }
     },
     "diffuse_mixture_weights": {
@@ -3930,12 +4812,11 @@
         "interpretation": "Proper modelling assumptions, not extra observations or geological facts. Identical prior specification for every eruption."
       },
       "volume": {
-        "lower95": 1339.2342577516008,
-        "median": 2388.678161860849,
-        "upper95": 11807.607302216298,
+        "lower95": 1144.662056526315,
+        "median": 2114.0287546128684,
+        "upper95": 11157.718456429999,
         "unit": "km3 bulk fallout",
-        "draws": 6000,
-        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+        "draws": 6144
       },
       "diagnostics": {
         "volume": {
@@ -4040,7 +4921,10 @@
         },
         "raw_sampler_passed": true,
         "trajectory_efficiency_warning": false,
-        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning."
+        "assessment": "R-hat <1.01, bulk/tail ESS >=400, zero divergences, every chain's energy BFMI >=0.3. Maximum-depth saturation is a separate efficiency warning.",
+        "parent_sampler_passed": true,
+        "bearing_integration_passed": true,
+        "bearing_volume_split_passed": true
       },
       "attempts": [
         {
@@ -4312,6 +5196,130 @@
         "coverage95_observations": 0.9782608695652174,
         "mean_interval_width_log": 3.128870201148491,
         "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."
+      },
+      "parent_volume": {
+        "lower95": 1339.2342577516008,
+        "median": 2388.678161860849,
+        "upper95": 11807.607302216298,
+        "unit": "km3 bulk fallout",
+        "draws": 6000,
+        "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+      },
+      "bearing_draw_refinements": [
+        {
+          "draws_per_chain": 256,
+          "volume": {
+            "lower95": 1172.847569212472,
+            "median": 2055.5782230679088,
+            "upper95": 9862.193832452243,
+            "unit": "km3 bulk fallout",
+            "draws": 3072
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.001964804144636206,
+                "max_relative_quantile_doubling_difference": 0.00275291995772986,
+                "p99_absolute_draw_fraction_difference": 0.012557069144090539,
+                "max_absolute_draw_fraction_difference": 0.02051386594660931,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.11227663325960491,
+            "draw_split_relative": [
+              0.049969423482105535,
+              0.0334952763528574,
+              0.2094916228107922
+            ],
+            "draw_split_passed": false
+          }
+        },
+        {
+          "draws_per_chain": 512,
+          "volume": {
+            "lower95": 1144.662056526315,
+            "median": 2114.0287546128684,
+            "upper95": 11157.718456429999,
+            "unit": "km3 bulk fallout",
+            "draws": 6144
+          },
+          "checks": {
+            "spatial_passed": true,
+            "history": [
+              {
+                "nodes_per_scramble": 512,
+                "scrambles": [
+                  39103,
+                  75227
+                ],
+                "max_relative_quantile_scramble_difference": 0.0024080822475343153,
+                "max_relative_quantile_doubling_difference": 0.002236818377479466,
+                "p99_absolute_draw_fraction_difference": 0.011894591431082653,
+                "max_absolute_draw_fraction_difference": 0.018720562589162548,
+                "max_parent_mass_error": 0.0
+              }
+            ],
+            "parent_subset_quantile_error": 0.01599553511652596,
+            "draw_split_relative": [
+              0.007291921762035452,
+              0.013841898078614055,
+              0.08134073057323198
+            ],
+            "draw_split_passed": true
+          }
+        }
+      ],
+      "bearing_volume_checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0024080822475343153,
+            "max_relative_quantile_doubling_difference": 0.002236818377479466,
+            "p99_absolute_draw_fraction_difference": 0.011894591431082653,
+            "max_absolute_draw_fraction_difference": 0.018720562589162548,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.01599553511652596,
+        "draw_split_relative": [
+          0.007291921762035452,
+          0.013841898078614055,
+          0.08134073057323198
+        ],
+        "draw_split_passed": true
+      },
+      "bearing_width_sensitivities_km3": {
+        "0": {
+          "lower95": 1333.9424781093924,
+          "median": 2426.8863472809726,
+          "upper95": 11868.996971803599
+        },
+        "1": {
+          "lower95": 1161.8161052063604,
+          "median": 2053.35692984553,
+          "upper95": 10655.20716104377
+        },
+        "4": {
+          "lower95": 1082.3425644640206,
+          "median": 1886.0092549176125,
+          "upper95": 10201.653116847716
+        }
+      },
+      "enhanced_hidden_fan_km3": {
+        "lower95": 1241.5797791991658,
+        "median": 2325.7775925024207,
+        "upper95": 12947.209558920194
       }
     }
   },
@@ -4426,210 +5434,210 @@
       "uses": "Coordinates and observation kinds only; never thickness values."
     },
     "metrics": {
-      "mean_log_score": 1.7654501519688452,
-      "rmse_log": 1.3615210152275081,
+      "mean_log_score": 1.745883038480541,
+      "rmse_log": 1.3426951566474037,
       "coverage95_observations": 0.8478260869565217,
-      "mean_interval_width_log": 3.986308069024689,
+      "mean_interval_width_log": 4.032320522442554,
       "fold_log_scores": [
-        2.6356900765256523,
-        1.499793909243173,
-        1.4500421032324282,
-        1.5225105085258255
+        2.443015445451032,
+        1.5270652169678192,
+        1.5575842276592196,
+        1.498270063523193
       ],
-      "equal_region_log_score": 1.77700914938177
+      "equal_region_log_score": 1.7564837384003158
     },
     "predictions": {
       "median": [
-        -0.41665510661093685,
-        1.22747898051739,
-        1.2267704792469138,
-        1.2419868464664305,
-        2.0465405893828894,
-        1.6327542602547935,
-        2.0903805035860445,
-        1.9110268737055867,
-        1.942126021853976,
-        2.1380967990032174,
-        2.1569083655671415,
-        1.8439972415633936,
-        1.9237655999581484,
-        0.03432261971756628,
-        0.03460639281912011,
-        1.9624212983684077,
-        1.480180381453292,
-        2.517935007007803,
-        1.3958502750084034,
-        1.3715402944189088,
-        1.37937586400728,
-        1.360916459255849,
-        1.366101813839684,
-        2.916423372995853,
-        2.2832453599790483,
-        1.693589619132565,
-        3.0639628605879485,
-        2.3214227637551037,
-        3.1277306806940466,
-        3.147441448118178,
-        3.1942494043877216,
-        2.1035973640328463,
-        2.3093196773472133,
-        3.079529698749126,
-        2.236442474074667,
-        2.3672311759908125,
-        2.354158135905072,
-        1.9268291081650357,
-        1.9070900726324331,
-        2.1310748126822165,
-        1.0591084641637964,
-        2.0200805370105224,
-        1.9812092863177946,
-        0.784835315491244,
-        1.5296987772039539,
-        1.330332187109744
+        -0.6615037585535428,
+        0.9944166884610145,
+        0.9940139639530048,
+        1.00788124360451,
+        1.911690801111827,
+        1.5458133671786571,
+        2.0763496770557346,
+        1.7266687643043745,
+        1.7837154843308307,
+        2.129745375690548,
+        2.156288178708853,
+        1.8439972415632995,
+        1.923765599957978,
+        -0.031026375057126167,
+        -0.030769841835620607,
+        1.9624212983682519,
+        1.480180381453657,
+        2.517935007007778,
+        1.3958502750082395,
+        1.3715402944185766,
+        1.379375864006962,
+        1.3609164592559921,
+        1.3661018138394696,
+        2.91642337299578,
+        2.2832453599787574,
+        1.6935896191321658,
+        3.063962860588045,
+        2.3214227637551206,
+        3.127730680694139,
+        3.14744144811816,
+        3.194249404388221,
+        2.1035973640326167,
+        2.3093196773465055,
+        3.079529698749358,
+        2.236442474074805,
+        2.367231175990084,
+        2.3541581359050294,
+        1.3480850921332,
+        1.324770532951563,
+        2.1310748126808443,
+        0.43947443754419035,
+        2.017998457397203,
+        1.8146674087474306,
+        0.7848353154912859,
+        1.5147961533002625,
+        1.2641939096524952
       ],
       "lower": [
-        -4.080453064259915,
-        -0.8253032627870485,
-        -0.8255144983302649,
-        -0.802722495515459,
-        0.4705279043516361,
-        0.0977613720870404,
-        0.5666047050438279,
-        0.45395720059689026,
-        0.5140647697304754,
-        0.6560341518768624,
-        0.6899305140485852,
-        0.3416154144331373,
-        0.4288994788411247,
-        -1.4752061069061093,
-        -1.4749379338148056,
-        0.43597469390326554,
-        -0.07232905933401784,
-        1.0618568104476722,
-        -0.16201635479632437,
-        -0.18684872970496674,
-        -0.17914557353822247,
-        -0.19776703798258033,
-        -0.19265077765812028,
-        1.1645924963937553,
-        0.44184464607155044,
-        -0.17373495736850464,
-        1.312588202090477,
-        0.7160690940484618,
-        1.333406766563566,
-        1.336394289919519,
-        1.3861381944741171,
-        -0.358882428526834,
-        0.36343693173632846,
-        1.2360009043157971,
-        -0.11841454455254358,
-        0.19990424914913335,
-        0.12844619932738788,
-        -1.2251589599218224,
-        -1.2402383931586272,
-        -0.302587928295273,
-        -2.5621536843211947,
-        0.1488448257487222,
-        0.08010321374283269,
-        -0.8868651138866821,
-        -0.3614106983513323,
-        -0.5804735299250445
+        -4.374102302836718,
+        -1.123996213754034,
+        -1.1237035565135898,
+        -1.1028953356872098,
+        0.3130526687107313,
+        0.0038520525930666573,
+        0.5523377497247746,
+        0.22157635126350153,
+        0.3205610530843986,
+        0.6475774968674269,
+        0.68930775947157,
+        0.34161541443367915,
+        0.4288994788418774,
+        -1.5470895528670472,
+        -1.546853907667649,
+        0.4359746939038705,
+        -0.07232905933460684,
+        1.0618568104475985,
+        -0.16201635479615906,
+        -0.18684872970388441,
+        -0.17914557353754926,
+        -0.19776703798282322,
+        -0.19265077765693234,
+        1.1645924963931162,
+        0.4418446460705884,
+        -0.1737349573677449,
+        1.312588202090618,
+        0.716069094049141,
+        1.3334067665643063,
+        1.3363942899204146,
+        1.386138194472458,
+        -0.3588824285283466,
+        0.36343693173661695,
+        1.2360009043174767,
+        -0.11841454455087544,
+        0.19990424914765295,
+        0.1284461993261301,
+        -2.151074760591292,
+        -2.1747022539302794,
+        -0.30258792829564396,
+        -3.590009703509631,
+        0.14675343184573425,
+        -0.1162937060317244,
+        -0.8868651138862063,
+        -0.3765277749220648,
+        -0.6511116869719946
       ],
       "upper": [
-        4.343829605665334,
-        3.407931789160698,
-        3.4055399932280688,
-        3.416537505319429,
-        3.6134080549399696,
-        3.152115834487783,
-        3.664002957319597,
-        3.4366146421795962,
-        3.410700710502641,
-        3.6442054621535025,
-        3.6591826357188033,
-        3.30171537034546,
-        3.3704876767745597,
-        1.5024435470969575,
-        1.5027223189872863,
-        3.382011337445433,
-        2.9192981787675176,
-        3.9694436896746117,
-        2.8371057639182977,
-        2.813630068857506,
-        2.821239267984091,
-        2.8033924706868856,
-        2.808426252157804,
-        4.5197602927437615,
-        3.9175639460159006,
-        3.4161928822441636,
-        4.680560471341908,
-        3.9634396390578317,
-        4.79396381382441,
-        4.834668329174569,
-        4.889904650935664,
-        4.295123498509879,
-        4.172564168259923,
-        4.795007770675587,
-        4.424490035102206,
-        5.0597772828650776,
-        5.38762010832602,
-        7.230045392622873,
-        7.182006385465744,
-        7.142275666125533,
-        5.953498354497762,
-        3.8187115625859187,
-        3.809188111710095,
-        2.49909810866923,
-        3.4135127179997724,
-        3.265394749016485
+        4.12472261534299,
+        3.2333389103546804,
+        3.2312052349291682,
+        3.240931435095337,
+        3.4994923905823514,
+        3.0772346558844292,
+        3.6500185805162975,
+        3.291381365020575,
+        3.282221103234459,
+        3.6358505423933503,
+        3.65855720029423,
+        3.301715370344751,
+        3.3704876767752703,
+        1.4421783020829526,
+        1.4424346051517443,
+        3.3820113374453933,
+        2.919298178767885,
+        3.9694436896743266,
+        2.837105763917368,
+        2.8136300688576323,
+        2.8212392679836396,
+        2.803392470686354,
+        2.808426252156792,
+        4.519760292744285,
+        3.9175639460164255,
+        3.4161928822446015,
+        4.680560471342263,
+        3.963439639058601,
+        4.793963813825594,
+        4.834668329173567,
+        4.889904650936593,
+        4.295123498511048,
+        4.172564168258652,
+        4.79500777067522,
+        4.424490035101348,
+        5.059777282864035,
+        5.387620108327489,
+        6.759404171283064,
+        6.703135111858363,
+        7.142275666127524,
+        5.381611302640878,
+        3.816630150178886,
+        3.6687473340190024,
+        2.499098108669616,
+        3.3987615170966627,
+        3.2027104382645346
       ],
       "log_score": [
-        -3.396043568892578,
-        -5.663364979957069,
-        -5.662925157843132,
-        -6.27910740904242,
-        -2.564759568546455,
-        -1.6292895549826243,
-        -1.8605073053318115,
-        -0.8986526552140086,
-        -0.3210209513702491,
-        -0.39497260851570104,
-        -0.32194708208612965,
-        -0.6392523884400525,
-        -0.7726153162856155,
-        -3.303508151999962,
-        -3.302739117399865,
-        -0.5131547392808535,
-        -0.9434832725203002,
-        -3.9852640550120517,
-        -0.5313358472740664,
-        -1.1319958702868185,
-        -0.5409595106896337,
-        -0.7125821578152198,
+        -3.093806261540493,
+        -5.2538525931387365,
+        -5.254275086514906,
+        -5.926010354748331,
+        -2.2226977948241053,
+        -1.432555330971507,
+        -1.8283274074587308,
+        -0.6160287828801869,
+        -0.5216726945634289,
+        -0.40184115408307886,
+        -0.3221024392378473,
+        -0.6392523884400614,
+        -0.7726153162856226,
+        -3.467099263599833,
+        -3.4664036984957365,
+        -0.5131547392808526,
+        -0.9434832725202975,
+        -3.985264055012049,
+        -0.531335847274069,
+        -1.1319958702868176,
+        -0.5409595106896372,
+        -0.712582157815218,
         -1.6206364839136365,
-        -1.686802299881359,
+        -1.686802299881358,
         -0.8982586934227914,
-        -1.696711465231612,
-        -0.5974747739887896,
-        -1.139882591674283,
-        -3.752951055854817,
-        -1.271592369861012,
-        -1.2064375380592898,
-        -1.0399310867967904,
-        -1.9562030335723657,
-        -1.698359225446918,
-        -1.1192289398223263,
-        -0.9256349600409628,
-        -2.163147889745921,
-        -1.9189869069195895,
-        -1.9374645727683815,
-        -1.5037587021839887,
-        -1.4012099481274545,
-        -2.298840959447264,
-        -1.0338251789306838,
-        -0.8450145039046468,
-        -1.0491832340887948,
-        -1.079689308096575
+        -1.6967114652316164,
+        -0.5974747739887789,
+        -1.1398825916742883,
+        -3.7529510558548216,
+        -1.2715923698610094,
+        -1.2064375380592942,
+        -1.039931086796793,
+        -1.956203033572363,
+        -1.6983592254469126,
+        -1.1192289398223272,
+        -0.9256349600409663,
+        -2.1631478897459253,
+        -2.3279297623949873,
+        -2.349776190304465,
+        -1.503758702183985,
+        -1.7629188438106698,
+        -2.2948338568076365,
+        -0.8488630166605792,
+        -0.8450145039046433,
+        -1.0296484030786968,
+        -0.99730806398482
       ]
     },
     "fits": [
@@ -6441,71 +7449,108 @@
       }
     ],
     "all_fits_passed_diagnostics": true,
-    "interpretation": "Same four geographic outer folds and buffer as the regional peers. Entire posterior is refitted with fixed generic priors using training observations only. No response-based inner tuning is used. Heldout observation prediction does not validate total volume in unobserved regions."
+    "interpretation": "Full matched training-fold posterior, fixed bearing prior and training-only support. Scores include exact readings and limit events."
   },
   "name": "YTT",
   "mass_partition": {
     "parts": {
       "local_footprint": {
-        "fraction": {
-          "lower95": 0.01846340244002699,
-          "median": 0.12490397421535138,
-          "upper95": 0.9300476095670859
-        },
         "volume_km3": {
-          "lower95": 137.5799461831655,
-          "median": 198.09850484416117,
-          "upper95": 23777.445266783765
+          "lower95": 131.43676731243914,
+          "median": 199.20098292289256,
+          "upper95": 24809.4252857467
+        },
+        "fraction": {
+          "lower95": 0.020360669506415942,
+          "median": 0.1401957176862698,
+          "upper95": 0.9396813176296639
         }
       },
       "unsampled_proximal": {
-        "fraction": {
-          "lower95": 0.0006538007790639064,
-          "median": 0.010254073883681014,
-          "upper95": 0.05298485440337172
-        },
         "volume_km3": {
-          "lower95": 10.895427050422551,
-          "median": 17.487291754305126,
-          "upper95": 397.3997111044066
+          "lower95": 0.0,
+          "median": 16.90427734168545,
+          "upper95": 390.15235906228236
+        },
+        "fraction": {
+          "lower95": 0.0,
+          "median": 0.0107421875,
+          "upper95": 0.08479003906249893
         }
       },
       "beyond_farthest_site": {
-        "fraction": {
-          "lower95": 0.00024367386060466622,
-          "median": 0.010830185873840392,
-          "upper95": 0.5550885308283015
-        },
         "volume_km3": {
-          "lower95": 0.6774537472195207,
-          "median": 21.69239695016242,
-          "upper95": 4954.1118952746565
+          "lower95": 0.0,
+          "median": 15.260899105848086,
+          "upper95": 2721.0608633503466
+        },
+        "fraction": {
+          "lower95": 0.0,
+          "median": 0.008695337198237875,
+          "upper95": 0.48260411062812747
         }
       },
       "other_gaps_and_sectors": {
-        "fraction": {
-          "lower95": 0.06159652364494123,
-          "median": 0.8302778243609568,
-          "upper95": 0.9384616600770476
-        },
         "volume_km3": {
-          "lower95": 970.3540427132137,
-          "median": 1301.7803586059435,
-          "upper95": 9859.001099727471
+          "lower95": 845.3481207223488,
+          "median": 1158.6954835419929,
+          "upper95": 6756.604363026856
+        },
+        "fraction": {
+          "lower95": 0.048828125,
+          "median": 0.8184187444822999,
+          "upper95": 0.9341422738782411
         }
       }
     },
-    "n_posterior_fields": 1024,
-    "quadrature_points_per_fan": 4096,
-    "max_fraction_change_on_doubling": 0.009031542253345237,
-    "max_partition_sum_error": 2.220446049250313e-16,
-    "nearest_exact_site_km": 362.07156448044213,
-    "farthest_exact_site_km": 6827.059595929152,
-    "interpretation": "Geometry-screened fractions, not fractions validated by data. Quantiles of parts do not add to quantiles of the total. Sobol integration error is separate from posterior uncertainty."
+    "sectors": {
+      "N": {
+        "lower95": 110.20338678217729,
+        "median": 214.2675606606718,
+        "upper95": 1673.1995084129162
+      },
+      "NE": {
+        "lower95": 69.7354051108152,
+        "median": 121.44060173218001,
+        "upper95": 1372.7903368361517
+      },
+      "E": {
+        "lower95": 40.96792784748929,
+        "median": 78.46154769245352,
+        "upper95": 3128.399419189447
+      },
+      "SE": {
+        "lower95": 28.16061853797438,
+        "median": 72.06720212910761,
+        "upper95": 4654.636426146349
+      },
+      "S": {
+        "lower95": 31.383083649262133,
+        "median": 93.62850211032216,
+        "upper95": 6406.96543873081
+      },
+      "SW": {
+        "lower95": 69.41478401506482,
+        "median": 165.57195383514664,
+        "upper95": 6087.074503492482
+      },
+      "W": {
+        "lower95": 205.10257298482142,
+        "median": 309.33719817458007,
+        "upper95": 3441.6398007264334
+      },
+      "NW": {
+        "lower95": 267.3058596333923,
+        "median": 359.0351702903404,
+        "upper95": 1967.4447648745577
+      }
+    },
+    "nearest_exact_site_chord_km": 362.02284100135927,
+    "farthest_exact_site_chord_km": 6505.0729651249885
   },
   "sensitivity_envelope_km3": [
-    1136.3932000968005,
-    136950.8968814816
+    1013.3652552528649,
+    109462.58239836305
   ],
   "all_assumption_fits_passed_diagnostics": true,
   "reproducibility": {
@@ -6524,7 +7569,7 @@
     },
     "report_source_sha256": "f0929589885b02098d3a18734c5132194f65e3c44e12dd411e4700f20e9b123d",
     "study_source_sha256": "795cec8ffccbbdef0a5e255bcc898c58ac95df27ce829a1b7415f08568a84a80",
-    "normalization": "Whole WGS84 Earth, analytical per-fan normalizers; total mass is the volume parameter. No integration bounds or isopach cutoff enter inference.",
+    "normalization": "Finite-Earth component normalization followed by positive quadrature of retained mass under each normalized parent mixture.",
     "source_sha256": {
       "src/Laea.py": "51b3d0775ee44b42f72eceb01d16d73a04df57903ea354b4bcaa84443f3e4d90",
       "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -6589,8 +7634,322 @@
   },
   "published_artifact_sha256": {
     "posterior.npz": "a0b8af2704f70399a8020a6d6ccdd152b1f92b47572873ce8083b88fea5918b4",
-    "volume_draws.csv.gz": "d9af99929376d93f645eb372a003b564132864390279b48b8ca954b0b7dfd74a",
-    "estimates.csv": "49e19d5ad6dff647e287cb79cfd393f2be965542abfcc7633562cb1ba2fe4aff",
-    "heldout_predictions.csv": "11288a04e0116845f4115f57778c97b7caa451d2e8635006abf8fc58474eba59"
+    "volume_draws.csv.gz": "78979576495bab06657a457af33eb4b3e3c0f9c08c1af1d7bcf46f209a5ccf60",
+    "estimates.csv": "5effe62a40d4b508098f2d3bd684f71ad517f90ea73a7421646afd19e8c69cb9",
+    "heldout_predictions.csv": "a2a41a7b417fe856b2c25ff1f2c6124a17274457d2f099b25c098401d26c4431",
+    "complete-contour-audit.json": "a3072bf05ee5499dc72b0d88f7742ecedd1eb6f5e0f9491a76e10f9b0b782a67",
+    "bearing/baseline.npz": "ba703424e04af24fb95fff7a78453474339af01c04fbee20a85c8b2331c13e1f",
+    "bearing/sector-areas.csv": "bc64558805aa9ccad23bb323bbc89e40557069e0552ca010b803710d1e8ea8f9",
+    "bearing/ray-crossings.json": "bd15ebacb31b2357e007acbeda83656e9c79a9499cb565593f969aeeef28c595",
+    "bearing/parent-report.json": "3267df63528caf67743878edbf815342a211837801f083558428eb486a803da0"
+  },
+  "parent_protocol": "mass-normalized-spherical-mixture-v1",
+  "bearing": {
+    "half_reach_degrees": 22.5,
+    "powers": [
+      0,
+      1,
+      4
+    ],
+    "probabilities": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "orientation_seed": 204917,
+    "model_sha256": {
+      "__init__.py": "f399301519b7d3ecc72639937328fc7aeecb474833d74b656f2308a0bf8b1e90",
+      "field.py": "862f5c54765c2645b9d4495d172f40f3fde4926046aaa9e1ee891beef5effb56",
+      "maps.py": "4b62dad506dc4b15e90c9e356f7624fc85898a26298263a9c0ebab6b78a19140",
+      "narrative.py": "eeb161c39881ea1cc07b6158ad9ee943d4c0328d1e15d6ed64741b81ead56b7f",
+      "report.py": "01da617bdd02891b9ffee489245e93323cea0ffba84db415c59fc04aa1427d74",
+      "study.py": "8b0fffeafcd63d1cacc601b6d07cb70023d4e6d4be491cce5be1ab8c47e9fdd0",
+      "volume.py": "b3a1412c81b3b654c35b87ba1eee5c443754bf4c1a8f603c0efea36d56b75fb2"
+    },
+    "posterior_interpretation": "Parent amplitude and kernel parameters follow the original posterior. The principal mass is its integrated retained fraction times parent volume. A single latent orientation applies to a complete deposit.",
+    "spacing_km": 99.69290884447014,
+    "positively_sampled_maximum_chord_km": 6505.0729651249885,
+    "reach_sensitivity": {
+      "11.25": {
+        "volume": {
+          "lower95": 867.376834163481,
+          "median": 1385.8487409296254,
+          "upper95": 47627.024766470175,
+          "unit": "km3 bulk fallout",
+          "draws": 12288
+        },
+        "checks": {
+          "spatial_passed": true,
+          "history": [
+            {
+              "nodes_per_scramble": 512,
+              "scrambles": [
+                39103,
+                75227
+              ],
+              "max_relative_quantile_scramble_difference": 0.000190279252150635,
+              "max_relative_quantile_doubling_difference": 0.00245678244637626,
+              "p99_absolute_draw_fraction_difference": 0.013629484200263229,
+              "max_absolute_draw_fraction_difference": 0.024062467827112743,
+              "max_parent_mass_error": 0.0
+            }
+          ],
+          "parent_subset_quantile_error": 0.019239395486046584,
+          "draw_split_relative": [
+            0.014454729626650358,
+            0.005630069643434341,
+            0.052884734161412164
+          ],
+          "draw_split_passed": true
+        },
+        "draws_per_chain": 1024
+      },
+      "45.0": {
+        "volume": {
+          "lower95": 1179.3002878583218,
+          "median": 1635.810754674379,
+          "upper95": 51671.44897639769,
+          "unit": "km3 bulk fallout",
+          "draws": 12288
+        },
+        "checks": {
+          "spatial_passed": true,
+          "history": [
+            {
+              "nodes_per_scramble": 512,
+              "scrambles": [
+                39103,
+                75227
+              ],
+              "max_relative_quantile_scramble_difference": 0.0009871336261923734,
+              "max_relative_quantile_doubling_difference": 0.0006889711444859614,
+              "p99_absolute_draw_fraction_difference": 0.00407729295117406,
+              "max_absolute_draw_fraction_difference": 0.006949034106411345,
+              "max_parent_mass_error": 0.0
+            }
+          ],
+          "parent_subset_quantile_error": 0.019239395486046584,
+          "draw_split_relative": [
+            0.0021640958271565676,
+            0.008119427447175562,
+            0.07746996128851781
+          ],
+          "draw_split_passed": true
+        },
+        "draws_per_chain": 1024
+      }
+    },
+    "numerical_interpretation": "NUTS diagnostics and attempt histories describe parent draws. Each fit separately records spatial integration and split-draw checks on derived volume.",
+    "parent_reference_km3": {
+      "lower95": 1203.6198216232358,
+      "median": 1674.1685982075578,
+      "upper95": 54906.94012183604,
+      "unit": "km3 bulk fallout",
+      "draws": 6000,
+      "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+    },
+    "parent_geographic_score": 1.77700914938177,
+    "parent_report_sha256": "3267df63528caf67743878edbf815342a211837801f083558428eb486a803da0",
+    "map_draw_check": {
+      "draws_per_chain": 96,
+      "passed": true,
+      "history": [
+        {
+          "per_chain": 96,
+          "warnings": [],
+          "checks": [
+            {
+              "sector": "N",
+              "level_cm": 1.0,
+              "union_effective_nodes": 352.3495707753251,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.041321134809908205
+            },
+            {
+              "sector": "Earth",
+              "level_cm": 1.0,
+              "union_effective_nodes": 2386.0316018323556,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.017271701875296464
+            },
+            {
+              "sector": "NE",
+              "level_cm": 1.0,
+              "union_effective_nodes": 356.0937847946252,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.03420703154579171
+            },
+            {
+              "sector": "E",
+              "level_cm": 1.0,
+              "union_effective_nodes": 351.2802941076954,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.04293391251194433
+            },
+            {
+              "sector": "SE",
+              "level_cm": 1.0,
+              "union_effective_nodes": 354.7804494191436,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.01571439562082326
+            },
+            {
+              "sector": "S",
+              "level_cm": 1.0,
+              "union_effective_nodes": 355.25289751390517,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.0
+            },
+            {
+              "sector": "SW",
+              "level_cm": 1.0,
+              "union_effective_nodes": 343.52242463166635,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.005452150358203832
+            },
+            {
+              "sector": "W",
+              "level_cm": 1.0,
+              "union_effective_nodes": 358.60696705298386,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.0
+            },
+            {
+              "sector": "NW",
+              "level_cm": 1.0,
+              "union_effective_nodes": 361.5471852783803,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.011146928246295536
+            },
+            {
+              "sector": "N",
+              "level_cm": 10.0,
+              "union_effective_nodes": 284.72554063597204,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.06535631648519732
+            },
+            {
+              "sector": "Earth",
+              "level_cm": 10.0,
+              "union_effective_nodes": 1545.1610858808217,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.03408483685912233
+            },
+            {
+              "sector": "NE",
+              "level_cm": 10.0,
+              "union_effective_nodes": 331.04361405339773,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.05892825184802109
+            },
+            {
+              "sector": "E",
+              "level_cm": 10.0,
+              "union_effective_nodes": 309.8322103572137,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.04041478337018149
+            },
+            {
+              "sector": "SE",
+              "level_cm": 10.0,
+              "union_effective_nodes": 303.09598073909365,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.046037337653484195
+            },
+            {
+              "sector": "S",
+              "level_cm": 10.0,
+              "union_effective_nodes": 317.1467205076245,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.02576617495816144
+            },
+            {
+              "sector": "SW",
+              "level_cm": 10.0,
+              "union_effective_nodes": 250.49219536719812,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.03594605909771978
+            },
+            {
+              "sector": "W",
+              "level_cm": 10.0,
+              "union_effective_nodes": 347.64725450523656,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.03468614575226639
+            },
+            {
+              "sector": "NW",
+              "level_cm": 10.0,
+              "union_effective_nodes": 356.37519556518413,
+              "resolved": true,
+              "split_symmetric_difference_fraction": 0.011118660611596162
+            },
+            {
+              "sector": "N",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "Earth",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "NE",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "E",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "SE",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "S",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "SW",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "W",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            },
+            {
+              "sector": "NW",
+              "level_cm": 100.0,
+              "union_effective_nodes": 0.0,
+              "resolved": false,
+              "split_symmetric_difference_fraction": null
+            }
+          ]
+        }
+      ]
+    }
   }
 }

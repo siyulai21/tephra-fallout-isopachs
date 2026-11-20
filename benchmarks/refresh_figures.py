@@ -123,10 +123,16 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
         shutil.copyfile(home/"spherical-mixture/posterior.npz", dest/"posterior.npz")
         with np.load(dest/"posterior.npz") as f:
             samples = dict(f)
+        from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL
+        from src.empirical_isopach.models.mass_mixture.bearings.maps import BearingView
+        bearer = spherical.get("protocol")==PROTOCOL
+        if bearer:
+            (dest/"bearing").mkdir(exist_ok=True)
+            shutil.copyfile(home/"spherical-mixture/bearing/baseline.npz",dest/"bearing/baseline.npz")
         spherical_figures(dest, name, data, meta, samples, spherical)
         if (home/"spherical-mixture/source.png").exists():
             from src.empirical_isopach.source_reporting import source_figure
-            source_figure(dest, name, data, meta, samples)
+            source_figure(dest, name, data, meta, samples,view=BearingView(samples,data,meta["vent_lonlat"][1],spherical["bearing"]["map_draw_check"]["draws_per_chain"]) if bearer else None)
         checks["spherical_posterior_sha256"] = digest(dest/"posterior.npz")
     if "directional" in scopes:
         print(f"{name}: rendering saved directional posterior", flush=True)

@@ -1,47 +1,47 @@
 {
-  "protocol": "reviewed-global-geometries-v2",
-  "summary_source_sha256": "5c0bff92378c45f35d70aedac46a975e0fc6555adb0670bb4d1824ce7c1badc7",
+  "protocol": "reviewed-spherical-bearing-mixtures-v1",
+  "summary_source_sha256": "b3b4d1266fd97a557738cf4f70ab5b1cf6bcc193c228a608f103218fc6af45ec",
   "cases": [
     {
       "name": "Aso-4",
       "slug": "aso-4",
       "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
-      "global_report_sha256": "9b3051ae2eadd00db5a1286a8aca457bb2aae3f12d5d2b130efbe6a03b65291d",
+      "global_report_sha256": "63a15d5f79c8fc69d8a1002c614afe1f7af9deb1c47808c95dad7f5b6096509b",
       "regional_report_sha256": "da1020c7b074baf4e7b971d33fa9a865e99d5c8ac9af0cc41e0ff0e9e2b3fd67"
     },
     {
       "name": "B-Tm",
       "slug": "b-tm",
       "input_sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
-      "global_report_sha256": "8afdc66e0a582929788c222a58f33dc970380b46fc56428a4c6e8e06fb792c85",
+      "global_report_sha256": "a46fad2198dfd9f9943b98532f30b654631b029b50cf03ba0d609103fb991ada",
       "regional_report_sha256": "12ecd1f1df3236066a33bd59398d192ca076e919bf14694e8abcacb245be3156"
     },
     {
       "name": "Mazama",
       "slug": "mazama",
       "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
-      "global_report_sha256": "c347b4a57fae2489d70abfe8b4a5b58e66affe6b21b84c35ad7927724a5fc176",
+      "global_report_sha256": "05bc6df7f86ea091706cdf403f3c87793c358c6171cb3910138d639c594292a3",
       "regional_report_sha256": "fcee5453da2670ac59279c27995969e436731d0b643975e6bbfecee9aa693617"
     },
     {
       "name": "Minoan",
       "slug": "minoan",
       "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
-      "global_report_sha256": "02c58749be394eefad481a255e28fac36c4e40e019ecdcf99da17eeab8c8e2fa",
+      "global_report_sha256": "7d2eff177cb603ce4af27422bc83cb529c633ab1662416780e5a8f24821b1f8d",
       "regional_report_sha256": "726839688001c9711833360cc656fb42afcae239708082a264d964d27ec501ea"
     },
     {
       "name": "Tambora",
       "slug": "tambora",
       "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
-      "global_report_sha256": "c6f16e8e86e6e68a94165ac44e5351f4128cab2dd66576ff777496d533f3626d",
+      "global_report_sha256": "5468a620ed388ba8fe861f41ac63900ccf42e6f7939d0bbcfa7d967ef60be2e4",
       "regional_report_sha256": "bfecef9aa956dac2421c51c8b392335c7a14e9f1fcad4b0ad64de015bfd185c7"
     },
     {
       "name": "YTT",
       "slug": "ytt",
       "input_sha256": "14f8c0367d8daf84c0a611cc1c3637e77ebee434509c1446e3f4962c4ce18427",
-      "global_report_sha256": "3267df63528caf67743878edbf815342a211837801f083558428eb486a803da0",
+      "global_report_sha256": "8b66879f69a63a27f8ea324a85e0369ddb5dc27984d09f5fe00b996f0ace258b",
       "regional_report_sha256": "1f5362dc99a5f00edcc049846e89e1ed904c8582e2a41a6c0db67f4c57f1388f"
     }
   ],
@@ -51,16 +51,16 @@
       "slug": "aso-4",
       "geometry": "displaced",
       "review_status": "questioned",
-      "median": 1465.9726218227443,
-      "lower95": 500.9743516440941,
-      "upper95": 44172.93140790358,
-      "sensitivity_lower": 464.6917119073577,
-      "sensitivity_upper": 141265896.8857714,
+      "median": 1069.67339065149,
+      "lower95": 402.89409200655086,
+      "upper95": 27836.608688428136,
+      "sensitivity_lower": 379.93655584975795,
+      "sensitivity_upper": 85084664.75925566,
       "baseline_sampling_passed": true,
-      "all_sensitivity_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.9807751528938525,
-      "global_equal_region_negative_log_score": 1.6319681853182262,
+      "median_fraction_outside_local_footprint": 0.9723091044547607,
+      "global_equal_region_negative_log_score": 1.6317781762679024,
       "global_observation_coverage95": 0.9518072289156626,
       "stacked_equal_region_negative_log_score": 1.5143312927066606,
       "spline_equal_region_negative_log_score": 1.661543361729549
@@ -70,16 +70,16 @@
       "slug": "b-tm",
       "geometry": "source-fans",
       "review_status": "conditional",
-      "median": 49.05616321533527,
-      "lower95": 30.65268241256439,
-      "upper95": 341.6876889029925,
-      "sensitivity_lower": 25.60520039487937,
-      "sensitivity_upper": 1225.6233747745534,
+      "median": 46.98217881409906,
+      "lower95": 30.162635929926765,
+      "upper95": 275.52892381558763,
+      "sensitivity_lower": 25.223159392863955,
+      "sensitivity_upper": 782.8503372431371,
       "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": false,
-      "median_fraction_outside_local_footprint": 0.8825245099716739,
-      "global_equal_region_negative_log_score": 1.4917608805495164,
+      "median_fraction_outside_local_footprint": 0.8792018965089345,
+      "global_equal_region_negative_log_score": 1.4867335576192628,
       "global_observation_coverage95": 0.9375,
       "stacked_equal_region_negative_log_score": 1.458667324756736,
       "spline_equal_region_negative_log_score": 4.294670376580042
@@ -89,17 +89,17 @@
       "slug": "mazama",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median": 223.1570209385165,
-      "lower95": 144.66934967004497,
-      "upper95": 3668.8046470496906,
-      "sensitivity_lower": 142.0278466121303,
-      "sensitivity_upper": 152270.62638060487,
+      "median": 212.8752992616732,
+      "lower95": 140.1407661861475,
+      "upper95": 2614.322367825034,
+      "sensitivity_lower": 137.01410132116933,
+      "sensitivity_upper": 92708.995136251,
       "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": false,
-      "median_fraction_outside_local_footprint": 0.8494875494033733,
-      "global_equal_region_negative_log_score": 1.5768964606324076,
-      "global_observation_coverage95": 0.9111111111111111,
+      "median_fraction_outside_local_footprint": 0.8452335583682605,
+      "global_equal_region_negative_log_score": 1.5614390043849067,
+      "global_observation_coverage95": 0.8888888888888888,
       "stacked_equal_region_negative_log_score": 1.2722152078519842,
       "spline_equal_region_negative_log_score": 1.9712502424004417
     },
@@ -108,16 +108,16 @@
       "slug": "minoan",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median": 46.03553729126296,
-      "lower95": 28.129074496242126,
-      "upper95": 2529.2422583624934,
-      "sensitivity_lower": 26.41300294508804,
-      "sensitivity_upper": 21238.5640835921,
+      "median": 40.806428215087934,
+      "lower95": 24.62933105778196,
+      "upper95": 1989.1236713231256,
+      "sensitivity_lower": 23.135446226747938,
+      "sensitivity_upper": 19068.016278733994,
       "baseline_sampling_passed": true,
-      "all_sensitivity_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.9463778355010989,
-      "global_equal_region_negative_log_score": 1.569936956394324,
+      "median_fraction_outside_local_footprint": 0.9404310767533351,
+      "global_equal_region_negative_log_score": 1.5747912250634026,
       "global_observation_coverage95": 0.9456521739130435,
       "stacked_equal_region_negative_log_score": 1.450521534669888,
       "spline_equal_region_negative_log_score": 1.600616075530494
@@ -127,17 +127,17 @@
       "slug": "tambora",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median": 179.06605694683046,
-      "lower95": 112.93975220450795,
-      "upper95": 1284.2051146530378,
-      "sensitivity_lower": 104.12852348350394,
-      "sensitivity_upper": 4967.886330776555,
+      "median": 162.3082693189885,
+      "lower95": 100.77193070544374,
+      "upper95": 920.143286031852,
+      "sensitivity_lower": 92.97951411683674,
+      "sensitivity_upper": 3846.5697978011317,
       "baseline_sampling_passed": true,
-      "all_sensitivity_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.9350003698181107,
-      "global_equal_region_negative_log_score": 1.4706245946224963,
-      "global_observation_coverage95": 0.9615384615384616,
+      "median_fraction_outside_local_footprint": 0.9287109375,
+      "global_equal_region_negative_log_score": 1.4765477246032779,
+      "global_observation_coverage95": 1.0,
       "stacked_equal_region_negative_log_score": 1.6197644505043818,
       "spline_equal_region_negative_log_score": 1.5478835722059785
     },
@@ -146,16 +146,16 @@
       "slug": "ytt",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median": 1674.1685982075578,
-      "lower95": 1203.6198216232358,
-      "upper95": 54906.94012183604,
-      "sensitivity_lower": 1136.3932000968005,
-      "sensitivity_upper": 136950.8968814816,
+      "median": 1510.5219018854154,
+      "lower95": 1054.2841197801843,
+      "upper95": 48708.465410675635,
+      "sensitivity_lower": 1013.3652552528649,
+      "sensitivity_upper": 109462.58239836305,
       "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": true,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.8750960257846486,
-      "global_equal_region_negative_log_score": 1.77700914938177,
+      "median_fraction_outside_local_footprint": 0.8598042823137302,
+      "global_equal_region_negative_log_score": 1.7564837384003158,
       "global_observation_coverage95": 0.8478260869565217,
       "stacked_equal_region_negative_log_score": 1.9342567871449574,
       "spline_equal_region_negative_log_score": 2.1527132079420115
@@ -165,17 +165,17 @@
     {
       "eruption": "Aso-4",
       "global": {
-        "mean_log_score": 1.6216184139508656,
-        "rmse_log": 1.2542211900355185,
+        "mean_log_score": 1.6208633587895958,
+        "rmse_log": 1.281999778214622,
         "coverage95_observations": 0.9518072289156626,
-        "mean_interval_width_log": 3.4438459891123987,
+        "mean_interval_width_log": 3.502262692079047,
         "fold_log_scores": [
-          2.532398294278614,
-          1.2645652871002537,
-          1.244059129530535,
-          1.4868500303635024
+          2.581367296880597,
+          1.2645652871002548,
+          1.244059129530536,
+          1.4371209915602217
         ],
-        "equal_region_log_score": 1.6319681853182262
+        "equal_region_log_score": 1.6317781762679024
       },
       "stacked": {
         "mean_log_score": 1.5069164845138914,
@@ -209,17 +209,17 @@
     {
       "eruption": "B-Tm",
       "global": {
-        "mean_log_score": 1.4865216079150916,
-        "rmse_log": 1.4899564451538556,
+        "mean_log_score": 1.4815548927951139,
+        "rmse_log": 1.4857975899421003,
         "coverage95_observations": 0.9375,
-        "mean_interval_width_log": 4.252627563855927,
+        "mean_interval_width_log": 4.252905911884384,
         "fold_log_scores": [
-          1.8637492375936882,
-          0.9827856595079179,
-          1.584881572527548,
-          1.5356270525689117
+          1.8544187601338382,
+          0.9806636523420514,
+          1.5763247936751865,
+          1.535527024325975
         ],
-        "equal_region_log_score": 1.4917608805495164
+        "equal_region_log_score": 1.4867335576192628
       },
       "stacked": {
         "mean_log_score": 1.4548547018012652,
@@ -253,17 +253,17 @@
     {
       "eruption": "Mazama",
       "global": {
-        "mean_log_score": 1.5806573221464946,
-        "rmse_log": 1.5014969976366273,
-        "coverage95_observations": 0.9111111111111111,
-        "mean_interval_width_log": 4.156925330279708,
+        "mean_log_score": 1.567729216898265,
+        "rmse_log": 1.4641935463211437,
+        "coverage95_observations": 0.8888888888888888,
+        "mean_interval_width_log": 4.191177325163149,
         "fold_log_scores": [
-          2.2568891512448945,
-          1.4048959948323043,
-          0.8996654676861217,
-          1.7461352287663097
+          2.2560186538062412,
+          1.2455733285612247,
+          0.8996654676861232,
+          1.8444985674860377
         ],
-        "equal_region_log_score": 1.5768964606324076
+        "equal_region_log_score": 1.5614390043849067
       },
       "stacked": {
         "mean_log_score": 1.2758639297888945,
@@ -297,17 +297,17 @@
     {
       "eruption": "Minoan",
       "global": {
-        "mean_log_score": 1.5684498741138013,
-        "rmse_log": 1.224430951555375,
+        "mean_log_score": 1.5736493503087594,
+        "rmse_log": 1.1705628911810813,
         "coverage95_observations": 0.9456521739130435,
-        "mean_interval_width_log": 5.586188544815003,
+        "mean_interval_width_log": 5.758142220186497,
         "fold_log_scores": [
-          1.9357143307129383,
-          1.66650099901429,
-          1.257790849788542,
-          1.4197416460615253
+          1.9305765155344334,
+          1.5785551277205772,
+          1.330571382154174,
+          1.4594618748444264
         ],
-        "equal_region_log_score": 1.569936956394324
+        "equal_region_log_score": 1.5747912250634026
       },
       "stacked": {
         "mean_log_score": 1.4498497577721863,
@@ -341,17 +341,17 @@
     {
       "eruption": "Tambora",
       "global": {
-        "mean_log_score": 1.4783040758738595,
-        "rmse_log": 0.9694060786312464,
-        "coverage95_observations": 0.9615384615384616,
-        "mean_interval_width_log": 5.785184532306645,
+        "mean_log_score": 1.4844828521726743,
+        "rmse_log": 1.0836442964812363,
+        "coverage95_observations": 1.0,
+        "mean_interval_width_log": 5.969856206254581,
         "fold_log_scores": [
-          1.253041776028341,
-          1.412149766681758,
-          1.488540900681209,
-          1.7287659350986768
+          1.2582514448775652,
+          1.6098423855379829,
+          1.4885306875246822,
+          1.549566380472881
         ],
-        "equal_region_log_score": 1.4706245946224963
+        "equal_region_log_score": 1.4765477246032779
       },
       "stacked": {
         "mean_log_score": 1.6532091908348556,
@@ -385,17 +385,17 @@
     {
       "eruption": "YTT",
       "global": {
-        "mean_log_score": 1.7654501519688452,
-        "rmse_log": 1.3615210152275081,
+        "mean_log_score": 1.745883038480541,
+        "rmse_log": 1.3426951566474037,
         "coverage95_observations": 0.8478260869565217,
-        "mean_interval_width_log": 3.986308069024689,
+        "mean_interval_width_log": 4.032320522442554,
         "fold_log_scores": [
-          2.6356900765256523,
-          1.499793909243173,
-          1.4500421032324282,
-          1.5225105085258255
+          2.443015445451032,
+          1.5270652169678192,
+          1.5575842276592196,
+          1.498270063523193
         ],
-        "equal_region_log_score": 1.77700914938177
+        "equal_region_log_score": 1.7564837384003158
       },
       "stacked": {
         "mean_log_score": 1.9102817850930547,

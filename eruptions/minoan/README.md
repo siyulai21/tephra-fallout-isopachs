@@ -6,7 +6,7 @@ The accepted dataset contains 92 exact measurements and 9 lower bounds. The regi
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Minoan](results/four-method-evidence.png)
 
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.
+All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
 
 ## Volume and predictive performance
 
@@ -15,11 +15,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | GP ensemble | Hull mean **27.21** | 18.21–40.34 | 1.451 | 96.7% |
 | Cubic spline | Hull mean **24.78** | 24.79–25.00 | 1.601 | 96.7% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **28.8** · volume median 39.1 | 21.3–138.5 | 1.782 | 94.6% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **46.0** | 28.1–2,529.2 | 1.570 | 94.6% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **40.8** | 24.6–1,989.1 | 1.575 | 94.6% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **8.5%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **8.5%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
 <summary>Compare the two whole-Earth maps</summary>

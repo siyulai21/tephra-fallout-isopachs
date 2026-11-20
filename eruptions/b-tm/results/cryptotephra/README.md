@@ -1,5 +1,7 @@
 # How cryptotephra changes the B-Tm reconstruction
 
+The spherical estimates and omission comparisons in this November 19 study use the broad parent geometry on each evidence selection. The [current spherical case](../spherical-mixture/README.md) includes the three interpreted bounds and integrates uncertain bearing continuation. [Spherical parent fitted to the 71-site input](../spherical-mixture/bearing/parent-report.json)
+
 The principal directional median map integrates to **33.6 km³** of bulk airborne fallout, compared with **44.1 km³** on the preceding 68-site input. Complete simulated deposits have a median of **37.2 km³** and a conditional 95% interval of **23.5–77.1 km³**. The central map integrates the pointwise median thickness. The interval integrates each spatially coherent deposit separately.
 
 The three additions are positive occurrences with unknown primary bed thickness. The principal fits use conditional upper limits of 0.06 cm at Lake Sihailongwan, 0.64 cm at Quanyang peat and 0.45 cm at Lake Kushu. The lake limits transfer a same-eruption count response from Suigetsu. The peat limit assumes full retention in a three-slice dry-mass budget, a maximum host dry density and a minimum fallout bulk density. Local variation enters the censoring likelihood. An interpreted bound gives neither an exact thickness nor a numerical lower endpoint. [Primary sources and calculations](../../../../data/audits/B-Tm/README.md) · [Accepted observations](../../../../data/eruptions/B-Tm_cryptotephra.csv)
@@ -33,7 +35,7 @@ The table gives the probability of a local observation below the stated upper li
 
 With Sihailongwan and Quanyang both withheld in the western fold, the directional local median at Sihailongwan returns to **4.76 cm**. The directional model assigns the 0.06 cm upper observation 20.7% probability. The westward retreat therefore relies on the cores. The GP and spline give Sihailongwan local medians of 6.1e-16 and 2.8e-16 cm. Values that small can score well against an upper limit. The positive glass occurrence establishes arrival, while its magnitude remains conditional on archive response.
 
-[Scores on 64 exact thicknesses and on 67 direct records excluding the Suigetsu reference](heldout-by-evidence.csv) · [Individual archive scores](heldout-archive-probabilities.csv) · [All regional holdouts](../heldout_predictions.csv) · [All directional holdouts](../directional/azimuth/heldout.csv) · [All spherical holdouts](../spherical-mixture/heldout_predictions.csv)
+[Scores on 64 exact thicknesses and on 67 direct records excluding the Suigetsu reference](heldout-by-evidence.csv) · [Individual archive scores](heldout-archive-probabilities.csv) · [All regional holdouts](../heldout_predictions.csv) · [All directional holdouts](../directional/azimuth/heldout.csv) · [Spherical holdouts in the original study](https://github.com/siyulai21/tephra-fallout-isopachs/blob/843a2eef0fc669e38d95e4153ac8d7464f4d4a98/eruptions/b-tm/results/spherical-mixture/heldout_predictions.csv)
 
 ## Where the contours move
 
@@ -100,7 +102,7 @@ The full-data directional structures passed sampling checks in 6 of 6 fits. Spat
 | Spherical geographic holdouts | 0, 3 |
 | Spherical full-data assumptions | five_fans, gaussian_errors |
 
-Across the eight spherical prior fits, the outer conditional interval endpoints span 25.6–1,225.6 km³. This envelope measures sensitivity to the published priors. Numerical warnings are retained. [Prior-by-prior estimates](../spherical-mixture/estimates.csv) · [Diagnostics, held-out fits and normalization](../spherical-mixture/report.json)
+Across the eight spherical prior fits, the outer conditional interval endpoints span 25.6–1,225.6 km³. This envelope measures sensitivity to the published priors. Numerical warnings are retained. [Original prior estimates, diagnostics and held-out fits](../spherical-mixture/bearing/parent-report.json)
 
 0 of 12 family–policy combinations support a complete isopach band. Measured-bracketed fragments have a different evidential status from continuation through gaps. Both global estimates condition on the geometry of unsampled fallout.
 

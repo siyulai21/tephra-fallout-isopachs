@@ -43,8 +43,21 @@ def screen(data, latitude, report, groups):
         to_sphere(np.array([[x,y] for x in bounds[[0,2]] for y in bounds[[1,3]]]),latitude)
     except ValueError:
         return {**metadata,"status":"audit_window_leaves_physical_chart","policies":{},"refined_levels":[]}
-    full = PosteriorSurface(groups["reference"],latitude)
-    folds = [PosteriorSurface(groups[f"fold-{c['fold']}"],latitude) for c in checks if c["passed"]]
+    from .bearings.field import PROTOCOL, BearingField, BearingSupport, phases
+    def surface(key, training, fit):
+        draws = groups[key]
+        if report["protocol"] != PROTOCOL:
+            return PosteriorSurface(draws,latitude)
+        chains = len(fit["diagnostics"]["energy_bfmi_per_chain"])
+        size = len(draws["log_volume"])
+        if size%chains:
+            raise ValueError("Unexpected chain count in spherical contour packet")
+        return BearingField(draws,BearingSupport(training,latitude),phases((chains,size//chains)))
+    full = surface("reference",data,report["fits"]["baseline"])
+    folds = [surface(f"fold-{f['fold']}",data.subset(np.isin(data.row_ids,f["training_row_ids"])),f["fit"])
+             for f in report["validation"]["fits"] if f["fit"]["diagnostics"]["passed"]]
+    if report["protocol"] == PROTOCOL:
+        metadata["field_protocol"] = PROTOCOL
     result, *_ = audit_contours(full,data,bounds,folds)
     return {**result,**metadata,"status":"completed",
             "surface":"Pointwise posterior median from up to 64 evenly spaced draws per chain. Eligibility requires four numerically usable geographic deletions."}

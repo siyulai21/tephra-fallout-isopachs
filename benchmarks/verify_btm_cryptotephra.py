@@ -90,8 +90,16 @@ def probe_limits(design):
 def verify_release(design, home=HOME):
     study = home/"cryptotephra"
     release = read(study/"release.json")
+    from hashlib import sha256
+    from .publication import read_hashes, SPHERICAL_REFERENCE, preceding_spherical_bytes
+    earlier = read_hashes(ROOT/SPHERICAL_REFERENCE/"previous-files.sha256")
+    current = read_hashes()
     for filename, expected in release["files"].items():
-        assert digest(ROOT/filename) == expected, filename
+        if filename in earlier:
+            assert sha256(preceding_spherical_bytes(filename)).hexdigest()==earlier[filename]==expected, filename
+            assert digest(ROOT/filename)==current[filename], filename
+        else:
+            assert digest(ROOT/filename) == expected, filename
     observations, meta = audited_data(NEW)
     ids = set(observations.row_ids)
     bounds = {r["id"]:r["row_id"] for r in meta["interpreted_upper_limits"]}
@@ -138,8 +146,13 @@ def verify_release(design, home=HOME):
         quantiles = reported["joint_volume"]["conditional_quantiles_km3"]
         np.testing.assert_allclose(row[["lower95","volume_median_km3","upper95"]].to_numpy(dtype=float),
                                    [quantiles[str(p)] for p in (.025,.5,.975)])
+    # The archive-interpretation experiment predates spherical bearing continuation.
+    parent = read(folder/"bearing/parent-report.json") if "bearing" in sphere else sphere
+    if "bearing" in sphere:
+        assert digest(folder/"bearing/parent-report.json")==sphere["bearing"]["parent_report_sha256"]
+        assert parent["input"]["input_sha256"]==sphere["input"]["input_sha256"]
     for method, summary in (("directional",az["volume"]["coherent_volume_km3"]),
-                            ("spherical",sphere["fits"]["baseline"]["volume"])):
+                            ("spherical",parent["fits"]["baseline"]["volume"])):
         np.testing.assert_allclose(table.loc[("principal",method),["lower95","volume_median_km3","upper95"]].to_numpy(dtype=float),
                                    [summary[k] for k in LABELS])
     np.testing.assert_allclose(table.at[("principal","directional"),"median_map_km3"],az["volume"]["median_map_km3"])

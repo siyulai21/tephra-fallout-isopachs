@@ -5,7 +5,7 @@ from .models.mass_mixture.inference import flatten
 from .models.mass_mixture.geometry import log_field, to_sphere
 
 
-def source_figure(output, name, data, meta, samples, previous=None):
+def source_figure(output, name, data, meta, samples, previous=None, *, view=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -21,6 +21,9 @@ def source_figure(output, name, data, meta, samples, previous=None):
     panels = [("", samples)] if previous is None else [("Previous displaced model", previous), ("Source-constrained reconstruction", samples)]
     medians = []
     for _, posterior in panels:
+        if view is not None:
+            medians.append(view.central(np.column_stack((xx.ravel(),yy.ravel()))).reshape(xx.shape))
+            continue
         flat = flatten(posterior)
         index = np.unique(np.linspace(0, len(flat["log_volume"])-1, min(1024, len(flat["log_volume"]))).astype(int))
         flat = {k: v[index] for k, v in flat.items()}
@@ -33,7 +36,8 @@ def source_figure(output, name, data, meta, samples, previous=None):
         fig, axes = plt.subplots(1,len(panels),figsize=(7*len(panels),6.7),layout="constrained",squeeze=False)
         for ax,(title,_),field in zip(axes[0],panels,medians):
             plot = ax.pcolormesh(axis,axis,field,shading="auto",cmap="viridis",vmin=lo,vmax=hi)
-            lines = ax.contour(axis,axis,field,levels=levels,colors="white",linewidths=.65)
+            lines = ax.contour(axis,axis,field,levels=levels,colors="white",linewidths=.65,
+                               linestyles="dashed" if view is not None else "solid")
             ax.clabel(lines,fmt=lambda v:f"{10**v:.2g}",fontsize=8)
             coastlines(ax,meta["vent_lonlat"])
             observations(ax,data,size=22,meta=meta)
