@@ -1,6 +1,2 @@
-# Keep generated reports and cartographic data out of the source-code review.
-docs/atlas/** linguist-generated=true
-docs/assets/*.png linguist-generated=true
-docs/atlas/**/*.svg -diff -whitespace
-docs/atlas/**/*.geojson -diff
-src/probabilistic_isopach/assets/* linguist-vendored=true
+# Bundled offline cartography.
+src/empirical_isopach/assets/ne_10m_coastline.geojson.gz linguist-vendored=true

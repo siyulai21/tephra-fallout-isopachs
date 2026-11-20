@@ -198,7 +198,7 @@ def summarize(output, published=False):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE, TEAL, AMBER
+    from src.empirical_isopach.visualization.style import STYLE, TEAL, AMBER
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 2, figsize=(12, 5), layout="constrained")
         names = table.dataset.unique()

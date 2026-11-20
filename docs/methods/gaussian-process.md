@@ -2,7 +2,7 @@
 
 [Method overview](README.md) · [Documentation](../README.md) · [Implementation](../../src/empirical_isopach/models/gaussian_process/README.md)
 
-**Used by the GP side of the current regional comparison and historical GP-only reports.** `selected` chooses one GP configuration; `stacked` combines GP configurations. Neither uses cubic splines.
+The regional GP ensemble combines fitted Gaussian-process components. Each component has a directional thinning trend and a spatial residual. [Ensemble weights](gp-ensemble.md)
 
 ## Identifiability comes first
 
@@ -16,7 +16,7 @@ The implementation removes manual pseudo-data dependence, not modelling assumpti
 
 Gaussian-process conditioning follows [Rasmussen and Williams](https://gaussianprocess.org/gpml/chapters/RW2.pdf). Virtual derivative constraints also have established precedent in [Riihimäki and Vehtari (2010)](https://proceedings.mlr.press/v9/riihimaki10a.html). Spatial validation is motivated by [Roberts et al. (2017)](https://doi.org/10.1111/ecog.02881).
 
-The GP workflow combines typed evidence, fitted direction, exclusion of invented observations from validation, correlated external constraints and extrapolation diagnostics. The separate trend-regularized cubic-spline experiment is documented in [cubic-spline methods](cubic-splines.md). This is a research implementation, not a claim of a new statistical theory or established publication novelty.
+The GP workflow combines typed evidence, fitted direction, exclusion of invented observations from validation, correlated external constraints and extrapolation diagnostics. The regional cubic spline has its own [model and tuning protocol](cubic-splines.md). This is a research implementation, not a claim of a new statistical theory or established publication novelty.
 
 ## Trend and spatial covariance
 
@@ -81,44 +81,11 @@ For genuinely independent external evidence e=Hz+eta, eta~N(0,R), Gaussian condi
 
 This API requires justified evidence and covariance. Legacy pseudo rows are not automatically promoted into it. An external simulator calibrated with the same observations is not independent; it would need a joint model or explicitly modular treatment. No physical deposition simulator is implemented.
 
-## Validation and volume
+## Geographic prediction and regional volume
 
-The primary workflow partitions unique sites recursively along the longest coordinate span into four approximately balanced spatial blocks. Colocated observations stay together; lexical ordering resolves ties. Nearby but nonidentical locations can lie across a boundary, so `--buffer-km` is available. Empty/insufficient training sets fail visibly. Row permutations do not change the fitted result.
+Four geographic folds test held-out predictions. Within each training fold, the component models refit their trends and covariance parameters, then the ensemble estimates its weights from inner predictions. Measurements contribute log densities and bounds contribute one-sided probabilities. The GP and spline share the same folds, buffer and observation hull. Each GP volume draw uses one component over the entire hull. [Ensemble weights and volume uncertainty](gp-ensemble.md) · [Matched validation](regional-comparison.md)
 
-Each candidate refits the trend, scales, amplitude and likelihood inside each training fold. Selection minimizes the average of fold-mean negative log predictive scores on log thickness, including the observation nugget; upper bounds use log-CDF scores and lower bounds use log-survival scores. With `--nested-cv`, outer four-fold prediction uses independent inner three-fold selection. Reported coverage concerns held-out **observations**, while maps show latent-surface uncertainty without the nugget. Neither coverage nor spatial CV validates a wholly unobserved sector.
-
-Since version 0.7, the primary reported fallout volume integrates the entire WGS84 Earth, independently of the user-selected rectangle or map extent. The fit, selected candidates and observation predictions remain unchanged. See [complete-Earth integration](global-volume.md) for the geometry, numerical checks and remaining extrapolation assumptions.
-
-The historical regional simulation is retained separately. For each jointly sampled log surface, finite-domain volume is
-
-\[
-V^{(b)}=10^{-5}\sum_j a_j\exp(z_j^{(b)})\quad\mathrm{km}^3,
-\]
-
-with cell area a_j in km². Joint draws preserve spatial covariance; pointwise interval bounds are never summed to make a volume interval. Conditional mean thickness is exp(mu+variance/2); median is exp(mu). The default rectangle uses real measurements and vent plus 25% padding. Grid doubling checks the mean integral, not convergence of all sampled quantiles. Domain expansion exposes tail sensitivity; it is not a total-volume estimate.
-
-Runs record input/code hashes, versions, seeds, fold/row assignments, candidates, failures and configuration. Sampling uses a fixed seed; fitting is deterministic. Bitwise identity across numerical libraries/platforms is not promised.
-
-## Limits shown by the experiments
-
-[VALIDATION.md](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/validation/initial-benchmark.md) reports substantial Aso-4 undercoverage and failure to recover a synthetic hidden lobe. The present code does not establish universally calibrated volume uncertainty. It does establish reproducible fitting without manually invented data and explicit statistical treatment of virtual constraints.
-
-Before publication-level volume claims: jointly infer trend/covariance uncertainty, model independently documented preservation/detection, compare richer anisotropic or multi-lobe means, and evaluate untouched eruptions with preregistered sector holdouts. Those are research extensions, not implemented features of this version.
-
-## Scientific reporting
-
-The Markdown reporting workflow separates the map domain from the finite volume region, expands maps to
-resolve closed median level sets, checks enclosed areas (including holes), and
-refines mean- and median-surface quadrature. Small contour features receive
-local refinement around the globally resolved components. This does not add
-pseudo observations, physical inputs, or a new uncertainty model.
-
-See [OUTPUTS.md](../OUTPUTS.md) for numerical definitions, limits, and the
-distinction between the median surface integral and median random volume.
-[Historical reporting validation](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reference/reporting-0.3-validation.md) records the reporting checks.
-
-
-## Lower bounds and combined-fallout observations (0.6)
+## Lower bounds and combined fallout
 
 A recovered layer that ends before the original base constrains thickness from below. For `Kind=lower_limit` with positive `Limit_cm=L`, the likelihood is
 

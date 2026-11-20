@@ -8,7 +8,6 @@ import pytest
 
 from benchmarks.ytt import verify_inputs
 from src.probabilistic_isopach.catalog import dataset_record, resolve_dataset
-from src.probabilistic_isopach.cli import main
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,28 +29,8 @@ def test_catalog_profile_is_not_applied_by_filename(tmp_path):
     source = resolve_dataset('YTT')
     external = tmp_path/source.name
     shutil.copyfile(source, external)
-    assert dataset_record(source)['analysis_defaults']['buffer_km'] == 50
+    assert dataset_record(source)['audit'] == 'audits/YTT/provenance.json'
     assert dataset_record(external) is None
-
-
-@pytest.mark.parametrize('overrides,buffer,bounds,extent', [
-    ([], 50, [-6900, -1400, 2400, 2900], 8000),
-    (['--buffer-km', '0', '--bounds', '-7000', '-1500', '2500', '3000',
-      '--max-extent-km', '7500', '--levels', '.1', '1', '10'],
-     0, [-7000, -1500, 2500, 3000], 7500),
-])
-def test_ytt_cli_records_profile_and_honors_explicit_overrides(tmp_path, overrides, buffer, bounds, extent):
-    main(['YTT', '--output', str(tmp_path/'run'), '--no-publication',
-          '--grid', '8', '--volume-grid', '8', '--draws', '20', *overrides])
-    report = json.loads((tmp_path/'run/report.json').read_text())
-    settings = report['settings']
-    assert settings['method'] == 'selected'
-    assert settings['buffer_km'] == buffer
-    assert settings['bounds'] == bounds
-    assert settings['max_extent_km'] == extent
-    assert report['input']['n_measurements'] == 46
-    assert report['input']['audit']['source_workbook_sha256'] == verify_inputs()['workbook_sha256']
-    assert report['volume']['bounds_km'] == bounds
 
 
 def test_reviewed_principal_uses_one_u1445_hole_and_preserves_source_values():
@@ -76,8 +55,10 @@ def test_reviewed_principal_uses_one_u1445_hole_and_preserves_source_values():
     files, _ = prepared_files()
     for name, content in files.items():
         assert (ROOT/name).read_bytes() == content
-    earlier = json.loads((audit/'history/2026-11-03-maninjau/provenance.json').read_text())
-    assert sha256((audit/'sensitivity/without_u1445b.csv').read_bytes()).hexdigest() == earlier['cases']['main45']['sha256']
+    # Recorded main45 SHA-256 from the intermediate Maninjau audit linked in history/README.md.
+    assert sha256((audit/'sensitivity/without_u1445b.csv').read_bytes()).hexdigest() == (
+        "28fecaaf595bf1824c85bd8c70064cea4926108fa7a33b9ff35676727c3f61fb"
+    )
 
 
 def test_review_membership_cannot_drift_from_selection_rules(tmp_path):

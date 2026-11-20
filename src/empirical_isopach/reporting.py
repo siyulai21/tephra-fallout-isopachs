@@ -59,7 +59,7 @@ def save_figures(output, name, data, metadata, region, models, report):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE, MUTED, TEAL, AMBER
+    from src.empirical_isopach.visualization.style import STYLE, MUTED, TEAL, AMBER
     methods = tuple(report["methods"])
     labels = {m: report_label(report, m) for m in methods}
     from .visualization.regional import regional_maps

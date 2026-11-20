@@ -25,6 +25,19 @@ def test_public_families_and_historical_imports(capsys):
         registry.method_spec("unregistered")
 
 
+@pytest.mark.parametrize("module", ["src.empirical_isopach.cli", "src.probabilistic_isopach.cli"])
+def test_retired_fit_command_does_not_dispatch_a_new_analysis(tmp_path, module):
+    from importlib import import_module
+
+    main = import_module(module).main
+
+    output = tmp_path / "run"
+    with pytest.raises(SystemExit) as error:
+        main(["fit", "Minoan", "--output", str(output)])
+    assert error.value.code == 2
+    assert not output.exists()
+
+
 def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, monkeypatch):
     from src.empirical_isopach import cli, global_reporting
     from src.empirical_isopach.models.directional import reporting as directional

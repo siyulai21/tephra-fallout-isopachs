@@ -379,7 +379,7 @@ def main(argv=None):
     twin = examples[examples.scenario=="invisible_sector"]
     t = twin.iloc[0]
     lines += ["",f"The additional paired-truth experiment has *identical observations*: a smooth deposit of **{t.truth_km3:.1f} km³**, or the same deposit with a compact lobe wholly inside the unsampled northeast, giving **{t.same_data_hidden_total_km3:.1f} km³**. The true NE sector changes from {t.NE_km3:.1f} to {t.same_data_hidden_NE_km3:.1f} km³. Each data realization yields exactly one posterior for either truth. Across {int(twin.passed.sum())} passing realizations, {int((twin.hidden_truth_covered.astype(bool) & twin.passed).sum())} intervals include the larger hidden deposit. A weakly identified lobe remains a separate structural uncertainty even when plotted isopachs look convincing.", "",
-        "[Complete paired results](known-volumes.csv) · [All stress-test fits, policies and retry diagnostics](known-volume-fits.json.gz) · [Development models and failures](development/README.md)", "",
+        "[Complete paired results](known-volumes.csv) · [All stress-test fits, policies and retry diagnostics](known-volume-fits.json.gz) · [Development models and failures](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/directional/single-structure/development)", "",
         "## Reproduce", "", "~~~sh",
         "python -m benchmarks.directional --output results/new-study --reports results/new-cases",
         "for scenario in "+" ".join((*SCENARIOS,"invisible_sector"))+"; do",

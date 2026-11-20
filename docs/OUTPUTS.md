@@ -86,7 +86,3 @@ The matched fixed-direction control is `volume.matched_control_map_km3` in the s
 `fits.baseline.volume` contains its conditional median and 95% credible interval. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` concerns mixing and, where applicable, normalization accuracy. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
 
 All volumes are **bulk fallout**, not dense-rock equivalent or total erupted material including ignimbrite deposits. Regional conditional intervals, global credible intervals, geographic-deletion ranges and prior-sensitivity envelopes remain separate. Passing numerical checks does not identify an unseen deposit.
-
-## Historical GP workflow
-
-Historical GP output conventions are preserved in the [version-specific guide](https://github.com/siyulai21/tephra-fallout-isopachs/blob/41b8f2f28ac8b1c877810b782005ff243e101c63/archive/reference/historical-gp-outputs.md).

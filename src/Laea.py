@@ -1,6 +1,5 @@
+"""Source-centred WGS84 Lambert azimuthal equal-area projection in kilometres."""
 import pyproj
-import pandas as pd
-import numpy as np
 
 
 def make_laea_transform(vent_lon: float, vent_lat: float):
@@ -19,25 +18,3 @@ def make_laea_transform(vent_lon: float, vent_lat: float):
     fwd = pyproj.Transformer.from_crs(wgs84, laea_crs, always_xy=True)
     inv = pyproj.Transformer.from_crs(laea_crs, wgs84, always_xy=True)
     return fwd, inv, laea_crs
-
-
-def prepare_inputs_from_csv(csv_path: str, lon_col: str, lat_col: str, thickness_cm_col: str,
-                            vent_lon_col: str = "vent_lon", vent_lat_col: str = "vent_lat"):
-    df = pd.read_csv(csv_path)
-    vent_lon = df[vent_lon_col].iloc[0]
-    vent_lat = df[vent_lat_col].iloc[0]
-    fwd, inv, laea_crs = make_laea_transform(vent_lon, vent_lat)
-    lon = df[lon_col].to_numpy(dtype=float)
-    lat = df[lat_col].to_numpy(dtype=float)
-    t_cm = df[thickness_cm_col].to_numpy(dtype=float)
-    x_km, y_km = fwd.transform(lon, lat)
-    pseudo = df['Pseudo']
-    meta = {
-        "vent_lonlat": (vent_lon, vent_lat),
-        "laea_crs": laea_crs,
-        "transform_fwd": fwd,
-        "transform_inv": inv,
-        "n_points": len(t_cm),
-        "pseudo": pseudo,
-    }
-    return x_km, y_km, t_cm, meta

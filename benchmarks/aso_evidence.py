@@ -14,13 +14,13 @@ import numpy as np
 import pandas as pd
 from pyproj import Geod
 
-from benchmarks.aso_input_review import INPUT_SHA256
 from src.empirical_isopach.models.mass_mixture.prior import BASELINE
 from src.empirical_isopach.models.mass_mixture.inference import Sampling
 from src.empirical_isopach.models.mass_mixture.study import audited_data, fit_checked, cross_validate
 
 
 RAW = Path("data/eruptions/Aso-4_tephra.csv")
+INPUT_SHA256 = "802f22266d905b8d10c0535a7767e7bd83fb7f797692ea869095a3fa410360d8"
 S2_SHA = "e03288f9a1074687828baf60031ea5884b9ce420903cf841dc0dd4e19d736781"
 S2_DOI = "https://doi.org/10.3389/feart.2020.00170.s002"
 CASES = {

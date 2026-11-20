@@ -38,14 +38,15 @@ def source_map(output):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from pyproj import Transformer
-    from src.probabilistic_isopach.figures import STYLE, _coastlines
+    from src.empirical_isopach.visualization.maps import coastlines
+    from src.empirical_isopach.visualization.style import STYLE
     raw=pd.read_csv("data/eruptions/Aso-4_tephra.csv").iloc[:87]
     revised=pd.read_csv("data/eruptions/Aso-4_reviewed.csv").iloc[:87]
     data,meta=audited_data("data/eruptions/Aso-4_reviewed.csv")
     transform=Transformer.from_crs("EPSG:4326",meta["projection"],always_xy=True)
     with plt.rc_context(STYLE):
         fig,ax=plt.subplots(figsize=(10,7),layout="constrained")
-        _coastlines(ax,meta["vent_lonlat"])
+        coastlines(ax,meta["vent_lonlat"])
         ax.scatter(*data.xy.T,s=15,c="#7B9398",alpha=.7,label="Reviewed observation locations")
         ax.scatter(0,0,marker="*",s=140,c="#B4573F",edgecolors="white",label="Aso source reference",zorder=7)
         for idx,label,shift in ((3,"PC1 · 7 cm",(20,-130)),(6,"PC2 · 6 cm",(100,100))):
@@ -67,7 +68,8 @@ def diagnosis_figures(root,output,original_report,original_global):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE, _coastlines
+    from src.empirical_isopach.visualization.maps import coastlines
+    from src.empirical_isopach.visualization.style import STYLE
     posterior=Path(original_global)/"posterior.npz"
     assert sha256(posterior.read_bytes()).hexdigest() == original_report["fits"]["baseline"]["posterior_sha256"]
     flat=flatten(load_samples(posterior))
@@ -105,7 +107,7 @@ def diagnosis_figures(root,output,original_report,original_global):
             subset={k:v[idx] for k,v in flat.items()}
             z=np.concatenate([np.median(log_field(subset,unit[j:j+256]),axis=0) for j in range(0,len(unit),256)]).reshape(xx.shape)
             fill=ax.contourf(xx,yy,z,levels=levels,cmap="YlOrRd",extend="both",alpha=.75)
-            _coastlines(ax,meta["vent_lonlat"])
+            coastlines(ax,meta["vent_lonlat"])
             cs=ax.contour(xx,yy,z,levels=np.log([1,10,100,1000]),colors="#75352D",linewidths=.7,linestyles="dashed")
             ax.clabel(cs,fmt=lambda v:f"{np.exp(v):g}",fontsize=8)
             ax.scatter(*data.xy.T,s=10,c="white",edgecolors="#183843",linewidths=.4,zorder=6)
@@ -155,7 +157,7 @@ def summarize(root,output,original_global=ORIGINAL_GLOBAL):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE
+    from src.empirical_isopach.visualization.style import STYLE
     labels={"original":"Original input / SD 3","bounds_only":"Three recovered bounds","s2_bounds":"Plus S2 lower bound at Biwa",
         "primary_6p5":"Biwa endpoint 6.5 cm","primary_7":"Biwa endpoint 7 cm","omit_ambiguous":"Omit 4 uncertain proximal sites",
         "omit_row37":"Omit offshore row 37","omit_row49":"Omit offshore row 49","offset_sd1":"Original input / SD 1",

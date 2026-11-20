@@ -11,7 +11,8 @@ def source_figure(output, name, data, meta, samples, previous=None):
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
     from .visualization.maps import observations, observation_legend
-    from src.probabilistic_isopach.figures import STYLE, _coastlines
+    from src.empirical_isopach.visualization.maps import coastlines
+    from src.empirical_isopach.visualization.style import STYLE
     distance = np.linalg.norm(data.xy, axis=1)
     extent = min(400., max(50., .25*distance.max(), 3*distance.min()))
     axis = np.linspace(-extent, extent, 161)
@@ -34,7 +35,7 @@ def source_figure(output, name, data, meta, samples, previous=None):
             plot = ax.pcolormesh(axis,axis,field,shading="auto",cmap="viridis",vmin=lo,vmax=hi)
             lines = ax.contour(axis,axis,field,levels=levels,colors="white",linewidths=.65)
             ax.clabel(lines,fmt=lambda v:f"{10**v:.2g}",fontsize=8)
-            _coastlines(ax,meta["vent_lonlat"])
+            coastlines(ax,meta["vent_lonlat"])
             observations(ax,data,size=22,meta=meta)
             maximum = np.unravel_index(np.argmax(field),field.shape)
             ax.scatter(axis[maximum[1]],axis[maximum[0]],s=80,marker="+",c="#EE5666",zorder=9,label="Grid maximum")

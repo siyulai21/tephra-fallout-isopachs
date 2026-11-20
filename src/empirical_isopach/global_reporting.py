@@ -41,7 +41,7 @@ def figures(output, name, data, meta, samples, report):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from src.probabilistic_isopach.figures import STYLE
+    from src.empirical_isopach.visualization.style import STYLE
     from .visualization.global_maps import global_maps
     global_maps(output, name, data, meta, samples, report)
     with plt.rc_context(STYLE):

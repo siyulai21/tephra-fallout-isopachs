@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
-from src.probabilistic_isopach.figures import STYLE
+from src.empirical_isopach.visualization.style import STYLE
 
 COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
           "Directional":"#6657A1", "Spherical mixture":"#346DA4"}

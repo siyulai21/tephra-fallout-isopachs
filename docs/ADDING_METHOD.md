@@ -34,7 +34,7 @@ Add a global family under `models/<family>/` with a complete-field posterior, it
 
 Test the new numerical solver against an independent reference or known case, test observation/bound semantics and leakage prevention, and check correlated draws and integral refinement. Run the matched real-data and known-truth comparisons without selecting a winner in advance. Keep non-convergence, insufficient support and poor coverage visible.
 
-Add a method card under `methods/`, its mathematical protocol under `docs/methods/`, and reviewed comparative evidence under `comparisons/`. When the active protocol changes, rerun before describing a comparison as current. Reports record their own method identities and labels so older artifacts remain readable after the registry changes.
+Add the method to the [method guide](methods/README.md), place its equations alongside the other protocols and publish reviewed evidence under `comparisons/`. When the active protocol changes, rerun before describing a comparison as current. Reports record their own method identities and labels so older artifacts remain readable after the registry changes.
 
 The registry is a navigation and dispatch mechanism, not evidence that a newly registered method is scientifically validated. New predictive distributions or new data requirements may require extending the shared contract deliberately.
 
