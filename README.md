@@ -2,7 +2,7 @@
 
 This repository turns published ash-thickness measurements into **isopachs** (contours of equal thickness) and estimates of bulk fallout volume. Open an eruption to see all four fits on one map panel, their volumes and their predictions at withheld sites. Its case page also links the measurements and source decisions.
 
-**[Browse the six eruptions](eruptions/README.md)** · **[Submit a new eruption through chat](docs/NEW_ERUPTION.md)**
+**[Browse the six eruptions](eruptions/README.md)** · **[Submit or recalculate an eruption through chat](docs/NEW_ERUPTION.md)**
 
 ## What a case tells you
 

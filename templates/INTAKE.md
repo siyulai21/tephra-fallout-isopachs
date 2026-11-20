@@ -1,6 +1,6 @@
 # Eruption intake — fill only what is known
 
-For a securely investigated horizon without a clear bed, include archive type, coordinates, age or correlation, sampling interval, recovery method, visible control beds and the original reference or figure. Identify unsurveyed or ambiguous sites explicitly. [Archive intake and modeling rules](../docs/methods/archive-evidence.md)
+Include site names and source references for blanks, traces, dispersed ash and uncertain deposit equivalents. Core logs, concentration profiles and scaled photographs can help recover a bound. For a recalculation, supply the old exclusions and their source references if available. The agent follows up on missing quantities and prioritizes sites that could constrain the geometry. [Site evidence worksheet](SITE_EVIDENCE.md) · [Review and inclusion rules](../docs/methods/sites-without-measured-thickness.md)
 
 - Eruption name and proposed short identifier:
 - Intended deposit quantity and included fans/phases:

@@ -15,6 +15,8 @@ The required columns are `Lon`, `Lat`, `Thickness`, `Vent Lon` and `Vent Lat`.
 - Upper limits and lower bounds require documented, positive `Limit_cm`. A lower bound describes minimum recovered thickness in an incomplete deposit, not an exact measurement.
 - Optional `LogSD`: known additional standard deviation of natural-log thickness. The fitted residual nugget is separate.
 
+For a real site with a defensible interpreted bound, leave `Thickness` blank, set the appropriate `Kind` and enter the positive `Limit_cm`. Preserve its evidence ID, the source observation and the conversion in the audit. Keep unquantified occurrences in the site ledger. The accepted CSV supports a single one-sided bound per observation. The protocol describes how to preserve both endpoints of a range and compare them in separate fits. [Sites without measured thickness](../docs/methods/sites-without-measured-thickness.md)
+
 Illustrative schema only:
 
 ```csv
