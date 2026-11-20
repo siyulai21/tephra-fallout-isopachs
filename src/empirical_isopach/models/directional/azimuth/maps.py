@@ -30,7 +30,8 @@ def supported_lines(ax, data, model, x, y, z, levels, colors):
 
 def mapped_archives(inventory):
     mapped = next((s for s in inventory["scenarios"] if s["id"]==inventory.get("validation_scenario")),{})
-    return [s for s in inventory["sites"] if s["id"] in mapped.get("effective_limit_cm",{})]
+    return [s for s in inventory["sites"] if s.get("in_principal_as") == "interpreted_upper_limit"
+            or s["id"] in mapped.get("effective_limit_cm",{})]
 
 
 def mark_archives(ax, sites, vent, bounds, *, labels=True):

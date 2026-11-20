@@ -15,7 +15,9 @@ from src.empirical_isopach.models.directional.study import digest, write_json
 LABELS = {"smooth": "Published smooth reference", "one_break": "One shared break",
           "two_breaks": "Two shared breaks", "exponential": "Exponential kernels",
           "broken_exponential": "Exponential kernels, one break", "wide_prior": "One break, wider slope prior"}
-HOME = Path("eruptions/b-tm/results")
+from benchmarks.publication import BTM_THICKNESS_ONLY
+
+HOME = BTM_THICKNESS_ONLY / "results"
 PUBLISHED = HOME/"source-audit/thinning"
 FILES = ("README.md", "fits.json", "heldout.csv", "summary.csv", "break-draws.npz")
 

@@ -127,35 +127,41 @@ def stress(runs, output):
 
 
 
+def case_extremes(record, report, by_octant=False):
+    """Outermost exact site by direction, predicted under its 90-degree holdout."""
+    rows = []
+    data, _ = audited_data(record["path"])
+    axis = report["designs"]["reference"]["geometry"]["authalic_axis_scale"]
+    radius, angle = polar(data.xy, axis)
+    validation = report["validation"]["quadrants"]
+    by_id = {int(r):i for i,r in enumerate(validation["row_ids"])}
+    octants = np.floor((angle+np.pi/8)/(np.pi/4)).astype(int)%8
+    by_fold = {f["fold"]:f for f in validation["fits"]}
+    rows_fold = np.array([validation["folds"][by_id[int(i)]] for i in data.row_ids])
+    groups = octants if by_octant else rows_fold
+    for group in np.unique(groups):
+        idx = np.flatnonzero(~data.censored & (groups == group))
+        if not len(idx):
+            continue
+        i = idx[np.lexsort((data.row_ids[idx],-radius[idx]))[0]]
+        j = by_id[int(data.row_ids[i])]
+        fold = by_fold[int(rows_fold[i])]
+        row = {"slug":record["slug"],"octant":COMPASS[octants[i]],"quadrant":fold["fold"],"training_status":fold["status"],
+               "sampling_passed":fold.get("passed"),"row_id":int(data.row_ids[i]),
+               "source_chord_km":float(radius[i]),"bearing_deg":float(np.rad2deg(angle[i])),
+               "observed_cm":float(np.exp(data.log_value[i]))}
+        for label in ("median","lower","upper"):
+            value = validation["predictions"][label][j]
+            row["predicted_"+label+"_cm"] = None if value is None else float(np.exp(value))
+        rows.append(row)
+    return rows
+
+
 def directional_extremes(cases, by_octant=False):
-    """Outermost exact site by direction; predictions always use its 90-degree holdout."""
     rows = []
     for record in datasets():
         report = read(cases/record["slug"]/"report.json")
-        data, _ = audited_data(record["path"])
-        axis = report["designs"]["reference"]["geometry"]["authalic_axis_scale"]
-        radius, angle = polar(data.xy, axis)
-        validation = report["validation"]["quadrants"]
-        by_id = {int(r):i for i,r in enumerate(validation["row_ids"])}
-        octants = np.floor((angle+np.pi/8)/(np.pi/4)).astype(int)%8
-        by_fold = {f["fold"]:f for f in validation["fits"]}
-        rows_fold = np.array([validation["folds"][by_id[int(i)]] for i in data.row_ids])
-        groups = octants if by_octant else rows_fold
-        for group in np.unique(groups):
-            idx = np.flatnonzero(~data.censored & (groups == group))
-            if not len(idx):
-                continue
-            i = idx[np.lexsort((data.row_ids[idx],-radius[idx]))[0]]
-            j = by_id[int(data.row_ids[i])]
-            fold = by_fold[int(rows_fold[i])]
-            row = {"slug":record["slug"],"octant":COMPASS[octants[i]],"quadrant":fold["fold"],"training_status":fold["status"],
-                   "sampling_passed":fold.get("passed"),"row_id":int(data.row_ids[i]),
-                   "source_chord_km":float(radius[i]),"bearing_deg":float(np.rad2deg(angle[i])),
-                   "observed_cm":float(np.exp(data.log_value[i]))}
-            for label in ("median","lower","upper"):
-                value = validation["predictions"][label][j]
-                row["predicted_"+label+"_cm"] = None if value is None else float(np.exp(value))
-            rows.append(row)
+        rows.extend(case_extremes(record, report, by_octant))
     return pd.DataFrame(rows)
 
 

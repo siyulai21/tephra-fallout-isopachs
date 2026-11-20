@@ -7,7 +7,7 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 | Eruption | Accepted CSV | Source decisions |
 |---|---|---|
 | Aso-4 | [Aso-4_reviewed.csv](Aso-4_reviewed.csv) | [Cruise coordinates and thickness bounds](../audits/Aso-4/README.md) |
-| B-Tm | [B-Tm_reviewed.csv](B-Tm_reviewed.csv) | [Combined airborne fallout from both phases](../audits/B-Tm/README.md) |
+| B-Tm | [B-Tm_cryptotephra.csv](B-Tm_cryptotephra.csv) | [Combined airborne fallout from both phases, including three interpreted archive bounds](../audits/B-Tm/README.md) |
 | Mazama | [Mazama_tephra.csv](Mazama_tephra.csv) | Supplied inclusion flags |
 | Minoan | [Minoan_tephra.csv](Minoan_tephra.csv) | [Combined fallout and incomplete-core bounds](../audits/Minoan/README.md) |
 | Tambora | [Tambora_tephra.csv](Tambora_tephra.csv) | Supplied inclusion flags |

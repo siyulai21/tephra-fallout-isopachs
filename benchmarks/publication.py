@@ -4,6 +4,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = ROOT / "benchmarks/published-evidence.sha256"
+BTM_THICKNESS_ONLY = Path("archive/2026-11-19-b-tm-thickness-only")
+
+
+def previous_btm_file(name):
+    """Translate the signed 68-row release's original paths to its present archive."""
+    path = Path(name)
+    if path.is_relative_to("eruptions/b-tm"):
+        return BTM_THICKNESS_ONLY / path.relative_to("eruptions/b-tm")
+    if path == Path("data/audits/B-Tm/README.md"):
+        return path.with_name("thickness-only.md")
+    return path
 
 
 def read_hashes(path=INVENTORY):

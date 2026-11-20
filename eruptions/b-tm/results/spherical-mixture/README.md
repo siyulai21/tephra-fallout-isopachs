@@ -2,7 +2,7 @@
 
 [Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/spherical-mixture/README.md)
 
-The baseline posterior median is **158 km³**, with a **40.7–4.46e+03 km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **passed**.
+The baseline posterior median is **49.1 km³**, with a **30.7–342 km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **passed**.
 
 Every posterior field is positive and has total volume equal (to the reported normalization tolerance) to its fitted volume parameter on the whole Earth. No closing pseudo-observations, map rectangle, contour cutoff or arbitrary distal radius sets this total. The previous contour screen remains a diagnostic of local support; its rejection does not veto this conditional global estimate.
 
@@ -18,7 +18,7 @@ The local detail can cut contours at its edges; the whole-Earth companion shows 
 
 ## Source constraint
 
-Every fitted field has its global thickness maximum at the supplied volcano. This is an explicit shape assumption, not an invented vent-thickness observation. Thickness decreases along every source ray, so this family cannot represent a secondary radial maximum. Real deposits can violate a point-source maximum, particularly with distributed sources or secondary deposition. The maximum relative change in any posterior component's integral on quadrupling angular resolution was **8.62e-10** (tolerance 10⁻⁶). [Derivation, rejected alternatives and geological limits](../../../../docs/methods/source-anchored-fans.md).
+Every fitted field has its global thickness maximum at the supplied volcano. This is an explicit shape assumption, not an invented vent-thickness observation. Thickness decreases along every source ray, so this family cannot represent a secondary radial maximum. Real deposits can violate a point-source maximum, particularly with distributed sources or secondary deposition. The maximum relative change in any posterior component's integral on quadrupling angular resolution was **3.64e-09** (tolerance 10⁻⁶). [Derivation, rejected alternatives and geological limits](../../../../docs/methods/source-anchored-fans.md).
 
 ![Source-region thickness contours](source.png)
 
@@ -32,16 +32,16 @@ No finite dataset alone can exclude an arbitrarily large deposit in an unsampled
 
 | Assumption | Median km³ | Conditional 95% interval km³ | Fitted-site log-RMSE | Numerical checks |
 |---|---:|---:|---:|---|
-| Source-focused fans · baseline | 158 | 40.7–4.46e+03 | 0.826 | pass |
-| Allow diffuse global tails | 161 | 41.1–4.55e+03 | 0.830 | pass |
-| Broader scale and shape priors | 263 | 40.1–1.8e+04 | 0.821 | **not passed** |
-| Shift volume prior 100-fold | 218 | 42.2–7.28e+03 | 0.830 | pass |
-| One fan | 50.2 | 32.8–71 | 0.826 | pass |
-| Five fans | 170 | 41.8–4.69e+03 | 0.823 | **not passed** |
-| Gaussian observation errors | 186 | 32.2–6.2e+03 | 0.663 | pass |
-| Diffuse fan and kernel weights | 132 | 46.9–1e+03 | 0.827 | pass |
+| Source-focused fans · baseline | 49.1 | 30.7–342 | 0.813 | pass |
+| Allow diffuse global tails | 49.5 | 30–396 | 0.815 | pass |
+| Broader scale and shape priors | 54.4 | 31–1.23e+03 | 0.797 | pass |
+| Shift volume prior 100-fold | 50 | 30.8–505 | 0.816 | pass |
+| One fan | 48.5 | 30.9–66 | 0.829 | pass |
+| Five fans | 50.4 | 30.8–362 | 0.783 | **not passed** |
+| Gaussian observation errors | 38.7 | 25.6–232 | 0.667 | **not passed** |
+| Diffuse fan and kernel weights | 52.5 | 32–191 | 0.770 | pass |
 
-The range across the lower and upper interval endpoints is **32.2–1.8e+04 km³**. This is an assumption-sensitivity envelope, **not** a 95% interval, a probability-weighted model average, or an exhaustive bound. Every alternative remains visible, including those that differ substantially; none was selected because its volume matched a published target.
+The range across the lower and upper interval endpoints is **25.6–1.23e+03 km³**. This is an assumption-sensitivity envelope, **not** a 95% interval, a probability-weighted model average, or an exhaustive bound. Every alternative remains visible, including those that differ substantially; none was selected because its volume matched a published target.
 
 Fitted-site log-RMSE compares the posterior predictive median with the exact measurements used for fitting; bounds contribute their likelihood events instead. These training checks can expose a restrictive alternative, but are optimistic and **not validation or a model-selection rule**. Only the baseline receives the full matched geographic holdout analysis below. Alternatives have not been given probability weights or declared equally plausible.
 
@@ -49,15 +49,15 @@ Fitted-site log-RMSE compares the posterior predictive median with the exact mea
 
 ## Validation and numerical precision
 
-Four buffered geographic holdouts: equal-region negative log score **1.490** (lower is better), log-thickness RMSE **1.194**, and heldout observation coverage **93.8%**. All four posterior fits passed numerical diagnostics: **False**. These predictions test transfer to withheld observations, not the unobserved whole-deposit volume.
+Four buffered geographic holdouts: equal-region negative log score **1.492** (lower is better), log-thickness RMSE **1.490**, and heldout observation coverage **93.8%**. All four posterior fits passed numerical diagnostics: **False**. These predictions test transfer to withheld observations, not the unobserved whole-deposit volume.
 
-Baseline chains: maximum rank-normalized split R-hat **1.0040**, minimum bulk/tail effective sample sizes **1677/534**, minimum energy BFMI **0.813**, divergences **0**. Diagnostics cover label-invariant global, observed-site and unsampled-field summaries. Passing them is evidence of numerical mixing, not proof of complete mode exploration. All shorter failed attempts are retained in the report. Monte Carlo standard errors of volume log-quantiles are recorded separately; rounded interval endpoints are estimates. [Inspect the chain traces and distributions](sampling.png).
+Baseline chains: maximum rank-normalized split R-hat **1.0019**, minimum bulk/tail effective sample sizes **1560/698**, minimum energy BFMI **0.662**, divergences **0**. Diagnostics cover label-invariant global, observed-site and unsampled-field summaries. Passing them is evidence of numerical mixing, not proof of complete mode exploration. All shorter failed attempts are retained in the report. Monte Carlo standard errors of volume log-quantiles are recorded separately; rounded interval endpoints are estimates. [Inspect the chain traces and distributions](sampling.png).
 
-Mass partition uses 1024 whole posterior fields and 4096 positive quadrature points per component. The largest fraction change on doubling that integration rule is **0.0082**. This numerical partition never changes the separately normalized total. Its local footprint is a sampling screen, not a confidence region.
+Mass partition uses 1024 whole posterior fields and 4096 positive quadrature points per component. The largest fraction change on doubling that integration rule is **0.0080**. This numerical partition never changes the separately normalized total. Its local footprint is a sampling screen, not a confidence region.
 
 ## Reproduce and inspect
 
-Use `tephra-isopachs global data/eruptions/B-Tm_reviewed.csv --geometry source-fans --output results/new-global-run`. Use `--resume` only for the same run; caches verify inputs, priors, numerical settings, source hashes, runtime versions and posterior checksums. The ordinary `compare` command runs the regional comparison followed by this global analysis.
+Use `tephra-isopachs global data/eruptions/B-Tm_cryptotephra.csv --geometry source-fans --output results/new-global-run`. Use `--resume` only for the same run; caches verify inputs, priors, numerical settings, source hashes, runtime versions and posterior checksums. The ordinary `compare` command runs the regional comparison followed by this global analysis.
 
 - [Full report, priors, diagnostics, all attempts and provenance](report.json)
 - [Baseline whole-field posterior samples](posterior.npz)
@@ -65,6 +65,6 @@ Use `tephra-isopachs global data/eruptions/B-Tm_reviewed.csv --geometry source-f
 - [Assumption summary](estimates.csv)
 - [Geographic predictions and fold membership](heldout_predictions.csv)
 
-Input SHA-256: `1829f1af9734672851353c4d94ac8b14290f02ac7526e5d5327b303ec01d1d17`. No accepted observations or source audits were changed for this calculation.
+Input SHA-256: `639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0`. No accepted observations or source audits were changed for this calculation.
 
 [Complete-contour support and geographic-deletion checks](complete-contour-audit.json).

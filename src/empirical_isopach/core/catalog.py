@@ -31,4 +31,11 @@ def resolve_dataset(value):
 def dataset_record(path):
     """Match only the actual catalogued file, never a same-named external CSV."""
     resolved = Path(path).resolve()
-    return next((row for row in datasets() if row['path'].resolve() == resolved), None)
+    for row in datasets():
+        if row["path"].resolve() == resolved:
+            return row
+        for previous in row.get("previous_inputs", []):
+            old_path = data_directory() / previous["file"]
+            if old_path.resolve() == resolved:
+                return {**row, **previous, "path":old_path}
+    return None

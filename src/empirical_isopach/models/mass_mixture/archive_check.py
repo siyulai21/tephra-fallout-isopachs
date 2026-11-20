@@ -75,12 +75,14 @@ def publish(posterior, data, meta, inventory, output):
         return None
     output=Path(output)
     output.mkdir(parents=True,exist_ok=True)
+    cutoffs = sorted({.1, 1., 10., *(s["limit_cm"] for s in meta.get("interpreted_upper_limits", []))})
     with np.load(posterior) as source:
-        info,weights=archive_checks(dict(source),data,meta["vent_lonlat"],inventory)
+        info,weights=archive_checks(dict(source),data,meta["vent_lonlat"],inventory,cutoffs)
     path=output/"spherical-archive-weights.npz"
     np.savez_compressed(path,**weights)
     report={"posterior_sha256":digest(posterior),"weights_sha256":digest(path),"input_sha256":meta["input_sha256"],
-            "method":"Self-normalized archive-likelihood update of complete mass-normalized posterior draws",
+            "method":("Self-normalized archive-likelihood update of complete mass-normalized posterior draws"
+                      if inventory["scenarios"] else "Predictions using the original equal weights of the fitted spherical posterior"),
             "diagnostic_policy":"ESS at least 400, Pareto k under 0.7, each chain supplies 10–40% of mass, each chain volume median within 15% of pooled. Raw weights used; instability is retained.",
             "scenarios":info}
     write_json(output/"spherical-archive-checks.json",report)

@@ -88,7 +88,12 @@ def draw_comparison(home, destination, regional_grid=None):
     for key, label in REGIONAL.items():
         volume = regional["methods"][key]["regional_volume"]["expected_km3"]
         note = "" if regional["methods"][key]["regional_volume"]["converged"] else " · integral warning"
-        panels.append((label, f"Hull mean · {volume:,.1f} km³{note}", rx, ry, fields[key], inside))
+        item = regional["methods"][key]
+        if volume > item["joint_volume"]["conditional_quantiles_km3"]["0.975"]:
+            detail = f"Hull median map · {item['regional_volume']['median_surface_km3']:,.1f} km³ · unstable mean"
+        else:
+            detail = f"Hull mean · {volume:,.1f} km³{note}"
+        panels.append((label, detail, rx, ry, fields[key], inside))
     volume = ensemble["volume"]
     map_volume = volume["median_map_km3"]
     posterior_volume = spherical["fits"]["baseline"]["volume"]["median"]
@@ -167,7 +172,7 @@ def draw_comparison(home, destination, regional_grid=None):
             setup_map(ax, bounds, vent)
             ax.plot(*hull.T, color=hull_colour, lw=1.1, ls=(0, (4, 2)), zorder=5,
                     path_effects=[effects.withStroke(linewidth=2.0, foreground="#413a35", alpha=.7)])
-            observations(ax, data, size=14)
+            observations(ax, data, size=14, meta=regional["input"])
             ax.set_title(label, fontsize=12, loc="left", pad=15)
             ax.annotate(volume, (0, 1), xycoords="axes fraction", xytext=(0, 2.5),
                         textcoords="offset points", fontsize=9, color="#375661", va="bottom")
@@ -184,7 +189,7 @@ def draw_comparison(home, destination, regional_grid=None):
         observation_legend(fig, data, [
             Line2D([], [], color=hull_colour, ls="--", label="Observation hull"),
             Line2D([], [], color="#354f5a", lw=2., label="Directional · measured bracket"),
-            Line2D([], [], color="#354f5a", ls="--", label="Directional · continuation")])
+            Line2D([], [], color="#354f5a", ls="--", label="Directional · continuation")], meta=regional["input"])
         destination.mkdir(parents=True, exist_ok=True)
         fig.savefig(destination/FIGURE, dpi=170, bbox_inches="tight", pad_inches=.13,
                     metadata={"Description": json.dumps(provenance, sort_keys=True)})
@@ -222,6 +227,8 @@ def directional_sensitivities(home, ensemble, prefix):
         return []
     heading = "Directional assumptions and inspected sites" if archive or len(scenarios) > 1 else "Directional assumptions"
     description = "The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings."
+    if ensemble["input"].get("interpreted_upper_limits"):
+        description = "Both fits include the same interpreted archive limits. The measured-fan sensitivity fixes the directions of the continuation to the sampled bearings."
     if archive or len(scenarios) > 1:
         description += " A visible-bed scenario also asks how much ash would have been preserved and recognized at inspected sites."
     lines = [f"## {heading}", "", description, "",
@@ -251,8 +258,12 @@ def comparison_section(home, *, prefix=""):
     for key, label in REGIONAL.items():
         model = regional["methods"][key]
         q = model["joint_volume"]["conditional_quantiles_km3"]
-        summary.append((label, f"Hull mean **{model['regional_volume']['expected_km3']:,.2f}**",
-                        f"{q['0.025']:,.2f}–{q['0.975']:,.2f}"))
+        vol = model["regional_volume"]
+        description = f"Hull mean **{vol['expected_km3']:,.2f}**"
+        if vol["expected_km3"] > q["0.975"]:
+            description = (f"Hull median map **{vol['median_surface_km3']:,.2f}** · volume median {q['0.5']:,.2f}"
+                           f" · unstable mean {vol['expected_km3']:.2g}")
+        summary.append((label, description, f"{q['0.025']:,.2f}–{q['0.975']:,.2f}"))
     summary += [
         (f"[Directional ensemble · uncertain fan direction]({prefix}directional/README.md)",
          f"Whole-Earth median map **{centre['median_map_km3']:,.1f}** · volume median {volumes['median']:,.1f}",
@@ -301,7 +312,8 @@ def comparison_section(home, *, prefix=""):
               "", "</details>", ""]
     sensitivities = directional_sensitivities(home, ensemble, prefix)
     if sensitivities:
-        lines[0] = "## Four matched thickness-only fits"
+        lines[0] = ("## Four fits with interpreted archive limits" if regional["input"].get("interpreted_upper_limits")
+                    else "## Four matched thickness-only fits")
         lines.extend(sensitivities)
     return "\n".join(lines)
 

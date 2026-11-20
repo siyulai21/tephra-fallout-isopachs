@@ -103,23 +103,32 @@ def setup_map(ax, bounds, vent):
     coastlines(ax, vent, bounds)
 
 
-def observations(ax, data, size=18):
+def observations(ax, data, size=18, *, meta=None):
+    interpreted = (meta or {}).get("interpreted_upper_limits", [])
+    marked = np.isin(data.row_ids, [s["row_id"] for s in interpreted])
     for mask, marker in ((~data.censored, "o"), (data.lower_censored, "^"),
-                         (data.censored & ~data.lower_censored, "v")):
+                         (data.censored & ~data.lower_censored & ~marked, "v")):
         if mask.any():
             ax.scatter(*data.xy[mask].T, s=size, marker=marker, facecolors="white",
                        edgecolors=INK, linewidths=.65, zorder=7)
+    if marked.any():
+        ax.scatter(*data.xy[marked].T, s=max(32, size*1.5), marker="D", facecolors="#f5be45",
+                   edgecolors="#332807", linewidths=.8, zorder=8)
     ax.scatter(0, 0, marker="*", s=105, c=SOURCE, edgecolors="white", lw=.7, zorder=8)
 
 
-def observation_legend(fig, data, extra=()):
+def observation_legend(fig, data, extra=(), *, meta=None, columns=None):
     handles = [Line2D([], [], marker="o", color=INK, markerfacecolor="white", ls="", label="Exact thickness"),
                Line2D([], [], marker="*", color=SOURCE, ls="", markersize=9, label="Source")]
     for present, marker, label in ((data.lower_censored.any(), "^", "Lower bound"),
                                    (np.any(data.censored & ~data.lower_censored), "v", "Upper bound")):
         if present:
             handles.append(Line2D([], [], marker=marker, color=INK, markerfacecolor="white", ls="", label=label))
-    fig.legend(handles=[*handles, *extra], loc="outside lower center", ncols=min(5, len(handles)+len(extra)),
+    if (meta or {}).get("interpreted_upper_limits"):
+        handles.append(Line2D([], [], marker="D", color="#332807", markerfacecolor="#f5be45",
+                              ls="", label="Interpreted archive limit"))
+    entries = [*handles, *extra]
+    fig.legend(handles=entries, loc="outside lower center", ncols=columns or min(5,len(entries)),
                fontsize=8, frameon=False)
 
 

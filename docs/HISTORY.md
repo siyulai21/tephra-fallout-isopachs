@@ -4,6 +4,7 @@ The [eruption catalogue](../eruptions/README.md) links the current results. To r
 
 | Question | Immutable release |
 |---|---|
+| How did the B-Tm core profiles change the geometry and volume? | [Previous 68-site B-Tm reconstruction](../archive/2026-11-19-b-tm-thickness-only/README.md) · [71-site comparison with the source profiles](../eruptions/b-tm/results/cryptotephra/README.md) |
 | Which map preceded the primary uncertain-fan-direction estimate? | [Fixed-direction case pages alongside the first six uncertain-direction fits](https://github.com/siyulai21/tephra-fallout-isopachs/tree/efe60416128ca9587bef796f3ab5bb91a50c75ca) |
 | Where are the original four-panel figures and the pages before the direction study? | [Audited fixed-direction release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/ebf0fc0f27db37a70f60d0d7708a5b64f9d95516) |
 | Where are the dated report bundles, figure checksums and original release inventory? | [First primary uncertain-direction release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/417f624ed6c41160946cbf1fcafcf289548e58f9/comparisons/azimuth-continuation/archive) |

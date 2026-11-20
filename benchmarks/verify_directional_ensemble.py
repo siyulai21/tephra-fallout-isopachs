@@ -23,8 +23,8 @@ def read(p):
     return json.loads(p.read_text())
 
 
-def verify_case(rec, expected_input, median_map_km3):
-    home = Path("eruptions")/rec["slug"]/"results"
+def verify_case(rec, expected_input, median_map_km3, *, home=None):
+    home = Path("eruptions")/rec["slug"]/"results" if home is None else Path(home)
     folder = home/"directional"/"ensemble"
     report = read(folder/"report.json")
     for f,h in read(folder/"artifacts.json").items():
@@ -110,7 +110,7 @@ def main():
         median_map = tab.loc[slug].median_map_km3
         expected_report = verification["case_reports"][slug]
         if digest(rec["path"]) != expected_input:
-            release = read(home/"source-audit/release.json")
+            release = read(home/rec.get("release_receipt", "source-audit/release.json"))
             expected_input = release["files"][rec["path"].relative_to(Path.cwd()).as_posix()]
             median_map = release["directional_median_map_km3"]
             expected_report = release["files"][str(home/"directional/ensemble/report.json")]

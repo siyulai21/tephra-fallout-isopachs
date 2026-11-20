@@ -1,8 +1,8 @@
 # B-Tm directional fallout
 
-**44.1 km³ of bulk fallout** is the whole-Earth integral of the median thickness map. The principal fit uses 68 accepted thickness observations and bounds and allows the fan direction to vary in unsampled sectors. Fixing fan directions with the same data and structure weights gives **56.2 km³**.
+**33.6 km³ of bulk fallout** is the whole-Earth integral of the median thickness map. The principal fit uses 71 accepted thickness observations and bounds and allows the fan direction to vary in unsampled sectors. Fixing fan directions with the same data and structure weights gives **34.6 km³**.
 
-Under uncertain azimuth, integrating each complete deposit gives a volume median of **72.9 km³** and a conditional 95% range of **31.0–1,507.8 km³**. Measured interpolation triangles contribute 10.0% of the median-map volume. The rest relies on continuation.
+Under uncertain azimuth, integrating each complete deposit gives a volume median of **37.2 km³** and a conditional 95% range of **23.5–77.1 km³**. Measured interpolation triangles contribute 13.9% of the median-map volume. The rest relies on continuation.
 
 ![Principal uncertain-fan-direction median isopachs](azimuth/isopachs.png)
 
@@ -18,14 +18,14 @@ Distances are great-circle kilometres to the first outward crossing on each comp
 
 | Bearing | Fixed 10 cm reach (km) | Uncertain 10 cm reach (km) | Fixed ≥10 cm area (km²) | Uncertain ≥10 cm area (km²) |
 |---|---:|---:|---:|---:|
-| N | 96.0 | 67.5 | 3,853 | 1,925 |
-| NE | 127.8 | 98.9 | 8,969 | 5,059 |
-| E | 359.3 | 359.4 | 39,111 | 37,969 |
-| SE | 131.4 | 107.1 | 8,698 | 7,052 |
-| S | 98.8 | 70.1 | 4,206 | 2,211 |
-| SW | 127.2 | 83.7 | 6,719 | 3,040 |
-| W | 204.0 | 113.2 | 13,969 | 4,631 |
-| NW | 126.8 | 83.4 | 6,967 | 2,891 |
+| N | 18.5 | 17.4 | 134 | 118 |
+| NE | 33.1 | 33.0 | 3,586 | 2,853 |
+| E | 462.2 | 462.4 | 65,483 | 63,063 |
+| SE | 30.5 | 30.1 | 4,398 | 4,198 |
+| S | 23.8 | 21.5 | 215 | 175 |
+| SW | 19.6 | 18.2 | 157 | 133 |
+| W | 26.2 | 22.5 | 245 | 193 |
+| NW | 19.6 | 18.3 | 159 | 134 |
 
 ![Probability that a deposit reaches ten centimetres](azimuth/exceedance.png)
 
@@ -37,43 +37,29 @@ Each row averages negative log predictive scores over equally weighted folds. Lo
 
 | Deletion | All estimable folds | Fixed | Uncertain | Passing folds | Fixed, passing | Uncertain, passing | Exact-site 95% coverage |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Geographic regions | 4 | 1.302 | 1.293 | 3 | 1.335 | 1.316 | 60/64 (93.8%) |
-| Source quadrants | 2 | 1.426 | 1.426 | 1 | 1.234 | 1.274 | 62/64 (96.9%) |
+| Geographic regions | 4 | 1.273 | 1.243 | 3 | 1.253 | 1.234 | 60/64 (93.8%) |
+| Source quadrants | 3 | 2.657 | 1.947 | 3 | 2.657 | 1.947 | 56/64 (87.5%) |
 
 [Predictions for every estimable held-out site](azimuth/heldout.csv). The numerical record includes all planned folds, row identities, unscorable directions, fit warnings and phase-integration checks.
 
 ## Inspected archives
 
-The thickness-only fit uses the quantitative table. Each visibility sensitivity asks what the deposit would look like if specified thicknesses at selected archives would have been recognizable as beds. The local preservation and detection scales are assumptions. The same coherent deposit supplies all site predictions.
+The principal fit includes the interpreted upper limits below. Each core enters once. Other sites provide an occurrence check. The interval describes the modeled latent thickness at each site.
 
-| Visibility assumption | Sihailongwan (cm) | Quanyang (cm) | Lake Kushu (cm) | Ulleung Basin (cm) | Effective draws |
-|---|---:|---:|---:|---:|---:|
-| quantitative | 8.02 | 24.6 | 0.454 | 0.0116 | 11,129 |
-| both 1 | 0.00229 | 0.0438 | 0.386 | 0.013 | 1,792 |
-| both 10 | 0.157 | 1.14 | 0.443 | 0.0101 | 4,425 |
-| lake only | 0.0804 | 1.3 | 0.546 | 0.00284 | 3,915 |
-| peat only | 0.00843 | 0.0891 | 0.279 | 0.0118 | 2,083 |
-| lake fine | 0.000652 | 0.016 | 0.51 | 0.00849 | 1,393 |
-| visible analogs | 0.00522 | 0.111 | 0.432 | 0.0118 | 2,116 |
-
-At Sihailongwan the thickness-only revised median is 8.02 cm, with a conditional 95% latent range of 0.000151–101 cm. Analytically averaging over every possible azimuth gives a median of 7.99 cm. Sun and colleagues counted glass shards in centimetre-thick core slices. Neither the slice thickness nor the core depth measures the original fallout bed. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013)
-
-The visibility scenarios use the recorded assumptions below.
-
-- **both_1** uses longgang 1 cm, quanyang 1 cm. At these core horizons, 1 cm of original local fallout suffices for recognition as a continuous layer. One slice is the sampling scale. Its status as a visibility scale is an assumption.
-- **both_10** uses longgang 10 cm, quanyang 10 cm. A primary layer ten times the sampling interval suffices for a visible bed. This allows tenfold weaker net preservation or recognition than the one-slice scenario.
-- **lake_only** uses longgang 1 cm. Condition on the lake alone at the one-slice scale. Predict the peat independently.
-- **peat_only** uses quanyang 1 cm. Condition on the peat alone at the one-slice scale. Predict the lake independently.
-- **lake_fine** uses longgang 0.1 cm, quanyang 1 cm. Effective original-fallout visibility scales of 1 mm at the varved lake and 1 cm in peat. Fine sampling and different lithology make this a sensitivity test only.
-- **visible_analogs** uses longgang 1 cm, quanyang 2 cm. The original-fallout equivalent needed for a visible bed at the checked lake and peat is at most the thickness of a documented visible B-Tm bed in a comparable sedimentary setting. The Lake Ogawara OG12-2 visible layer is 1 cm. The margin of Larchenkov bog has a B-Tm ash layer up to 2 cm thick, while the central bog preserved cryptotephra. Matrix, sorting and preservation differ between archives. The model conditions on this transfer.
-
-The mapped **visible_analogs** sensitivity gives 40.7 km³ from its median map and a conditional complete-deposit interval of 28.5–149.7 km³ (median 59.0).
+| Site | Interpreted upper limit (cm) | Median thickness (cm) | Conditional 95% interval (cm) |
+|---|---:|---:|---:|
+| Lake Sihailongwan | 0.06 | 0.0146 | 4.71e-09–0.298 |
+| Quanyang peat | 0.64 | 0.358 | 0.00123–3.25 |
+| Lake Kushu | 0.45 | 0.217 | 5.81e-38–2.39 |
+| Ulleung Basin 13PT-P4_026 | Occurrence only | 2.95e-09 | 1.44e-39–0.0527 |
+| YK14-01 PC09 | Occurrence only | 0.753 | 0.361–1.64 |
+| NT13-19 PL01 | Occurrence only | 0.618 | 0.221–1.58 |
 
 ## Checks and reproducibility
 
 The shared contour audit found eligible bands under none of the screened support policies. Audit status is completed. [All contour decisions and deletion failures](azimuth/complete-contour-audit.json)
 
-The spatial integration check passed at 8,192 points per scramble. The map used up to 512 posterior draws per chain and structure. Split posterior packets disagreed about the area at 100 cm (24.3%). The joint-volume quantiles passed the split check.
+The spatial integration check passed at 16,384 points per scramble. The map used up to 64 posterior draws per chain and structure. Resolved contour areas passed the split-packet check. The joint-volume quantiles passed the split check.
 
 All six full fits passed their sampling diagnostics.
 

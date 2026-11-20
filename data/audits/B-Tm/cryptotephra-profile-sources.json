@@ -1,0 +1,73 @@
+{
+  "profiles": [
+    {
+      "evidence_id": "longgang",
+      "source": "Sun et al. (2015), article-in-press proof used for digitization",
+      "doi": "https://doi.org/10.1016/j.gr.2015.01.013",
+      "figure": 2,
+      "pdf_page": 4,
+      "raster_extraction": "Poppler pdfimages 25.07.0, -f 4 -l 4 -png, first image",
+      "document_sha256": "49f1e5e62db69e294e06860aaf34cca06e5dc103d3cb3a1037ab3d47f73887d9",
+      "extracted_figure_sha256": "ccebde58ca6b805f9d38302f535c3feb5ce9712603d1456b1c30a6960dc31c8d",
+      "raster_pixels": [
+        1312,
+        737
+      ]
+    },
+    {
+      "evidence_id": "old-084",
+      "source": "Chen et al. (2016), published version, Quaternary Geochronology 33, 61–75",
+      "digitized_copy_url": "https://archive.artsrn.ualberta.ca/bhaparchive/bhaparchive.artsrn.ualberta.ca/images/uploads/pdfs/2016_Chen_et_al._Quaternary_Geochronology.pdf",
+      "doi": "https://doi.org/10.1016/j.quageo.2016.02.003",
+      "figure": 4,
+      "pdf_page": 5,
+      "raster_extraction": "Poppler pdfimages 25.07.0, -f 5 -l 5 -png, second image",
+      "document_sha256": "6f24d447d6c492da149cb859259ab6b94d90e1bb5157e283df475940a44f2102",
+      "extracted_figure_sha256": "950b655fb096cc41cc5496dd7112d2ee75e48133a3bc78f27d1dc026493151af",
+      "raster_pixels": [
+        1033,
+        590
+      ]
+    }
+  ],
+  "coordinate_origin": "Upper left of the original unscaled raster. Axis anchors and bar-edge pixel coordinates are retained in benchmarks/btm_cryptotephra.py.",
+  "neem_recovered_particle_count": {
+    "site": "NEEM-2011-S1, QUB-1819",
+    "doi": "https://doi.org/10.1002/2013GL058642",
+    "article_pdf_sha256": "ddd80984d969f41a071a117ba253e004dcbe9175d196bf98effcea8fb4c23b6d",
+    "field_log_url": "https://neem.dk/documentation/2011/Field_season_report_2011__draft1_.pdf",
+    "field_log_sha256": "895af270c9098f6e0e3f692fe55a9dbb84b48ad0183b6e4d518361ccb78f4c66",
+    "field_log_locator": "Daily report, 22 May 2011, drill photograph caption for the 420 m shallow drilling project. S1 termination on 24 June.",
+    "whole_core_diameter_cm": 9.8,
+    "whole_core_area_cm2": 75.42963961269095,
+    "size_band_micrometres": [10, 50],
+    "reported_minimum_all_glass_in_band": 30,
+    "recovered_all_glass_in_band_per_full_core_cm2_minimum": 0.39772164037958013,
+    "conservative_minimum_B_Tm_identified_fragments_any_size": 2,
+    "recovered_matched_fragments_per_full_core_cm2_minimum": 0.02651477602530534,
+    "role": "Positive particle-number evidence in the recovered core column. Two compositionally distinct matched glass populations in Table 1 establish at least one shard each. An outlying analysis precludes assigning all 30 to B-Tm. The 30 by 30 mm sticks in section 2 were used for chemical measurements; the area of the tephra aliquot is not assumed to equal that stick. A primary bulk mass does not follow from particle number."
+  },
+  "sihailongwan_host_mass_check": {
+    "source": "Han et al. (2023), SHLW21-Fr-13, Figure 2d",
+    "doi": "https://doi.org/10.1177/20530196231167019",
+    "pdf_page": 5,
+    "document_sha256": "7bbae9107ad44b8fb5abc2f070aa2d048afe8e9e7cbe4138cf4a3bb396d5da8a",
+    "figure_sha256": "374d147e34069e77575f1f5676eb7410b08bdd3ff624f5edb6c96c67ba98bc88",
+    "raster_extraction": "Poppler pdfimages 25.07.0, -f 5 -l 5 -png, first image, 1500 by 831 pixels",
+    "horizontal_ticks_g_cm3": [0.1, 0.3],
+    "horizontal_tick_pixels": [893, 976],
+    "rightmost_density_mark_pixel": 981,
+    "digitization_allowance_pixels_per_edge": 2,
+    "recent_host_dry_density_ceiling_g_cm3": 0.34,
+    "source_window_cm": 6,
+    "original_bulk_density_floor_g_cm3": 0.6,
+    "full_retention_mass_budget_upper_cm": 3.4,
+    "role": "Independent scale check using the 0–20 cm modern freeze core. The 946 CE host density, ash mass fraction and retention in the six event slices are unknown. This limit is not used in any likelihood."
+  },
+  "peat_source": {
+    "evidence_id": "quanyang",
+    "source": "Han et al. (2019), section 1.1 and Figure 1",
+    "url": "https://www.dzdz.ac.cn/article/2019/0253-4967-41-1-225.html",
+    "inspected_html_sha256": "f7eb63b735019f6df290474f9380b419ea071135c4347d426dee706b33d1b989"
+  }
+}

@@ -10,12 +10,12 @@ The common footprint keeps well-connected triangles between exact measurement si
 
 | Policy | Area (km²) | Method | Expected bulk volume (km³) | Median-surface integral (km³) | Deletion range (km³) |
 |---|---:|---|---:|---:|---:|
-| strict | 23,913 | GP ensemble | 1.06 | 1.01 | 1.09–1.26 |
-| strict | 23,913 | Trend-regularized cubic spline | 1.20 | 1.16 | 0.82–424.65 |
-| standard | 96,131 | GP ensemble | 5.22 | 4.95 | 5.37–5.93 |
-| standard | 96,131 | Trend-regularized cubic spline | 4.84 | 4.66 | 3.85–607.28 |
-| permissive | 131,541 | GP ensemble | 6.81 | 6.47 | 6.90–7.77 |
-| permissive | 131,541 | Trend-regularized cubic spline | 6.22 | 5.99 | 4.91–622.42 |
+| strict | 23,913 | GP ensemble | 1.05 | 1.00 | 0.99–1.22 |
+| strict | 23,913 | Trend-regularized cubic spline | 1.16 | 1.12 | 0.77–1.02 |
+| standard | 96,131 | GP ensemble | 5.17 | 4.91 | 5.17–5.77 |
+| standard | 96,131 | Trend-regularized cubic spline | 5.24 | 5.03 | 3.09–4.80 |
+| permissive | 131,541 | GP ensemble | 6.75 | 6.41 | 6.78–7.54 |
+| permissive | 131,541 | Trend-regularized cubic spline | 6.40 | 6.16 | 4.01–6.14 |
 
 These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**. The median-surface integral is not the median of total volume.
 

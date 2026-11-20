@@ -50,7 +50,19 @@ def case_page(output,r,inventory):
                       if coverage.get("scored_exact") else "—")
         rows.append("| "+" | ".join(values)+" |")
     rows += ["","[Predictions for every estimable held-out site](heldout.csv). The numerical record includes all planned folds, row identities, unscorable directions, fit warnings and phase-integration checks.", ""]
-    if r["archive"]:
+    if r["archive"] and r["input"].get("interpreted_upper_limits"):
+        rows += ["## Inspected archives", "",
+                 "The principal fit includes the interpreted upper limits below. Each core enters once. Other sites provide an occurrence check. The interval describes the modeled latent thickness at each site.", "",
+                 "| Site | Interpreted upper limit (cm) | Median thickness (cm) | Conditional 95% interval (cm) |",
+                 "|---|---:|---:|---:|"]
+        for site in inventory["sites"]:
+            local = r["archive"]["scenarios"]["quantitative"]["sites"][site["id"]]
+            low, med, high = local["latent_cm_p025_p50_p975"]
+            scale = site.get("principal_effective_upper_cm")
+            role = f"{scale:g}" if scale is not None else "Occurrence only"
+            rows.append(f"| {site['name']} | {role} | {med:.3g} | {low:.3g}–{high:.3g} |")
+        rows += [""]
+    elif r["archive"]:
         rows += ["## Inspected archives", "",
           "The thickness-only fit uses the quantitative table. Each visibility sensitivity asks what the deposit would look like if specified thicknesses at selected archives would have been recognizable as beds. The local preservation and detection scales are assumptions. The same coherent deposit supplies all site predictions.", "",
           "| Visibility assumption | Sihailongwan (cm) | Quanyang (cm) | Lake Kushu (cm) | Ulleung Basin (cm) | Effective draws |",

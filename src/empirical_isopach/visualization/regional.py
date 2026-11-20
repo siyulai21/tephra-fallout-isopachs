@@ -68,16 +68,21 @@ def regional_maps(output, name, data, metadata, region, models, report):
             boundary = np.vstack((region.vertices, region.vertices[0]))
             ax.plot(*boundary.T, color=AMBER, lw=1.25, ls=(0, (5, 3)), zorder=5)
             setup_map(ax, bounds, metadata["vent_lonlat"])
-            observations(ax, data)
-            volume = report["methods"][method]["regional_volume"]["expected_km3"]
-            ax.set_title(f"{report_label(report, method)}\nExpected hull volume: {volume:,.1f} km³", fontsize=11)
+            observations(ax, data, meta=metadata)
+            item = report["methods"][method]
+            volume = item["regional_volume"]["expected_km3"]
+            description = f"Expected hull volume · {volume:,.1f} km³"
+            if volume > item["joint_volume"]["conditional_quantiles_km3"]["0.975"]:
+                central = item["regional_volume"]["median_surface_km3"]
+                description = f"Median map · {central:,.1f} km³ · upper-tail-sensitive mean"
+            ax.set_title(f"{report_label(report, method)}\n{description}", fontsize=11)
         bar = fig.colorbar(image, ax=list(axs.flat), location="bottom", shrink=.85, pad=.055,
                           aspect=48, label="Posterior median thickness (cm; identical scale for every regional family)")
         levels = contour_levels(values)
         if len(levels) > 10:
             levels = levels[::2]
         bar.set_ticks(levels, labels=[level_labels(t) for t in levels])
-        observation_legend(fig, data, [Line2D([], [], c=AMBER, ls="--", label="Complete observation hull")])
+        observation_legend(fig, data, [Line2D([], [], c=AMBER, ls="--", label="Complete observation hull")], meta=metadata)
         fig.suptitle(f"{name} · regional isopachs\nAll accepted locations and the complete hull are shown; gaps inside remain model-dependent.", fontsize=14)
         for suffix in ("png", "svg"):
             fig.savefig(output/f"isopachs.{suffix}", dpi=190, bbox_inches="tight", pad_inches=.16)

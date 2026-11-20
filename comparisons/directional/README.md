@@ -1,14 +1,16 @@
 # Directional fallout across six eruptions
 
+This design study keeps its original 68-site B-Tm input. The [current B-Tm reconstruction](../../eruptions/b-tm/README.md) includes three interpreted archive bounds. Its [before-and-after comparison](../../eruptions/b-tm/results/cryptotephra/README.md) measures the change in western contours.
+
 Six eruptions test how much the assumed fan direction changes a contour, a bulk volume and predictions at withheld sites. The principal fit allows extra fallout to point in different directions across possible deposits. The control fixes the direction and uses the same observations and structure weights.
 
 Solid pieces of a median contour cross triangles where measured thicknesses bracket the level and the fitted crossing probability reaches 90%. Dashes trace continuation through gaps. A fan can extend into an unsampled direction in an individual simulated deposit even where the median contour retreats.
 
 ## Western Changbaishan and southwestern Mazama
 
-**Western Changbaishan.** At Lake Sihailongwan the preceding fixed-direction map gave 15.8 cm. The paired fixed-direction control gives 16.4 cm and the uncertain-azimuth median gives 8.0 cm. The principal quantitative-only 95% latent range is 0.00015–101 cm. A cryptotephra occurrence without a measured fallout bed still challenges this central prediction. The core description supplies no numerical upper limit. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013) · [Source and site audit](../../eruptions/b-tm/results/directional/bearing/field-evidence.md)
+**Western Changbaishan.** At Lake Sihailongwan the preceding fixed-direction map gave 15.8 cm. The paired fixed-direction control gives 16.4 cm and the uncertain-azimuth median gives 8.0 cm. The principal quantitative-only 95% latent range is 0.00015–101 cm. A cryptotephra occurrence without a measured fallout bed still challenges this central prediction. The core description supplies no numerical upper limit. [Primary core study](https://doi.org/10.1016/j.gr.2015.01.013) · [Source and site audit](../../archive/2026-11-19-b-tm-thickness-only/results/directional/bearing/field-evidence.md)
 
-Conditioning only on an assumed 1 cm recognizable bed at Quanyang gives a Sihailongwan median of 0.0084 cm without conditioning on the lake. Assuming recognizable beds at 1 cm at Sihailongwan and 2 cm at Quanyang gives 0.0052 cm at the lake and 0.11 cm at the peat. Those estimates depend on preservation and detection. The second estimate uses both sites in its likelihood. The fixed record keeps transferred shard-to-thickness conversions outside the quantitative table. [B-Tm maps and all archive sensitivities](../../eruptions/b-tm/results/directional/README.md)
+Conditioning only on an assumed 1 cm recognizable bed at Quanyang gives a Sihailongwan median of 0.0084 cm without conditioning on the lake. Assuming recognizable beds at 1 cm at Sihailongwan and 2 cm at Quanyang gives 0.0052 cm at the lake and 0.11 cm at the peat. Those estimates depend on preservation and detection. The second estimate uses both sites in its likelihood. The fixed record keeps transferred shard-to-thickness conversions outside the quantitative table. [B-Tm maps and all archive sensitivities](../../archive/2026-11-19-b-tm-thickness-only/results/directional/README.md)
 
 **Southwestern Mazama.** Along the 225° ray the 10 cm median crossing moves from 199 to 135 km. The ≥10 cm area across the entire southwest octant falls from 13,559 to 6,635 km². The accepted observations do not locate an actual southwest deposit edge. [Mazama maps and all eight bearings](../../eruptions/mazama/results/directional/README.md)
 
@@ -19,7 +21,7 @@ The two median maps use identical structure weights and training observations. T
 | Eruption | Principal uncertain-direction median map (km³) | Fixed-direction control (km³) | Uncertain-azimuth complete deposits, median [95%] (km³) |
 |---|---:|---:|---:|
 | [Aso-4](../../eruptions/aso-4/results/directional/README.md) | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
-| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | **44.1** | 56.2 | 72.9 [31.0–1,507.8] |
+| [B-Tm](../../archive/2026-11-19-b-tm-thickness-only/results/directional/README.md) | **44.1** | 56.2 | 72.9 [31.0–1,507.8] |
 | [Mazama](../../eruptions/mazama/results/directional/README.md) | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
 | [Minoan](../../eruptions/minoan/results/directional/README.md) | **28.8** | 32.9 | 39.1 [21.3–138.5] |
 | [Tambora](../../eruptions/tambora/results/directional/README.md) | **95.7** | 107.7 | 117.5 [73.2–203.8] |
@@ -57,7 +59,7 @@ Across the resolved high-exposure tests, the revised 1 cm contour cuts false ext
 
 The spatial quadrature check passed in all six eruptions. For B-Tm the 100 cm area differs by 24% between split posterior packets at the 512-draw-per-chain ceiling, although the integrated median-map volume differs by about 1%. The thickest contour therefore remains numerically sensitive. Passing integration checks do not identify ash volume outside the measurements.
 
-The matched regional benchmark was rerun on the same six audited inputs. Its twelve empirical rows and its eighty synthetic rows reproduced the published CSVs byte for byte, including the four unsuccessful synthetic fits. [Matched regional results](../../eruptions/b-tm/results/source-audit/matched-regional.csv) · [Regional synthetic results](../regional/synthetic/comparison.csv)
+The matched regional benchmark was rerun on the same six audited inputs. Its twelve empirical rows and its eighty synthetic rows reproduced the published CSVs byte for byte, including the four unsuccessful synthetic fits. [Matched regional results](../../archive/2026-11-19-b-tm-thickness-only/results/source-audit/matched-regional.csv) · [Regional synthetic results](../regional/synthetic/comparison.csv)
 
 [Statistical protocol and reproduction commands](../../docs/methods/uncertain-azimuth.md) · [Numerical identities of the six original fits](verification.json)
 

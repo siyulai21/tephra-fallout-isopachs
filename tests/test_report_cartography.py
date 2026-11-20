@@ -123,7 +123,8 @@ def test_publication_receipt_rejects_conflicting_entries(tmp_path):
 def test_audited_case_leads_with_matching_fits_then_site_evidence():
     from src.empirical_isopach.visualization.comparison import comparison_section, FIGURE
 
-    home = Path(__file__).resolve().parents[1]/"eruptions/b-tm/results"
+    from benchmarks.publication import BTM_THICKNESS_ONLY
+    home = Path(__file__).resolve().parents[1]/BTM_THICKNESS_ONLY/"results"
     section = comparison_section(home, prefix="results/")
     assert section in (home.parent/"README.md").read_text()
     assert section.index(FIGURE) < section.index("Volume and predictive performance") < section.index("Measured fan directions |")

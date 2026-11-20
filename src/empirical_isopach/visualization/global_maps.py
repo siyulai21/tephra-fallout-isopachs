@@ -81,7 +81,7 @@ def field_panel(ax, x, y, z, bounds, data, meta, norm, mesh=None):
     if mesh is not None:
         footprint(ax, mesh, color="#9BE3DB", lw=.9)
     setup_map(ax, bounds, meta["vent_lonlat"])
-    observations(ax, data)
+    observations(ax, data, meta=meta)
     return image
 
 
@@ -116,9 +116,10 @@ def world_map(output, name, data, meta, view, norm, *, show_contours=True):
         levels = contour_levels(z)
         levels = levels[::2]  # 0.1, 1, 10, 100 ...; local figures show intermediate levels.
         if show_contours and len(levels):
-            lines = ax.contour(np.deg2rad(longitude), np.deg2rad(latitude), z,
-                               levels=levels, colors="white", linewidths=.6)
-            ax.clabel(lines, fmt=level_labels, fontsize=7)
+            # The nonlinear projection can split a contour at the longitude seam.
+            # List the levels in the title so the lines stay intact across that split.
+            ax.contour(np.deg2rad(longitude), np.deg2rad(latitude), z,
+                       levels=levels, colors="white", linewidths=.6)
         coast = []
         for ring in coast_rings():
             relative = (ring[:, 0]-meta["vent_lonlat"][0]+180) % 360-180
@@ -135,7 +136,8 @@ def world_map(output, name, data, meta, view, norm, *, show_contours=True):
         ax.grid(alpha=.2)
         ax.tick_params(labelsize=8)
         ax.set_xticklabels([""]*len(ax.get_xticks()))
-        legend = "contours in cm" if show_contours else "thickness in cm"
+        legend = ("White contours · "+", ".join(level_labels(level) for level in levels)+" cm"
+                  if show_contours and len(levels) else "Thickness in cm")
         ax.set_title(f"{name} · whole-Earth context\n{view.statistic} · {legend}", fontsize=14, pad=18)
         thickness_bar(fig, image, [ax], norm)
         fig.supxlabel("Mollweide overview centred on the source longitude · map edges join · unsampled colour is conditional extrapolation", fontsize=9)
@@ -170,14 +172,14 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
             left.set_title("Whole-deposit field\nPosterior median; contours in cm", fontsize=11)
             uncertainty = right.pcolormesh(x, y, q[2]-q[0], shading="auto", cmap="magma", vmin=0, rasterized=True)
             setup_map(right, bounds, meta["vent_lonlat"])
-            observations(right, data)
+            observations(right, data, meta=meta)
             footprint(right, mesh, color="#9BE3DB")
             right.set_title("Latent thickness uncertainty\nObservation scatter is additional", fontsize=11)
             thickness_bar(fig, image, [left], norm)
             fig.colorbar(uncertainty, ax=right, location="bottom", shrink=.8, pad=.06, aspect=44,
                          label="Orders of magnitude: upper / lower 95% thickness")
             fig.suptitle(f"{name} · spherical-mixture global reconstruction{warning}\n{edge_note}", fontsize=13)
-            observation_legend(fig, data)
+            observation_legend(fig, data, meta=meta)
             save(fig, output, "field.png")
         else:
             # Different frames are intentional: fragments need their local
@@ -200,12 +202,12 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
                 lines.set_array(np.log10(selected.level_cm))
                 left.add_collection(lines, autolim=False)
             setup_map(left, local_bounds, meta["vent_lonlat"])
-            observations(left, data)
+            observations(left, data, meta=meta)
             left.set_title("Measured isopach fragments\nComplete observation extent; gaps stay open", fontsize=11)
             image = field_panel(right, x, y, q[1], bounds, data, meta, norm, mesh)
             right.set_title("Wider conditional continuation\nGeometric-mean thickness; contours in cm", fontsize=11)
             thickness_bar(fig, image, list(axes.flat), norm)
-            observation_legend(fig, data)
+            observation_legend(fig, data, meta=meta)
             # Reserve a separate header above the constrained axes. Fixed-aspect
             # panels with unequal width ratios otherwise collide with it.
             fig.suptitle(f"{name} · directional global reconstruction{warning}\nPanels use different extents. {edge_note}",
@@ -220,14 +222,14 @@ def global_maps(output, name, data, meta, samples, report, g=None, arcs=None):
         left.set_title(f"Near-observation field\n{view.statistic}", fontsize=11)
         uncertainty = right.pcolormesh(lx, ly, lq[2]-lq[0], shading="auto", cmap="magma", vmin=0, rasterized=True)
         setup_map(right, local_bounds, meta["vent_lonlat"])
-        observations(right, data)
+        observations(right, data, meta=meta)
         footprint(right, mesh, color="#9BE3DB")
         right.set_title("Local latent uncertainty\nCyan outlines: sampling footprint", fontsize=11)
         thickness_bar(fig, image, [left], norm)
         fig.colorbar(uncertainty, ax=right, location="bottom", shrink=.8, pad=.06, aspect=44,
                      label="Orders of magnitude: upper / lower 95% thickness")
         fig.suptitle(f"{name} · local detail{warning}\nA detail window is not the global integration boundary; contours can continue outside it.", fontsize=13)
-        observation_legend(fig, data)
+        observation_legend(fig, data, meta=meta)
         save(fig, output, "local.png")
     world = world_map(output, name, data, meta, view, norm)
     provenance = {"protocol":"report-cartography-v1", "input_sha256":meta["input_sha256"],

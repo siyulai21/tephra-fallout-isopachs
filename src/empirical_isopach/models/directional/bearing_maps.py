@@ -206,7 +206,7 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
             for scale,prob in vals.items():
                 usable=obs["reading"] in ELIGIBLE and obs["confidence"]=="secure"
                 rows.append({"scenario":key,"site":obs["name"],"reading":obs["reading"],"eligible":usable,
-                             "used_in_fit":site["id"] in trained,"effective_limit_scenario_cm":float(scale),
+                             "used_in_fit":site["id"] in trained or obs.get("in_principal_as") == "interpreted_upper_limit","effective_limit_scenario_cm":float(scale),
                              "median_field_cm":site["latent_cm"]["median"],"local_median_cm":site["new_site_cm"]["median"],
                              "five_percent_conflict_transition_cm":site["new_site_cm"]["lower90"],
                              "p_local_below_scale":prob,"conditional_conflict_at_5pct":usable and prob<.05})
@@ -274,12 +274,13 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
             with np.load(spherical_posterior) as raw:
                 render(dict(raw),output/"spherical-archive-weights.npz",sphere,data,meta,inv,output,geo["local_bounds_km"])
         lines+=["## Independent spherical mixture","",
-                "The same readings update the weights of complete mass-normalized spherical deposits. The likelihood includes the spherical model’s local scatter and contamination component. The whole-deposit volumes below come from the updated draws. Each retains its own physical normalization. The effective sample size and the consistency of the independent chain estimates check whether the update is numerically usable.","",
+                ("These predictions use the spherical posterior fitted with the same interpreted upper limits. Each saved deposit contributes its original weight." if meta.get("interpreted_upper_limits") and not inv["scenarios"] else "The same readings update the weights of complete mass-normalized spherical deposits. The likelihood includes the spherical model’s local scatter and contamination component. The whole-deposit volumes below come from the updated draws. Each retains its own physical normalization. The effective sample size and the consistency of the independent chain estimates check whether the update is numerically usable."),"",
                 "| Archive transfer | Complete-deposit median (conditional 95%, km³) | Weight ESS | Numerical check |","|---|---:|---:|---|"]
         for key,v in sphere["scenarios"].items():
             if (v["scenario"] or {}).get("role")=="cross_prediction":continue
             q=v["full_field_volume_km3"]
-            lines.append(f"| {labels[key]} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {v['raw_weight_ess']:,.0f} | {'Passed' if v['importance_checks_passed'] else 'Requires independent refit'} |")
+            evidence_label = "Principal observation bounds and thicknesses" if key == "quantitative" else labels[key]
+            lines.append(f"| {evidence_label} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {v['raw_weight_ess']:,.0f} | {'Passed' if v['importance_checks_passed'] else 'Requires independent refit'} |")
         if (output/"spherical-archive-isopachs.png").exists():
             lines+=["","![Independent spherical median isopachs before and after archive conditioning](spherical-archive-isopachs.png)"]
         lines+=["","[Spherical archive probabilities, chain checks and hull membership](spherical-archive-checks.json) · [Posterior weights by chain](spherical-archive-weights.npz)",""]

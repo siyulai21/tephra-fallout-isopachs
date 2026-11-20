@@ -11,6 +11,7 @@ from zipfile import ZipFile
 import numpy as np
 import pandas as pd
 
+from benchmarks.publication import BTM_THICKNESS_ONLY, previous_btm_file
 from benchmarks.btm_source_sensitivities import SOURCE_CASES
 from benchmarks.btm_thinning_report import verify as verify_thinning
 from benchmarks.btm_thinning_volume_report import verify as verify_thinning_volumes
@@ -24,7 +25,7 @@ from src.empirical_isopach.models.directional.ensemble.members import NAMES
 from src.empirical_isopach.models.mass_mixture.source_protocol import protocol
 
 AUDIT = Path("data/audits/B-Tm")
-HOME = Path("eruptions/b-tm/results")
+HOME = BTM_THICKNESS_ONLY / "results"
 STUDY = HOME/"source-audit"
 
 
@@ -131,6 +132,7 @@ def verify_inputs():
 
 def verify_results(manifest):
     release = read(STUDY/"release.json")
+    release["files"] = {str(previous_btm_file(p)):value for p,value in release["files"].items()}
     if Path(".git").exists():
         tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
         missing = sorted(set(release["files"]).difference(tracked))
@@ -152,8 +154,8 @@ def verify_results(manifest):
         assert trials.loc[trials.completed.eq(0), "failure"].notna().all()
     assert read(STUDY/"regional-benchmark-design.json")["spline_model_sha256"] == digest(
         Path("src/empirical_isopach/models/cubic_spline/model.py"))
-    rec = next(r for r in datasets() if r["slug"] == "b-tm")
     principal = manifest["cases"]["principal"]
+    rec = {**next(r for r in datasets() if r["slug"] == "b-tm"), "path":Path(principal["file"])}
     reference = read(HOME/"directional/single-structure/report.json")
     ensemble = read(HOME/"directional/ensemble/report.json")
     sphere = read(HOME/"spherical-mixture/report.json")
@@ -165,7 +167,7 @@ def verify_results(manifest):
         assert (meta["n_measurements"], meta["n_lower_limits"], meta["n_upper_limits"]) == (64, 3, 1)
     extremes = pd.read_csv(STUDY/"octant-extremes.csv")
     verify_single(HOME/"directional/single-structure", rec, principal["sha256"], release["files"][str(HOME/"directional/single-structure/report.json")], extremes)
-    verify_ensemble(rec, principal["sha256"], release["directional_median_map_km3"])
+    verify_ensemble(rec, principal["sha256"], release["directional_median_map_km3"], home=HOME)
     verify_case_map(rec, HOME.resolve())
     rv, sv = regional["validation"], sphere["validation"]
     for key in ("row_ids","folds","buffer_km"):

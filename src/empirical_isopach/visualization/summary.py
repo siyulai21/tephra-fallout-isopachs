@@ -2,6 +2,7 @@
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
 from src.probabilistic_isopach.figures import STYLE
 
 COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
@@ -49,11 +50,16 @@ def case_overview(output, name, regional, directional, spherical):
             q = item["joint_volume"]["conditional_quantiles_km3"]
             axs[0, 0].errorbar(q["0.5"], i, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
                               fmt="o", color=COLORS[label], capsize=4, markersize=7)
-            axs[0, 0].scatter(item["regional_volume"]["expected_km3"], i, marker="D", s=34,
-                             color=COLORS[label], zorder=4)
+            expectation = item["regional_volume"]["expected_km3"]
+            if expectation <= q["0.975"]:
+                axs[0, 0].scatter(expectation, i, marker="D", s=34, color=COLORS[label], zorder=4)
+            else:
+                axs[0, 0].annotate(f"Unstable mean {expectation:.2g} km³", xy=(.98, i),
+                                   xycoords=("axes fraction", "data"), xytext=(0, 10),
+                                   textcoords="offset points", ha="right", fontsize=8, color=COLORS[label])
         axs[0, 0].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(1.6, -.6),
-                      xscale="log", xlabel="Hull bulk volume (km³; log scale)",
-                      title="Regional question: volume inside the same hull\nCircle = median; diamond = expectation")
+                      xscale="log", xlabel="Hull bulk volume (km³, logarithmic scale)",
+                      title="Regional volume inside the same hull\nCircle = median · diamond = mean")
         ensemble = directional.get("median_surface")
         if directional.get("protocol")=="uncertain-azimuth-v1":
             volume = directional["volume"]
@@ -77,9 +83,13 @@ def case_overview(output, name, regional, directional, spherical):
         if centre is not None:
             axs[0, 1].scatter(centre, -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
         axs[0, 1].set(yticks=[0, 1], yticklabels=["Directional", "Spherical mixture"], ylim=(1.6, -.6),
-                      xscale="log", xlabel="Whole-Earth bulk volume (km³; log scale)",
+                      xscale="log", xlabel="Whole-Earth bulk volume (km³, logarithmic scale)",
                       title=("Whole-deposit volume · diamond = directional median map\nComplete-field median and 95% interval · × = numerical warning"
                              if centre is not None else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
+        for ax in axs[0]:
+            ax.xaxis.set_major_locator(LogLocator(subs=(1, 2, 5)))
+            ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.3g}"))
+            ax.xaxis.set_minor_formatter(NullFormatter())
         records = metrics(regional, directional, spherical)
         for i, (label, score, coverage, passed) in enumerate(records):
             if coverage is not None:
@@ -100,13 +110,13 @@ def case_overview(output, name, regional, directional, spherical):
                       title="Matched geographic holdouts\nAll accepted measurements and likelihood bounds")
         axs[1, 1].axvline(95, color="#566C72", ls="--", lw=1)
         axs[1, 1].set(xlim=(0, 103), xlabel="Exact-site observation interval coverage (%)",
-                      title="Coverage at withheld measurement sites\nDashed = nominal 95%; not global-volume coverage")
+                      title="Coverage at withheld measurement sites\nDashed line marks nominal 95% coverage")
         for ax in axs.flat:
             ax.grid(axis="x", alpha=.18)
             ax.set_axisbelow(True)
             ax.title.set_fontsize(10.5)
         fig.suptitle(f"{name} · four methods, two different volume questions", fontsize=16)
-        fig.supxlabel("Each interval is conditional on its own model. Regional and global panels use different domains and axes; no preferred or pooled volume.", fontsize=9)
+        fig.supxlabel("Intervals are conditional on the fitted model. The two volume panels integrate different geographic areas.", fontsize=9)
         fig.savefig(Path(output)/"overview.png", dpi=190, bbox_inches="tight", pad_inches=.16)
         plt.close(fig)
 

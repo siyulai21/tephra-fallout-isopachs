@@ -136,10 +136,11 @@ def main():
         expected_report = study["cases"][slug]
         case_extremes = extremes[extremes.slug == slug]
         if digest(record["path"]) != expected_input:
-            release = read(home/"source-audit/release.json")
+            release_path = home/record.get("release_receipt", "source-audit/release.json")
+            release = read(release_path)
             expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
             expected_report = release["files"][str(home/"directional/single-structure/report.json")]
-            case_extremes = pd.read_csv(home/"source-audit/octant-extremes.csv")
+            case_extremes = pd.read_csv(release_path.with_name("octant-extremes.csv"))
         verify(home/"directional/single-structure", record, expected_input, expected_report, case_extremes)
         # The published comparison and its replications retain their own input identities.
         with gzip.open(root/"spherical-support"/(slug+".json.gz"),"rt") as f:
