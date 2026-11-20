@@ -1,6 +1,6 @@
 # Add an empirical model family
 
-[Method catalogue](../methods/README.md) · [Source map](../src/README.md) · [Contributing](../CONTRIBUTING.md)
+[Method catalogue](methods/README.md) · [Source map](../src/README.md) · [Contributing](../CONTRIBUTING.md)
 
 A new family joins the same eruption workflow as a peer. It must not silently change the accepted data, the target region or another method's results.
 

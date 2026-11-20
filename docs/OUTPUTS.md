@@ -1,6 +1,6 @@
 # Reading current maps, volumes and output files
 
-[Eruption cases](../eruptions/README.md) · [Method relationships](../methods/README.md) · [Commands](QUICKSTART.md)
+[Eruption cases](../eruptions/README.md) · [Method relationships](methods/README.md) · [Commands](QUICKSTART.md)
 
 Start with the case home. It links the accepted evidence, regional comparison, support audit and **both** global families. The normal `compare` command writes the layout below. A standalone `global --output PATH` command writes its chosen family's report directly to `PATH`.
 
@@ -17,9 +17,9 @@ Older records use `global/` for the spherical-only files. Those files were moved
 
 Start on the case home. Its `four-method-evidence.png` compares four median fields in the same observation frame. The directional panel uses the uncertain-fan-direction field. `directional/azimuth/isopachs.png` shows that field at deposit and near-source scales. Expand the whole-Earth pair for the uncertain-direction and spherical-mixture maps. The four-family volume and prediction plot is `overview.png`.
 
-`map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/visuals.md).
+`map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/README.md#checking-a-map).
 
-For runs with an inspected-site inventory, the four thickness-only fits appear first. The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm example](../eruptions/b-tm/README.md)
+The four principal fits use the same accepted measurements and bounds, including any site-specific interpreted limits. The source audit gives its derivation and the shared source-review protocol explains the decision. [Site decision protocol](methods/sites-without-measured-thickness.md) The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm omission and weaker-response comparisons](../eruptions/b-tm/results/cryptotephra/README.md)
 
 ## Regional GP and cubic spline
 
@@ -45,7 +45,7 @@ In `report.json`, read `methods.<method>.regional_volume`, `joint_volume` and `v
 | `support/report.json` | Three policies, deletion sensitivity, band checks and conditional scenarios |
 | `support/support_geometry.json` | Footprint polygons in source-centred projected kilometres |
 | `directional/azimuth/complete-contour-audit.json` | Complete-contour screen on the principal uncertain-direction field. The fixed-direction screen is in `directional/ensemble/complete-contour-audit.json`. |
-| [Spherical support packets](../comparisons/directional/single-structure/spherical-support/) | All six spherical-family screens and checksum-verified posterior field subsets |
+| `spherical-mixture/support/` | This case’s complete contour decisions and checksum-verified posterior fields. [All case support audits](../comparisons/support/README.md) |
 
 The regional support report records `methods.<method>.footprint_volumes` and `contours.policies`. Its `preferred_global_km3` is null: this audit does not select a global total. A zero quadrature fraction is not proof of absent ash. Preserve rejection reasons, unsupported holes and numerical warnings. A failed complete-contour screen is diagnostic, not a veto on conditional global inference. [Support protocol](methods/supported-isopachs.md).
 

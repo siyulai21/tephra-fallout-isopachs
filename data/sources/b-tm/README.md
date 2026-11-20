@@ -1,6 +1,6 @@
 # Millennium eruption source files
 
-These three files preserve the public versions used for the B-Tm audit. The CSV selections and interpretations are our derivatives. The source publications and their individual licences apply to the originals. [Evidence ledger and decisions](../../audits/B-Tm/README.md)
+The tables and source files below support the thickness audit and the review of sites without measured fallout. The CSV selections and interpretations are our derivatives. The source publications and their individual licences apply to the originals. [Evidence ledger and decisions](../../audits/B-Tm/README.md)
 
 | Original file | Source and attribution | SHA-256 |
 |---|---|---|

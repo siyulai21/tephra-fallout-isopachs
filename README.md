@@ -12,10 +12,10 @@ The **directional ensemble** and **spherical mixture** each extend thickness acr
 
 On the directional maps, solid contour fragments connect measured thicknesses that bracket a level. Dashes show where the deposit edge depends on continuation. Each directional report compares the principal map with a control that fixes fan direction using the same observations and weights. [Six-eruption comparison and maps](comparisons/directional/README.md)
 
-Minoan shows how the Plinian and co-ignimbrite fans can be fitted as one deposit. B-Tm shows how glass-shard profiles and a peat mass budget constrain the reach of fallout contours. The case compares the resulting maps with the original thickness survey and two weaker archive interpretations. [Minoan case](eruptions/minoan/README.md) · [B-Tm case](eruptions/b-tm/README.md)
+Minoan combines Plinian and co-ignimbrite fans in one deposit. At B-Tm, two lake profiles and one peat core supplied conditional upper bounds where no bed thickness was measured. Their case pages show how those decisions affect the maps and volumes. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [How to review an occurrence without a measured thickness](docs/methods/sites-without-measured-thickness.md)
 
 ## Methods and evidence
 
-[How the four models work](methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
+[How the four models work](docs/methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
 
 To run an analysis or contribute code, start with the [guides and repository layout](docs/README.md). AI agents can follow the [intake, publication and verification instructions](AGENTS.md).

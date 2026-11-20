@@ -19,7 +19,7 @@ The directional model interpolates log thickness across locally supported triang
 
 Lower scores mean better prediction of held-out thickness or a documented bound. The directional score is lower in **2/6** eruptions overall and **1/4** where both models passed sampling checks on every geographic fold. Each case report lists numerical warnings and quadrant-deletion results. These are development comparisons using four matched outer folds within each eruption. The true global volume of each real eruption remains unknown. Both global estimates are published as conditional alternatives.
 
-The shared complete-contour screen was also run on both global families, using the same bracketing, support, resolution and four-deletion criteria as the regional peers. The directional model has a qualifying band in 0/6 cases and the spherical mixture in 0/6. Each case contains its directional decisions. The spherical packet includes all rejected levels, numerical fold flags and checksum-verified field subsets for replay. [Spherical support evidence](spherical-support/) · [Regional support evidence](../../support/README.md).
+The shared complete-contour screen was also run on both global families, using the same bracketing, support, resolution and four-deletion criteria as the regional peers. The directional model has a qualifying band in 0/6 cases and the spherical mixture in 0/6. Each case contains its directional decisions. The spherical packet includes all rejected levels, numerical fold flags and checksum-verified field subsets for replay. [Current case support audits](../../support/README.md) · [Original 84-site B-Tm spherical screen](original-spherical-screens/).
 
 ![Vent-centred conditional maps for all six eruptions](compass-maps.png)
 
@@ -122,7 +122,7 @@ done
 python -m benchmarks.regional --output results/new-regional
 python -m benchmarks.directional_reference --output results/new-mixture-sectors.json
 python -m benchmarks.directional_replication --runs results/new-study --output results/new-replication
-python -m benchmarks.directional_spherical_support --replay comparisons/directional/single-structure/spherical-support --output results/new-spherical-support
+python -m benchmarks.directional_spherical_support --published --output results/new-spherical-support
 python -m benchmarks.directional_comparison --spherical-support results/new-spherical-support --runs results/new-study --cases results/new-cases --replication results/new-replication --regional results/new-regional --reference results/new-mixture-sectors.json --output results/new-comparison
 ~~~
 

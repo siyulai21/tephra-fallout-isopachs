@@ -111,13 +111,21 @@ def synthetic_benchmark(output, repeats=10):
     return rows
 
 
-def summarize(output):
+def summarize(output, published=False):
     output = Path(output)
+    output.mkdir(parents=True, exist_ok=True)
     rows = []
-    for path in sorted(output.glob("*/report.json")):
+    if published:
+        accepted = {r["slug"]: r["path"] for r in datasets()}
+        sources = [(slug, Path("eruptions")/slug/"results/report.json") for slug in accepted]
+    else:
+        sources = [(p.parent.name, p) for p in output.glob("*/report.json")]
+    for slug, path in sorted(sources):
         report = json.loads(path.read_text())
+        if published and report["input"]["input_sha256"] != sha256(accepted[slug].read_bytes()).hexdigest():
+            raise ValueError(f"{slug}: published regional fit and accepted input differ")
         for method, result in report["methods"].items():
-            rows.append({"dataset": report["dataset"], "slug": path.parent.name, "method": method, "label": report_label(report, method),
+            rows.append({"dataset": report["dataset"], "slug": slug, "method": method, "label": report_label(report, method),
                 "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
                 "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
@@ -129,16 +137,29 @@ def summarize(output):
                 **{k: v for k, v in report["validation"]["methods"][method]["metrics"].items() if k != "fold_log_scores"}})
     table = pd.DataFrame(rows)
     table.to_csv(output/"comparison.csv", index=False)
-    lines = ["# Regional comparison of empirical methods", "",
-        "All methods are reported as peers. Every eruption uses its accepted data, identical nested geographic holdouts and one shared observation hull. No global volume enters this comparison.", "",
-        "| Eruption | Method | Expected regional volume (km³) | Outer equal-region score ↓ | 95% observation coverage |",
+    lines = ["# GP and cubic spline inside the observation hull", "",
+        "Each pair uses the same accepted sites, geographic holdouts and integration area. "
+        "The volume column integrates each model’s pointwise median thickness. Each case also reports its "
+        "expected volume and the conditional interval from whole-surface draws.", "",
+        "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |",
         "|---|---|---:|---:|---:|"]
     for row in table.itertuples():
-        lines.append(f"| [{row.dataset}]({row.slug}/README.md) | {row.label} | {row.expected_regional_km3:.1f} | "
+        link = f"../../eruptions/{row.slug}/results/README.md" if published else f"{row.slug}/README.md"
+        precision = " †" if not row.volume_converged else ""
+        lines.append(f"| [{row.dataset}]({link}) | {row.label} | {row.median_surface_km3:.2f}{precision} | "
                      f"{row.equal_region_log_score:.3f} | {row.coverage95_observations:.1%} |")
-    lines += ["", "These are bulk fallout volumes inside each dataset’s observation hull, not total eruption volumes. Different eruptions have different footprints. Lower predictive scores are better; close differences across four folds do not establish superiority.", "",
-              "![Regional volume and held-out scores](comparison.png)", "",
-              "[Machine-readable real-data comparison](comparison.csv). Each eruption report includes full tuning tables, fold assignments, conditional joint-volume draws, numerical refinements and deletion sensitivity."]
+    lines += ["", "Lower negative log predictive scores indicate better predictions in withheld regions. "
+              "Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical "
+              "volume integration warning. [Full benchmark table, including expected volumes](comparison.csv)", "",
+              "![Regional median-map volumes and geographic prediction scores](comparison.png)"]
+    if published:
+        lines += ["", "At B-Tm, three interpreted upper bounds expand the hull. The spline’s arithmetic mean "
+                  "is dominated by a poorly constrained upper tail near Lake Suigetsu. The case study compares "
+                  "the median map with 20,000 complete-surface draws and reports the integration diagnostics. "
+                  "[Spline sensitivity and regional footprint](../../eruptions/b-tm/results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail)",
+                  "", "The known-deposit benchmark retains all 40 attempted datasets, including two where both methods "
+                  "had insufficient training support. [Simulation results](synthetic/README.md) · "
+                  "[Matched regional protocol](../../docs/methods/regional-comparison.md)"]
     if (output/"synthetic/synthetic.json").exists():
         simulations = json.loads((output/"synthetic/synthetic.json").read_text())
         entries = []
@@ -170,8 +191,9 @@ def summarize(output):
         lines += ["", "Metrics describe completed trials only; unestimable censored trials remain in the attempted count and JSON with their failure reason. No censoring threshold or training requirement was relaxed to make these trials pass.", "",
                   "These small development experiments cannot certify coverage for real eruptions. Poor conditional coverage is retained rather than repaired after seeing test outcomes.", "",
                   "[All synthetic results and design](synthetic/synthetic.json) · [Per-run comparison](synthetic/comparison.csv)"]
-    lines += ["", "## Reproduce", "", "```sh", "python -m benchmarks.regional --output results/regional-methods", "```", "",
-              "No manually placed pseudo-points, smoothing settings, knot spacings or preferred method are requested. Fixed algorithmic assumptions and search limits remain explicit in the method documentation."]
+    command = ("python -m benchmarks.regional --summarize-only --published --output results/regional-summary"
+               if published else "python -m benchmarks.regional --output results/regional-methods")
+    lines += ["", "## Reproduce", "", "```sh", command, "```"]
     (output/"README.md").write_text("\n".join(lines)+"\n")
     import matplotlib
     matplotlib.use("Agg")
@@ -181,22 +203,22 @@ def summarize(output):
         fig, axes = plt.subplots(1, 2, figsize=(12, 5), layout="constrained")
         names = table.dataset.unique()
         methods = list(table.method.unique())
-        width = .8/len(methods)
+        width = .45/len(methods)
         colors = [TEAL, AMBER]+[plt.get_cmap("tab10")(i % 10) for i in range(2, len(methods))]
         for index, (method, color) in enumerate(zip(methods, colors)):
             shift = (index-(len(methods)-1)/2)*width
             subset = table[table.method == method].set_index("dataset").reindex(names)
             label = table.loc[table.method == method, "label"].iloc[0]
-            axes[0].barh(np.arange(len(names))+shift, subset.expected_regional_km3, height=.9*width, color=color, label=label)
-            axes[1].barh(np.arange(len(names))+shift, subset.equal_region_log_score, height=.9*width, color=color)
+            axes[0].scatter(subset.median_surface_km3, np.arange(len(names))+shift, color=color, label=label)
+            axes[1].scatter(subset.equal_region_log_score, np.arange(len(names))+shift, color=color)
         for ax in axes:
             ax.set(yticks=np.arange(len(names)), yticklabels=names)
             ax.invert_yaxis()
             ax.grid(axis="x", alpha=.15)
-        axes[0].set(xscale="log", xlabel="Expected regional bulk fallout (km³; log scale)", title="One shared footprint per eruption")
+        axes[0].set(xscale="log", xlabel="Regional median-map volume (km³, log scale)", title="One shared footprint per eruption")
         axes[1].set(xlabel="Outer equal-region negative log score (lower is better)", title="Identical geographic holdouts")
-        axes[0].legend(fontsize=9, loc="lower right")
-        fig.suptitle("Empirical methods · matched regional evaluation", fontsize=16)
+        fig.legend(loc="outside lower center", ncols=len(methods), frameon=False)
+        fig.suptitle("GP ensemble and cubic spline across eruptions", fontsize=16)
         for suffix in ("png", "svg"):
             fig.savefig(output/f"comparison.{suffix}", dpi=180)
         plt.close(fig)
@@ -209,10 +231,13 @@ def main(argv=None):
     parser.add_argument("--synthetic-only", action="store_true")
     parser.add_argument("--skip-synthetic", action="store_true")
     parser.add_argument("--summarize-only", action="store_true")
+    parser.add_argument("--published", action="store_true", help="Summarize the registered case reports without refitting")
     parser.add_argument("--repeats", type=int, default=10)
     args = parser.parse_args(argv)
+    if args.published and not args.summarize_only:
+        parser.error("--published is for summarizing completed cases")
     if args.summarize_only:
-        summarize(args.output)
+        summarize(args.output, published=args.published)
         return
     if args.repeats < 1:
         parser.error("Use at least one synthetic replicate")

@@ -1,6 +1,6 @@
 # Empirical model families
 
-[Framework](../README.md) · [Method cards](../../../methods/README.md) · [Add a family](../../../docs/ADDING_METHOD.md)
+[Framework](../README.md) · [Method cards](../../../docs/methods/README.md) · [Add a family](../../../docs/ADDING_METHOD.md)
 
 [registry.py](registry.py) is the executable catalogue for the two regional peers:
 

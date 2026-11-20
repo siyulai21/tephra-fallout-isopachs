@@ -34,7 +34,7 @@ Every target excludes its own eruption, any identical input digest and the same 
 
 An exact observation contributes its predictive log density. A bound contributes its one-sided probability. Single-site held-out likelihoods integrate over orientation by deterministic cosine quadrature with 16 through 128 nodes. Successive per-row log scores must differ by less than 0.001 for a fold to enter calibration. Poorly mixed or inestimable folds remain visible in the validation record. Passing-only and all-estimable summaries answer different questions.
 
-The project uses uncertain fan direction as its primary assumption in unsampled sectors. The matched control remains important for interpreting that choice. The uncertain-direction ensemble scored slightly better on pooled geographic holdouts and worse on whole-quadrant holdouts. The real cases have preferential sampling at known ash sites. Scores at those sites cannot determine the probability of a macroscopic bed at an unvisited location. A pair of synthetic deposits with identical observations and different hidden lobes demonstrates the limitation directly. [Cross-eruption findings](../../comparisons/directional/README.md)
+The project uses uncertain fan direction as its primary assumption in unsampled sectors. The matched control remains important for interpreting that choice. With the current B-Tm bounds, the published fits give lower pooled negative log scores for uncertain direction on both geographic and whole-quadrant holdouts. The original comparison on 68 B-Tm sites gave a higher uncertain-direction score for quadrants. The change illustrates sensitivity to which sites can test an unsampled sector. The real cases have preferential sampling at known ash sites. Scores at those sites cannot determine the probability of a macroscopic bed at an unvisited location. A pair of synthetic deposits with identical observations and different hidden lobes demonstrates the limitation directly. [Cross-eruption findings](../../comparisons/directional/README.md)
 
 ## Volume, site evidence and uncertainty
 
@@ -55,3 +55,5 @@ python -m benchmarks.azimuth_continuation synthetic --work results/extent/fits -
 ~~~
 
 The report command uses the packaged, versioned calibration file. Compare the regenerated calibration to that file before interpreting differences. Each field packet stores structure parameters, original draw indices, concentration indices, orientation, weights and complete-deposit volumes. [Calibration file](../../src/empirical_isopach/assets/azimuth-calibration.json)
+
+To compare the current case reports and the retained fourteen synthetic trials without refitting, run `python -m benchmarks.azimuth_summary --output results/directional-summary`.

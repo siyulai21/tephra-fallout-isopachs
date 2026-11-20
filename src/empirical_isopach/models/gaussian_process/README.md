@@ -1,6 +1,6 @@
 # Gaussian-process ensemble implementation
 
-[Families](../README.md) · [Method card](../../../../methods/gaussian-process.md)
+[Families](../README.md) · [Method card](../../../../docs/methods/README.md#regional-gp-ensemble)
 
 - [adapter.py](adapter.py): exposes the ensemble as one active regional method.
 - [model.py](model.py): directional trends, Matérn residuals and conditional/censored fitting.

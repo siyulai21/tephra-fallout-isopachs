@@ -1,6 +1,6 @@
 # Source-code map
 
-[Project home](../README.md) · [Method catalogue](../methods/README.md) · [Agent routes](../AGENTS.md)
+[Project home](../README.md) · [Method catalogue](../docs/methods/README.md) · [Agent routes](../AGENTS.md)
 
 The active workflow is [empirical_isopach/](empirical_isopach/README.md). Its four families fit the same accepted evidence independently. Shared utilities provide consistent units, observation semantics, geometry, evaluation and reporting.
 
@@ -22,4 +22,4 @@ The active workflow is [empirical_isopach/](empirical_isopach/README.md). Its fo
 | [spline_isopach/](spline_isopach/README.md) | Original spline numerical engine and regression references; the unused desktop GUI has been removed |
 | [research/](research/README.md) | First fixed-smoothing spline experiment, needed by historical benchmarks and regression checks |
 
-These are not additional default families. Do not delete shared Earth/plotting helpers just because their package name is historical. `Laea.py` still supplies source-coordinate preparation for reproduction. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md) · [History](../docs/HISTORY.md).
+These are not additional default families. Do not delete shared Earth/plotting helpers just because their package name is historical. `Laea.py` still supplies source-coordinate preparation for reproduction. [Tests](../tests/README.md) · [Benchmark commands](../benchmarks/README.md) · [History](../CHANGELOG.md#earlier-results).

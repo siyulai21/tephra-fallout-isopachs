@@ -13,7 +13,7 @@ from src.empirical_isopach.global_reporting import global_dataset
 def summarize(output, regional_root=Path('eruptions'), published=False):
     output, regional_root = Path(output), Path(regional_root)
     rows, cases, validation_rows, sensitivity_warnings = [], [], [], []
-    for record in datasets():
+    for record in sorted(datasets(), key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
         folder = Path('eruptions')/slug/'results'/'spherical-mixture' if published else output/slug
         path = folder/'report.json'
@@ -27,6 +27,8 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
         val = report['validation']
         other = regional['validation']
         assert report['input']['input_sha256'] == regional['input']['input_sha256']
+        if published and report['input']['input_sha256'] != sha256(record['path'].read_bytes()).hexdigest():
+            raise ValueError(f'{slug}: published spherical fit and accepted input differ')
         assert val['row_ids'] == other['row_ids'] and val['folds'] == other['folds']
         assert val['buffer_km'] == other['buffer_km']
         for model in other['methods'].values():
@@ -36,7 +38,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
         base = report['fits']['baseline']
         failed = [key.replace('_', ' ') for key, fit in report['fits'].items() if not fit['diagnostics']['passed']]
         if failed:
-            sensitivity_warnings.append(name+': '+', '.join(failed))
+            sensitivity_warnings.append(f"{name} ({', '.join(failed)})")
         row = {'eruption': name, 'slug': slug, 'geometry':report.get('geometry','displaced'),
             'review_status':record.get('global_review_status','conditional'),
             **{k: base['volume'][k] for k in ('median', 'lower95', 'upper95')},
@@ -68,51 +70,34 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
     table = '\n'.join(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/spherical-mixture/README.md) | {r['geometry']}{' · **questioned**' if r['review_status'] == 'questioned' else ''} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {r['sensitivity_lower']:.3g}–{r['sensitivity_upper']:.3g} | {'pass' if r['baseline_sampling_passed'] else '**provisional**'} |" for r in rows)
     predictions = '\n'.join(f"| {r['eruption']} | {r['global_equal_region_negative_log_score']:.3f} | {r['stacked_equal_region_negative_log_score']:.3f} | {r['spline_equal_region_negative_log_score']:.3f} | {r['global_observation_coverage95']:.1%} | {'pass' if r['all_outer_sampling_passed'] else '**provisional**'} |" for r in rows)
     n_pass = sum(r['baseline_sampling_passed'] for r in rows)
-    (output/'README.md').write_text(f"""# Global fallout estimates across six eruptions
+    warnings = ("Sampling warnings occurred in " + ", ".join(sensitivity_warnings) +
+                ". Their results contribute to the envelope." if sensitivity_warnings
+                else "All alternative refits passed the sampling checks.")
+    (output/'README.md').write_text(f"""# Spherical-mixture estimates across eruptions
 
-[Single-structure directional comparison](../directional/single-structure/README.md) · [Project home](../../README.md) · [Method, equations and priors](../../docs/methods/probabilistic-global.md) · [Regional peers](../regional/README.md) · [Local support diagnostic](../support/README.md)
+Each case uses its registered source geometry and accepted observations. Every fitted deposit integrates to its own volume over the Earth. A credible interval summarizes the baseline posterior. The sensitivity envelope spans the baseline and seven declared changes to geometry, priors or noise.
 
-The complete-contour screen was too conservative as a prerequisite for conditional global estimation. It remains useful for local evidence checks. The replacement global calculation fits positive, finite-mass fallout fans jointly on the whole Earth. **No closing pseudo-data, chosen calculation rectangle or distal cutoff determines these totals.**
-
-**Reviewed revisions:** B-Tm uses source-focused fans to remove an unsupported off-volcano maximum. Aso-4 retains the displaced field family but now uses two corrected cruise coordinates and source-qualified bounds. Its high global total remains questioned; the separately tested tighter displacement prior is a development alternative, not a demonstrated global-mass correction. See the [Aso-4 evidence audit](../aso-4-audit/README.md) and [earlier geometry review](../source-revision/README.md). The other four results are unchanged. This table is a record of reviewed case calculations, not a new common-geometry experiment across all six eruptions.
-
-## Global estimates and uncertainty
-
-| Eruption | Geometry | Median bulk km³ | Conditional 95% credible interval | Assumption-sensitivity envelope km³ | Baseline numerical checks |
+| Eruption | Geometry | Baseline median (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) | Baseline sampling |
 |---|---|---:|---:|---:|---|
 {table}
 
-The credible interval is conditional on the baseline field, likelihood and priors. The assumption-sensitivity envelope spans the endpoints from seven alternative refits plus the baseline; **it is not a 95% interval or an exhaustive bound**. All accepted fans, including Minoan's Plinian and co-ignimbrite fallout, are fitted together. Ignimbrite deposits and dense-rock-equivalent conversion are excluded.
+{n_pass} of {len(rows)} baseline fits passed the sampling checks. {warnings} Aso-4's high volume remains qualified by its source audit. At B-Tm, the source-focused fit includes three interpreted upper bounds. [Aso-4 audit](../aso-4-audit/README.md) · [B-Tm occurrence evidence](../../data/audits/B-Tm/README.md)
 
-**Assumption refits with remaining numerical warnings:** {'; '.join(sensitivity_warnings) if sensitivity_warnings else 'none'}. Their provisional summaries remain in the envelope and are marked in the individual reports; the envelope's endpoints therefore need the corresponding numerical qualification. Holdout-fit warnings are reported separately below.
+![Spherical whole-deposit intervals, prior envelopes and withheld-region scores](comparison.png)
 
-Some restrictive alternatives allow geologically extreme totals, particularly the one-fan Aso-4 model. Those outcomes expose weak identification or an inadequate shape assumption; **the envelope is not a range of certified geologically plausible volumes**. Numerical convergence alone does not rescue an unsuitable geological model. The baseline remains the jointly fitted multi-fan specification, with every alternative visible in its eruption report.
+## Predictions in withheld regions
 
-![Global estimates and matched predictive checks](comparison.png)
+Scores use the same observations, training and withheld rows, geographic folds and buffers within each eruption. Lower scores indicate better prediction at the held-out sites. Each case page links the independent directional result and the local contour support audit.
 
-Every individual posterior field is normalized to its fitted volume parameter over WGS84. Source-focused fans have analytical radial integrals and automatically refined angular quadrature; displaced circular fields have analytical integrals. This removes an arbitrary calculation region, not the need for geological assumptions. Sparse measurements cannot exclude arbitrarily large deposits in unsampled places. General smoothness, source-related fan structure, finite mass, alternative thinning shapes and proper priors make the conditional inference possible. Each named geometry has a fixed specification, without fitting to published volume targets.
-
-Each eruption report includes the baseline field, its uncertainty, all assumption refits, whole-field samples, mass in unsampled sectors/proximal/distal areas, and all numerical attempts. **{n_pass}/6 baseline fits pass the declared sampling checks.** Numerical warnings on any sensitivity or withheld fit remain visible. Passing those checks does not establish geological correctness.
-
-## Same-data geographic prediction
-
-| Eruption | Global-model negative log score ↓ | GP score ↓ | Spline score ↓ | Global heldout 95% coverage | Holdout sampling |
+| Eruption | Spherical score ↓ | GP score ↓ | Spline score ↓ | Spherical exact-site 95% coverage | Holdout sampling |
 |---|---:|---:|---:|---:|---|
 {predictions}
 
-Scores use identical accepted inputs, four geographic folds, buffers, training rows and heldout observation/bound semantics. Lower score is better. Global-model fitting is repeated inside every training fold with the fixed priors. Better local prediction does not prove an accurate global total; the regional peers retain their own purpose and no automatic winner is selected by volume.
+[Estimates and diagnostics](comparison.csv) · [Input hashes and matched validation](report.json) · [All four families](../README.md)
 
-## Evidence and reproducibility
+## Geometry and validation
 
-- [Displaced-model known-truth stress tests and retained failures](stress-tests.md)
-- [Source-focused stress tests and limits of the new constraint](../source-revision/stress-tests.md)
-- [Development decisions and numerical equivalence checks](development/README.md)
-- [Machine-readable estimates](comparison.csv) and [matched comparison record](report.json)
-- [Regional rerun and input-preservation verification](verification.json)
-
-Aso-4 now uses its separately named reviewed input; the original CSV and preceding results remain archived. Mazama, Tambora and B-Tm retain their supplied source flags, while YTT and Minoan retain their documented audits. Global uncertainty does not automatically cover unrecorded erosion, marine transport, preferential sampling or source misattribution. The older rerun-verification record above describes its original date and inputs, not the later Aso-4 revision.
-
-For new data, upload measurements and source notes in chat. The assistant audits them, runs the regional and global protocols, and adds the data and illustrated reports to GitHub. No browser workflow is needed.
+The displaced and source-focused geometries have separate known-deposit trials, including failed fits. Sensitivity to the shape of an unmeasured deposit limits interpretation of whole-Earth volumes. [Displaced-geometry trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Geometry study](../source-revision/README.md) · [Model development](development/README.md) · [Equations and priors](../../docs/methods/probabilistic-global.md)
 """)
     return rows
 
@@ -136,10 +121,10 @@ def figures(output, rows):
         for ax in axes:
             ax.set(yticks=range(len(rows)), yticklabels=[r['eruption']+(' (questioned)' if r.get('review_status') == 'questioned' else '') for r in rows])
             ax.invert_yaxis(); ax.grid(axis='x', alpha=.2)
-        axes[0].set(xscale='log', xlabel='Global bulk fallout (km³; log scale)',
-            title='Global volumes\nSolid: conditional 95% · dotted: assumption envelope')
+        axes[0].set(xscale='log', xlabel='Whole-deposit volume (km³, log scale)',
+            title='Whole-deposit volumes\nConditional 95% (solid) and prior envelope (dotted)')
         axes[1].set(xlabel='Equal-region negative log score (lower is better)',
-            title='Matched geographic holdouts\nLocal prediction, not global volume\n× = provisional sampling')
+            title='Matched geographic holdouts\n× marks provisional sampling')
         axes[1].legend(fontsize=9)
         fig.suptitle('Whole-Earth fallout · explicit assumptions and uncertainty', fontsize=16)
         for suffix in ('png', 'svg'):
