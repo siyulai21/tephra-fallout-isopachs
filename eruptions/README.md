@@ -9,6 +9,7 @@ Choose an eruption for its accepted observations, four volume estimates, maps an
 | [Ilopango TBJ, Unit G](ilopango-tbj/README.md) | **40.8** | **190.9** | 52 measurements, 4 lower bounds | Unit G co-ignimbrite fallout. The spherical upper interval is provisional. Northeast measurements are proximal and southwest measurements are distal. |
 | [Mazama](mazama/README.md) | **166.1** | **212.9** | 45 exact | The published calculation uses the supplied acceptance flags. |
 | [Minoan](minoan/README.md) | **28.8** | **40.8** | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |
+| [Sakurajima Satsuma](sakurajima-satsuma/README.md) | **7.1** | **11.3** | 50 measurements, 5 lower bounds, 2 upper bounds | All eight bearings are sampled. Both northwest sites are proximal. The single distal western core materially constrains the spherical upper tail. |
 | [Tambora](tambora/README.md) | **95.7** | **162.3** | 26 exact | Four of six full-data directional fits carry a numerical warning. |
 | [Younger Toba Tuff (YTT)](ytt/README.md) | **900.6** | **1,510.5** | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
 

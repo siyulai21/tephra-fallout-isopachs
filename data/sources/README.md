@@ -2,6 +2,7 @@
 
 [Data guide](../README.md) · [Audits](../audits/README.md)
 
+- The Satsuma records pair numerical locations with published field measurements and document which archaeological values were taken from drawings. [Source files and original reports](sakurajima-satsuma/README.md)
 - The Ilopango sources provide numeric field sections and distal core measurements for the final co-ignimbrite fall. [Original workbook and printed core readings](ilopango-tbj/README.md)
 - The B-Tm sources include the Yang compilation, Costa phase table, Hokkaido sections, Greenland particle series and Sihailongwan varve chronology. [B-Tm originals and attribution](b-tm/README.md)
 - [Minoan published workbook and catalogue](minoan/README.md): source downloads, attribution and their distinct roles in the audit.

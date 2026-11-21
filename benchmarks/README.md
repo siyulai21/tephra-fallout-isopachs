@@ -35,6 +35,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 
 | Command | Evidence checked |
 |---|---|
+| `python -m benchmarks.sakurajima_satsuma` | Satsuma source cells, numerical literature readings, original bounds and eight-sector coverage |
 | `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |
 | `python -m benchmarks.verify_btm_cryptotephra` | Current B-Tm profile integrals, upper-limit identities, four fitted families, matched holdouts and archive-response sensitivity volumes |
 | `python -m benchmarks.verify_btm_audit` | Archived 68-site B-Tm fits, folds, four source sensitivities and thinning experiments |
