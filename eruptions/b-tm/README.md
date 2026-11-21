@@ -4,7 +4,7 @@ The 946 CE Millennium eruption of Paektu / Changbaishan deposited fallout in two
 
 The principal uncertain-direction median map integrates to **33.6 km³**. At Lake Sihailongwan, west of the volcano, its median thickness falls from **8.02 cm to 0.0146 cm**. The conditional limits used at Sihailongwan, Quanyang and Kushu are 0.06, 0.64 and 0.45 cm. The peat and lakes require different transfer assumptions. [Before-and-after contours, weaker assumptions and the independent marine check](results/cryptotephra/README.md)
 
-## Four fits with interpreted archive limits
+## Five fits with interpreted archive limits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-evidence.png)
 
@@ -18,6 +18,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull median map **50.75** · volume median 64.64 · unstable mean 6.1e+11 | 33.03–664.44 | 4.295 | 75.0% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **33.6** · volume median 37.2 | 23.5–77.1 | 1.243 † | 93.8% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **47.0** | 30.2–275.5 | 1.487 † | 93.8% |
+| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **90.4** | 52.0–534.5 | 1.570 | 93.8% |
+
+[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
+
+The nested estimate puts a median 4.9% of the fallout volume inside the retained exact-site triangles and 21.7% beyond the farthest exact measurement. 4/4 geographic refits passed the independent-population check.
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 

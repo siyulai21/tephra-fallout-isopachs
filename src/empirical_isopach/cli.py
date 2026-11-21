@@ -5,6 +5,7 @@ import sys
 
 from .core.catalog import resolve_dataset
 from .models.registry import REGISTRY
+from .models.nested.report import nested_dataset
 from .reporting import compare_dataset
 from .visualization.summary import saved_case_overview
 from .visualization.comparison import add_comparison_to_run
@@ -30,8 +31,18 @@ def compare(argv=None):
                        progress=lambda message: print(message, flush=True))
         from .models.directional.reporting import directional_dataset
         directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name, archives=args.archives)
+        nested_dataset(resolve_dataset(args.csv), args.output/"nested-isopachs", name=args.name, archives=args.archives)
+        review_continuations(resolve_dataset(args.csv), args.output)
         saved_case_overview(args.output, args.name)
         add_comparison_to_run(args.output)
+
+
+def review_continuations(path, root):
+    from .models.continuation_review import directional_review, spherical_review
+    spherical = root/"spherical-mixture"
+    directional = root/"directional"
+    spherical_review(path, spherical, spherical/"sensitivity-study")
+    directional_review(path, directional, directional/"sensitivity-study", directional/"work"/"ensemble")
 
 
 def global_analysis(argv=None):
@@ -40,9 +51,11 @@ def global_analysis(argv=None):
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name")
     parser.add_argument("--resume", action="store_true", help="Resume only checksum-verified matching posterior caches")
-    parser.add_argument("--geometry", choices=("directional", "displaced", "source-fans", "source-envelope"), help="Use directional for the common isopach continuation or select a spherical-mixture geometry")
+    parser.add_argument("--geometry", choices=("directional", "nested-isopachs", "displaced", "source-fans", "source-envelope"), help="Use directional for the common isopach continuation or select a spherical-mixture geometry")
     parser.add_argument("--archives", type=Path, help="Audited archive inventory for conditional global predictions")
     args = parser.parse_args(argv)
+    if args.geometry == "nested-isopachs":
+        return nested_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "directional":
         from .models.directional.reporting import directional_dataset
         return directional_dataset(resolve_dataset(args.csv), args.output, args.name, args.resume, archives=args.archives)
@@ -63,7 +76,7 @@ def main(argv=None):
         # Preserve the module's original CSV-first regional comparison command.
         return compare(argv)
     parser = argparse.ArgumentParser(description=__doc__,
-        epilog="Run tephra-isopachs compare observations.csv --output results/new-run to fit all four families.")
+        epilog="Run tephra-isopachs compare observations.csv --output results/new-run to fit all five families.")
     subparsers = parser.add_subparsers(dest="command")
     subparsers.add_parser("compare", help="Compare every active method; no preferred family")
     subparsers.add_parser("global", help="Global fallout posterior with explicit assumption sensitivity")
@@ -74,6 +87,7 @@ def main(argv=None):
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume with bearing-dependent continuation, fixed prior sensitivities and matched geographic holdouts.")
         print("directional: Whole-Earth continuation from locally supported isopachs\n  Uncertain fan direction across six structures. The principal bulk volume integrates the pointwise median isopachs.")
+        print("nested-isopachs: Joint Bayesian isopach areas and shapes\n  A complete-deposit volume posterior, externally informed thinning, and buffered geographic validation.")
     else:
         parser.print_help()
 

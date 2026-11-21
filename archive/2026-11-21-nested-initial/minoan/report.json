@@ -1,0 +1,430 @@
+{
+  "protocol": "nested-isopach-v1",
+  "name": "Minoan",
+  "input": {
+    "source": "data/eruptions/Minoan_tephra.csv",
+    "input_sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+    "vent_lonlat": [
+      25.396,
+      36.404
+    ],
+    "projection": "+proj=laea +lat_0=36.404 +lon_0=25.396 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 92,
+    "n_upper_limits": 0,
+    "n_lower_limits": 9,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [],
+    "audit": {
+      "file": "audits/Minoan/provenance.json",
+      "sha256": "2310feabf6863117df08cc12fb43abc2866c42d39971232adaf60842fe337435",
+      "case": "combined",
+      "definition": "Combined fallout: consistent reported totals minus identified turbidites; incomplete cores are lower bounds; conflicting rows excluded; identical colocated records counted once."
+    }
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "1fec9737079f0df68688d80d8592f17691349373acf8b05f892a19402dad486e",
+  "draws": 3072,
+  "conditional_volume_km3": [
+    26.02426054503699,
+    38.342107927337835,
+    111.26121761788738
+  ],
+  "population_check_passed": true,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 8.924057354597892e-05,
+      "q95_relative_error": 0.002009600973502856,
+      "maximum_relative_error": 0.01609788548636204,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.02368638331369502,
+        0.06478798221053973,
+        0.09089709478986188
+      ],
+      [
+        0.006519675334281002,
+        0.019951725251377853,
+        0.1325181130438376
+      ],
+      [
+        0.007521154022827064,
+        0.05805681370698791,
+        0.6155923463280587
+      ],
+      [
+        0.3513087640848323,
+        0.8322411006329878,
+        0.9047924501426111
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.03741799997151089,
+        0.10028470813480123,
+        0.19441169649592463
+      ],
+      [
+        0.08267572291994388,
+        0.16388966151817888,
+        0.23273816929753074
+      ],
+      [
+        0.16612828414803102,
+        0.23954416366836123,
+        0.3198188175832398
+      ],
+      [
+        0.1175600230645445,
+        0.19441044258897072,
+        0.3822262220449485
+      ],
+      [
+        0.029344714853824515,
+        0.07763719463837175,
+        0.1657434327908857
+      ],
+      [
+        0.012785866177545879,
+        0.04115950713140523,
+        0.20347061208416928
+      ],
+      [
+        0.00986897066189137,
+        0.04746754787722482,
+        0.1615816454012232
+      ],
+      [
+        0.013013124800310008,
+        0.06668732159657845,
+        0.23167378522519144
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.022902062711381663,
+      0.006411529071938173,
+      0.6274566418952197,
+      0.34472308023397846
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 92,
+    "covered": 85,
+    "fraction": 0.9239130434782609
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "volume_km3": [
+        26.02426054503699,
+        38.342107927337835,
+        111.26121761788738
+      ],
+      "effective_draws": 3071.9999999999854,
+      "relative_ess": 0.9999999999999952,
+      "weight_check_passed": true
+    },
+    "weak_profile_transfer": {
+      "volume_km3": [
+        25.752122375247442,
+        35.57475794783737,
+        70.92370700094061
+      ],
+      "effective_draws": 78.69221394474403,
+      "relative_ess": 0.02561595506013803,
+      "weight_check_passed": false
+    },
+    "broader_peak_prior": {
+      "volume_km3": [
+        26.04586396503608,
+        38.56480984482657,
+        110.13454065733242
+      ],
+      "effective_draws": 3041.079564956495,
+      "relative_ess": 0.989934754217609,
+      "weight_check_passed": true
+    },
+    "power_tail_prior_80pct": {
+      "volume_km3": [
+        25.762349854549665,
+        38.27940867706537,
+        128.69491589081537
+      ],
+      "effective_draws": 2123.7453936348525,
+      "relative_ess": 0.6913233703238452,
+      "weight_check_passed": true
+    },
+    "exponential_tail_prior_80pct": {
+      "volume_km3": [
+        26.354849127684606,
+        38.466023603841556,
+        98.15316800408844
+      ],
+      "effective_draws": 2408.8512299883073,
+      "relative_ess": 0.7841312597618187,
+      "weight_check_passed": true
+    },
+    "detached_prior_50pct": {
+      "volume_km3": [
+        25.87275826971698,
+        37.98742456385767,
+        117.6094728194787
+      ],
+      "effective_draws": 1879.9354479688366,
+      "relative_ess": 0.611958153635689,
+      "weight_check_passed": true
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      3304092.8628162188,
+      8013691.826950273,
+      239030718.14526471
+    ],
+    "0.1": [
+      1328750.914566804,
+      2310932.7511604447,
+      7587504.741920779
+    ],
+    "1.0": [
+      376427.2638363822,
+      643616.868569927,
+      1291739.328349148
+    ],
+    "10.0": [
+      34397.40702039346,
+      61450.41044821927,
+      109893.15871661577
+    ],
+    "100.0": [
+      0.0,
+      0.0,
+      1810.7298919765378
+    ],
+    "1000.0": [
+      0.0,
+      0.0,
+      60.452754086344775
+    ]
+  },
+  "slab_volume_km3": [
+    [
+      0.4420228739115423,
+      1.431799721661065,
+      45.06357217427465
+    ],
+    [
+      1.857551726260618,
+      3.5031875139676423,
+      35.99505179359482
+    ],
+    [
+      5.872760234866966,
+      9.524642495557414,
+      19.083178199745387
+    ],
+    [
+      12.036150856734194,
+      18.168492334935223,
+      32.098818042638186
+    ],
+    [
+      1.1818297527697847,
+      3.169097826179163,
+      6.722795757319593
+    ],
+    [
+      -0.0,
+      -0.0,
+      3.9632451631302366
+    ],
+    [
+      -0.0,
+      -0.0,
+      0.1185854584687579
+    ]
+  ],
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.3997395833333333,
+  "volume_conditional_on_tail": {
+    "power": [
+      25.478221539442544,
+      38.27940867706537,
+      158.6798148414968
+    ],
+    "exponential": [
+      26.626531306235986,
+      38.533475586316236,
+      93.19036025186116
+    ]
+  },
+  "geographic_score": 1.5347166016372362,
+  "geographic_folds_passed": 4,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 35,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 37.0,
+      "upper_cm": null,
+      "latent_cm": [
+        8.209465658616358,
+        15.500580141400137,
+        31.613180662697093
+      ],
+      "latent_satisfies": 0.016927083333333332,
+      "predictive_probability_of_event": 0.21041130493853868
+    },
+    {
+      "row_id": 6,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        10.281751912126392,
+        17.236271156408353,
+        30.666145712706882
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8790782277648156
+    },
+    {
+      "row_id": 3,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        10.689039432352756,
+        18.40784783860829,
+        73.60986071073995
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.894900575198124
+    },
+    {
+      "row_id": 37,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        12.905698860057425,
+        20.66736470406571,
+        104.80951797470158
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9152687327119019
+    },
+    {
+      "row_id": 2,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 10.000000000000002,
+      "upper_cm": null,
+      "latent_cm": [
+        13.47308809170113,
+        21.6735849690207,
+        117.27648795415338
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7850022356431124
+    },
+    {
+      "row_id": 10,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 31.0,
+      "upper_cm": null,
+      "latent_cm": [
+        18.452958508192044,
+        29.166270021847666,
+        435.85881515875036
+      ],
+      "latent_satisfies": 0.4287109375,
+      "predictive_probability_of_event": 0.5372924051625811
+    },
+    {
+      "row_id": 7,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        18.246402506170856,
+        28.436361722670146,
+        307.9404046009394
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9533893532061275
+    },
+    {
+      "row_id": 13,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 46.0,
+      "upper_cm": null,
+      "latent_cm": [
+        18.10744102482075,
+        28.10907489268552,
+        261.4815614631974
+      ],
+      "latent_satisfies": 0.18359375,
+      "predictive_probability_of_event": 0.3809553016575368
+    },
+    {
+      "row_id": 22,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 9.000000000000002,
+      "upper_cm": null,
+      "latent_cm": [
+        12.971653766173752,
+        18.773833532759717,
+        25.755364053643337
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7657892118040218
+    }
+  ],
+  "archive_predictions": {},
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  }
+}

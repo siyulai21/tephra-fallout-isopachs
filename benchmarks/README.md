@@ -70,3 +70,7 @@ Start with the [Aso-4 study's complete reproduction sequence](../comparisons/aso
 Run `python -m benchmarks.ilopango` to verify Unit G thicknesses, bounds, the source ledger and angular coverage. Supply `--verify-manuscript PATH` to check the distal core readings and Greenland coordinates against the accepted manuscript. [Ilopango source audit](../data/audits/Ilopango-TBJ/README.md)
 
 Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the published inputs against their workbooks. Both commands check the principal selection and four alternatives. Add `--prepare-only` to rebuild the reviewed tables and provenance. Fit either eruption with the ordinary `tephra-isopachs compare` command. [Minoan audit](../data/audits/Minoan/README.md) · [YTT audit](../data/audits/YTT/README.md)
+
+## Bayesian nested isopach volumes
+
+Run the catalogue with `python -m benchmarks.nested_catalogue --output results/nested-cases`. Run `python -m benchmarks.nested_known --output results/nested-known --with-directional` and `python -m benchmarks.nested_spherical_known --output results/nested-spherical-known` for matched known deposits. Replay the published tables with `python -m benchmarks.nested_summary --output results/nested-comparison` and verify the published packets with `python -m benchmarks.verify_nested`. [Results](../comparisons/nested-isopachs/README.md)

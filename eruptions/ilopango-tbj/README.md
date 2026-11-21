@@ -2,7 +2,7 @@
 
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
-## Four matched thickness-only fits
+## Five matched thickness-only fits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](results/four-method-evidence.png)
 
@@ -16,6 +16,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
+| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **50.5** | 37.5–181.8 **(provisional)** | 1.159 † | 94.2% |
+
+[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
+
+The nested estimate puts a median 3.4% of the fallout volume inside the retained exact-site triangles and 11.3% beyond the farthest exact measurement. 1/4 geographic refits passed the independent-population check.
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 

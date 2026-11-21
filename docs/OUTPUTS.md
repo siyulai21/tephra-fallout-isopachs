@@ -11,7 +11,7 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 | `directional/` | Principal uncertain-fan-direction report in `README.md`, with its quantitative field, whole-Earth volume and contour audit in `azimuth/` |
 | `spherical-mixture/` | Spherical-mixture whole-Earth posterior and assumption sensitivities |
 
-Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) shows all four families on matched geographic tests.
+Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) links the five families on matched geographic tests.
 
 ## Visual reading route
 
@@ -19,7 +19,7 @@ Start on the case home. Its `four-method-evidence.png` compares four median fiel
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/README.md#checking-a-map).
 
-The four principal fits use the same accepted measurements and bounds, including any site-specific interpreted limits. The source audit gives its derivation and the shared source-review protocol explains the decision. [Site decision protocol](methods/sites-without-measured-thickness.md) The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm omission and weaker-response comparisons](../eruptions/b-tm/results/cryptotephra/README.md)
+The five principal fits use the same accepted measurements and bounds, including any site-specific interpreted limits. The source audit gives its derivation and the shared source-review protocol explains the decision. [Site decision protocol](methods/sites-without-measured-thickness.md) The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm omission and weaker-response comparisons](../eruptions/b-tm/results/cryptotephra/README.md)
 
 ## Regional GP and cubic spline
 
@@ -88,3 +88,7 @@ The principal volume in `fits.baseline.volume` integrates complete bearing-condi
 `fits.baseline.volume` contains its conditional median and 95% credible interval. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` combines the parent sampling status, retained-mass integration check and split-draw volume check. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
 
 All volumes are **bulk fallout**, not dense-rock equivalent or total erupted material including ignimbrite deposits. Regional conditional intervals, global credible intervals, geographic-deletion ranges and prior-sensitivity envelopes remain separate. Passing numerical checks does not identify an unseen deposit.
+
+## Bayesian nested isopachs
+
+Open `nested-isopachs/README.md` for the posterior volume, conditional 95% interval, map and area–thickness curve. Its companion `support.json` records contour rejections. `geographic.json` preserves training and withheld row IDs, `heldout.csv` gives predictions, and `volume-budget.npz` stores the contributions of each thickness slice in every complete deposit. [Worked catalogue](../comparisons/nested-isopachs/README.md)

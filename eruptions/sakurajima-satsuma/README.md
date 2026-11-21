@@ -2,7 +2,7 @@
 
 The 12.8 ka Satsuma eruption (P14, Sz-S) deposited ash and pumice east and west of Sakurajima. The reconstruction combines primary fallout from its eruptive phases. **50 measured thicknesses, five lower bounds and two upper bounds** come from field sections, written excavation records, an island outcrop and a seafloor core. Each location and thickness comes from a numeric source record. [Accepted data](../../data/eruptions/Sakurajima_Satsuma.csv) · [Published sources](../../data/sources/sakurajima-satsuma/README.md) · [202-row selection audit](../../data/audits/Sakurajima-Satsuma/README.md)
 
-## Four matched thickness-only fits
+## Five matched thickness-only fits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Sakurajima Satsuma (P14)](results/four-method-evidence.png)
 
@@ -16,6 +16,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **13.04** | 4.18–41.49 | 1.371 | 90.0% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **7.1** · volume median 10.0 | 3.8–70.6 | 1.164 † | 96.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **11.3** | 5.1–666.5 | 1.376 | 88.0% |
+| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **12.5** | 7.0–60.2 **(provisional)** | 0.742 † | 98.0% |
+
+[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
+
+The nested estimate puts a median 1.4% of the fallout volume inside the retained exact-site triangles and 45.9% beyond the farthest exact measurement. 1/4 geographic refits passed the independent-population check.
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
