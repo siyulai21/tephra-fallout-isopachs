@@ -1,5 +1,8 @@
 """Replay principal spherical masses, map checks, geographic partitions and release evidence."""
+import argparse
 import gzip
+import subprocess
+from zipfile import ZipFile
 from hashlib import sha256
 from pathlib import Path
 import json
@@ -7,7 +10,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import qmc
 
-from .publication import SPHERICAL_REFERENCE,read_hashes,preceding_spherical_bytes
+from .publication import ROOT, SPHERICAL_REFERENCE, preceding_spherical_bytes, read_hashes, verify_files
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL,BearingSupport,phases
@@ -85,9 +88,38 @@ def verify_case(rec):
     assert screen["baseline_posterior_sha256"]==r["fits"]["baseline"]["posterior_sha256"]
 
 
+def verify_previous_release(check_history):
+    """Check the offline audit inputs and, on request, the entire preceding release."""
+    hashes = read_hashes(ROOT / SPHERICAL_REFERENCE / "previous-files.sha256")
+    inventory = {Path(name): digest for name, digest in read_hashes().items()
+                 if Path(name).is_relative_to(SPHERICAL_REFERENCE)}
+    verify_files(inventory)
+    inputs = SPHERICAL_REFERENCE / "audit-inputs"
+    retained = {(Path("eruptions") / path.relative_to(inputs)).as_posix()
+                for path in inventory if path.is_relative_to(inputs)}
+    with ZipFile(ROOT / SPHERICAL_REFERENCE / "audit-pages.zip") as pages:
+        retained.update(pages.namelist())
+    retained.update(name for name in hashes if Path(name).match("eruptions/*/results/spherical-mixture/report.json"))
+    for name in sorted(retained):
+        assert sha256(preceding_spherical_bytes(name)).hexdigest() == hashes[name], name
+    print(f"Verified {len(retained)} historical inputs used by the maps and source audits.")
+    if check_history:
+        revision = "843a2eef0fc669e38d95e4153ac8d7464f4d4a98"
+        if subprocess.run(["git", "cat-file", "-e", revision + "^{commit}"], cwd=ROOT,
+                          stderr=subprocess.DEVNULL).returncode:
+            raise SystemExit(f"Full release verification needs commit {revision}. "
+                             f"Fetch it with git fetch --no-tags --depth=1 origin {revision}")
+        for name, expected in hashes.items():
+            content = subprocess.check_output(["git", "cat-file", "blob", f"{revision}:{name}"], cwd=ROOT)
+            assert sha256(content).hexdigest() == expected, name
+        print(f"Verified all {len(hashes)} original files against Git commit {revision}.")
+
+
 def main():
-    for name,v in read_hashes(SPHERICAL_REFERENCE/"previous-files.sha256").items():
-        assert sha256(preceding_spherical_bytes(name)).hexdigest()==v,name
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check-history", action="store_true",
+                        help="Also read every replaced artifact from the pinned, locally available Git revision.")
+    verify_previous_release(parser.parse_args().check_history)
     for rec in datasets():
         verify_case(rec)
     base=Path("comparisons/spherical-mixture")
@@ -109,7 +141,7 @@ def main():
         ref=refs[packet["geometry"],packet["scenario"],packet["seed"]]
         assert packet["posterior_sha256"]==ref["fits"]["baseline"]["posterior_sha256"]
         assert packet["volumes_km3"]["original"]==ref["truth_km3"]
-    print("Verified all six spherical reconstructions, 48 prior fits, 24 geographic deletions, 24 known-volume fits and the preceding release.")
+    print("Verified all six spherical reconstructions, 48 prior fits, 24 geographic deletions, and 24 known-volume fits.")
 
 
 if __name__=="__main__":

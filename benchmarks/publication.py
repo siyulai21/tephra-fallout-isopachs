@@ -1,6 +1,7 @@
 """Read and verify the SHA-256 identities of the published evidence."""
 from hashlib import sha256
 from pathlib import Path
+from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = ROOT / "benchmarks/published-evidence.sha256"
@@ -20,15 +21,17 @@ def previous_btm_file(name):
 SPHERICAL_REFERENCE = Path("archive/2026-11-20-spherical-continuation")
 
 
-def preceding_spherical_bytes(name,root=ROOT):
-    """Read a replaced artifact under its original repository-relative name."""
-    from zipfile import ZipFile
-    folder = root/SPHERICAL_REFERENCE
-    if Path(name).suffix in {".md",".py"}:
-        archive = "pages.zip" if Path(name).suffix==".md" else "implementation.zip"
-        with ZipFile(folder/archive) as pages:
-            return pages.read(str(name))
-    return (folder/"files"/name).read_bytes()
+def preceding_spherical_bytes(name, root=ROOT):
+    """Read a broad-continuation artifact used by a current audit or paired map."""
+    path = Path(name)
+    folder = root / SPHERICAL_REFERENCE
+    archived = folder / "audit-inputs" / path.relative_to("eruptions")
+    if path.match("eruptions/*/results/spherical-mixture/report.json") and not archived.exists():
+        return (root / path.parent / "bearing/parent-report.json").read_bytes()
+    if path.suffix == ".md":
+        with ZipFile(folder / "audit-pages.zip") as pages:
+            return pages.read(path.as_posix())
+    return archived.read_bytes()
 
 
 def read_hashes(path=INVENTORY):

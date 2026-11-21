@@ -13,9 +13,9 @@
 | [reporting.py](reporting.py) | Provenance, candidate tables and reports for all fitted methods |
 | [visualization/](visualization/README.md) | Shared offline cartography, complete map frames, posterior-field views and reader comparisons |
 | [support.py](support.py), [support_reporting.py](support_reporting.py) | Local evidence footprints, rejected contours, partial volumes and support reports |
-| [global_reporting.py](global_reporting.py) | Spherical-mixture posterior reporting; the module keeps its historical name |
+| [global_reporting.py](global_reporting.py) | Spherical runner for the kernel posterior, bearing continuation and case report |
 | [models/directional/](models/directional/README.md) | Directional interpolation, whole-Earth posterior, mass budgets, sensitivities and reporting |
-| [models/mass_mixture/](models/mass_mixture/) | Mass-normalized fans, priors, posterior inference and geographic validation |
+| [models/mass_mixture/](models/mass_mixture/) | Kernel likelihood, bearing-dependent continuation, integrated mass and geographic tests |
 | [cli.py](cli.py) | `methods`, `compare`, `global` and historical `fit` dispatch |
 
 `spline.py` and `selection.py` are compatibility imports. Edit the cubic-spline implementation under `models/cubic_spline/`. Method-specific diagnostics belong to its adapter; shared reporting should not contain a branch for each new family.

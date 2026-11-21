@@ -3,6 +3,7 @@ import argparse
 import gzip
 import json
 from pathlib import Path
+from shutil import copyfile
 
 import numpy as np
 import pandas as pd
@@ -11,23 +12,27 @@ from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.bearings.study import read
 
 
-def summarize(trials,output,cases=Path("eruptions")):
+def build_validation(trials, output, case_dirs, link_prefix=""):
+    """Write paired data and the map; return their findings for the family report."""
     output.mkdir(parents=True,exist_ok=True)
-    packets=[]
-    if trials:
-        for p in sorted(trials.glob("*/*.json")):
-            packets.append({**read(p),"geometry":p.parent.name})
-        if len(packets)!=24:
-            raise ValueError("The two registered six-design, two-seed suites require 24 fitted deposits")
-        (output/"known-deposits.json.gz").write_bytes(gzip.compress(json.dumps(packets,separators=(",",":"),allow_nan=False).encode(),mtime=0))
+    packet_file = output / "known-deposits.json.gz"
+    published = Path(__file__).resolve().parents[1] / "comparisons/spherical-mixture/bearings/known-deposits.json.gz"
+    if trials is None:
+        with gzip.open(published, "rt") as stream:
+            packets = json.load(stream)
+        if packet_file.resolve() != published:
+            copyfile(published, packet_file)
     else:
-        archive=output/"known-deposits.json.gz"
-        if not archive.exists():
-            from shutil import copyfile
-            published=Path(__file__).resolve().parents[1]/"comparisons/spherical-mixture/bearings/known-deposits.json.gz"
-            copyfile(published,archive)
-        with gzip.open(archive,"rt") as stream:
-            packets=json.load(stream)
+        from .mass_mixture import SCENARIOS
+        expected = {(geometry, scenario, seed)
+                    for geometry, seeds in (("displaced", (10, 11)), ("source", (20, 21)))
+                    for scenario in SCENARIOS for seed in seeds}
+        packets = [{**read(path), "geometry": path.parent.name} for path in sorted(trials.glob("*/*.json"))]
+        observed = {(row["geometry"], row["scenario"], row["seed"]) for row in packets}
+        if observed != expected or len(packets) != len(expected):
+            raise ValueError("The comparison requires all 24 registered geometry, scenario and seed combinations exactly once")
+        raw = json.dumps(packets, separators=(",", ":"), allow_nan=False).encode()
+        packet_file.write_bytes(gzip.compress(raw, mtime=0))
     estimates,area_rows=[],[]
     for d in packets:
         for name,total in d["volumes_km3"].items():
@@ -50,7 +55,7 @@ def summarize(trials,output,cases=Path("eruptions")):
     grouped.to_csv(output/"known-areas.csv",index=False)
     real=[]
     for rec in sorted(datasets(),key=lambda r:r["slug"]):
-        home=cases/rec["slug"]/"results/spherical-mixture"
+        home=case_dirs[rec["slug"]]
         r=read(home/"report.json")
         v=r["fits"]["baseline"]["volume"]
         old=r["bearing"]["parent_reference_km3"]
@@ -72,28 +77,32 @@ def summarize(trials,output,cases=Path("eruptions")):
         sparse_text=(f" Within those readings the site-weighted score was {pooled[0]:.3f} → {pooled[1]:.3f}. "
                      f"Giving each represented eruption equal weight gives {balanced[0]:.3f} → {balanced[1]:.3f}.")
     original=t[t.truth=="original"].groupby("method").agg({"absolute_log_volume_error":"mean","covers_truth":"sum"})
-    rows=["# Spherical isopachs in unsampled directions","",
-      "Every eruption uses the same continuation of its fitted spherical kernels. The source and measured thicknesses retain their likelihood. The central map allows an unobserved fan to extend in different directions across simulated deposits. A broad continuation remains possible in one third of the mixture. The first column below is the earlier spherical median under the same observations.","",
-      "| Eruption | Earlier → principal volume (km³) | Principal conditional 95% (km³) | Geographic score, earlier → principal | Exact-site 95% coverage |",
-      "|---|---:|---:|---:|---:|"]
-    for r in real.itertuples():
-        rows.append(f"| [{r.eruption}](../../../eruptions/{r.slug}/results/spherical-mixture/README.md) | {r.parent_volume_km3:,.1f} → **{r.principal_volume_km3:,.1f}** | {r.lower95:,.1f}–{r.upper95:,.1f} | {r.parent_score:.3f} → {r.principal_score:.3f} | {r.coverage:.1%} |")
-    rows+=["",f"Averaging geographic scores equally across eruptions gives {real.parent_score.mean():.3f} → {real.principal_score.mean():.3f}. Lower is better. The matched predictions retain all limit events and numerical warnings. {real.n_high_exposure.sum()} withheld readings had gap exposure of at least 0.5.{sparse_text} [Paired results, including poorly supported held-out sites](paired-cases.csv)","",
+    score_text = (
+        f"The geographic score averaged equally across eruptions changed from {real.parent_score.mean():.3f} "
+        f"to {real.principal_score.mean():.3f}. Of the withheld readings, {real.n_high_exposure.sum()} "
+        f"had gap exposure of at least 0.5.{sparse_text} "
+        f"[Paired predictions and gap-exposure scores]({link_prefix}paired-cases.csv)"
+    )
+    rows=[
        "## Where the map changes","",
-       "![Earlier and principal spherical ten-centimetre isopachs for all six eruptions](paired-isopachs.png)","",
-       "Each panel zooms to the same thickness threshold. Tan shading identifies ground where only the earlier median reaches 10 cm. Blue shading identifies ground where both medians reach it. Only sites inside each frame are visible. The area calculations below cover the entire Earth.","",
+       f"![Broad and principal spherical 10 cm isopachs by eruption]({link_prefix}paired-isopachs.png)","",
+       "Each panel compares the same 10 cm threshold. Tan shading identifies ground where only the earlier median reaches 10 cm. Blue shading identifies ground where both medians reach it. Only sites inside each frame are visible. The area calculations below cover the entire Earth.","",
        "| Eruption and compass sector | Area ≥10 cm, earlier → principal (km²) | Split-draw area disagreement |","|---|---:|---:|"]
     for slug,name,sector in (("aso-4","Aso-4","S"),("aso-4","Aso-4","SE"),("aso-4","Aso-4","W"),
                              ("b-tm","B-Tm","W"),("mazama","Mazama","SW")):
-        a=pd.read_csv(cases/slug/"results/spherical-mixture/bearing/sector-areas.csv")
+        if slug not in case_dirs:
+            continue
+        a=pd.read_csv(case_dirs[slug]/"bearing/sector-areas.csv")
         group=a[(a.sector==sector)&(a.level_cm==10)]
         union=group.split_union_km2.sum()
         effective=union**2/group.split_union_area_squared_weights.sum() if union else 0.
         split=(f"{group.split_disagreement_km2.sum()/union:.1%}" if effective>=64 else "Unresolved")
         rows.append(f"| {name}, {sector} | {group.reference_km2.mean():,.0f} → {group.principal_km2.mean():,.0f} | {split} |")
     rows+=["","These are modelled areas in 45° sectors, averaged over two scrambled whole-Earth integration grids. The sites do not establish the actual deposit edge. The downloadable tables give both grid results, contour-area split checks and all eight bearings at 1, 10 and 100 cm.","",
-       "## Deposits with known volumes","",
-       f"The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **{int(original.loc['reference','covers_truth'])}/24 and {int(original.loc['principal','covers_truth'])}/24** fits, respectively. Mean absolute log volume error was **{original.loc['reference','absolute_log_volume_error']:.3f} → {original.loc['principal','absolute_log_volume_error']:.3f}**. A smaller footprint does not guarantee a better total.","",
+    ]
+    map_section = "\n".join(rows)
+    rows = ["## Deposits with known volumes","",
+       f"The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **{int(original.loc['reference','covers_truth'])}/24 and {int(original.loc['principal','covers_truth'])}/24** fits, respectively. Mean absolute log volume error was **{original.loc['reference','absolute_log_volume_error']:.3f} → {original.loc['principal','absolute_log_volume_error']:.3f}**. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.","",
        "| Area tested | Threshold | Resolved pairs / 24 | False-positive area, earlier → principal (km²) | Missed fallout area, earlier → principal (km²) |",
        "|---|---:|---:|---:|---:|"]
     for scope in ("Earth","gap exposure >= 0.5"):
@@ -109,16 +118,22 @@ def summarize(trials,output,cases=Path("eruptions")):
     warnings=sum(not d["sampler_passed"] for d in packets)
     split=sum(not d["principal"]["checks"]["draw_split_passed"] for d in packets)
     rows+=["",f"Each resolved fit receives equal weight. Both model–truth unions must have at least 64 effective area nodes. Empty or inadequately resolved unions are listed in the CSV. {warnings} parent fits had sampling warnings and {split} bearing-volume estimates retained split-draw warnings. The scores describe these development simulations.","",
-       "Four missing-quadrant fits also have a second compatible truth. Within an 80 km disk centred 110 km east and north of the source, the hidden fan can be substantially weaker while every sampled thickness is identical. Both truths and both changes in error are retained. Diffuse tails and genuine missing lobes remain consequential for a global estimate. [Known volumes and failures](known-volumes.csv) · [Contour errors for every threshold and truth](known-areas.csv) · [Both quadrature replicates and numerical refinements](known-deposits.json.gz)","",
-       "[Equations, model assumptions and reproduction](../../../docs/methods/spherical-bearings.md) · [All prior sensitivities](../README.md) · [Preceding release](../../../archive/2026-11-20-spherical-continuation/README.md)",""]
-    (output/"README.md").write_text("\n".join(rows))
+       f"Four missing-quadrant fits also have a second compatible truth. Within an 80 km disk centred 110 km east and north of the source, a weaker hidden fan gives identical thickness at every sampled site. The tables retain both truths. [Volume errors and failures]({link_prefix}known-volumes.csv) · [Contour errors by threshold and truth]({link_prefix}known-areas.csv) · [Quadrature replicates and numerical checks]({link_prefix}known-deposits.json.gz)",""]
     from .spherical_bearing_figure import draw
-    draw(output,cases)
+    draw(output, case_dirs)
+    return real.set_index("slug"), score_text, map_section, "\n".join(rows)
+
+
+def summarize(trials, output, cases=Path("eruptions")):
+    """Replay the paired validation files separately in a research output directory."""
+    case_dirs = {r["slug"]: cases / r["slug"] / "results/spherical-mixture" for r in datasets()}
+    _, scores, maps, trials_text = build_validation(trials, output, case_dirs)
+    (output / "README.md").write_text(f"# Spherical bearing validation\n\n{scores}\n\n{maps}\n{trials_text}")
 
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--trials",type=Path,help="Directory holding displaced and source trial folders. By default replay the published gzip packet.")
-    p.add_argument("--output",type=Path,default=Path("comparisons/spherical-mixture/bearings"))
+    p.add_argument("--output",type=Path,default=Path("results/spherical-bearing-comparison"))
     args=p.parse_args()
     summarize(args.trials,args.output)

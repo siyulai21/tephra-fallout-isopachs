@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 
-from .publication import SPHERICAL_REFERENCE, read_hashes, preceding_spherical_bytes
+from .publication import ROOT, SPHERICAL_REFERENCE, read_hashes, preceding_spherical_bytes
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.bearings.maps import BearingView, medians
@@ -25,11 +25,11 @@ def grid(view, bounds, size):
     return x,y,xy,fields.reshape(2,*xx.shape)
 
 
-def draw(output, cases):
+def draw(output, case_dirs):
     previous, current = "#a44926", "#075d72"
     sources = {}
     records=sorted(datasets(),key=lambda r:r["slug"])
-    archived=read_hashes(SPHERICAL_REFERENCE/"previous-files.sha256")
+    archived=read_hashes(ROOT/SPHERICAL_REFERENCE/"previous-files.sha256")
     rows=(len(records)+1)//2
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(rows,2,figsize=(10.2,3.6*rows),squeeze=False,layout="constrained")
@@ -38,17 +38,23 @@ def draw(output, cases):
         fig.suptitle("How the spherical 10 cm isopach changes", fontsize=18)
         for ax,rec in zip(axes.flat,records):
             slug=rec["slug"]
-            folder=cases/slug/"results/spherical-mixture"
+            folder=case_dirs[slug]
             report=read(folder/"report.json")
             data,meta=audited_data(rec["path"])
+            parent_hash = digest(folder / "posterior.npz")
+            if (meta["input_sha256"] != report["input"]["input_sha256"]
+                    or parent_hash != report["fits"]["baseline"]["posterior_sha256"]):
+                raise ValueError(f"{slug}: map inputs differ from the spherical fit")
             with np.load(folder/"posterior.npz") as raw:
                 samples=dict(raw)
             lat=meta["vent_lonlat"][1]
             view=BearingView(samples,data,lat,report["bearing"]["map_draw_check"]["draws_per_chain"])
             name=folder/"map-display.json"
             key=f"eruptions/{slug}/results/spherical-mixture/map-display.json"
-            if key in archived:
-                earlier_bounds=json.loads(preceding_spherical_bytes(key))["global_bounds_km"]
+            parent_frame = json.loads(preceding_spherical_bytes(key)) if key in archived else {}
+            if (parent_frame.get("input_sha256") == meta["input_sha256"]
+                    and parent_frame.get("posterior_sha256") == parent_hash):
+                earlier_bounds = parent_frame["global_bounds_km"]
             else:
                 earlier_bounds,_=global_frame(data.xy,lat,PosteriorView(samples,lat).central,minimum_cm=10.)
             boxes=np.array([earlier_bounds,read(name)["global_bounds_km"]])
@@ -86,7 +92,7 @@ def draw(output, cases):
             ax.tick_params(labelsize=8)
             if ax.get_subplotspec().is_last_row():
                 ax.set_xlabel("Easting from source (km)",fontsize=9)
-            sources[slug]={"report_sha256":digest(folder/"report.json"),"parent_posterior_sha256":digest(folder/"posterior.npz"),
+            sources[slug]={"report_sha256":digest(folder/"report.json"),"parent_posterior_sha256":parent_hash,
                            "bounds_km":bounds.tolist(),"maximum_edge_cm":float(np.exp(edge_max)) if edge_max is not None else None}
         handles=[Patch(facecolor="#e1bba6",edgecolor=previous,linestyle=":",label="Earlier estimate only"),
                  Patch(facecolor="#bde2e5",edgecolor=current,linestyle="--",label="Principal estimate ≥10 cm"),

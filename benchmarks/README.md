@@ -2,10 +2,6 @@
 
 For a new case, run the four families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.
 
-## Spherical continuation across unsampled bearings
-
-The [paired spherical study](../comparisons/spherical-mixture/bearings/README.md) reuses the verified full-data and geographic-fold posteriors because the extension preserves their training likelihood. The ordinary global command computes all seven prior sensitivities and the new principal field. Use `python -m benchmarks.spherical_bearings --help` for the two known-volume suites and `python -m benchmarks.verify_spherical_bearings` to verify the six published cases.
-
 ## Current evaluations
 
 | Command | What it does | Method family |
@@ -15,7 +11,7 @@ The [paired spherical study](../comparisons/spherical-mixture/bearings/README.md
 | `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/single-structure/README.md#reproduce) | Single-structure directional sensitivity |
 | `python -m benchmarks.directional_comparison --help` | Assemble matched global comparisons from completed cases, stress trials and replications | Both global families |
 | `python -m benchmarks.regional --output results/regional-methods` | Current six-eruption matched regional fits, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
-| `python -m benchmarks.global_posterior --output results/global-posterior` | Six global posteriors using each case's reviewed catalogue geometry, seven sensitivity refits per eruption, matched geographic holdouts and illustrated reports | Spherical mixture; reviewed geometry per case |
+| `python -m benchmarks.global_posterior --output results/global-posterior` | Fit the registered cases with bearing continuation, seven prior sensitivities and matched geographic holdouts, then build the spherical comparison | Spherical mixture; reviewed geometry per case |
 | `python -m benchmarks.source_fans --output results/source-stress` | Twelve source-focused trials with seeds 20/21, including shape violations and hidden mass, plus two diffuse-tail alternatives | Source-focused ellipses |
 | `python -m benchmarks.source_stress_report --source results/source-stress --output results/source-stress-report` | Publish every declared source-focused trial, preserving failed attempts and normalization refinements | Reports the source-focused stress cache |
 | `python -m benchmarks.global_stress_report --source results/global-stress --output results/global-stress-report` | Publish all twelve completed global stress trials, including coverage failures and numerical warnings | Reports the existing stress-run cache |
@@ -23,13 +19,15 @@ The [paired spherical study](../comparisons/spherical-mixture/bearings/README.md
 | `python -m benchmarks.support --output results/support-trials` | Twelve known-truth tests of local footprints, complete-contour gates and hidden extrapolation | Regional GP and cubic spline |
 | `python -m benchmarks.support_domain --base results/regional-methods --output results/domain-sensitivity` | Retune spline fitting-rectangle padding while keeping the integration footprint fixed | Spline; unchanged GP reference |
 
-To rebuild the published comparisons from the saved fits, run these commands in the repository root. The regional and spherical tables use the accepted input for each eruption. The directional comparison uses the same fitted report for each uncertain-direction estimate and its paired control.
+To rebuild the published comparisons from the saved fits, run these commands in the repository root. The regional and spherical tables use the accepted input for each eruption. The spherical command writes one report containing the broad controls, principal volumes, prior envelopes, paired maps and 24 known-deposit tests. The directional command reads the uncertain-direction estimates and their matched controls from the same fits.
 
 ```sh
 python -m benchmarks.azimuth_summary --output results/directional-summary
 python -m benchmarks.regional --summarize-only --published --output results/regional-summary
 python -m benchmarks.global_posterior --summarize-only --published --output results/spherical-summary
 ```
+
+To rerun the spherical simulations from their seeds, follow the [known-deposit commands](../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility). To verify the six published fits and their retained controls offline, run `python -m benchmarks.verify_spherical_bearings`. The [dated inventory](../archive/2026-11-20-spherical-continuation/README.md) gives the full historical check.
 
 Replay the contour screens directly from the published spherical fits with `python -m benchmarks.directional_spherical_support --published --output results/spherical-support`. [Case support packets](../comparisons/support/README.md)
 

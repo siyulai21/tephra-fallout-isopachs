@@ -1,8 +1,15 @@
 # Mass-normalized spherical mixture
 
-[Scientific protocol and priors](../../../../docs/methods/probabilistic-global.md) · [Results](../../../../comparisons/spherical-mixture/README.md)
+The spherical mixture fits kernel amplitudes, locations and shapes to audited thicknesses and bounds. Its principal field lets a fan continue into unsampled directions. The broad parent supplies the kernel posterior and the matched control. [Scientific protocol](../../../../docs/methods/spherical-bearings.md) · [Published maps and checks](../../../../comparisons/spherical-mixture/README.md)
 
-The [bearing continuation](bearings/) supplies the principal field on every registered geometry. [Equations, uncertainty and checks](../../../../docs/methods/spherical-bearings.md)
+## Follow a fit
+
+1. [Global runner](../../global_reporting.py) resolves the catalogue geometry, fits the baseline and seven prior alternatives, and hands their verified posterior draws to the [bearing report builder](bearings/report.py).
+2. [Field](bearings/field.py) defines directional reach from the training sites and the uncertain fan orientation. [Volume](bearings/volume.py) integrates each simulated deposit and separates mass by sector and support class.
+3. [Validation](bearings/study.py) uses the training posterior for each held-out region. [Maps](bearings/maps.py) checks contour-area stability and [complete-contour screening](contours.py) replays the fitted surfaces on the shared support protocol.
+4. [Report text](bearings/narrative.py) gives the case its principal volume, broad control and warnings. The [cross-eruption builder](../../../../benchmarks/global_posterior.py) combines the case reports with the paired maps and known-volume tests.
+
+## Kernel posterior and geometry
 
 | Module | Purpose |
 |---|---|
@@ -16,5 +23,3 @@ The [bearing continuation](bearings/) supplies the principal field on every regi
 | [source_checks.py](source_checks.py) | Source-thickness constraints and posterior normalization refinement |
 | [vent_envelope.py](vent_envelope.py) | Experimental bounded field with a vent maximum and smaller secondary peaks |
 | [supported_basis.py](supported_basis.py) | Deterministic training-location basis design; no heldout-site leakage |
-
-`global_reporting.py` in the parent framework builds GitHub-readable reports. `tephra-isopachs global` runs the complete protocol; `compare` runs regional peers followed by this companion. No browser, atlas or pseudo-observation interface is involved.

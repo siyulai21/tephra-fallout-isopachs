@@ -7,7 +7,7 @@ Run `python -m pytest -q` after installing `.[test]`. These tests verify numeric
 | Area | Tests |
 |---|---|
 | Active regional models and probability | `test_probabilistic.py`, `test_ensemble.py`, `test_regional_spline.py` |
-| Spherical-mixture posterior, normalization and geometry | `test_mass_mixture.py`, `test_source_fans.py`, `test_vent_envelope.py` |
+| Spherical-mixture posterior, bearing continuation, normalization and geometry | `test_spherical_bearings.py`, `test_mass_mixture.py`, `test_source_fans.py`, `test_vent_envelope.py` |
 | Directional geometry, likelihood, whole-Earth integration and invisible proximal cap | `test_directional.py` |
 | Local footprints and complete-contour diagnostics | `test_support.py` |
 | Source audits and preserved inputs | `test_aso_evidence.py`, `test_minoan.py`, `test_ytt.py` |

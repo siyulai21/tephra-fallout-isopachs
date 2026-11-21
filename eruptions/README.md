@@ -11,7 +11,7 @@ Choose an eruption for its accepted observations, four volume estimates, maps an
 | [Tambora](tambora/README.md) | **95.7** | **162.3** | 26 exact | Four of six full-data directional fits carry a numerical warning. |
 | [Younger Toba Tuff (YTT)](ytt/README.md) | **900.6** | **1,510.5** | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
 
-The spherical volume column gives the median of integrated whole deposits under the common bearing-continuation policy. [Spherical estimates and validation](../comparisons/spherical-mixture/bearings/README.md)
+The spherical volume column gives the median of integrated whole deposits under the common bearing-continuation policy. [Spherical estimates and validation](../comparisons/spherical-mixture/README.md)
 
 The directional volume column integrates the quantitative uncertain-fan-direction median map across the Earth. Each case gives its conditional complete-deposit interval and the matched fixed-direction control. [Compare directional extent across all six](../comparisons/directional/README.md)
 

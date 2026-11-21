@@ -79,7 +79,7 @@ The principal volume in `fits.baseline.volume` integrates complete bearing-condi
 |---|---|
 | `README.md`, `field.png`, `volume.png`, `sampling.png` | Conditional field/volume, sensitivity, unobserved mass and chain diagnostics |
 | `report.json`, `estimates.csv` | Priors, baseline and sensitivities, all numerical attempts and provenance |
-| `posterior.npz` | Baseline whole-field parameter samples, retaining chain identity |
+| `posterior.npz` | Broad-parent amplitude and kernel draws, with chain identity. `bearing/baseline.npz` pairs these draws with the principal retained mass. |
 | `volume_draws.csv.gz` | Integrated volumes by assumption and chain. Within an assumption, the parent draw index and fan-width power jointly identify a deposit. The three widths share one kernel draw and orientation. |
 | `heldout_predictions.csv` | Matched geographic outer-fold predictions |
 | `source.png` when present | Source-region shape and maximum checks |
