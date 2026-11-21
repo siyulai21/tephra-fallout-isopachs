@@ -38,6 +38,13 @@
       "regional_report_sha256": "726839688001c9711833360cc656fb42afcae239708082a264d964d27ec501ea"
     },
     {
+      "name": "Sakurajima Satsuma (P14)",
+      "slug": "sakurajima-satsuma",
+      "input_sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1",
+      "global_report_sha256": "38d0590649da9e5159e627962ab858994757c8bffd150e34c16a3d487ea2b9ac",
+      "regional_report_sha256": "343322136b9d0893335053ce3285e5914276f57a49a3460d4a9c520b89909d9d"
+    },
+    {
       "name": "Tambora",
       "slug": "tambora",
       "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
@@ -147,6 +154,25 @@
       "global_observation_coverage95": 0.9456521739130435,
       "stacked_equal_region_negative_log_score": 1.450521534669888,
       "spline_equal_region_negative_log_score": 1.600616075530494
+    },
+    {
+      "eruption": "Sakurajima Satsuma (P14)",
+      "slug": "sakurajima-satsuma",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 11.344297288338915,
+      "lower95": 5.104078751934502,
+      "upper95": 666.5464015363515,
+      "sensitivity_lower": 4.50850089526041,
+      "sensitivity_upper": 3337.132673683932,
+      "baseline_sampling_passed": true,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.984375,
+      "global_equal_region_negative_log_score": 1.376323694717514,
+      "global_observation_coverage95": 0.88,
+      "stacked_equal_region_negative_log_score": 1.2644314847371465,
+      "spline_equal_region_negative_log_score": 1.371340552004002
     },
     {
       "eruption": "Tambora",
@@ -403,6 +429,50 @@
           1.8426444543561953,
           1.3083028609803344,
           1.5493833400959893
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
+    },
+    {
+      "eruption": "Sakurajima Satsuma (P14)",
+      "global": {
+        "mean_log_score": 1.365866346977521,
+        "rmse_log": 0.9995194526778648,
+        "coverage95_observations": 0.88,
+        "mean_interval_width_log": 3.090083006747729,
+        "fold_log_scores": [
+          1.7256263377025058,
+          0.9470666943546187,
+          2.0523468732749985,
+          0.7802548735379328
+        ],
+        "equal_region_log_score": 1.376323694717514
+      },
+      "stacked": {
+        "mean_log_score": 1.2578494110559741,
+        "rmse_log": 0.7511859621906413,
+        "coverage95_observations": 0.94,
+        "mean_interval_width_log": 2.4915369253089223,
+        "equal_region_log_score": 1.2644314847371465,
+        "fold_log_scores": [
+          1.918660998773152,
+          0.8812951315101495,
+          1.368516523754974,
+          0.8892532849103109
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.3682084093758875,
+        "rmse_log": 0.8616719870154378,
+        "coverage95_observations": 0.9,
+        "mean_interval_width_log": 3.031261451063071,
+        "equal_region_log_score": 1.371340552004002,
+        "fold_log_scores": [
+          1.6471765529277869,
+          1.3974256258858626,
+          1.2479516070008911,
+          1.1928084222014683
         ]
       },
       "matched_input_folds_buffer_and_training_rows": true,

@@ -74,6 +74,9 @@ def draw(output,reports,inventory,data,meta,title):
         span=focus[2:]-focus[:2]
         span=np.maximum(span,span[::-1]*.74)
         focus=np.r_[mid-span/2,mid+span/2]
+    elif sites and not meta.get("interpreted_upper_limits"):
+        # Distant occurrence-only probes belong on the overview. Resolve the measured field locally.
+        focus = frame_bounds(data.xy, margin=.08)
     else:
         focus = full_bounds.copy()
     geom = primary.members[0].geometry
@@ -275,7 +278,7 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
                 render(dict(raw),output/"spherical-archive-weights.npz",sphere,data,meta,inv,output,geo["local_bounds_km"])
         lines+=["## Broad spherical continuation control","",
                 "This comparison uses the original unattenuated spherical draws. The principal spherical case integrates a range of possible continuations across unobserved bearings.","",
-                ("These predictions use the spherical posterior fitted with the same interpreted upper limits. Each saved deposit contributes its original weight." if meta.get("interpreted_upper_limits") and not inv["scenarios"] else "The same readings update the weights of complete mass-normalized spherical deposits. The likelihood includes the spherical model’s local scatter and contamination component. The whole-deposit volumes below come from the updated draws. Each retains its own physical normalization. The effective sample size and the consistency of the independent chain estimates check whether the update is numerically usable."),"",
+                ("These archive predictions use the spherical posterior fitted to the quantitative measurements and bounds. Each complete deposit retains its original weight." if not inv["scenarios"] else "The same readings update the weights of complete mass-normalized spherical deposits. The likelihood includes the spherical model’s local scatter and contamination component. The whole-deposit volumes below come from the updated draws. Each retains its own physical normalization. The effective sample size and the consistency of the independent chain estimates check whether the update is numerically usable."),"",
                 "| Archive transfer | Complete-deposit median (conditional 95%, km³) | Weight ESS | Numerical check |","|---|---:|---:|---|"]
         for key,v in sphere["scenarios"].items():
             if (v["scenario"] or {}).get("role")=="cross_prediction":continue

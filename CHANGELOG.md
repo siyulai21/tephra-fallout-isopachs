@@ -4,6 +4,8 @@ The [eruption catalogue](eruptions/README.md) contains the current reports. For 
 
 ## Current release
 
+The 12.8 ka Satsuma eruption adds 50 measured thicknesses and seven bounds. Its audit checks written field values and a lenticular marine bed 163 km west of Sakurajima. Both global families were refitted after omitting that bed. [Satsuma results](eruptions/sakurajima-satsuma/README.md)
+
 Ilopango’s Tierra Blanca Joven Unit G adds a co-ignimbrite deposit with 52 measured thicknesses and four reported limits. The audit preserves the original numerical sources and shows how the directional coverage changes with distance from the caldera. [Ilopango results](eruptions/ilopango-tbj/README.md) · [Thickness audit](data/audits/Ilopango-TBJ/README.md)
 
 The principal spherical-mixture result now limits the directional reach of measured sites and integrates over uncertain fan continuation in the original six-eruption study. The paired study gives the changes in 10 cm isopachs, bulk volumes, geographic predictions and errors on deposits with known volumes. [Current spherical comparison](comparisons/spherical-mixture/README.md)

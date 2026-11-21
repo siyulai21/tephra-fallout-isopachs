@@ -14,6 +14,8 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 128.90 | 1.971 | 82.2% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |
 | [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.78 | 1.601 | 96.7% |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | GP ensemble | 3.08 | 1.264 | 94.0% |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | Trend-regularized cubic spline | 9.12 | 1.371 | 90.0% |
 | [Tambora](../../eruptions/tambora/results/README.md) | GP ensemble | 91.14 | 1.620 | 96.2% |
 | [Tambora](../../eruptions/tambora/results/README.md) | Trend-regularized cubic spline | 93.46 | 1.548 | 96.2% |
 | [YTT](../../eruptions/ytt/results/README.md) | GP ensemble | 1079.21 | 1.934 | 91.3% |

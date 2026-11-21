@@ -62,6 +62,16 @@ def case_page(output,r,inventory):
             role = f"{scale:g}" if scale is not None else "Occurrence only"
             rows.append(f"| {site['name']} | {role} | {med:.3g} | {low:.3g}–{high:.3g} |")
         rows += [""]
+    elif r["archive"] and not inventory["scenarios"]:
+        rows += ["## Independent archive predictions", "",
+                 "These locations have reported ash occurrences or tentative correlations. The fitted thickness data supply the predictions. The intervals describe latent bulk thickness at each location.", "",
+                 "| Archive | Identification | Median thickness (cm) | Conditional 95% interval (cm) |",
+                 "|---|---|---:|---:|"]
+        estimates = r["archive"]["scenarios"]["quantitative"]["sites"]
+        for site in inventory["sites"]:
+            low, median, high = estimates[site["id"]]["latent_cm_p025_p50_p975"]
+            rows.append(f"| {site['name']} | {site['confidence']} | {median:.3g} | {low:.3g}–{high:.3g} |")
+        rows.append("")
     elif r["archive"]:
         rows += ["## Inspected archives", "",
           "The thickness-only fit uses the quantitative table. Each visibility sensitivity asks what the deposit would look like if specified thicknesses at selected archives would have been recognizable as beds. The local preservation and detection scales are assumptions. The same coherent deposit supplies all site predictions.", "",
