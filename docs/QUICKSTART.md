@@ -26,7 +26,7 @@ Use `compare --regional-only` for the regional pair. The separate `global` comma
 
 Before preparing a new input or revising an existing one, review real sites that lack measured thickness. Include source-supported upper or lower limits in the common input and document decisions for the remaining sites. The calculation uses the reviewed CSV and its audit. [Site review before fitting](methods/sites-without-measured-thickness.md)
 
-The catalogue selects source-focused spherical kernels for B-Tm and displaced kernels for the other five cases. Both geometries use the current bearing continuation. The earlier broad control is saved within the same fit at `bearing/parent-report.json`. [B-Tm source audit and fits](../eruptions/b-tm/README.md) · [Spherical protocol](methods/spherical-bearings.md)
+The default spherical geometry uses displaced kernels. The catalogue specifies source-focused kernels for B-Tm. Both geometries use the current bearing continuation. The earlier broad control is saved within the same fit at `bearing/parent-report.json`. [B-Tm source audit and fits](../eruptions/b-tm/README.md) · [Spherical protocol](methods/spherical-bearings.md)
 
 ## Find results and verify a run
 

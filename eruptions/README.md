@@ -6,6 +6,7 @@ Choose an eruption for its accepted observations, four volume estimates, maps an
 |---|---:|---:|---|---|
 | [Aso-4](aso-4/README.md) | **659.1** | **1,069.7** | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. |
 | [B-Tm](b-tm/README.md) | **33.6** | **47.0** | 64 measurements, 3 reported lower bounds, 1 reported and 3 interpreted upper bounds | Combined fallout. Lake shard profiles and a peat mass budget constrain the contours. |
+| [Ilopango TBJ, Unit G](ilopango-tbj/README.md) | **40.8** | **190.9** | 52 measurements, 4 lower bounds | Unit G co-ignimbrite fallout. The spherical upper interval is provisional. Northeast measurements are proximal and southwest measurements are distal. |
 | [Mazama](mazama/README.md) | **166.1** | **212.9** | 45 exact | The published calculation uses the supplied acceptance flags. |
 | [Minoan](minoan/README.md) | **28.8** | **40.8** | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |
 | [Tambora](tambora/README.md) | **95.7** | **162.3** | 26 exact | Four of six full-data directional fits carry a numerical warning. |
@@ -13,6 +14,6 @@ Choose an eruption for its accepted observations, four volume estimates, maps an
 
 The spherical volume column gives the median of integrated whole deposits under the common bearing-continuation policy. [Spherical estimates and validation](../comparisons/spherical-mixture/README.md)
 
-The directional volume column integrates the quantitative uncertain-fan-direction median map across the Earth. Each case gives its conditional complete-deposit interval and the matched fixed-direction control. [Compare directional extent across all six](../comparisons/directional/README.md)
+The directional volume column integrates the quantitative uncertain-fan-direction median map across the Earth. Each case gives its conditional complete-deposit interval and the matched fixed-direction control. [Compare directional extent across eruptions](../comparisons/directional/README.md)
 
 For the same geographic prediction test across eruptions, see the [cross-eruption comparison](../comparisons/README.md).

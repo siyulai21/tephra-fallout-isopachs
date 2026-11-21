@@ -106,10 +106,12 @@ def main():
     for rec in datasets():
         slug = rec["slug"]
         home = Path("eruptions")/slug/"results"
-        expected_input = tab.loc[slug].input_sha256
-        median_map = tab.loc[slug].median_map_km3
-        expected_report = verification["case_reports"][slug]
-        if digest(rec["path"]) != expected_input:
+        historic_input = tab.loc[slug].input_sha256 if slug in tab.index else None
+        if digest(rec["path"]) == historic_input:
+            expected_input = historic_input
+            median_map = tab.loc[slug].median_map_km3
+            expected_report = verification["case_reports"][slug]
+        else:
             release = read(home/rec.get("release_receipt", "source-audit/release.json"))
             expected_input = release["files"][rec["path"].relative_to(Path.cwd()).as_posix()]
             median_map = release["directional_median_map_km3"]
@@ -133,7 +135,7 @@ def main():
         if key.startswith("invisible_sector"):
             assert row["truth"]["same_data_hidden_total_km3"]>row["truth"]["total_km3"]
             assert set(r["truth"] for r in row["contour_accuracy"])=={"hidden_lobe","sampled_equivalent"}
-    print("Verified six ensemble median-map packets, all partitioned volume histories, held-out predictions and 14 simulated deposits.")
+    print(f"Verified {len(datasets())} ensemble median-map packets, all partitioned volume histories, held-out predictions and 14 simulated deposits.")
 
 
 if __name__=="__main__":

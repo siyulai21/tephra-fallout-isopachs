@@ -141,8 +141,10 @@ def verify_results(manifest):
         assert digest(Path(name)) == expected, name
     matched = pd.read_csv(STUDY/"matched-regional.csv").set_index(["slug", "method"])
     historical = pd.read_csv(STUDY/"spline-replay.csv").set_index(["slug", "method"])
+    original_cases = {"aso-4", "b-tm", "mazama", "minoan", "tambora", "ytt"}
+    assert original_cases <= {r["slug"] for r in datasets()}
     assert set(matched.index) == set(historical.index) == {
-        (r["slug"], family) for r in datasets() for family in ("spline", "stacked")}
+        (slug, family) for slug in original_cases for family in ("spline", "stacked")}
     for key, row in historical.iterrows():
         assert bool(row.same_input) == (key[0] != "b-tm")
         np.testing.assert_allclose(row.current_score, matched.at[key,"equal_region_log_score"])

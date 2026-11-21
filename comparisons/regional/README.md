@@ -8,6 +8,8 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 200.94 | 1.662 | 90.4% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | GP ensemble | 27.64 † | 1.459 | 89.1% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 50.75 | 4.295 | 75.0% |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | GP ensemble | 23.31 | 1.343 | 98.1% |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | Trend-regularized cubic spline | 25.67 | 1.462 | 92.3% |
 | [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 129.65 | 1.272 | 95.6% |
 | [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 128.90 | 1.971 | 82.2% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |

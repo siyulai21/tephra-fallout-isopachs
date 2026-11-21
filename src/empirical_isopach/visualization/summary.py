@@ -1,4 +1,5 @@
 """Reader-facing comparisons from recorded estimates, never new inference."""
+import json
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -124,7 +125,11 @@ def case_overview(output, name, regional, directional, spherical):
 def all_case_scores(output, cases):
     from matplotlib.lines import Line2D
     with plt.rc_context(STYLE):
-        fig, axes = plt.subplots(2, 3, figsize=(13.4, 8.3), layout="constrained")
+        rows_needed = (len(cases) + 2) // 3
+        fig, axes = plt.subplots(rows_needed, 3, figsize=(13.4, 4.15 * rows_needed),
+                                 squeeze=False, layout="constrained")
+        for ax in axes.flat[len(cases):]:
+            ax.set_visible(False)
         for ax, (name, regional, directional, spherical) in zip(axes.flat, cases):
             rows = metrics(regional, directional, spherical)
             for i, (label, score, coverage, passed) in enumerate(rows):
@@ -142,9 +147,11 @@ def all_case_scores(output, cases):
                    xlabel="Geographic prediction score ↓")
             ax.grid(axis="x", alpha=.18)
             ax.tick_params(labelsize=8)
-        fig.suptitle("Six eruptions · matched predictive evidence across all four families\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
+        fig.suptitle(f"{len(cases)} eruptions · matched predictive evidence across all four families\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
         fig.legend(handles=[Line2D([], [], c="#4B6068", marker="o", ls="", label="Completed geographic fits"),
                             Line2D([], [], c="#4B6068", marker="x", ls="", label="At least one global geographic fit has a numerical warning")],
                    loc="outside lower center", ncols=2, frameon=False, fontsize=9)
-        fig.savefig(Path(output)/"method-scores.png", dpi=190, bbox_inches="tight", pad_inches=.16)
+        panels = [ax.get_title() for ax in axes.flat if ax.get_visible()]
+        fig.savefig(Path(output)/"method-scores.png", dpi=190, bbox_inches="tight", pad_inches=.16,
+                    metadata={"Description": json.dumps({"eruption_panels": panels})})
         plt.close(fig)

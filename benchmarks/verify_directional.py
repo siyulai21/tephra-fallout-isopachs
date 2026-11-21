@@ -132,10 +132,12 @@ def main():
     for record in datasets():
         slug = record["slug"]
         home = Path("eruptions")/slug/"results"
-        expected_input = cases.loc[slug].input_sha256
-        expected_report = study["cases"][slug]
-        case_extremes = extremes[extremes.slug == slug]
-        if digest(record["path"]) != expected_input:
+        historic_input = cases.loc[slug].input_sha256 if slug in cases.index else None
+        if digest(record["path"]) == historic_input:
+            expected_input = historic_input
+            expected_report = study["cases"][slug]
+            case_extremes = extremes[extremes.slug == slug]
+        else:
             release_path = home/record.get("release_receipt", "source-audit/release.json")
             release = read(release_path)
             expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
@@ -150,7 +152,7 @@ def main():
         assert screen["baseline_posterior_sha256"] == digest(spherical/"posterior.npz")
         assert screen["surface_samples_sha256"] == digest(packet/(slug+".npz"))
         # A superseded input has a distinct packet in the original design study.
-        if screen["input_sha256"] != cases.loc[slug].input_sha256:
+        if historic_input is not None and screen["input_sha256"] != historic_input:
             original = root/"original-spherical-screens"
             with gzip.open(original/(slug+".json.gz"), "rt") as stream:
                 screen = json.load(stream)
@@ -171,7 +173,7 @@ def main():
     for slug, run in replicas.items():
         assert run["design"]["replication"]["input_sha256"] == cases.loc[slug].input_sha256
         assert run["integral"]["passed"] == cases.loc[slug].replication_passed
-    print(f"Verified {len(cases)} current eruptions, {len(cases)*len(POLICIES)} policy fits, "
+    print(f"Verified {len(datasets())} current eruptions, {len(datasets())*len(POLICIES)} policy fits, "
           f"{len(replicas)} original-study replications and {len(evidence)} known-volume trials.")
 
 

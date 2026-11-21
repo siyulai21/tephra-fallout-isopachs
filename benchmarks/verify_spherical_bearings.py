@@ -141,7 +141,7 @@ def main():
         ref=refs[packet["geometry"],packet["scenario"],packet["seed"]]
         assert packet["posterior_sha256"]==ref["fits"]["baseline"]["posterior_sha256"]
         assert packet["volumes_km3"]["original"]==ref["truth_km3"]
-    print("Verified all six spherical reconstructions, 48 prior fits, 24 geographic deletions, and 24 known-volume fits.")
+    print(f"Verified {len(datasets())} spherical reconstructions, their prior fits and geographic deletions, and {len(refs)} known-volume fits.")
 
 
 if __name__=="__main__":

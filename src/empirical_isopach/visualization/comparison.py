@@ -257,7 +257,11 @@ def comparison_section(home, *, prefix=""):
     centre = ensemble["volume"]
     volumes = centre["coherent_volume_km3"]
     measured = sum(centre["median_map_parts_by_sector_km3"][0])/centre["median_map_km3"]
-    mixture = spherical["fits"]["baseline"]["volume"]
+    spherical_fit = spherical["fits"]["baseline"]
+    mixture = spherical_fit["volume"]
+    spherical_interval = f"{mixture['lower95']:,.1f}–{mixture['upper95']:,.1f}"
+    if not spherical_fit["diagnostics"]["passed"]:
+        spherical_interval += " **(provisional)**"
     summary = []
     for key, label in REGIONAL.items():
         model = regional["methods"][key]
@@ -274,7 +278,7 @@ def comparison_section(home, *, prefix=""):
          f"{volumes['lower95']:,.1f}–{volumes['upper95']:,.1f}"),
         (f"[Spherical mixture]({prefix}spherical-mixture/README.md)",
          f"Whole-Earth volume median **{mixture['median']:,.1f}**",
-         f"{mixture['lower95']:,.1f}–{mixture['upper95']:,.1f}"),
+         spherical_interval),
     ]
     performance = metrics(regional, ensemble, spherical)
     lines = [

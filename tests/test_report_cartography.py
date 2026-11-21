@@ -133,6 +133,23 @@ def test_audited_case_leads_with_matching_fits_then_site_evidence():
     assert "| Uncertain fan direction | Comparable visible fallout beds | 40.7 | 59.0 | 28.5–149.7 |" in section
 
 
+def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch):
+    from src.empirical_isopach.visualization import comparison
+
+    home = Path(__file__).resolve().parents[1] / "eruptions/ilopango-tbj/results"
+    reports = comparison.comparison_reports(home)
+    spherical = reports[2]
+    monkeypatch.setattr(comparison, "comparison_reports", lambda _: reports)
+    for volume_ok, prediction_ok in ((False, True), (True, False)):
+        spherical["fits"]["baseline"]["diagnostics"]["passed"] = volume_ok
+        spherical["validation"]["all_fits_passed_diagnostics"] = prediction_ok
+        section = comparison.comparison_section(home)
+        row = next(line for line in section.splitlines() if line.startswith("| [Spherical mixture]"))
+        _, _, _, interval, score, _, _ = row.split("|")
+        assert ("provisional" in interval) == (not volume_ok)
+        assert ("†" in score) == (not prediction_ok)
+
+
 def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, monkeypatch):
     from src.empirical_isopach.visualization import comparison
 

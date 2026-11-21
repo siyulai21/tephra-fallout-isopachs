@@ -122,4 +122,4 @@ if __name__=="__main__":
     verify_published_estimates()
     for rec in datasets():
         verify(rec)
-    print("Verified six paired directional fields, source and site anchors, archives, folds and complete volume intervals.")
+    print(f"Verified {len(datasets())} paired directional fields, source and site anchors, archives, folds and complete volume intervals.")

@@ -126,6 +126,9 @@ def verify_comparison_tables(root):
 def main():
     root = Path(__file__).resolve().parents[1]
     verify_comparison_tables(root)
+    with Image.open(root/"comparisons/method-scores.png") as figure:
+        panels = json.loads(figure.info["Description"])["eruption_panels"]
+    assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()
     verify_files(hashes)
     for record in datasets():
