@@ -11,3 +11,15 @@ Inside the common observation hull, the GP gives an expected volume of 2.74 km³
 The data are transcribed from published sections, sublayer maps and core readings. The model uses each accepted source row once. The analogue prior for the nested model excludes the Pinatubo thinning estimates. [Koyaguchi map readings](data/sources/koyaguchi-figure-3.csv) · [Paladio map readings](data/sources/paladio-figure-7.csv) · [Paladio section thicknesses](data/sources/paladio-table-2.csv) · [Wiesner and Wang core thicknesses](data/sources/wiesner-wang-table-1.csv)
 
 [Original source scans and hashes](data/originals/sources.json) · [Original Paladio-Melosantos source text](../../../data/sources/nested-isopachs/paladio-table-source.html.gz)
+
+## Global fits on the same Layer C evidence
+
+The three models predicted the same four geographically withheld sets. The volume column gives the median and conditional 95% interval from whole deposits. The directional median-thickness map integrates to a separate value of 4.92 km³.
+
+| Family | Whole-deposit bulk volume (km³) | Geographic score ↓ |
+|---|---:|---:|
+| [Directional](directional/README.md) | 5.68 [3.20–11.04] | 1.804 |
+| [Spherical mixture](spherical-mixture/README.md) | 6.21 [4.05–28.71] | 0.813 |
+| [Nested isopachs](nested-isopachs/README.md) | 6.14 [3.57–14.87] | 1.076 |
+
+The family reports retain the sampler warnings, contour-support decisions and separate sensitivity to poorly sampled bearings. [Directional gap amount](directional/sensitivity-study/README.md) · [Spherical source displacement](spherical-mixture/sensitivity-study/README.md) · [Removal of the core controlling the nested continuation](nested-isopachs/edge-deletion/README.md) · [Regional comparison](regional/README.md)

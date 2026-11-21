@@ -149,6 +149,31 @@ def verify_distal_holdout(receipt, path):
         np.testing.assert_allclose(fit["equal_site_negative_log_score"],-np.mean(fit["site_log_scores"]))
 
 
+def verify_preview_peers(preview, source):
+    directional = preview/"directional/azimuth"
+    spherical = preview/"spherical-mixture"
+    key = digest(source)
+    d, s = read(directional/"report.json"),read(spherical/"report.json")
+    assert d["input"]["input_sha256"] == s["input"]["input_sha256"] == key
+    assert set(s["fits"])=={"baseline","diffuse_tail","wide_geography","volume_prior_shift",
+                            "one_fan","five_fans","gaussian_errors","diffuse_mixture_weights"}
+    assert len(d["members"])==6
+    inventories = [*directional.parent.rglob("artifacts.json"),spherical/"artifacts.json"]
+    for manifest in inventories:
+        assert all(digest(manifest.parent/f)==v for f,v in read(manifest).items())
+    with np.load(spherical/"bearing/baseline.npz",allow_pickle=False) as packet:
+        q = [s["fits"]["baseline"]["volume"][k] for k in ("lower95","median","upper95")]
+        np.testing.assert_allclose(np.quantile(packet["volume_km3"],[.025,.5,.975]),q)
+    folds = read(preview/"nested-isopachs/geographic.json")["folds"]
+    for n,dr,sr in zip(folds,d["validation"]["geographic"]["folds"],s["validation"]["fits"],strict=True):
+        for nk,dk,sk in (("training_rows","train","training_row_ids"),("test_rows","test","withheld_row_ids")):
+            assert n["identity"][nk]==dr[dk]==sr[sk]
+    for name in ("directional","spherical-mixture"):
+        sensitivity=read(preview/name/"sensitivity-study/report.json")
+        assert sensitivity["input_sha256"]==key
+        assert len(sensitivity["folds"])==len(folds)
+
+
 def main():
     prior = read(ASSET)
     source = ROOT/"data/sources/nested-isopachs/paladio-table-source.html.gz"
@@ -203,6 +228,7 @@ def main():
             raw = gzip.decompress(stored) if path.suffix == ".gz" else stored
             assert len(raw) == entry["source_bytes"] and sha256(raw).hexdigest() == entry["source_sha256"]
         verify_case(preview/"nested-isopachs",file)
+        verify_preview_peers(preview,file)
     print(f"Verified {len(expected_cases)//3} registered cases, the extra published snapshot, "
           f"{len(receipts['nested'])} challenge designs, paired fields, scores, budgets and source identities.")
 
