@@ -8,14 +8,17 @@ import pandas as pd
 
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.global_reporting import global_dataset
+from .spherical_bearing_summary import build_validation
 
 
-def summarize(output, regional_root=Path('eruptions'), published=False):
+def summarize(output, regional_root=Path('eruptions'), published=False, trials=None):
     output, regional_root = Path(output), Path(regional_root)
     rows, cases, validation_rows, sensitivity_warnings = [], [], [], []
+    case_dirs = {}
     for record in sorted(datasets(), key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
         folder = Path('eruptions')/slug/'results'/'spherical-mixture' if published else output/slug
+        case_dirs[slug] = folder
         path = folder/'report.json'
         if not path.exists():
             raise ValueError(f'Missing completed global report: {path}')
@@ -67,37 +70,57 @@ def summarize(output, regional_root=Path('eruptions'), published=False):
         'cases': cases, 'estimates': rows, 'matched_validation': validation_rows,
         'scope': 'Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume.'}, indent=2, allow_nan=False)+'\n')
     figures(output, rows)
-    table = '\n'.join(f"| [{r['eruption']}](../../eruptions/{r['slug']}/results/spherical-mixture/README.md) | {r['geometry']}{' · **questioned**' if r['review_status'] == 'questioned' else ''} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {r['sensitivity_lower']:.3g}–{r['sensitivity_upper']:.3g} | {'pass' if r['baseline_sampling_passed'] else '**provisional**'} |" for r in rows)
-    predictions = '\n'.join(f"| {r['eruption']} | {r['global_equal_region_negative_log_score']:.3f} | {r['stacked_equal_region_negative_log_score']:.3f} | {r['spline_equal_region_negative_log_score']:.3f} | {r['global_observation_coverage95']:.1%} | {'pass' if r['all_outer_sampling_passed'] else '**provisional**'} |" for r in rows)
+    paired, gap_scores, maps, known_deposits = build_validation(trials, output / "bearings", case_dirs, link_prefix="bearings/")
+    volumes, forecasts = [], []
+    for row in rows:
+        slug = row["slug"]
+        earlier = paired.loc[slug]
+        label = row["geometry"] + (" · **questioned**" if row["review_status"] == "questioned" else "")
+        case = f"[{row['eruption']}](../../eruptions/{slug}/README.md)"
+        baseline_warning = "" if row["baseline_sampling_passed"] else " · **provisional**"
+        volumes.append(
+            f"| {case} | {label} | {earlier.parent_volume_km3:,.1f} → **{row['median']:,.1f}**{baseline_warning} "
+            f"| {row['lower95']:,.1f}–{row['upper95']:,.1f} | {row['sensitivity_lower']:.3g}–{row['sensitivity_upper']:.3g} |"
+        )
+        status = "pass" if row["all_outer_sampling_passed"] else "**provisional**"
+        forecasts.append(
+            f"| {row['eruption']} | {earlier.parent_score:.3f} → {row['global_equal_region_negative_log_score']:.3f} "
+            f"| {row['stacked_equal_region_negative_log_score']:.3f} | {row['spline_equal_region_negative_log_score']:.3f} "
+            f"| {row['global_observation_coverage95']:.1%} | {status} |"
+        )
+    table = "\n".join(volumes)
+    predictions = "\n".join(forecasts)
     n_pass = sum(r['baseline_sampling_passed'] for r in rows)
     warnings = ("Numerical warnings occurred in " + ", ".join(sensitivity_warnings) +
                 ". Their results contribute to the envelope." if sensitivity_warnings
                 else "All alternative refits passed their numerical checks.")
-    (output/'README.md').write_text(f"""# Spherical-mixture estimates across eruptions
+    (output/'README.md').write_text(f"""# Spherical-mixture maps and volumes
 
-The principal spherical mixture keeps each case’s registered kernel geometry and fits the accepted thicknesses and bounds. In directions without comparable measurements, a complete deposit can continue broadly or follow one unknown fan. The reported volume is the median integral of these complete deposits over the Earth. A credible interval summarizes the baseline posterior. The sensitivity envelope spans the baseline and seven declared changes to geometry, priors or noise. [Bearing protocol and mass normalization](../../docs/methods/spherical-bearings.md) · [Extent, prediction and known-volume tests](bearings/README.md)
+Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The table shows the median volume under each continuation, the principal conditional interval and the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
 
-| Eruption | Geometry | Baseline median (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) | Baseline checks |
-|---|---|---:|---:|---:|---|
+| Eruption | Kernel geometry | Broad → principal volume (km³) | Principal 95% interval (km³) | Prior-sensitivity envelope (km³) |
+|---|---|---:|---:|---:|
 {table}
 
-{n_pass} of {len(rows)} baseline fits passed the sampling and integration checks. {warnings} Aso-4's high volume remains qualified by its source audit. At B-Tm, the source-focused fit includes three interpreted upper bounds. [Aso-4 audit](../aso-4-audit/README.md) · [B-Tm occurrence evidence](../../data/audits/B-Tm/README.md)
+{n_pass} of {len(rows)} baseline fits passed the sampling and integration checks. {warnings} Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
 
-![Spherical whole-deposit intervals, prior envelopes and withheld-region scores](comparison.png)
-
+{maps}
 ## Predictions in withheld regions
 
-Scores use the same observations, training and withheld rows, geographic folds and buffers within each eruption. Lower scores indicate better prediction at the held-out sites. Each case page links the independent directional result and the local contour support audit.
+All methods faced the same held-out observations, bounds, regions and buffers for each eruption. Lower scores indicate better prediction. Coverage is the fraction of exact thickness readings inside the principal spherical 95% predictive interval.
 
-| Eruption | Spherical score ↓ | GP score ↓ | Spline score ↓ | Spherical exact-site 95% coverage | Holdout sampling |
+| Eruption | Spherical score, broad → principal | GP score | Spline score | Spherical coverage | Spherical holdout checks |
 |---|---:|---:|---:|---:|---|
 {predictions}
 
-[Estimates and diagnostics](comparison.csv) · [Input hashes and matched validation](report.json) · [All four families](../README.md)
+{gap_scores}
 
-## Geometry and validation
+![Conditional spherical volumes, prior envelopes and withheld-region scores](comparison.png)
 
-The displaced and source-focused geometries have separate known-deposit trials, including failed fits. Sensitivity to the shape of an unmeasured deposit limits interpretation of whole-Earth volumes. [Displaced-geometry trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Geometry study](../source-revision/README.md) · [Model development](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/spherical-mixture/development) · [Equations and priors](../../docs/methods/probabilistic-global.md)
+{known_deposits}
+## Data and reproduction
+
+[Case estimates and prior diagnostics](comparison.csv) · [Input identities and matched validation](report.json) · [Kernel-geometry experiment](../source-revision/README.md) · [Displaced-kernel trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Reproduction commands](../../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility) · [Preceding release](../../archive/2026-11-20-spherical-continuation/README.md)
 """)
     return rows
 
@@ -139,6 +162,7 @@ def main():
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--summarize-only', action='store_true')
     parser.add_argument('--published', action='store_true')
+    parser.add_argument('--trials', type=Path, help='Optional fresh displaced and source known-deposit trials for the comparison')
     parser.add_argument('--regional-root', type=Path, default=Path('eruptions'))
     args = parser.parse_args()
     if args.published and not args.summarize_only:
@@ -151,7 +175,7 @@ def main():
             global_dataset(record['path'], args.output/record['slug'], name=record['name'], resume=args.resume,
                            progress=lambda s: print(s, flush=True))
     if args.dataset is None or args.summarize_only:
-        summarize(args.output, args.regional_root, args.published)
+        summarize(args.output, args.regional_root, args.published, args.trials)
 
 
 if __name__ == '__main__':

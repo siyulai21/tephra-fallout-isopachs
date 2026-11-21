@@ -4,7 +4,7 @@ The [eruption catalogue](eruptions/README.md) contains the current reports. For 
 
 ## Current release
 
-The principal spherical-mixture result now limits the directional reach of measured sites and integrates over uncertain fan continuation across the six eruptions. The paired study gives the changes in 10 cm isopachs, bulk volumes, geographic predictions and errors on deposits with known volumes. [Current spherical comparison](comparisons/spherical-mixture/bearings/README.md)
+The principal spherical-mixture result now limits the directional reach of measured sites and integrates over uncertain fan continuation across the six eruptions. The paired study gives the changes in 10 cm isopachs, bulk volumes, geographic predictions and errors on deposits with known volumes. [Current spherical comparison](comparisons/spherical-mixture/README.md)
 
 The principal directional estimate allows fan direction to vary across unsampled sectors. B-Tm now fits 71 observations, including three interpreted upper limits, across all four families. The site-review protocol documents how to derive a bound, justify omission and test an influential interpretation. [Directional comparisons](comparisons/directional/README.md) · [B-Tm before and after](eruptions/b-tm/results/cryptotephra/README.md) · [Site-review protocol](docs/methods/sites-without-measured-thickness.md)
 

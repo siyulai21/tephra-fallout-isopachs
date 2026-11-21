@@ -6,7 +6,6 @@ import json
 from pathlib import Path
 import platform
 import shutil
-import shlex
 
 import numpy as np
 import pandas as pd
@@ -91,103 +90,6 @@ def figures(output, name, data, meta, samples, report):
         fig.suptitle(f"{name} · whole-deposit volume by chain", fontsize=15)
         fig.savefig(output/"sampling.png", dpi=160)
         plt.close(fig)
-
-
-def write_readme(output, name, report):
-    fit = report["fits"]["baseline"]
-    v, d = fit["volume"], fit["diagnostics"]
-    input_argument = shlex.quote(report["input"]["source"])
-    rows = []
-    for key, item in report["fits"].items():
-        q = item["volume"]
-        rows.append(f"| {assumption_label(key, report)} | {q['median']:.3g} | {q['lower95']:.3g}–{q['upper95']:.3g} | {item['training_checks']['rmse_log']:.3f} | {'pass' if item['diagnostics']['passed'] else '**not passed**'} |")
-    validation = report.get("validation")
-    validation_text = "Geographic validation was not requested for this run."
-    if validation:
-        m = validation["metrics"]
-        validation_text = (f"Four buffered geographic holdouts: equal-region negative log score **{m['equal_region_log_score']:.3f}** "
-            f"(lower is better), log-thickness RMSE **{m['rmse_log']:.3f}**, and heldout observation coverage **{m['coverage95_observations']:.1%}**. "
-            f"All four posterior fits passed numerical diagnostics: **{validation['all_fits_passed_diagnostics']}**. "
-            "These predictions test transfer to withheld observations, not the unobserved whole-deposit volume.")
-    text = f"""# {name} · spherical-mixture global fallout estimate
-
-[Eruption home](../../README.md) · [Regional GP/spline comparison](../README.md) · [Method and assumptions](../../../../docs/methods/probabilistic-global.md) · [All six eruptions](../../../../comparisons/spherical-mixture/README.md)
-
-The baseline posterior median is **{v['median']:.3g} km³**, with a **{v['lower95']:.3g}–{v['upper95']:.3g} km³ conditional 95% credible interval**. This is bulk fallout across all jointly fitted fans, including co-ignimbrite ash where present in the accepted data. It excludes ignimbrite deposits and is not dense-rock equivalent. Numerical diagnostics: **{'passed' if d['passed'] else 'not passed — provisional numerical summary'}**.
-
-Every posterior field is positive and has total volume exactly equal to its fitted volume parameter on the whole Earth. No closing pseudo-observations, map rectangle, contour cutoff or arbitrary distal radius sets this total. The previous contour screen remains a diagnostic of local support; its rejection does not veto this conditional global estimate.
-
-![Global fallout field and uncertainty](field.png)
-
-The overview expands around the displayed 0.1 cm contour, with a recorded finite-grid edge check. Its window never sets the volume. Fine coastlines are geographic context only. [Display bounds, posterior subset and coastline provenance](map-display.json).
-
-![Local thickness and uncertainty around every accepted observation](local.png)
-
-![Whole-Earth continuation and coastlines](world.png)
-
-The local detail can cut contours at its edges; the whole-Earth companion shows their wider context. Longitude edges join in that companion. Colours saturate below 0.1 cm and above the displayed upper limit. Neither a smooth surface nor a closed contour establishes geological support.
-
-## What the interval means
-
-Uncertainty includes fan positions, sizes, relative masses, tail shape, total volume and observation scatter parameters. The latent volume excludes observation noise. It remains conditional on general modelling assumptions: a finite mixture of smooth, source-related, radially decreasing components, a proper volume/scale prior and a stated observation model. Several components can form elongated, separated or overlapping fans; they are mathematical components, not independently measured eruption phases.
-
-No finite dataset alone can exclude an arbitrarily large deposit in an unsampled region. The proper prior makes inference possible; it does not create geological evidence. Unrecorded erosion, reworking, preferential sampling and source misattribution are not automatically covered by this interval. If residual scatter is unresolved areal deposition variability rather than observation/preservation error, central-field volume can differ from area-mean physical mass; that structural correction is not automatically included. Bounds retain their documented likelihood meaning.
-
-## Sensitivity to those assumptions
-
-| Assumption | Median km³ | Conditional 95% interval km³ | Fitted-site log-RMSE | Numerical checks |
-|---|---:|---:|---:|---|
-{chr(10).join(rows)}
-
-The range across the lower and upper interval endpoints is **{report['sensitivity_envelope_km3'][0]:.3g}–{report['sensitivity_envelope_km3'][1]:.3g} km³**. This is an assumption-sensitivity envelope, **not** a 95% interval, a probability-weighted model average, or an exhaustive bound. Every alternative remains visible, including those that differ substantially; none was selected because its volume matched a published target.
-
-Fitted-site log-RMSE compares the posterior predictive median with the exact measurements used for fitting; bounds contribute their likelihood events instead. These training checks can expose a restrictive alternative, but are optimistic and **not validation or a model-selection rule**. Only the baseline receives the full matched geographic holdout analysis below. Alternatives have not been given probability weights or declared equally plausible.
-
-![Volume sensitivity and mass partition](volume.png)
-
-## Validation and numerical precision
-
-{validation_text}
-
-Baseline chains: maximum rank-normalized split R-hat **{d['max_label_invariant_rhat']:.4f}**, minimum bulk/tail effective sample sizes **{d['min_label_invariant_bulk_ess']:.0f}/{d['min_label_invariant_tail_ess']:.0f}**, minimum energy BFMI **{d['min_energy_bfmi']:.3f}**, divergences **{d['divergences']}**. Diagnostics cover label-invariant global, observed-site and unsampled-field summaries. Passing them is evidence of numerical mixing, not proof of complete mode exploration. All shorter failed attempts are retained in the report. Monte Carlo standard errors of volume log-quantiles are recorded separately; rounded interval endpoints are estimates. [Inspect the chain traces and distributions](sampling.png).
-
-Mass partition uses {report['mass_partition']['n_posterior_fields']} whole posterior fields and {report['mass_partition']['quadrature_points_per_fan']} equal-mass quadrature points per fan. The largest fraction change on doubling that integration rule is **{report['mass_partition']['max_fraction_change_on_doubling']:.4f}**. This numerical partition never changes the analytically normalized total. Its local footprint is a sampling screen, not a confidence region.
-
-## Reproduce and inspect
-
-Use `tephra-isopachs global {input_argument} --output results/new-global-run`. Use `--resume` only for the same run; caches verify inputs, priors, numerical settings, source hashes, runtime versions and posterior checksums. The ordinary `compare` command runs the regional comparison followed by this global analysis.
-
-- [Full report, priors, diagnostics, all attempts and provenance](report.json)
-- [Baseline whole-field posterior samples](posterior.npz)
-- [Volume samples for every assumption and chain](volume_draws.csv.gz)
-- [Assumption summary](estimates.csv)
-- [Geographic predictions and fold membership](heldout_predictions.csv)
-
-Input SHA-256: `{report['input']['input_sha256']}`. No accepted observations or source audits were changed for this calculation.
-"""
-    if not validation:
-        text = text.replace("- [Geographic predictions and fold membership](heldout_predictions.csv)\n", "")
-    geometry = report.get("geometry", "displaced")
-    if geometry != "displaced":
-        text = text.replace("exactly equal to", "equal (to the reported normalization tolerance) to")
-        text = text.replace("Uncertainty includes fan positions, sizes, relative masses, tail shape, total volume and observation scatter parameters.",
-            "Uncertainty includes the fitted field geometry, relative strengths, total volume and observation scatter parameters. The source-focused alternative also varies its tail shape; the bounded-envelope alternative has Gaussian tails.")
-        text = text.replace("Several components can form elongated, separated or overlapping fans;", "Several components form overlapping fallout fans;")
-        text = text.replace("analytically normalized total", "separately normalized total")
-        text = text.replace("equal-mass quadrature points per fan", "positive quadrature points per component")
-        text = text.replace("--output results/new-global-run", f"--geometry {geometry} --output results/new-global-run")
-        check = report["source_checks"]
-        normalization = check["normalization"]
-        numerical = (f"The maximum relative change in any posterior component's integral on quadrupling angular resolution was **{normalization['max_relative_component_mass_error']:.3g}** (tolerance 10⁻⁶)."
-            if "max_relative_component_mass_error" in normalization else "The envelope and its Gaussian-product overlap terms have analytical whole-Earth integrals.")
-        source_text = ("## Source constraint\n\nEvery fitted field has its global thickness maximum at the supplied volcano. "
-            "This is an explicit shape assumption, not an invented vent-thickness observation. "
-            + ("Thickness decreases along every source ray, so this family cannot represent a secondary radial maximum. " if geometry == "source-fans" else "Smaller secondary maxima are allowed; Gaussian bases are placed at training sites using coordinates only. ")
-            + "Real deposits can violate a point-source maximum, particularly with distributed sources or secondary deposition. "
-            + numerical+" [Derivation, rejected alternatives and geological limits](../../../../docs/methods/source-anchored-fans.md).\n\n"
-            + "![Source-region thickness contours](source.png)\n\n")
-        text = text.replace("## What the interval means", source_text+"## What the interval means")
-    (output/"README.md").write_text(text)
 
 
 def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print, geometry=None, archives=None):

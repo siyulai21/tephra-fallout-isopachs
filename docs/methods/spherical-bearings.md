@@ -1,6 +1,6 @@
 # Spherical mixture with finite directional reach
 
-The principal spherical result uses the existing Gaussian, exponential and power-law kernels, their inferred scales, offsets or source-focused axes, and their original bounded observation likelihood. It changes the continuation of those kernels into bearings lacking comparable sampling. Each eruption uses the same reach rule and the same distribution of possible hidden fan widths and orientations. [Six-eruption and known-deposit comparisons](../../comparisons/spherical-mixture/bearings/README.md)
+The principal spherical result uses the existing Gaussian, exponential and power-law kernels, their inferred scales, offsets or source-focused axes, and their original bounded observation likelihood. It changes the continuation of those kernels into bearings lacking comparable sampling. Each eruption uses the same reach rule and the same distribution of possible hidden fan widths and orientations. [Six-eruption and known-deposit comparisons](../../comparisons/spherical-mixture/README.md)
 
 ## What the observations identify
 
@@ -52,7 +52,7 @@ All seven prior alternatives reuse their own checked posterior fits. Each of fou
 ```sh
 tephra-isopachs global Aso-4 --output results/aso-spherical
 tephra-isopachs compare path/to/eruption.csv --output results/new-eruption
-python -m benchmarks.spherical_bearing_summary --output results/spherical-bearing-comparison
+python -m benchmarks.global_posterior --summarize-only --published --output results/spherical-comparison
 python -m benchmarks.verify_spherical_bearings
 ```
 
@@ -64,7 +64,7 @@ python -m benchmarks.source_fans --output results/source-stress
 python -m benchmarks.source_fans --summarize-only --output results/source-stress
 python -m benchmarks.spherical_bearings --cache results/displaced-stress/posteriors --summary results/displaced-stress/report.json --output results/bearing-trials/displaced
 python -m benchmarks.spherical_bearings --cache results/source-stress/posteriors --summary results/source-stress/report.json --output results/bearing-trials/source
-python -m benchmarks.spherical_bearing_summary --trials results/bearing-trials --output results/bearing-trial-summary
+python -m benchmarks.global_posterior --summarize-only --published --trials results/bearing-trials --output results/spherical-trial-comparison
 ```
 
 The published `posterior.npz` stores the underlying kernel/amplitude draws. The principal `report.json` identifies its field protocol, parent hash, integrated volumes, intervals, prior sensitivities and geographic tests. The baseline volume packet gives parent indices, orientations and mass partitions. Use the preceding report under `bearing/parent-report.json` when reproducing the older continuation. [Implementation](../../src/empirical_isopach/models/mass_mixture/bearings/) · [Earlier release](../../archive/2026-11-20-spherical-continuation/README.md)

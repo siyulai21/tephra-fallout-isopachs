@@ -1,4 +1,4 @@
-"""Replay spherical bearing continuation on known deposits and on the published case fits."""
+"""Test spherical bearing continuation on known deposits from either kernel geometry."""
 import argparse
 from pathlib import Path
 import numpy as np
