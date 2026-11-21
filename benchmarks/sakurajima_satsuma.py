@@ -213,7 +213,8 @@ def source_positions(measured):
     for label, lon, lat in offsets:
         angles = [GEOD.inv(lon, lat, float(r["longitude"]), float(r["latitude"]))[0] % 360 for r in measured]
         counts = Counter(SECTORS[int(((angle + 22.5) % 360) // 45)] for angle in angles)
-        result.append(dict(reference=label, longitude=lon, latitude=lat,
+        # Format the derived offset locations after computing every bearing at full precision.
+        result.append(dict(reference=label, longitude=f"{lon:.8f}", latitude=f"{lat:.8f}",
                            **{sector: counts[sector] for sector in SECTORS},
                            max_gap_degrees=largest_gap(angles)))
     return result
