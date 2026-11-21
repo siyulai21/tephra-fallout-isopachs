@@ -56,3 +56,4 @@ All six full fits passed their sampling diagnostics.
 
 - [Earlier fixed-direction ensemble and its separate calibration](ensemble/README.md)
 - [Single-structure and proximal-cap sensitivities](single-structure/README.md)
+- [Measured-fan continuation and inspected-site evidence](bearing/README.md)

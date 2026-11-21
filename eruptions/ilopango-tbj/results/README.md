@@ -1,6 +1,6 @@
 # Ilopango TBJ (Unit G) fallout reconstruction
 
-## Isopach fits
+## Four matched thickness-only fits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](four-method-evidence.png)
 
@@ -38,6 +38,23 @@ With the same observations and structure weights, fixing the fan directions give
 ![Principal uncertain-fan-direction median isopachs for Ilopango TBJ (Unit G)](directional/azimuth/isopachs.png)
 
 </details>
+
+## Directional assumptions
+
+The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
+
+| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
+|---|---|---:|---:|---:|
+| Measured fan directions | Thicknesses and bounds | 49.6 | 69.1 | 32.3–433.2 |
+
+<details>
+<summary>View agreement between the directional sensitivities</summary>
+
+![Agreement on median isopach extent](directional/bearing/isopach-agreement.png)
+
+</details>
+
+[Measured-fan maps, held-out tests and site evidence](directional/bearing/README.md)
 
 [Volume and geographic prediction plot](overview.png)
 

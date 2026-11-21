@@ -2,7 +2,7 @@
 
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [109-row audit and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
-## Isopach fits
+## Four matched thickness-only fits
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](results/four-method-evidence.png)
 
@@ -40,6 +40,23 @@ With the same observations and structure weights, fixing the fan directions give
 ![Principal uncertain-fan-direction median isopachs for Ilopango TBJ (Unit G)](results/directional/azimuth/isopachs.png)
 
 </details>
+
+## Directional assumptions
+
+The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
+
+| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
+|---|---|---:|---:|---:|
+| Measured fan directions | Thicknesses and bounds | 49.6 | 69.1 | 32.3–433.2 |
+
+<details>
+<summary>View agreement between the directional sensitivities</summary>
+
+![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
+
+</details>
+
+[Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
 
 
 ## Reading the global uncertainty
