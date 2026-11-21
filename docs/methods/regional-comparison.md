@@ -48,4 +48,4 @@ These are small development stress tests, not an external calibration certificat
 python -m benchmarks.regional --output results/regional-methods
 ```
 
-All six accepted inputs, including combined Plinian/co-ignimbrite Minoan and the audited 46-record YTT selection, enter unchanged. Audits are verified and source/input hashes recorded. Historical selected-GP and global calculations remain separate and are not used to rank regional fits.
+Every registered case uses its accepted input, including the combined Minoan fans, the audited 46-record YTT selection and Ilopango Unit G. Audits are verified and source/input hashes recorded. Historical selected-GP and global calculations remain separate and are not used to rank regional fits.

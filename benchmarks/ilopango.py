@@ -20,6 +20,7 @@ CORES = SOURCES / "smith-2020-cores.csv"
 BOOK_HASH = "0b9cf7846ed313bfb0383edae7088c97ab6df9f7390d24ddce588b79f8db6403"
 CORE_TABLE_HASH = "5797f79c2b837e8ada812e64796e13530f86351f1a67f24973f0db53054037d2"
 MANUSCRIPT_HASH = "1a01f05e868a02974c067802c1c5e3b6d1f2d431147201efeef225b6a2ba6c78"
+TUNU_LATITUDE, TUNU_LONGITUDE = 78.04, -33.88
 VENT = (-89.053, 13.672)
 GEOD = Geod(ellps="WGS84")
 SECTORS = ("N", "NE", "E", "SE", "S", "SW", "W", "NW")
@@ -106,12 +107,21 @@ def ledger():
                 units_at_section="distal TBJ",total_tbj_cm=core["thickness_cm"],unit_g_cm="",
                 kind="measurement",fitted_cm=core["thickness_cm"],
                 decision="Directly reported distal bed; the authors used it in the co-ignimbrite reconstruction."))
+    rows.append(dict(
+        evidence_id="S20-TUNU2013", source="Smith et al. 2020, polar ice-core results, Fig. 4, Table 2 and Methods",
+        source_row="", site_id="TUNU2013", site="TUNU2013, northeast Greenland", setting="ice core",
+        latitude_as_published=f"{TUNU_LATITUDE} N", longitude_as_published=f"{abs(TUNU_LONGITUDE)} W",
+        latitude=TUNU_LATITUDE, longitude=TUNU_LONGITUDE, units_at_section="TBJ glass, eruptive phase unresolved",
+        total_tbj_cm="", unit_g_cm="", kind="occurrence_only", fitted_cm="",
+        decision="Glass chemistry identifies a TBJ occurrence. The meltwater sample does not resolve the eruptive "
+                 "phase or give bulk ash mass per unit ground area. No Unit G thickness or bound enters the fit.",
+    ))
     for row in rows:
         az, _, metres = GEOD.inv(*VENT, row["longitude"], row["latitude"])
         row["bearing_deg"] = round(az % 360, 4)
         row["distance_km"] = round(metres/1000, 4)
         row["sector"] = SECTORS[int(((az+22.5) % 360)//45)]
-    if len(rows) != 109 or len({r["evidence_id"] for r in rows}) != len(rows):
+    if len(rows) != 110 or len({r["evidence_id"] for r in rows}) != len(rows):
         raise ValueError("Source rows must be unique and exhaustive.")
     return rows
 
@@ -141,7 +151,7 @@ def angular_gap(angles):
 
 def products():
     rows = ledger()
-    accepted = [r for r in rows if r["kind"]]
+    accepted = [r for r in rows if r["kind"] in {"measurement", "lower_limit"}]
     if len({(r["longitude"], r["latitude"]) for r in accepted}) != len(accepted):
         raise ValueError("Repeated accepted coordinates require a site decision.")
     for i, r in enumerate(accepted, 2):
@@ -178,15 +188,14 @@ def products():
 
 
 def verify_manuscript(path):
-    """Read the two published core measurements from the accepted manuscript's text layer."""
+    """Check the two measured beds and the Greenland occurrence against the accepted manuscript."""
     if digest(path) != MANUSCRIPT_HASH:
         raise ValueError("Expected the Oxford accepted manuscript listed in the source guide.")
-    page = subprocess.check_output(
-        ["pdftotext", "-f", "7", "-l", "7", "-layout", str(path.resolve()), "-"], text=True
-    )
+    manuscript = subprocess.check_output(["pdftotext", "-layout", str(path.resolve()), "-"], text=True)
+    text = " ".join(manuscript.split())
     paragraph = re.search(
         r"additional two points where (\d+) cm of ash was recorded in cores: (.+?) \(20\)",
-        " ".join(page.split()),
+        text,
     )
     if paragraph is None:
         raise ValueError("Could not locate the two-core observation.")
@@ -196,6 +205,9 @@ def verify_manuscript(path):
                     for r in csv.DictReader(stream)]
     if len(printed) != 2 or [(*row, paragraph[1]) for row in printed] != recorded:
         raise ValueError("A core coordinate or thickness differs from the published paragraph.")
+    tunu = re.search(r"northeast Greenland \(([\d.]+)[◦°o]N, ([\d.]+)[◦°o]W; 2105 m", text)
+    if tunu is None or (float(tunu[1]), -float(tunu[2])) != (TUNU_LATITUDE, TUNU_LONGITUDE):
+        raise ValueError("TUNU2013 coordinates differ from the ice-core methods.")
 
 
 def coverage_figure():
@@ -204,30 +216,38 @@ def coverage_figure():
 
     with (AUDIT / "selection.csv").open(newline="") as stream:
         rows = [row for row in csv.DictReader(stream) if row["kind"]]
-    fig, ax = plt.subplots(figsize=(9, 4.9), layout="constrained")
+    fig, ax = plt.subplots(figsize=(10.6, 4.9), layout="constrained")
+    counts = Counter(row["kind"] for row in rows)
     for row in rows:
         index = SECTORS.index(row["sector"])
         within_sector = (float(row["bearing_deg"]) - index * 45 + 180) % 360 - 180
-        # Place near-coincident sites at their measured angular offsets.
         y = index + within_sector / 56
-        lower = row["kind"] == "lower_limit"
-        ax.scatter(float(row["distance_km"]), y, s=57 if lower else 36,
-                   marker="^" if lower else "o", facecolor="white" if lower else "#1b6570",
-                   edgecolor="#99491f" if lower else "white", linewidth=1.4 if lower else .65,
-                   zorder=3)
+        distance = float(row["distance_km"])
+        if row["kind"] == "occurrence_only":
+            ax.scatter(distance, y, marker="D", s=54, facecolor="white", edgecolor="#63478a", zorder=3)
+            ax.annotate(row["site_id"], (distance, y), xytext=(-7, -3), textcoords="offset points",
+                        ha="right", va="center", color="#503970", fontsize=9)
+        else:
+            lower = row["kind"] == "lower_limit"
+            ax.scatter(distance, y, s=57 if lower else 36, marker="^" if lower else "o",
+                       facecolor="white" if lower else "#1b6570", edgecolor="#99491f" if lower else "white",
+                       linewidth=1.4 if lower else .65, zorder=3)
     ax.set_xscale("log")
-    ax.set_xticks([10, 20, 30, 50, 100, 200, 350], labels=["10","20","30","50","100","200","350"])
-    ax.set(xlim=(9, 395), ylim=(7.55, -.55), yticks=range(8), yticklabels=SECTORS,
+    ax.set_xticks([10, 20, 50, 100, 200, 350, 1000, 3000, 8000],
+                  labels=["10", "20", "50", "100", "200", "350", "1,000", "3,000", "8,000"])
+    ax.set(xlim=(9, 10000), ylim=(7.55, -.55), yticks=range(8), yticklabels=SECTORS,
            xlabel="Distance from Ilopango caldera (km, logarithmic scale)", ylabel="Bearing")
     ax.grid(axis="x", color="#c9d2d0", linewidth=.75)
     for i in range(0, 8, 2):
         ax.axhspan(i-.5, i+.5, color="#f1f5f4", zorder=0)
     ax.spines[["right","top"]].set_visible(False)
-    ax.set_title("Ilopango Unit G  |  Where thickness was observed", loc="left", weight="bold")
-    handles = [Line2D([], [], ls="", marker="o", color="#1b6570", label="Measured thickness (52 sites)"),
+    ax.set_title("Ilopango TBJ fallout evidence by distance and bearing", loc="left", weight="bold")
+    handles = [Line2D([], [], ls="", marker="o", color="#1b6570", label=f"Measured Unit G thickness ({counts['measurement']})"),
                Line2D([], [], ls="", marker="^", markerfacecolor="white", color="#99491f",
-                      label="Reported lower bound (4 sites)")]
-    fig.legend(handles=handles, loc="outside lower center", ncols=2, frameon=False)
+                      label=f"Reported lower bound ({counts['lower_limit']})"),
+               Line2D([], [], ls="", marker="D", markerfacecolor="white", color="#63478a",
+                      label="TBJ glass occurrence, phase unresolved")]
+    fig.legend(handles=handles, loc="outside lower center", ncols=3, frameon=False)
     fig.savefig(AUDIT / "coverage.png", dpi=180)
     plt.close(fig)
 
@@ -237,7 +257,7 @@ def main():
     parser.add_argument("--prepare",action="store_true",help="Write the four reproducible audit products.")
     parser.add_argument("--figure", action="store_true", help="Draw coverage from the verified site ledger.")
     parser.add_argument("--verify-manuscript", type=Path, metavar="PDF",
-                        help="Check the two distal core readings against the Oxford manuscript.")
+                        help="Check both distal thickness readings and the Greenland site coordinates against the Oxford manuscript.")
     args=parser.parse_args()
     if args.verify_manuscript:
         verify_manuscript(args.verify_manuscript)
@@ -248,7 +268,9 @@ def main():
             raise ValueError(f"Saved file differs from workbook replay: {path.relative_to(ROOT)}")
     if args.figure:
         coverage_figure()
-    print("Verified Ilopango workbook rows, printed core locations, thicknesses, limits and geographic coverage.")
+    print("Verified the Ilopango source ledger, accepted thicknesses and bounds, and geographic coverage.")
+    if args.verify_manuscript:
+        print("Matched both 3 cm beds and the TUNU2013 site coordinates to the Oxford manuscript.")
 
 
 if __name__ == "__main__":

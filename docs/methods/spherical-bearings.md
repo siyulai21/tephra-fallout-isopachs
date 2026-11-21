@@ -1,6 +1,6 @@
 # Spherical mixture with finite directional reach
 
-The principal spherical result uses the existing Gaussian, exponential and power-law kernels, their inferred scales, offsets or source-focused axes, and their original bounded observation likelihood. It changes the continuation of those kernels into bearings lacking comparable sampling. Each eruption uses the same reach rule and the same distribution of possible hidden fan widths and orientations. [Six-eruption and known-deposit comparisons](../../comparisons/spherical-mixture/README.md)
+The principal spherical result uses the existing Gaussian, exponential and power-law kernels, their inferred scales, offsets or source-focused axes, and their original bounded observation likelihood. It changes the continuation of those kernels into bearings lacking comparable sampling. Each eruption uses the same reach rule and the same distribution of possible hidden fan widths and orientations. [Eruption and known-deposit comparisons](../../comparisons/spherical-mixture/README.md)
 
 ## What the observations identify
 

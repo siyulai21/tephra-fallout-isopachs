@@ -1,6 +1,6 @@
 # Ilopango Tierra Blanca Joven, Unit G
 
-The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [109-row audit and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
+The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
 ## Four matched thickness-only fits
 
@@ -15,7 +15,7 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | GP ensemble | Hull mean **24.99** | 17.93–33.81 | 1.343 | 98.1% |
 | Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 | 1.225 | 94.2% |
+| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 
@@ -58,24 +58,23 @@ The principal fit above uses quantitative thicknesses and bounds. The measured-f
 
 [Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
 
-
 ## Reading the global uncertainty
 
-The uncertain-direction ensemble gives a **40.8 km³** median map. The median across complete simulated deposits is **59.4 km³**, with a conditional 95% interval of **30.1–384.8 km³**. Measured interpolation triangles account for 3.9% of the median-map volume. The same ensemble with fixed fan directions gives 46.7 km³. All four geographic holdouts were scored. One of four quadrant fits retained a sampling warning. [Directional maps, controls and withheld-site results](results/directional/README.md)
-
-The spherical whole-deposit median is **190.9 km³**, with a provisional conditional 95% interval of **62.9–3,300.8 km³**. Its parent sampler and spatial integration passed their checks. Between two halves of the retained draws the median differed by 0.12% and the upper endpoint by 17.3%, exceeding the 10% tolerance. This limits numerical confidence in the upper tail. Across eight fixed prior fits the medians range from 64.7 to 350.4 km³. [Numerical checks, prior changes and held-out predictions](results/spherical-mixture/README.md)
+Across two halves of the spherical draws, the median changed by 0.12% and the upper interval endpoint by 17.3%. The latter exceeded the 10% numerical tolerance. The parent sampler and spatial integration passed. The medians under the eight prior fits range from 64.7 to 350.4 km³. One directional quadrant fit also retained a sampling warning. [Spherical numerical checks](results/spherical-mixture/README.md) · [Directional holdouts](results/directional/README.md)
 
 ## What the observations constrain
 
 Every 45° compass sector contains at least two measured thicknesses. In the northeast, both measurements lie within 25 km, with a published lower bound at Lake Yojoa 176 km away. In the southwest, both measurements come from marine cores 264–309 km away. The largest gap between measured bearings grows from 37° overall to 107° at distances of at least 50 km. The extent of the ash between these sites depends on the fitted thinning and continuation assumptions. [Distances by bearing](../../data/audits/Ilopango-TBJ/coverage.csv)
 
-![Observed radial coverage for Unit G](../../data/audits/Ilopango-TBJ/coverage.png)
+![Locations of the fitted thicknesses and bounds by distance and bearing, with the Greenland occurrence shown separately](../../data/audits/Ilopango-TBJ/coverage.png)
+
+Smith et al. also identified TBJ glass in the TUNU2013 ice core about 7,755 km from Ilopango. It documents long-distance transport. The core supplies no separate thickness or bound for Unit G. [Ice-core evidence and fitting decision](../../data/audits/Ilopango-TBJ/README.md#greenland-ice-core-occurrence)
 
 The two regional models integrate the same 166,961 km² hull. The standard measured-site support screen covers 15,973 km². It gives expected partial volumes of 1.54 km³ for the GP and 1.52 km³ for the spline. The standard screen accepted no complete isopach band for any of the four models. A full deposit still requires assumptions about the proximal region, gaps and distal continuation. [Support geometry, partial volumes and contour decisions](results/support/README.md)
 
 The workbook distinguishes the final ash layer from earlier falls and from pyroclastic density-current deposits. In the offshore cores, chemistry supports a TBJ correlation more securely than attribution to an individual phase. The 550 cm Unit G value at Istagua and the two adjacent 3 cm distal cores in the west remain in the input. Tazumal's conflicting 20 cm and 40–50 cm reports remain in the audit. [Source decisions](../../data/audits/Ilopango-TBJ/README.md)
 
-Smith et al. estimated **85–188 km³ of bulk co-ignimbrite fallout** with a physical dispersal model that uses overlapping thickness data. Both reconstructions draw on overlapping thickness measurements. The four empirical fits used the thicknesses directly, with the published volume reserved for comparison. [Published dispersal estimate](https://pmc.ncbi.nlm.nih.gov/articles/PMC7584997/)
+Smith et al. estimated **85–188 km³ of bulk co-ignimbrite fallout** with a physical dispersal model. That estimate provides a comparison based on overlapping thickness measurements. All four empirical fits used the site data directly. [Published dispersal estimate](https://pmc.ncbi.nlm.nih.gov/articles/PMC7584997/)
 
 ## Reproduce the calculation
 

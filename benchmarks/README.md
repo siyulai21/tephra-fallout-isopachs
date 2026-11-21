@@ -10,7 +10,7 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 | `python -m benchmarks.directional_ensemble --help` | Fit six structures, calibrate predictive weights, render median fields or run known-volume trials | Fixed-direction comparison |
 | `python -m benchmarks.directional --output results/directional-study --reports results/directional-cases` | Six directional cases, 13 fixed policies and geographic/quadrant holdouts; full stress/replication sequence in the [study](../comparisons/directional/single-structure/README.md#reproduce) | Single-structure directional sensitivity |
 | `python -m benchmarks.directional_comparison --help` | Assemble matched global comparisons from completed cases, stress trials and replications | Both global families |
-| `python -m benchmarks.regional --output results/regional-methods` | Current six-eruption matched regional fits, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
+| `python -m benchmarks.regional --output results/regional-methods` | Matched regional fits for every registered eruption, nested geographic validation and 40 known-truth attempts | GP ensemble and automatic cubic spline |
 | `python -m benchmarks.global_posterior --output results/global-posterior` | Fit the registered cases with bearing continuation, seven prior sensitivities and matched geographic holdouts, then build the spherical comparison | Spherical mixture; reviewed geometry per case |
 | `python -m benchmarks.source_fans --output results/source-stress` | Twelve source-focused trials with seeds 20/21, including shape violations and hidden mass, plus two diffuse-tail alternatives | Source-focused ellipses |
 | `python -m benchmarks.source_stress_report --source results/source-stress --output results/source-stress-report` | Publish every declared source-focused trial, preserving failed attempts and normalization refinements | Reports the source-focused stress cache |
@@ -39,7 +39,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 | `python -m benchmarks.verify_btm_cryptotephra` | Current B-Tm profile integrals, upper-limit identities, four fitted families, matched holdouts and archive-response sensitivity volumes |
 | `python -m benchmarks.verify_btm_audit` | Archived 68-site B-Tm fits, folds, four source sensitivities and thinning experiments |
 | `python -m benchmarks.verify_bearing_continuation` | Archived 68-site measured-fan and inspected-site tests, sector volumes and the independent spherical update |
-| `python -m benchmarks.verify_directional` | The six current directional fits and their 78 policy runs, plus the original study’s independent replications and known-volume trials |
+| `python -m benchmarks.verify_directional` | The 13 directional policies for each registered eruption, plus the original study’s independent replications and known-volume trials |
 | `python -m benchmarks.verify_directional_ensemble` | Earlier fixed-direction maps and complete-field volumes, geographic predictions and the published simulation trials |
 | `python -m benchmarks.verify_aso_evidence` | Aso-4 source records, matched validation and posterior attempts |
 | `python -m benchmarks.verify_visuals` | Published file hashes, current cross-eruption tables and four-panel maps |
@@ -64,7 +64,8 @@ Start with the [Aso-4 study's complete reproduction sequence](../comparisons/aso
 
 `python -m benchmarks.aso_diagnosis` uses the required pre-audit posterior in [the study reference](../comparisons/aso-4-audit/reference/README.md). `python -m benchmarks.verify_aso_evidence` checks that reference, current source hashes, matched validation and all retained posterior attempts without writing tracked files. Use `--output results/verification.json` to save a fresh record.
 
+## Verify the source tables
 
-## Verify the Minoan and YTT source tables
+Run `python -m benchmarks.ilopango` to verify Unit G thicknesses, bounds, the source ledger and angular coverage. Supply `--verify-manuscript PATH` to check the distal core readings and Greenland coordinates against the accepted manuscript. [Ilopango source audit](../data/audits/Ilopango-TBJ/README.md)
 
 Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the published inputs against their workbooks. Both commands check the principal selection and four alternatives. Add `--prepare-only` to rebuild the reviewed tables and provenance. Fit either eruption with the ordinary `tephra-isopachs compare` command. [Minoan audit](../data/audits/Minoan/README.md) · [YTT audit](../data/audits/YTT/README.md)

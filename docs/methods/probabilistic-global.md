@@ -8,7 +8,7 @@ A second whole-Earth model continues measured isopach fragments with directional
 
 Protocol: `mass-normalized-spherical-mixture-v1`, introduced in 0.10. The proposed empirical model estimates **bulk fallout volume**, jointly across accepted fallout fans. It is a research implementation, not a validated physical transport model. Its priors are the same for all eruptions; no wind field, umbrella dynamics, grain-size distribution or published target volume is supplied.
 
-**Version 0.11 adds a source-focused alternative and adopts it for B-Tm after the contour review.** This page documents the preceding displaced geometry, retained for the other five cases; it no longer describes one common geometry for all six published results. See the [source-focused equations](source-anchored-fans.md) and the [B-Tm correction and unresolved Aso-4 comparison](../../comparisons/source-revision/README.md).
+Version 0.11 adopted source-focused kernels for B-Tm after its contour review. This page gives the default displaced geometry. Each case records its chosen kernel geometry. [Source-focused equations](source-anchored-fans.md) · [B-Tm correction and Aso-4 comparison](../../comparisons/source-revision/README.md)
 
 ## Why the old screen cannot decide whether to give a global estimate
 

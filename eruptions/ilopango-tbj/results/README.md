@@ -13,7 +13,7 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | GP ensemble | Hull mean **24.99** | 17.93–33.81 | 1.343 | 98.1% |
 | Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
 | [Directional ensemble · uncertain fan direction](directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
-| [Spherical mixture](spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 | 1.225 | 94.2% |
+| [Spherical mixture](spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 

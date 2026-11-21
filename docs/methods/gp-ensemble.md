@@ -46,4 +46,4 @@ The diagnostic estimates extra variation in a new measurement. Latent thickness,
 
 ## Run and validate
 
-`tephra-isopachs compare Minoan --regional-only --output results/new-minoan-regional` fits the GP ensemble and the cubic spline on the same hull. Outer geographic holdouts test the full fitting procedure, including selection of weights inside each training set. The published comparison reports the scores, interval coverage and numerical warnings for all six eruptions. [Regional comparison and known-deposit tests](../../comparisons/regional/README.md)
+`tephra-isopachs compare Minoan --regional-only --output results/new-minoan-regional` fits the GP ensemble and the cubic spline on the same hull. Outer geographic holdouts test the full fitting procedure, including selection of weights inside each training set. The published comparison reports the scores, interval coverage and numerical warnings for each registered eruption. [Regional comparison and known-deposit tests](../../comparisons/regional/README.md)
