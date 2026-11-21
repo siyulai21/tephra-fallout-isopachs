@@ -1,0 +1,791 @@
+{
+  "protocol": "nested-isopach-v1",
+  "name": "Pinatubo 1991 Layer C",
+  "input": {
+    "source": "Pinatubo_1991_layer_C.csv",
+    "input_sha256": "80397cde8948cf20f374cb7245b3f75b3e07a6e1e007ec51c576f701084d57ac",
+    "vent_lonlat": [
+      120.345455,
+      15.142857
+    ],
+    "projection": "+proj=laea +lat_0=15.142857 +lon_0=120.345455 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 102,
+    "n_upper_limits": 22,
+    "n_lower_limits": 13,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [
+      "EvidenceID",
+      "Site"
+    ]
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "18a901cd7c7ebc068984dd137aa1c3065a4b535a583d9dc13e880fedc7afe73d",
+  "draws": 24576,
+  "conditional_volume_km3": [
+    4.722990656831969,
+    7.592373709616972,
+    41.19467910021676
+  ],
+  "population_check_passed": false,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 4.2208441340840785e-05,
+      "q95_relative_error": 0.00022011424114541932,
+      "maximum_relative_error": 0.0002593724825783461,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.02604165514609063,
+        0.04767322871067952,
+        0.05397137723923517
+      ],
+      [
+        0.005564213924182141,
+        0.009962008457414798,
+        0.016794711873833745
+      ],
+      [
+        0.11852589054232193,
+        0.2021366028671544,
+        0.5553168659930372
+      ],
+      [
+        0.4114332807391651,
+        0.7392905347840797,
+        0.8153392361579462
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.04462504164568577,
+        0.05067167666707797,
+        0.07278630085538541
+      ],
+      [
+        0.03157261246188792,
+        0.03207176116411946,
+        0.03519007766745653
+      ],
+      [
+        0.03980654834520027,
+        0.05066262290818871,
+        0.06659831669616931
+      ],
+      [
+        0.0876500672205733,
+        0.1132852983394706,
+        0.12742251626021123
+      ],
+      [
+        0.1657573878479172,
+        0.199331454944976,
+        0.21144667394981445
+      ],
+      [
+        0.23275789556362103,
+        0.2405370488933717,
+        0.24183594514973486
+      ],
+      [
+        0.17173143989836978,
+        0.19936204047313844,
+        0.22191773779654297
+      ],
+      [
+        0.09994609231088655,
+        0.11328104176901614,
+        0.14204923245021986
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.02363145268924948,
+      0.005375836316422189,
+      0.5924300543748015,
+      0.3771675003056234
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 102,
+    "covered": 92,
+    "fraction": 0.9019607843137255
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "volume_km3": [
+        4.722990656831969,
+        7.592373709616972,
+        41.19467910021676
+      ],
+      "effective_draws": 24576.000000000946,
+      "relative_ess": 1.0000000000000384,
+      "weight_check_passed": true
+    },
+    "weak_profile_transfer": {
+      "volume_km3": [
+        4.9307362906365535,
+        8.03310243371888,
+        158.1037429566948
+      ],
+      "effective_draws": 7106.118890184884,
+      "relative_ess": 0.28914871786234064,
+      "weight_check_passed": true
+    },
+    "broader_peak_prior": {
+      "volume_km3": [
+        4.720797906078869,
+        7.592373709616972,
+        41.26168801620016
+      ],
+      "effective_draws": 24575.100003684187,
+      "relative_ess": 0.99996337905616,
+      "weight_check_passed": true
+    },
+    "power_tail_prior_80pct": {
+      "volume_km3": [
+        4.79165844787499,
+        7.731605936184785,
+        110.14484038201621
+      ],
+      "effective_draws": 20110.50100738632,
+      "relative_ess": 0.8182983808344043,
+      "weight_check_passed": true
+    },
+    "exponential_tail_prior_80pct": {
+      "volume_km3": [
+        4.710309964128429,
+        7.493882655006438,
+        12.246446055234074
+      ],
+      "effective_draws": 24158.31496953218,
+      "relative_ess": 0.9830043526014071,
+      "weight_check_passed": true
+    },
+    "detached_prior_50pct": {
+      "volume_km3": [
+        4.720797906078869,
+        7.592373709616972,
+        41.26168801620016
+      ],
+      "effective_draws": 24576.000000000946,
+      "relative_ess": 1.0000000000000384,
+      "weight_check_passed": true
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      3845477.3380367225,
+      5596580.056725816,
+      78620612.44796179
+    ],
+    "0.1": [
+      993805.5271180657,
+      1658789.9574313741,
+      2847710.0161964716
+    ],
+    "1.0": [
+      13921.672479821298,
+      22348.275482173034,
+      122736.41049023849
+    ],
+    "10.0": [
+      2218.2530638613107,
+      2589.6671598149524,
+      2974.7859214754108
+    ],
+    "100.0": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "1000.0": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "slab_volume_km3": [
+    [
+      0.5680466306434981,
+      0.8339087431381769,
+      31.210143465043355
+    ],
+    [
+      1.6578025040907187,
+      2.4903104251197004,
+      8.716030639642291
+    ],
+    [
+      1.1308726574126597,
+      3.1844450739515406,
+      5.24883808720558
+    ],
+    [
+      0.48057985423820315,
+      0.5807416528733574,
+      0.8365558384338015
+    ],
+    [
+      0.14812039821734613,
+      0.20402455787902268,
+      0.2683292836383284
+    ],
+    [
+      0.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      -0.0,
+      -0.0
+    ]
+  ],
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.0302734375,
+  "volume_conditional_on_tail": {
+    "power": [
+      26.54323328867318,
+      70.02773490576695,
+      293.77945195410564
+    ],
+    "exponential": [
+      4.702884617234333,
+      7.45280099358345,
+      11.662095559517121
+    ]
+  },
+  "geographic_score": 1.0399040688270258,
+  "geographic_folds_passed": 2,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 135,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.10000000000000002,
+      "latent_cm": [
+        0.04863680245092756,
+        0.09165500444592076,
+        0.16289635032242794
+      ],
+      "latent_satisfies": 0.6797688802083334,
+      "predictive_probability_of_event": 0.5797662266295981
+    },
+    {
+      "row_id": 129,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.200000000000001,
+      "latent_cm": [
+        0.8926214408577968,
+        1.3543459940425517,
+        1.9704251902967795
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9929942339625768
+    },
+    {
+      "row_id": 130,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        1.1440227155820297,
+        1.6286349079974898,
+        2.1798619557967265
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9902185219129507
+    },
+    {
+      "row_id": 27,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 9.699999999999998,
+      "upper_cm": null,
+      "latent_cm": [
+        10.418849624177009,
+        12.277116310597147,
+        14.164413274247995
+      ],
+      "latent_satisfies": 0.9969889322916666,
+      "predictive_probability_of_event": 0.6935082066976298
+    },
+    {
+      "row_id": 84,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 19.999999999999996,
+      "latent_cm": [
+        13.170969810599432,
+        15.152367491905405,
+        17.16290368512019
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7364907151563632
+    },
+    {
+      "row_id": 20,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        8.774830380857479,
+        10.916597863914177,
+        13.007656304422682
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9452331004516813
+    },
+    {
+      "row_id": 86,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 17.999999999999996,
+      "latent_cm": [
+        14.688819357813822,
+        16.680177722336325,
+        18.748282835955283
+      ],
+      "latent_satisfies": 0.8822021484375,
+      "predictive_probability_of_event": 0.5706554917817332
+    },
+    {
+      "row_id": 68,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 17.999999999999996,
+      "latent_cm": [
+        15.846018241091366,
+        18.50802031333369,
+        21.390718356389826
+      ],
+      "latent_satisfies": 0.3994547526041667,
+      "predictive_probability_of_event": 0.4819499577076502
+    },
+    {
+      "row_id": 91,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 19.999999999999996,
+      "upper_cm": null,
+      "latent_cm": [
+        27.010617234720755,
+        32.415991042326496,
+        39.266862327185876
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8523851237481247
+    },
+    {
+      "row_id": 92,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 13.0,
+      "upper_cm": null,
+      "latent_cm": [
+        27.492198559141805,
+        33.14084614745224,
+        40.185999829645596
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9708477206111987
+    },
+    {
+      "row_id": 63,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 4.5,
+      "upper_cm": null,
+      "latent_cm": [
+        16.92387937107151,
+        19.904913605546827,
+        23.17906885462615
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.993142326270745
+    },
+    {
+      "row_id": 47,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 6.700000000000001,
+      "upper_cm": null,
+      "latent_cm": [
+        10.96496048928368,
+        12.165536890058899,
+        13.371781404831431
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9022903024334753
+    },
+    {
+      "row_id": 64,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 6.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        16.478969858185074,
+        19.166908158280442,
+        22.139667892599316
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9775096103595171
+    },
+    {
+      "row_id": 115,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 11.199999999999998,
+      "latent_cm": [
+        10.357842347868996,
+        11.519427552334376,
+        12.620716459495029
+      ],
+      "latent_satisfies": 0.3035481770833333,
+      "predictive_probability_of_event": 0.4786833672960118
+    },
+    {
+      "row_id": 117,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 15.0,
+      "latent_cm": [
+        11.530758973512176,
+        12.996604353139052,
+        14.49324601159524
+      ],
+      "latent_satisfies": 0.99462890625,
+      "predictive_probability_of_event": 0.6286588358349702
+    },
+    {
+      "row_id": 126,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        6.252708146011596,
+        6.888213992201913,
+        7.498698050482531
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.24012107721505693
+    },
+    {
+      "row_id": 125,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        8.923701116943615,
+        9.942903001944767,
+        10.860126579022372
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.31796818970577917
+    },
+    {
+      "row_id": 46,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 7.400000000000001,
+      "upper_cm": null,
+      "latent_cm": [
+        9.005127032261319,
+        10.075352449567465,
+        11.03349681622217
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7501954284435283
+    },
+    {
+      "row_id": 71,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 19.999999999999996,
+      "upper_cm": null,
+      "latent_cm": [
+        12.092648279563406,
+        13.75975486269296,
+        15.83518779721962
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.20719291136593732
+    },
+    {
+      "row_id": 24,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 13.5,
+      "upper_cm": null,
+      "latent_cm": [
+        9.975095799689033,
+        11.10078309885535,
+        12.405762564291795
+      ],
+      "latent_satisfies": 0.0014241536458333333,
+      "predictive_probability_of_event": 0.3328134470931778
+    },
+    {
+      "row_id": 118,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 11.499999999999998,
+      "latent_cm": [
+        10.236821064132064,
+        11.605919705156104,
+        12.929978362079067
+      ],
+      "latent_satisfies": 0.4036865234375,
+      "predictive_probability_of_event": 0.4947565767772461
+    },
+    {
+      "row_id": 127,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        5.876506720801554,
+        6.515641163383833,
+        7.100695268873512
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.2801249967980933
+    },
+    {
+      "row_id": 100,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 16.5,
+      "latent_cm": [
+        10.145986836883587,
+        11.668589738055633,
+        13.232547778988
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7787861169047975
+    },
+    {
+      "row_id": 98,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 17.999999999999996,
+      "latent_cm": [
+        10.286211066588681,
+        11.899976070552855,
+        13.650113171438269
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8181881645518535
+    },
+    {
+      "row_id": 120,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.499999999999999,
+      "latent_cm": [
+        7.099823065773446,
+        8.001154825748126,
+        8.79888812710863
+      ],
+      "latent_satisfies": 0.14156087239583334,
+      "predictive_probability_of_event": 0.4469375800104412
+    },
+    {
+      "row_id": 52,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 3.0000000000000004,
+      "upper_cm": null,
+      "latent_cm": [
+        4.299657446122041,
+        4.825038178598743,
+        5.317690603194018
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8507620574386244
+    },
+    {
+      "row_id": 16,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 2.0,
+      "upper_cm": null,
+      "latent_cm": [
+        0.9813031503837962,
+        1.3226047293210872,
+        1.848406167014257
+      ],
+      "latent_satisfies": 0.006184895833333333,
+      "predictive_probability_of_event": 0.20054260668225074
+    },
+    {
+      "row_id": 14,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.6,
+      "latent_cm": [
+        0.4150073415361333,
+        0.9826136275159267,
+        1.5593931212708625
+      ],
+      "latent_satisfies": 0.12552897135416666,
+      "predictive_probability_of_event": 0.21736213518586753
+    },
+    {
+      "row_id": 30,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 10.8,
+      "upper_cm": null,
+      "latent_cm": [
+        4.439371815774128,
+        5.1045269386250185,
+        5.778390895262907
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.055046730003787604
+    },
+    {
+      "row_id": 61,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.5,
+      "latent_cm": [
+        1.2894500219138012,
+        1.582818926788527,
+        1.9007732294892985
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8393427771062822
+    },
+    {
+      "row_id": 106,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 3.5,
+      "latent_cm": [
+        2.8322677481947904,
+        3.405824073723913,
+        3.9316684246559745
+      ],
+      "latent_satisfies": 0.6698404947916666,
+      "predictive_probability_of_event": 0.5308350090840882
+    },
+    {
+      "row_id": 36,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        2.3612568654137025,
+        2.8701320187449757,
+        3.348027995732714
+      ],
+      "latent_satisfies": 8.138020833333333e-05,
+      "predictive_probability_of_event": 0.21893457180219966
+    },
+    {
+      "row_id": 44,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        2.0108330544430797,
+        2.4502346180289396,
+        2.872302434793682
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.034232383883961354
+    },
+    {
+      "row_id": 79,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.2,
+      "latent_cm": [
+        1.1732572382710886,
+        1.4558814664541764,
+        1.8197732658498993
+      ],
+      "latent_satisfies": 0.035319010416666664,
+      "predictive_probability_of_event": 0.3299576132609122
+    },
+    {
+      "row_id": 32,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        1.6413359211933198,
+        2.0372016333550893,
+        2.4389657426762286
+      ],
+      "latent_satisfies": 0.4314371744791667,
+      "predictive_probability_of_event": 0.4914290555832111
+    }
+  ],
+  "archive_predictions": {},
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  }
+}

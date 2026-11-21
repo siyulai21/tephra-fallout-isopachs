@@ -1,0 +1,222 @@
+{
+  "protocol": "nested-bearing-sensitivity-v1",
+  "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+  "history": [
+    {
+      "draws": 256,
+      "nodes_per_scramble": 4096,
+      "unmodified_p95_relative_integration_error": 0.0006394173737793052,
+      "ordinary_scramble_relative_difference": 0.0006417787277255029,
+      "enhanced_scramble_relative_difference": 0.00031165551931416706,
+      "scramble_relative_quantile_difference": 0.0006417787277255029,
+      "doubling_relative_difference": null,
+      "passed": false
+    },
+    {
+      "draws": 512,
+      "nodes_per_scramble": 8192,
+      "unmodified_p95_relative_integration_error": 0.0003159656806014034,
+      "ordinary_scramble_relative_difference": 0.00021032055126100308,
+      "enhanced_scramble_relative_difference": 8.095955602285403e-05,
+      "scramble_relative_quantile_difference": 0.00021032055126100308,
+      "doubling_relative_difference": 0.02767047836393899,
+      "passed": true
+    }
+  ],
+  "baseline_km3": [
+    96.10787267344293,
+    146.85216584306949,
+    290.70004470829264
+  ],
+  "retained_volume_km3": [
+    89.95282257140181,
+    133.72277805930224,
+    248.2362355504858
+  ],
+  "enhanced_hidden_fan_km3": [
+    92.60886657379203,
+    139.81210543763171,
+    335.61097512312085
+  ],
+  "sector_fraction": [
+    [
+      0.035795222716718166,
+      0.12315733852100563,
+      0.21199264216227057
+    ],
+    [
+      0.03226121658569631,
+      0.12500049516456652,
+      0.2537011993078978
+    ],
+    [
+      0.03359773700788,
+      0.10610263758134467,
+      0.17189648578496586
+    ],
+    [
+      0.015085663452477128,
+      0.054101585438016644,
+      0.18587491826554234
+    ],
+    [
+      0.02162632364133091,
+      0.07178933201096979,
+      0.2397703354833512
+    ],
+    [
+      0.05476467860465267,
+      0.12499979343839468,
+      0.29114238690653904
+    ],
+    [
+      0.1249978982984627,
+      0.20807433940467102,
+      0.2769224073586878
+    ],
+    [
+      0.061032064342785915,
+      0.1616140683565065,
+      0.2611099764186725
+    ]
+  ],
+  "folds": [
+    {
+      "fold": 0,
+      "training_rows": [
+        20,
+        19,
+        16,
+        23,
+        13,
+        5,
+        2,
+        3,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test_rows": [
+        18,
+        14,
+        12,
+        11,
+        7,
+        10
+      ],
+      "reference_score": 1.2794113014538502,
+      "bearing_score": 1.2612242261832516,
+      "parent_passed": true
+    },
+    {
+      "fold": 1,
+      "training_rows": [
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        5,
+        2,
+        3,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test_rows": [
+        20,
+        19,
+        17,
+        16,
+        15,
+        23,
+        13
+      ],
+      "reference_score": 1.3647337907263666,
+      "bearing_score": 1.4420577259921077,
+      "parent_passed": true
+    },
+    {
+      "fold": 2,
+      "training_rows": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        7,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test_rows": [
+        8,
+        9,
+        5,
+        2,
+        3,
+        6
+      ],
+      "reference_score": 1.2493895487131375,
+      "bearing_score": 1.2493781217432671,
+      "parent_passed": true
+    },
+    {
+      "fold": 3,
+      "training_rows": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        5,
+        6
+      ],
+      "test_rows": [
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "reference_score": 1.6071667157135303,
+      "bearing_score": 1.646009921543591,
+      "parent_passed": true
+    }
+  ],
+  "paired_scores": {
+    "reference_score": 1.3751753391517212,
+    "bearing_score": 1.3996674988655544
+  }
+}

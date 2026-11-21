@@ -1,0 +1,474 @@
+{
+  "protocol": "nested-observed-range-v3",
+  "name": "Ilopango TBJ (Unit G)",
+  "input": {
+    "source": "data/eruptions/Ilopango_TBJ_Unit_G.csv",
+    "input_sha256": "17392b010ca5814d719884c0b5c925b14fe9b70a34a7e2832f30f31b82e713c9",
+    "vent_lonlat": [
+      -89.053,
+      13.672
+    ],
+    "projection": "+proj=laea +lat_0=13.672 +lon_0=-89.053 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 52,
+    "n_upper_limits": 0,
+    "n_lower_limits": 4,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [
+      "EvidenceID",
+      "Site"
+    ],
+    "audit": {
+      "file": "audits/Ilopango-TBJ/provenance.json",
+      "sha256": "b95146876ff7360abf1088b7522b7ddbe9447aaa03a42009824681bb50c5adcb",
+      "case": "principal",
+      "definition": "Widespread co-ignimbrite fallout, Pedrazzi Unit G and explicitly correlated distal beds."
+    }
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "67dcfc9c7acc82471a0991415e7ef883ec2b4a16374a6546a1f8274334ab2dd9",
+  "draws": 49152,
+  "conditional_volume_km3": [
+    37.4946108395891,
+    50.45493644491516,
+    181.84775558098048
+  ],
+  "population_check_passed": false,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 5.819264584649986e-07,
+      "q95_relative_error": 2.4771397181289055e-05,
+      "maximum_relative_error": 0.00047994178041954605,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.008143059374436216,
+        0.03362627310842655,
+        0.039764655360452955
+      ],
+      [
+        0.004029778022774969,
+        0.03501762268986025,
+        0.12765478646575237
+      ],
+      [
+        0.007720894328289245,
+        0.1130278221666799,
+        0.7733136270996039
+      ],
+      [
+        0.2105563767625454,
+        0.801925162684796,
+        0.8890052036184949
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.1249985222846276,
+        0.12501925433547906,
+        0.15635715053012883
+      ],
+      [
+        0.12483525578143115,
+        0.12498286228139655,
+        0.22135721826645433
+      ],
+      [
+        0.12495766937996179,
+        0.12499583989224938,
+        0.21666421989774992
+      ],
+      [
+        0.12499939260604868,
+        0.12502020661196264,
+        0.14213822568700704
+      ],
+      [
+        0.08329179299968088,
+        0.12498013851459519,
+        0.12500031116163413
+      ],
+      [
+        0.043329618390067014,
+        0.12501742594237697,
+        0.12517975260068043
+      ],
+      [
+        0.04128071841934049,
+        0.12500907854238513,
+        0.12504161504132616
+      ],
+      [
+        0.08788677458177988,
+        0.12497801951232486,
+        0.12500051706306395
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.00787753938793535,
+      0.003754205360059095,
+      0.7839335432027499,
+      0.2022452359429664
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 52,
+    "covered": 49,
+    "fraction": 0.9423076923076923
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "volume_km3": [
+        37.4946108395891,
+        50.45493644491516,
+        181.84775558098048
+      ],
+      "effective_draws": 49152.000000006534,
+      "relative_ess": 1.000000000000133,
+      "weight_check_passed": true
+    },
+    "weak_profile_transfer": {
+      "volume_km3": [
+        37.72571334229965,
+        51.237404804545136,
+        205.2045990201761
+      ],
+      "effective_draws": 32464.59426136412,
+      "relative_ess": 0.6604938611117375,
+      "weight_check_passed": true
+    },
+    "broader_peak_prior": {
+      "volume_km3": [
+        37.49457411928394,
+        50.2780566278159,
+        165.63970120764026
+      ],
+      "effective_draws": 47511.70468191392,
+      "relative_ess": 0.9666281063214909,
+      "weight_check_passed": true
+    },
+    "power_tail_prior_80pct": {
+      "volume_km3": [
+        37.23541688630844,
+        49.62012719667384,
+        165.87861016812082
+      ],
+      "effective_draws": 42537.17896803731,
+      "relative_ess": 0.8654211215827904,
+      "weight_check_passed": true
+    },
+    "exponential_tail_prior_80pct": {
+      "volume_km3": [
+        38.33235619111047,
+        52.297395830095724,
+        210.72225164858014
+      ],
+      "effective_draws": 31641.680302218225,
+      "relative_ess": 0.6437516337528122,
+      "weight_check_passed": true
+    },
+    "detached_prior_50pct": {
+      "volume_km3": [
+        37.49462150032286,
+        50.459430103062104,
+        182.77703043324738
+      ],
+      "effective_draws": 49056.292112954936,
+      "relative_ess": 0.9980528180532824,
+      "weight_check_passed": true
+    },
+    "more_distal_ash_prior": {
+      "volume_km3": [
+        37.51151544423128,
+        50.385883718386104,
+        178.72067831277218
+      ],
+      "effective_draws": 48795.822484987424,
+      "relative_ess": 0.9927535499061569,
+      "weight_check_passed": true
+    },
+    "less_distal_ash_prior": {
+      "volume_km3": [
+        37.50896066918946,
+        50.46718042215876,
+        182.04747160282784
+      ],
+      "effective_draws": 49046.94981296314,
+      "relative_ess": 0.9978627484733712,
+      "weight_check_passed": true
+    },
+    "distal_prior_without_Santa Maria 1902": {
+      "volume_km3": [
+        37.39201214340353,
+        51.037449082652785,
+        200.42058404062055
+      ],
+      "effective_draws": 36758.36034089307,
+      "relative_ess": 0.747850755633404,
+      "weight_check_passed": true
+    },
+    "distal_prior_without_Quizapu 1932": {
+      "volume_km3": [
+        37.52211454433223,
+        50.4482734582472,
+        181.17142919040614
+      ],
+      "effective_draws": 48710.14957751544,
+      "relative_ess": 0.9910105301415087,
+      "weight_check_passed": true
+    },
+    "distal_prior_without_Novarupta 1912": {
+      "volume_km3": [
+        37.5235255556044,
+        50.44606225540339,
+        181.06248398334213
+      ],
+      "effective_draws": 48649.878455453334,
+      "relative_ess": 0.9897843110240343,
+      "weight_check_passed": true
+    },
+    "distal_prior_without_Hudson 1991": {
+      "volume_km3": [
+        37.536378434346595,
+        50.4308907835089,
+        180.4204356669441
+      ],
+      "effective_draws": 48408.722657961174,
+      "relative_ess": 0.9848779837638585,
+      "weight_check_passed": true
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      564764.8089916978,
+      2719704.627799585,
+      91013005.99720024
+    ],
+    "0.1": [
+      453366.93118660233,
+      1085301.5379143553,
+      20435998.526862033
+    ],
+    "1.0": [
+      397571.4438885536,
+      516727.8349089557,
+      3176176.8578944583
+    ],
+    "10.0": [
+      77379.84893510416,
+      120806.20729471883,
+      183511.6484351331
+    ],
+    "100.0": [
+      914.6073609548064,
+      1248.977986753249,
+      2620.4955547902587
+    ],
+    "1000.0": [
+      0.0,
+      7.826657709928457,
+      256.02333905728625
+    ]
+  },
+  "slab_volume_km3": [
+    [
+      0.06602280707212493,
+      0.5507001003954386,
+      19.636833153668466
+    ],
+    [
+      0.43670777845673875,
+      1.339774342917643,
+      32.46557013387322
+    ],
+    [
+      3.7161327296900732,
+      5.941759529660374,
+      63.20260886156762
+    ],
+    [
+      18.604616403689537,
+      24.344661763777918,
+      64.25002979589696
+    ],
+    [
+      9.294584491486088,
+      13.838026895656702,
+      20.832961099122034
+    ],
+    [
+      0.43793104200279087,
+      2.2446903248268226,
+      4.465869970579794
+    ],
+    [
+      -0.0,
+      0.005620011608192775,
+      3.4731559210420464
+    ]
+  ],
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.75592041015625,
+  "volume_conditional_on_tail": {
+    "power": [
+      37.131739525944354,
+      49.2359598452031,
+      158.75731082785234
+    ],
+    "exponential": [
+      41.533281201275244,
+      54.875485345546956,
+      243.28820516165774
+    ]
+  },
+  "geographic_score": 1.1587991814617842,
+  "geographic_folds_passed": 1,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 51,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 1.0,
+      "upper_cm": null,
+      "latent_cm": [
+        1.838902995253566,
+        3.259725174419643,
+        4.796691894396848
+      ],
+      "latent_satisfies": 0.9983113606770834,
+      "predictive_probability_of_event": 0.9631876850236011
+    },
+    {
+      "row_id": 27,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 49.99999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        22.07716963987142,
+        28.247693749130224,
+        39.750212361061735
+      ],
+      "latent_satisfies": 0.003926595052083333,
+      "predictive_probability_of_event": 0.1583767339531638
+    },
+    {
+      "row_id": 43,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 6.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        6.447162178314791,
+        8.988954296336868,
+        12.689480542592792
+      ],
+      "latent_satisfies": 0.9166666666666666,
+      "predictive_probability_of_event": 0.6653638837964497
+    },
+    {
+      "row_id": 53,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 0.3,
+      "upper_cm": null,
+      "latent_cm": [
+        8.487563154796444,
+        11.838159637403056,
+        17.711745697914093
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9994115500299109
+    }
+  ],
+  "archive_predictions": {},
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "distal_budget": {
+    "donor_reference_tail_to_core_odds": {
+      "Santa Maria 1902": 0.12228980213463429,
+      "Quizapu 1932": 2.7009896692936874,
+      "Novarupta 1912": 2.420692312263672,
+      "Hudson 1991": 1.187524116429101
+    },
+    "predictive_df": 3,
+    "centre_log_odds": -0.012954807438836993,
+    "scale_log_odds": 1.609013260484478,
+    "reference_log_odds": [
+      1.7355291039811664,
+      2.9229062239357844,
+      4.3189819754568095
+    ],
+    "physical_distal_volume_fraction": [
+      0.7870358233992879,
+      0.9146870335311628,
+      0.9752928839867279
+    ]
+  },
+  "terminal_continuation": {
+    "unrestricted_volume_km3": [
+      47.92605184775897,
+      87.21206038447144,
+      208.89890559664718
+    ],
+    "transfer_multiplier_km3": {
+      "0.25": [
+        35.945286927667944,
+        46.13895983677672,
+        105.75289634998462
+      ],
+      "1.0": [
+        37.4946108395891,
+        50.45493644491516,
+        181.84775558098048
+      ],
+      "4.0": [
+        41.12756302750892,
+        64.50995557618019,
+        507.50038018237683
+      ]
+    },
+    "volume_fraction_beyond_last_sampled_rank": [
+      0.011332434906016467,
+      0.10497963742031813,
+      0.7176772332290005
+    ],
+    "sampling_rule": "Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit."
+  }
+}

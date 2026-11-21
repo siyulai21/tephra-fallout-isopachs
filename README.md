@@ -1,6 +1,6 @@
 # Tephra fallout reconstruction
 
-This repository turns published ash-thickness measurements into **isopachs** (contours of equal thickness) and estimates of bulk fallout volume. Open an eruption to see all four fits on one map panel, their volumes and their predictions at withheld sites. Its case page also links the measurements and source decisions.
+This repository turns published ash-thickness measurements into **isopachs** (contours of equal thickness) and estimates of bulk fallout volume. Open an eruption to compare five fits, their volumes and their predictions at withheld sites. Its case page also links the measurements and source decisions.
 
 **[Browse the eruption results](eruptions/README.md)** · **[Submit or recalculate an eruption through chat](docs/NEW_ERUPTION.md)**
 
@@ -14,8 +14,10 @@ On the directional maps, solid contour fragments connect measured thicknesses th
 
 Minoan combines Plinian and co-ignimbrite fans in one deposit. At B-Tm, two lake profiles and one peat core supplied conditional upper bounds where no bed thickness was measured. Their case pages show how those decisions affect the maps and volumes. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [How to review an occurrence without a measured thickness](docs/methods/sites-without-measured-thickness.md)
 
+The **Bayesian nested-isopach model** estimates the area covered above every thickness threshold. A deposit can have multiple fans or a detached maximum. Each case shows the median isopachs, the volume in each thickness range and the fraction inferred beyond the farthest exact site. [Compare all three global estimates](comparisons/nested-isopachs/README.md)
+
 ## Methods and evidence
 
-[How the four models work](docs/methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
+[How the five models work](docs/methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
 
 To run an analysis or contribute code, start with the [guides and repository layout](docs/README.md). AI agents can follow the [intake, publication and verification instructions](AGENTS.md).

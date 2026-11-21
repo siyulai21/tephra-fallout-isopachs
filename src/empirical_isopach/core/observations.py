@@ -45,7 +45,19 @@ class Observations:
                                       self.xy[:, 1], self.xy[:, 0])))
 
 
-def read_observations(path):
+@dataclass
+class IntervalObservations(Observations):
+    # Set only for a method that explicitly implements two-sided likelihoods.
+    # NaN denotes a row with one of the original observation kinds.
+    interval_log_upper: np.ndarray | None = None
+
+    def subset(self, indices):
+        base = super().subset(indices)
+        base.interval_log_upper = self.interval_log_upper[indices]
+        return base
+
+
+def read_observations(path, *, allow_intervals=False):
     """Ignore legacy pseudo rows, including their coordinates, for all fitting.
 
     A non-detection requires Kind=upper_limit and Limit_cm>0. An incomplete
@@ -78,26 +90,49 @@ def read_observations(path):
             or np.any(abs(coords[:, 1]) > 90)):
         raise ValueError("Every real observation needs valid longitude and latitude.")
     kind = real.get("Kind", pd.Series("measurement", index=real.index)).fillna("measurement").str.strip().str.lower()
-    if not set(kind).issubset({"measurement", "upper_limit", "lower_limit"}):
+    allowed_kinds = {"measurement", "upper_limit", "lower_limit"}
+    if allow_intervals:
+        allowed_kinds.add("interval")
+    elif kind.eq("interval").any():
+        raise ValueError("Two-sided intervals require the nested-isopachs global method; supply Lower_cm and Upper_cm.")
+    if not set(kind).issubset(allowed_kinds):
         raise ValueError("Kind must be measurement, upper_limit or lower_limit; bounds need documented limits.")
     censored = kind.ne("measurement").to_numpy()
-    lower_censored = kind.eq("lower_limit").to_numpy()
+    interval = kind.eq("interval").to_numpy()
+    lower_censored = kind.isin(["lower_limit","interval"]).to_numpy()
     value = pd.to_numeric(real.Thickness, errors="coerce").to_numpy(dtype=float).copy()
-    if np.any(censored):
+    one_sided = censored & ~interval
+    if np.any(one_sided):
         if "Limit_cm" not in real:
             raise ValueError("Censored observations require a documented positive Limit_cm.")
-        value[censored] = real.loc[kind.ne("measurement"), "Limit_cm"].to_numpy(dtype=float)
+        value[one_sided] = real.loc[one_sided, "Limit_cm"].to_numpy(dtype=float)
+    if interval.any():
+        if not {"Lower_cm","Upper_cm"}.issubset(real):
+            raise ValueError("A two-sided interval requires Lower_cm and Upper_cm")
+        value[interval] = real.loc[interval,"Lower_cm"].to_numpy(dtype=float)
+        upper = real.loc[interval,"Upper_cm"].to_numpy(dtype=float)
+        if not np.all(np.isfinite(upper) & (upper>value[interval])):
+            raise ValueError("Interval upper bounds must be finite and exceed the lower bound")
     if not np.all(np.isfinite(value) & (value > 0)):
         raise ValueError("Thicknesses must be positive. Encode non-detections as upper_limit with Limit_cm.")
     log_sd = real.get("LogSD", pd.Series(0., index=real.index)).fillna(0).to_numpy(dtype=float)
     fwd, inv, crs = make_laea_transform(*vent)
     xy = np.column_stack(fwd.transform(coords[:, 0], coords[:, 1]))
-    data = Observations(xy, np.log(value), censored, log_sd, real.index.to_numpy() + 2, lower_censored).canonical()
+    args = (xy, np.log(value), censored, log_sd, real.index.to_numpy() + 2, lower_censored)
+    if interval.any():
+        bounds = np.full(len(real), np.nan)
+        bounds[interval] = np.log(upper)
+        data = IntervalObservations(*args, interval_log_upper=bounds).canonical()
+    else:
+        data = Observations(*args).canonical()
     metadata = {"source": str(path), "input_sha256": sha256(path.read_bytes()).hexdigest(),
                 "vent_lonlat": vent.tolist(), "projection": crs.to_string(),
                 "n_measurements": int((~censored).sum()), "n_upper_limits": int((censored & ~lower_censored).sum()),
-                "n_lower_limits": int(lower_censored.sum()),
+                "n_lower_limits": int((lower_censored & ~interval).sum()),
                 "ignored_pseudo_rows": (df.index[is_pseudo] + 2).tolist(),
                 "ignored_extra_columns": sorted(set(df) - required - {"Pseudo", "Kind", "Limit_cm", "LogSD"}),
                 "transform_inv": inv}
+    if interval.any():
+        metadata["n_intervals"] = int(interval.sum())
+        metadata["ignored_extra_columns"] = sorted(set(metadata["ignored_extra_columns"])-{"Lower_cm","Upper_cm"})
     return data, metadata

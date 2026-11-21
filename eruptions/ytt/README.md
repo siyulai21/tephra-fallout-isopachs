@@ -16,6 +16,11 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **1,203.01** | 797.96–1,998.78 | 2.153 | 82.6% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **900.6** · volume median 1,272.1 | 736.5–3,660.9 | 1.531 † | 100.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **1,510.5** | 1,054.3–48,708.5 | 1.756 | 84.8% |
+| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **1,543.0** | 1,048.5–3,339.5 **(provisional)** | 1.507 † | 93.5% |
+
+[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
+
+The nested estimate puts a median 13.2% of the fallout volume inside the retained exact-site triangles and 0.9% beyond the farthest exact measurement. 3/4 geographic refits passed the independent-population check.
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 

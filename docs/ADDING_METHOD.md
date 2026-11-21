@@ -39,3 +39,5 @@ Add the method to the [method guide](methods/README.md), place its equations alo
 The registry is a navigation and dispatch mechanism, not evidence that a newly registered method is scientifically validated. New predictive distributions or new data requirements may require extending the shared contract deliberately.
 
 For a method that extrapolates across a sampling gap, test archived no-bed readings at their own coordinates. Show the inferred response to an intact visible bed and its sensitivity to loss or mixing. Use the same audited quantitative input for the geographic benchmark. [Archive observation and continuation protocol](methods/archive-evidence.md)
+
+The Bayesian nested-isopach family exercises this contract using an analytic area integral, joint geographic draws, matched withholding and direct integration of the same fields. [Implementation and scientific limits](methods/nested-isopachs.md)

@@ -8,6 +8,7 @@ from ....core.validation import spatial_folds, training_mask
 from ....validation import automatic_buffer
 from ..geometry import BASE, POLICIES, Geometry, polar
 from ..study import SEED, fit, write_json
+from ..inference import _sampler
 
 
 MEMBERS = (POLICIES[5], BASE, POLICIES[6],
@@ -60,5 +61,13 @@ def run_members(data, latitude, work, kinds=("full", "geographic", "quadrants"),
                     write_json(folder/"status.json", {"status": "insufficient support", "reason": str(exc)})
                     continue
                 offset = code if kind == "full" else code*1000+(101 if kind == "geographic" else 201)+i
-                _, info = fit(train, g, SEED+offset, folder)
+                try:
+                    _, info = fit(train, g, SEED+offset, folder)
+                except ValueError as exc:
+                    if "vmap was requested to map its argument along axis 0" not in str(exc):
+                        raise
+                    # Some NumPyro runtimes retain an in-place vectorized kernel
+                    # between equal-shaped fits. Retry its exact seed with a fresh kernel.
+                    _sampler.cache_clear()
+                    _, info = fit(train, g, SEED+offset, folder)
                 write_json(folder/"status.json", {"status": "estimated", **info})

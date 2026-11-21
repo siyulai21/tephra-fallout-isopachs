@@ -1,6 +1,6 @@
-# How the four models fit fallout
+# How the five models fit fallout
 
-An eruption has one accepted table of measured thicknesses and documented bounds. Each of the four models fits that evidence independently. A case page puts their isopachs, bulk volumes and geographic prediction scores side by side. [Eruption catalogue](../../eruptions/README.md) · [Matched comparisons](../../comparisons/README.md)
+An eruption has one accepted table of measured thicknesses and documented bounds. Each of the five models fits that evidence independently. A case page puts their isopachs, bulk volumes and geographic prediction scores side by side. [Eruption catalogue](../../eruptions/README.md) · [Matched comparisons](../../comparisons/README.md)
 
 ## Observations and bounds
 
@@ -23,6 +23,10 @@ The measured-fan sensitivity follows sampled bearings. Earlier experiments isola
 ## Spherical mixture
 
 The principal spherical field integrates the retained kernel mass along measured and uncertain bearings over the Earth. The reported volume median and conditional interval use complete deposits. Fixed changes to the priors and fan geometry produce a separate sensitivity envelope. B-Tm uses source-focused fans. The catalogue identifies the geometry used in each case. [Finite bearing reach and uncertain continuation](spherical-bearings.md) · [Likelihood, priors and numerical checks](probabilistic-global.md) · [Source-focused fans](source-anchored-fans.md) · [Estimates by eruption](../../comparisons/spherical-mixture/README.md)
+
+## Bayesian nested isopachs
+
+The model learns a decreasing whole-Earth area–thickness profile and the geographic shape of its contours jointly. Complete draws give global bulk volume, including the unmeasured proximal core and distal tail. Each case includes the support decisions, thinning-law sensitivity and direct numerical verification of the integral. [Equations and external analogue data](nested-isopachs.md) · [Matched results and known-volume tests](../../comparisons/nested-isopachs/README.md)
 
 ## Interpreting the maps
 

@@ -248,6 +248,35 @@ def directional_sensitivities(home, ensemble, prefix):
     return lines
 
 
+def nested_comparison(home, prefix=""):
+    p = Path(home)/"nested-isopachs/report.json"
+    if not p.is_file():
+        return None
+    model = read_report(p)
+    if model["input"]["input_sha256"] != read_report(Path(home)/"report.json")["input"]["input_sha256"]:
+        raise ValueError("Nested and regional results use different accepted observations")
+    lo,med,hi = model["conditional_volume_km3"]
+    warning = "" if model["population_check_passed"] and model["area_check"][-1]["passed"] else " **(provisional)**"
+    passed = model["geographic_folds_passed"] == 4
+    cov = model["exact_site_coverage95"]["fraction"]
+    coverage = "—" if cov is None else f"{cov:.1%}"
+    row = (f"| [Bayesian nested isopachs]({prefix}nested-isopachs/README.md) | Whole-Earth volume median **{med:,.1f}** "
+           f"| {lo:,.1f}–{hi:,.1f}{warning} | {model['geographic_score']:.3f}{'' if passed else ' †'} | {coverage} |")
+    note = (f"[Nested median isopachs and the area–thickness curve]({prefix}nested-isopachs/isopachs.png) · "
+            f"[Nested whole-Earth map]({prefix}nested-isopachs/world.png)")
+    if (p.parent/"bearing-study/README.md").is_file():
+        note += f" · [Nested sensitivity in poorly sampled bearings]({prefix}nested-isopachs/bearing-study/README.md)"
+    for directory,label in (("directional","Uncertain gap amount"),("spherical-mixture","Soft source displacement")):
+        if (Path(home)/directory/"sensitivity-study/README.md").is_file():
+            note += f" · [{label}]({prefix}{directory}/sensitivity-study/README.md)"
+    if "terminal_continuation" in model:
+        budget = model["spatial_volume_budget"]["fraction_by_part"]
+        note += (f"\n\nThe nested estimate puts a median {budget[0][1]:.1%} of the fallout volume inside the "
+                 f"retained exact-site triangles and {budget[2][1]:.1%} beyond the farthest exact measurement. "
+                 f"{model['geographic_folds_passed']}/4 geographic refits passed the independent-population check.")
+    return row,note
+
+
 def comparison_section(home, *, prefix=""):
     """Render the same data-backed section for a run or its published case home."""
     from .summary import metrics
@@ -295,6 +324,10 @@ def comparison_section(home, *, prefix=""):
         score_text = "—" if score is None else f"{score:.3f}"
         coverage_text = "—" if coverage is None else f"{coverage:.1%}"
         lines.append(f"| {label} | {volume} | {interval} | {score_text}{'' if passed else ' †'} | {coverage_text} |")
+    nested = nested_comparison(home,prefix)
+    if nested:
+        lines.append(nested[0])
+        lines.extend(["",nested[1]])
     lines.extend(["", "A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out "
                       "observations inside the 95% predictive interval."
                       + (" † A geographic fit had a numerical warning or incomplete scoring."
@@ -322,6 +355,8 @@ def comparison_section(home, *, prefix=""):
     if sensitivities:
         lines[0] = ("## Four fits with interpreted archive limits" if regional["input"].get("interpreted_upper_limits")
                     else "## Four matched thickness-only fits")
+        if nested:
+            lines[0] = lines[0].replace("Four","Five")
         lines.extend(sensitivities)
     return "\n".join(lines)
 
