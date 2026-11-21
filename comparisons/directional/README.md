@@ -6,6 +6,7 @@ Each pair uses the same observations and structure weights. The control fixes fa
 |---|---:|---:|---:|---:|
 | [Aso-4](../../eruptions/aso-4/results/directional/README.md) | 87 | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
 | [B-Tm](../../eruptions/b-tm/results/directional/README.md) | 71 | **33.6** | 34.6 | 37.2 [23.5–77.1] |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/directional/README.md) | 56 | **40.8** | 46.7 | 59.4 [30.1–384.8] |
 | [Mazama](../../eruptions/mazama/results/directional/README.md) | 45 | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
 | [Minoan](../../eruptions/minoan/results/directional/README.md) | 101 | **28.8** | 32.9 | 39.1 [21.3–138.5] |
 | [Tambora](../../eruptions/tambora/results/directional/README.md) | 26 | **95.7** | 107.7 | 117.5 [73.2–203.8] |
@@ -19,12 +20,12 @@ Each score gives equal weight to available folds within an eruption, then equal 
 
 | Deletion design | Eruptions contributing | Fixed | Uncertain azimuth |
 |---|---:|---:|---:|
-| Geographic, all estimable folds | 6 | 1.597 | 1.589 |
-| Geographic, passing folds only | 6 | 1.764 | 1.692 |
-| Quadrants, all estimable folds | 6 | 2.144 | 2.094 |
-| Quadrants, passing folds only | 5 | 2.139 | 2.047 |
+| Geographic, all estimable folds | 7 | 1.582 | 1.580 |
+| Geographic, passing folds only | 7 | 1.725 | 1.669 |
+| Quadrants, all estimable folds | 7 | 2.040 | 2.014 |
+| Quadrants, passing folds only | 6 | 2.025 | 1.960 |
 
-A quadrant with no test observations has no score. The download gives input hashes, fold and row counts, and both scores for every eruption. In the original 68-site B-Tm analysis, only two quadrants could be scored. Adding observations can change which sectors contribute to a pooled comparison. The same six eruptions informed model development. [Paired scores and volumes](case-comparison.csv) · [Original 68-site comparison](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/directional)
+A quadrant with no test observations has no score. The download gives input hashes, fold and row counts, and both scores for every eruption. In the original 68-site B-Tm analysis, only two quadrants could be scored. Adding observations can change which sectors contribute to a pooled comparison. The original six eruptions informed model development. [Paired scores and volumes](case-comparison.csv) · [Original 68-site comparison](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/directional)
 
 ## Known deposits with a deliberate sampling gap
 

@@ -7,6 +7,7 @@ from io import StringIO
 import json
 from pathlib import Path
 import re
+import subprocess
 
 from pyproj import Geod
 
@@ -17,6 +18,8 @@ INPUT = ROOT / "data/eruptions/Ilopango_TBJ_Unit_G.csv"
 BOOK = SOURCES / "pedrazzi-supplement-1.xls"
 CORES = SOURCES / "smith-2020-cores.csv"
 BOOK_HASH = "0b9cf7846ed313bfb0383edae7088c97ab6df9f7390d24ddce588b79f8db6403"
+CORE_TABLE_HASH = "5797f79c2b837e8ada812e64796e13530f86351f1a67f24973f0db53054037d2"
+MANUSCRIPT_HASH = "1a01f05e868a02974c067802c1c5e3b6d1f2d431147201efeef225b6a2ba6c78"
 VENT = (-89.053, 13.672)
 GEOD = Geod(ellps="WGS84")
 SECTORS = ("N", "NE", "E", "SE", "S", "SW", "W", "NW")
@@ -92,6 +95,8 @@ def ledger():
         if r in range(105,115):
             row["decision"] += " Kutterolf et al. (2008) correlate the C1 marine bed with TBJ. Its Unit G assignment follows Pedrazzi et al."
         rows.append(row)
+    if digest(CORES) != CORE_TABLE_HASH:
+        raise ValueError("The distal-core table differs from the verified source readings.")
     with CORES.open(newline="") as f:
         for core in csv.DictReader(f):
             rows.append(dict(evidence_id="S20-"+core["core"],source="Smith et al. 2020, Ash Dispersal Modeling",
@@ -172,6 +177,27 @@ def products():
             AUDIT/"provenance.json":(json.dumps(provenance,indent=2,allow_nan=False)+"\n").encode()}
 
 
+def verify_manuscript(path):
+    """Read the two published core measurements from the accepted manuscript's text layer."""
+    if digest(path) != MANUSCRIPT_HASH:
+        raise ValueError("Expected the Oxford accepted manuscript listed in the source guide.")
+    page = subprocess.check_output(
+        ["pdftotext", "-f", "7", "-l", "7", "-layout", str(path.resolve()), "-"], text=True
+    )
+    paragraph = re.search(
+        r"additional two points where (\d+) cm of ash was recorded in cores: (.+?) \(20\)",
+        " ".join(page.split()),
+    )
+    if paragraph is None:
+        raise ValueError("Could not locate the two-core observation.")
+    printed = re.findall(r"(\w+\d+) at (\d+\.\d+)[o°]W, (\d+\.\d+)[o°]N", paragraph[2])
+    with CORES.open(newline="") as stream:
+        recorded = [(r["core"], r["longitude_w"], r["latitude_n"], r["thickness_cm"])
+                    for r in csv.DictReader(stream)]
+    if len(printed) != 2 or [(*row, paragraph[1]) for row in printed] != recorded:
+        raise ValueError("A core coordinate or thickness differs from the published paragraph.")
+
+
 def coverage_figure():
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
@@ -210,7 +236,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepare",action="store_true",help="Write the four reproducible audit products.")
     parser.add_argument("--figure", action="store_true", help="Draw coverage from the verified site ledger.")
+    parser.add_argument("--verify-manuscript", type=Path, metavar="PDF",
+                        help="Check the two distal core readings against the Oxford manuscript.")
     args=parser.parse_args()
+    if args.verify_manuscript:
+        verify_manuscript(args.verify_manuscript)
     for path,content in products().items():
         if args.prepare:
             path.write_bytes(content)

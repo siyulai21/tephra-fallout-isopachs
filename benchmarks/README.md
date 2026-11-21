@@ -27,7 +27,7 @@ python -m benchmarks.regional --summarize-only --published --output results/regi
 python -m benchmarks.global_posterior --summarize-only --published --output results/spherical-summary
 ```
 
-To rerun the spherical simulations from their seeds, follow the [known-deposit commands](../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility). To verify the six published fits and their retained controls offline, run `python -m benchmarks.verify_spherical_bearings`. The [dated inventory](../archive/2026-11-20-spherical-continuation/README.md) gives the full historical check.
+To rerun the spherical simulations from their seeds, follow the [known-deposit commands](../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility). To verify the published fits and their retained controls offline, run `python -m benchmarks.verify_spherical_bearings`. The [dated inventory](../archive/2026-11-20-spherical-continuation/README.md) gives the full historical check.
 
 Replay the contour screens directly from the published spherical fits with `python -m benchmarks.directional_spherical_support --published --output results/spherical-support`. [Case support packets](../comparisons/support/README.md)
 

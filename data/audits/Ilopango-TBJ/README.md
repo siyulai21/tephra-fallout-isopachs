@@ -38,4 +38,4 @@ The largest gap between adjacent measured bearings is 37° across all distances.
 
 ## Replay
 
-From the project environment, install the optional original Excel reader with `python -m pip install xlrd==2.0.2`. Run `python -m benchmarks.ilopango` to compare the frozen observations, ledger, sector counts and provenance against the source bytes. Use `--prepare` to rebuild those four files or `--figure` to redraw the coverage figure. [Audit implementation](../../../benchmarks/ilopango.py)
+From the project environment, install the optional original Excel reader with `python -m pip install xlrd==2.0.2`. Run `python -m benchmarks.ilopango` to compare the frozen observations, ledger, sector counts and provenance against the source bytes. With Poppler installed, add `--verify-manuscript path/to/smith-accepted.pdf` to check both core IDs, both reported thicknesses and all four coordinates against the original PDF text. Use `--prepare` to rebuild those four files or `--figure` to redraw the coverage figure. [Audit implementation](../../../benchmarks/ilopango.py)

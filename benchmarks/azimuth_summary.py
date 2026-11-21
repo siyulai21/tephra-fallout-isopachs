@@ -83,7 +83,7 @@ def summarize(cases, synthetic, output):
             rows.append(f"| {design.title()}, {name} | {len(d)} | {d.iloc[:,0].mean():.3f} | {d.iloc[:,1].mean():.3f} |")
     rows += ["", "A quadrant with no test observations has no score. The download gives input hashes, fold and row counts, "
         "and both scores for every eruption. In the original 68-site B-Tm analysis, only two quadrants could be scored. "
-        "Adding observations can change which sectors contribute to a pooled comparison. The same six eruptions "
+        "Adding observations can change which sectors contribute to a pooled comparison. The original six eruptions "
         "informed model development. [Paired scores and volumes](case-comparison.csv) · "
         "[Original 68-site comparison](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/directional)", "",
         "## Known deposits with a deliberate sampling gap", "",

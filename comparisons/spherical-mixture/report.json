@@ -17,6 +17,13 @@
       "regional_report_sha256": "12ecd1f1df3236066a33bd59398d192ca076e919bf14694e8abcacb245be3156"
     },
     {
+      "name": "Ilopango TBJ (Unit G)",
+      "slug": "ilopango-tbj",
+      "input_sha256": "17392b010ca5814d719884c0b5c925b14fe9b70a34a7e2832f30f31b82e713c9",
+      "global_report_sha256": "dbb73fbf9cc1319c8c13360dcf935b1f05e21fc8a3e246813df44b33b0134875",
+      "regional_report_sha256": "e4e7de88b6acfad7c82ab935e427a8ecef9037b8bcffb19d379f715e2e1c0873"
+    },
+    {
       "name": "Mazama",
       "slug": "mazama",
       "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
@@ -83,6 +90,25 @@
       "global_observation_coverage95": 0.9375,
       "stacked_equal_region_negative_log_score": 1.458667324756736,
       "spline_equal_region_negative_log_score": 4.294670376580042
+    },
+    {
+      "eruption": "Ilopango TBJ (Unit G)",
+      "slug": "ilopango-tbj",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median": 190.90025516004897,
+      "lower95": 62.9453450517849,
+      "upper95": 3300.774330890276,
+      "sensitivity_lower": 43.2926796876614,
+      "sensitivity_upper": 21116.17285480446,
+      "baseline_sampling_passed": false,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": true,
+      "median_fraction_outside_local_footprint": 0.9916771782815992,
+      "global_equal_region_negative_log_score": 1.2249357694018859,
+      "global_observation_coverage95": 0.9423076923076923,
+      "stacked_equal_region_negative_log_score": 1.342825812349835,
+      "spline_equal_region_negative_log_score": 1.4616043474144238
     },
     {
       "eruption": "Mazama",
@@ -249,6 +275,50 @@
       },
       "matched_input_folds_buffer_and_training_rows": true,
       "global_outer_sampling_passed": false
+    },
+    {
+      "eruption": "Ilopango TBJ (Unit G)",
+      "global": {
+        "mean_log_score": 1.2249357694018859,
+        "rmse_log": 0.8937090699609334,
+        "coverage95_observations": 0.9423076923076923,
+        "mean_interval_width_log": 3.6237958615399473,
+        "fold_log_scores": [
+          0.8819704125959463,
+          1.301437280617251,
+          1.117517734711737,
+          1.5988176496826088
+        ],
+        "equal_region_log_score": 1.2249357694018859
+      },
+      "stacked": {
+        "mean_log_score": 1.342825812349835,
+        "rmse_log": 0.9643473736804009,
+        "coverage95_observations": 0.9807692307692307,
+        "mean_interval_width_log": 4.407179468368288,
+        "equal_region_log_score": 1.342825812349835,
+        "fold_log_scores": [
+          1.3147039311543673,
+          1.3239584047219208,
+          1.4570443714804644,
+          1.2755965420425868
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.461604347414424,
+        "rmse_log": 1.0530054096885957,
+        "coverage95_observations": 0.9230769230769231,
+        "mean_interval_width_log": 4.315775948511608,
+        "equal_region_log_score": 1.4616043474144238,
+        "fold_log_scores": [
+          1.2260076667513486,
+          1.3497674935666815,
+          1.575635112050477,
+          1.6950071172891887
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": true
     },
     {
       "eruption": "Mazama",

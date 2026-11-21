@@ -6,12 +6,13 @@ Each eruption uses the same observations for the broad control and the principal
 |---|---|---:|---:|---:|
 | [Aso-4](../../eruptions/aso-4/README.md) | displaced · **questioned** | 1,466.0 → **1,069.7** | 402.9–27,836.6 | 380–8.51e+07 |
 | [B-Tm](../../eruptions/b-tm/README.md) | source-fans | 49.1 → **47.0** | 30.2–275.5 | 25.2–783 |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/README.md) | displaced | 255.6 → **190.9** · **provisional** | 62.9–3,300.8 | 43.3–2.11e+04 |
 | [Mazama](../../eruptions/mazama/README.md) | displaced | 223.2 → **212.9** | 140.1–2,614.3 | 137–9.27e+04 |
 | [Minoan](../../eruptions/minoan/README.md) | displaced | 46.0 → **40.8** | 24.6–1,989.1 | 23.1–1.91e+04 |
 | [Tambora](../../eruptions/tambora/README.md) | displaced | 179.1 → **162.3** | 100.8–920.1 | 93–3.85e+03 |
 | [YTT](../../eruptions/ytt/README.md) | displaced | 1,674.2 → **1,510.5** | 1,054.3–48,708.5 | 1.01e+03–1.09e+05 |
 
-6 of 6 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
+6 of 7 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Ilopango TBJ (Unit G) (baseline, volume prior shift), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
 
 ## Where the map changes
 
@@ -37,12 +38,13 @@ All methods faced the same held-out observations, bounds, regions and buffers fo
 |---|---:|---:|---:|---:|---|
 | Aso-4 | 1.632 → 1.632 | 1.514 | 1.662 | 95.2% | pass |
 | B-Tm | 1.492 → 1.487 | 1.459 | 4.295 | 93.8% | **provisional** |
+| Ilopango TBJ (Unit G) | 1.173 → 1.225 | 1.343 | 1.462 | 94.2% | pass |
 | Mazama | 1.577 → 1.561 | 1.272 | 1.971 | 88.9% | **provisional** |
 | Minoan | 1.570 → 1.575 | 1.451 | 1.601 | 94.6% | pass |
 | Tambora | 1.471 → 1.477 | 1.620 | 1.548 | 100.0% | pass |
 | YTT | 1.777 → 1.756 | 1.934 | 2.153 | 84.8% | pass |
 
-The geographic score averaged equally across eruptions changed from 1.586 to 1.581. Of the withheld readings, 71 had gap exposure of at least 0.5. Within those readings the site-weighted score was 1.664 → 1.675. Giving each represented eruption equal weight gives 1.721 → 1.682. [Paired predictions and gap-exposure scores](bearings/paired-cases.csv)
+The geographic score averaged equally across eruptions changed from 1.527 to 1.530. Of the withheld readings, 89 had gap exposure of at least 0.5. Within those readings the site-weighted score was 1.569 → 1.611. Giving each represented eruption equal weight gives 1.645 → 1.636. [Paired predictions and gap-exposure scores](bearings/paired-cases.csv)
 
 ![Conditional spherical volumes, prior envelopes and withheld-region scores](comparison.png)
 
