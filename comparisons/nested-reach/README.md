@@ -14,13 +14,14 @@ Real surveys provide the primary comparison. On Calbuco 2015 the corridor fit im
 | [Mazama](../../eruptions/mazama/results/nested-isopachs/README.md) | **244.6** [129.2–938.0] | 354.7 | 1.503 → 1.365 | 2.794 → 2.821 |
 | [Minoan](../../eruptions/minoan/results/nested-isopachs/README.md) | **24.9** [17.4–67.6] | 31.4 | 1.536 → 1.621 | 1.494 → 1.646 |
 | [Pinatubo 1991 Layer C (separate intake)](../nested-isopachs/pinatubo-preview/nested-isopachs/README.md) | **2.1** [1.5–6.9] | 5.8 | 1.076 → 1.440 | 0.958 → 1.328 |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/nested-isopachs/README.md) | **7.6** [5.7–9.1] | 10.9 | 2.057 → 3.018 | 1.161 → 2.011 |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-isopachs/README.md) | **6.3** [3.1–30.7] | 11.5 | 0.742 → 1.016 | 1.141 → 1.353 |
 | [Tambora](../../eruptions/tambora/results/nested-isopachs/README.md) | **94.9** [62.5–237.7] | 123.4 | 1.368 → 1.646 | 1.509 → 1.816 |
 | [YTT](../../eruptions/ytt/results/nested-isopachs/README.md) | **1,245.3** [771.0–3,000.8] | 1,418.8 | 1.507 → 1.429 | 1.865 → 2.225 |
 
 Each volume integrates the pointwise median-thickness map. The 95% interval uses the two tails of the volume distribution. These are bulk deposit volumes. The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. [Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)
 
-Across the 8 catalogued eruptions the mean buffered score changes from 1.366 to 1.431. The mean whole-quadrant score changes from 1.784 to 1.709. B-Tm accounts for the improvement in the latter average. A complete contour band passes the shared support screen in 0 of 8 cases. The separate Pinatubo Layer C snapshot is excluded from those averages.
+Across the 9 catalogued eruptions the mean buffered score changes from 1.442 to 1.608. The mean whole-quadrant score changes from 1.714 to 1.742. A complete contour band passes the shared support screen in 0 of 9 registered cases. The current Pinatubo observations enter those averages once. The earlier 137-observation development snapshot is shown separately.
 
 ## What the three disputed maps show
 

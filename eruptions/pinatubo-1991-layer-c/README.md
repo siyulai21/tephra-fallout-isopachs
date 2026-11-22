@@ -4,9 +4,37 @@ The 15 June 1991 climactic eruption deposited pumice and ash across Luzon and th
 
 **194 observations enter every principal fit.** They comprise 140 measured thicknesses, 26 lower bounds and 28 upper bounds. The evidence inventory contains 464 records, including repeat visits, uncertain readings, coarse units, distal reports and survey coverage. Beyond 100 km the exact measurements leave a 294° gap in direction. [Accepted data](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Evidence inventory](../../data/audits/Pinatubo-1991/full-evidence.csv) · [Audit and directional coverage](../../data/audits/Pinatubo-1991/README.md)
 
-## Model release in progress
+**Input under visual review.** The results below use the frozen 194-site transcription with SHA-256 `5400069fea176a055aebf2395d0f92dabf51ce3c7354f17c559f4e9ccea0bfda`. Four C1 labels at K-07, K-23, K-34 and K-52 are under review against the original printed figures. These fits supply a baseline for measuring the effect of any corrections. [Original Koyaguchi map](../../data/sources/pinatubo-1991/koyaguchi-figure-3.gif) · [Original Paladio-Melosantos map](../../data/sources/pinatubo-1991/paladio-figure-7.gif)
 
-The current 194-site regional GP, cubic spline, directional ensemble and nested-corridor fits are available. The directional median-thickness map integrates to 6.57 km³ over Earth. Its conditional interval is 5.00–11.76 km³. Two of six ensemble members have a sampling warning. The spherical prior-sensitivity study is running. [Regional results](results/README.md) · [Directional ensemble](results/directional/README.md) · [Nested corridors](results/nested-isopachs/README.md)
+## Volumes and geographic prediction
+
+Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
+
+| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---:|---:|---:|---:|
+| GP ensemble | **3.5** | 3–5.05 | 4.300 | 86.4% |
+| Cubic spline | **13.2** | 11.3–2.43e+11 (provisional) | 1.599 | 87.1% |
+| [Directional ensemble](results/directional/README.md) | **6.57** | 5–11.8 (provisional) | 1.447 † | 89.3% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **13.7** | 8.79–25.4 (provisional) | 0.986 † | 97.1% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **7.58** | 5.7–9.08 | 3.018 † | 60.7% |
+
+Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
+
+## Full deposits and near-vent detail
+
+The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
+
+![Pinatubo 1991 (Layer C) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+
+![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+
+![Pinatubo 1991 (Layer C) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+
+## Inside the observation hull
+
+![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
+
+The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
 ## Check the measurements
 
@@ -22,6 +50,10 @@ The current 194-site regional GP, cubic spline, directional ensemble and nested-
 With all 34 offshore records withheld, the land-only nested fit covers 0 of 19 measured seabeds with its 95% predictive intervals. Its 0.70 km³ estimate also has a numerical warning. The full nested fit gives 7.58 km³. Including both endpoints of the nine marine replicate ranges gives 5.16 km³ with a conditional 95% interval of 4.44–7.06 km³. [Source tests and individual station predictions](results/source-checks/README.md)
 
 The GP and spline use the same 279,806 km² observation hull. At the northern marine core SO-114-13 the source records 1–2 mm. With just its lower endpoint in the shared input, the spline predicts 24.1 m at that core. Giving the nine replicate stations their upper endpoints changes its regional volume from 13.17 to 5.30 km³. Its principal upper volume interval fails the integration check. [Regional sensitivity and field checks](results/source-checks/README.md#regional-sensitivity-to-the-upper-endpoints)
+
+The uncertain-direction ensemble covered 125 of 140 scored exact thicknesses with its geographic 95% prediction intervals (140 exact sites in total). The spherical family placed a median 4.1% of its mass in the screened measurement footprint and 94.2% in intervening gaps and sectors, calculated across complete draws. [Directional holdouts](results/directional/azimuth/heldout.csv) · [Spherical mass by region](results/spherical-mixture/README.md)
+
+The spherical baseline’s final sampling attempt recorded 1 divergent transition. Across eight fixed priors, 5 fits passed their numerical checks. Their full set of conditional intervals spans 6.29–431.02 km³. 2 of the four geographic training fits passed sampling checks. [Prior fits and diagnostics](results/spherical-mixture/report.json)
 
 The nested corridor’s full fit passes its population and integration checks. 2 of its four geographic training fits pass. Across the four withheld regions, its predictive interval covers 85 of 140 measured thicknesses. No complete nested contour band passes the shared support screen. Beyond 100 km the exact sites leave a 294° unsampled arc. The whole-Earth volumes depend on assumptions about fallout outside the measured directions. [Observation map and directional coverage](../../data/audits/Pinatubo-1991/README.md#geographic-coverage) · [Nested support and extrapolation](results/nested-isopachs/README.md)
 

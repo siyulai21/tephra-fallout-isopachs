@@ -96,7 +96,7 @@ def build(output=OUT):
            "The teal pointers identify the figure pixel. Geographic coordinates have the precision of the original maps. Koyaguchi’s A and B sites match the corresponding C1 field markers. For the three Paladio-Melosantos maps the original axis ticks give linear longitude and latitude scales. The numeric column contains only legible single positive readings in centimetres. The source column retains bounds, multiple values, dashes and reported zeros. [Axis controls](../../../sources/pinatubo-1991/context/phase-graticules.csv) · [Four photographed sections with phase-by-phase thicknesses](../../../sources/pinatubo-1991/context/phase-photo-sections.csv) · [Original photograph plate](../../../sources/pinatubo-1991/context/paladio-figure-4.jpg)", "",
            "At the Gumain River section, photograph 4C gives 23 cm for B and 31 cm for C. The 23 cm B dot (P6-068) falls near the 32 cm C dot (P7-099). The original C map supplies the located measurement. The photograph supplies an independent reading at the named locality. [Layer C reading sheet](../visual/p7-13.png) · [Photograph caption](https://pubs.usgs.gov/pinatubo/paladio/index.html)", "",
            "Figure 2 outlines the April to early June ashfall footprint. It supplies no site-specific bed thickness. [Early footprint](../../../sources/pinatubo-1991/context/paladio-figure-2.gif)", "", *pages]
-    (output/"README.md").write_text("\n".join(lines)+"\n")
+    (output/"README.md").write_text("\n".join(lines).rstrip()+"\n")
 
 
 if __name__=="__main__":

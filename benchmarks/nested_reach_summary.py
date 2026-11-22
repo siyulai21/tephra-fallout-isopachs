@@ -128,7 +128,7 @@ def build(output, cases, known, quadrants, regional):
               "[Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)", "",
               f"Across the {len(reg)} catalogued eruptions the mean buffered score changes from {avg('previous_geographic_score'):.3f} to {avg('geographic_score'):.3f}. "
               f"The mean whole-quadrant score changes from {avg('previous_quadrant_score'):.3f} to {avg('quadrant_score'):.3f}. "
-              f"A complete contour band passes the shared support screen in {bands} of {len(reg)} cases. The separate Pinatubo Layer C snapshot is excluded from those averages.", "",
+              f"A complete contour band passes the shared support screen in {bands} of {len(reg)} registered cases. The current Pinatubo observations enter those averages once. The earlier 137-observation development snapshot is shown separately.", "",
               "## What the three disputed maps show", ""]
     for slug, sector in (("b-tm","W"),("aso-4","W"),("mazama","SW")):
         row = next(r for r in area_rows if r["slug"]==slug and r["bearing"]==sector and r["level_cm"]==1.)

@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from benchmarks.pinatubo import INPUT, ROOT, src
+from benchmarks.pinatubo import AUDIT, INPUT, ROOT, src
 from benchmarks.refresh_figures import regional_models
 from src.Laea import make_laea_transform
 from src.empirical_isopach.core.audit import audited_data
@@ -47,6 +47,8 @@ def replay(home, output, paired_output=None):
         np.testing.assert_allclose(points[0], data.xy[[sample[r] for r in paired.csv_row]], atol=1e-7, rtol=0)
         query = np.vstack([xy, *points])
 
+    predictions = {}
+
     def save_principal(key, values):
         predictions["principal_"+key+"_cm"] = values[:len(xy)]
         if paired is not None:
@@ -54,7 +56,6 @@ def replay(home, output, paired_output=None):
             paired[key+"_at_c1_cm"] = first
             paired[key+"_at_c2_cm"] = second
 
-    predictions = {}
     for name, folder, source in [
         ("principal", home, INPUT), ("upper_endpoint", home/"source-checks/regional-upper-endpoints/regional",
                                             home/"source-checks/regional-upper-endpoints/upper-endpoints.csv")]:
@@ -88,10 +89,47 @@ def replay(home, output, paired_output=None):
         paired.to_csv(paired_output, index=False, lineterminator="\n")
 
 
+def marine_probe_predictions(home, output):
+    """Collect sitewise latent thickness predictions at the published marine map symbols."""
+    source = AUDIT/"archive-probes.json"
+    inventory = json.loads(source.read_text())
+    directional = json.loads((home/"directional/azimuth/report.json").read_text())
+    spherical = json.loads((home/"spherical-mixture/archive-evidence/spherical-archive-checks.json").read_text())
+    nested = json.loads((home/"nested-isopachs/report.json").read_text())["archive_predictions"]
+    expected = digest(source)
+    if (directional["archive_evidence_sha256"], spherical["archive_inventory_sha256"], nested["inventory_sha256"]) != (expected,)*3:
+        raise ValueError("Marine probe predictions use different source inventories")
+    direction = directional["archive"]["scenarios"]["quantitative"]["sites"]
+    sphere = {r["id"]:r for r in spherical["scenarios"]["quantitative"]["sites"]}
+    sites = {r["id"] for r in inventory["sites"]}
+    if len(sites) != 102 or any(sites != set(v) for v in (direction,sphere,nested["sites"])):
+        raise ValueError("Missing or unrecognized marine probes")
+    rows = []
+    for site in inventory["sites"]:
+        key = site["id"]
+        if site["reported_fallout_limit_cm"] is not None or direction[key]["in_likelihood"] or inventory["scenarios"]:
+            raise ValueError("The Pinatubo probe comparison assumes no site-specific detection thresholds")
+        row = {k:site[k] for k in ("id","latitude","longitude","reading","reference")}
+        row["coincident_with_quantitative_training_site"] = nested["sites"][key]["coincident_with_training"]
+        latent = sphere[key]["latent_cm"]
+        for family, values in [
+            ("directional", direction[key]["latent_cm_p025_p50_p975"]),
+            ("spherical", [latent[k] for k in ("lower95","median","upper95")]),
+            ("nested", nested["sites"][key]["latent_cm"]),
+        ]:
+            for label, value in zip(("lower95","median","upper95"), values, strict=True):
+                row[family+"_"+label+"_cm"] = value
+        rows.append(row)
+    pd.DataFrame(rows).to_csv(output, index=False, lineterminator="\n")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case-results", type=Path, default=ROOT/"eruptions/pinatubo-1991-layer-c/results")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--paired-output", type=Path, help="Also compare the fixed principal fields at the original C1 and C2 map positions.")
+    parser.add_argument("--probe-output", type=Path, help="Also collect the three global families' predictions at the unquantified marine probes.")
     args = parser.parse_args()
     replay(args.case_results, args.output, args.paired_output)
+    if args.probe_output is not None:
+        marine_probe_predictions(args.case_results, args.probe_output)

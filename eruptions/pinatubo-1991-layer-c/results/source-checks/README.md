@@ -14,7 +14,7 @@ The land-only model predicts the 34 marine records without seeing any of them. T
 
 The second test keeps 48 published section, core and text readings, including named sections positioned from maps. It withholds 146 land markers whose thickness was transcribed from map figures. The archived site table retains their reading and predictive error. [Withheld land markers](tabulated-thickness/heldout.csv)
 
-At nine marine stations Hess and colleagues report replicate thickness ranges. All five principal fits can use the minimum as a lower bound. The two-sided nested test represents the measured range as an interval at each station. The two endpoints also supply a separate check on both regional fits. [Published ranges](../../../../data/sources/pinatubo-1991/hess-table-1.csv) · [Interval input](marine-intervals/interval-input.csv)
+At nine marine stations Hess and colleagues report replicate thickness ranges. All five principal fits can use the minimum as a lower bound. The two-sided nested test represents the measured range as an interval at each station. The two endpoints also supply a separate check on both regional fits. [Published ranges](../../../../data/sources/pinatubo-1991/hess-table-1.csv) · [Interval input](marine-intervals/interval-input.csv) · [Median predictions from all five fits at every station](marine-intervals/fitted-bed-thickness.csv)
 
 ## Regional sensitivity to the upper endpoints
 
@@ -44,3 +44,9 @@ Koyaguchi printed the same 51 accepted stations on the C1 and C2 panels. Indepen
 | Global nested corridors | 7.58 | 7.76 |
 
 The alternative regional hull covers 279,806 km², compared with 279,806 km² for the principal fits. The alternative nested fit flags a warning in its numerical checks. [Regional fits and diagnostics](paired-map-coordinates/regional/report.json) · [Nested volume interval and diagnostics](paired-map-coordinates/result.json)
+
+The five principal fields can also be evaluated directly at each of the two coordinates for a station. The two positions come from the original maps. This evaluation holds the fitted field fixed. Reproduce the comparison by adding `--paired-output results/paired-site-predictions.csv` to the station-prediction command above. [Fitted thickness at both original map positions](paired-map-coordinates/principal-predictions.csv)
+
+## Marine surveys with a mapped location and no thickness limit
+
+The three global families predict latent thickness at all 102 marine survey symbols. The table preserves the inspected or unresolved horizon classification, the site coordinates, and each model’s median and conditional 95% interval. The survey symbols supply no detection threshold. Some coincide with independently measured beds. Rebuild this table by adding `--probe-output results/pinatubo-probe-predictions.csv` to the station-prediction command. [Predictions by survey location](marine-probe-predictions.csv) · [Original surveys and source symbols](../../../../data/audits/Pinatubo-1991/marine-check.md)

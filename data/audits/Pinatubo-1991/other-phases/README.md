@@ -67,4 +67,3 @@ Figure 2 outlines the April to early June ashfall footprint. It supplies no site
 - [P13-037 through P13-048](p13-d-04.png)
 - [P13-049 through P13-060](p13-d-05.png)
 - [P13-061 through P13-067](p13-d-06.png)
-

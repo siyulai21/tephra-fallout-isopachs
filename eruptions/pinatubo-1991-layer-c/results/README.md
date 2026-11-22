@@ -1,4 +1,38 @@
-# Pinatubo 1991 (Layer C): empirical methods on one regional footprint
+# Pinatubo 1991 (Layer C) fallout reconstruction
+
+## Volumes and geographic prediction
+
+Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
+
+| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---:|---:|---:|---:|
+| GP ensemble | **3.5** | 3–5.05 | 4.300 | 86.4% |
+| Cubic spline | **13.2** | 11.3–2.43e+11 (provisional) | 1.599 | 87.1% |
+| [Directional ensemble](directional/README.md) | **6.57** | 5–11.8 (provisional) | 1.447 † | 89.3% |
+| [Spherical mixture](spherical-mixture/README.md) | **13.7** | 8.79–25.4 (provisional) | 0.986 † | 97.1% |
+| [Bayesian nested corridors](nested-isopachs/README.md) | **7.58** | 5.7–9.08 | 3.018 † | 60.7% |
+
+Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
+
+## Full deposits and near-vent detail
+
+The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
+
+![Pinatubo 1991 (Layer C) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](directional/deposit.png)
+
+![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](spherical-mixture/deposit.png)
+
+![Pinatubo 1991 (Layer C) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](nested-isopachs/deposit.png)
+
+## Inside the observation hull
+
+![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](isopachs.png)
+
+The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained.
+
+[Volume and geographic prediction plot](overview.png)
+
+## Regional fit details
 
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
