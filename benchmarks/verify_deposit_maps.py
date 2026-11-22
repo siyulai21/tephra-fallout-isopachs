@@ -8,7 +8,7 @@ from PIL import Image
 from .nested_reach import case_home
 from .nested_reach_challenge import records
 from .principal_volumes import catalogue_rows
-from .refresh_figures import regional_models
+from .refresh_figures import recorded_observations, regional_models
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.visualization.deposit import FAMILIES, volume_interval, digest, open_field, read_json
@@ -70,7 +70,8 @@ def verify_case(record):
     for item in r["methods"].values():
         assert "expected_km3" not in item["regional_volume"]
         assert "0.5" not in item["joint_volume"]["conditional_quantiles_km3"]
-    models,hull,_=regional_models(data,r)
+    recorded, _ = recorded_observations(record, region)
+    models,hull,_=regional_models(recorded,r)
     screen=read_json(region/"map-display.json")
     bounds=np.array(screen["display_bounds_km"])
     assert screen["land_sha256"]==digest(LAND) and screen["input_sha256"]==meta["input_sha256"]
