@@ -1,0 +1,475 @@
+{
+  "identity": {
+    "input_sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+    "engine": "d8baffef7818b5899d52b76d2f07bccd831079b828a2d23c59da094dba13fcc2",
+    "training_rows": [
+      2,
+      60,
+      3,
+      65,
+      64,
+      63,
+      62,
+      61,
+      6,
+      15,
+      7,
+      31,
+      9,
+      16,
+      42,
+      14,
+      13,
+      8,
+      28,
+      35,
+      59,
+      29,
+      43,
+      11,
+      4,
+      30,
+      10,
+      12,
+      21,
+      38,
+      33,
+      5,
+      27,
+      17,
+      67,
+      66,
+      58,
+      23,
+      26,
+      40,
+      39,
+      48,
+      49,
+      18,
+      36,
+      32,
+      24,
+      41,
+      50,
+      44,
+      22,
+      51,
+      52,
+      19,
+      25,
+      53,
+      45,
+      68,
+      69,
+      37,
+      54,
+      34,
+      20,
+      55,
+      56,
+      47,
+      46,
+      57
+    ],
+    "test_rows": [
+      70,
+      71,
+      72
+    ]
+  },
+  "source": "data/eruptions/B-Tm_cryptotephra.csv",
+  "geographically_separated": {
+    "training_only_buffer_km": 23.123135568326486,
+    "test_rows": [
+      70,
+      71,
+      72
+    ],
+    "scores": {
+      "whole_area": 4.753696868600049,
+      "corridor": 0.24658476633712537
+    }
+  },
+  "q95_coverage_denominator": 0,
+  "nearest_training_projected_km": [
+    124.54458323488632,
+    44.50608198741415,
+    290.16008811472295
+  ],
+  "observed_or_limit_cm": [
+    0.06,
+    0.64,
+    0.45
+  ],
+  "observed_is_bound": [
+    true,
+    true,
+    true
+  ],
+  "tested_models": {
+    "whole_area": {
+      "row_log_score": [
+        -6.2993345218482295,
+        -5.788479734377692,
+        -2.173276349574225
+      ],
+      "negative_log_score": 4.753696868600049,
+      "latent_log_cm": [
+        2.104761805302128,
+        3.3862863025373864,
+        0.5357788171391075
+      ],
+      "predictive_cdf_at_value": [
+        0.0018375272044423609,
+        0.0030626346572070243,
+        0.11380414327346772
+      ],
+      "median_absolute_log_error": null,
+      "covered95_exact": 0,
+      "thresholds": {
+        "0.01": {
+          "adjudicable": 0,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": null
+        },
+        "0.05": {
+          "adjudicable": 0,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": null
+        },
+        "0.1": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 1,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.9937404504516504
+        },
+        "0.2": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 1,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.9830733793371775
+        },
+        "0.4": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 1,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.9434575563141014
+        },
+        "1.0": {
+          "adjudicable": 3,
+          "measured_inside": 0,
+          "false_exceedances": 3,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.7439665026264418
+        },
+        "10.0": {
+          "adjudicable": 3,
+          "measured_inside": 0,
+          "false_exceedances": 1,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.2733828230034721
+        }
+      }
+    },
+    "corridor": {
+      "row_log_score": [
+        -0.021766537519921414,
+        -0.04795025797558061,
+        -0.6700375035158741
+      ],
+      "negative_log_score": 0.24658476633712537,
+      "latent_log_cm": [
+        -10.271962838957354,
+        -3.496877296316772,
+        -0.7622040575030924
+      ],
+      "predictive_cdf_at_value": [
+        0.9784686441040372,
+        0.953181199060789,
+        0.5116893872756297
+      ],
+      "median_absolute_log_error": null,
+      "covered95_exact": 0,
+      "thresholds": {
+        "0.01": {
+          "adjudicable": 0,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": null
+        },
+        "0.05": {
+          "adjudicable": 0,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": null
+        },
+        "0.1": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.00038812288804531385
+        },
+        "0.2": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.0003020662721950275
+        },
+        "0.4": {
+          "adjudicable": 1,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.0002308416742271955
+        },
+        "1.0": {
+          "adjudicable": 3,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.012076890796997057
+        },
+        "10.0": {
+          "adjudicable": 3,
+          "measured_inside": 0,
+          "false_exceedances": 0,
+          "missed_exceedances": 0,
+          "predictive_brier": 0.00015063897528302302
+        }
+      }
+    }
+  },
+  "numerics": {
+    "passed": true,
+    "parent_passed": true,
+    "continued_attempts": [
+      {
+        "particles_per_population": 6144,
+        "population_volume_quantiles_km3": [
+          [
+            64.42535372849375,
+            209.62045084575504,
+            3233.130618884116
+          ],
+          [
+            67.40621026690646,
+            214.45211412985512,
+            2047.96457831537
+          ],
+          [
+            66.80794979535247,
+            196.16330293610247,
+            2168.4677157264014
+          ],
+          [
+            70.5701305135802,
+            205.8596001851529,
+            2521.5188846405285
+          ]
+        ],
+        "passed": true
+      },
+      {
+        "particles_per_population": 12288,
+        "population_volume_quantiles_km3": [
+          [
+            68.12309695153833,
+            221.59213850323454,
+            2855.8156733685687
+          ],
+          [
+            70.46980442389837,
+            189.24618957388566,
+            2244.6733202170285
+          ],
+          [
+            70.47525682389552,
+            213.11561243409102,
+            2097.4060230348923
+          ],
+          [
+            70.9804443408621,
+            197.20575811437675,
+            2582.294613093104
+          ]
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "importance": [
+    {
+      "proposal": "all_accepted",
+      "positive_rows": [
+        2,
+        60,
+        3,
+        65,
+        64,
+        63,
+        62,
+        61,
+        6,
+        15,
+        7,
+        31,
+        9,
+        16,
+        42,
+        14,
+        13,
+        8,
+        28,
+        35,
+        29,
+        43,
+        11,
+        4,
+        30,
+        10,
+        12,
+        21,
+        38,
+        33,
+        5,
+        27,
+        17,
+        67,
+        66,
+        58,
+        23,
+        26,
+        40,
+        39,
+        48,
+        49,
+        18,
+        36,
+        32,
+        24,
+        41,
+        50,
+        44,
+        22,
+        51,
+        52,
+        19,
+        25,
+        53,
+        45,
+        68,
+        69,
+        37,
+        54,
+        34,
+        20,
+        55,
+        56,
+        47,
+        46,
+        57
+      ],
+      "upper_rows": [
+        59
+      ],
+      "proximal_resolution_km": 16.07318290705041,
+      "populations": [
+        {
+          "parent_particles": 12288,
+          "effective_parent_draws": 6149.613730598947,
+          "relative_ess": 0.5004568465656695,
+          "maximum_weight": 0.0009996543492876546,
+          "log_mean_likelihood_ratio": 3.2934654163085586,
+          "law_probabilities": [
+            0.01328739829908337,
+            0.3136559345403881,
+            0.3136559345403881,
+            0.3136559345403881,
+            0.010323651126249623,
+            0.010323651126249623,
+            0.010323651126249623,
+            0.004924614900335608,
+            0.004924614900335608,
+            0.004924614900335608
+          ],
+          "passed": true
+        },
+        {
+          "parent_particles": 12288,
+          "effective_parent_draws": 5628.942242400496,
+          "relative_ess": 0.45808449238285287,
+          "maximum_weight": 0.0009616753611792488,
+          "log_mean_likelihood_ratio": 3.202850281801103,
+          "law_probabilities": [
+            0.01307317567609708,
+            0.31349199696347574,
+            0.31349199696347574,
+            0.31349199696347574,
+            0.010604553295994181,
+            0.010604553295994181,
+            0.010604553295994181,
+            0.004879057848498889,
+            0.004879057848498889,
+            0.004879057848498889
+          ],
+          "passed": true
+        },
+        {
+          "parent_particles": 12288,
+          "effective_parent_draws": 6203.602696537599,
+          "relative_ess": 0.5048504798614583,
+          "maximum_weight": 0.0009962714931841803,
+          "log_mean_likelihood_ratio": 3.3022309256187263,
+          "law_probabilities": [
+            0.011802866984746913,
+            0.31537563250162626,
+            0.31537563250162626,
+            0.31537563250162626,
+            0.009616817644128724,
+            0.009616817644128724,
+            0.009616817644128724,
+            0.004406594192662778,
+            0.004406594192662778,
+            0.004406594192662778
+          ],
+          "passed": true
+        },
+        {
+          "parent_particles": 12288,
+          "effective_parent_draws": 5707.645961406414,
+          "relative_ess": 0.4644894174321626,
+          "maximum_weight": 0.0008729963779157661,
+          "log_mean_likelihood_ratio": 3.2429220848130633,
+          "law_probabilities": [
+            0.013343052127061984,
+            0.3131284240707246,
+            0.3131284240707246,
+            0.3131284240707246,
+            0.010775327279173857,
+            0.010775327279173857,
+            0.010775327279173857,
+            0.004981897941080431,
+            0.004981897941080431,
+            0.004981897941080431
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "revised_source_passed": true,
+  "corridor_packet_sha256": "70aba73e382ddfec4cd9d7fd7cb4c39ae05f6cb29f6a7083a40016eb95870ad8"
+}

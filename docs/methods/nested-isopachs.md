@@ -1,5 +1,7 @@
 # Bayesian nested isopachs with a distal volume budget
 
+The whole-area fit is paired with a geographic reach study that allows finite crosswind and down-range extent. Compare the actual survey predictions and the solid, locally bracketed contour fragments before interpreting global volume. [Geographic reach model](nested-reach.md) · [Real-deposit tests](../../comparisons/nested-reach/field-surveys/README.md)
+
 The observations constrain a decreasing area–thickness profile and a geographic ordering in one likelihood. The profile gives the area above every thickness. The ordering allocates that area geographically. Changing an ordering while holding the profile fixed leaves the global volume exactly the same. Measurements can update both quantities together. Each draw represents the combined deposit across all fallout fans.
 
 ## Geographic ordering

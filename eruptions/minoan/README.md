@@ -1,5 +1,7 @@
 # Minoan fallout reconstruction
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 28.4 km³ of bulk fallout (conditional 95% interval 17.4–67.6), compared with 37.6 km³ under the whole-area continuation. All accepted Plinian and co-ignimbrite fans enter the fit together. Both sets of held-out thicknesses favor the broader continuation. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The accepted dataset contains 92 exact measurements and 9 lower bounds. The regional fits share an observation hull of 760,879 km². [Accepted thickness CSV](../../data/eruptions/Minoan_tephra.csv) · [Row-level source audit](../../data/audits/Minoan/README.md)
 
 ## Isopach fits

@@ -59,6 +59,8 @@ jobs:
         run: python -m benchmarks.verify_visuals
       - name: Verify directional extent and archive sensitivity
         run: python -m benchmarks.verify_azimuth_continuation
+      - name: Replay nested reach and independent field survey predictions
+        run: python -m benchmarks.verify_nested_reach
       - run: python -m pytest -q
         env:
           MPLBACKEND: Agg

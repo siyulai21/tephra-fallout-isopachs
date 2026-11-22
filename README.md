@@ -14,7 +14,7 @@ On the directional maps, solid contour fragments connect measured thicknesses th
 
 Minoan combines Plinian and co-ignimbrite fans in one deposit. At B-Tm, two lake profiles and one peat core supplied conditional upper bounds where no bed thickness was measured. Their case pages show how those decisions affect the maps and volumes. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [How to review an occurrence without a measured thickness](docs/methods/sites-without-measured-thickness.md)
 
-The **Bayesian nested-isopach model** estimates the area covered above every thickness threshold. A deposit can have multiple fans or a detached maximum. Each case shows the median isopachs, the volume in each thickness range and the fraction inferred beyond the farthest exact site. [Compare all three global estimates](comparisons/nested-isopachs/README.md)
+The **Bayesian nested-isopach model** estimates the area covered above every thickness threshold. A deposit can have multiple fans or a detached maximum. Each case shows the median isopachs, the volume in each thickness range and the fraction inferred beyond the farthest exact site. Every eruption also has a paired geographic reach estimate, a full-compass map and a separate check against withheld measurements. [Paired nested volumes and contours](comparisons/nested-reach/README.md) · [Real-survey validation](comparisons/nested-reach/field-surveys/README.md) · [Compare all three global estimates](comparisons/nested-isopachs/README.md)
 
 ## Methods and evidence
 
