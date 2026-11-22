@@ -4,6 +4,8 @@ Each global family reports the integral of the median-thickness map, its conditi
 
 The nested family uses dispersal corridors for its principal isopachs and volume, with whole-area continuation as its sensitivity. B-Tm’s withheld archive bounds favor the narrower map, while withheld Aso-4 and Pinatubo marine deposits favor the broader one. [Conditional isopachs and volumes](nested-reach/README.md) · [Independent field surveys](nested-reach/field-surveys/README.md)
 
+The published Pinatubo comparison uses 208 observations, including 34 offshore records. Its land measurements incorporate both the Koyaguchi and Paladio-Melosantos figure reviews. The earlier field-survey experiments keep their own fitted inputs and held-out predictions. [Audited Pinatubo case](../eruptions/pinatubo-1991-layer-c/README.md) · [Effect of the two land-map reviews](../eruptions/pinatubo-1991-layer-c/results/source-checks/figure7-review/README.md) · [Earlier survey tests](nested-isopachs/pinatubo-preview/README.md)
+
 The figure compares the five published fits on withheld geographic regions for each eruption. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
 
 ![Geographic prediction scores and exact-site coverage for the five methods](method-scores.png)

@@ -9,6 +9,7 @@ Each pair uses the same observations and structure weights. The control fixes fa
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/directional/README.md) | 56 | **40.8** | 46.7 | 30.1–384.8 |
 | [Mazama](../../eruptions/mazama/results/directional/README.md) | 45 | **166** | 177.0 | 138.6–1,265.1 |
 | [Minoan](../../eruptions/minoan/results/directional/README.md) | 101 | **28.8** | 32.9 | 21.3–138.5 |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/directional/README.md) | 208 | **6.42** | 6.7 | 5.0–11.8 |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/directional/README.md) | 57 | **7.07** | 9.1 | 3.8–70.6 |
 | [Tambora](../../eruptions/tambora/results/directional/README.md) | 26 | **95.7** | 107.7 | 73.2–203.8 |
 | [YTT](../../eruptions/ytt/results/directional/README.md) | 46 | **900** | 1,005.6 | 736.5–3,660.9 |
@@ -21,10 +22,10 @@ Each score gives equal weight to available folds within an eruption, then equal 
 
 | Deletion design | Eruptions contributing | Fixed | Uncertain azimuth |
 |---|---:|---:|---:|
-| Geographic, all estimable folds | 8 | 1.513 | 1.528 |
-| Geographic, passing folds only | 8 | 1.628 | 1.594 |
-| Quadrants, all estimable folds | 8 | 1.941 | 1.938 |
-| Quadrants, passing folds only | 7 | 1.913 | 1.881 |
+| Geographic, all estimable folds | 9 | 1.506 | 1.530 |
+| Geographic, passing folds only | 9 | 1.706 | 1.682 |
+| Quadrants, all estimable folds | 9 | 1.879 | 1.862 |
+| Quadrants, passing folds only | 8 | 1.962 | 1.838 |
 
 A quadrant with no test observations has no score. The download gives input hashes, fold and row counts, and both scores for every eruption. In the original 68-site B-Tm analysis, only two quadrants could be scored. Adding observations can change which sectors contribute to a pooled comparison. The original six eruptions informed model development. [Paired scores and volumes](case-comparison.csv) · [Original 68-site comparison](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f155753dad2dd4d06e4fa48d3d877242ae8539aa/comparisons/directional)
 

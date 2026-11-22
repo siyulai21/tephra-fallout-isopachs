@@ -15,6 +15,8 @@ jobs:
           python -m benchmarks.satsuma_core_sensitivity --verify
       - name: Replay the Ilopango thickness audit from the original workbook
         run: python -m benchmarks.ilopango
+      - name: Replay the Pinatubo Layer C source audit
+        run: python -m benchmarks.pinatubo
       - name: Check repository navigation
         run: python scripts/check_repository_navigation.py
       - name: Check installed command and bundled data outside the checkout
@@ -25,7 +27,7 @@ jobs:
           tephra-isopachs compare --help
           tephra-isopachs global --help
           python -c "from src.empirical_isopach.models.registry import active_methods; assert active_methods() == ('stacked', 'spline')"
-          python -c "from importlib.util import find_spec; from src.probabilistic_isopach.global_volume import EarthDomain; assert 5.1e8 < EarthDomain.wgs84(36).describe()['surface_area_km2'] < 5.2e8; from src.probabilistic_isopach.catalog import datasets, data_directory; rows = datasets(); assert len({r['slug'] for r in rows}) == len(rows); assert {'aso-4', 'b-tm', 'ilopango-tbj', 'mazama', 'minoan', 'sakurajima-satsuma', 'tambora', 'ytt'} <= {r['slug'] for r in rows}; assert all(r['path'].is_file() for r in rows); assert (data_directory()/'audits/YTT/provenance.json').is_file(); assert (data_directory()/'audits/Minoan/provenance.json').is_file(); assert find_spec('src.probabilistic_isopach.workbench') is None; assert find_spec('src.probabilistic_isopach.atlas') is None"
+          python -c "from importlib.util import find_spec; from src.probabilistic_isopach.global_volume import EarthDomain; assert 5.1e8 < EarthDomain.wgs84(36).describe()['surface_area_km2'] < 5.2e8; from src.probabilistic_isopach.catalog import datasets, data_directory; rows = datasets(); assert len({r['slug'] for r in rows}) == len(rows); assert {'aso-4', 'b-tm', 'ilopango-tbj', 'mazama', 'minoan', 'pinatubo-1991-layer-c', 'sakurajima-satsuma', 'tambora', 'ytt'} <= {r['slug'] for r in rows}; assert all(r['path'].is_file() for r in rows); assert (data_directory()/'audits/YTT/provenance.json').is_file(); assert (data_directory()/'audits/Minoan/provenance.json').is_file(); assert find_spec('src.probabilistic_isopach.workbench') is None; assert find_spec('src.probabilistic_isopach.atlas') is None"
           python -c "from src.empirical_isopach.core.catalog import datasets; from src.empirical_isopach.models.mass_mixture.source_protocol import protocol; assert next(r for r in datasets() if r['slug'] == 'b-tm')['global_geometry'] == 'source-fans'; assert protocol('source-fans')[0].source_anchored; assert protocol('source-envelope')[0].supported_basis; assert not protocol('displaced')[0].source_anchored"
           python -c "from src.empirical_isopach.core.catalog import datasets, data_directory, resolve_dataset; from src.empirical_isopach.models.mass_mixture.study import audited_data; assert all((data_directory()/r['audit']).is_file() for r in datasets() if 'audit' in r); data, meta = audited_data(resolve_dataset('Aso-4')); assert len(data.xy) == 87 and data.censored.sum() == 4 and data.lower_censored.sum() == 3"
           python -c "from src.empirical_isopach.visualization.maps import ASSET, coast_rings; assert ASSET.is_file() and (ASSET.parent/'coastline-source.json').is_file(); assert len(coast_rings()) > 1000"
@@ -35,7 +37,17 @@ jobs:
           from pathlib import Path
           from src.empirical_isopach.core.catalog import data_directory, datasets
 
+          from src.empirical_isopach.core.audit import audited_data
+          from src.empirical_isopach.models.directional.archive_readings import load_inventory
+
           root = data_directory()
+          pinatubo = next(r for r in datasets() if r["slug"] == "pinatubo-1991-layer-c")
+          data, meta = audited_data(pinatubo["path"])
+          assert (len(data.xy), int((~data.censored).sum()), int(data.lower_censored.sum())) == (208, 150, 28)
+          principal = json.loads((root / pinatubo["audit"]).read_text())["cases"]["principal"]
+          assert meta["input_sha256"] == principal["sha256"]
+          archive, _ = load_inventory(pinatubo["path"])
+          assert len(archive["sites"]) == 102 and not archive["scenarios"]
           for case in (r for r in datasets() if r["slug"] in {"ilopango-tbj", "sakurajima-satsuma"}):
               audit = json.loads((root / case["audit"]).read_text())
               for source in audit["sources"]:

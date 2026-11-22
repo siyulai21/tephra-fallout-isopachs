@@ -231,8 +231,6 @@ def main():
         rows.extend(case)
         experiments.extend(paired)
         slug = record["slug"]
-        nested["initial_profile"] = read(ROOT/"archive/2026-11-21-nested-initial"/slug/"report.json")
-        nested["outer_fifth"] = raw["outer"][slug]
         nested["sectors"] = sector_evidence(record,nested)
         compass.extend(nested["sectors"])
         reports[slug] = nested

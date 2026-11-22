@@ -1,0 +1,67 @@
+{
+  "protocol": "report-cartography-v1",
+  "input_sha256": "5400069fea176a055aebf2395d0f92dabf51ce3c7354f17c559f4e9ccea0bfda",
+  "posterior_sha256": "18509764785476696458356b032ea0bfe4a95fe79349a57112f83e74a468b262",
+  "coastline_sha256": "db8b8a451c11fa91b6cd36f457d238f204f1ade8f337ef2da9f6cd84a30e6f8e",
+  "coastline_scale": "1:10 million",
+  "central_statistic": "Bearing-conditioned spherical median",
+  "posterior_fields": 1536,
+  "posterior_flat_indices_sha256": "367c6fdfd61f59977d61bc2c304fa263b18e3c3d61d029b701345b1edfb5798c",
+  "global_bounds_km": [
+    -1065.540137994515,
+    -839.2470015662319,
+    340.13573758127427,
+    380.31595457600037
+  ],
+  "local_bounds_km": [
+    -1040.3004702745777,
+    -428.0769593345914,
+    164.61049108201712,
+    157.4602214456282
+  ],
+  "global_grid_shape": [
+    280,
+    322
+  ],
+  "local_grid_shape": [
+    157,
+    322
+  ],
+  "extent_audit": {
+    "minimum_display_contour_cm": 0.1,
+    "search_points": 51840,
+    "edge_refinements": [
+      {
+        "bounds_km": [
+          -1065.540137994515,
+          -839.2470015662319,
+          340.13573758127427,
+          380.31595457600037
+        ],
+        "maximum_edge_log10_cm": -1.5295005625148286
+      }
+    ],
+    "physical_rim_maximum_log10_cm": -9.350264598797326,
+    "lowest_contour_within_chart": true,
+    "scope": "Display-only finite-grid extent audit, not contour-support validation or an integration boundary."
+  },
+  "whole_earth_view": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "volume_calculation_changed": false,
+  "note": "Finite plotting grids summarize saved fields. Thresholds and map windows do not enter inference or volume.",
+  "field_protocol": "spherical-mixture-bearing-continuation-v1",
+  "gap_half_reach_degrees": 22.5,
+  "assumptions_sha256": {
+    "field.py": "862f5c54765c2645b9d4495d172f40f3fde4926046aaa9e1ee891beef5effb56",
+    "maps.py": "4b62dad506dc4b15e90c9e356f7624fc85898a26298263a9c0ebab6b78a19140",
+    "study.py": "8b0fffeafcd63d1cacc601b6d07cb70023d4e6d4be491cce5be1ab8c47e9fdd0",
+    "volume.py": "b3a1412c81b3b654c35b87ba1eee5c443754bf4c1a8f603c0efea36d56b75fb2"
+  },
+  "display_orientation_seed": 204917
+}

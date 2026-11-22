@@ -34,3 +34,25 @@ def test_pinned_land_and_lakes_distinguish_source_geography():
     assert shapely.contains_xy(land,23.72,37.98)  # Athens
     assert not shapely.contains_xy(land,25.,36.)  # Aegean Sea
     assert shapely.contains_xy(lakes,-87.4,44.)  # Lake Michigan
+
+
+def test_regional_replay_checks_directional_thinning_in_any_map_orientation():
+    import pytest
+    from benchmarks.refresh_figures import same_description
+
+    reference = np.array([4., 3., 1., 0.])
+    angle = np.deg2rad(57.)
+    rotation = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
+    for axes in (np.eye(2), rotation):
+        def coefficients(east_north, *, radial=3., intercept=4.):
+            return [intercept, radial, *(axes @ east_north)]
+
+        target = coefficients(reference[2:])
+        for field in ("stacked.components[0].model.beta", "spline.trend_beta"):
+            same_description(coefficients([1., 2e-7]), target, field)
+            with pytest.raises(AssertionError):
+                same_description(coefficients([1., 2e-5]), target, field)
+            with pytest.raises(AssertionError):
+                same_description(coefficients([1., 0.], radial=3.01), target, field)
+            with pytest.raises(AssertionError):
+                same_description(coefficients([1., 0.], intercept=4.01), target, field)

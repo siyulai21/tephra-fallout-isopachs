@@ -50,6 +50,17 @@ def same_description(actual, expected, where="model"):
         assert set(actual) == set(expected), where
         for key in expected:
             same_description(actual[key], expected[key], where+"."+key)
+    elif where.rsplit(".", 1)[-1] in {"beta", "trend_beta"}:
+        # On a ray u, the fitted slope is -beta[1] + beta[2:] @ u.
+        # Its maximum absolute change over every unit bearing is exact, and
+        # does not depend on the map axes or a component being close to zero.
+        fitted, reference = np.asarray(actual, float), np.asarray(expected, float)
+        assert fitted.shape == reference.shape == (4,), where
+        same_description(fitted[0], reference[0], where + ".intercept")
+        difference = fitted - reference
+        slope_error = abs(difference[1]) + np.linalg.norm(difference[2:])
+        slope_scale = abs(reference[1]) + np.linalg.norm(reference[2:])
+        assert slope_error <= 1e-9 + 2e-7 * slope_scale, (where, slope_error, slope_scale)
     elif isinstance(expected, list):
         assert len(actual) == len(expected), where
         for i, (a, b) in enumerate(zip(actual, expected)):

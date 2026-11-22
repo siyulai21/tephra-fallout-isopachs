@@ -1,20 +1,19 @@
-"""Build the matched map-integral table from registered cases and the separate Pinatubo snapshot."""
+"""Build the matched map-integral table from the registered eruption cases."""
 import argparse
 from pathlib import Path
 
 from .nested_reach import case_home
-from .nested_reach_challenge import records
+from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.visualization.principal import volume_rows, write_rows
 
 
 def catalogue_rows():
     rows = []
-    for record in sorted(records(), key=lambda r:r["slug"]):
+    for record in sorted(datasets(), key=lambda r:r["slug"]):
         slug = record["slug"]
         home = case_home(slug)
-        preview = slug=="pinatubo-1991"
-        for row in volume_rows(home,regional_home=home/"regional" if preview else home):
-            rows.append(dict(eruption=record["name"],slug=slug,case_status="intake study" if preview else "catalogue",**row))
+        for row in volume_rows(home):
+            rows.append(dict(eruption=record["name"],slug=slug,case_status="catalogue",**row))
     return rows
 
 

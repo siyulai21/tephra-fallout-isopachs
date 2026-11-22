@@ -6,7 +6,7 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 
 ## Current evaluations
 
-Replay the principal global plates and physical map integrals with `python -m benchmarks.deposit_maps --output results/deposit-maps --workers 3`. Refresh the matched five-family table with `python -m benchmarks.principal_volumes --output results/principal-volumes.csv`. Both commands include the separate Pinatubo study.
+Replay the principal global plates and physical map integrals with `python -m benchmarks.deposit_maps --output results/deposit-maps --workers 3`. The map replay includes both the registered Pinatubo case and its earlier 137-observation development snapshot. Refresh the matched five-family table with `python -m benchmarks.principal_volumes --output results/principal-volumes.csv`. Each registered eruption appears once in that table.
 
 | Command | What it does | Method family |
 |---|---|---|
@@ -39,6 +39,9 @@ Replay the contour screens directly from the published spherical fits with `pyth
 
 | Command | Evidence checked |
 |---|---|
+| `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests` | Pinatubo marine holdout, map-reading holdout, two-sided marine ranges and upper-endpoint regional refits. [Checks and results](../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md) |
+| `python -m benchmarks.pinatubo_field_review --output results/pinatubo-new-sites.csv --volume-output results/pinatubo-review-volumes.csv` | Compare the archived fields at 14 newly read sites and the five median-map volumes before and after both source reviews. [Record of the original fits](../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md) |
+| `python -m benchmarks.pinatubo` | Pinatubo’s measured sections, paired sublayers, marine bounds, map coordinates and accepted decisions. [Visual checks](../data/audits/Pinatubo-1991/VISUAL-CHECK.md) |
 | `python -m benchmarks.sakurajima_satsuma` | Satsuma source cells, numerical literature readings, original bounds and eight-sector coverage |
 | `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |
 | `python -m benchmarks.verify_btm_cryptotephra` | Current B-Tm profile integrals, upper-limit identities, four fitted families, matched holdouts and archive-response sensitivity volumes |
