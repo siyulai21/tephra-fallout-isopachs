@@ -122,10 +122,22 @@ def main():
             assert trial["test_rows"] == test.row_ids.tolist()
             assert trial["training_rows"] == ([] if train is None else train.row_ids.tolist())
             quadrant_receipts.append(trial)
+    with (comp/"compass-holdouts.csv").open(newline="") as stream:
+        published = {(r["slug"], int(r["quadrant"])):r for r in csv.DictReader(stream)}
+    assert len(published) == len(quadrant_receipts)
     for j in quadrant_receipts:
+        row = published.pop((j["slug"], j["quadrant"]))
+        assert row["status"] == j["status"]
+        assert int(row["test_rows"]) == len(j["test_rows"])
+        assert int(row["training_rows"]) == len(j["training_rows"])
         assert not (set(j["test_rows"]) & set(j["training_rows"]))
         if j["status"]=="estimated":
             assert len(j["test_rows"])==len(j["previous_log_score"])==len(j["corridor_log_score"])
+            for method in ("previous", "corridor"):
+                np.testing.assert_allclose(float(row[method+"_score"]), -np.mean(j[method+"_log_score"]))
+        else:
+            assert row["previous_score"] == row["corridor_score"] == ""
+    assert not published
     for v in read(comp/"regional-parity.json").values():
         assert digest(v["path"])==v["sha256"]
     survey=comp/"field-surveys"
@@ -158,7 +170,8 @@ def main():
         for expected,printed in zip(references,csv.DictReader(stream),strict=True):
             for k in expected:
                 np.testing.assert_allclose(expected[k],float(printed[k]))
-    print("Verified nine geographic comparisons, 36 compass deletions, 20 known truths and four withheld field surveys.")
+    print(f"Verified {len(records())} geographic comparisons including the earlier Pinatubo snapshot, "
+          f"{len(quadrant_receipts)} compass deletions, 20 known truths and {len(FIELD_CASES)} withheld field surveys.")
 
 
 if __name__=="__main__":

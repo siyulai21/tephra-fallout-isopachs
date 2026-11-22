@@ -90,3 +90,18 @@ def test_other_fall_layers_and_cruise_chart_are_separately_traceable():
     assert all(r["review"] == "positive point reading" for r in index if r["single_positive_cm"])
     assert len(cruise_registration()) == 15
     assert {r["evidence_id"]: r["reported_or_candidate"] for r in index}["P6-068"] == "23"
+
+
+def test_paired_position_refit_changes_only_the_51_sublayer_coordinates(tmp_path):
+    from benchmarks.pinatubo_sensitivity import paired_coordinates
+
+    original, alternate = rows(INPUT), rows(paired_coordinates(tmp_path))
+    changed = set()
+    for before, after in zip(original, alternate, strict=True):
+        if any(before[k] != after[k] for k in ("Lon","Lat")):
+            changed.add(before["EvidenceID"])
+        assert all(before[k] == after[k] for k in before if k not in ("Lon","Lat"))
+    pairs = {r["evidence_id"]:r for r in rows(tmp_path/"paired-coordinates.csv")}
+    assert len(pairs) == 51 and changed == set(pairs)
+    assert pairs["K-03"]["c2_x"] == "302" and pairs["K-03"]["c2_y"] == "458"
+    assert pairs["K-03"]["c2_lon"] == "120.580682" and pairs["K-03"]["c2_lat"] == "15.339644"

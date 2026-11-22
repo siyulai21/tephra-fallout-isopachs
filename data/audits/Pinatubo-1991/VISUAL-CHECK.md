@@ -21,6 +21,8 @@ To check a coordinate, open the [worked CAB 1 map](visual/coordinate-check.png).
 
 [Original image](../../sources/pinatubo-1991/koyaguchi-figure-3.gif)
 
+The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md#position-on-the-two-sublayer-maps)
+
 - [K-01 through K-08](visual/k3-01.png)
 - [K-09 through K-16](visual/k3-02.png)
 - [K-17 through K-24](visual/k3-03.png)

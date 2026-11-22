@@ -4,10 +4,11 @@ The nested-corridor tests change one source selection or reading rule at a time.
 
 | Fit | Training sites | Volume (km³) | Conditional 95% (km³) | Exact withheld beds within 95% | Numerical checks |
 |---|---:|---:|---:|---:|---|
-| [Common five-family input](../nested-isopachs/README.md) | 194 | 7.59 | 5.70–9.08 | — | Passed |
+| [Common five-family input](../nested-isopachs/README.md) | 194 | 7.58 | 5.70–9.08 | — | Passed |
 | [Withhold every offshore thickness and bound](marine-holdout/result.json) | 160 | 0.70 | 0.61–1.56 | [0/19](marine-holdout/heldout.csv) | Warning · parent population check |
 | [Withhold the numerical land-map readings](tabulated-thickness/result.json) | 48 | 7.64 | 6.55–10.43 | [95/109](tabulated-thickness/heldout.csv) | Warning · importance weights |
 | [Use both observed endpoints of nine marine station ranges](marine-intervals/result.json) | 194 | 5.16 | 4.44–7.06 | — | Passed |
+| [Use the C2 map coordinates for the same 51 paired beds](paired-map-coordinates/result.json) | 194 | 7.76 | 6.54–9.23 | — | Warning · parent population check |
 
 The land-only model predicts the 34 marine records without seeing any of them. The later offshore cruises document a secondary thickness maximum. Their measurements change both the estimated reach and the total. [Predictions at every withheld marine station](marine-holdout/heldout.csv) · [Original offshore survey](https://doi.org/10.1007/s00445-003-0306-x)
 
@@ -30,4 +31,16 @@ At SO-114-13 (H01-16), the source gives 1–2 mm, or 0.1–0.2 cm. Under the sha
 
 The 1.0 cm reading at SO-114-23 became available after the archived 193-site audit. Its preceding fits predicted 0.89 cm (spline), 1.54 cm (GP) and 3.78 cm (nested corridor). Applying the 15 independently measured chart-position discrepancies at the core gave 0.70–0.94, 1.45–1.57 and 3.58–3.84 cm respectively. Those ranges measure sensitivity to position. This check concerns one additional core. All principal fits include it once. [Numerical receipt](cruise-core-holdout/result.json) · [Training evidence and replay](../../../../archive/2026-11-22-pinatubo-intake/README.md) · [Original core verification](../../../../data/audits/Pinatubo-1991/marine-check.md#südmeer-core-23)
 
-Reproduce the source refits with `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests`. Each receipt records its training rows, input hash, fit diagnostics and integration checks.
+Reproduce the source refits with `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests`. Each receipt records its training rows, input hash, fit diagnostics and integration checks. Rebuild the station comparison with `python -m benchmarks.pinatubo_ranges --output results/pinatubo-station-predictions.csv`.
+
+## Position on the two sublayer maps
+
+Koyaguchi printed the same 51 accepted stations on the C1 and C2 panels. Independently registered positions differ by a median 0.16 km and a maximum 0.55 km. The alternative refit uses the C2 coordinates and keeps all 194 bed measurements and limits. The observed discrepancies provide an empirical check on registration. Both panels can share survey error. [Pixel coordinates on both maps](paired-map-coordinates/paired-coordinates.csv) · [Alternative model input](paired-map-coordinates/c2-positions.csv)
+
+| Median-thickness volume (km³) | Published C1 positions | Alternative C2 positions |
+|---|---:|---:|
+| Regional GP | 3.50 | 3.50 |
+| Regional cubic spline | 13.17 | 13.16 |
+| Global nested corridors | 7.58 | 7.76 |
+
+The alternative regional hull covers 279,806 km², compared with 279,806 km² for the principal fits. The alternative nested fit flags a warning in its numerical checks. [Regional fits and diagnostics](paired-map-coordinates/regional/report.json) · [Nested volume interval and diagnostics](paired-map-coordinates/result.json)

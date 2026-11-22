@@ -1,12 +1,13 @@
-"""Test how the Pinatubo nested corridors respond to source selection and marine intervals."""
+"""Test Pinatubo source selection, marine ranges and the paired land-map coordinates."""
 import argparse
+import csv
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from .nested_reach_field import assess
-from .pinatubo import AUDIT, INPUT, src
+from .pinatubo import AUDIT, GEOD, INPUT, position, src
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.observations import read_observations
 from src.empirical_isopach.models.nested.continuation import check_and_refine
@@ -35,6 +36,36 @@ def marine_intervals(folder):
     return data,paired,digest(path)
 
 
+def paired_coordinates(folder):
+    """Locate the same combined beds on the independently registered C2 panel."""
+    pairs = {r["id"]:r for r in src("koyaguchi-figure-3.csv")}
+    with INPUT.open(newline="") as stream:
+        accepted = list(csv.DictReader(stream))
+    changes = []
+    for csv_row, record in enumerate(accepted, 2):
+        pair = pairs.get(record["EvidenceID"])
+        if pair is None:
+            continue
+        c1 = tuple(round(v,6) for v in position("K1",pair["c1_x"],pair["c1_y"]))
+        c2 = tuple(round(v,6) for v in position("K2",pair["c2_x"],pair["c2_y"]))
+        if c1 != (float(record["Lon"]),float(record["Lat"])):
+            raise ValueError(f"Paired panel disagrees with accepted C1 position at {pair['id']}")
+        distance = GEOD.inv(*c1,*c2)[2]/1000
+        changes.append({"evidence_id":pair["id"],"csv_row":csv_row,"c1_x":pair["c1_x"],"c1_y":pair["c1_y"],
+                        "c2_x":pair["c2_x"],"c2_y":pair["c2_y"],"c1_lon":c1[0],"c1_lat":c1[1],
+                        "c2_lon":c2[0],"c2_lat":c2[1],"separation_km":distance})
+        record["Lon"], record["Lat"] = c2
+    if len(changes) != 51:
+        raise ValueError("Expected 51 accepted combined beds with positions on both Koyaguchi panels")
+    path = folder/"c2-positions.csv"
+    for output, rows in [(path,accepted),(folder/"paired-coordinates.csv",changes)]:
+        with output.open("w",newline="") as stream:
+            writer=csv.DictWriter(stream,fieldnames=rows[0],lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(rows)
+    return path
+
+
 def scenario(name, root):
     folder=root/name
     folder.mkdir(parents=True,exist_ok=False)
@@ -52,9 +83,19 @@ def scenario(name, root):
     elif name=="marine-intervals":
         train,paired,sha=marine_intervals(folder)
         alternate={"interval_rows":paired,"interval_input_sha256":sha}
+    elif name=="paired-map-coordinates":
+        path=paired_coordinates(folder)
+        train,alt_meta=read_observations(path)
+        # The reader orders by projected position. Join by the original CSV row.
+        original_order = np.argsort(full.row_ids)
+        alternative_order = np.argsort(train.row_ids)
+        np.testing.assert_array_equal(train.row_ids[alternative_order], full.row_ids[original_order])
+        for key in ("log_value","censored","lower_censored","log_sd"):
+            np.testing.assert_array_equal(getattr(train,key)[alternative_order], getattr(full,key)[original_order])
+        alternate={"paired_positions":51, "alternate_input_sha256":alt_meta["input_sha256"]}
     else:
         raise ValueError(name)
-    if name!="marine-intervals":
+    if name in ("marine-holdout","tabulated-thickness"):
         train,test=full.subset(~withheld),full.subset(withheld)
     latitude=meta["vent_lonlat"][1]
     raw,internal=fit(train,latitude,initial=768,ceiling=6144)
@@ -87,6 +128,9 @@ def scenario(name, root):
               "predictive_cdf_at_observed":score["predictive_cdf_at_value"]})
         frame.to_csv(folder/"heldout.csv",index=False,lineterminator="\n")
     write_json(folder/"result.json",report)
+    if name == "paired-map-coordinates":
+        from src.empirical_isopach.reporting import compare_dataset
+        compare_dataset(path, folder/"regional", name="Pinatubo Layer C, paired C2 map coordinates", progress=print)
     print(name,len(train.xy),integral["median_map_volume_km3"],report["passed"],flush=True)
 
 
@@ -108,7 +152,7 @@ def regional_endpoints(root):
 
 
 if __name__ == "__main__":
-    cases = ["marine-holdout", "tabulated-thickness", "marine-intervals", "regional-upper-endpoints"]
+    cases = ["marine-holdout", "tabulated-thickness", "marine-intervals", "regional-upper-endpoints", "paired-map-coordinates"]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--case", choices=cases)
