@@ -1,5 +1,10 @@
 # Release history
 
+## Global median-thickness maps and volume integrals
+
+All eight catalogue cases and the separate Pinatubo study now show the full median-thickness footprint down to 0.5 cm, near-vent detail and a thickness–area curve for each global method. Each mapped integral includes the thin tail. The regional pair reports its median-map integrals inside the observation hull. The earlier four-method figures and duplicate corridor redirect pages are retired. [Current figures and estimates](eruptions/README.md)
+
+
 The [eruption catalogue](eruptions/README.md) contains the current reports. For an earlier calculation, open the linked commit to obtain its input, fitting code and evidence together.
 
 ## Current release

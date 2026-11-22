@@ -1,75 +1,40 @@
 # Ilopango Tierra Blanca Joven, Unit G
 
-**Principal Bayesian nested estimate.** The corridor model gives 40.9 km³ of bulk fallout (conditional 95% interval 25.1–94.2), compared with 50.5 km³ under the whole-area continuation. Both geographic and compass holdouts favor the broader fit. The full-data proposal retained a numerical warning. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
-
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All five models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
-## Five matched thickness-only fits
+## Volumes and geographic prediction
 
-![Principal nested corridor median isopachs for Ilopango TBJ (Unit G)](results/nested-isopachs/isopachs.png)
+Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
 
-On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
+| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---:|---:|---:|---:|
+| GP ensemble | **23.3** | 17.9–33.8 | 1.343 | 98.1% |
+| Cubic spline | **25.7** | 22.6–31.5 | 1.462 | 92.3% |
+| [Directional ensemble](results/directional/README.md) | **40.8** | 30.1–385 | 1.528 | 92.3% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **145** | 62.9–3.3e+03 (provisional) | 1.225 | 94.2% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **39.1** | 25.1–94.2 (provisional) | 1.274 † | 94.2% |
 
-![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](results/four-method-evidence.png)
+Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
+## Full deposits and near-vent detail
 
-## Volume and predictive performance
+The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
 
-| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---|---:|---:|---:|
-| GP ensemble | Hull mean **24.99** | 17.93–33.81 | 1.343 | 98.1% |
-| Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
-| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
-| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **40.9** | 25.1–94.2 **(provisional)** | 1.274 † | 94.2% |
+![Ilopango TBJ (Unit G) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
-The nested corridor assigns a median 3.8% of bulk volume to the retained exact-site triangles and 5.8% beyond the farthest exact site. Its median map integrates to 39.1 km³. 1/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
+![Ilopango TBJ (Unit G) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
+![Ilopango TBJ (Unit G) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.9%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+## Inside the observation hull
 
-<details>
-<summary>Compare the three whole-Earth maps</summary>
+![Ilopango TBJ (Unit G) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
-| Uncertain fan direction | Spherical mixture | Nested corridor |
-|---|---|---|
-| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
-
-Each map is centred on the vent longitude and has its own thickness key.
-
-</details>
-
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **46.7 km³**.
-
-<details>
-<summary>View the directional deposit extent and source area</summary>
-
-![Principal uncertain-fan-direction median isopachs for Ilopango TBJ (Unit G)](results/directional/azimuth/isopachs.png)
-
-</details>
-
-## Directional assumptions
-
-The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
-
-| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---|---:|---:|---:|
-| Measured fan directions | Thicknesses and bounds | 49.6 | 69.1 | 32.3–433.2 |
-
-<details>
-<summary>View agreement between the directional sensitivities</summary>
-
-![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
-
-</details>
-
-[Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
+The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
 ## Reading the global uncertainty
 
-Across two halves of the spherical draws, the median changed by 0.12% and the upper interval endpoint by 17.3%. The latter exceeded the 10% numerical tolerance. The parent sampler and spatial integration passed. The medians under the eight prior fits range from 64.7 to 350.4 km³. One directional quadrant fit also retained a sampling warning. [Spherical numerical checks](results/spherical-mixture/README.md) · [Directional holdouts](results/directional/README.md)
+Across two halves of the spherical draws, the median changed by 0.12% and the upper interval endpoint by 17.3%. The latter exceeded the 10% numerical tolerance. The parent sampler and spatial integration passed. One directional quadrant fit also retained a sampling warning. [Spherical numerical checks](results/spherical-mixture/README.md) · [Directional holdouts](results/directional/README.md)
 
 ## What the observations constrain
 
@@ -79,7 +44,7 @@ Every 45° compass sector contains at least two measured thicknesses. In the nor
 
 Smith et al. also identified TBJ glass in the TUNU2013 ice core about 7,755 km from Ilopango. It documents long-distance transport. The core supplies no separate thickness or bound for Unit G. [Ice-core evidence and fitting decision](../../data/audits/Ilopango-TBJ/README.md#greenland-ice-core-occurrence)
 
-The two regional models integrate the same 166,961 km² hull. The standard measured-site support screen covers 15,973 km². It gives expected partial volumes of 1.54 km³ for the GP and 1.52 km³ for the spline. The standard screen accepted no complete isopach band for any of the five models. A full deposit still requires assumptions about the proximal region, gaps and distal continuation. [Support geometry, partial volumes and contour decisions](results/support/README.md)
+The two regional models integrate the same 166,961 km² hull. The standard measured-site support screen covers 15,973 km². The median maps give partial volumes of 1.44 km³ for the GP and 1.46 km³ for the spline. The standard screen accepted no complete isopach band for any of the five models. A full deposit still requires assumptions about the proximal region, gaps and distal continuation. [Support geometry, partial volumes and contour decisions](results/support/README.md)
 
 The workbook distinguishes the final ash layer from earlier falls and from pyroclastic density-current deposits. In the offshore cores, chemistry supports a TBJ correlation more securely than attribution to an individual phase. The 550 cm Unit G value at Istagua and the two adjacent 3 cm distal cores in the west remain in the input. Tazumal's conflicting 20 cm and 40–50 cm reports remain in the audit. [Source decisions](../../data/audits/Ilopango-TBJ/README.md)
 
@@ -88,3 +53,5 @@ Smith et al. estimated **85–188 km³ of bulk co-ignimbrite fallout** with a ph
 ## Reproduce the calculation
 
 The accepted input identifies the source cell or printed core record for every thickness. The case uses the registered regional models, uncertain fan direction, and the default displaced spherical mixture with measured-bearing continuation. Their geographic holdouts, prior sensitivities, integration checks and conditional intervals are included with each report. [Intake and run command](../../docs/NEW_ERUPTION.md) · [Input checksum and replay](../../data/audits/Ilopango-TBJ/provenance.json) · [Directional verification receipt](results/source-audit/release.json)
+
+Both geographic and compass holdouts favor the broader fit. The full-data proposal retained a numerical warning. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)

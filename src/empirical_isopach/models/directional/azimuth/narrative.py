@@ -18,7 +18,7 @@ def case_page(output,r,inventory):
     n = len(r["data_rows"])
     rows = [f"# {r['dataset']} directional fallout", "",
         f"**{volume['median_map_km3']:,.1f} km³ of bulk fallout** is the whole-Earth integral of the median thickness map. The principal fit uses {n} accepted thickness observations and bounds and allows the fan direction to vary in unsampled sectors. Fixing fan directions with the same data and structure weights gives **{volume['matched_control_map_km3']:,.1f} km³**.", "",
-        f"Under uncertain azimuth, integrating each complete deposit gives a volume median of **{joint['median']:,.1f} km³** and a conditional 95% range of **{joint['lower95']:,.1f}–{joint['upper95']:,.1f} km³**. Measured interpolation triangles contribute {mass[0].sum()/mass.sum():.1%} of the median-map volume. The rest relies on continuation.", "",
+        f"Under uncertain azimuth, the conditional 95% volume interval is **{joint['lower95']:,.1f}–{joint['upper95']:,.1f} km³**. Measured interpolation triangles contribute {mass[0].sum()/mass.sum():.1%} of the median-map volume. The rest relies on continuation.", "",
         "![Principal uncertain-fan-direction median isopachs](isopachs.png)", "",
         "Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.", "",
         ("The deposit panel includes the accepted sites and the display search for the 0.1 cm contour. " +
@@ -96,7 +96,7 @@ def case_page(output,r,inventory):
         if "archive_conditioned" in volume:
             q=volume["archive_conditioned"]
             v=q["coherent_volume_km3"]
-            rows += ["",f"The mapped **{r['archive']['mapped_scenario']}** sensitivity gives {q['median_map_km3']:,.1f} km³ from its median map and a conditional complete-deposit interval of {v['lower95']:,.1f}–{v['upper95']:,.1f} km³ (median {v['median']:,.1f})."]
+            rows += ["",f"The mapped **{r['archive']['mapped_scenario']}** sensitivity gives {q['median_map_km3']:,.1f} km³ from its median map and a conditional complete-deposit interval of {v['lower95']:,.1f}–{v['upper95']:,.1f} km³."]
         rows += [""]
     unstable = [f"{a['level_cm']:g} cm ({a['symmetric_difference_fraction']:.1%})" for a in check["split_areas"]
                 if a["effective_union_nodes"]>=64 and a["symmetric_difference_fraction"]>=.1]

@@ -38,8 +38,8 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
         for name,total in d["volumes_km3"].items():
             for model,q in (("reference",d["reference"]),("principal",d["principal"]["volume"])):
                 estimates.append({"geometry":d["geometry"],"scenario":d["scenario"],"seed":d["seed"],"truth":name,
-                    "method":model,"truth_km3":total,"median_km3":q["median"],"lower95":q["lower95"],"upper95":q["upper95"],
-                    "absolute_log_volume_error":abs(np.log(q["median"]/total)),"covers_truth":q["lower95"]<=total<=q["upper95"],
+                    "method":model,"truth_km3":total,"lower95":q["lower95"],"upper95":q["upper95"],
+                    "covers_truth":q["lower95"]<=total<=q["upper95"],
                     "sampler_passed":d["sampler_passed"],"spatial_passed":d["principal"]["checks"]["spatial_passed"],
                     "draw_split_passed":d["principal"]["checks"]["draw_split_passed"]})
         area_rows += [dict(a,geometry=d["geometry"],scenario=d["scenario"],seed=d["seed"]) for a in d["areas"]]
@@ -61,8 +61,8 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
         old=r["bearing"]["parent_reference_km3"]
         held=pd.read_csv(home/"heldout_predictions.csv")
         hard=held[held.gap_exposure>=.5]
-        real.append({"eruption":rec["name"],"slug":rec["slug"],"parent_volume_km3":old["median"],
-            "principal_volume_km3":v["median"],"lower95":v["lower95"],"upper95":v["upper95"],
+        real.append({"eruption":rec["name"],"slug":rec["slug"],"parent_lower95_km3":old["lower95"],"parent_upper95_km3":old["upper95"],
+            "median_map_volume_km3":read(home/"deposit.json")["median_map_volume_km3"],"lower95":v["lower95"],"upper95":v["upper95"],
             "parent_score":r["bearing"]["parent_geographic_score"],"principal_score":r["validation"]["metrics"]["equal_region_log_score"],
             "n_high_exposure":len(hard),"high_exposure_parent_score":-hard.log_score_power_0.mean(),
             "high_exposure_principal_score":-hard.log_score.mean(),"coverage":r["validation"]["metrics"]["coverage95_observations"]})
@@ -76,7 +76,7 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
         balanced=sparse[columns].mean().to_numpy()
         sparse_text=(f" Within those readings the site-weighted score was {pooled[0]:.3f} → {pooled[1]:.3f}. "
                      f"Giving each represented eruption equal weight gives {balanced[0]:.3f} → {balanced[1]:.3f}.")
-    original=t[t.truth=="original"].groupby("method").agg({"absolute_log_volume_error":"mean","covers_truth":"sum"})
+    original=t[t.truth=="original"].groupby("method").agg({"covers_truth":"sum"})
     score_text = (
         f"The geographic score averaged equally across eruptions changed from {real.parent_score.mean():.3f} "
         f"to {real.principal_score.mean():.3f}. Of the withheld readings, {real.n_high_exposure.sum()} "
@@ -102,7 +102,7 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
     ]
     map_section = "\n".join(rows)
     rows = ["## Deposits with known volumes","",
-       f"The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **{int(original.loc['reference','covers_truth'])}/24 and {int(original.loc['principal','covers_truth'])}/24** fits, respectively. Mean absolute log volume error was **{original.loc['reference','absolute_log_volume_error']:.3f} → {original.loc['principal','absolute_log_volume_error']:.3f}**. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.","",
+       f"The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **{int(original.loc['reference','covers_truth'])}/24 and {int(original.loc['principal','covers_truth'])}/24** fits, respectively. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.","",
        "| Area tested | Threshold | Resolved pairs / 24 | False-positive area, earlier → principal (km²) | Missed fallout area, earlier → principal (km²) |",
        "|---|---:|---:|---:|---:|"]
     for scope in ("Earth","gap exposure >= 0.5"):

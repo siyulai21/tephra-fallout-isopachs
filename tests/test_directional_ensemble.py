@@ -135,6 +135,12 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
         calls.append("principal uncertain fan direction")
         return primary
 
+    from src.empirical_isopach.visualization import deposit
+    def simulate_deposit_figure(folder,family,data,meta,name):
+        assert folder==tmp_path and family=="directional" and name==primary["dataset"]
+        assert (folder/"README.md").is_file()
+        calls.append("median deposit map")
+    monkeypatch.setattr(deposit,"render_deposit",simulate_deposit_figure)
     monkeypatch.setattr(reporting,"run_fits",lambda *args:calls.append("reference fits"))
     monkeypatch.setattr(reporting,"render",simulate_reference)
     monkeypatch.setattr(report,"reuse_reference_fits",lambda *args:calls.append("verified cache import"))
@@ -144,7 +150,7 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
     monkeypatch.setattr(azimuth,"run",simulate_primary)
     assert reporting.directional_dataset(datasets()[0]["path"],tmp_path)==primary
     assert calls==["reference fits","verified cache import","ensemble fits","archive and bearing fits",
-                   "principal uncertain fan direction"]
+                   "principal uncertain fan direction","median deposit map"]
     page = (tmp_path/"README.md").read_text()
     assert "**28.8 km³ of bulk fallout**" in page and "(azimuth/isopachs.png)" in page
     assert "Exact-site 95% coverage" in page and "Reach from the volcano" in page

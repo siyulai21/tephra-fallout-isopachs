@@ -34,6 +34,7 @@ def write_support_analysis(output, name, data, bounds, models, deletion_models, 
                 continue
             volume = integrate_region(model, mesh)
             removed = [integrate_region(m, mesh) for m in deletion]
+            volume["deletion_median_surface_km3"] = [v["median_surface_km3"] for v in removed]
             volume["deletion_expected_km3"] = [v["expected_km3"] for v in removed]
             volume["deletion_integrals_converged"] = all(v["converged"] for v in removed)
             volume["uncertainty"] = "Geographic-deletion sensitivity only; not a confidence interval. Common footprint held fixed. Selection-adjusted volume intervals are not supplied."
@@ -141,18 +142,19 @@ def support_readme(output, name, report):
         "![Sampling support and contour eligibility](support.png)", "",
         "## Local interpolation volumes", "",
         "The common footprint keeps well-connected triangles between exact measurement sites and removes long bridges and thin triangles. Its holes remain holes. Bounds still enter both model likelihoods, but do not count as exact thickness sites for this geometric screen.", "",
-        "| Policy | Area (km²) | Method | Expected bulk volume (km³) | Median-surface integral (km³) | Deletion range (km³) |",
-        "|---|---:|---|---:|---:|---:|"]
+        "| Policy | Area (km²) | Method | Median-thickness integral (km³) | Median-map deletion range (km³) |",
+        "|---|---:|---|---:|---:|"]
     for key, mesh in report["support"].items():
         for method, result in methods.items():
             v = result["footprint_volumes"][key]
             if v.get("expected_km3") is None:
-                values = "— | — | empty footprint"
+                values = "— | empty footprint"
             else:
-                deleted = v["deletion_expected_km3"]
-                values = f"{v['expected_km3']:.2f} | {v['median_surface_km3']:.2f} | {min(deleted):.2f}–{max(deleted):.2f}"
+                deleted = v.get("deletion_median_surface_km3")
+                span = f"{min(deleted):.2f}–{max(deleted):.2f}" if deleted else "unavailable for this fit"
+                values = f"{v['median_surface_km3']:.2f} | {span}"
             lines.append(f"| {key} | {mesh['area_km2']:,.0f} | {result['label']} | {values} |")
-    lines += ["", "These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**. The median-surface integral is not the median of total volume.", "",
+    lines += ["", "These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**.", "",
         "## Complete-contour gate", "",
         "Every candidate must close without touching the calculation boundary, have its entire perimeter inside the local footprint, be bracketed by at least three distinct exact sites on each required side, converge under map refinement, and remain closed and shape-stable after each of four fully retuned geographic deletions. All islands and holes count. A usable band also needs three consecutive qualifying contours spanning at least a factor of two in thickness, with no unsupported area between them.", "",
         "| Method | Policy | Passing contours / 25 | Usable bands | Extension status |",

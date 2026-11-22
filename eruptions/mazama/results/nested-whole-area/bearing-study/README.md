@@ -1,6 +1,6 @@
 # Mazama · How much ash is assigned to bearings with limited evidence?
 
-The uncertain-bearing median is **361.1 km³** with a conditional 95% interval of **155.4–1,317.6 km³**. Allowing a concentrated hidden fan to carry extra ash gives 394.1 km³ [157.9–1,853.0]. The principal nested median is 411.2 km³.
+The conditional 95% volume interval is **155.4–1,317.6 km³** with uncertain bearing and **157.9–1,853.0 km³** with a concentrated extra fan.
 
 Every training location keeps its fitted thickness. The existing spherical bearing policy progressively allows an unseen fan to turn beyond the reach of measured bearings. The same policy includes broad continuation as a possibility. The extra-fallout experiment normalizes the rotating fan to unit mean over an unknown direction.
 

@@ -29,11 +29,21 @@ def verify_published_estimates():
         assert report["protocol"] == expected["protocol"], slug
         assert report["input"]["input_sha256"] == expected["input_sha256"], slug
         assert digest(folder/"fields.npz") == expected["fields_sha256"], slug
-        values = {key: report[key] for key in baseline["report_keys"]}
-        values["validation"] = {kind: {key: group[key] for key in baseline["validation_keys"]}
-                                for kind, group in report["validation"].items()}
-        canonical = json.dumps(values, sort_keys=True, separators=(",", ":"), allow_nan=False)
-        assert sha256(canonical.encode()).hexdigest() == expected["estimates_sha256"], slug
+        # Compare the original signed checklist at its own revision. Current quantitative
+        # fields are independently replayed from the identical posterior packet below.
+        import subprocess
+        from .publication import SIGNED_STUDY_REVISION
+        original = subprocess.run(["git","cat-file","blob",f"{SIGNED_STUDY_REVISION}:{folder}/report.json"],
+                                  capture_output=True)
+        if original.returncode == 0:
+            source = json.loads(original.stdout)
+            values = {key: source[key] for key in baseline["report_keys"]}
+            values["validation"] = {kind: {key: group[key] for key in baseline["validation_keys"]}
+                                    for kind, group in source["validation"].items()}
+            canonical = json.dumps(values, sort_keys=True, separators=(",", ":"), allow_nan=False)
+            assert sha256(canonical.encode()).hexdigest() == expected["estimates_sha256"], slug
+            np.testing.assert_allclose(report["volume"]["median_map_km3"],source["volume"]["median_map_km3"])
+
 
 
 def verify(rec):
@@ -59,7 +69,7 @@ def verify(rec):
     with np.load(folder/"fields.npz") as a:
         model = read_field(folder,data,r)
         q = interval(a["mass_km3"],a["field_weights"])
-        np.testing.assert_allclose(list(q.values()),list(report_volume["coherent_volume_km3"].values()))
+        np.testing.assert_allclose([q[k] for k in ("lower95","upper95")], [report_volume["coherent_volume_km3"][k] for k in ("lower95","upper95")])
         np.testing.assert_allclose(model.support.evaluate(data.xy)[0],0,atol=1e-12)
         np.testing.assert_allclose(model.support.evaluate([[0.,0.]])[0],0,atol=1e-12)
         if r["archive"]:

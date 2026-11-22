@@ -38,7 +38,7 @@ def matched_rows(record, run, regional, output):
                 assert a[key] == fresh["validation"]["methods"][m]["selections"][fold][key]
     for m in ("stacked","spline"):
         a,b = fresh["methods"][m]["regional_volume"],published["methods"][m]["regional_volume"]
-        assert np.isclose(a["expected_km3"], b["expected_km3"],rtol=1e-6)
+        assert np.isclose(a["median_surface_km3"], b["median_surface_km3"],rtol=1e-6)
         assert np.isclose(fresh["validation"]["methods"][m]["metrics"]["equal_region_log_score"],
                           published["validation"]["methods"][m]["metrics"]["equal_region_log_score"],rtol=1e-6)
     for k in ("stacked","spline"):
@@ -58,12 +58,9 @@ def matched_rows(record, run, regional, output):
     v = base["volume_km3"]
     cap = new["unobserved_proximal_cap"]
     passing = [(name,fit["volume_km3"]) for name,fit in new["fits"].items() if fit["passed"]]
-    low = min(passing,key=lambda x:x[1]["median"]) if passing else (None,{})
-    high = max(passing,key=lambda x:x[1]["median"]) if passing else (None,{})
-    return {"eruption":record["name"],"slug":slug,**v,"previous_median":old["fits"]["baseline"]["volume"]["median"],
+    return {"eruption":record["name"],"slug":slug,"lower95":v["lower95"],"upper95":v["upper95"],
         "previous_lower95":old["fits"]["baseline"]["volume"]["lower95"], "previous_upper95":old["fits"]["baseline"]["volume"]["upper95"],
         "footprint_median_fraction":base["parts"]["footprint"]["fraction"]["median"],
-        "footprint_median_km3":base["parts"]["footprint"]["volume_km3"]["median"],
         "geographic_score":val["equal_region_log_score"],
         "previous_score":v0["metrics"]["equal_region_log_score"],
         "exact_coverage":val["metrics"]["coverage95_observations"],
@@ -72,17 +69,14 @@ def matched_rows(record, run, regional, output):
         "quadrant_scored_rows":new["validation"]["quadrants"]["scored_rows"],
         "quadrant_total_rows":len(val["row_ids"]),
         "reference_passed":base["passed"],"nearest_accepted_km":cap["nearest_accepted_chord_km"],
-        "cap_extra_median":cap["extra_km3"]["median"],"cap_total_median":cap["volume_km3"]["median"],
         "cap_geographic_score":cap["validation"]["geographic"]["equal_region_log_score"],
-        "cap_passed":cap["passed"],"lowest_passing_policy":low[0],"highest_passing_policy":high[0],
-        "lowest_passing_median":low[1].get("median"),"highest_passing_median":high[1].get("median"),
+        "cap_passed":cap["passed"],
         "passing_policy_lower_endpoint":min((i["lower95"] for _,i in passing),default=None),
         "passing_policy_upper_endpoint":max((i["upper95"] for _,i in passing),default=None),
         "policies_passed":sum(v["passed"] for v in new["fits"].values()),"policies":len(new["fits"]),
         "previous_geographic_checks_passed":all(f["fit"]["diagnostics"]["passed"] for f in v0["fits"]),
         "geographic_checks_passed":val["all_estimable_passed"],
         "quadrant_checks_passed":new["validation"]["quadrants"]["all_estimable_passed"],
-        "extra_fan_median":new["fits"]["possible_missing_fan"]["volume_km3"]["median"],
         "extra_fan_passed":new["fits"]["possible_missing_fan"]["passed"],
         "input_sha256":new["input"]["input_sha256"]}
 
@@ -99,23 +93,20 @@ def stress(runs, output):
             evidence[key] = {"truth":truth,"fit":fit,"design":read(folder/"design.json")}
             v = fit["volume_km3"]
             row = {"scenario":scenario,"seed":seed,"n":len(data.xy),"passed":fit["passed"],
-                   "truth_km3":truth["total_km3"],**v,
-                   "covers_truth":v["lower95"] <= truth["total_km3"] <= v["upper95"],
-                   "absolute_log_volume_error":float(abs(np.log(v["median"]/truth["total_km3"])))}
+                   "truth_km3":truth["total_km3"],"lower95":v["lower95"],"upper95":v["upper95"],
+                   "covers_truth":v["lower95"] <= truth["total_km3"] <= v["upper95"]}
             match = old[(old.scenario == scenario) & (old.seed == seed)]
             if len(match):
                 o = match.iloc[0]
                 assert np.isclose(o.truth_km3, truth["total_km3"])
-                row.update(previous_median=o["median"],previous_covers_truth=bool(o.covers_truth),
-                           previous_passed=bool(o.sampling_passed),
-                           previous_absolute_log_volume_error=abs(np.log(o["median"]/truth["total_km3"])))
+                row.update(previous_covers_truth=bool(o.covers_truth),previous_passed=bool(o.sampling_passed))
             if "NE_km3" in truth:
                 row.update(truth,hidden_truth_covered=v["lower95"] <= truth["same_data_hidden_total_km3"] <= v["upper95"])
-                row.update({"NE_"+k:a for k,a in fit["compass"]["NE"]["volume"].items()})
+                row.update({"NE_"+k:a for k,a in fit["compass"]["NE"]["volume"].items() if k in ("lower95","upper95")})
             with np.load(folder/fit["attempts"][-1]["file"]) as draws, np.load(folder/"mass.npz") as mass:
                 _,_,_,extra = cap_volumes(data,Geometry(data,0),dict(draws))
                 cap_total = interval(mass["mass"].sum(axis=(-1,-2))+extra)
-            row.update({"source_cap_"+k:v for k,v in cap_total.items()})
+            row.update({"source_cap_"+k:v for k,v in cap_total.items() if k in ("lower95","upper95")})
             evidence[key]["source_cap_volume_km3"] = cap_total
             records.append(row)
     frame = pd.DataFrame(records)
@@ -226,9 +217,8 @@ def aso_sector_plot(aso, previous, path):
     families = (("Directional",-.13,"#086970","o",[aso["compass"][k]["volume"] for k in COMPASS]),
                 ("Spherical mixture",.13,"#9d5231","s",[previous["volume_km3"][k] for k in COMPASS]))
     for label, shift, color, marker, vals in families:
-        lo, med, hi = np.array([[v[k] for v in vals] for k in ("lower95","median","upper95")])
-        ax.errorbar(med, y+shift, xerr=(med-lo,hi-med), fmt=marker, color=color,
-                    elinewidth=1.6, capsize=2, markersize=5, label=label)
+        lo, hi = np.array([[v[k] for v in vals] for k in ("lower95","upper95")])
+        ax.hlines(y+shift,lo,hi,color=color,linewidth=2.2,label=label)
     ax.set_xscale("log")
     ax.set_xlabel("Sector bulk fallout (km³, logarithmic scale)")
     ax.set_yticks(y,[f"{k}  ·  {aso['compass'][k]['exact']} exact" for k in COMPASS])
@@ -236,7 +226,7 @@ def aso_sector_plot(aso, previous, path):
     ax.grid(axis="x",alpha=.24)
     ax.spines[["top","right"]].set_visible(False)
     ax.legend(frameon=False,loc="upper right")
-    ax.set_title("Aso-4 fallout by direction", loc="left",fontweight="bold",pad=10)
+    ax.set_title("Aso-4 conditional 95% volume intervals by direction", loc="left",fontweight="bold",pad=10)
     fig.savefig(path,dpi=165)
     plt.close(fig)
 
@@ -264,7 +254,7 @@ def main(argv=None):
         assert rep["signature"]["design_sha256"] == digest(folder/"design.json")
         assert rep["mass_sha256"] == digest(folder/"mass.npz")
         assert rep["signature"]["posterior_sha256"] == digest(folder/"attempt-1.npz")
-        row.update(replication_passed=rep["passed"], **{"replication_"+k:v for k,v in rep["volume_km3"].items()})
+        row.update(replication_passed=rep["passed"], **{"replication_"+k:v for k,v in rep["volume_km3"].items() if k in ("lower95","upper95")})
         replicated[slug] = {"design":design,"integral":rep}
     (output/"independent-replications.json.gz").write_bytes(gzip.compress(
         json.dumps(replicated,allow_nan=False,separators=(",",":")).encode(),mtime=0))
@@ -309,88 +299,38 @@ def main(argv=None):
         "old_spherical_posterior_inputs_checked":all(previous[r["slug"]]["input_sha256"] == r["input_sha256"] for r in rows)}
     assert verification["old_spherical_posterior_inputs_checked"]
     write_json(output/"verification.json",verification)
-    aro = read(args.cases/"aso-4"/"report.json")
-    aso = aro["fits"]["reference"]; missing = aro["fits"]["possible_missing_fan"]
-    matched = examples.dropna(subset=["previous_median"])
-    successful = matched[matched.passed & matched.previous_passed.astype(bool)]
-    fresh = examples[examples.seed.isin([70,71]) & (examples.scenario!="invisible_sector")]
-    draw = np.load(args.cases/"aso-4"/"directional-mass.npz")["mass"]
-    area = draw.sum(axis=-2)
-    group = interval(area[..., [3,4,6]].sum(-1)/area.sum(-1))
-    wins = int((frame.geographic_score < frame.previous_score).sum())
-    reliable = frame[frame.geographic_checks_passed & frame.previous_geographic_checks_passed]
-    reliable_wins = int((reliable.geographic_score < reliable.previous_score).sum())
-    lines = ["# Single-structure directional sensitivity study", "",
-        "This study retains the original single-structure results and their assumption tests. [Principal uncertain-direction fits and paired checks](../README.md)", "",
-        "The directional model interpolates log thickness across locally supported triangles. A positive source-centred thinning law continues across gaps. Its reach can increase towards measured bearings, with less angular spread from isolated sites. The same policies, input acceptance rules and geographic tests apply to all six eruptions. Each case report shows the data-bracketed arcs, the extrapolated field, and its volume by compass direction. [Equations and assumptions](../../../docs/methods/directional-continuation.md).", "",
-        "| Eruption | Directional median km³ [conditional 95%] | Spherical-mixture median km³ [95%] | Inside local triangles | Geographic score, directional / spherical | 95% exact-site coverage, directional / spherical |",
-        "|---|---:|---:|---:|---:|---:|"]
-    for r in rows:
-        lines.append(f"| [{r['eruption']}](../../../eruptions/{r['slug']}/results/directional/single-structure/README.md) | {r['median']:,.1f} [{r['lower95']:,.1f}–{r['upper95']:,.1f}] | {r['previous_median']:,.1f} [{r['previous_lower95']:,.1f}–{r['previous_upper95']:,.1f}] | {r['footprint_median_fraction']:.1%} | {r['geographic_score']:.3f} / {r['previous_score']:.3f} | {r['exact_coverage']:.1%} / {r['previous_coverage']:.1%} |")
-    lines += ["",f"Lower scores mean better prediction of held-out thickness or a documented bound. The directional score is lower in **{wins}/6** eruptions overall and **{reliable_wins}/{len(reliable)}** where both models passed sampling checks on every geographic fold. Each case report lists numerical warnings and quadrant-deletion results. These are development comparisons using four matched outer folds within each eruption. The true global volume of each real eruption remains unknown. Both global estimates are published as conditional alternatives.", "",
-        "The shared complete-contour screen was also run on both global families, using the same bracketing, support, resolution and four-deletion criteria as the regional peers. "
-        f"The directional model has a qualifying band in {int((frame.directional_qualifying_support_policies>0).sum())}/6 cases and the spherical mixture in {int((frame.spherical_qualifying_support_policies>0).sum())}/6. "
-        "Each case contains its directional decisions. The spherical packet includes all rejected levels, numerical fold flags and checksum-verified field subsets for replay. [Spherical support evidence](spherical-support/) · [Regional support evidence](../../support/README.md).", "",
-        "![Vent-centred conditional maps for all six eruptions](compass-maps.png)", "",
-        "Each circle shows all compass directions to the most distant accepted observation in that eruption. White symbols locate the observations and bounds. Dashed contours mark 1, 10 and 100 cm where present. The star marks the vent. Colours in empty sectors show the reference continuation. The circle edge is only a display limit. The bulk-volume integral continues across the whole Earth.", "",
-        "## Sensitivity to unmeasured fallout", "",
-        "The reference interval conditions on one policy. The next table compares the same 13 predeclared policies in every eruption. The endpoint range runs from the lowest 2.5th percentile to the highest 97.5th percentile among numerically passing fits. It has no joint probability attached. The individual case reports retain every fit, including failures.", "",
-        "| Eruption | Passing policies | Median range km³ | Endpoint range km³ | Extra missing-fan median km³ |", "|---|---:|---:|---:|---:|"]
-    for r in rows:
-        def span(low,high):
-            return f"{r[low]:,.0f}–{r[high]:,.0f}" if r[low] is not None else "unavailable"
-        warning = "" if r["extra_fan_passed"] else " (warning)"
-        lines.append(f"| {r['eruption']} | {r['policies_passed']}/{r['policies']} | {span('lowest_passing_median','highest_passing_median')} | {span('passing_policy_lower_endpoint','passing_policy_upper_endpoint')} | {r['extra_fan_median']:,.0f}{warning} |")
-    lines += ["", "### A source cap invisible to the observations", "",
-        "Local triangles or their transition can cross the vent even when all measurements are some distance away. This additional sensitivity places a compact proximal deposit inside the nearest accepted radius, with amplitude equal to the positive difference between the fitted background and local vent thickness. Each accepted site and bound receives exactly zero addition. Its analytic volume is added to each coherent posterior field. Geographic scores use training-only cap radii and the same held-out rows.", "",
-        "| Eruption | Nearest site km | Median added km³ | Cap-inclusive median km³ | Geographic score with cap |", "|---|---:|---:|---:|---:|"]
-    for r in rows:
-        warn = "" if r["cap_passed"] else " (warning)"
-        lines.append(f"| {r['eruption']} | {r['nearest_accepted_km']:.1f} | {r['cap_extra_median']:.2f} | {r['cap_total_median']:,.1f}{warn} | {r['cap_geographic_score']:.3f} |")
-    lines += ["", "## Independent numerical replication", "",
-        "A residual divergence in the Tambora reference prompted one additional run for **every** eruption. The separate run used the same statistical model, a fresh fixed seed, 1,800 warmup iterations and 4,000 draws in each of four chains. It was executed once per eruption with the original numerical thresholds. The standard run and this check are reported separately. A similar median across runs can coexist with a sampling warning.", "",
-        "| Eruption | Standard reference checks | Independent median km³ [95%] | Independent checks |", "|---|---|---:|---|"]
-    for r in rows:
-        lines.append(f"| {r['eruption']} | {'pass' if r['reference_passed'] else 'warning'} | {r['replication_median']:,.1f} [{r['replication_lower95']:,.1f}–{r['replication_upper95']:,.1f}] | {'pass' if r['replication_passed'] else 'warning'} |")
-    lines += ["", "[Independent designs, posterior checksums, convergence and sector results](independent-replications.json.gz).", "",
-        "## Aso-4 and its unsampled directions", "",
-        "The measured distribution is highly asymmetric. SE and S each have two exact rows, W has none, and NE has 60. A 15 cm offshore layer about 709 km to the southeast provides positive evidence in that direction. It cannot determine thickness all around the vent at that radius. [Source-level decisions](../../../data/audits/Aso-4/README.md).", "",
-        "| Aso-4 sector | Directional median km³ [95%] | Spherical-mixture median km³ [95%] | Exact rows |","|---|---:|---:|---:|"]
-    for key in COMPASS:
-        c = aso["compass"][key]; o = previous["aso-4"]["volume_km3"][key]; n = c["volume"]
-        lines.append(f"| {key} | {n['median']:,.1f} [{n['lower95']:,.1f}–{n['upper95']:,.1f}] | {o['median']:,.1f} [{o['lower95']:,.1f}–{o['upper95']:,.1f}] | {c['exact']} |")
-    aso_sector_plot(aso, previous["aso-4"], output/"aso-4-sectors.png")
-    se = octants.query("slug == 'aso-4' and octant == 'SE'").iloc[0]
-    due_east = extremes.query("slug == 'aso-4' and quadrant == 1").iloc[0]
-    old_aso = previous["aso-4"]
-    p = aso["parts"]["footprint"]
-    v = missing["volume_km3"]
-    lines += ["",f"Together SE, S and W carry a median **{group['median']:.1%}** of directional volume [{group['lower95']:.1%}–{group['upper95']:.1%}], calculated by summing the same three sectors within every draw. Only **{p['volume_km3']['median']:.1f} km³** lies inside the entire local footprint. The remaining mass depends on the assumed continuation, including in the northeast between scattered measurements. Allowing an extra fan in the largest distal gap gives **{v['median']:,.0f} [{v['lower95']:,.0f}–{v['upper95']:,.0f}] km³**. Preferential sampling and marine redistribution introduce additional uncertainty.", "",
-        f"The northeast median changes from {old_aso['volume_km3']['NE']['median']:,.0f} to {aso['compass']['NE']['volume']['median']:,.0f} km³ and the south from {old_aso['volume_km3']['S']['median']:,.0f} to {aso['compass']['S']['volume']['median']:,.1f} km³. The spherical-mixture sector partition uses {old_aso['draws']} fields from its verified posterior and {old_aso['sobol_points_per_component']:,} integration points per component. Halving the integration points changes the Aso-4 sector fractions by up to {old_aso['largest_sector_fraction_change_on_doubling']:.4f} in absolute fraction.", "",
-        f"The directional rule also risks **underestimating a real off-axis fan**. When all observations from bearings 90–180° were withheld with a buffer, the most distant exact site in the southeast octant (row {int(se.row_id)}, {se.source_chord_km:.0f} km, bearing {se.bearing_deg:.1f}°) had **{se.observed_cm:g} cm**. The held-out median was **{se.predicted_median_cm:.2g} cm** and the 95% observation interval was **{se.predicted_lower_cm:.2g}–{se.predicted_upper_cm:.2f} cm**. This site is included in the full-data estimate. In the same fold the more easterly site at {due_east.bearing_deg:.1f}° had {due_east.observed_cm:g} cm and a predictive interval of {due_east.predicted_lower_cm:.2f}–{due_east.predicted_upper_cm:.1f} cm. The same position-only selections are published across all eruptions. [Outermost site by octant](octant-extremes.csv) · [Outermost site by quadrant](quadrant-extremes.csv).", "",
-        "![Sector volume medians and conditional 95% intervals for both Aso-4 reconstructions](aso-4-sectors.png)", "",
-        "![Aso-4 evidence and extrapolation maps](../../../eruptions/aso-4/results/directional/single-structure/isopachs.png)", "",
-        "## Known-volume and missing-direction tests", "",
-        "The matched trials reuse the exact synthetic deposits and noise seeds 10 and 11 from the spherical-mixture study. Seeds 70 and 71 generate new observations after the final model choice. Tests deliberately include secondary maxima, a missing sector, an invisible proximal cap and a diffuse far tail. The trial table retains numerical failures. The displayed comparison of median errors uses only pairs passing numerical checks in both models.", "",
-        f"Of {len(matched)} matched trials, {len(successful)} passed for both families. Their median absolute log volume errors are **{successful.absolute_log_volume_error.median():.3f}** for the directional model and **{successful.previous_absolute_log_volume_error.median():.3f}** for the spherical mixture. In the {len(fresh)} fresh trials across the original six scenarios, {int(fresh.passed.sum())} passed numerical checks. Their conditional intervals contained the true volume in **{int((fresh.covers_truth & fresh.passed).sum())}/{int(fresh.passed.sum())}** passing trials. These small, designed experiments measure specific failure modes.", "",
-        "| Scenario, fresh seeds | True km³ | Median estimates km³ | Numerically usable | Truth in interval among usable |","|---|---:|---:|---:|---:|"]
-    for scenario,g in fresh.groupby("scenario",sort=False):
-        lines.append(f"| {scenario.replace('_',' ')} | {g.truth_km3.iloc[0]:.1f} | "+", ".join(f"{x:.1f}" for x in g["median"])+f" | {g.passed.sum()}/{len(g)} | {(g.covers_truth & g.passed).sum()}/{g.passed.sum()} |")
-    twin = examples[examples.scenario=="invisible_sector"]
-    t = twin.iloc[0]
-    lines += ["",f"The additional paired-truth experiment has *identical observations*: a smooth deposit of **{t.truth_km3:.1f} km³**, or the same deposit with a compact lobe wholly inside the unsampled northeast, giving **{t.same_data_hidden_total_km3:.1f} km³**. The true NE sector changes from {t.NE_km3:.1f} to {t.same_data_hidden_NE_km3:.1f} km³. Each data realization yields exactly one posterior for either truth. Across {int(twin.passed.sum())} passing realizations, {int((twin.hidden_truth_covered.astype(bool) & twin.passed).sum())} intervals include the larger hidden deposit. A weakly identified lobe remains a separate structural uncertainty even when plotted isopachs look convincing.", "",
-        "[Complete paired results](known-volumes.csv) · [All stress-test fits, policies and retry diagnostics](known-volume-fits.json.gz) · [Development models and failures](https://github.com/siyulai21/tephra-fallout-isopachs/tree/2e45ecbc898139d2b93904667b96a8770245c74d/comparisons/directional/single-structure/development)", "",
-        "## Reproduce", "", "~~~sh",
-        "python -m benchmarks.directional --output results/new-study --reports results/new-cases",
-        "for scenario in "+" ".join((*SCENARIOS,"invisible_sector"))+"; do",
-        "  python -m benchmarks.directional --synthetic \"$scenario\" --output results/new-study",
-        "done",
-        "python -m benchmarks.regional --output results/new-regional",
-        "python -m benchmarks.directional_reference --output results/new-mixture-sectors.json",
-        "python -m benchmarks.directional_replication --runs results/new-study --output results/new-replication",
-        "python -m benchmarks.directional_spherical_support --published --output results/new-spherical-support",
-        "python -m benchmarks.directional_comparison --spherical-support results/new-spherical-support --runs results/new-study --cases results/new-cases --replication results/new-replication --regional results/new-regional --reference results/new-mixture-sectors.json --output results/new-comparison",
-        "~~~","", "The normal case command produces the complete plots, checks and report. [Case workflow](../../../docs/NEW_ERUPTION.md) · [Comparison CSV](comparison.csv) · [Paired-input and regional regression checks](verification.json) · [Spherical-mixture sector estimates and quadrature refinement](spherical-mixture-sectors.json).",""]
+    aso=read(args.cases/"aso-4/report.json")["fits"]["reference"]
+    aso_sector_plot(aso,previous["aso-4"],output/"aso-4-sectors.png")
+    write_study_page(frame,examples,output)
+
+
+def write_study_page(cases,trials,output):
+    lines = ["# Single-structure directional sensitivity", "",
+             "This six-eruption study tests the older single-structure continuation against a spherical fit on the same observations. The B-Tm comparison uses the 84-record input. The current case pages give the median-thickness maps and their integrated volumes. [Current directional fits](../README.md) · [B-Tm evidence revision](../../../eruptions/b-tm/README.md)", "",
+             "## Geographic validation and volume uncertainty", "",
+             "| Eruption | Directional 95% interval (km³) | Spherical 95% interval (km³) | Geographic score, directional / spherical | Exact-site coverage, directional / spherical | Passing directional policies |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for row in cases.itertuples():
+        lines.append(f"| {row.eruption} | {row.lower95:,.1f}–{row.upper95:,.1f} | "
+                     f"{row.previous_lower95:,.1f}–{row.previous_upper95:,.1f} | {row.geographic_score:.3f} / {row.previous_score:.3f} | "
+                     f"{row.exact_coverage:.1%} / {row.previous_coverage:.1%} | {row.policies_passed}/{row.policies} |")
+    fresh = trials[trials.seed.isin([70,71]) & (trials.scenario!="invisible_sector")]
+    passed = fresh[fresh.passed]
+    lines += ["", "The CSV includes the independent replication intervals, the envelope across passing policies, and geographic scores with a proximal cap. [Paired cases](comparison.csv) · [Independent fit diagnostics](independent-replications.json.gz) · [Matched-fold verification](verification.json)", "",
+              "## Unsampled sectors at Aso-4", "",
+              "The southeast and south each have two exact readings. The west has none. With the southeast quadrant withheld, a 15 cm offshore observation at 709 km fell above the directional 95% predictive interval of 0.0003–1.95 cm. An unsampled sector can contain a real lobe. [Outermost site by octant](octant-extremes.csv) · [Outermost site by quadrant](quadrant-extremes.csv)", "",
+              "![Conditional sector volume intervals for both Aso-4 fits](aso-4-sectors.png)", "",
+              "![Fitted thickness and measurements across six eruptions](compass-maps.png)", "",
+              "## Known-deposit tests", "",
+              f"Of {len(fresh)} fresh trials, {len(passed)} passed the numerical checks. Their conditional volume intervals contained the true volume in {int(passed.covers_truth.sum())}/{len(passed)}. The full trial table includes failures, deliberately missing directions, and the known volumes of the simulated deposits. [All trials](known-volumes.csv) · [Fit records](known-volume-fits.json.gz)", ""]
+    lines += ["## Reproduce", "",
+              "Run the single-structure and geographic benchmarks with a fresh results directory. The comparison command pairs geographic folds, rebuilds the two interval tables and checks each input identity.", "",
+              "~~~sh",
+              "python -m benchmarks.directional --help",
+              "python -m benchmarks.directional_replication --help",
+              "python -m benchmarks.directional_comparison --help",
+              "python -m benchmarks.verify_directional",
+              "~~~", "", "[Eruption workflow](../../../docs/NEW_ERUPTION.md) · [Benchmark scripts](../../../benchmarks/README.md)", ""]
     (output/"README.md").write_text("\n".join(lines))
 
 

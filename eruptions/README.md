@@ -1,22 +1,18 @@
 # Eruption results
 
-Choose an eruption for its accepted observations, regional and global volume estimates, maps and local support audit. All volumes measure bulk airborne fallout. The two regional fits cover the observation hull. The three global fits extend across unsampled ground.
+Open a case for the maps, source audit and predictions at withheld sites. Each global volume integrates the fitted median-thickness field over Earth, including its thin distal tail. The GP and spline volumes cover the observation hull and are given on each case page.
 
-| Eruption | Principal directional volume (km³) | Principal spherical volume (km³) | Principal nested corridor median [conditional 95%], km³ | Accepted thickness evidence | What to keep in mind |
+| Eruption | Directional (km³) | Spherical mixture (km³) | Nested corridors (km³) | Accepted thickness evidence | Field or numerical qualification |
 |---|---:|---:|---:|---|---|
-| [Aso-4](aso-4/README.md) | **659.1** | **1,069.7** | **652.5** [249.5–9,990.1] | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. |
-| [B-Tm](b-tm/README.md) | **33.6** | **47.0** | **35.9** [26.6–50.2] † | 64 measurements, 3 reported lower bounds, 1 reported and 3 interpreted upper bounds | Combined fallout. Lake shard profiles and a peat mass budget constrain the contours. |
-| [Ilopango TBJ, Unit G](ilopango-tbj/README.md) | **40.8** | **190.9** | **40.9** [25.1–94.2] † | 52 measurements, 4 lower bounds | Unit G co-ignimbrite fallout. The spherical upper interval is provisional. Northeast measurements are proximal and southwest measurements are distal. |
-| [Mazama](mazama/README.md) | **166.1** | **212.9** | **271.4** [129.2–938.0] | 45 exact | The published calculation uses the supplied acceptance flags. |
-| [Minoan](minoan/README.md) | **28.8** | **40.8** | **28.4** [17.4–67.6] | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |
-| [Sakurajima Satsuma](sakurajima-satsuma/README.md) | **7.1** | **11.3** | **6.7** [3.1–30.7] † | 50 measurements, 5 lower bounds, 2 upper bounds | All eight bearings are sampled. Both northwest sites are proximal. The single distal western core materially constrains the spherical upper tail. |
-| [Tambora](tambora/README.md) | **95.7** | **162.3** | **112.7** [62.5–237.7] | 26 exact | Four of six full-data directional fits carry a numerical warning. |
-| [Younger Toba Tuff (YTT)](ytt/README.md) | **900.6** | **1,510.5** | **1,322.2** [771.0–3,000.8] † | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
+| [Aso-4](aso-4/README.md) | 659 | 599 | 545 | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. |
+| [B-Tm](b-tm/README.md) | 33.5 | 37.1 | 33.7 | 64 measurements, 3 reported lower bounds, 1 reported and 3 interpreted upper bounds | Combined fallout. Lake shard profiles and a peat mass budget constrain the contours. |
+| [Ilopango TBJ, Unit G](ilopango-tbj/README.md) | 40.8 | 145 | 39.1 | 52 measurements, 4 lower bounds | Unit G co-ignimbrite fallout. The spherical upper interval is provisional. Northeast measurements are proximal and southwest measurements are distal. |
+| [Mazama](mazama/README.md) | 166 | 178 | 245 | 45 exact | The published calculation uses the supplied acceptance flags. |
+| [Minoan](minoan/README.md) | 28.8 | 29.2 | 24.9 | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |
+| [Sakurajima Satsuma](sakurajima-satsuma/README.md) | 7.07 | 7.32 | 6.33 | 50 measurements, 5 lower bounds, 2 upper bounds | All eight bearings are sampled. Both northwest sites are proximal. The single distal western core materially constrains the spherical upper tail. |
+| [Tambora](tambora/README.md) | 95.7 | 126 | 94.9 | 26 exact | Four of six full-data directional fits carry a numerical warning. |
+| [Younger Toba Tuff (YTT)](ytt/README.md) | 900 | 1,284 | 1,245 | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
 
-The spherical volume column gives the median of integrated whole deposits under the common bearing-continuation policy. [Spherical estimates and validation](../comparisons/spherical-mixture/README.md)
+The separate Pinatubo Layer C intake study also has all five fits. Calbuco supplies an independent field survey in the nested-method validation. [Pinatubo Layer C](../comparisons/nested-isopachs/pinatubo-preview/README.md) · [Calbuco survey](../comparisons/nested-reach/field-surveys/README.md)
 
-The directional volume column integrates the quantitative uncertain-fan-direction median map across the Earth. Each case gives its conditional complete-deposit interval and the matched fixed-direction control. [Compare directional extent across eruptions](../comparisons/directional/README.md)
-
-For the same geographic prediction test across eruptions, see the [cross-eruption comparison](../comparisons/README.md).
-
-The nested column gives the median integral of complete corridor deposits. A dagger marks a numerical warning in the full fit or volume populations. Each report gives the median-map integral and the whole-area sensitivity separately. [Global estimates and diagnostics](../comparisons/nested-isopachs/README.md) · [Withheld field surveys and mapped contours](../comparisons/nested-reach/field-surveys/README.md)
+The machine-readable table includes median-map volumes, conditional 95% volume intervals, geographic scores and warnings for all nine case records. [Download the numerical comparison](../comparisons/principal-volumes.csv) · [Methods and validation](../comparisons/README.md)

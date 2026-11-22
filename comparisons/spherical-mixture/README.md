@@ -1,17 +1,17 @@
 # Spherical-mixture maps and volumes
 
-Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The table shows the median volume under each continuation, the principal conditional interval and the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
+Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The principal volume integrates the median-thickness map. The interval describes uncertainty in total fallout across complete posterior draws. The last column gives the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
 
-| Eruption | Kernel geometry | Broad → principal volume (km³) | Principal 95% interval (km³) | Prior-sensitivity envelope (km³) |
+| Eruption | Kernel geometry | Median-thickness map (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) |
 |---|---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/README.md) | displaced · **questioned** | 1,466.0 → **1,069.7** | 402.9–27,836.6 | 380–8.51e+07 |
-| [B-Tm](../../eruptions/b-tm/README.md) | source-fans | 49.1 → **47.0** | 30.2–275.5 | 25.2–783 |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/README.md) | displaced | 255.6 → **190.9** · **provisional** | 62.9–3,300.8 | 43.3–2.11e+04 |
-| [Mazama](../../eruptions/mazama/README.md) | displaced | 223.2 → **212.9** | 140.1–2,614.3 | 137–9.27e+04 |
-| [Minoan](../../eruptions/minoan/README.md) | displaced | 46.0 → **40.8** | 24.6–1,989.1 | 23.1–1.91e+04 |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/README.md) | displaced | 14.3 → **11.3** | 5.1–666.5 | 4.51–3.34e+03 |
-| [Tambora](../../eruptions/tambora/README.md) | displaced | 179.1 → **162.3** | 100.8–920.1 | 93–3.85e+03 |
-| [YTT](../../eruptions/ytt/README.md) | displaced | 1,674.2 → **1,510.5** | 1,054.3–48,708.5 | 1.01e+03–1.09e+05 |
+| [Aso-4](../../eruptions/aso-4/README.md) | displaced · **questioned** | **599** | 402.9–27,836.6 | 380–8.51e+07 |
+| [B-Tm](../../eruptions/b-tm/README.md) | source-fans | **37.1** | 30.2–275.5 | 25.2–783 |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/README.md) | displaced | **145** · **provisional** | 62.9–3,300.8 | 43.3–2.11e+04 |
+| [Mazama](../../eruptions/mazama/README.md) | displaced | **178** | 140.1–2,614.3 | 137–9.27e+04 |
+| [Minoan](../../eruptions/minoan/README.md) | displaced | **29.2** | 24.6–1,989.1 | 23.1–1.91e+04 |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/README.md) | displaced | **7.32** | 5.1–666.5 | 4.51–3.34e+03 |
+| [Tambora](../../eruptions/tambora/README.md) | displaced | **126** | 100.8–920.1 | 93–3.85e+03 |
+| [YTT](../../eruptions/ytt/README.md) | displaced | **1.28e+03** | 1,054.3–48,708.5 | 1.01e+03–1.09e+05 |
 
 7 of 8 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Ilopango TBJ (Unit G) (baseline, volume prior shift), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Sakurajima Satsuma (P14) (volume prior shift), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
 
@@ -52,7 +52,7 @@ The geographic score averaged equally across eruptions changed from 1.526 to 1.5
 
 ## Deposits with known volumes
 
-The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **21/24 and 21/24** fits, respectively. Mean absolute log volume error was **0.448 → 0.451**. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.
+The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **21/24 and 21/24** fits, respectively. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.
 
 | Area tested | Threshold | Resolved pairs / 24 | False-positive area, earlier → principal (km²) | Missed fallout area, earlier → principal (km²) |
 |---|---:|---:|---:|---:|

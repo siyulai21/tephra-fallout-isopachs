@@ -126,9 +126,8 @@ def volume_plot(volumes, out):
             r = table.loc[(case,method)]
             color = "#08768b" if case == "principal" else "#6d7377"
             ax.plot([r.lower95,r.upper95],[y,y],color=color,lw=2,solid_capstyle="round")
-            ax.scatter(r.volume_median_km3,y,s=42,facecolor=color,edgecolor="white",lw=.6,zorder=3)
-            if method == "directional":
-                ax.scatter(r.median_map_km3,y+.15,marker="D",s=32,color="#be7229",zorder=3)
+            if pd.notna(r.median_map_km3):
+                ax.scatter(r.median_map_km3,y,marker="D",s=32,color="#be7229",zorder=3)
         ax.set(xscale="log",yticks=range(len(labels)),yticklabels=labels,ylim=(3.6,-.55),title=title)
         ax.grid(axis="x",alpha=.23)
         ax.spines[["top","right"]].set_visible(False)
@@ -137,8 +136,8 @@ def volume_plot(volumes, out):
         ax.set_xlabel("Bulk volume (km³, logarithmic scale)")
         ax.set_xticks([20,50,100,300,1000,3000],labels=["20","50","100","300","1,000","3,000"])
         ax.tick_params(axis="x",which="minor",length=0)
-    fig.legend(handles=[Line2D([],[],color="#687178",marker="o",label="Complete deposits · median and conditional 95% interval"),
-                        Line2D([],[],ls="",marker="D",color="#be7229",label="Directional median-map integral")],
+    fig.legend(handles=[Line2D([],[],color="#687178",label="Conditional 95% volume interval"),
+                        Line2D([],[],ls="",marker="D",color="#be7229",label="Median-thickness map integral")],
                loc="outside lower center",ncols=2,frameon=False)
     fig.savefig(out/"volume-sensitivity.png",dpi=170)
     plt.close(fig)
@@ -163,11 +162,10 @@ def assemble(home,old,out):
         for family in ("stacked","spline"):
             r=regional[(regional.case==label)&(regional.method==family)].iloc[0]
             fitrows.append(dict(case=label,method=family,scope="observation hull",median_map_km3=r.median_map_km3,
-                                volume_median_km3=r["volume_q0.5"],lower95=r["volume_q0.025"],upper95=r["volume_q0.975"],
-                                analytic_mean_km3=r.expected_km3))
+                                lower95=r["volume_q0.025"],upper95=r["volume_q0.975"]))
         for family,r in methods.items():
             v=r["volume"] if family=="spherical" else r["volume"]["coherent_volume_km3"]
-            fitrows.append(dict(case=label,method=family,scope="whole Earth",volume_median_km3=v["median"],
+            fitrows.append(dict(case=label,method=family,scope="whole Earth",
                                 lower95=v["lower95"],upper95=v["upper95"],median_map_km3=r["volume"].get("median_map_km3")))
     volumes=pd.DataFrame(fitrows)
     volumes.to_csv(out/"four-method-sensitivities.csv",index=False)

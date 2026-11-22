@@ -140,6 +140,17 @@ class MapView:
         return out
 
 
+def map_volume(model, packet):
+    """Integrate the same 512-field pointwise median shown in the whole-area sensitivity map."""
+    from ...visualization.deposit_integrals import independent_integral
+    view = MapView(model.reduced(512))
+    checks = independent_integral(view, view.domain)
+    return dict(median_map_volume_km3=float(np.mean(checks[-1]["km3"])),
+                statistic="Integral of pointwise median thickness", domain="WGS84 whole Earth",
+                source_sha256=digest(packet), map_draws=len(view.model.z), independent_integrals=checks,
+                integration_passed=checks[-1]["relative_change"] < .01)
+
+
 def figures(folder,name,data,meta,model):
     view = MapView(model.reduced(512))
     frame = frame_bounds(data.xy)
@@ -265,10 +276,16 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
              "transfer_multiplier_km3":variants,
              "volume_fraction_beyond_last_sampled_rank":np.quantile(1-volume_for(full,full.edge)/volume,PROBS).tolist(),
              "sampling_rule":"Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit."}
-    write_json(output/"report.json",report)
+    mapped = map_volume(full, output/"full.npz")
+    write_json(output/"median-field.json", mapped)
+    from ...volume_reporting import whole_area_estimates
+    from copy import deepcopy
+    publication = deepcopy(report)
+    whole_area_estimates(publication, mapped)
+    write_json(output/"report.json", publication)
     q = report["conditional_volume_km3"]
     lines = [f"# {name} · Bayesian nested whole-area sensitivity","",
-             f"**{q[1]:,.1f} km³ of bulk fallout**, with a conditional 95% interval of **{q[0]:,.1f}–{q[2]:,.1f} km³**. Each sample integrates one complete deposit over the Earth.",
+             f"The median-thickness field integrates to **{mapped['median_map_volume_km3']:,.3g} km³** over Earth. Its conditional 95% interval is **{q[0]:,.1f}–{q[2]:,.1f} km³**. [Map integral and numerical check](median-field.json)",
              "",f"The {len(data.xy)} accepted rows include {meta['n_measurements']} exact thicknesses, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper bounds and {meta.get('n_intervals',0)} two-sided intervals.",
              "", "![Median isopachs and uncertain total area](isopachs.png)", "",
              "Dashed contours show model predictions. Shading in the area panel gives pointwise conditional 95% limits wherever the lower area is positive. [Whole-Earth map](world.png) · [Complete contour support decisions](support.json)",
@@ -277,8 +294,8 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
              "",f"At withheld exact sites, {coverage['covered']}/{coverage['exact_sites']} measurements fell inside their 95% predictive intervals. The median fraction of a draw’s volume inside the retained exact-site triangles is {allocation['fraction_by_part'][0][1]:.1%}. The median fraction beyond the farthest exact site is {allocation['fraction_by_part'][2][1]:.1%}. Geographic classes describe sampling coverage.",
              "",f"{support_note} The global estimate remains conditional on unsampled sectors, the unmeasured core and the distal thinning law.",
              "","## What contributes to volume","",
-             "A thickness slab counts the stated slice everywhere the deposit reaches it. The highest slice can occur near or far from the source. Each draw conserves volume across all slices. Marginal medians need not add to the total median.","",
-             "| Thickness slice (cm) | Median [conditional 95%], km³ |","|---|---:|"]
+             "A thickness slab counts the stated slice everywhere the deposit reaches it. The highest slice can occur near or far from the source. Each draw conserves volume across all slices. Each interval describes uncertainty in its own slice.","",
+             "| Thickness slice (cm) | Conditional 95% volume interval (km³) |","|---|---:|"]
     if budget:
         frac = report["distal_budget"]["physical_distal_volume_fraction"]
         lines[4:4] = [f"The refined profile learns the amount deposited beyond its own thinning break. Its median distal share is {frac[1]:.1%} (conditional 95% {frac[0]:.1%}–{frac[2]:.1%}). The thinning break belongs to the deposit and can lie on either side of the outermost measured site.",""]
@@ -286,7 +303,7 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
         terminal = report["terminal_continuation"]
         low,med,high = terminal["unrestricted_volume_km3"]
         v = terminal["transfer_multiplier_km3"]
-        lines[4:4] = [f"Continuing the fitted slopes freely beyond every sampled isopach rank gives {med:,.1f} km³ [{low:,.1f}–{high:,.1f}]. The whole-area fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Reducing or increasing the transferred odds fourfold gives medians of {v['0.25'][1]:,.1f} and {v['4.0'][1]:,.1f} km³. Every accepted training site has exactly the same predicted thickness in these continuations.",""]
+        lines[4:4] = [f"Continuing the fitted slopes freely beyond every sampled isopach rank gives a conditional 95% interval of {low:,.1f}–{high:,.1f} km³. The whole-area fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Every accepted training site has exactly the same predicted thickness in these continuations.",""]
         position = lines.index("## Validation")+2
         lines[position:position] = [population_summary(check["numerics"]),""]
         sites = edge_sites(full,data,path)
@@ -294,11 +311,11 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
         lines[position:position] = [edge_summary(sites),""]
     labels = [f"{a:g}–{b:g}" for a,b in zip((0.,*LEVELS),LEVELS)]+[f">{LEVELS[-1]:g}"]
     for label,(lo,med,hi) in zip(labels,report["slab_volume_km3"],strict=True):
-        lines.append(f"| {label} | {max(0.,med):,.2f} [{max(0.,lo):,.2f}–{max(0.,hi):,.2f}] |")
-    lines += ["","## Prior sensitivity","","| Assumption | Median [conditional 95%], km³ | Effective draws |","|---|---:|---:|"]
+        lines.append(f"| {label} | {max(0.,lo):,.2f}–{max(0.,hi):,.2f} |")
+    lines += ["","## Prior sensitivity","","| Assumption | Conditional 95% volume interval (km³) | Effective draws |","|---|---:|---:|"]
     for k,s in report["prior_sensitivity"].items():
         lo,med,hi = s["volume_km3"]
-        lines.append(f"| {k.replace('_',' ')} | {med:,.1f} [{lo:,.1f}–{hi:,.1f}] | {s['effective_draws']:,.0f} |")
+        lines.append(f"| {k.replace('_',' ')} | {lo:,.1f}–{hi:,.1f} | {s['effective_draws']:,.0f} |")
     if bounds_check:
         conflicts = [b for b in bounds_check if b["predictive_probability_of_event"]<.05]
         lines += ["","## Compatibility with fitted bounds","",
@@ -314,11 +331,11 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
         lines += ["","The numerical report gives the latent and observation probabilities at every fitted bound. A poorly predicted bound identifies a limitation of the fitted thinning geometry or error model."]
     lines += ["","## Additional distal thinning","",
               "Beyond the largest equivalent isopach radius of any training site in a draw, a smooth extra thinning term tests progressive loss of transported ash. The three fixed scenarios reach an additional e-fold of attenuation after one, two or four more sampled radii. All three integrate to the antipode. The same rule is applied to the training sites in each geographic fold.","",
-              "| Additional range | Median [conditional 95%], km³ | Geographic score ↓ |",
+              "| Additional range | Conditional 95% volume interval (km³) | Geographic score ↓ |",
               "|---|---:|---:|"]
     for factor,s in distal["scenarios"].items():
         lo,med,hi = s["volume_km3"]
-        lines.append(f"| {float(factor):g} × sampled radius | {med:,.1f} [{lo:,.1f}–{hi:,.1f}] | {s['equal_region_negative_log_score']:.3f} |")
+        lines.append(f"| {float(factor):g} × sampled radius | {lo:,.1f}–{hi:,.1f} | {s['equal_region_negative_log_score']:.3f} |")
     lines += ["","The accepted sites give each scenario the same fitted likelihood. The difference in global volume measures sensitivity to the unobserved continuation. [Quadrature and withheld-site checks](distal-taper.json)"]
     lines += ["","The intervals condition on the recorded sampling locations and the specified shape family. Preservation, reworking and the far-field transfer of analogue slopes can introduce additional uncertainty.",
               "","[Numerical report and archive probes](report.json) · [Withheld thickness predictions](heldout.csv) · [Geographic training IDs](geographic.json) · [Full posterior](full.npz) · [Per-draw thickness budgets](volume-budget.npz)"]
@@ -327,15 +344,14 @@ def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, 
         review(data,meta,output,name)
         lines += ["","[Matched test of the volume assigned to unsupported bearings](bearing-study/README.md)"]
     (output/"README.md").write_text("\n".join(lines)+"\n")
-    return report
+    return publication
 
 
 def population_summary(numerics):
     populations = np.asarray(numerics["continuation"]["population_volume_quantiles_km3"])
     parent = "passed" if numerics["parent_passed"] else "retained a warning"
     outer = "passed" if numerics["continuation"]["passed"] else "retained a warning"
-    return (f"The independent full-data populations gave medians from {min(populations[:,1]):,.1f} to "
-            f"{max(populations[:,1]):,.1f} km³. Their upper 95% endpoints ranged from {min(populations[:,2]):,.1f} "
+    return (f"The independent populations’ upper 95% endpoints ranged from {min(populations[:,2]):,.1f} "
             f"to {max(populations[:,2]):,.1f} km³. The unmodified thinning profile {parent} and the "
             f"continued global volume {outer}. [Population estimates and refinement history](full.json)")
 
@@ -358,4 +374,8 @@ def nested_dataset(path, output, name=None, *, archives=None, resume=False, pare
         return whole_area_dataset(path, output, name, archives=archives, resume=resume,
                                   budget=True if budget is None else budget, base_cache=base_cache)
     from .reach_report import reach_dataset
-    return reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
+    result = reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
+    from ...visualization.deposit import render_deposit
+    data, meta = audited_data(path,allow_intervals=True)
+    render_deposit(output,"nested-isopachs",data,meta,result["name"])
+    return result

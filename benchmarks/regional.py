@@ -129,7 +129,6 @@ def summarize(output, published=False):
                 "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
                 "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
-                "expected_regional_km3": result["regional_volume"]["expected_km3"],
                 "median_surface_km3": result["regional_volume"]["median_surface_km3"],
                 "conditional_volume_lower95_km3": result["joint_volume"]["conditional_quantiles_km3"]["0.025"],
                 "conditional_volume_upper95_km3": result["joint_volume"]["conditional_quantiles_km3"]["0.975"],

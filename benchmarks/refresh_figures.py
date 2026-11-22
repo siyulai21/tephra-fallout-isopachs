@@ -75,10 +75,11 @@ def regional_models(data, report):
         same_description(model.describe(), report["methods"][key]["model"], key)
         integral = integrate_region(model, region)
         old = report["methods"][key]["regional_volume"]
-        for quantity in ("expected_km3", "median_surface_km3"):
-            np.testing.assert_allclose(integral[quantity], old[quantity], rtol=2e-7, atol=1e-9)
+        expected = old["refinement"][-1]["expected_km3"]
+        np.testing.assert_allclose(integral["expected_km3"], expected, rtol=2e-7, atol=1e-9)
+        np.testing.assert_allclose(integral["median_surface_km3"], old["median_surface_km3"], rtol=2e-7, atol=1e-9)
         checks[key] = {"recorded_parameters_replayed":True, "selection_repeated":False,
-            "expected_volume_relative_difference":abs(integral["expected_km3"]-old["expected_km3"])/old["expected_km3"],
+            "expected_volume_relative_difference":abs(integral["expected_km3"]-expected)/expected,
             "median_surface_volume_relative_difference":abs(integral["median_surface_km3"]-old["median_surface_km3"])/old["median_surface_km3"]}
     return fitted, region, checks
 
@@ -172,15 +173,22 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
             field = read_field(primary_dir,data,directional)
             inventory,_ = load_inventory(record["path"])
             render_primary(dest,data,meta,directional,field,inventory,source=primary_dir)
-    if "comparison" in scopes:
+    if "comparison" in scopes and not (home/"nested-isopachs/deposit.json").is_file():
         if "regional" in scopes:
             comparison_grid = saved_regional_grid(target/"predictions.csv")
         else:
             gx, gy, _, fields, _ = regional_grid(regional["fit_bounds_km"], region, models)
             comparison_grid = gx, gy, fields
         draw_comparison(home, target, comparison_grid)
+    if "comparison" in scopes and (home/"nested-isopachs/deposit.json").is_file():
+        from src.empirical_isopach.visualization.deposit import FAMILIES, render_deposit
+        from src.empirical_isopach.visualization.regional import regional_maps
+        if "regional" not in scopes:
+            regional_maps(target,name,data,meta,region,models,regional)
+        for family in FAMILIES:
+            render_deposit(home/family,family,data,meta,name,output=target/family)
     nested = principal_report(home)
-    case_overview(target, name, regional, directional, spherical, nested)
+    case_overview(target, name, regional, directional, spherical, nested,map_home=home)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")
     print(f"{name}: figures complete", flush=True)
     return name, regional, directional, spherical, nested

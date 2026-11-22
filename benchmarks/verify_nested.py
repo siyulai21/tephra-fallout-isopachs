@@ -23,6 +23,12 @@ def verify_case(home, data_path):
     support = read(home/"support.json")
     assert report["input"]["input_sha256"] == meta["input_sha256"]
     assert report["thinning_source_sha256"] == digest(ASSET)
+    def ends(values):
+        return [values[0], values[-1]]
+    limits = report.get("conditional_volume_interval95_km3") or ends(report["conditional_volume_km3"])
+    if (home/"median-field.json").is_file():
+        np.testing.assert_allclose(report["median_map_volume_km3"], read(home/"median-field.json")["median_map_volume_km3"])
+        assert "conditional_volume_km3" not in report
     geo = read(home/"geographic.json")
     withheld = []
     for fold in [None, *geo["folds"]]:
@@ -52,8 +58,9 @@ def verify_case(home, data_path):
             vol = model.volume()
             if report["protocol"] == PROTOCOL:
                 verify_edge_study(home, data_path, data, model)
-            np.testing.assert_allclose(np.quantile(vol,[.025,.5,.975]),report["conditional_volume_km3"])
-            np.testing.assert_allclose(report["prior_sensitivity"]["baseline"]["volume_km3"],report["conditional_volume_km3"])
+            np.testing.assert_allclose(np.quantile(vol,[.025,.975]),limits)
+            base = report["prior_sensitivity"]["baseline"]
+            np.testing.assert_allclose(base.get("volume_interval95_km3") or ends(base["volume_km3"]),limits)
             with np.load(home/"volume-budget.npz", allow_pickle=False) as budget:
                 np.testing.assert_allclose(budget["volume_km3"],vol)
                 np.testing.assert_allclose(budget["slab_km3"].sum(axis=0),vol)
@@ -73,7 +80,7 @@ def verify_case(home, data_path):
     accepted = [k for k,p in support["policies"].items() if p["selected_band"]]
     assert accepted == report["supported_band_policies"]
     taper = read(home/"distal-taper.json")
-    np.testing.assert_allclose(taper["baseline_km3"],report["conditional_volume_km3"])
+    np.testing.assert_allclose(ends(taper["baseline_km3"]),limits)
     previous = np.zeros(3)
     for factor in ("1.0","2.0","4.0"):
         s = taper["scenarios"][factor]
@@ -98,7 +105,7 @@ def verify_case(home, data_path):
     if report["protocol"] == PROTOCOL:
         test = read(home/"bearing-study/report.json")
         assert test["input_sha256"] == meta["input_sha256"]
-        np.testing.assert_allclose(test["baseline_km3"],report["conditional_volume_km3"])
+        np.testing.assert_allclose(ends(test["baseline_km3"]),limits)
         for pair,fold in zip(test["folds"],geo["folds"],strict=True):
             for key in ("training_rows","test_rows"):
                 assert pair[key] == fold["identity"][key]
@@ -162,8 +169,8 @@ def verify_preview_peers(preview, source):
     for manifest in inventories:
         assert all(digest(manifest.parent/f)==v for f,v in read(manifest).items())
     with np.load(spherical/"bearing/baseline.npz",allow_pickle=False) as packet:
-        q = [s["fits"]["baseline"]["volume"][k] for k in ("lower95","median","upper95")]
-        np.testing.assert_allclose(np.quantile(packet["volume_km3"],[.025,.5,.975]),q)
+        q = [s["fits"]["baseline"]["volume"][k] for k in ("lower95","upper95")]
+        np.testing.assert_allclose(np.quantile(packet["volume_km3"],[.025,.975]),q)
     folds = read(preview/"nested-whole-area/geographic.json")["folds"]
     for n,dr,sr in zip(folds,d["validation"]["geographic"]["folds"],s["validation"]["fits"],strict=True):
         for nk,dk,sk in (("training_rows","train","training_row_ids"),("test_rows","test","withheld_row_ids")):

@@ -11,21 +11,14 @@ The case home is the reading copy. It shows the five principal maps, volumes, va
 
 ## Checking a map
 
-Each case opens with the principal nested corridor map. Its solid fragments mark local thickness brackets and its dashed fragments show continuation. The four peer panels beneath it share the same contours, colour scale and geographic frame for that eruption. The full observation hull and every accepted site are in view. The regional fields end at the hull boundary. For the three global families, the whole-Earth maps show where contours continue beyond the comparison frame.
-
-### What to check
-
-- Read the colour key on the figure. Values below its lowest tick share a shade. The scale on a whole-Earth map can differ from the case comparison.
-- Check the bounds, projected positions and clipping against the recorded map design. Inspect the outer contour and any projection-rim warning. The volume calculation uses its stated integration domain.
-- Compare the plotted values with the saved fit. The four-panel PNG records source hashes, coordinates, contour levels and five reference predictions per method. The regional replay uses the selected spline settings and GP weights. The directional panel replays the quantitative uncertain-fan-direction packet and records its median-map volume. The spherical panel applies the principal bearing continuation to its own saved posterior. Replay its recorded number of draws per chain and verify both the retained area by compass bearing and the integrated mass. The single-structure directional reference plots geometric mean thickness.
-- Keep held-out observation coverage, numerical convergence and the local support screen visible. Each answers a different question about an extrapolated contour. [Support protocol](../methods/supported-isopachs.md)
+The case home shows the three global median-thickness maps and the complete regional hull. Confirm the 0.5 cm footprint fits the chart, the near-vent frame matches across families and each principal number integrates the surface shown. Inspect islands, limits, contour labels and detached deposits. Review the thickness–area table and independent volume checks. A closed contour still needs its support audit. [Output definitions](../OUTPUTS.md#read-the-map-and-its-volume)
 
 ### Replay a figure
 
 From the repository root, choose a fresh output directory. For example, to render the B-Tm comparison and verify the published figures, run
 
 ```sh
-python -m benchmarks.refresh_figures --case b-tm --scopes comparison --output results/btm-figures
+python -m benchmarks.deposit_maps --case b-tm --output results/btm-deposits
 python -m benchmarks.verify_visuals
 ```
 

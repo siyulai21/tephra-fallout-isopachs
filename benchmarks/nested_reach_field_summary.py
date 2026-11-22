@@ -50,6 +50,15 @@ def main():
     c=json.loads((root/"calbuco-2015/validation.json").read_text())
     contour=json.loads((root/"calbuco-2015/mapped-01mm.json").read_text())
     v=c["tested_models"]
+    from src.empirical_isopach.models.nested.report import map_volume
+    from src.empirical_isopach.models.nested.continuation import load_packet
+    from src.empirical_isopach.models.nested.reach import ReachDraws
+    parent_file = root/"calbuco-2015/training-parent.npz"
+    corridor_file = root/"calbuco-2015/corridor.npz"
+    parent_map = map_volume(load_packet(parent_file), parent_file)
+    corridor_map = map_volume(ReachDraws.load(corridor_file), corridor_file)
+    (root/"calbuco-2015/median-volumes.json").write_text(json.dumps(
+        {"whole_area":parent_map, "corridor":corridor_map}, indent=2)+"\n")
     lo,med,hi=c["corridor_integration"]["volume_km3"]
     old=c["whole_area_volume_km3"]
     r=rows[0]
@@ -67,7 +76,7 @@ def main():
                f"The mean missed mapped length changes from {contour['whole_area']['missed']:.1f} to {contour['corridor']['missed']:.1f} km. The reference line is an expert interpretation between field sites. "
                "The magenta rings give the digitized crossings. The sampling campaign and the reference line stayed outside the fit. "
                "[Printed figure and attribution](../../../data/sources/nested-reach/README.md) · [Transect measurements](calbuco-2015/mapped-01mm-transects.csv) · [Mingari et al., Figure 2](https://gmd.copernicus.org/articles/16/3459/2023/)","",
-               f"The Van Eaton training survey gives {old[1]:.3f} km³ [{old[0]:.3f}–{old[2]:.3f}] under whole-area continuation and {med:.3f} km³ [{lo:.3f}–{hi:.3f}] under the principal corridor model. "
+               f"Integrating median thickness on the Van Eaton training survey gives {parent_map['median_map_volume_km3']:.3f} km³ [{old[0]:.3f}–{old[2]:.3f}] under whole-area continuation and {corridor_map['median_map_volume_km3']:.3f} km³ [{lo:.3f}–{hi:.3f}] under the principal corridor model. "
                "Published field reconstructions span approximately 0.27–0.58 km³ bulk. One of those reconstructions uses the Van Eaton observations. Romero et al.’s Table 3 gives 0.270 km³ for the whole deposit under two-segment exponential thinning. These estimates provide geological context and have their own distal extrapolation assumptions. "
                "[Review of the field estimates](https://gmd.copernicus.org/articles/16/3459/2023/) · [Romero et al., original reconstruction](https://doi.org/10.1016/j.jvolgeores.2016.02.027)","",
                "## What the named eruptions establish","",

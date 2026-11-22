@@ -6,19 +6,19 @@ Real surveys provide the primary comparison. On Calbuco 2015 the corridor fit im
 
 **B-Tm has the clearest evidence for the narrower map.** Mazama improves on buffered geographic predictions and changes little on whole-quadrant predictions. Aso-4’s western footprint shrinks substantially, while independent compass predictions favor broader continuation. The paired results are published together. Global volume remains conditional on how a fan continues across unvisited ground.
 
-| Eruption | Principal corridor median [conditional 95%], km³ | Whole-area sensitivity median, km³ | Buffered score, whole-area → corridor | Compass score, whole-area → corridor |
+| Eruption | Corridor median-map integral [conditional 95%], km³ | Whole-area median-map integral (km³) | Buffered score, whole-area → corridor | Compass score, whole-area → corridor |
 |---|---:|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/nested-isopachs/README.md) | **652.5** [249.5–9,990.1] | 2,513.9 | 1.540 → 1.556 | 1.263 → 1.579 |
-| [B-Tm](../../eruptions/b-tm/results/nested-isopachs/README.md) | **35.9** [26.6–50.2] | 90.4 | 1.570 → 1.544 | 3.070 → 0.946 |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-isopachs/README.md) | **40.9** [25.1–94.2] | 50.5 | 1.159 → 1.274 | 1.132 → 1.283 |
-| [Mazama](../../eruptions/mazama/results/nested-isopachs/README.md) | **271.4** [129.2–938.0] | 411.2 | 1.503 → 1.365 | 2.794 → 2.821 |
-| [Minoan](../../eruptions/minoan/results/nested-isopachs/README.md) | **28.4** [17.4–67.6] | 37.6 | 1.536 → 1.621 | 1.494 → 1.646 |
-| [Pinatubo 1991 Layer C (separate intake)](../nested-isopachs/pinatubo-preview/nested-isopachs/README.md) | **2.3** [1.5–6.9] | 6.1 | 1.076 → 1.440 | 0.958 → 1.328 |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-isopachs/README.md) | **6.7** [3.1–30.7] | 12.5 | 0.742 → 1.016 | 1.141 → 1.353 |
-| [Tambora](../../eruptions/tambora/results/nested-isopachs/README.md) | **112.7** [62.5–237.7] | 146.9 | 1.368 → 1.646 | 1.509 → 1.816 |
-| [YTT](../../eruptions/ytt/results/nested-isopachs/README.md) | **1,322.2** [771.0–3,000.8] | 1,543.0 | 1.507 → 1.429 | 1.865 → 2.225 |
+| [Aso-4](../../eruptions/aso-4/results/nested-isopachs/README.md) | **544.5** [249.5–9,990.1] | 2,006.6 | 1.540 → 1.556 | 1.263 → 1.579 |
+| [B-Tm](../../eruptions/b-tm/results/nested-isopachs/README.md) | **33.7** [26.6–50.2] | 67.9 | 1.570 → 1.544 | 3.070 → 0.946 |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-isopachs/README.md) | **39.1** [25.1–94.2] | 47.7 | 1.159 → 1.274 | 1.132 → 1.283 |
+| [Mazama](../../eruptions/mazama/results/nested-isopachs/README.md) | **244.6** [129.2–938.0] | 354.7 | 1.503 → 1.365 | 2.794 → 2.821 |
+| [Minoan](../../eruptions/minoan/results/nested-isopachs/README.md) | **24.9** [17.4–67.6] | 31.4 | 1.536 → 1.621 | 1.494 → 1.646 |
+| [Pinatubo 1991 Layer C (separate intake)](../nested-isopachs/pinatubo-preview/nested-isopachs/README.md) | **2.1** [1.5–6.9] | 5.8 | 1.076 → 1.440 | 0.958 → 1.328 |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-isopachs/README.md) | **6.3** [3.1–30.7] | 11.5 | 0.742 → 1.016 | 1.141 → 1.353 |
+| [Tambora](../../eruptions/tambora/results/nested-isopachs/README.md) | **94.9** [62.5–237.7] | 123.4 | 1.368 → 1.646 | 1.509 → 1.816 |
+| [YTT](../../eruptions/ytt/results/nested-isopachs/README.md) | **1,245.3** [771.0–3,000.8] | 1,418.8 | 1.507 → 1.429 | 1.865 → 2.225 |
 
-Each map is the pointwise median. Volumes summarize the integrals of complete posterior draws. These are bulk deposit volumes. The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. [Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)
+Each volume integrates the pointwise median-thickness map. The 95% interval uses the two tails of the volume distribution. These are bulk deposit volumes. The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. [Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)
 
 Across the 8 catalogued eruptions the mean buffered score changes from 1.366 to 1.431. The mean whole-quadrant score changes from 1.784 to 1.709. B-Tm accounts for the improvement in the latter average. A complete contour band passes the shared support screen in 0 of 8 cases. The separate Pinatubo Layer C snapshot is excluded from those averages.
 
@@ -30,7 +30,7 @@ Across the 8 catalogued eruptions the mean buffered score changes from 1.366 to 
 
 ## Recovery of deposits with known thickness
 
-The whole-area and corridor fits covered the known total in 18/20 and 17/20 cases, respectively. Median absolute log-volume error changed from 0.212 to 0.300. The 20 truths come from 18 surveys, including two pairs with identical observations and different hidden deposits. These are development stress tests.
+The whole-area and corridor fits covered the known total in 18/20 and 17/20 cases, respectively. The 20 truths come from 18 surveys, including two pairs with identical observations and different hidden deposits. These are development stress tests.
 
 For a genuinely broad, circular deposit surveyed only on its eastern half, the two corridor fits missed 159,977–304,290 km² of the true western 1 cm footprint. Both conditional volume intervals included the known total. A volume interval can cover the truth while the median contour misses a real lobe. Both models also underestimated the deliberately diffuse global tail. The inherited analogue thinning prior limits both methods there.
 

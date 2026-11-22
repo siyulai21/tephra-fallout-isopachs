@@ -1,32 +1,5 @@
 {
-  "volume_km3": [
-    249.51327519267343,
-    652.5327543640483,
-    9990.076060458938
-  ],
   "median_map_volume_km3": 544.6892164989174,
-  "volume_population_quantiles": [
-    [
-      248.91023246833942,
-      660.2581565880954,
-      9456.112883211177
-    ],
-    [
-      246.64770746405947,
-      658.6815429787634,
-      8339.692580574625
-    ],
-    [
-      254.39541269989348,
-      630.5142737635199,
-      8674.915598523887
-    ],
-    [
-      246.20969096618524,
-      657.0704308998523,
-      13413.532912003653
-    ]
-  ],
   "volume_populations_passed": true,
   "quadrature": [
     {
@@ -36,15 +9,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        246.3504857622809,
-        635.7972089071725,
-        11667.409542045954
-      ],
       "scramble_difference": 0.0007225706628926471,
       "change_from_previous": null,
       "parent_q95_relative_error": 0.0010785046151197892,
-      "passed": false
+      "passed": false,
+      "conditional_volume_interval95_km3": [
+        246.3504857622809,
+        11667.409542045954
+      ]
     },
     {
       "draws": 1024,
@@ -53,15 +25,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        252.02077094531936,
-        635.0232759015157,
-        8083.16419617964
-      ],
       "scramble_difference": 0.0003592218358719434,
       "change_from_previous": 0.3072014685821849,
       "parent_q95_relative_error": 0.00048190546558209846,
-      "passed": false
+      "passed": false,
+      "conditional_volume_interval95_km3": [
+        252.02077094531936,
+        8083.16419617964
+      ]
     },
     {
       "draws": 2048,
@@ -70,15 +41,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        247.1071118624248,
-        677.6676686117951,
-        9873.072705631956
-      ],
       "scramble_difference": 0.0005589041801540957,
       "change_from_previous": 0.2214366139312478,
       "parent_q95_relative_error": 0.00021512615374366661,
-      "passed": false
+      "passed": false,
+      "conditional_volume_interval95_km3": [
+        247.1071118624248,
+        9873.072705631956
+      ]
     },
     {
       "draws": 4096,
@@ -87,15 +57,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        249.51327519267343,
-        652.5327543640483,
-        9990.076060458938
-      ],
       "scramble_difference": 0.00035489649856006156,
       "change_from_previous": 0.037090325261105894,
       "parent_q95_relative_error": 0.00013008455666047575,
-      "passed": true
+      "passed": true,
+      "conditional_volume_interval95_km3": [
+        249.51327519267343,
+        9990.076060458938
+      ]
     }
   ],
   "level_cm": [
@@ -187,48 +156,6 @@
     "W",
     "NW"
   ],
-  "sector_volume_km3": [
-    [
-      21.11630002867382,
-      84.70711953074289,
-      748.5858468361957
-    ],
-    [
-      93.8542615666009,
-      153.71639226250326,
-      780.110077965405
-    ],
-    [
-      88.92055699133392,
-      184.46091638121095,
-      1032.4449658471813
-    ],
-    [
-      17.194360788486424,
-      112.65456314927413,
-      1601.3435395860733
-    ],
-    [
-      2.941610289526639,
-      34.09616408549185,
-      1796.576009354687
-    ],
-    [
-      0.4523602035403485,
-      6.317462565360568,
-      1717.641352326805
-    ],
-    [
-      0.26948158456167,
-      5.354761853705395,
-      1346.9788635454336
-    ],
-    [
-      1.9390367520354976,
-      22.295166328770954,
-      1007.4902221884499
-    ]
-  ],
   "sector_volume_fraction": [
     [
       0.03842684634190023,
@@ -299,11 +226,6 @@
   "engine_sha256": "d8baffef7818b5899d52b76d2f07bccd831079b828a2d23c59da094dba13fcc2",
   "full_packet_sha256": "0336d33a085cec96615d4744dbe680e2c17d760cf375d8e2bbb1001b51abcf93",
   "reference_packet_sha256": "bdae48306696109754451b8c225dcfcd696c60b027977d4978431e5078b3affa",
-  "reference_volume_km3": [
-    648.7502684421506,
-    2513.9436845078717,
-    15969.916296134848
-  ],
   "law_order": [
     [
       null,
@@ -1622,36 +1544,32 @@
   "prior_sensitivity": {
     "broad_prior_scenarios": {
       "0.1": {
-        "volume_km3": [
+        "effective_draws": 3670.2300884955844,
+        "conditional_volume_interval95_km3": [
           246.1290978224129,
-          559.299906895181,
           4976.879578169104
-        ],
-        "effective_draws": 3670.2300884955844
+        ]
       },
       "0.25": {
-        "volume_km3": [
+        "effective_draws": 4096.0,
+        "conditional_volume_interval95_km3": [
           249.51327519267343,
-          652.5327543640483,
           9990.076060458938
-        ],
-        "effective_draws": 4096.0
+        ]
       },
       "0.5": {
-        "volume_km3": [
+        "effective_draws": 3072.3404255319206,
+        "conditional_volume_interval95_km3": [
           258.83759127529436,
-          1029.965597892432,
           14616.585568512459
-        ],
-        "effective_draws": 3072.3404255319206
+        ]
       },
       "0.75": {
-        "volume_km3": [
+        "effective_draws": 1734.674846625763,
+        "conditional_volume_interval95_km3": [
           277.9962985735059,
-          1676.8356258728872,
           15558.27423994065
-        ],
-        "effective_draws": 1734.674846625763
+        ]
       }
     },
     "conditional_by_law": [
@@ -1659,9 +1577,8 @@
         "width_deg": null,
         "extension": null,
         "joint_draws": 992,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           663.1510817724113,
-          2517.5209558507186,
           16006.638406491466
         ]
       },
@@ -1669,9 +1586,8 @@
         "width_deg": 12.0,
         "extension": 0.25,
         "joint_draws": 315,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           214.55220157479562,
-          272.256580677138,
           377.83620590591624
         ]
       },
@@ -1679,9 +1595,8 @@
         "width_deg": 12.0,
         "extension": 0.5,
         "joint_draws": 349,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           240.2737098113069,
-          320.60555332231456,
           476.4706687434051
         ]
       },
@@ -1689,9 +1604,8 @@
         "width_deg": 12.0,
         "extension": 1.0,
         "joint_draws": 370,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           250.2805319610195,
-          369.9155623666943,
           658.6987212428443
         ]
       },
@@ -1699,9 +1613,8 @@
         "width_deg": 30.0,
         "extension": 0.25,
         "joint_draws": 334,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           328.73993991368803,
-          458.44077763336793,
           721.3300231313349
         ]
       },
@@ -1709,9 +1622,8 @@
         "width_deg": 30.0,
         "extension": 0.5,
         "joint_draws": 347,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           337.54453916535016,
-          519.208036736684,
           880.2391600595557
         ]
       },
@@ -1719,9 +1631,8 @@
         "width_deg": 30.0,
         "extension": 1.0,
         "joint_draws": 343,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           356.40666093085383,
-          567.1340756778075,
           1183.584839656198
         ]
       },
@@ -1729,9 +1640,8 @@
         "width_deg": 60.0,
         "extension": 0.25,
         "joint_draws": 344,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           474.1656358323236,
-          837.2644321361157,
           1870.5455549649607
         ]
       },
@@ -1739,9 +1649,8 @@
         "width_deg": 60.0,
         "extension": 0.5,
         "joint_draws": 345,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           502.32563757178525,
-          906.3655417536077,
           2232.941721358387
         ]
       },
@@ -1749,9 +1658,8 @@
         "width_deg": 60.0,
         "extension": 1.0,
         "joint_draws": 357,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           519.2176450406425,
-          1015.7213308712126,
           2758.4175741278145
         ]
       }
@@ -1759,16 +1667,72 @@
   },
   "archive_predictions": {},
   "model_role": "principal",
-  "volume_statistic": "median of complete Earth-integrated posterior draws",
+  "volume_statistic": "Earth integral of pointwise posterior median thickness",
   "map_statistic": "pointwise posterior median thickness",
   "exact_site_coverage95": {
     "covered": 76,
     "exact_sites": 83,
     "fraction": 0.9156626506024096
   },
-  "conditional_volume_km3": [
+  "conditional_volume_interval95_km3": [
     249.51327519267343,
-    652.5327543640483,
     9990.076060458938
-  ]
+  ],
+  "reference_volume_interval95_km3": [
+    648.7502684421506,
+    15969.916296134848
+  ],
+  "sector_volume_interval95_km3": [
+    [
+      21.11630002867382,
+      748.5858468361957
+    ],
+    [
+      93.8542615666009,
+      780.110077965405
+    ],
+    [
+      88.92055699133392,
+      1032.4449658471813
+    ],
+    [
+      17.194360788486424,
+      1601.3435395860733
+    ],
+    [
+      2.941610289526639,
+      1796.576009354687
+    ],
+    [
+      0.4523602035403485,
+      1717.641352326805
+    ],
+    [
+      0.26948158456167,
+      1346.9788635454336
+    ],
+    [
+      1.9390367520354976,
+      1007.4902221884499
+    ]
+  ],
+  "population_volume_intervals95_km3": [
+    [
+      248.91023246833942,
+      9456.112883211177
+    ],
+    [
+      246.64770746405947,
+      8339.692580574625
+    ],
+    [
+      254.39541269989348,
+      8674.915598523887
+    ],
+    [
+      246.20969096618524,
+      13413.532912003653
+    ]
+  ],
+  "estimate_source": "deposit.json#median_map_volume_km3"
 }

@@ -8,16 +8,16 @@
 
 The common footprint keeps well-connected triangles between exact measurement sites and removes long bridges and thin triangles. Its holes remain holes. Bounds still enter both model likelihoods, but do not count as exact thickness sites for this geometric screen.
 
-| Policy | Area (km²) | Method | Expected bulk volume (km³) | Median-surface integral (km³) | Deletion range (km³) |
-|---|---:|---|---:|---:|---:|
-| strict | 55,865 | GP ensemble | 0.17 | 0.14 | 0.03–0.18 |
-| strict | 55,865 | Trend-regularized cubic spline | 2859902396837972720374353189928960.00 | 0.90 | 0.03–24390452896301569087241847748689920.00 |
-| standard | 95,960 | GP ensemble | 0.43 | 0.32 | 0.09–0.47 |
-| standard | 95,960 | Trend-regularized cubic spline | 2879646974200532685014300396355584.00 | 3.11 | 0.09–24642920453806582904340421338464256.00 |
-| permissive | 97,661 | GP ensemble | 0.69 | 0.59 | 0.35–0.73 |
-| permissive | 97,661 | Trend-regularized cubic spline | 2879646974200532685014300396355584.00 | 3.34 | 0.32–24642920453806582904340421338464256.00 |
+| Policy | Area (km²) | Method | Median-thickness integral (km³) | Median-map deletion range (km³) |
+|---|---:|---|---:|---:|
+| strict | 55,865 | GP ensemble | 0.14 | unavailable for this fit |
+| strict | 55,865 | Trend-regularized cubic spline | 0.90 | unavailable for this fit |
+| standard | 95,960 | GP ensemble | 0.32 | unavailable for this fit |
+| standard | 95,960 | Trend-regularized cubic spline | 3.11 | unavailable for this fit |
+| permissive | 97,661 | GP ensemble | 0.59 | unavailable for this fit |
+| permissive | 97,661 | Trend-regularized cubic spline | 3.34 | unavailable for this fit |
 
-These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**. The median-surface integral is not the median of total volume.
+These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**.
 
 ## Complete-contour gate
 

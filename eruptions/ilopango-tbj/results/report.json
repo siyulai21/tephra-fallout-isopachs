@@ -497,7 +497,6 @@
         "candidate_table_sha256": "3fb8e4b74d87bce17b16bcfd28013fb3e1e1d7a1f0cb402202b8a557ab6812d1"
       },
       "regional_volume": {
-        "expected_km3": 24.989466686322658,
         "median_surface_km3": 23.312258092858844,
         "converged": true,
         "tolerance": 0.001,
@@ -547,18 +546,16 @@
         ],
         "unit_conversion": "cm * km^2 * 1e-5 = km^3",
         "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-        "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+        "volume_statistic": "Integral of pointwise median thickness"
       },
       "joint_volume": {
         "conditional_quantiles_km3": {
           "0.025": 17.9250526995108,
-          "0.5": 24.41286125071033,
           "0.975": 33.80829548223477
         },
         "draws": 2000,
         "seed": 1729,
         "integration_order": 16,
-        "sampling_mean_km3": 24.81845779657024,
         "grid_checks": [
           {
             "order": 4,
@@ -603,10 +600,6 @@
           "0.025": [
             17.697336598073463,
             18.387442464738143
-          ],
-          "0.5": [
-            24.216795473230807,
-            24.626140046039765
           ],
           "0.975": [
             33.39291321318687,
@@ -822,7 +815,6 @@
         "candidate_table_sha256": "3be4bb8268b8ce998e504faf5c3a30333ba53ab4c6ad191be34fea99690ceb37"
       },
       "regional_volume": {
-        "expected_km3": 26.746258079724328,
         "median_surface_km3": 25.671153138911748,
         "converged": true,
         "tolerance": 0.001,
@@ -851,18 +843,16 @@
         ],
         "unit_conversion": "cm * km^2 * 1e-5 = km^3",
         "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-        "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+        "volume_statistic": "Integral of pointwise median thickness"
       },
       "joint_volume": {
         "conditional_quantiles_km3": {
           "0.025": 22.60690427422071,
-          "0.5": 26.59287891335634,
           "0.975": 31.547289896409087
         },
         "draws": 2000,
         "seed": 1729,
         "integration_order": 6,
-        "sampling_mean_km3": 26.692836476265605,
         "grid_checks": [
           {
             "order": 4,
@@ -883,10 +873,6 @@
           "0.025": [
             22.342914134125596,
             22.755424620865526
-          ],
-          "0.5": [
-            26.44984131634715,
-            26.702868134932594
           ],
           "0.975": [
             31.288084304734937,
@@ -1716,7 +1702,6 @@
               "candidate_table_sha256": "88f63dddcf8d02b11cb7bfaab3a702a17fe3820403bd658e8babcacc8b6a43ec"
             },
             "regional_deletion_volume": {
-              "expected_km3": 51.36552969958593,
               "median_surface_km3": 39.51289943195308,
               "converged": true,
               "tolerance": 0.001,
@@ -1759,7 +1744,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -2169,7 +2154,6 @@
               "candidate_table_sha256": "c9bff496e4a3c072c9aec55e63326ad7e837f0f11a1b8a8792cc6cb01cb4f263"
             },
             "regional_deletion_volume": {
-              "expected_km3": 28.452625893032508,
               "median_surface_km3": 26.61376730015765,
               "converged": true,
               "tolerance": 0.001,
@@ -2212,7 +2196,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -2640,7 +2624,6 @@
               "candidate_table_sha256": "963818451b7c2e38bcaf66b779b81f55319586f8bc37f9b378789faa76e9487c"
             },
             "regional_deletion_volume": {
-              "expected_km3": 22.25132625745708,
               "median_surface_km3": 18.728359888967265,
               "converged": true,
               "tolerance": 0.001,
@@ -2690,7 +2673,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -3100,7 +3083,6 @@
               "candidate_table_sha256": "26e6a333c0c90f67563799da3a72fd9d498dbd91c0d68c363d4386f51e30c3bf"
             },
             "regional_deletion_volume": {
-              "expected_km3": 27.56072528089107,
               "median_surface_km3": 23.619626037856456,
               "converged": true,
               "tolerance": 0.001,
@@ -3143,7 +3125,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           }
         ],
@@ -3613,7 +3595,6 @@
               "candidate_table_sha256": "9dc263d5b89af25cea9877ba0017e813e30000df700e1592bc85d0cdcb59bea7"
             },
             "regional_deletion_volume": {
-              "expected_km3": 434.13300206768093,
               "median_surface_km3": 39.806470585460225,
               "converged": true,
               "tolerance": 0.001,
@@ -3642,7 +3623,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -3890,7 +3871,6 @@
               "candidate_table_sha256": "2308a06455d2bc48ec4fccce2049352c6d9f08297cf98baa0119484415c82192"
             },
             "regional_deletion_volume": {
-              "expected_km3": 29.03805199949517,
               "median_surface_km3": 26.77910205220765,
               "converged": true,
               "tolerance": 0.001,
@@ -3919,7 +3899,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -4170,7 +4150,6 @@
               "candidate_table_sha256": "462f3b24f5474f8649819df841f178a15506a84e996911a19a0207f54b1e7ccd"
             },
             "regional_deletion_volume": {
-              "expected_km3": 43.19283042104767,
               "median_surface_km3": 34.01774302572385,
               "converged": true,
               "tolerance": 0.001,
@@ -4199,7 +4178,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           },
           {
@@ -4423,7 +4402,6 @@
               "candidate_table_sha256": "f98271377cbc0cacb5f37180ae3a29750304ad20925ef5fb3ccee701f25082a2"
             },
             "regional_deletion_volume": {
-              "expected_km3": 1914.6232647495358,
               "median_surface_km3": 25.09042119860756,
               "converged": true,
               "tolerance": 0.001,
@@ -4466,7 +4444,7 @@
               ],
               "unit_conversion": "cm * km^2 * 1e-5 = km^3",
               "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
-              "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."
+              "volume_statistic": "Integral of pointwise median thickness"
             }
           }
         ],

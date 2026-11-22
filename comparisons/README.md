@@ -1,5 +1,7 @@
 # How well do the methods predict fallout?
 
+Each global family reports the integral of the median-thickness map, its conditional volume interval and its held-out predictions. [All mapped volumes, conditional intervals and held-out scores](principal-volumes.csv)
+
 The nested family uses dispersal corridors for its principal isopachs and volume, with whole-area continuation as its sensitivity. B-Tm’s withheld archive bounds favor the narrower map, while withheld Aso-4 and Pinatubo marine deposits favor the broader one. [Conditional isopachs and volumes](nested-reach/README.md) · [Independent field surveys](nested-reach/field-surveys/README.md)
 
 The figure compares the five published fits on withheld geographic regions for each eruption. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.

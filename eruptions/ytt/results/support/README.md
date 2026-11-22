@@ -1,7 +1,5 @@
 # YTT: which parts of the deposit are supported?
 
-This audit identifies locally supported contours and partial volumes. The [case summary](../../README.md) reports both conditional whole-Earth estimates alongside the regional results.
-
 **A closed or smooth isopach is not sufficient evidence for its enclosed area or a global volume.** This audit applies the same geometric screen to both model families, then checks their contours separately. It does not change the observations or refit to pseudo-data.
 
 ![Sampling support and contour eligibility](support.png)
@@ -10,16 +8,16 @@ This audit identifies locally supported contours and partial volumes. The [case 
 
 The common footprint keeps well-connected triangles between exact measurement sites and removes long bridges and thin triangles. Its holes remain holes. Bounds still enter both model likelihoods, but do not count as exact thickness sites for this geometric screen.
 
-| Policy | Area (km²) | Method | Expected bulk volume (km³) | Median-surface integral (km³) | Deletion range (km³) |
-|---|---:|---|---:|---:|---:|
-| strict | 451,621 | GP ensemble | 98.24 | 90.30 | 90.06–379.36 |
-| strict | 451,621 | Trend-regularized cubic spline | 78.44 | 74.81 | 73.50–128.49 |
-| standard | 1,196,058 | GP ensemble | 249.71 | 230.23 | 227.34–849.25 |
-| standard | 1,196,058 | Trend-regularized cubic spline | 214.01 | 203.22 | 182.74–222.30 |
-| permissive | 2,452,730 | GP ensemble | 396.16 | 363.86 | 364.98–1178.41 |
-| permissive | 2,452,730 | Trend-regularized cubic spline | 372.56 | 344.75 | 355.89–1592.14 |
+| Policy | Area (km²) | Method | Median-thickness integral (km³) | Median-map deletion range (km³) |
+|---|---:|---|---:|---:|
+| strict | 451,621 | GP ensemble | 90.30 | unavailable for this fit |
+| strict | 451,621 | Trend-regularized cubic spline | 74.81 | unavailable for this fit |
+| standard | 1,196,058 | GP ensemble | 230.23 | unavailable for this fit |
+| standard | 1,196,058 | Trend-regularized cubic spline | 203.22 | unavailable for this fit |
+| permissive | 2,452,730 | GP ensemble | 363.86 | unavailable for this fit |
+| permissive | 2,452,730 | Trend-regularized cubic spline | 344.75 | unavailable for this fit |
 
-These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**. The median-surface integral is not the median of total volume.
+These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**.
 
 ## Complete-contour gate
 

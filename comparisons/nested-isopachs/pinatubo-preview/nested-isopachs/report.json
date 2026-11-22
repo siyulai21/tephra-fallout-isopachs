@@ -1,32 +1,5 @@
 {
-  "volume_km3": [
-    1.4598053832519988,
-    2.267876865559769,
-    6.931645472742099
-  ],
   "median_map_volume_km3": 2.1225526173393625,
-  "volume_population_quantiles": [
-    [
-      1.4252091106631046,
-      2.275328384025109,
-      6.623714932301336
-    ],
-    [
-      1.4592228730572263,
-      2.180452572745831,
-      5.976382874113367
-    ],
-    [
-      1.5652949745447051,
-      2.08451107105304,
-      7.013794492344322
-    ],
-    [
-      1.5062740630738045,
-      2.439470908543609,
-      7.421581804469574
-    ]
-  ],
   "volume_populations_passed": true,
   "quadrature": [
     {
@@ -36,15 +9,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        1.564544256106845,
-        2.2608840836844424,
-        7.204596626981008
-      ],
       "scramble_difference": 0.003167714431668363,
       "change_from_previous": null,
       "parent_q95_relative_error": 0.0015391476480736798,
-      "passed": false
+      "passed": false,
+      "conditional_volume_interval95_km3": [
+        1.564544256106845,
+        7.204596626981008
+      ]
     },
     {
       "draws": 1024,
@@ -53,15 +25,14 @@
         28439,
         95717
       ],
-      "volume_km3": [
-        1.4598053832519988,
-        2.267876865559769,
-        6.931645472742099
-      ],
       "scramble_difference": 0.0010371627952385097,
       "change_from_previous": 0.06694529250036974,
       "parent_q95_relative_error": 0.0006595349205753886,
-      "passed": true
+      "passed": true,
+      "conditional_volume_interval95_km3": [
+        1.4598053832519988,
+        6.931645472742099
+      ]
     }
   ],
   "level_cm": [
@@ -153,48 +124,6 @@
     "W",
     "NW"
   ],
-  "sector_volume_km3": [
-    [
-      0.022990854341434046,
-      0.03085359490938542,
-      0.3469680239297962
-    ],
-    [
-      0.03244164983559832,
-      0.04170943459227573,
-      0.2229340344260816
-    ],
-    [
-      0.04742147699831338,
-      0.058628832507011626,
-      0.33962349286238
-    ],
-    [
-      0.08829242571856226,
-      0.10701048752811484,
-      0.7599851203650482
-    ],
-    [
-      0.12480110601940418,
-      0.1524733952820091,
-      1.3319288240953129
-    ],
-    [
-      0.48936264731510204,
-      0.8154501013854363,
-      1.8012595662601276
-    ],
-    [
-      0.5410938358875186,
-      0.9048504094112768,
-      1.5713011509948434
-    ],
-    [
-      0.07660384770925897,
-      0.10103678411018023,
-      0.8402733003603051
-    ]
-  ],
   "sector_volume_fraction": [
     [
       0.010370455882213168,
@@ -265,11 +194,6 @@
   "engine_sha256": "d8baffef7818b5899d52b76d2f07bccd831079b828a2d23c59da094dba13fcc2",
   "full_packet_sha256": "eb6f8dfdbd5e4b235d76193e4a3b79e3e33f9c035bb6f196f4edbc6d8ac228b4",
   "reference_packet_sha256": "f2b25a0567076da9ae7150eb6f0499b43ce88f92d8969f6d221ae3dde271ddfe",
-  "reference_volume_km3": [
-    3.5689058419045496,
-    6.138808375985395,
-    14.871443574258556
-  ],
   "law_order": [
     [
       null,
@@ -2366,36 +2290,32 @@
   "prior_sensitivity": {
     "broad_prior_scenarios": {
       "0.1": {
-        "volume_km3": [
+        "effective_draws": 984.8584195672627,
+        "conditional_volume_interval95_km3": [
           1.4504395818123013,
-          2.2101173522306694,
           5.653386397399659
-        ],
-        "effective_draws": 984.8584195672627
+        ]
       },
       "0.25": {
-        "volume_km3": [
+        "effective_draws": 1024.0,
+        "conditional_volume_interval95_km3": [
           1.4598053832519988,
-          2.267876865559769,
           6.931645472742099
-        ],
-        "effective_draws": 1024.0
+        ]
       },
       "0.5": {
-        "volume_km3": [
+        "effective_draws": 832.2603686635925,
+        "conditional_volume_interval95_km3": [
           1.4804580855244929,
-          2.424144623949299,
           8.059878821592335
-        ],
-        "effective_draws": 832.2603686635925
+        ]
       },
       "0.75": {
-        "volume_km3": [
+        "effective_draws": 370.0510805500985,
+        "conditional_volume_interval95_km3": [
           1.5421793619583282,
-          3.487532584245505,
           10.234197825026438
-        ],
-        "effective_draws": 370.0510805500985
+        ]
       }
     },
     "conditional_by_law": [
@@ -2403,9 +2323,8 @@
         "width_deg": null,
         "extension": null,
         "joint_draws": 89,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           3.3865347371017975,
-          5.838458023555016,
           11.57078360882379
         ]
       },
@@ -2413,9 +2332,8 @@
         "width_deg": 12.0,
         "extension": 0.25,
         "joint_draws": 405,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           1.3871428481660397,
-          1.951020159237753,
           2.5748900056974375
         ]
       },
@@ -2423,9 +2341,8 @@
         "width_deg": 12.0,
         "extension": 0.5,
         "joint_draws": 179,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           1.4898627579756851,
-          2.0464725500168197,
           2.8711495652959926
         ]
       },
@@ -2433,9 +2350,8 @@
         "width_deg": 12.0,
         "extension": 1.0,
         "joint_draws": 102,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           1.615908454891488,
-          2.3535991955196183,
           2.9818445825964424
         ]
       },
@@ -2443,9 +2359,8 @@
         "width_deg": 30.0,
         "extension": 0.25,
         "joint_draws": 40,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           2.0265097512724455,
-          2.991749807587816,
           4.05577760506195
         ]
       },
@@ -2453,9 +2368,8 @@
         "width_deg": 30.0,
         "extension": 0.5,
         "joint_draws": 65,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           2.136856686606013,
-          2.984540340156241,
           4.022463612009215
         ]
       },
@@ -2463,9 +2377,8 @@
         "width_deg": 30.0,
         "extension": 1.0,
         "joint_draws": 44,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           2.408340743102207,
-          3.1161528019159306,
           4.549591708127137
         ]
       },
@@ -2473,15 +2386,14 @@
         "width_deg": 60.0,
         "extension": 0.25,
         "joint_draws": 35,
-        "volume_km3": null
+        "conditional_volume_interval95_km3": null
       },
       {
         "width_deg": 60.0,
         "extension": 0.5,
         "joint_draws": 40,
-        "volume_km3": [
+        "conditional_volume_interval95_km3": [
           2.712983549383855,
-          4.065850998447347,
           6.515437520740491
         ]
       },
@@ -2489,22 +2401,78 @@
         "width_deg": 60.0,
         "extension": 1.0,
         "joint_draws": 25,
-        "volume_km3": null
+        "conditional_volume_interval95_km3": null
       }
     ]
   },
   "archive_predictions": {},
   "model_role": "principal",
-  "volume_statistic": "median of complete Earth-integrated posterior draws",
+  "volume_statistic": "Earth integral of pointwise posterior median thickness",
   "map_statistic": "pointwise posterior median thickness",
   "exact_site_coverage95": {
     "covered": 84,
     "exact_sites": 102,
     "fraction": 0.8235294117647058
   },
-  "conditional_volume_km3": [
+  "conditional_volume_interval95_km3": [
     1.4598053832519988,
-    2.267876865559769,
     6.931645472742099
-  ]
+  ],
+  "reference_volume_interval95_km3": [
+    3.5689058419045496,
+    14.871443574258556
+  ],
+  "sector_volume_interval95_km3": [
+    [
+      0.022990854341434046,
+      0.3469680239297962
+    ],
+    [
+      0.03244164983559832,
+      0.2229340344260816
+    ],
+    [
+      0.04742147699831338,
+      0.33962349286238
+    ],
+    [
+      0.08829242571856226,
+      0.7599851203650482
+    ],
+    [
+      0.12480110601940418,
+      1.3319288240953129
+    ],
+    [
+      0.48936264731510204,
+      1.8012595662601276
+    ],
+    [
+      0.5410938358875186,
+      1.5713011509948434
+    ],
+    [
+      0.07660384770925897,
+      0.8402733003603051
+    ]
+  ],
+  "population_volume_intervals95_km3": [
+    [
+      1.4252091106631046,
+      6.623714932301336
+    ],
+    [
+      1.4592228730572263,
+      5.976382874113367
+    ],
+    [
+      1.5652949745447051,
+      7.013794492344322
+    ],
+    [
+      1.5062740630738045,
+      7.421581804469574
+    ]
+  ],
+  "estimate_source": "deposit.json#median_map_volume_km3"
 }

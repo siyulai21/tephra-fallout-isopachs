@@ -10,9 +10,9 @@ from src.empirical_isopach.models.nested.report import nested_dataset, whole_are
 def report(job):
     path,folder,name,resume,whole_area,budget,base = job
     if whole_area:
-        volume = whole_area_dataset(path,folder,name,resume=resume,budget=budget,base_cache=base)["conditional_volume_km3"]
+        volume = whole_area_dataset(path,folder,name,resume=resume,budget=budget,base_cache=base)["median_map_volume_km3"]
     else:
-        volume = nested_dataset(path,folder,name,resume=resume)["volume_km3"]
+        volume = nested_dataset(path,folder,name,resume=resume)["median_map_volume_km3"]
     print(name,volume,flush=True)
 
 

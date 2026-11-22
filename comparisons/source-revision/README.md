@@ -4,39 +4,39 @@ This experiment used the earlier B-Tm and Aso-4 inputs to test how fan geometry 
 
 **The B-Tm maximum moved when the geometry changed.** The preceding median field peaked about 94 km southwest of the vent on a 5 km local grid, at about 163 cm; it predicted 73 cm at the vent. The nearest accepted observation is 150 cm at 2.6 km distance. This unsupported displaced maximum motivated a source-focused geometry, without adding a vent thickness, missing-data zeros, a volume cap or a closing boundary.
 
-The source-focused B-Tm fit has a median of **106 km³** and a **53–2,159 km³ conditional 95% interval**, compared with the preceding **344 km³ (80–17,485 km³)**. Its maximum is at the supplied source by construction. Its geographic negative log score improves from **1.520 to 1.162**; lower is better. Coverage changes from **95.2% to 92.9%**, so the improvement is not uniform across every metric. The same-data GP and spline scores are 1.331 and 1.814. The preceding B-Tm score also has one numerically provisional fold, so its exact difference is uncertain. These are development comparisons, not proof of superior global-volume accuracy or independent validation of the subsequent family choice.
+The source-focused B-Tm fit has a conditional 95% volume interval of **53–2,159 km³**. The earlier displaced model spanned **80–17,485 km³**. The geographic score improved from **1.520 to 1.162**, while exact-site coverage fell from **95.2% to 92.9%**.
 
 ![B-Tm source correction](b-tm-source.png)
 
 The [current B-Tm report](../../eruptions/b-tm/results/spherical-mixture/README.md) contains the complete seven-alternative sensitivity protocol, fresh production fit, geographic checks and automatic integration refinement. The catalogue records its reviewed `source-fans` geometry, so the normal B-Tm command reproduces that choice. This changes the geometry, not eruption-specific wind or particle inputs. The upper volume tail remains broad and must be reported.
 
-**Aso-4 geometry sensitivities.** Source-focused ellipses improve its geographic score from **1.644 to 1.421**, with 94.3% coverage, but increase the conditional median to **3,418 km³**. The six- and twelve-site envelope models reduce it to **472 and 369 km³**, but their scores worsen to **1.715 and 1.760**, and coverage falls to **86.2%**. That is not a demonstration that 369–472 km³ is the correct global mass. The preceding 1,836 km³ calculation remains visible as a questioned conditional estimate, alongside these alternatives; it is not endorsed as a precise geological total.
+For Aso-4, source-focused ellipses improved the geographic score from **1.644 to 1.421**. The six- and twelve-site envelopes scored **1.715 and 1.760** with **86.2%** exact-site coverage.
 
 ![Competing volumes and geographic predictions](comparison.png)
 
 ## B-Tm · every tested geometry
 
-| Geometry | Median bulk km³ | Conditional 95% interval km³ | Fit numerical checks | Geographic score ↓ | Heldout 95% coverage | Holdout checks |
-|---|---:|---:|---|---:|---:|---|
-| Previous displaced circles | 344 | 79.5–1.75e+04 | pass | 1.520 | 95.2% | **provisional** |
-| Anchored harmonic fans | 143 | 58.7–1.98e+03 | pass | not run | — | — |
-| Source-focused ellipses | 106 | 53.2–2.16e+03 | pass | 1.162 | 92.9% | pass |
-| One source-focused fan | 67.6 | 54.8–81.5 | pass | not run | — | — |
-| Vent envelope, free centres | 92.6 | 58.1–724 | **provisional** | not run | — | — |
-| Vent envelope, six site bases | 213 | 153–303 | **provisional** | 1.499 | 96.4% | **provisional** |
-| Vent envelope, twelve site bases | 81.8 | 58.9–112 | pass | 1.659 | 92.9% | pass |
+| Geometry | Conditional 95% interval km³ | Fit numerical checks | Geographic score ↓ | Heldout 95% coverage | Holdout checks |
+|---|---:|---|---:|---:|---|
+| Previous displaced circles | 79.5–1.75e+04 | pass | 1.520 | 95.2% | **provisional** |
+| Anchored harmonic fans | 58.7–1.98e+03 | pass | not run | — | — |
+| Source-focused ellipses | 53.2–2.16e+03 | pass | 1.162 | 92.9% | pass |
+| One source-focused fan | 54.8–81.5 | pass | not run | — | — |
+| Vent envelope, free centres | 58.1–724 | **provisional** | not run | — | — |
+| Vent envelope, six site bases | 153–303 | **provisional** | 1.499 | 96.4% | **provisional** |
+| Vent envelope, twelve site bases | 58.9–112 | pass | 1.659 | 92.9% | pass |
 
 ## Aso-4 · every tested geometry
 
-| Geometry | Median bulk km³ | Conditional 95% interval km³ | Fit numerical checks | Geographic score ↓ | Heldout 95% coverage | Holdout checks |
-|---|---:|---:|---|---:|---:|---|
-| Previous displaced circles | 1.84e+03 | 507–5e+04 | pass | 1.644 | 94.3% | pass |
-| Anchored harmonic fans | 3.35e+03 | 706–1.5e+04 | pass | not run | — | — |
-| Source-focused ellipses | 3.42e+03 | 700–1.79e+04 | pass | 1.421 | 94.3% | pass |
-| One source-focused fan | 2.36e+03 | 451–1.24e+04 | pass | not run | — | — |
-| Vent envelope, free centres | 1.34e+03 | 359–2e+04 | pass | not run | — | — |
-| Vent envelope, six site bases | 472 | 317–1.05e+03 | pass | 1.715 | 86.2% | pass |
-| Vent envelope, twelve site bases | 369 | 298–482 | pass | 1.760 | 86.2% | pass |
+| Geometry | Conditional 95% interval km³ | Fit numerical checks | Geographic score ↓ | Heldout 95% coverage | Holdout checks |
+|---|---:|---|---:|---:|---|
+| Previous displaced circles | 507–5e+04 | pass | 1.644 | 94.3% | pass |
+| Anchored harmonic fans | 706–1.5e+04 | pass | not run | — | — |
+| Source-focused ellipses | 700–1.79e+04 | pass | 1.421 | 94.3% | pass |
+| One source-focused fan | 451–1.24e+04 | pass | not run | — | — |
+| Vent envelope, free centres | 359–2e+04 | pass | not run | — | — |
+| Vent envelope, six site bases | 317–1.05e+03 | pass | 1.715 | 86.2% | pass |
+| Vent envelope, twelve site bases | 298–482 | pass | 1.760 | 86.2% | pass |
 
 All volumes are bulk fallout, not dense-rock equivalent, PDC/ignimbrite deposit volume, or a whole-eruption total. Each interval is conditional on its own model and priors. They are not probability-weighted alternatives and their combined span is not a 95% interval. No model was selected because its volume agreed with published estimates.
 

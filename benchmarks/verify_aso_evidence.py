@@ -30,7 +30,13 @@ updated_btm = 0
 for old_path, expected in others.items():
  current = re.sub(r'^(eruptions/[^/]+/results)/global/', r'\1/spherical-mixture/', old_path)
  path = Path(current)
- if hashfile(path) == expected:
+ if path.is_file() and hashfile(path) == expected:
+  continue
+ if not path.is_file():
+  assert path.name == "isopachs.svg" and current not in published, current
+  replacement = path.with_name("isopachs.png").as_posix()
+  verify_files({replacement:published[replacement]})
+  visual_revisions += 1
   continue
  if current in preceding_spherical:
   # The 2026-11-08 study checks the prior result at its original scientific identity.
@@ -42,7 +48,7 @@ for old_path, expected in others.items():
  if path.parts[1] == "b-tm":
   updated_btm += 1
  else:
-  assert path.suffix in {".md", ".png", ".svg"} or path.name == "artifacts.json", current
+  assert path.suffix in {".md", ".png", ".svg"} or path.name in {"artifacts.json","report.json","estimates.csv"}, current
   visual_revisions += 1
  verify_files({current: published[current]})
 reference_root = OUT/'reference'

@@ -2,10 +2,10 @@
 
 CSV row 56 most frequently sets the last measured rank. The first test withholds that observation. The second also withholds every accepted row within the shared geographic buffer of 8.1 km. Each fit re-estimates shape, thinning and the remaining volume. The principal fit retains all accepted sites.
 
-| Withheld | Rows | Bulk volume median [conditional 95%] (km³) | Full-fit population check |
+| Withheld | Rows | Conditional 95% volume interval (km³) | Full-fit population check |
 |---|---:|---:|---|
-| One site | 1 | 52.0 [37.8–242.2] | passed |
-| Site and local cluster | 2 | 52.5 [37.8–250.1] | **warning** |
+| One site | 1 | 37.8–242.2 | passed |
+| Site and local cluster | 2 | 37.8–250.1 | **warning** |
 
 These sites were selected from their influence on the fitted geometry. The change measures sensitivity to that part of the survey. The observations retain their published provenance and acceptance status.
 

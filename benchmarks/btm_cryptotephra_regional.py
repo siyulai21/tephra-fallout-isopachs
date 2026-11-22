@@ -112,10 +112,10 @@ def run(previous, primary, weaker, analog, output):
             item = report["methods"][family]
             common = integrate_region(model,old)
             summary.append({"case":label,"method":family,"input_sha256":meta["input_sha256"],
-                            "fitted_hull_km2":hull.area, "expected_km3":item["regional_volume"]["expected_km3"],
+                            "fitted_hull_km2":hull.area,
                             "median_map_km3":item["regional_volume"]["median_surface_km3"],
                             **{"volume_q"+k:v for k,v in item["joint_volume"]["conditional_quantiles_km3"].items()},
-                            "original_hull_km2":old.area, "original_hull_expected_km3":common["expected_km3"],
+                            "original_hull_km2":old.area,
                             "original_hull_median_map_km3":common["median_surface_km3"]})
             for site,point,inside in zip(sites,xy,hull.contains(xy),strict=True):
                 row = {"case":label,"method":family,"id":site["id"],"inside_regional_hull":bool(inside)}

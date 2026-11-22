@@ -92,17 +92,17 @@ def principal_map(data, meta, name, out, model, report):
     contour_segments(ax, x, y, z, data, SupportMesh(data), model)
     setup_map(ax, bounds, meta["vent_lonlat"])
     observations(ax, data, size=20, meta=meta)
-    lo, mid, hi = report["volume_km3"]
+    lo, hi = report["conditional_volume_interval95_km3"]
     warning = " · numerical warning" if not all(report["numerics"].values()) else ""
     fig.suptitle(f"{name} · Bayesian nested corridor", fontsize=16, fontweight="bold")
-    ax.set_title(f"Median isopachs (cm)   |   Bulk volume {mid:,.1f} km³ [{lo:,.1f}–{hi:,.1f}]{warning}", fontsize=10)
+    ax.set_title(f"Median isopachs (cm)   |   Conditional 95% volume interval {lo:,.1f}–{hi:,.1f} km³{warning}", fontsize=10)
     thickness_bar(fig, image, ax, norm)
     observation_legend(fig, data, [Line2D([], [], color="#274552", lw=2, label="Locally bracketed"),
                                    Line2D([], [], color="#274552", ls="--", label="Continuation")], meta=meta, columns=4)
     indices = np.flatnonzero(np.isfinite(z.ravel()))
     sample = indices[np.linspace(0, len(indices)-1, 7, dtype=int)]
     provenance = {"protocol":report["protocol"], "input_sha256":meta["input_sha256"],
-                  "posterior_sha256":report["full_packet_sha256"], "volume_km3":report["volume_km3"],
+                  "posterior_sha256":report["full_packet_sha256"], "conditional_volume_interval95_km3":[lo,hi],
                   "median_map_volume_km3":report["median_map_volume_km3"], "map_draws":len(shown.z),
                   "x_km_y_km_log10_median_cm":np.column_stack((xy[sample], z.ravel()[sample])).tolist()}
     fig.savefig(out/"isopachs.png", dpi=150, bbox_inches="tight",
@@ -204,22 +204,25 @@ def set_principal_summary(report):
     groups = [f["exact_site_coverage95"] for f in report["folds"]]
     count = sum(len(g["exact_rows"]) for g in groups)
     covered = sum(g["covered"] for g in groups)
-    report.update(model_role="principal", conditional_volume_km3=report["volume_km3"],
-                  volume_statistic="median of complete Earth-integrated posterior draws",
+    from ...volume_reporting import corridor_intervals
+    corridor_intervals(report)
+    report.update(model_role="principal",
+                  estimate_source="deposit.json#median_map_volume_km3",
+                  volume_statistic="Earth integral of pointwise posterior median thickness",
                   map_statistic="pointwise posterior median thickness",
                   exact_site_coverage95={"covered":covered, "exact_sites":count,
                                          "fraction":covered/count if count else None})
 
 
 def case_text(report, *, whole_area_link=None):
-    lo, med, hi = report["volume_km3"]
-    plo, pmed, phi = report["reference_volume_km3"]
+    lo, hi = report["conditional_volume_interval95_km3"]
+    plo, phi = report["reference_volume_interval95_km3"]
     nums = report["numerics"]
     score, prior = report["geographic_score"], report["reference_geographic_score"]
     lines = [f"# {report['name']} · Bayesian nested isopachs", "",
-             f"The principal corridor estimate of bulk fallout is **{med:,.1f} km³** (conditional 95% interval **{lo:,.1f}–{hi:,.1f}**). "
+             f"The conditional 95% volume interval is **{lo:,.1f}–{hi:,.1f} km³**. "
              f"The median thickness map integrates to {report['median_map_volume_km3']:,.1f} km³. "
-             f"The whole-area sensitivity gives {pmed:,.1f} km³ ({plo:,.1f}–{phi:,.1f}).", "",
+             f"The whole-area sensitivity has a conditional 95% interval of {plo:,.1f}–{phi:,.1f} km³.", "",
              "![Principal corridor median thickness, measured sites and local contour support](isopachs.png)", "",
              "Solid portions cross a retained triangle with thicknesses on either side at distinct measured sites and at least 90% posterior crossing probability. Dashed portions depend on the continuation. "
              "The triangles diagnose spatial coverage. The shared contour screen also checks thickness bracketing and deletion stability. "
@@ -234,15 +237,15 @@ def case_text(report, *, whole_area_link=None):
              "## Where the volume lies", "",
              "![Full compass, measured values, median contours and conditional uncertainty](compass.png)", "",
              "The full-compass view includes all bearings through the antipode. Its logarithmic distance scale makes the proximal flanks visible. Areas in the table use the physical equal-area integral.", "",
-             "| Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor volume (km³), median [95%] |",
+             "| Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor conditional 95% volume interval (km³) |",
              "|---|---:|---:|---:|---:|---:|"]
     areas = np.asarray(report["paired_areas"]["area_km2"])[:, 2]
     def volume_label(value):
         return f"{value:.2g}" if 0 < value < .1 else f"{value:,.1f}"
 
-    for j, (name, (vlow, centre, vhigh)) in enumerate(zip(SECTORS, report["sector_volume_km3"], strict=True)):
+    for j, (name, (vlow, vhigh)) in enumerate(zip(SECTORS, report["sector_volume_interval95_km3"], strict=True)):
         exact, bounded = report["site_counts_by_sector"][j]
-        lines.append(f"| {name} | {exact} | {bounded} | {areas[1,j]:,.0f} | {areas[0,j]:,.0f} | {volume_label(centre)} [{volume_label(vlow)}–{volume_label(vhigh)}] |")
+        lines.append(f"| {name} | {exact} | {bounded} | {areas[1,j]:,.0f} | {areas[0,j]:,.0f} | {volume_label(vlow)}–{volume_label(vhigh)} |")
     lines.extend(["", f"At 1 cm, the corridor median map encloses {areas[1,:8].sum():,.0f} km² and the whole-area sensitivity encloses {areas[0,:8].sum():,.0f} km². "
                   f"Of these, {areas[1,8]:,.0f} and {areas[0,8]:,.0f} km² fall outside the retained exact-site triangles. "
                   "An unsampled sector can contain ash. Its allocation depends on the assumed continuation.", "",
@@ -253,11 +256,11 @@ def case_text(report, *, whole_area_link=None):
                   "[Volume and sector draws](volume-budget.npz) · [Complete field draws](full.npz) · [Areas, assumptions, bounds and diagnostics](report.json)"])
     lines.extend(["", "## Structural uncertainty", "",
                   "[Corridor and whole-area maps on a common scale](paired-isopachs.png)", "",
-                  "| Prior probability of broad continuation | Median bulk volume, km³ [conditional 95%] |",
+                  "| Prior probability of broad continuation | Conditional 95% volume interval (km³) |",
                   "|---:|---:|"])
     for p, result in report["prior_sensitivity"]["broad_prior_scenarios"].items():
-        left, centre, right = result["volume_km3"]
-        lines.append(f"| {float(p):.0%} | {centre:,.1f} [{left:,.1f}–{right:,.1f}] |")
+        left, right = result["conditional_volume_interval95_km3"]
+        lines.append(f"| {float(p):.0%} | {left:,.1f}–{right:,.1f} |")
     lines.extend(["", "The prior odds vary under the same observed likelihood. The numerical report also gives the volume by individual corridor law where the saved draws resolve it."])
     for b in report["bounds"]:
         if b["name"] == "Lake Sihailongwan":

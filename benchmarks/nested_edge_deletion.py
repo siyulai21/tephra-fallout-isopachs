@@ -52,13 +52,13 @@ def run(record):
     write_json(out/"report.json",result)
     lines=["# Sensitivity to the site setting the outermost sampled isopach", "",
            f"CSV row {first} most frequently sets the last measured rank. The first test withholds that observation. The second also withholds every accepted row within the shared geographic buffer of {buffer:.1f} km. Each fit re-estimates shape, thinning and the remaining volume. The principal fit retains all accepted sites.", "",
-           "| Withheld | Rows | Bulk volume median [conditional 95%] (km³) | Full-fit population check |",
+           "| Withheld | Rows | Conditional 95% volume interval (km³) | Full-fit population check |",
            "|---|---:|---:|---|"]
     for key,label in (("single","One site"),("cluster","Site and local cluster")):
         f=result["fits"][key]
         lo,med,hi=f["volume_km3"]
         state="passed" if f["numerical"]["passed"] else "**warning**"
-        lines.append(f"| {label} | {len(f['test_rows'])} | {med:,.1f} [{lo:,.1f}–{hi:,.1f}] | {state} |")
+        lines.append(f"| {label} | {len(f['test_rows'])} | {lo:,.1f}–{hi:,.1f} | {state} |")
     lines.extend(["","These sites were selected from their influence on the fitted geometry. The change measures sensitivity to that part of the survey. The observations retain their published provenance and acceptance status.", "",
                   "[Every site's edge probability](../edge-sites.csv) · [Deleted rows, held-out likelihoods and sampling attempts](report.json) · [Complete-volume draws](volumes.npz)"])
     (out/"README.md").write_text("\n".join(lines)+"\n")

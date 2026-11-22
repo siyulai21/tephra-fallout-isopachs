@@ -1,6 +1,6 @@
 # Aso-4 single-structure directional sensitivity
 
-**743.6 [391.6–2,030.3] km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. The brackets give the conditional 95% credible interval. A median **3.4%** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. The reference passed the sampling and integration checks.
+**391.6–2,030.3 km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. These endpoints give the conditional 95% volume interval. A median **3.4%** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. The reference passed the sampling and integration checks.
 
 ![Supported isopach fragments and conditional continuation](isopachs.png)
 
@@ -19,56 +19,56 @@ The original execution grid reached 83.8 cm at a source distance of 48.9 km (bac
 
 ## Where the volume comes from
 
-| Region | Median bulk km³ [95% interval] | Median fraction |
+| Region | Conditional 95% volume interval (km³) | Median fraction |
 |---|---:|---:|
-| Retained measurement triangles | 25.3 [20.7–31.7] | 3.4% |
-| Transition around triangle edges | 30.5 [25.1–39.1] | 4.2% |
-| Remaining area closer than the nearest exact site | 4.9 [2.4–9.9] | 0.7% |
-| Remaining area between the nearest and farthest exact sites | 231.8 [172.2–400.7] | 31.4% |
-| Remaining area beyond the farthest exact site | 448.4 [141.8–1,597.4] | 60.1% |
+| Retained measurement triangles | 20.7–31.7 | 3.4% |
+| Transition around triangle edges | 25.1–39.1 | 4.2% |
+| Remaining area closer than the nearest exact site | 2.4–9.9 | 0.7% |
+| Remaining area between the nearest and farthest exact sites | 172.2–400.7 | 31.4% |
+| Remaining area beyond the farthest exact site | 141.8–1,597.4 | 60.1% |
 
-The five regions exhaust the Earth in each draw. Their separately reported medians can sum to a different value from the median total.
+The five regions exhaust the Earth in each draw.
 
 ![Volume by compass sector](directions.png)
 
-| Bearing | Exact rows | Bounds | Exact rows in distal half | Footprint km² | Median sector km³ [95% interval] |
+| Bearing | Exact rows | Bounds | Exact rows in distal half | Footprint km² | Sector 95% volume interval (km³) |
 |---|---:|---:|---:|---:|---:|
-| N | 8 | 0 | 0 | 11,828 | 50.2 [22.0–243.1] |
-| NE | 60 | 4 | 33 | 338,921 | 356.5 [169.5–863.0] |
-| E | 11 | 0 | 9 | 358,848 | 201.1 [92.5–652.7] |
-| SE | 2 | 0 | 0 | 509 | 47.4 [12.8–392.1] |
-| S | 2 | 0 | 0 | 992 | 7.6 [4.2–86.3] |
-| SW | 0 | 0 | 0 | 23 | 7.3 [3.9–77.9] |
-| W | 0 | 0 | 0 | 19 | 7.3 [3.9–77.9] |
-| NW | 0 | 0 | 0 | 208 | 7.3 [3.9–83.3] |
+| N | 8 | 0 | 0 | 11,828 | 22.0–243.1 |
+| NE | 60 | 4 | 33 | 338,921 | 169.5–863.0 |
+| E | 11 | 0 | 9 | 358,848 | 92.5–652.7 |
+| SE | 2 | 0 | 0 | 509 | 12.8–392.1 |
+| S | 2 | 0 | 0 | 992 | 4.2–86.3 |
+| SW | 0 | 0 | 0 | 23 | 3.9–77.9 |
+| W | 0 | 0 | 0 | 19 | 3.9–77.9 |
+| NW | 0 | 0 | 0 | 208 | 3.9–83.3 |
 
-Octants span 45° centred on each compass bearing. Distal half refers to radius at or beyond the median distinct exact-site radius. The largest gap between distal bearings spans **304.1°** around **237.0°**. Measurements at the vent have no bearing. The explicit extra-fan sensitivity gives **827.0 [411.8–2,780.4] km³**.
+Octants span 45° centred on each compass bearing. Distal half refers to radius at or beyond the median distinct exact-site radius. The largest gap between distal bearings spans **304.1°** around **237.0°**. Measurements at the vent have no bearing. The explicit extra-fan sensitivity gives 411.8–2,780.4 km³**.
 
 ## Unmeasured proximal fallout
 
-The nearest accepted site is 88.3 km from the vent. A compact positive ash cap filling a source depression adds a median **8.16 km³** and gives **756.2 [401.2–2,042.4] km³**. It vanishes exactly at every accepted measurement and bound. Its amplitude comes from the fitted source-background contrast and its mass is analytic. The cap-inclusive numerical checks passed. Other unobserved proximal deposits can differ. Its matched geographic score is 1.555, with 13 held-out rows inside a training cap.
+The nearest accepted site is 88.3 km from the vent. With a compact positive ash cap filling a source depression, the conditional 95% interval is **401.2–2,042.4 km³**. It vanishes exactly at every accepted measurement and bound. Its amplitude comes from the fitted source-background contrast and its mass is analytic. The cap-inclusive numerical checks passed. Other unobserved proximal deposits can differ. Its matched geographic score is 1.555, with 13 held-out rows inside a training cap.
 
 Adding the measured sites, triangle vertices and a finer near-source search to the displayed grid gives a reference thickness maximum of 86.1 cm, 44.2 km from the vent in transition. With the cap the highest candidate is 16.6 km from the vent. Both peak searches are finite. [Paired volume draws](source-cap.npz).
 
 ## Assumptions and validation
 
-| Common policy | Median bulk km³ [95% interval] | Numerical checks |
+| Common policy | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---|
-| reference | 743.6 [391.6–2,030.3] | pass |
-| heavy tail | 1,213.7 [778.3–2,343.0] | pass |
-| fixed fourth power | 882.6 [503.5–1,936.2] | pass |
-| exponential | 629.9 [355.8–1,599.6] | pass |
-| light tail | 751.7 [426.4–1,868.7] | pass |
-| narrow fans | 757.0 [351.0–2,453.1] | pass |
-| broad fans | 1,214.3 [478.0–3,171.8] | pass |
-| possible missing fan | 827.0 [411.8–2,780.4] | pass |
-| strict footprint | 832.7 [397.0–2,688.7] | pass |
-| permissive footprint | 693.2 [361.8–1,893.8] | pass |
-| broader background | 727.6 [383.9–2,112.7] | pass |
-| longer transition | 737.6 [381.9–2,093.1] | pass |
-| stronger local departures | 747.1 [383.0–2,071.4] | pass |
+| reference | 391.6–2,030.3 | pass |
+| heavy tail | 778.3–2,343.0 | pass |
+| fixed fourth power | 503.5–1,936.2 | pass |
+| exponential | 355.8–1,599.6 | pass |
+| light tail | 426.4–1,868.7 | pass |
+| narrow fans | 351.0–2,453.1 | pass |
+| broad fans | 478.0–3,171.8 | pass |
+| possible missing fan | 411.8–2,780.4 | pass |
+| strict footprint | 397.0–2,688.7 | pass |
+| permissive footprint | 361.8–1,893.8 | pass |
+| broader background | 383.9–2,112.7 | pass |
+| longer transition | 381.9–2,093.1 | pass |
+| stronger local departures | 383.0–2,071.4 | pass |
 
-The 13 median estimates span 629.9–1,214.3 km³ across named assumptions. 13/13 fits passed the parameter, volume and integration checks. The intervals condition on the fitted field family, sampling locations and deposit identification. Unknown fans, preservation bias and marine redistribution can move the true total outside them.
+13/13 fits passed the parameter, volume and integration checks. The intervals condition on the fitted field family, sampling locations and deposit identification. Unknown fans, preservation bias and marine redistribution can move the true total outside them.
 
 The matched buffered geographic score is **1.555** (lower is better). Its 95% predictive intervals cover **86.7%** of exact held-out measurements. The quadrant-deletion test scored 87/87 rows with an equal-quadrant score of 1.550. Both tests rebuild the geometry from training rows.
 

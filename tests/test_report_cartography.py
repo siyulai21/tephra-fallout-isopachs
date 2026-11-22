@@ -120,17 +120,15 @@ def test_publication_receipt_rejects_conflicting_entries(tmp_path):
         read_hashes(receipt)
 
 
-def test_audited_case_leads_with_matching_fits_then_site_evidence():
-    from src.empirical_isopach.visualization.comparison import comparison_section, FIGURE
-
+def test_old_fit_packets_use_median_maps_and_do_not_substitute_an_unmapped_volume():
     from benchmarks.publication import BTM_THICKNESS_ONLY
-    home = Path(__file__).resolve().parents[1]/BTM_THICKNESS_ONLY/"results"
+    from src.empirical_isopach.visualization.comparison import comparison_section
+
+    home = Path(__file__).resolve().parents[1] / BTM_THICKNESS_ONLY / "results"
     section = comparison_section(home, prefix="results/")
-    assert section in (home.parent/"README.md").read_text()
-    assert section.index(FIGURE) < section.index("Volume and predictive performance") < section.index("Measured fan directions |")
-    assert "| Measured fan directions | Thicknesses and bounds | 42.5 | 52.3 |" in section
-    assert "| Measured fan directions | Comparable visible fallout beds | 35.8 | 43.5 |" in section
-    assert "| Uncertain fan direction | Comparable visible fallout beds | 40.7 | 59.0 | 28.5–149.7 |" in section
+    assert "| Spherical mixture | Map integral pending |" in section
+    assert "| Directional | Whole-Earth median map **" in section
+    assert section.count("Hull median map") == 2
 
 
 def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch):

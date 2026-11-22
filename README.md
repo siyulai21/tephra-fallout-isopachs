@@ -1,23 +1,15 @@
 # Tephra fallout reconstruction
 
-This repository turns published ash-thickness measurements into **isopachs** (contours of equal thickness) and estimates of bulk fallout volume. Open an eruption to compare five fits, their volumes and their predictions at withheld sites. Its case page also links the measurements and source decisions.
+This repository reconstructs ash thickness and bulk airborne fallout volume from field measurements and documented bounds. Open an eruption to compare five independent fits, see where they draw each isopach and check their predictions against geographically withheld sites.
 
-**[Browse the eruption results](eruptions/README.md)** · **[Submit or recalculate an eruption through chat](docs/NEW_ERUPTION.md)**
+**[Explore the eruption catalogue](eruptions/README.md)** · **[Submit an eruption in chat](docs/NEW_ERUPTION.md)**
 
-## What a case tells you
+## Read a result
 
-The **GP ensemble** and **trend-regularized cubic spline** each reconstruct thickness inside the same observation hull. The local support audit shows where observations bracket a contour, including holes inside that hull.
+The **GP ensemble** and **trend-regularized cubic spline** map the same observation hull. The **directional ensemble**, **spherical mixture** and **Bayesian nested corridors** extend thickness across Earth under different assumptions about unsampled ground. Each global method reports one median-thickness map and the integral of that same field over Earth. Conditional 95% intervals describe uncertainty in total fallout volume. The regional maps integrate median thickness within the observation hull. [All five methods](docs/methods/README.md) · [Numerical results across eruptions](comparisons/principal-volumes.csv)
 
-The **directional ensemble** and **spherical mixture** each extend thickness across the Earth under different assumptions. The principal directional map allows a fan to turn in poorly sampled directions. Its bulk volume integrates the pointwise median thickness over the Earth. Its conditional 95% interval comes from integrating complete simulated deposits. The spherical mixture limits how far a measured bearing supports broad fallout and allows an unseen fan to turn. Its principal volume is the median integral of complete deposits. A poorly sampled direction can hold ash that none of the observations reveal. [Spherical maps and matched tests](comparisons/spherical-mixture/README.md)
+Each global figure shows the full modeled footprint down to 0.5 cm, a near-vent view and thickness versus the square root of cumulative area. Contours and observation colours follow 0.5, 1, 2, 4 cm and successive doublings. The global volumes include thinner fallout. A case’s support audit shows which contour fragments have local measurement brackets and where continuation relies on assumptions. [Map and volume definitions](docs/OUTPUTS.md)
 
-On the directional maps, solid contour fragments connect measured thicknesses that bracket a level. Dashes show where the deposit edge depends on continuation. Each directional report compares the principal map with a control that fixes fan direction using the same observations and weights. [Cross-eruption comparison and maps](comparisons/directional/README.md)
+Minoan combines Plinian and co-ignimbrite fallout in one deposit. B-Tm includes interpreted upper bounds from lake and peat archives. The Pinatubo Layer C study compares all five fits outside the eight-eruption catalogue. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [Pinatubo Layer C](comparisons/nested-isopachs/pinatubo-preview/README.md)
 
-Minoan combines Plinian and co-ignimbrite fans in one deposit. At B-Tm, two lake profiles and one peat core supplied conditional upper bounds where no bed thickness was measured. Their case pages show how those decisions affect the maps and volumes. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [How to review an occurrence without a measured thickness](docs/methods/sites-without-measured-thickness.md)
-
-The **Bayesian nested-isopach model** uses dispersal corridors as its principal continuation. The maps show pointwise median thickness and distinguish locally bracketed contour segments from extrapolation. The principal volume is the median integral of complete deposits over Earth. Every case reports a separate whole-area sensitivity, along with the tests that withheld real measurements. [Global estimates and maps](comparisons/nested-isopachs/README.md) · [Field-survey validation](comparisons/nested-reach/field-surveys/README.md) · [Paired continuation assumptions](comparisons/nested-reach/README.md)
-
-## Methods and evidence
-
-[How the five models work](docs/methods/README.md) · [Compare their held-out predictions and stress tests](comparisons/README.md)
-
-To run an analysis or contribute code, start with the [guides and repository layout](docs/README.md). AI agents can follow the [intake, publication and verification instructions](AGENTS.md).
+[Prediction tests and sensitivity studies](comparisons/README.md) · [Repository and code guides](docs/README.md) · [Agent workflow](AGENTS.md)

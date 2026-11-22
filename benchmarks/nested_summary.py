@@ -34,7 +34,7 @@ def table(path, rows):
 
 
 def three(volume):
-    return [volume[k] for k in ("lower95", "median", "upper95")]
+    return [volume["lower95"], volume["upper95"]]
 
 
 def case_results(record):
@@ -55,12 +55,14 @@ def case_results(record):
             if not n["identity"][partition] == d[dk] == s[sk]:
                 raise ValueError(f"Geographic partitions differ for {slug} fold {n['fold']}")
     draws = [three(directional["volume"]["coherent_volume_km3"]),
-             three(spherical["fits"]["baseline"]["volume"]), nested["conditional_volume_km3"]]
+             three(spherical["fits"]["baseline"]["volume"]), nested["conditional_volume_interval95_km3"]]
     scores = [dg["all_estimated"]["revised_score"], sv["metrics"]["equal_region_log_score"],
               nested["geographic_score"]]
+    maps = [read(home/family/file)["median_map_volume_km3"] for family,file in (
+        ("directional","deposit.json"), ("spherical-mixture","deposit.json"), ("nested-whole-area","median-field.json"))]
     results = [dict(eruption=record["name"], slug=slug, method=name, lower95_km3=q[0],
-                    median_km3=q[1], upper95_km3=q[2], equal_region_log_score=score, input_sha256=key)
-               for name, q, score in zip(FAMILIES, draws, scores, strict=True)]
+                    median_map_km3=volume, upper95_km3=q[-1], equal_region_log_score=score, input_sha256=key)
+               for name, q, volume, score in zip(FAMILIES, draws, maps, scores, strict=True)]
     experiments = []
     for family, folder in zip(FAMILIES, ("directional", "spherical-mixture")):
         study = read(home/folder/"sensitivity-study/report.json")
@@ -69,8 +71,8 @@ def case_results(record):
         paired = study["paired_scores"]
         lo, med, hi = study["sensitivity_volume_km3"]
         experiments.append(dict(eruption=record["name"], method=family, control_score=paired["reference_score"],
-                                candidate_score=paired["sensitivity_score"], control_median_km3=study["reference_volume_km3"][1],
-                                candidate_median_km3=med, candidate_lower95_km3=lo, candidate_upper95_km3=hi,
+                                candidate_score=paired["sensitivity_score"], control_lower95_km3=study["reference_volume_km3"][0],
+                                control_upper95_km3=study["reference_volume_km3"][-1], candidate_lower95_km3=lo, candidate_upper95_km3=hi,
                                 numerical_checks_passed=study["passed"]))
     nested["distal_rolloff"] = read(home/"nested-whole-area/distal-taper.json")["scenarios"]
     nested["bearing_study"] = read(home/"nested-whole-area/bearing-study/report.json")
@@ -103,14 +105,13 @@ def sector_evidence(record, report):
 
 
 def known_row(item, label, assumption, family, quantiles, passed):
-    lo, med, hi = quantiles
+    lo, hi = quantiles[0], quantiles[-1]
     truth = item["truths"][label]["volume_km3"]
-    signed = np.log(med/truth)
     width = np.log(hi/lo)
     outside = max(np.log(lo/truth), np.log(truth/hi), 0.)
     return dict(scenario=item["scenario"], seed=item["seed"], truth=label, method=family,
-                weight=1/len(item["truths"]), truth_km3=truth, lower95_km3=lo, median_km3=med,
-                upper95_km3=hi, signed_log_error=signed, absolute_log_error=abs(signed),
+                weight=1/len(item["truths"]), truth_km3=truth, lower95_km3=lo,
+                upper95_km3=hi,
                 covered=lo <= truth <= hi, log_interval_width=width, log_interval_score=width+40*outside,
                 numerical_checks_passed=passed, source=assumption)
 
@@ -135,7 +136,7 @@ def matched_challenges(known, spherical, initial=()):
                 if not np.isclose(actual["volume_km3"], float(s["truth_km3"])):
                     raise ValueError(f"Spherical challenge truth differs for {scenario}-{seed}")
                 passed = all(s[k] == "True" for k in ("sampler_passed", "spatial_passed", "draw_split_passed"))
-                append("Spherical", [float(s[k]) for k in ("lower95", "median_km3", "upper95")], passed,
+                append("Spherical", [float(s[k]) for k in ("lower95", "upper95")], passed,
                        "published spherical-bearing challenge")
             else:
                 d = item["directional"]
@@ -150,7 +151,7 @@ def matched_challenges(known, spherical, initial=()):
                     if not np.isclose(actual["volume_km3"], s["truths"][key]):
                         raise ValueError(f"Fresh spherical challenge truth differs for {scenario}-{seed}")
                     passed = s["parent"]["passed"] and s["numerical"]["spatial_passed"] and s["numerical"]["draw_split_passed"]
-                    append("Spherical", three(s["volume"]), passed, "matched spherical refit")
+                    append("Spherical", [s["volume"][k] for k in ("lower95","median","upper95")], passed, "matched spherical refit")
                     if "candidate_quantiles_km3" in s:
                         append("Spherical source prior",s["candidate_quantiles_km3"],passed and s["candidate_effective_draws"]>=100,
                                "same spherical draws with source-displacement prior")
@@ -185,13 +186,14 @@ def comparison_plot(rows, path, nested_family="Nested"):
     for i, (family, color) in enumerate(zip(("Directional", "Spherical", nested_family), ("#427687", "#bd6c31", "#694b91"), strict=True)):
         group = [r for r in rows if r["method"] == family]
         y = np.arange(len(names)) + .23*(1-i)
-        lo, med, hi = np.array([[r[k] for r in group] for k in ("lower95_km3", "median_km3", "upper95_km3")])
-        ax.errorbar(med, y, xerr=[med-lo, hi-med], fmt="o", color=color, capsize=2.5, ms=4, label=family)
+        lo, med, hi = np.array([[r[k] for r in group] for k in ("lower95_km3", "median_map_km3", "upper95_km3")])
+        ax.hlines(y, lo, hi, color=color, lw=1.5)
+        ax.scatter(med, y, color=color, marker="D", s=20, label=family, zorder=3)
     ax.set(yticks=np.arange(len(names)), yticklabels=names, xscale="log", xlabel="Whole-deposit bulk volume (km³, log scale)")
     ax.invert_yaxis()
     ax.grid(axis="x", alpha=.24)
     ax.legend(loc="upper center", bbox_to_anchor=(.5,-.14), ncol=3, frameon=False)
-    ax.set_title("Complete-deposit medians and conditional 95% intervals", loc="left")
+    ax.set_title("Median-thickness map integrals and conditional 95% volume intervals", loc="left")
     fig.savefig(path, dpi=160)
     plt.close(fig)
 

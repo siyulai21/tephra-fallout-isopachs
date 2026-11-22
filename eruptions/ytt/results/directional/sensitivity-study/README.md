@@ -1,6 +1,6 @@
 # YTT · Uncertain amount of fallout in unsampled bearings
 
-The candidate median complete-deposit volume is **1,247.2 km³**. The conditional 95% interval is 715.3–4,542.2 km³.
+The conditional 95% volume interval for this sensitivity is 715.3–4,542.2 km³.
 
 One amount multiplier is shared by the entire deposit. Its influence increases with the existing measure of unsupported bearing and vanishes at training sites. The quarter, unchanged and fourfold factors are structural scenarios. An unvisited bearing supplies no measurement of that amount.
 

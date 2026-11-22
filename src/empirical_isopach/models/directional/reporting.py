@@ -58,25 +58,31 @@ def figures(output, title, data, meta, g, draws, arcs, result):
 
     from ...visualization.global_maps import global_maps
     map_result = global_maps(output, title, data, meta, draws, result, g=g, arcs=arcs)
+    sector_intervals(output, title, result)
+    return map_result
+
+
+def sector_intervals(output, title, result):
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
     fig, ax = plt.subplots(figsize=(8.5, 4.2), layout="constrained")
     for j,s in enumerate(COMPASS):
         item = result["compass"][s]
         v = item["volume"]
         ax.plot([j,j],[v["lower95"],v["upper95"]],c="#235164",lw=2)
-        ax.scatter(j,v["median"],c="#235164",s=32,zorder=3)
-        ax.scatter(j,item["parts"]["footprint"]["median"],s=28,c="#e08548",marker="D",zorder=3)
+        part = item["parts"]["footprint"]
+        ax.plot([j+.10, j+.10], [part["lower95"], part["upper95"]], color="#c17541", lw=3)
     ax.set(xticks=range(8),xticklabels=[f"{s}\n{result['compass'][s]['exact']} rows" for s in COMPASS],
            ylabel="Bulk fallout (km³)",title=title+"  |  Volume by bearing from the vent")
     ax.set_ylim(bottom=0)
     ax.grid(axis="y",alpha=.22)
-    ax.legend([Line2D([0],[0],c="#235164",marker="o"),Line2D([0],[0],c="#e08548",marker="D",ls="")],
-              ["Sector median and conditional 95% interval","Median inside the local footprint"],fontsize=9)
+    ax.legend([Line2D([0],[0],c="#235164"),Line2D([0],[0],c="#c17541")],
+              ["Sector 95% interval","Footprint 95% interval"],fontsize=9)
     fig.savefig(output/"directions.png",dpi=145,bbox_inches="tight"); plt.close(fig)
-    return map_result
 
 
 def _range(v):
-    return f"{v['median']:,.1f} [{v['lower95']:,.1f}–{v['upper95']:,.1f}]"
+    return f"{v['lower95']:,.1f}–{v['upper95']:,.1f}"
 
 
 def render(path, work, output, name=None):
@@ -152,26 +158,26 @@ def render(path, work, output, name=None):
     coverage = v["metrics"].get("coverage95_observations")
     coverage_text = f"{coverage:.1%}" if coverage is not None else "unavailable"
     lines = [f"# {name} single-structure directional sensitivity", "",
-        f"**{_range(base['volume_km3'])} km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. The brackets give the conditional 95% credible interval. A median **{base['parts']['footprint']['fraction']['median']:.1%}** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. {reference_status}", "",
+        f"**{_range(base['volume_km3'])} km³ of bulk fallout** under the common two-scale continuation with an inferred distal thinning law. This is the conditional 95% volume interval. A median **{base['parts']['footprint']['fraction']['median']:.1%}** of the volume lies inside retained measurement triangles. The remainder depends on extrapolation. {reference_status}", "",
         "![Supported isopach fragments and conditional continuation](isopachs.png)", "",
         f"The first map shades the interpolation footprint and shows {int(arcs.displayed.sum())} measured-bracketed line segments. The second map shows the geometric mean of posterior thickness with labelled contours. The panels deliberately use different extents: every observation is visible locally, while the continuation view expands around the 0.1 cm contour. Circles mark exact observations, triangles mark bounds, and the star marks the source. Volume comes from integration of each complete field to the antipode.", "",
         "![Local thickness and latent uncertainty](local.png)", "",
         "![Whole-Earth conditional continuation](world.png)", "",
         "Local detail can cut contours at its window; longitude edges join in the whole-Earth view. Colours saturate below 0.1 cm and above the displayed upper limit. Fine coastlines supply context, not fitting evidence. [Display bounds, finite-grid edge check and posterior subset](map-display.json).", "",
         f"The displayed grid reaches {map_result['grid_maximum_cm']:,.1f} cm at a source distance of {map_result['grid_maximum_chord_distance_km']:.1f} km ({map_result['grid_maximum_region']}). At the supplied vent it gives {map_result['source_geometric_mean_cm']:,.1f} cm. These are summaries of the fitted map.", "",
-        "## Where the volume comes from", "", "| Region | Median bulk km³ [95% interval] | Median fraction |","|---|---:|---:|"]
+        "## Where the volume comes from", "", "| Region | Conditional 95% volume interval (km³) | Median fraction |","|---|---:|---:|"]
     for k in PARTS:
         vpart = base["parts"][k]
         lines.append(f"| {parts_text[k]} | {_range(vpart['volume_km3'])} | {vpart['fraction']['median']:.1%} |")
-    lines += ["","The five regions exhaust the Earth in each draw. Their separately reported medians can sum to a different value from the median total.","",
-        "![Volume by compass sector](directions.png)","", "| Bearing | Exact rows | Bounds | Exact rows in distal half | Footprint km² | Median sector km³ [95% interval] |",
+    lines += ["","The five regions exhaust the Earth in each draw.","",
+        "![Volume by compass sector](directions.png)","", "| Bearing | Exact rows | Bounds | Exact rows in distal half | Footprint km² | Sector 95% volume interval (km³) |",
         "|---|---:|---:|---:|---:|---:|"]
     for s, val in base["compass"].items():
         lines.append(f"| {s} | {val['exact']} | {val['bounds']} | {val['distal_half_exact']} | {val['footprint_km2']:,.0f} | {_range(val['volume'])} |")
     lines += ["",f"Octants span 45° centred on each compass bearing. Distal half refers to radius at or beyond the median distinct exact-site radius. The largest gap between distal bearings spans **{largest['width_deg']:.1f}°** around **{largest['midpoint_deg']:.1f}°**. Measurements at the vent have no bearing. The explicit extra-fan sensitivity gives **{_range(estimates['possible_missing_fan']['volume_km3'])} km³**.", "",
-        "## Assumptions and validation", "", "| Common policy | Median bulk km³ [95% interval] | Numerical checks |", "|---|---:|---|"]
+        "## Assumptions and validation", "", "| Common policy | Conditional 95% volume interval (km³) | Numerical checks |", "|---|---:|---|"]
     lines.extend(f"| {p.name.replace('_',' ')} | {_range(estimates[p.name]['volume_km3'])} | {'pass' if estimates[p.name]['passed'] else 'review'} |" for p in POLICIES)
-    lines += ["",f"The {len(estimates)} median estimates span {policies[0]['volume_km3']['median']:,.1f}–{policies[-1]['volume_km3']['median']:,.1f} km³ across named assumptions. {n_pass}/{len(estimates)} fits passed the parameter, volume and integration checks. The intervals condition on the fitted field family, sampling locations and deposit identification. Unknown fans, preservation bias and marine redistribution can move the true total outside them.", "",
+    lines += ["",f"{n_pass}/{len(estimates)} fits passed the parameter, volume and integration checks. The intervals condition on the fitted field family, sampling locations and deposit identification. Unknown fans, preservation bias and marine redistribution can move the true total outside them.", "",
         f"The matched buffered geographic score is **{score_text}** (lower is better). Its 95% predictive intervals cover **{coverage_text}** of exact held-out measurements. The quadrant-deletion test scored {w['scored_rows']}/{w['total_rows']} rows with an equal-quadrant score of "+(f"{w['equal_region_log_score']:.3f}." if w["equal_region_log_score"] is not None else "unavailable.")+" Both tests rebuild the geometry from training rows.", "",
         "Geographic deletion used four clusters. "+fold_checks(v)+" Quadrant deletion used four compass quadrants. "+fold_checks(w), "",
         f"The shared whole-contour audit found {sum(v['selected_band'] is not None for v in screen['policies'].values())} policies with a qualifying band out of {len(screen['policies'])}. Its record retains rejected contours, holes and geographic-deletion checks. [Complete contour audit](complete-contour-audit.json)", "",
@@ -204,4 +210,6 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     measured_bearings(path,work,output/"bearing",archives)
     result = uncertain_azimuth(path,work,output/"azimuth",name,archives)
     family_page(output)
+    from ...visualization.deposit import render_deposit
+    render_deposit(output,"directional",data,meta,result["dataset"])
     return result

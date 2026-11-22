@@ -147,8 +147,8 @@ def publish(data, g, draws, folder, report, work, latitude):
     validation_text = (f" Its matched geographic score is {score:.3f}, with {len(geo['inside_training_cap'])} held-out rows inside a training cap."
                        if score is not None else "")
     block = ("## Unmeasured proximal fallout\n\n"
-        f"The nearest accepted site is {nearest:,.1f} km from the vent. A compact positive ash cap filling a source depression adds a median "
-        f"**{item['extra_km3']['median']:.2f} km³** and gives **{v['median']:,.1f} [{v['lower95']:,.1f}–{v['upper95']:,.1f}] km³**. "
+        f"The nearest accepted site is {nearest:,.1f} km from the vent. With a compact positive ash cap filling a source depression, the conditional 95% interval is "
+        f"**{v['lower95']:,.1f}–{v['upper95']:,.1f} km³**. "
         "It vanishes exactly at every accepted measurement and bound. Its amplitude comes from the fitted source-background contrast and its mass is analytic. "
         f"The cap-inclusive numerical checks {'passed' if item['passed'] else 'carry a warning'}. Other unobserved proximal deposits can differ.{validation_text}\n\n"
         f"Adding the measured sites, triangle vertices and a finer near-source search to the displayed grid gives a reference thickness maximum of "

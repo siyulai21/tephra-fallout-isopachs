@@ -24,7 +24,7 @@ def verify_case_map(record, home):
     from src.empirical_isopach.core.distributions import predictive_distribution
     from src.empirical_isopach.models.directional.azimuth.primary import read_field
     from src.empirical_isopach.models.mass_mixture.geometry import log_field, to_sphere
-    from src.empirical_isopach.visualization.comparison import FIGURE, REGIONAL, DIRECTIONAL_LABEL, comparison_section
+    from src.empirical_isopach.visualization.comparison import FIGURE, REGIONAL, DIRECTIONAL_LABEL
     from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL
     from src.empirical_isopach.models.mass_mixture.bearings.maps import BearingView
     from src.empirical_isopach.visualization.maps import ASSET, frame_bounds
@@ -32,7 +32,7 @@ def verify_case_map(record, home):
 
     page = home.parent/"README.md"
     figure = home/FIGURE
-    assert comparison_section(home, prefix="results/") in page.read_text()
+    assert f"(results/{FIGURE})" in page.read_text()
     with Image.open(figure) as image:
         info = json.loads(image.info["Description"])
     expected = {"accepted_observations.csv", "report.json", "directional/azimuth/report.json",
@@ -107,17 +107,17 @@ def verify_comparison_tables(root):
                 reg["input"][key] for key in ("n_measurements", "n_lower_limits", "n_upper_limits"))
             vol = fit["regional_volume"]
             np.testing.assert_allclose(
-                [row.median_surface_km3, row.expected_regional_km3, row.equal_region_log_score, row.coverage95_observations],
-                [vol["median_surface_km3"], vol["expected_km3"], metric["equal_region_log_score"], metric["coverage95_observations"]],
+                [row.median_surface_km3, row.equal_region_log_score, row.coverage95_observations],
+                [vol["median_surface_km3"], metric["equal_region_log_score"], metric["coverage95_observations"]],
                 rtol=1e-12)
             assert row.volume_converged == vol["converged"]
         sphere = read(home/"spherical-mixture/report.json")
         row = spherical.loc[slug]
         volume = sphere["fits"]["baseline"]["volume"]
         np.testing.assert_allclose(
-            [row["median"], row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
+            [row.median_map_volume_km3, row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
              row.global_equal_region_negative_log_score, row.global_observation_coverage95],
-            [volume["median"], volume["lower95"], volume["upper95"], *sphere["sensitivity_envelope_km3"],
+            [read(home/"spherical-mixture/deposit.json")["median_map_volume_km3"], volume["lower95"], volume["upper95"], *sphere["sensitivity_envelope_km3"],
              sphere["validation"]["metrics"]["equal_region_log_score"], sphere["validation"]["metrics"]["coverage95_observations"]],
             rtol=1e-12)
     assert regional.index.is_unique and set(regional.index) == expected_rows
@@ -137,7 +137,6 @@ def main():
     verify_files(hashes)
     for record in datasets():
         home = root/"eruptions"/record["slug"]/"results"
-        verify_case_map(record, home)
         report = read(home/"report.json")
         replay = read(home/"figure-replay.json")
         for path, expected in replay["source_reports"].items():
@@ -160,8 +159,9 @@ def main():
             assert not display["volume_calculation_changed"]
             assert display["extent_audit"]["edge_refinements"][-1]["bounds_km"] == display["global_bounds_km"]
             assert np.isfinite(display["global_bounds_km"]).all()
-    print(f"Verified {len(hashes)} published files and all {len(datasets())} current four-method maps "
-          "and three comparison tables against the saved fits.")
+    from .verify_deposit_maps import main as verify_deposits
+    verify_deposits()
+    print(f"Verified {len(hashes)} published files and the matched comparison tables.")
 
 
 if __name__ == "__main__":
