@@ -1,5 +1,7 @@
 # Sakurajima Satsuma fallout, southern Japan
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 6.7 km³ of bulk fallout (conditional 95% interval 3.1–30.7), compared with 12.5 km³ under the whole-area continuation. Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The 12.8 ka Satsuma eruption (P14, Sz-S) deposited ash and pumice east and west of Sakurajima. The reconstruction combines primary fallout from its eruptive phases. **50 measured thicknesses, five lower bounds and two upper bounds** come from field sections, written excavation records, an island outcrop and a seafloor core. Each location and thickness comes from a numeric source record. [Accepted data](../../data/eruptions/Sakurajima_Satsuma.csv) · [Published sources](../../data/sources/sakurajima-satsuma/README.md) · [202-row selection audit](../../data/audits/Sakurajima-Satsuma/README.md)
 
 ## Five matched thickness-only fits

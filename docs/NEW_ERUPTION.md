@@ -8,6 +8,8 @@ Site-derived principal bounds belong in the accepted CSV. A separate archive inv
 
 The [optional intake template](../templates/README.md) gives the observation schema. Leave unknown values explicit. Decisions about sources and deposit interpretation belong in the audit.
 
+The default full run writes the paired nested geographic continuation to `nested-reach/`. Publish both maps and intervals. Give independent surveys and buffered measurements priority when discussing how far a deposit actually extended. [Output and evidence hierarchy](methods/nested-reach.md)
+
 ## From upload to published case
 
 1. **Audit the sources.** Preserve original files and hashes and record row identities and units in the case audit. Review each actual site lacking a measured thickness. Trace important locations to their original descriptions, calculate any defensible limits, and document the missing physical quantity or the demonstrated low geometric influence for an omission. Save the calculations and the links from source records to fitted rows. [Site review worksheet](../templates/SITE_EVIDENCE.md)

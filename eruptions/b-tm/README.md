@@ -1,5 +1,7 @@
 # B-Tm fallout reconstruction
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 35.9 km³ of bulk fallout (conditional 95% interval 26.6–50.2), compared with 90.4 km³ under the whole-area continuation. Predicting the three interpreted upper limits from the other 68 rows strongly favors finite reach. At Lake Sihailongwan the withheld event probability rises from 0.18% to 97.85%. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The 946 CE Millennium eruption of Paektu / Changbaishan deposited fallout in two phases. The four families fit their combined airborne deposit using **64 measured thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The gold diamonds locate the interpreted cores. [Accepted observations](../../data/eruptions/B-Tm_cryptotephra.csv) · [Source descriptions and calculations](../../data/audits/B-Tm/README.md)
 
 The principal uncertain-direction median map integrates to **33.6 km³**. At Lake Sihailongwan, west of the volcano, its median thickness falls from **8.02 cm to 0.0146 cm**. The conditional limits used at Sihailongwan, Quanyang and Kushu are 0.06, 0.64 and 0.45 cm. The peat and lakes require different transfer assumptions. [Before-and-after contours, weaker assumptions and the independent marine check](results/cryptotephra/README.md)

@@ -1,5 +1,7 @@
 # Mazama fallout reconstruction
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 271.4 km³ of bulk fallout (conditional 95% interval 129.2–938.0), compared with 411.2 km³ under the whole-area continuation. The southwestern sector has no measured sites or bounds. Its median 1 cm footprint changes from 28,185 to 5,771 km². Buffered thickness predictions improve, and withholding whole quadrants slightly favors the broader fit. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The accepted dataset contains 45 exact measurements. The regional fits share an observation hull of 930,447 km². [Accepted thickness CSV](../../data/eruptions/Mazama_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
 ## Isopach fits

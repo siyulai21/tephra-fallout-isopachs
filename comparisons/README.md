@@ -1,5 +1,7 @@
 # How well do the methods predict fallout?
 
+The nested family now reports two geographic continuations for every eruption. B-Tm’s withheld archive bounds favor the narrower map, while withheld Aso-4 and Pinatubo marine deposits favor the broader one. [Conditional isopachs and volumes](nested-reach/README.md) · [Independent field surveys](nested-reach/field-surveys/README.md)
+
 The figure compares the four published fits on withheld geographic regions for each eruption. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
 
 ![Geographic prediction scores and exact-site coverage for the four methods](method-scores.png)

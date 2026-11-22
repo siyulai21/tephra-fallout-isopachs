@@ -1,5 +1,7 @@
 # Ilopango Tierra Blanca Joven, Unit G
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 40.9 km³ of bulk fallout (conditional 95% interval 25.1–94.2), compared with 50.5 km³ under the whole-area continuation. Both geographic and compass holdouts favor the broader fit. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
 ## Five matched thickness-only fits

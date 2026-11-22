@@ -1,5 +1,7 @@
 # Younger Toba Tuff (YTT) fallout reconstruction
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 1,322.2 km³ of bulk fallout (conditional 95% interval 771.0–3,000.8), compared with 1,543.0 km³ under the whole-area continuation. The corridor fit improves buffered predictions and fares worse on withheld quadrants. The full-data fit and volume population checks retained numerical warnings. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The accepted dataset contains 46 exact measurements. The regional fits share an observation hull of 17,719,965 km². [Accepted thickness CSV](../../data/eruptions/YTT_tephra.csv) · [Row-level source audit](../../data/audits/YTT/README.md)
 
 ## Isopach fits

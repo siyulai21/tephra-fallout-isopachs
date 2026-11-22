@@ -1,5 +1,7 @@
 # Tambora fallout reconstruction
 
+**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 112.7 km³ of bulk fallout (conditional 95% interval 62.5–237.7), compared with 146.9 km³ under the whole-area continuation. Both geographic and whole-quadrant holdouts predict the real observations better under the broader continuation. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+
 The accepted dataset contains 26 exact measurements. The regional fits share an observation hull of 2,980,287 km². [Accepted thickness CSV](../../data/eruptions/Tambora_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
 ## Isopach fits

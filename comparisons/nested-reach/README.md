@@ -1,0 +1,37 @@
+# How far can a measured isopach be continued?
+
+A distant core establishes fallout at its location. Extending the same thickness across an unsampled flank can contribute much more bulk volume than the core itself constrains. The paired fits below use identical accepted observations and the same nested thickness profile. The new fit gives a positive site a finite angular width and a finite extension beyond its range. Bounds constrain thickness through their observation likelihood. [Geographic reach model and assumptions](../../docs/methods/nested-reach.md)
+
+Real surveys provide the primary comparison. On Calbuco 2015 the corridor fit improved predictions on a separate field campaign and reduced the average extra span against an independently mapped 0.1 mm isopach. The Aso-4 and Pinatubo marine transfers favored the broader fit. Synthetic deposits have a separate role in testing failure modes and numerical recovery. [Independent surveys, archive bounds and field-map checks](field-surveys/README.md)
+
+**B-Tm has the clearest evidence for the narrower map.** Mazama improves on buffered geographic predictions and changes little on whole-quadrant predictions. Aso-4’s western footprint shrinks substantially, while independent compass predictions favor broader continuation. The paired results are published together. Global volume remains conditional on how a fan continues across unvisited ground.
+
+| Eruption | Whole-area median, km³ | Corridor median [conditional 95%], km³ | Buffered score, old → new | Compass score, old → new |
+|---|---:|---:|---:|---:|
+| [Aso-4](../../eruptions/aso-4/results/nested-reach/README.md) | 2,513.9 | **652.5** [249.5–9,990.1] | 1.540 → 1.556 | 1.263 → 1.579 |
+| [B-Tm](../../eruptions/b-tm/results/nested-reach/README.md) | 90.4 | **35.9** [26.6–50.2] | 1.570 → 1.544 | 3.070 → 0.946 |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-reach/README.md) | 50.5 | **40.9** [25.1–94.2] | 1.159 → 1.274 | 1.132 → 1.283 |
+| [Mazama](../../eruptions/mazama/results/nested-reach/README.md) | 411.2 | **271.4** [129.2–938.0] | 1.503 → 1.365 | 2.794 → 2.821 |
+| [Minoan](../../eruptions/minoan/results/nested-reach/README.md) | 37.6 | **28.4** [17.4–67.6] | 1.536 → 1.621 | 1.494 → 1.646 |
+| [Pinatubo 1991 Layer C (separate intake)](../nested-isopachs/pinatubo-preview/nested-reach/README.md) | 6.1 | **2.3** [1.5–6.9] | 1.076 → 1.440 | 0.958 → 1.328 |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-reach/README.md) | 12.5 | **6.7** [3.1–30.7] | 0.742 → 1.016 | 1.141 → 1.353 |
+| [Tambora](../../eruptions/tambora/results/nested-reach/README.md) | 146.9 | **112.7** [62.5–237.7] | 1.368 → 1.646 | 1.509 → 1.816 |
+| [YTT](../../eruptions/ytt/results/nested-reach/README.md) | 1,543.0 | **1,322.2** [771.0–3,000.8] | 1.507 → 1.429 | 1.865 → 2.225 |
+
+Each map is the pointwise median. Volumes summarize the integrals of complete posterior draws. These are bulk deposit volumes. The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. [Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)
+
+Across the eight catalogued eruptions the mean buffered score changes from 1.366 to 1.431. The mean whole-quadrant score changes from 1.784 to 1.709. B-Tm accounts for the improvement in the latter average. None of the eight has a complete contour band that passes the shared support screen. The separate Pinatubo Layer C snapshot is excluded from those averages.
+
+## What the three disputed maps show
+
+- **B-Tm, W.** The median 1 cm contour encloses 6,593 km² in this sector under the old fit and 71 km² under the new fit. The accepted table has 0 exact and 1 bounded readings there. [Both maps and sector volumes](../../eruptions/b-tm/results/nested-reach/README.md)
+- **Aso-4, W.** The median 1 cm contour encloses 6,319,337 km² in this sector under the old fit and 48,254 km² under the new fit. The accepted table has 0 exact and 0 bounded readings there. [Both maps and sector volumes](../../eruptions/aso-4/results/nested-reach/README.md)
+- **Mazama, SW.** The median 1 cm contour encloses 28,185 km² in this sector under the old fit and 5,771 km² under the new fit. The accepted table has 0 exact and 0 bounded readings there. [Both maps and sector volumes](../../eruptions/mazama/results/nested-reach/README.md)
+
+## Recovery of deposits with known thickness
+
+The two models covered the known total in 18/20 and 17/20 cases, respectively. Median absolute log-volume error changed from 0.212 to 0.300. The 20 truths come from 18 surveys, including two pairs with identical observations and different hidden deposits. These are development stress tests.
+
+For a genuinely broad, circular deposit surveyed only on its eastern half, the two corridor fits missed 159,977–304,290 km² of the true western 1 cm footprint. Both conditional volume intervals included the known total. A volume interval can cover the truth while the median contour misses a real lobe. Both models also underestimated the deliberately diffuse global tail. The inherited analogue thinning prior limits both methods there.
+
+The earlier regional GP and cubic-spline benchmarks were rerun on matched inputs. Both the registered-case summary and the 80-row synthetic table reproduced their previous SHA-256 hashes. [Known volume and false/missed area](known-surfaces.csv) · [Per-site scores, model diagnostics and known-surface receipts](validation.json.gz) · [Regional replay](regional-parity.json)

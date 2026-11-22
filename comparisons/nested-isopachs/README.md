@@ -1,5 +1,7 @@
 # Whole-deposit volume from Bayesian nested isopachs
 
+The nested values below use whole-area continuation. The paired reach study evaluates how much of each contour depends on extending measurements across unsampled bearings. Independently withheld field surveys provide the primary evidence for choosing between these assumptions. [All paired maps and volume intervals](../nested-reach/README.md) · [Real-deposit tests](../nested-reach/field-surveys/README.md)
+
 Each row compares the same accepted thickness measurements and bounds. Each interval integrates complete simulated deposits over the Earth. The directional case home also reports the integral of its median map. Those two summaries can differ appreciably when a fan can turn.
 
 ![Whole-deposit median volumes and conditional intervals](volumes.png)

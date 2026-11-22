@@ -1,5 +1,7 @@
 # Bayesian nested isopachs
 
+The full comparison also runs the paired finite-corridor continuation. [Geographic reach and fitting](reach.py) · [Case reports](reach_report.py) · [Protocol](../../../../docs/methods/nested-reach.md)
+
 The [method equations and reproduction commands](../../../../docs/methods/nested-isopachs.md) describe the prior, external analogue information, observation model, independent particle populations and whole-Earth integration.
 
 | File | Responsibility |

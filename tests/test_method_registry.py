@@ -51,6 +51,11 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
         return {"principal_estimate": "uncertain fan direction"}
     monkeypatch.setattr(directional, "directional_dataset", directional_run)
     monkeypatch.setattr(cli, "nested_dataset", lambda *a, **k: calls.append("nested"))
+    def check_reach(path, output, **kwargs):
+        assert kwargs["parent"] == tmp_path/"a/nested-isopachs"
+        assert output == tmp_path/"a/nested-reach"
+        calls.append("geographic reach")
+    monkeypatch.setattr(cli, "reach_dataset", check_reach)
     monkeypatch.setattr(cli, "review_continuations", lambda *a: calls.append("sensitivities"))
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
     monkeypatch.setattr(global_reporting, "global_dataset", spherical_run)
@@ -58,7 +63,7 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     monkeypatch.setattr(cli, "add_comparison_to_run", lambda output: calls.append(("maps and table", output)))
     (tmp_path/"a").mkdir()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"a")])
-    assert calls == ["regional", ("global", False), "directional", "nested", "sensitivities", "overview", ("maps and table", tmp_path/"a")]
+    assert calls == ["regional", ("global", False), "directional", "nested", "geographic reach", "sensitivities", "overview", ("maps and table", tmp_path/"a")]
     assert destinations == {"spherical": tmp_path/"a/spherical-mixture", "directional": tmp_path/"a/directional"}
     assert not (tmp_path/"a/global").exists()
     calls.clear()
