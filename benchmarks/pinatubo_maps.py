@@ -4,7 +4,7 @@ import csv
 from PIL import Image, ImageDraw, ImageFont
 from matplotlib import font_manager
 
-from .pinatubo import AUDIT, SOURCE, src
+from .pinatubo import AUDIT, FRAMES, SOURCE, position, src
 
 OUT = AUDIT / "visual"
 FONT_PATH = font_manager.findfont("DejaVu Sans")
@@ -50,6 +50,35 @@ def reading_status(row):
     return f"Fitted {sign}{float(row['value_cm']):g} cm · CSV row {row['accepted_csv_row']}"
 
 
+def coordinate_example():
+    """Locate a named section against the original longitude and latitude ticks."""
+    raw = Image.open(SOURCE/"paladio-figure-7.gif").convert("RGB")
+    section = next(r for r in src("paladio-table-2.csv") if r["section"] == "CAB 1")
+    x, y = int(section["x"]), int(section["y"])
+    lon, lat = position("P7", x, y)
+    left, right, top, bottom, _, _ = FRAMES["P7"]
+    sheet = Image.new("RGB", (1160, 849), "white")
+    mark = ImageDraw.Draw(sheet)
+    mark.text((12,10), "Check CAB 1 against the printed coordinate grid", fill=INK, font=font(25))
+    mark.text((12,47), "Paladio-Melosantos Figure 7 · original map pixels at native scale", fill=INK, font=font(17))
+    ox, oy = 145, 108
+    sheet.paste(raw.crop((0,0,1000,681)), (ox,oy))
+    for px, label in [(left,"120°00′ E"), (right,"120°45′ E")]:
+        mark.text((ox+px,oy-27), label, anchor="mt", font=font(15), fill=BLUE)
+        mark.line((ox+px,oy-9,ox+px,oy+4), fill=BLUE, width=2)
+    for py, label in [(top,"15°30′ N"), (bottom,"15°00′ N")]:
+        mark.text((ox-13,oy+py), label, anchor="rm", font=font(16), fill=BLUE)
+        mark.line((ox-9,oy+py,ox+3,oy+py), fill=BLUE, width=2)
+    cx, cy = ox+x, oy+y
+    for u in range(int(ox+left), cx-15, 14):
+        mark.line((u,cy,u+6,cy), fill=BLUE, width=1)
+    for v in range(int(oy+top), cy-15, 14):
+        mark.line((cx,v,cx,v+6), fill=BLUE, width=1)
+    mark.ellipse((cx-10,cy-10,cx+10,cy+10), outline=BLUE, width=2)
+    mark.text((12,807), f"CAB 1 · original pixel ({x}, {y}) · {lat:.5f}° N, {lon:.5f}° E · Table 2 thickness {section['whole_layer_c_cm']} cm", fill=INK, font=font(21))
+    sheet.save(OUT/"coordinate-check.png", optimize=True)
+
+
 def distal_sheet():
     """Print the original small-scale symbols with their map locators outside the pixels."""
     readings = src("context/paladio-figure-9-localities.csv")
@@ -75,13 +104,16 @@ def draw_sheets():
     OUT.mkdir(exist_ok=True,parents=True)
     with (AUDIT/"selection.csv").open() as f:
         lookup = {r["id"]:r for r in csv.DictReader(f)}
+    with (AUDIT/"survey-coverage/david-schematic.csv").open() as f:
+        schematic = {r["site"]:r for r in csv.DictReader(f)}
     distal_sheet()
+    coordinate_example()
     index = []
     guide = ["# Check the Pinatubo measurements by eye", "",
              "Three examples take about a minute to check. The [CAB-1 table entry and mapped section](field-check.md) give a measured 15 cm. On [K-03](visual/k3-01.png), 20 mm is clear and the other value carries a question mark, giving a 2 cm minimum. The [P7-056 symbol](visual/p7-07.png) is ambiguous and was excluded.", "",
              "Find an evidence ID in the [row index](reading-index.csv), then open its sheet below. Each card shows the original pixels enlarged four times. The small teal marks in the margin point to the recorded pixel centre. On the sublayer sheets the left and right panels show the same site in C1 and C2. On the other sheets the second panel repeats the location with the margin marks.", "",
              "P7 filled circles are independent Layer C field readings. Open circles are whole-section totals and bound Layer C from above. Squares report the Koyaguchi or Listanco survey. Triangles locate the sampled sections in Table 2. The section totals are printed in the table. A question mark records an unresolved reading. The [selection ledger](selection.csv) explains each fitting decision.", "",
-             "The published maps have finite resolution. Six decimal places record the output of the graticule transformation. Recalculate a location from the stored pixel in [the coordinate audit](README.md#map-coordinates).", ""]
+             "To check a coordinate, open the [worked CAB 1 map](visual/coordinate-check.png). Its triangle is at original pixel (628, 411). It lies 588 of 874 pixels eastward across the 0.75° longitude span, giving 120.50458° E. It lies 388 of 600.5 pixels southward across the 0.5° latitude span, giving 15.17694° N. Each reading card also prints its mapped location. The full-precision coordinates in the row index reflect the map transformation. [Original Figure 7](../../sources/pinatubo-1991/paladio-figure-7.gif) · [Coordinate audit and uncertainty](README.md#map-coordinates)", ""]
     for tag,title,filename,readings in sources():
         raw = Image.open(SOURCE/filename).convert("RGB")
         guide += [f"## {title}", "", f"[Original image](../../sources/pinatubo-1991/{filename})", ""]
@@ -95,17 +127,27 @@ def draw_sheets():
             g.text((18,12),title+"   /   "+subset[0][0]+" to "+subset[-1][0],font=font(23),fill=INK)
             for j,(ident,reading,pair) in enumerate(subset):
                 x,y=(j%2)*625+13,(j//2)*222+60
-                status=reading_status(lookup.get(ident)); color=BLUE if status.startswith("Fitted") else INK
+                row = lookup.get(ident)
+                status=reading_status(row); color=BLUE if status.startswith("Fitted") else INK
+                if row is None:
+                    location = schematic[ident]
+                    lon, lat = location["approximate_lon"], location["approximate_lat"]
+                    precision = "Schematic"
+                else:
+                    lon, lat = row["longitude"], row["latitude"]
+                    precision = "Mapped"
                 g.text((x,y),ident+"   "+reading,font=font(17),fill=INK)
                 g.text((x+5,y+26),"C1" if len(pair)==2 else "Original",font=font(13),fill=INK)
                 g.text((x+306,y+26),"C2" if len(pair)==2 else "Location",font=font(13),fill=INK)
                 crop_panel(sheet,raw,pair[0],x+7,y+53,marked=len(pair)==2)
                 crop_panel(sheet,raw,pair[-1],x+310,y+53,marked=True)
                 g.text((x+5,y+191),status,font=font(16),fill=color)
+                g.text((x+306,y+191),f"{precision} {float(lat):.4f}° N, {float(lon):.4f}° E",font=font(14),fill=INK)
                 g.line([(x,y+215),(x+598,y+215)],fill="#c9d4d8")
                 index.append(dict(evidence_id=ident,source=tag,published_reading=reading,
                                   x1=pair[0][0],y1=pair[0][1],x2=pair[1][0] if len(pair)>1 else "",
-                                  y2=pair[1][1] if len(pair)>1 else "",decision=status,sheet="visual/"+dest))
+                                  y2=pair[1][1] if len(pair)>1 else "",longitude_e=lon,latitude_n=lat,
+                                  coordinate_source=precision,decision=status,sheet="visual/"+dest))
             sheet.save(OUT/dest,optimize=True)
             guide.append(f"- [{subset[0][0]} through {subset[-1][0]}](visual/{dest})")
         guide.append("")

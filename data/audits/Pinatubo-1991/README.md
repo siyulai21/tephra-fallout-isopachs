@@ -41,10 +41,14 @@ The Singapore sample confirms micrometre-scale particles at great distance. The 
 
 ## Geographic coverage
 
+![Locations of the 194 accepted observations on Luzon and in the South China Sea, with distance and bearing from Pinatubo](coverage.png)
+
 The northern sector has one exact measurement, 14.15 km from the source. Beyond 100 km the exact-site bearings leave a 294.1° gap. Marine deposits extend the measured footprint predominantly west and southwest. An uninterrupted isopach across the remaining directions depends on the model. The later offshore survey documents a local distal thickening and a bend in the lobe, both challenging a smooth thinning field. [Sector counts and distances](coverage.csv) · [Marine evidence and preservation](marine-check.md) · [Wiesner et al.](https://doi.org/10.1007/s00445-003-0306-x)
 
 ## Reproduction
 
 Run `python -m benchmarks.pinatubo` from the repository root to check the principal CSV and selection against the source transcripts. `python -m benchmarks.pinatubo_maps` rebuilds the reading sheets, and `python -m benchmarks.pinatubo_evidence` rebuilds the combined evidence inventory. [Case results](../../../eruptions/pinatubo-1991-layer-c/README.md) · [New eruption workflow](../../../docs/NEW_ERUPTION.md)
+
+Rebuild the observation maps and distance-by-bearing plot with `python -m benchmarks.pinatubo_coverage`. The figure records the input checksum and the number of observations from each environment.
 
 The additional layers have a separate [phase-specific observation index and original pixel checks](other-phases/README.md). Rebuild it with `python -m benchmarks.pinatubo_phases`.

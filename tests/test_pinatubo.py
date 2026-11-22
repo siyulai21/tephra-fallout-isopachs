@@ -32,9 +32,21 @@ def test_input_replays_from_original_readings_and_units():
     assert len(ledger) == len({r["evidence_id"] for r in ledger}) == 464
     fitted = {r["evidence_id"]: int(r["accepted_csv_row"]) for r in ledger if r["accepted_csv_row"]}
     assert fitted == {r["EvidenceID"]: i for i, r in enumerate(accepted, 2)}
+    from PIL import Image
+
+    with Image.open(AUDIT / "coverage.png") as figure:
+        coverage = json.loads(figure.info["Description"])
+    assert coverage == {"input_sha256":sha256(INPUT.read_bytes()).hexdigest(), "observations":194,
+                        "group_counts":{"Terrestrial surveys":158, "Marine cores":34, "Airfield limits":2}}
     sheets = rows(AUDIT / "reading-index.csv")
     assert {r["evidence_id"] for r in sheets} >= {key for key in records if key.startswith(("P2-", "K-", "P7-"))}
     assert all((AUDIT / r["sheet"]).is_file() for r in sheets)
+    for site in sheets:
+        if site["evidence_id"] in records:
+            accepted_row = records[site["evidence_id"]]
+            assert float(site["longitude_e"]) == float(accepted_row["Lon"])
+            assert float(site["latitude_n"]) == float(accepted_row["Lat"])
+    assert (AUDIT / "visual/coordinate-check.png").is_file()
 
 
 def test_preserved_sources_and_marine_station_matches():

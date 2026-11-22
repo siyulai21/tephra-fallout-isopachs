@@ -6,7 +6,7 @@ Find an evidence ID in the [row index](reading-index.csv), then open its sheet b
 
 P7 filled circles are independent Layer C field readings. Open circles are whole-section totals and bound Layer C from above. Squares report the Koyaguchi or Listanco survey. Triangles locate the sampled sections in Table 2. The section totals are printed in the table. A question mark records an unresolved reading. The [selection ledger](selection.csv) explains each fitting decision.
 
-The published maps have finite resolution. Six decimal places record the output of the graticule transformation. Recalculate a location from the stored pixel in [the coordinate audit](README.md#map-coordinates).
+To check a coordinate, open the [worked CAB 1 map](visual/coordinate-check.png). Its triangle is at original pixel (628, 411). It lies 588 of 874 pixels eastward across the 0.75° longitude span, giving 120.50458° E. It lies 388 of 600.5 pixels southward across the 0.5° latitude span, giving 15.17694° N. Each reading card also prints its mapped location. The full-precision coordinates in the row index reflect the map transformation. [Original Figure 7](../../sources/pinatubo-1991/paladio-figure-7.gif) · [Coordinate audit and uncertainty](README.md#map-coordinates)
 
 ## Paladio-Melosantos, Table 2 and Figure 7
 
