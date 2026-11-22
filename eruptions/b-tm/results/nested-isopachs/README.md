@@ -1,85 +1,49 @@
 # B-Tm · Bayesian nested isopachs
 
-**90.4 km³ of bulk fallout**, with a conditional 95% interval of **52.0–534.5 km³**. Each sample integrates one complete deposit over the Earth.
+The principal corridor estimate of bulk fallout is **35.9 km³** (conditional 95% interval **26.6–50.2**). The median thickness map integrates to 33.7 km³. The whole-area sensitivity gives 90.4 km³ (52.0–534.5).
 
-Continuing the fitted slopes freely beyond every sampled isopach rank gives 87.5 km³ [53.2–469.1]. The principal fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Reducing or increasing the transferred odds fourfold gives medians of 78.7 and 126.5 km³. Every accepted training site has exactly the same predicted thickness in these continuations.
+![Principal corridor median thickness, measured sites and local contour support](isopachs.png)
 
-The refined profile learns the amount deposited beyond its own thinning break. Its median distal share is 86.5% (conditional 95% 2.5%–98.6%). The thinning break belongs to the deposit and can lie on either side of the outermost measured site.
+Solid portions cross a retained triangle with thicknesses on either side at distinct measured sites and at least 90% posterior crossing probability. Dashed portions depend on the continuation. The triangles diagnose spatial coverage. The shared contour screen also checks thickness bracketing and deletion stability. [Whole-Earth field](world.png) · [Every local bracket](local-brackets.csv.gz) · [Complete contour checks](support.json)
 
-The 71 accepted rows include 64 exact thicknesses, 3 lower bounds, 4 upper bounds and 0 two-sided intervals.
+The buffered geographic score is 1.544 for the corridor and 1.570 for the whole-area sensitivity. Lower scores indicate better predictions at withheld sites. The corridor’s 95% predictive intervals cover 59 of 64 exact withheld readings. 4 of 4 geographic fits passed their sampling checks. The full-data proposal and importance check retained a warning, the final volume populations passed, and the integration check passed. The shared screen accepted a complete contour band under 0 policies. [Prediction scores and row identities](report.json) · [Full fit diagnostics](full.json)
 
-![Median isopachs and uncertain total area](isopachs.png)
+## Where the volume lies
 
-Dashed contours show model predictions. Shading in the area panel gives pointwise conditional 95% limits wherever the lower area is positive. [Whole-Earth map](world.png) · [Complete contour support decisions](support.json)
+![Full compass, measured values, median contours and conditional uncertainty](compass.png)
 
-## Validation
+The full-compass view includes all bearings through the antipode. Its logarithmic distance scale makes the proximal flanks visible. Areas in the table use the physical equal-area integral.
 
-Accepted CSV row 59 (Lake Suigetsu) sets the last sampled isopach rank in 62.2% of complete draws and 14.6% among the largest 5% by volume. Ties split the credit. This identifies where the shape assumes that measured thinning ends. It does not measure the effect of deleting a site. [Attribution to every measured or bounded site](edge-sites.csv) · [Refit with the controlling site and its local cluster withheld](edge-deletion/README.md)
+| Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor volume (km³), median [95%] |
+|---|---:|---:|---:|---:|---:|
+| N | 0 | 1 | 625 | 55,423 | 0.065 [0.025–0.2] |
+| NE | 0 | 3 | 30,789 | 331,346 | 1.9 [0.9–4.3] |
+| E | 64 | 0 | 638,627 | 612,248 | 26.4 [19.9–37.2] |
+| SE | 0 | 1 | 125,384 | 273,009 | 6.9 [4.0–11.1] |
+| S | 0 | 0 | 454 | 36,478 | 0.08 [0.027–0.3] |
+| SW | 0 | 0 | 80 | 7,729 | 0.009 [0.0043–0.036] |
+| W | 0 | 1 | 71 | 6,593 | 0.0084 [0.004–0.033] |
+| NW | 0 | 1 | 106 | 9,346 | 0.013 [0.0058–0.046] |
 
-The independent full-data populations gave medians from 85.2 to 96.1 km³. Their upper 95% endpoints ranged from 476.6 to 605.0 km³. The unmodified thinning profile passed and the continued global volume passed. [Population estimates and refinement history](full.json)
+At 1 cm, the corridor median map encloses 796,136 km² and the whole-area sensitivity encloses 1,332,172 km². Of these, 698,883 and 1,234,920 km² fall outside the retained exact-site triangles. An unsampled sector can contain ash. Its allocation depends on the assumed continuation.
 
-The matched geographic score is 1.570. 4/4 training-fold fits passed the population check. The full-fit population check passed. Direct spatial integration passed.
+The prior assigns 25% to continuation across all bearings. The remaining probability spans three fan widths and three down-range extensions. The fitted probability of whole-bearing continuation is 0.0%. The widths and extensions are shared structural assumptions. A bound supplies a likelihood event. Only positive evidence supplies a potential dispersal corridor.
 
-At withheld exact sites, 60/64 measurements fell inside their 95% predictive intervals. The median fraction of a draw’s volume inside the retained exact-site triangles is 4.9%. The median fraction beyond the farthest exact site is 21.7%. Geographic classes describe sampling coverage.
+[Volume and sector draws](volume-budget.npz) · [Complete field draws](full.npz) · [Areas, assumptions, bounds and diagnostics](report.json)
 
-No complete contour band passed the shared support screen. The global estimate remains conditional on unsampled sectors, the unmeasured core and the distal thinning law.
+## Structural uncertainty
 
-## What contributes to volume
+[Corridor and whole-area maps on a common scale](paired-isopachs.png)
 
-A thickness slab counts the stated slice everywhere the deposit reaches it. The highest slice can occur near or far from the source. Each draw conserves volume across all slices. Marginal medians need not add to the total median.
+| Prior probability of broad continuation | Median bulk volume, km³ [conditional 95%] |
+|---:|---:|
+| 10% | 35.9 [26.6–50.2] |
+| 25% | 35.9 [26.6–50.2] |
+| 50% | 35.9 [26.6–50.2] |
+| 75% | 35.9 [26.6–50.2] |
 
-| Thickness slice (cm) | Median [conditional 95%], km³ |
-|---|---:|
-| 0–0.01 | 2.88 [0.46–50.19] |
-| 0.01–0.1 | 8.26 [2.66–162.44] |
-| 0.1–1 | 24.31 [13.56–219.38] |
-| 1–10 | 38.46 [22.65–132.58] |
-| 10–100 | 9.22 [1.86–36.71] |
-| 100–1000 | 0.00 [0.00–1.90] |
-| >1000 | 0.00 [0.00–0.00] |
+The prior odds vary under the same observed likelihood. The numerical report also gives the volume by individual corridor law where the saved draws resolve it.
 
-## Prior sensitivity
+At Lake Sihailongwan the fitted median is 2.43e-05 cm and the predictive probability of the interpreted ≤0.06 cm event is 99.99%. The archive constrains an upper limit. The actual bed thickness remains unknown.
 
-| Assumption | Median [conditional 95%], km³ | Effective draws |
-|---|---:|---:|
-| baseline | 90.4 [52.0–534.5] | 6,144 |
-| weak profile transfer | 91.1 [53.4–539.4] | 1,879 |
-| broader peak prior | 90.4 [52.0–535.0] | 6,127 |
-| power tail prior 80pct | 92.7 [53.4–580.7] | 3,960 |
-| exponential tail prior 80pct | 89.1 [51.2–506.8] | 5,302 |
-| detached prior 50pct | 96.4 [52.8–607.5] | 4,383 |
-| more distal ash prior | 91.1 [50.5–615.7] | 5,212 |
-| less distal ash prior | 89.6 [53.3–479.5] | 4,219 |
-| distal prior without Santa Maria 1902 | 90.0 [53.9–429.9] | 3,533 |
-| distal prior without Quizapu 1932 | 90.6 [52.0–565.7] | 6,022 |
-| distal prior without Novarupta 1912 | 90.7 [51.9–572.0] | 6,011 |
-| distal prior without Hudson 1991 | 91.0 [51.6–584.7] | 5,890 |
-
-## Compatibility with fitted bounds
-
-Of 7 documented thickness bounds, 2 had a posterior-predictive probability below 5% under the fitted model. Each bound entered the likelihood once. This check includes field scatter and known measurement error.
-
-| Site or source row | Bound (cm) | Median field (cm) | Probability of observed bound |
-|---|---|---:|---:|
-| Lake Sihailongwan | ≤ 0.06 | 1.12 | 0.77% |
-| Quanyang peat | ≤ 0.64 | 9.08 | 0.98% |
-
-The numerical report gives the latent and observation probabilities at every fitted bound. A poorly predicted bound identifies a limitation of the fitted thinning geometry or error model.
-
-## Additional distal thinning
-
-Beyond the largest equivalent isopach radius of any training site in a draw, a smooth extra thinning term tests progressive loss of transported ash. The three fixed scenarios reach an additional e-fold of attenuation after one, two or four more sampled radii. All three integrate to the antipode. The same rule is applied to the training sites in each geographic fold.
-
-| Additional range | Median [conditional 95%], km³ | Geographic score ↓ |
-|---|---:|---:|
-| 1 × sampled radius | 80.7 [51.0–316.5] | 1.568 |
-| 2 × sampled radius | 85.0 [51.7–356.0] | 1.569 |
-| 4 × sampled radius | 88.0 [52.0–403.6] | 1.570 |
-
-The accepted sites give each scenario the same fitted likelihood. The difference in global volume measures sensitivity to the unobserved continuation. [Quadrature and withheld-site checks](distal-taper.json)
-
-The intervals condition on the recorded sampling locations and the specified shape family. Preservation, reworking and the far-field transfer of analogue slopes can introduce additional uncertainty.
-
-[Numerical report and archive probes](report.json) · [Withheld thickness predictions](heldout.csv) · [Geographic training IDs](geographic.json) · [Full posterior](full.npz) · [Per-draw thickness budgets](volume-budget.npz)
-
-[Matched test of the volume assigned to unsupported bearings](bearing-study/README.md)
+[Whole-area sensitivity report, posterior and diagnostics](../nested-whole-area/README.md)

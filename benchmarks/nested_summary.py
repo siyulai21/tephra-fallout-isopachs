@@ -40,8 +40,8 @@ def three(volume):
 def case_results(record):
     slug = record["slug"]
     home = ROOT/"eruptions"/slug/"results"
-    nested = read(home/"nested-isopachs/report.json")
-    folds = read(home/"nested-isopachs/geographic.json")["folds"]
+    nested = read(home/"nested-whole-area/report.json")
+    folds = read(home/"nested-whole-area/geographic.json")["folds"]
     directional = read(home/"directional/azimuth/report.json")
     spherical = read(home/"spherical-mixture/report.json")
     key = digest(record["path"])
@@ -72,11 +72,11 @@ def case_results(record):
                                 candidate_score=paired["sensitivity_score"], control_median_km3=study["reference_volume_km3"][1],
                                 candidate_median_km3=med, candidate_lower95_km3=lo, candidate_upper95_km3=hi,
                                 numerical_checks_passed=study["passed"]))
-    nested["distal_rolloff"] = read(home/"nested-isopachs/distal-taper.json")["scenarios"]
-    nested["bearing_study"] = read(home/"nested-isopachs/bearing-study/report.json")
+    nested["distal_rolloff"] = read(home/"nested-whole-area/distal-taper.json")["scenarios"]
+    nested["bearing_study"] = read(home/"nested-whole-area/bearing-study/report.json")
     if nested["bearing_study"]["input_sha256"] != key:
         raise ValueError(f"Nested bearing sensitivity input differs for {slug}")
-    edge = home/"nested-isopachs/edge-deletion/report.json"
+    edge = home/"nested-whole-area/edge-deletion/report.json"
     if edge.is_file():
         nested["edge_deletion"] = read(edge)
         if nested["edge_deletion"]["input_sha256"] != key:
@@ -179,10 +179,10 @@ def matched_challenges(known, spherical, initial=()):
     return volumes, areas
 
 
-def comparison_plot(rows, path):
+def comparison_plot(rows, path, nested_family="Nested"):
     names = list(dict.fromkeys(r["eruption"] for r in rows))
     fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
-    for i, (family, color) in enumerate(zip(FAMILIES, ("#427687", "#bd6c31", "#694b91"), strict=True)):
+    for i, (family, color) in enumerate(zip(("Directional", "Spherical", nested_family), ("#427687", "#bd6c31", "#694b91"), strict=True)):
         group = [r for r in rows if r["method"] == family]
         y = np.arange(len(names)) + .23*(1-i)
         lo, med, hi = np.array([[r[k] for r in group] for k in ("lower95_km3", "median_km3", "upper95_km3")])
@@ -235,12 +235,14 @@ def main():
         compass.extend(nested["sectors"])
         reports[slug] = nested
     volumes, areas = matched_challenges(raw["nested"], {(s["scenario"],s["seed"]):s for s in raw["spherical"]},raw["initial"])
-    for filename, data in (("cases.csv",rows), ("peer-sensitivities.csv",experiments),("sector-evidence.csv",compass),
+    for filename, data in (("whole-area-cases.csv",rows), ("peer-sensitivities.csv",experiments),("sector-evidence.csv",compass),
                            ("known-volumes.csv",volumes), ("known-areas.csv",areas)):
         table(a.output/filename, data)
-    comparison_plot(rows, a.output/"volumes.png")
+    comparison_plot(rows, a.output/"whole-area-volumes.png")
     from .nested_summary_report import write_report
     write_report(a.output, rows, experiments, reports, volumes, areas,raw["recovery"])
+    from .nested_principal_summary import build
+    build(a.output, rows)
 
 
 if __name__ == "__main__":

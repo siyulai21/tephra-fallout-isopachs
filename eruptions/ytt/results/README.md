@@ -141,8 +141,8 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
 
-## Four-method visual overview
+## Five-family volume and prediction comparison
 
 ![Separate regional and global volume domains with matched predictive evidence](overview.png)
 
-The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md).
+The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md) · [Nested corridor report](nested-isopachs/README.md).

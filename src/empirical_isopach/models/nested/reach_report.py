@@ -3,11 +3,14 @@ from pathlib import Path
 import csv
 import gzip
 import io
+import json
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 import numpy as np
 from matplotlib.collections import LineCollection
+from matplotlib.lines import Line2D
+from scipy.special import ndtr
 from shapely.geometry import LineString, Polygon
 from shapely.ops import unary_union
 
@@ -23,6 +26,7 @@ from ..directional.ensemble.members import splits
 from .continuation import from_parent, load_packet
 from .diagnostics import check_bounds
 from .geometry import DIAMETER
+from .profile import parameters
 from .reach import LAWS, PRIOR, PROTOCOL, PROBS
 from .reach_fit import conditioned_fit, signature
 from .reach_figure import compass_map
@@ -61,6 +65,51 @@ def line_parts(shape):
     return []
 
 
+def contour_segments(ax, x, y, z, data, mesh, deposit):
+    rows = []
+    levels = [v for v in (-1, 0, 1, 2, 3) if np.nanmin(z) < v < np.nanmax(z)]
+    if levels:
+        cs = ax.contour(x, y, z, levels=levels, colors="white", linewidths=1.05, linestyles="dashed")
+        regions, rows = bracketed_regions(data, mesh, deposit, levels)
+        for level, segments in zip(levels, cs.allsegs, strict=True):
+            fragments = [piece for line in segments if len(line) >= 2 for piece in
+                         line_parts(LineString(line).intersection(regions[level]))]
+            ax.add_collection(LineCollection(fragments, colors="white", linewidths=1.9, zorder=5))
+        ax.clabel(cs, fmt=lambda v:f"{10**v:g}", fontsize=8)
+    return rows
+
+
+def principal_map(data, meta, name, out, model, report):
+    bounds = frame_bounds(data.xy)
+    x, y = grid_axes(bounds, longest=181)
+    xx, yy = np.meshgrid(x, y)
+    xy = np.column_stack((xx.ravel(), yy.ravel()))
+    shown = model.reduced(512)
+    z = MapView(shown).central(xy).reshape(xx.shape)
+    norm = Normalize(-2., max(2., np.ceil(np.nanmax(z))))
+    fig, ax = plt.subplots(figsize=(8.3, 6.5), layout="constrained")
+    image = ax.pcolormesh(x, y, z, shading="auto", cmap="viridis", norm=norm, rasterized=True)
+    contour_segments(ax, x, y, z, data, SupportMesh(data), model)
+    setup_map(ax, bounds, meta["vent_lonlat"])
+    observations(ax, data, size=20, meta=meta)
+    lo, mid, hi = report["volume_km3"]
+    warning = " · numerical warning" if not all(report["numerics"].values()) else ""
+    fig.suptitle(f"{name} · Bayesian nested corridor", fontsize=16, fontweight="bold")
+    ax.set_title(f"Median isopachs (cm)   |   Bulk volume {mid:,.1f} km³ [{lo:,.1f}–{hi:,.1f}]{warning}", fontsize=10)
+    thickness_bar(fig, image, ax, norm)
+    observation_legend(fig, data, [Line2D([], [], color="#274552", lw=2, label="Locally bracketed"),
+                                   Line2D([], [], color="#274552", ls="--", label="Continuation")], meta=meta, columns=4)
+    indices = np.flatnonzero(np.isfinite(z.ravel()))
+    sample = indices[np.linspace(0, len(indices)-1, 7, dtype=int)]
+    provenance = {"protocol":report["protocol"], "input_sha256":meta["input_sha256"],
+                  "posterior_sha256":report["full_packet_sha256"], "volume_km3":report["volume_km3"],
+                  "median_map_volume_km3":report["median_map_volume_km3"], "map_draws":len(shown.z),
+                  "x_km_y_km_log10_median_cm":np.column_stack((xy[sample], z.ravel()[sample])).tolist()}
+    fig.savefig(out/"isopachs.png", dpi=150, bbox_inches="tight",
+                metadata={"Description":json.dumps(provenance, sort_keys=True)})
+    plt.close(fig)
+
+
 def both_maps(data, meta, name, out, model, previous):
     x, y = grid_axes(frame_bounds(data.xy), longest=181)
     xx, yy = np.meshgrid(x, y)
@@ -73,23 +122,15 @@ def both_maps(data, meta, name, out, model, previous):
     fig, axes = plt.subplots(1, 2, figsize=(12.8, 5.9), layout="constrained")
     for ax, z, deposit, title in zip(axes, fields, (previous, model), ("Whole-area rank", "Local dispersal corridors"), strict=True):
         image = ax.pcolormesh(x, y, z, shading="auto", cmap="viridis", norm=norm, rasterized=True)
-        levels = [v for v in (-1, 0, 1, 2, 3) if np.nanmin(z) < v < np.nanmax(z)]
-        if levels:
-            cs = ax.contour(x, y, z, levels=levels, colors="white", linewidths=1.05, linestyles="dashed")
-            regions, rows = bracketed_regions(data, mesh, deposit, levels)
-            both_records.extend((title, *row) for row in rows)
-            for level, segments in zip(levels, cs.allsegs, strict=True):
-                fragments = [piece for line in segments if len(line) >= 2 for piece in
-                             line_parts(LineString(line).intersection(regions[level]))]
-                ax.add_collection(LineCollection(fragments, colors="white", linewidths=1.9, zorder=5))
-            ax.clabel(cs, fmt=lambda v:f"{10**v:g}", fontsize=8)
+        rows = contour_segments(ax, x, y, z, data, mesh, deposit)
+        both_records.extend((title, *row) for row in rows)
         setup_map(ax, frame_bounds(data.xy), meta["vent_lonlat"])
         observations(ax, data, size=16, meta=meta)
         ax.set_title(title)
     thickness_bar(fig, image, axes, norm)
     fig.suptitle(f"{name} · Median isopachs (cm)\nSolid where measurements bracket the contour", fontsize=14)
     observation_legend(fig, data, meta=meta)
-    fig.savefig(out / "isopachs.png", dpi=145)
+    fig.savefig(out / "paired-isopachs.png", dpi=145)
     plt.close(fig)
     with io.StringIO(newline="") as stream:
         writer = csv.writer(stream)
@@ -146,20 +187,45 @@ def prior_sensitivity(budgets):
     return {"broad_prior_scenarios":scenarios, "conditional_by_law":conditional}
 
 
-def case_text(report):
+def heldout_coverage(model, test):
+    """Central equal-tail predictive coverage of exact readings under the fitted observation law."""
+    exact = test.subset(~test.censored) if (~test.censored).any() else None
+    if exact is None:
+        return {"exact_rows":[], "predictive_cdf":[], "covered":0}
+    residual = exact.log_value - model.field(exact.xy)
+    scatter = parameters(model.z)[-1][:, None]
+    ranks = (.95*ndtr(residual/np.hypot(scatter, exact.log_sd))
+             + .05*ndtr(residual/np.hypot(3.*scatter, exact.log_sd))).mean(axis=0)
+    return {"exact_rows":exact.row_ids.tolist(), "predictive_cdf":ranks.tolist(),
+            "covered":int(((ranks >= .025) & (ranks <= .975)).sum())}
+
+
+def set_principal_summary(report):
+    groups = [f["exact_site_coverage95"] for f in report["folds"]]
+    count = sum(len(g["exact_rows"]) for g in groups)
+    covered = sum(g["covered"] for g in groups)
+    report.update(model_role="principal", conditional_volume_km3=report["volume_km3"],
+                  volume_statistic="median of complete Earth-integrated posterior draws",
+                  map_statistic="pointwise posterior median thickness",
+                  exact_site_coverage95={"covered":covered, "exact_sites":count,
+                                         "fraction":covered/count if count else None})
+
+
+def case_text(report, *, whole_area_link=None):
     lo, med, hi = report["volume_km3"]
     plo, pmed, phi = report["reference_volume_km3"]
     nums = report["numerics"]
     score, prior = report["geographic_score"], report["reference_geographic_score"]
-    lines = [f"# {report['name']} · Geographic reach of nested isopachs", "",
-             f"The conditional bulk fallout estimate is **{med:,.1f} km³** (95% interval **{lo:,.1f}–{hi:,.1f}**). "
+    lines = [f"# {report['name']} · Bayesian nested isopachs", "",
+             f"The principal corridor estimate of bulk fallout is **{med:,.1f} km³** (conditional 95% interval **{lo:,.1f}–{hi:,.1f}**). "
              f"The median thickness map integrates to {report['median_map_volume_km3']:,.1f} km³. "
-             f"The earlier whole-area rank gives {pmed:,.1f} km³ ({plo:,.1f}–{phi:,.1f}).", "",
-             "![Previous and revised median isopachs](isopachs.png)", "",
+             f"The whole-area sensitivity gives {pmed:,.1f} km³ ({plo:,.1f}–{phi:,.1f}).", "",
+             "![Principal corridor median thickness, measured sites and local contour support](isopachs.png)", "",
              "Solid portions cross a retained triangle with thicknesses on either side at distinct measured sites and at least 90% posterior crossing probability. Dashed portions depend on the continuation. "
              "The triangles diagnose spatial coverage. The shared contour screen also checks thickness bracketing and deletion stability. "
              "[Whole-Earth field](world.png) · [Every local bracket](local-brackets.csv.gz) · [Complete contour checks](support.json)", "",
-             f"The buffered geographic score is {score:.3f}, compared with {prior:.3f} previously. Lower scores indicate better predictions at withheld sites. "
+             f"The buffered geographic score is {score:.3f} for the corridor and {prior:.3f} for the whole-area sensitivity. Lower scores indicate better predictions at withheld sites. "
+             f"The corridor’s 95% predictive intervals cover {report['exact_site_coverage95']['covered']} of {report['exact_site_coverage95']['exact_sites']} exact withheld readings. "
              f"{sum(f['passed'] for f in report['folds'])} of {len(report['folds'])} geographic fits passed their sampling checks. "
              f"The full-data proposal and importance check {'passed' if nums['fit'] else 'retained a warning'}, the final volume populations "
              f"{'passed' if nums['populations'] else 'retained a warning'}, and the integration check {'passed' if nums['quadrature'] else 'retained a warning'}. "
@@ -168,14 +234,17 @@ def case_text(report):
              "## Where the volume lies", "",
              "![Full compass, measured values, median contours and conditional uncertainty](compass.png)", "",
              "The full-compass view includes all bearings through the antipode. Its logarithmic distance scale makes the proximal flanks visible. Areas in the table use the physical equal-area integral.", "",
-             "| Compass sector | Exact sites | Bounded sites | Old 1 cm area (km²) | Revised 1 cm area (km²) | Revised volume (km³), median [95%] |",
+             "| Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor volume (km³), median [95%] |",
              "|---|---:|---:|---:|---:|---:|"]
     areas = np.asarray(report["paired_areas"]["area_km2"])[:, 2]
+    def volume_label(value):
+        return f"{value:.2g}" if 0 < value < .1 else f"{value:,.1f}"
+
     for j, (name, (vlow, centre, vhigh)) in enumerate(zip(SECTORS, report["sector_volume_km3"], strict=True)):
         exact, bounded = report["site_counts_by_sector"][j]
-        lines.append(f"| {name} | {exact} | {bounded} | {areas[0,j]:,.0f} | {areas[1,j]:,.0f} | {centre:,.1f} [{vlow:,.1f}–{vhigh:,.1f}] |")
-    lines.extend(["", f"At 1 cm, the two median maps enclose {areas[0,:8].sum():,.0f} and {areas[1,:8].sum():,.0f} km² across Earth. "
-                  f"Of these, {areas[0,8]:,.0f} and {areas[1,8]:,.0f} km² fall outside the retained exact-site triangles. "
+        lines.append(f"| {name} | {exact} | {bounded} | {areas[1,j]:,.0f} | {areas[0,j]:,.0f} | {volume_label(centre)} [{volume_label(vlow)}–{volume_label(vhigh)}] |")
+    lines.extend(["", f"At 1 cm, the corridor median map encloses {areas[1,:8].sum():,.0f} km² and the whole-area sensitivity encloses {areas[0,:8].sum():,.0f} km². "
+                  f"Of these, {areas[1,8]:,.0f} and {areas[0,8]:,.0f} km² fall outside the retained exact-site triangles. "
                   "An unsampled sector can contain ash. Its allocation depends on the assumed continuation.", "",
                   "The prior assigns 25% to continuation across all bearings. The remaining probability spans three fan widths and three down-range extensions. "
                   f"The fitted probability of whole-bearing continuation is {report['law_posterior'][0]:.1%}. "
@@ -183,6 +252,7 @@ def case_text(report):
                   "Only positive evidence supplies a potential dispersal corridor.", "",
                   "[Volume and sector draws](volume-budget.npz) · [Complete field draws](full.npz) · [Areas, assumptions, bounds and diagnostics](report.json)"])
     lines.extend(["", "## Structural uncertainty", "",
+                  "[Corridor and whole-area maps on a common scale](paired-isopachs.png)", "",
                   "| Prior probability of broad continuation | Median bulk volume, km³ [conditional 95%] |",
                   "|---:|---:|"])
     for p, result in report["prior_sensitivity"]["broad_prior_scenarios"].items():
@@ -193,6 +263,8 @@ def case_text(report):
         if b["name"] == "Lake Sihailongwan":
             lines.extend(["", f"At Lake Sihailongwan the fitted median is {b['latent_cm'][1]:.3g} cm and the predictive probability of the interpreted ≤{b['upper_cm']:.2g} cm event is {b['predictive_probability_of_event']:.2%}. "
                           "The archive constrains an upper limit. The actual bed thickness remains unknown."])
+    if whole_area_link:
+        lines.extend(["", f"[Whole-area sensitivity report, posterior and diagnostics]({whole_area_link})"])
     return "\n".join(lines) + "\n"
 
 
@@ -202,6 +274,16 @@ def reach_dataset(path, output, name=None, *, parent=None, resume=False, archive
         raise ValueError("Use a fresh corridor result directory or verified resume")
     out.mkdir(parents=True, exist_ok=True)
     data, meta = audited_data(path, allow_intervals=True)
+    if resume:
+        for key in ("full", "fold-0", "fold-1", "fold-2", "fold-3"):
+            info, packet = out/(key+".json"), out/(key+".npz")
+            if info.exists() or packet.exists():
+                row = json.loads(info.read_text()) if info.exists() else {}
+                ident = row.get("identity", {})
+                if (ident.get("protocol") != PROTOCOL or ident.get("input_sha256") != meta["input_sha256"]
+                        or ident.get("engine_sha256") != signature() or not packet.is_file()
+                        or row.get("posterior_sha256") != digest(packet)):
+                    raise ValueError(f"Resume inputs or model differ from {info}. Choose a fresh output directory.")
     name = name or (dataset_record(path) or {}).get("name", Path(path).stem)
     if parent is None:
         parent = out / "whole-area-parent"
@@ -219,6 +301,7 @@ def reach_dataset(path, output, name=None, *, parent=None, resume=False, archive
         model, row = conditioned_fit(train, test, meta, parent, out, f"fold-{i}", 71184+i)
         folds.append({"fold":i, "passed":row["passed"], "training_rows":train.row_ids.tolist(),
                       "test_rows":test.row_ids.tolist(), "row_log_scores":row["row_log_scores"],
+                      "exact_site_coverage95":heldout_coverage(model, test),
                       "reference_row_log_scores":row["reference_row_log_scores"],
                       "negative_log_score":float(-np.mean(row["row_log_scores"])),
                       "reference_negative_log_score":float(-np.mean(row["reference_row_log_scores"]))})
@@ -252,7 +335,12 @@ def reach_dataset(path, output, name=None, *, parent=None, resume=False, archive
                             "quadrature":report["quadrature"][-1]["passed"]})
     report["archive_predictions"] = archive_predictions(path, archives, data, meta, full)
     report["prior_sensitivity"] = prior_sensitivity(budgets)
+    set_principal_summary(report)
     write_json(out / "report.json", report)
+    principal_map(data, meta, name, out, full, report)
     both_maps(data, meta, name, out, full, previous)
-    (out / "README.md").write_text(case_text(report))
+    sibling = None
+    if parent.resolve() == (out.parent/"nested-whole-area").resolve() and (parent/"README.md").is_file():
+        sibling = "../nested-whole-area/README.md"
+    (out / "README.md").write_text(case_text(report, whole_area_link=sibling))
     return report

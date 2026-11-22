@@ -1,10 +1,14 @@
 # Sakurajima Satsuma fallout, southern Japan
 
-**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 6.7 km³ of bulk fallout (conditional 95% interval 3.1–30.7), compared with 12.5 km³ under the whole-area continuation. Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+**Principal Bayesian nested estimate.** The corridor model gives 6.7 km³ of bulk fallout (conditional 95% interval 3.1–30.7), compared with 12.5 km³ under the whole-area continuation. Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
 
 The 12.8 ka Satsuma eruption (P14, Sz-S) deposited ash and pumice east and west of Sakurajima. The reconstruction combines primary fallout from its eruptive phases. **50 measured thicknesses, five lower bounds and two upper bounds** come from field sections, written excavation records, an island outcrop and a seafloor core. Each location and thickness comes from a numeric source record. [Accepted data](../../data/eruptions/Sakurajima_Satsuma.csv) · [Published sources](../../data/sources/sakurajima-satsuma/README.md) · [202-row selection audit](../../data/audits/Sakurajima-Satsuma/README.md)
 
 ## Five matched thickness-only fits
+
+![Principal nested corridor median isopachs for Sakurajima Satsuma (P14)](results/nested-isopachs/isopachs.png)
+
+On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Sakurajima Satsuma (P14)](results/four-method-evidence.png)
 
@@ -18,24 +22,22 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **13.04** | 4.18–41.49 | 1.371 | 90.0% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **7.1** · volume median 10.0 | 3.8–70.6 | 1.164 † | 96.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **11.3** | 5.1–666.5 | 1.376 | 88.0% |
-| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **12.5** | 7.0–60.2 **(provisional)** | 0.742 † | 98.0% |
+| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **6.7** | 3.1–30.7 **(provisional)** | 1.016 † | 98.0% |
 
-[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
-
-The nested estimate puts a median 1.4% of the fallout volume inside the retained exact-site triangles and 45.9% beyond the farthest exact measurement. 1/4 geographic refits passed the independent-population check.
+The nested corridor assigns a median 3.0% of bulk volume to the retained exact-site triangles and 14.7% beyond the farthest exact site. Its median map integrates to 6.3 km³. 1/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **2.6%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **2.6%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
-<summary>Compare the two whole-Earth maps</summary>
+<summary>Compare the three whole-Earth maps</summary>
 
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for Sakurajima Satsuma (P14)](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Sakurajima Satsuma (P14)](results/spherical-mixture/world.png) |
+| Uncertain fan direction | Spherical mixture | Nested corridor |
+|---|---|---|
+| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
 
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+Each map is centred on the vent longitude and has its own thickness key.
 
 </details>
 
@@ -64,7 +66,6 @@ The principal fit above uses quantitative thicknesses and bounds. The measured-f
 </details>
 
 [Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
-
 
 ## Where the thicknesses constrain the deposit
 

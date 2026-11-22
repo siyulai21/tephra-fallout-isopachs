@@ -16,7 +16,7 @@ def case_home(slug):
 def run(job):
     rec, out, parents, resume = job
     slug = rec["slug"]
-    parent = parents / slug if parents else case_home(slug) / "nested-isopachs"
+    parent = parents / slug if parents else case_home(slug) / "nested-whole-area"
     result = reach_dataset(rec["path"], out / slug, rec["name"], parent=parent, resume=resume)
     print(slug, result["volume_km3"], result["numerics"], flush=True)
 

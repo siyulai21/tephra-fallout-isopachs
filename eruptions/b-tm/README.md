@@ -1,12 +1,16 @@
 # B-Tm fallout reconstruction
 
-**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 35.9 km³ of bulk fallout (conditional 95% interval 26.6–50.2), compared with 90.4 km³ under the whole-area continuation. Predicting the three interpreted upper limits from the other 68 rows strongly favors finite reach. At Lake Sihailongwan the withheld event probability rises from 0.18% to 97.85%. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+**Principal Bayesian nested estimate.** The corridor model gives 35.9 km³ of bulk fallout (conditional 95% interval 26.6–50.2), compared with 90.4 km³ under the whole-area continuation. Predicting the three interpreted upper limits from the other 68 rows strongly favors finite reach. At Lake Sihailongwan the withheld event probability rises from 0.18% to 97.85%. The full-data proposal retained a numerical warning. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
 
-The 946 CE Millennium eruption of Paektu / Changbaishan deposited fallout in two phases. The four families fit their combined airborne deposit using **64 measured thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The gold diamonds locate the interpreted cores. [Accepted observations](../../data/eruptions/B-Tm_cryptotephra.csv) · [Source descriptions and calculations](../../data/audits/B-Tm/README.md)
+The 946 CE Millennium eruption of Paektu / Changbaishan deposited fallout in two phases. The five families fit their combined airborne deposit using **64 measured thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The gold diamonds locate the interpreted cores. [Accepted observations](../../data/eruptions/B-Tm_cryptotephra.csv) · [Source descriptions and calculations](../../data/audits/B-Tm/README.md)
 
 The principal uncertain-direction median map integrates to **33.6 km³**. At Lake Sihailongwan, west of the volcano, its median thickness falls from **8.02 cm to 0.0146 cm**. The conditional limits used at Sihailongwan, Quanyang and Kushu are 0.06, 0.64 and 0.45 cm. The peat and lakes require different transfer assumptions. [Before-and-after contours, weaker assumptions and the independent marine check](results/cryptotephra/README.md)
 
 ## Five fits with interpreted archive limits
+
+![Principal nested corridor median isopachs for B-Tm](results/nested-isopachs/isopachs.png)
+
+On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](results/four-method-evidence.png)
 
@@ -20,24 +24,22 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull median map **50.75** · volume median 64.64 · unstable mean 6.1e+11 | 33.03–664.44 | 4.295 | 75.0% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **33.6** · volume median 37.2 | 23.5–77.1 | 1.243 † | 93.8% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **47.0** | 30.2–275.5 | 1.487 † | 93.8% |
-| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **90.4** | 52.0–534.5 | 1.570 | 93.8% |
+| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **35.9** | 26.6–50.2 **(provisional)** | 1.544 | 92.2% |
 
-[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
-
-The nested estimate puts a median 4.9% of the fallout volume inside the retained exact-site triangles and 21.7% beyond the farthest exact measurement. 4/4 geographic refits passed the independent-population check.
+The nested corridor assigns a median 13.0% of bulk volume to the retained exact-site triangles and 12.0% beyond the farthest exact site. Its median map integrates to 33.7 km³. 4/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
-<summary>Compare the two whole-Earth maps</summary>
+<summary>Compare the three whole-Earth maps</summary>
 
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for B-Tm](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for B-Tm](results/spherical-mixture/world.png) |
+| Uncertain fan direction | Spherical mixture | Nested corridor |
+|---|---|---|
+| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
 
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+Each map is centred on the vent longitude and has its own thickness key.
 
 </details>
 
@@ -66,7 +68,6 @@ Both fits include the same interpreted archive limits. The measured-fan sensitiv
 </details>
 
 [Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
-
 
 ## Evidence, coverage and history
 

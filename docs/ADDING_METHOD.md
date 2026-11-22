@@ -40,4 +40,4 @@ The registry is a navigation and dispatch mechanism, not evidence that a newly r
 
 For a method that extrapolates across a sampling gap, test archived no-bed readings at their own coordinates. Show the inferred response to an intact visible bed and its sensitivity to loss or mixing. Use the same audited quantitative input for the geographic benchmark. [Archive observation and continuation protocol](methods/archive-evidence.md)
 
-The Bayesian nested-isopach family exercises this contract using an analytic area integral, joint geographic draws, matched withholding and direct integration of the same fields. [Implementation and scientific limits](methods/nested-isopachs.md)
+The Bayesian nested-isopach family exercises this contract using joint geographic draws, matched withholding and direct integration of corridor fields. The whole-area sensitivity has an analytic reference integral. [Principal implementation and scientific limits](methods/nested-reach.md)

@@ -177,7 +177,7 @@ def figures(folder,name,data,meta,model):
     return world_map(folder,name,data,meta,view,norm)
 
 
-def nested_dataset(path, output, name=None, *, archives=None, resume=False, budget=True, base_cache=None):
+def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, budget=True, base_cache=None):
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh nested-isopach output or verified resume")
@@ -267,7 +267,7 @@ def nested_dataset(path, output, name=None, *, archives=None, resume=False, budg
              "sampling_rule":"Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit."}
     write_json(output/"report.json",report)
     q = report["conditional_volume_km3"]
-    lines = [f"# {name} · Bayesian nested isopachs","",
+    lines = [f"# {name} · Bayesian nested whole-area sensitivity","",
              f"**{q[1]:,.1f} km³ of bulk fallout**, with a conditional 95% interval of **{q[0]:,.1f}–{q[2]:,.1f} km³**. Each sample integrates one complete deposit over the Earth.",
              "",f"The {len(data.xy)} accepted rows include {meta['n_measurements']} exact thicknesses, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper bounds and {meta.get('n_intervals',0)} two-sided intervals.",
              "", "![Median isopachs and uncertain total area](isopachs.png)", "",
@@ -286,7 +286,7 @@ def nested_dataset(path, output, name=None, *, archives=None, resume=False, budg
         terminal = report["terminal_continuation"]
         low,med,high = terminal["unrestricted_volume_km3"]
         v = terminal["transfer_multiplier_km3"]
-        lines[4:4] = [f"Continuing the fitted slopes freely beyond every sampled isopach rank gives {med:,.1f} km³ [{low:,.1f}–{high:,.1f}]. The principal fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Reducing or increasing the transferred odds fourfold gives medians of {v['0.25'][1]:,.1f} and {v['4.0'][1]:,.1f} km³. Every accepted training site has exactly the same predicted thickness in these continuations.",""]
+        lines[4:4] = [f"Continuing the fitted slopes freely beyond every sampled isopach rank gives {med:,.1f} km³ [{low:,.1f}–{high:,.1f}]. The whole-area fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Reducing or increasing the transferred odds fourfold gives medians of {v['0.25'][1]:,.1f} and {v['4.0'][1]:,.1f} km³. Every accepted training site has exactly the same predicted thickness in these continuations.",""]
         position = lines.index("## Validation")+2
         lines[position:position] = [population_summary(check["numerics"]),""]
         sites = edge_sites(full,data,path)
@@ -348,3 +348,14 @@ def edge_summary(sites):
             f"among the largest 5% by volume. Ties split the credit. This identifies where the shape assumes "
             f"that measured thinning ends. It does not measure the effect of deleting a site. "
             f"[Attribution to every measured or bounded site](edge-sites.csv)")
+
+
+def nested_dataset(path, output, name=None, *, archives=None, resume=False, parent=None, budget=None, base_cache=None):
+    """Fit the principal corridor model, with explicit historical profile options for existing callers."""
+    if budget is not None or base_cache is not None:
+        if parent is not None:
+            raise ValueError("Specify a corridor parent or historical whole-area profile options.")
+        return whole_area_dataset(path, output, name, archives=archives, resume=resume,
+                                  budget=True if budget is None else budget, base_cache=base_cache)
+    from .reach_report import reach_dataset
+    return reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)

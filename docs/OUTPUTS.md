@@ -10,12 +10,14 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 | `support/` | Local footprints, holes, partial volumes and regional contour decisions |
 | `directional/` | Principal uncertain-fan-direction report in `README.md`, with its quantitative field, whole-Earth volume and contour audit in `azimuth/` |
 | `spherical-mixture/` | Spherical-mixture whole-Earth posterior and assumption sensitivities |
+| `nested-isopachs/` | Principal corridor map, integrated volume draws, local brackets, geographic predictions and support |
+| `nested-whole-area/` | Broad nested sensitivity with its own maps, volume draws and geographic scores |
 
 Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) links the five families on matched geographic tests.
 
 ## Visual reading route
 
-Start on the case home. Its `four-method-evidence.png` compares four median fields in the same observation frame. The directional panel uses the uncertain-fan-direction field. `directional/azimuth/isopachs.png` shows that field at deposit and near-source scales. Expand the whole-Earth pair for the uncertain-direction and spherical-mixture maps. The four-family volume and prediction plot is `overview.png`.
+Start on the case home. The principal corridor map is `nested-isopachs/isopachs.png`. The adjacent `four-method-evidence.png` compares four median fields in the same observation frame. The directional panel uses the uncertain-fan-direction field. `directional/azimuth/isopachs.png` shows that field at deposit and near-source scales. Expand the whole-Earth comparison for the directional, spherical and nested corridor maps. The five-family volume and prediction plot is `overview.png`.
 
 `map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/README.md#checking-a-map).
 
@@ -91,4 +93,4 @@ All volumes are **bulk fallout**, not dense-rock equivalent or total erupted mat
 
 ## Bayesian nested isopachs
 
-Open `nested-isopachs/README.md` for the posterior volume, conditional 95% interval, map and area–thickness curve. Its companion `support.json` records contour rejections. `geographic.json` preserves training and withheld row IDs, `heldout.csv` gives predictions, and `volume-budget.npz` stores the contributions of each thickness slice in every complete deposit. [Worked catalogue](../comparisons/nested-isopachs/README.md)
+Open `nested-isopachs/README.md` for the principal corridor median, conditional 95% interval, and median isopachs. In `report.json`, `volume_km3` gives the 2.5%, 50% and 97.5% quantiles of whole-deposit integrals. The historical key `conditional_volume_km3` exposes the same principal quantiles. `median_map_volume_km3` is the integral of pointwise median thickness. The report records each buffered split, exact withheld predictive CDFs, the three numerical checks and the prior-odds sensitivities. `volume-budget.npz` contains the volume and sector allocations of coherent draws. `support.json` and `local-brackets.csv.gz` identify eligible contour fragments and rejected bands. The broad sensitivity has its own packets and area–thickness curve in `nested-whole-area/`. [Principal estimates](../comparisons/nested-isopachs/README.md) · [Model and map definitions](methods/nested-reach.md)

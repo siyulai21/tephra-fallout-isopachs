@@ -4,6 +4,8 @@ The [eruption catalogue](eruptions/README.md) contains the current reports. For 
 
 ## Current release
 
+Dispersal corridors now supply the principal Bayesian nested isopachs, bulk volume and geographic predictions for each eruption. The former whole-area estimate has its own sensitivity report. The saved posterior packets retain their original hashes. [Principal estimates](comparisons/nested-isopachs/README.md) · [Previous release](archive/2026-11-21-corridor-principal/README.md)
+
 The 12.8 ka Satsuma eruption adds 50 measured thicknesses and seven bounds. Its audit checks written field values and a lenticular marine bed 163 km west of Sakurajima. Both global families were refitted after omitting that bed. [Satsuma results](eruptions/sakurajima-satsuma/README.md)
 
 Ilopango’s Tierra Blanca Joven Unit G adds a co-ignimbrite deposit with 52 measured thicknesses and four reported limits. The audit preserves the original numerical sources and shows how the directional coverage changes with distance from the caldera. [Ilopango results](eruptions/ilopango-tbj/README.md) · [Thickness audit](data/audits/Ilopango-TBJ/README.md)

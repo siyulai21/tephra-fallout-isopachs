@@ -343,39 +343,13 @@
     },
     {
       "level_cm": 3.7702400396095577,
-      "status": "map_boundary_above_level",
-      "area_km2": null,
-      "components": 0,
-      "policies": {
-        "strict": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "standard": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "permissive": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        }
-      }
-    },
-    {
-      "level_cm": 4.984575232616871,
       "status": "closed",
-      "area_km2": 546577.783034774,
+      "area_km2": 551595.0077356589,
       "components": 1,
       "policies": {
         "strict": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9653605868310662,
+          "unsupported_enclosed_area_fraction": 0.9656756616902239,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -384,7 +358,7 @@
         },
         "standard": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9097594429330982,
+          "unsupported_enclosed_area_fraction": 0.9105802573813568,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -392,8 +366,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9847470912316851,
-          "unsupported_enclosed_area_fraction": 0.8349835379319859,
+          "unsupported_perimeter_fraction": 0.9938936666135497,
+          "unsupported_enclosed_area_fraction": 0.8345696857259055,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -401,12 +375,61 @@
           ]
         }
       },
-      "grid_shape_change": 0.002252198314657189,
+      "grid_shape_change": 0.0034573064912805096,
       "deletion_shape_changes": [
+        0.23902936313520257,
         null,
+        0.12335719570960971,
+        0.29029451017436514
+      ],
+      "bracketing": {
+        "above_inside_each_component": [
+          20
+        ],
+        "below_outside": 6,
+        "below_inside_each_hole": []
+      }
+    },
+    {
+      "level_cm": 4.984575232616871,
+      "status": "closed",
+      "area_km2": 450128.56117463013,
+      "components": 1,
+      "policies": {
+        "strict": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9579383862999153,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "standard": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.8904235636753661,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "permissive": {
+          "unsupported_perimeter_fraction": 0.9809920814716365,
+          "unsupported_enclosed_area_fraction": 0.8003859470004183,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        }
+      },
+      "grid_shape_change": 0.0038716869905612364,
+      "deletion_shape_changes": [
+        0.2550017182268039,
         null,
-        0.16760740734736065,
-        0.23941468398028462
+        0.12966203415398678,
+        0.2846530001971883
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -419,43 +442,42 @@
     {
       "level_cm": 6.590028748458832,
       "status": "closed",
-      "area_km2": 435976.087525769,
+      "area_km2": 358544.01003763947,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9648661018558,
-          "unsupported_enclosed_area_fraction": 0.9602187968421102,
+          "unsupported_perimeter_fraction": 0.9663388062471947,
+          "unsupported_enclosed_area_fraction": 0.9525611470122614,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9645883130308948,
-          "unsupported_enclosed_area_fraction": 0.8905126779543354,
+          "unsupported_perimeter_fraction": 0.964908740024372,
+          "unsupported_enclosed_area_fraction": 0.867811461554088,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9286037621001247,
-          "unsupported_enclosed_area_fraction": 0.8024187277210247,
+          "unsupported_perimeter_fraction": 0.9233979555836136,
+          "unsupported_enclosed_area_fraction": 0.7628955325268664,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.002633715142745633,
+      "grid_shape_change": 0.004059405217376801,
       "deletion_shape_changes": [
-        0.2034349664632069,
-        null,
-        0.16882315952080004,
-        0.23437261416609184
+        0.26709724869652945,
+        0.24832942116821163,
+        0.13273292034832754,
+        0.2784254217880641
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -468,12 +490,12 @@
     {
       "level_cm": 8.712573665522578,
       "status": "closed",
-      "area_km2": 337331.8059177222,
+      "area_km2": 277855.41467663925,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9831107370838456,
-          "unsupported_enclosed_area_fraction": 0.9559163640284585,
+          "unsupported_perimeter_fraction": 0.9787860478908275,
+          "unsupported_enclosed_area_fraction": 0.9478180610662204,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -481,28 +503,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9572074879416197,
-          "unsupported_enclosed_area_fraction": 0.8723077800717296,
+          "unsupported_perimeter_fraction": 0.9541884527403012,
+          "unsupported_enclosed_area_fraction": 0.8477343938092697,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9128509397357802,
-          "unsupported_enclosed_area_fraction": 0.7704650782171546,
+          "unsupported_perimeter_fraction": 0.8983405653945737,
+          "unsupported_enclosed_area_fraction": 0.7271864924850487,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.003023044357895156,
+      "grid_shape_change": 0.004611472895722167,
       "deletion_shape_changes": [
-        0.21211796625843418,
-        0.19023253380139557,
-        0.16950212520323962,
-        0.2285753017771513
+        0.27514803607941163,
+        0.23743301986351992,
+        0.13747734556845198,
+        0.27452315766998303
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -515,12 +538,12 @@
     {
       "level_cm": 11.518757015272488,
       "status": "closed",
-      "area_km2": 251798.8849182896,
+      "area_km2": 207980.10100298718,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9587560551511485,
-          "unsupported_enclosed_area_fraction": 0.9543861760291581,
+          "unsupported_perimeter_fraction": 0.9565721356562548,
+          "unsupported_enclosed_area_fraction": 0.947170617952438,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -528,28 +551,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9479474605157209,
-          "unsupported_enclosed_area_fraction": 0.8505317832752918,
+          "unsupported_perimeter_fraction": 0.9480786397082787,
+          "unsupported_enclosed_area_fraction": 0.8220058111534431,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.8910716341790994,
-          "unsupported_enclosed_area_fraction": 0.7303227859558784,
+          "unsupported_perimeter_fraction": 0.8848128240812265,
+          "unsupported_enclosed_area_fraction": 0.6816846849229867,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0036948157876412822,
+      "grid_shape_change": 0.006444872161513172,
       "deletion_shape_changes": [
-        0.21217646720639732,
-        0.19674344747136838,
-        0.16755448501742848,
-        0.22394501870977812
+        0.2852917113540368,
+        0.22346593876342502,
+        0.1425768429225691,
+        0.26704363237050843
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -562,12 +586,12 @@
     {
       "level_cm": 15.228768016268022,
       "status": "closed",
-      "area_km2": 179310.11751124228,
+      "area_km2": 147386.31822920317,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9835375067713005,
-          "unsupported_enclosed_area_fraction": 0.9593716729131061,
+          "unsupported_perimeter_fraction": 0.9976242318093103,
+          "unsupported_enclosed_area_fraction": 0.951056650892479,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -575,28 +599,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9397308215618422,
-          "unsupported_enclosed_area_fraction": 0.8191476843097285,
+          "unsupported_perimeter_fraction": 0.9372515333792187,
+          "unsupported_enclosed_area_fraction": 0.7835221122918207,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.807366688084336,
-          "unsupported_enclosed_area_fraction": 0.6814502539366727,
+          "unsupported_perimeter_fraction": 0.7757464607205815,
+          "unsupported_enclosed_area_fraction": 0.6319444085263436,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0036157045936358488,
+      "grid_shape_change": 0.009285854984809234,
       "deletion_shape_changes": [
-        0.22554893643491825,
-        0.20116039375747394,
-        0.16762096796868542,
-        0.21702580664882687
+        0.29840062632278247,
+        0.21880978580094268,
+        0.1544513530600752,
+        0.27080676564326334
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -609,41 +634,45 @@
     {
       "level_cm": 20.133715381426633,
       "status": "closed",
-      "area_km2": 117327.96085198094,
+      "area_km2": 98627.92689090187,
       "components": 1,
       "policies": {
         "strict": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9385295817599731,
+          "unsupported_enclosed_area_fraction": 0.9268746788848284,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.8901788333529581,
-          "unsupported_enclosed_area_fraction": 0.7787824484792045,
+          "unsupported_perimeter_fraction": 0.8549754576147622,
+          "unsupported_enclosed_area_fraction": 0.741956152494348,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7812995821701639,
-          "unsupported_enclosed_area_fraction": 0.6426355488582394,
+          "unsupported_perimeter_fraction": 0.7693327000946611,
+          "unsupported_enclosed_area_fraction": 0.5902332703313395,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.005891994095911297,
+      "grid_shape_change": 0.010761354824052266,
       "deletion_shape_changes": [
-        0.2351909326563113,
-        0.20518351090226739,
-        0.1677636115385669,
-        0.21396771818203636
+        0.3235652165535268,
+        0.22501681527800058,
+        0.16964419129227984,
+        0.2801651699001089
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -656,41 +685,45 @@
     {
       "level_cm": 26.618469375018776,
       "status": "closed",
-      "area_km2": 69535.27660754311,
+      "area_km2": 58971.734049991646,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9259956059983973,
-          "unsupported_enclosed_area_fraction": 0.9055926569609535,
+          "unsupported_perimeter_fraction": 0.8774381147398549,
+          "unsupported_enclosed_area_fraction": 0.8945630645848242,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7423554301529252,
-          "unsupported_enclosed_area_fraction": 0.7648520282227294,
+          "unsupported_perimeter_fraction": 0.6582038006065314,
+          "unsupported_enclosed_area_fraction": 0.7534079254248811,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7423554301529252,
-          "unsupported_enclosed_area_fraction": 0.5855313668172599,
+          "unsupported_perimeter_fraction": 0.6582038006065314,
+          "unsupported_enclosed_area_fraction": 0.5419657490475248,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.008937189296789706,
+      "grid_shape_change": 0.01663445190265536,
       "deletion_shape_changes": [
-        0.23580210232154372,
-        0.20755744047879934,
-        0.17606492431570414,
-        0.19903566898054914
+        0.33029442483922306,
+        0.2670598845437109,
+        0.18537477663097696,
+        0.28353664885906826
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -703,41 +736,45 @@
     {
       "level_cm": 35.191860938018586,
       "status": "closed",
-      "area_km2": 35263.60631483204,
+      "area_km2": 31018.65035715756,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8588850535017002,
-          "unsupported_enclosed_area_fraction": 0.8955415849385335,
+          "unsupported_perimeter_fraction": 0.8377153225059144,
+          "unsupported_enclosed_area_fraction": 0.9026922198968697,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7087562337658491,
-          "unsupported_enclosed_area_fraction": 0.7824716676380677,
+          "unsupported_perimeter_fraction": 0.6895195201669869,
+          "unsupported_enclosed_area_fraction": 0.787201176697232,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.5996946294080123,
-          "unsupported_enclosed_area_fraction": 0.5115451201402187,
+          "unsupported_perimeter_fraction": 0.5591750715433068,
+          "unsupported_enclosed_area_fraction": 0.47050907053468227,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.00887229621596792,
+      "grid_shape_change": 0.02374805467136943,
       "deletion_shape_changes": [
-        0.24099461946763362,
-        0.22741125143090699,
-        0.1984653054766878,
-        0.16850488463306995
+        0.31959343138077523,
+        0.27943110636635066,
+        0.21702545075716242,
+        0.29279289540165576
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -750,12 +787,12 @@
     {
       "level_cm": 46.52660747815691,
       "status": "closed",
-      "area_km2": 14305.477104480147,
+      "area_km2": 12752.16776309664,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8219702687896568,
-          "unsupported_enclosed_area_fraction": 0.9099444440443231,
+          "unsupported_perimeter_fraction": 0.8273173469415408,
+          "unsupported_enclosed_area_fraction": 0.9181544710648384,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -765,8 +802,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.6906280016947456,
-          "unsupported_enclosed_area_fraction": 0.8358384395529234,
+          "unsupported_perimeter_fraction": 0.7002298407941542,
+          "unsupported_enclosed_area_fraction": 0.8414827420228745,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -776,8 +813,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.39613016281561897,
-          "unsupported_enclosed_area_fraction": 0.4514072029872139,
+          "unsupported_perimeter_fraction": 0.40167959776311396,
+          "unsupported_enclosed_area_fraction": 0.4305126865476446,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -786,12 +823,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.017880436042510012,
+      "grid_shape_change": 0.0720140967480186,
       "deletion_shape_changes": [
-        0.2531565288927155,
-        0.2511985673415157,
-        0.30507408887472376,
-        0.18661308221880596
+        0.33384918407196823,
+        0.31627509765401124,
+        0.3501357767179226,
+        0.3249911093980962
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -804,12 +841,12 @@
     {
       "level_cm": 61.51209813084601,
       "status": "closed",
-      "area_km2": 3173.7601544407676,
+      "area_km2": 3405.964525826548,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8429526402888007,
-          "unsupported_enclosed_area_fraction": 0.9428076159146187,
+          "unsupported_perimeter_fraction": 0.8740523665255018,
+          "unsupported_enclosed_area_fraction": 0.947566265250967,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -819,8 +856,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7721407597262433,
-          "unsupported_enclosed_area_fraction": 0.9269641260736163,
+          "unsupported_perimeter_fraction": 0.8088490069017283,
+          "unsupported_enclosed_area_fraction": 0.931418215139203,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -830,8 +867,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.42540648444220575,
-          "unsupported_enclosed_area_fraction": 0.4430944537996045,
+          "unsupported_perimeter_fraction": 0.4274845897158942,
+          "unsupported_enclosed_area_fraction": 0.4119251957283907,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -841,12 +878,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.06462501987546458,
+      "grid_shape_change": 0.15070847809883817,
       "deletion_shape_changes": [
-        0.35719944311206037,
-        0.18340080476156395,
-        0.5604015009476682,
-        0.1948926063365604
+        0.42325789225481475,
+        0.30040680531429703,
+        0.5533131045902167,
+        0.3302439921152045
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -858,28 +895,57 @@
     },
     {
       "level_cm": 81.32418032488604,
-      "status": "above_resolved_peak",
-      "area_km2": null,
-      "components": 0,
+      "status": "closed",
+      "area_km2": 183.47011564838948,
+      "components": 1,
       "policies": {
         "strict": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9999999999999999,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9999999999999999,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
+          "unsupported_perimeter_fraction": 0.47459866379861737,
+          "unsupported_enclosed_area_fraction": 0.47261566604472605,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         }
+      },
+      "grid_shape_change": 0.5303190011014534,
+      "deletion_shape_changes": [
+        0.42959245783196265,
+        0.40791170261133125,
+        0.9012328941116214,
+        0.3538400500249294
+      ],
+      "bracketing": {
+        "above_inside_each_component": [
+          0
+        ],
+        "below_outside": 24,
+        "below_inside_each_hole": []
       }
     }
   ],
@@ -1588,65 +1654,13 @@
     },
     {
       "level_cm": 3.7702400396095577,
-      "status": "map_boundary_above_level",
-      "area_km2": null,
-      "components": 0,
-      "policies": {
-        "strict": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "standard": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "permissive": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        }
-      }
-    },
-    {
-      "level_cm": 4.335094592100415,
-      "status": "map_boundary_above_level",
-      "area_km2": null,
-      "components": 0,
-      "policies": {
-        "strict": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "standard": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        },
-        "permissive": {
-          "eligible": false,
-          "reasons": [
-            "map_boundary_above_level"
-          ]
-        }
-      }
-    },
-    {
-      "level_cm": 4.984575232616871,
       "status": "closed",
-      "area_km2": 546577.783034774,
+      "area_km2": 551595.0077356589,
       "components": 1,
       "policies": {
         "strict": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9653605868310662,
+          "unsupported_enclosed_area_fraction": 0.9656756616902239,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1655,7 +1669,7 @@
         },
         "standard": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9097594429330982,
+          "unsupported_enclosed_area_fraction": 0.9105802573813568,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1663,8 +1677,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9847470912316851,
-          "unsupported_enclosed_area_fraction": 0.8349835379319859,
+          "unsupported_perimeter_fraction": 0.9938936666135497,
+          "unsupported_enclosed_area_fraction": 0.8345696857259055,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1672,12 +1686,110 @@
           ]
         }
       },
-      "grid_shape_change": 0.002252198314657189,
+      "grid_shape_change": 0.0034573064912805096,
       "deletion_shape_changes": [
+        0.23902936313520257,
         null,
+        0.12335719570960971,
+        0.29029451017436514
+      ],
+      "bracketing": {
+        "above_inside_each_component": [
+          20
+        ],
+        "below_outside": 6,
+        "below_inside_each_hole": []
+      }
+    },
+    {
+      "level_cm": 4.335094592100415,
+      "status": "closed",
+      "area_km2": 499458.8294308731,
+      "components": 1,
+      "policies": {
+        "strict": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9620927040631634,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "standard": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9012461473998683,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "permissive": {
+          "unsupported_perimeter_fraction": 0.9862425568705598,
+          "unsupported_enclosed_area_fraction": 0.8184396588628327,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        }
+      },
+      "grid_shape_change": 0.003723598301999298,
+      "deletion_shape_changes": [
+        0.24731199323457925,
         null,
-        0.16760740734736065,
-        0.23941468398028462
+        0.12803409881918704,
+        0.28656677245217704
+      ],
+      "bracketing": {
+        "above_inside_each_component": [
+          18
+        ],
+        "below_outside": 6,
+        "below_inside_each_hole": []
+      }
+    },
+    {
+      "level_cm": 4.984575232616871,
+      "status": "closed",
+      "area_km2": 450128.56117463013,
+      "components": 1,
+      "policies": {
+        "strict": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9579383862999153,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "standard": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.8904235636753661,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        },
+        "permissive": {
+          "unsupported_perimeter_fraction": 0.9809920814716365,
+          "unsupported_enclosed_area_fraction": 0.8003859470004183,
+          "eligible": false,
+          "reasons": [
+            "perimeter_leaves_local_support",
+            "not_closed_after_every_geographic_deletion"
+          ]
+        }
+      },
+      "grid_shape_change": 0.0038716869905612364,
+      "deletion_shape_changes": [
+        0.2550017182268039,
+        null,
+        0.12966203415398678,
+        0.2846530001971883
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -1690,92 +1802,90 @@
     {
       "level_cm": 5.731360578588737,
       "status": "closed",
-      "area_km2": 489388.82809508755,
+      "area_km2": 403329.302097996,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9925919098127443,
-          "unsupported_enclosed_area_fraction": 0.9615468448414674,
+          "unsupported_perimeter_fraction": 0.9892380082497045,
+          "unsupported_enclosed_area_fraction": 0.9537010995707197,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9925919098127443,
-          "unsupported_enclosed_area_fraction": 0.8994482675522368,
+          "unsupported_perimeter_fraction": 0.9892380082497045,
+          "unsupported_enclosed_area_fraction": 0.8783523713531879,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9683162577468016,
-          "unsupported_enclosed_area_fraction": 0.8178517337838301,
+          "unsupported_perimeter_fraction": 0.9586632687121687,
+          "unsupported_enclosed_area_fraction": 0.7807042439004349,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.002468428748108842,
+      "grid_shape_change": 0.004536623629876907,
       "deletion_shape_changes": [
-        0.19755064018663004,
-        null,
-        0.16898452081493037,
-        0.2368244873612949
+        0.2629382229889551,
+        0.2555484967231161,
+        0.1304700021106204,
+        0.2819278883681873
       ],
       "bracketing": {
         "above_inside_each_component": [
           14
         ],
-        "below_outside": 7,
+        "below_outside": 8,
         "below_inside_each_hole": []
       }
     },
     {
       "level_cm": 6.590028748458832,
       "status": "closed",
-      "area_km2": 435976.087525769,
+      "area_km2": 358544.01003763947,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9648661018558,
-          "unsupported_enclosed_area_fraction": 0.9602187968421102,
+          "unsupported_perimeter_fraction": 0.9663388062471947,
+          "unsupported_enclosed_area_fraction": 0.9525611470122614,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9645883130308948,
-          "unsupported_enclosed_area_fraction": 0.8905126779543354,
+          "unsupported_perimeter_fraction": 0.964908740024372,
+          "unsupported_enclosed_area_fraction": 0.867811461554088,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9286037621001247,
-          "unsupported_enclosed_area_fraction": 0.8024187277210247,
+          "unsupported_perimeter_fraction": 0.9233979555836136,
+          "unsupported_enclosed_area_fraction": 0.7628955325268664,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.002633715142745633,
+      "grid_shape_change": 0.004059405217376801,
       "deletion_shape_changes": [
-        0.2034349664632069,
-        null,
-        0.16882315952080004,
-        0.23437261416609184
+        0.26709724869652945,
+        0.24832942116821163,
+        0.13273292034832754,
+        0.2784254217880641
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -1788,43 +1898,42 @@
     {
       "level_cm": 7.577341943508894,
       "status": "closed",
-      "area_km2": 385330.4788749029,
+      "area_km2": 316687.265784374,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9830871565102537,
-          "unsupported_enclosed_area_fraction": 0.9592799805517281,
+          "unsupported_perimeter_fraction": 0.9878352014237707,
+          "unsupported_enclosed_area_fraction": 0.9513956129406376,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.96331763508832,
-          "unsupported_enclosed_area_fraction": 0.8819527439861596,
+          "unsupported_perimeter_fraction": 0.9608081959859143,
+          "unsupported_enclosed_area_fraction": 0.8584142423646425,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9208741809720564,
-          "unsupported_enclosed_area_fraction": 0.7875256743056303,
+          "unsupported_perimeter_fraction": 0.9159933602935599,
+          "unsupported_enclosed_area_fraction": 0.7461719832660602,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support",
-            "not_closed_after_every_geographic_deletion"
+            "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0026452259946433718,
+      "grid_shape_change": 0.005380747241249629,
       "deletion_shape_changes": [
-        0.2066689165576768,
-        null,
-        0.17004628685570833,
-        0.2315111337827523
+        0.27152044505389095,
+        0.2430257630988539,
+        0.1350694521326644,
+        0.2763011074719007
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -1837,12 +1946,12 @@
     {
       "level_cm": 8.712573665522578,
       "status": "closed",
-      "area_km2": 337331.8059177222,
+      "area_km2": 277855.41467663925,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9831107370838456,
-          "unsupported_enclosed_area_fraction": 0.9559163640284585,
+          "unsupported_perimeter_fraction": 0.9787860478908275,
+          "unsupported_enclosed_area_fraction": 0.9478180610662204,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1850,28 +1959,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9572074879416197,
-          "unsupported_enclosed_area_fraction": 0.8723077800717296,
+          "unsupported_perimeter_fraction": 0.9541884527403012,
+          "unsupported_enclosed_area_fraction": 0.8477343938092697,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9128509397357802,
-          "unsupported_enclosed_area_fraction": 0.7704650782171546,
+          "unsupported_perimeter_fraction": 0.8983405653945737,
+          "unsupported_enclosed_area_fraction": 0.7271864924850487,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.003023044357895156,
+      "grid_shape_change": 0.004611472895722167,
       "deletion_shape_changes": [
-        0.21211796625843418,
-        0.19023253380139557,
-        0.16950212520323962,
-        0.2285753017771513
+        0.27514803607941163,
+        0.23743301986351992,
+        0.13747734556845198,
+        0.27452315766998303
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -1884,12 +1994,12 @@
     {
       "level_cm": 10.017884957954776,
       "status": "closed",
-      "area_km2": 292824.72414083075,
+      "area_km2": 241670.5960936803,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.968726989022069,
-          "unsupported_enclosed_area_fraction": 0.9539400544834161,
+          "unsupported_perimeter_fraction": 0.9660540329129084,
+          "unsupported_enclosed_area_fraction": 0.9463821706553007,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1897,32 +2007,33 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9499154962032984,
-          "unsupported_enclosed_area_fraction": 0.8619113807269112,
+          "unsupported_perimeter_fraction": 0.948625520876439,
+          "unsupported_enclosed_area_fraction": 0.8358737972751172,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.9016838827913926,
-          "unsupported_enclosed_area_fraction": 0.7514426170975654,
+          "unsupported_perimeter_fraction": 0.8901308634077135,
+          "unsupported_enclosed_area_fraction": 0.7061596590984615,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0033233028605188907,
+      "grid_shape_change": 0.006320844965589648,
       "deletion_shape_changes": [
-        0.2110961651186714,
-        0.19322603564730356,
-        0.1697184533545809,
-        0.22599872239023197
+        0.2803767195898543,
+        0.23021858721569083,
+        0.14096891658226438,
+        0.2695712219512564
       ],
       "bracketing": {
         "above_inside_each_component": [
-          13
+          12
         ],
         "below_outside": 12,
         "below_inside_each_hole": []
@@ -1931,12 +2042,12 @@
     {
       "level_cm": 11.518757015272488,
       "status": "closed",
-      "area_km2": 251798.8849182896,
+      "area_km2": 207980.10100298718,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9587560551511485,
-          "unsupported_enclosed_area_fraction": 0.9543861760291581,
+          "unsupported_perimeter_fraction": 0.9565721356562548,
+          "unsupported_enclosed_area_fraction": 0.947170617952438,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1944,28 +2055,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9479474605157209,
-          "unsupported_enclosed_area_fraction": 0.8505317832752918,
+          "unsupported_perimeter_fraction": 0.9480786397082787,
+          "unsupported_enclosed_area_fraction": 0.8220058111534431,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.8910716341790994,
-          "unsupported_enclosed_area_fraction": 0.7303227859558784,
+          "unsupported_perimeter_fraction": 0.8848128240812265,
+          "unsupported_enclosed_area_fraction": 0.6816846849229867,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0036948157876412822,
+      "grid_shape_change": 0.006444872161513172,
       "deletion_shape_changes": [
-        0.21217646720639732,
-        0.19674344747136838,
-        0.16755448501742848,
-        0.22394501870977812
+        0.2852917113540368,
+        0.22346593876342502,
+        0.1425768429225691,
+        0.26704363237050843
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -1978,12 +2090,12 @@
     {
       "level_cm": 13.244488605504733,
       "status": "closed",
-      "area_km2": 213983.23468826877,
+      "area_km2": 176323.13257498082,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9487743911702021,
-          "unsupported_enclosed_area_fraction": 0.9572540023676741,
+          "unsupported_perimeter_fraction": 0.9524054377463521,
+          "unsupported_enclosed_area_fraction": 0.9508795019024765,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -1991,46 +2103,47 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9471705349810849,
-          "unsupported_enclosed_area_fraction": 0.8364674765377702,
+          "unsupported_perimeter_fraction": 0.9466976253180579,
+          "unsupported_enclosed_area_fraction": 0.804474733118696,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.8765656571082845,
-          "unsupported_enclosed_area_fraction": 0.7059282829963615,
+          "unsupported_perimeter_fraction": 0.8411802548460807,
+          "unsupported_enclosed_area_fraction": 0.6541335383518074,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0038965865047516815,
+      "grid_shape_change": 0.007212365453741129,
       "deletion_shape_changes": [
-        0.21948577161666,
-        0.2046014774007042,
-        0.16523521637614788,
-        0.22144929132769145
+        0.29028702521740646,
+        0.2194078566461962,
+        0.148639799722304,
+        0.26758880078594915
       ],
       "bracketing": {
         "above_inside_each_component": [
           10
         ],
-        "below_outside": 12,
+        "below_outside": 13,
         "below_inside_each_hole": []
       }
     },
     {
       "level_cm": 15.228768016268022,
       "status": "closed",
-      "area_km2": 179310.11751124228,
+      "area_km2": 147386.31822920317,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9835375067713005,
-          "unsupported_enclosed_area_fraction": 0.9593716729131061,
+          "unsupported_perimeter_fraction": 0.9976242318093103,
+          "unsupported_enclosed_area_fraction": 0.951056650892479,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2038,28 +2151,29 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9397308215618422,
-          "unsupported_enclosed_area_fraction": 0.8191476843097285,
+          "unsupported_perimeter_fraction": 0.9372515333792187,
+          "unsupported_enclosed_area_fraction": 0.7835221122918207,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.807366688084336,
-          "unsupported_enclosed_area_fraction": 0.6814502539366727,
+          "unsupported_perimeter_fraction": 0.7757464607205815,
+          "unsupported_enclosed_area_fraction": 0.6319444085263436,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support"
           ]
         }
       },
-      "grid_shape_change": 0.0036157045936358488,
+      "grid_shape_change": 0.009285854984809234,
       "deletion_shape_changes": [
-        0.22554893643491825,
-        0.20116039375747394,
-        0.16762096796868542,
-        0.21702580664882687
+        0.29840062632278247,
+        0.21880978580094268,
+        0.1544513530600752,
+        0.27080676564326334
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2072,41 +2186,45 @@
     {
       "level_cm": 17.51033068931919,
       "status": "closed",
-      "area_km2": 146548.8943532317,
+      "area_km2": 121602.95014160378,
       "components": 1,
       "policies": {
         "strict": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.950786398924054,
+          "unsupported_enclosed_area_fraction": 0.9406905933086127,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.9167896284870122,
-          "unsupported_enclosed_area_fraction": 0.7995717177819366,
+          "unsupported_perimeter_fraction": 0.9152690778077825,
+          "unsupported_enclosed_area_fraction": 0.7619591474352465,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7843150797839932,
-          "unsupported_enclosed_area_fraction": 0.6655597868003859,
+          "unsupported_perimeter_fraction": 0.7734254968415556,
+          "unsupported_enclosed_area_fraction": 0.6134447466590851,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.004666218664966211,
+      "grid_shape_change": 0.010306133950052681,
       "deletion_shape_changes": [
-        0.23126022621039397,
-        0.20024396442926662,
-        0.168203802839911,
-        0.21256040912093555
+        0.3102186103961783,
+        0.22097537997992933,
+        0.16418433395635693,
+        0.2759456082720674
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2119,41 +2237,45 @@
     {
       "level_cm": 20.133715381426633,
       "status": "closed",
-      "area_km2": 117327.96085198094,
+      "area_km2": 98627.92689090187,
       "components": 1,
       "policies": {
         "strict": {
           "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 0.9385295817599731,
+          "unsupported_enclosed_area_fraction": 0.9268746788848284,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.8901788333529581,
-          "unsupported_enclosed_area_fraction": 0.7787824484792045,
+          "unsupported_perimeter_fraction": 0.8549754576147622,
+          "unsupported_enclosed_area_fraction": 0.741956152494348,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7812995821701639,
-          "unsupported_enclosed_area_fraction": 0.6426355488582394,
+          "unsupported_perimeter_fraction": 0.7693327000946611,
+          "unsupported_enclosed_area_fraction": 0.5902332703313395,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.005891994095911297,
+      "grid_shape_change": 0.010761354824052266,
       "deletion_shape_changes": [
-        0.2351909326563113,
-        0.20518351090226739,
-        0.1677636115385669,
-        0.21396771818203636
+        0.3235652165535268,
+        0.22501681527800058,
+        0.16964419129227984,
+        0.2801651699001089
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2166,41 +2288,45 @@
     {
       "level_cm": 23.15013361269973,
       "status": "closed",
-      "area_km2": 91873.2081586052,
+      "area_km2": 77522.83272141287,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9896425146711685,
-          "unsupported_enclosed_area_fraction": 0.9218929270107187,
+          "unsupported_perimeter_fraction": 0.9538925888489963,
+          "unsupported_enclosed_area_fraction": 0.9081999710557246,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.8423345093833355,
-          "unsupported_enclosed_area_fraction": 0.7626469450387816,
+          "unsupported_perimeter_fraction": 0.7414818791082431,
+          "unsupported_enclosed_area_fraction": 0.7313708924478598,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7694192214304666,
-          "unsupported_enclosed_area_fraction": 0.6157254987030993,
+          "unsupported_perimeter_fraction": 0.687313584713179,
+          "unsupported_enclosed_area_fraction": 0.5613902691792937,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.0044947077030496555,
+      "grid_shape_change": 0.011925699887784805,
       "deletion_shape_changes": [
-        0.23465006135736968,
-        0.20516754054917152,
-        0.1739595929192284,
-        0.2108655197777313
+        0.33578456258144146,
+        0.2419675206939338,
+        0.17209166322449934,
+        0.285162881312074
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2213,41 +2339,45 @@
     {
       "level_cm": 26.618469375018776,
       "status": "closed",
-      "area_km2": 69535.27660754311,
+      "area_km2": 58971.734049991646,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9259956059983973,
-          "unsupported_enclosed_area_fraction": 0.9055926569609535,
+          "unsupported_perimeter_fraction": 0.8774381147398549,
+          "unsupported_enclosed_area_fraction": 0.8945630645848242,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7423554301529252,
-          "unsupported_enclosed_area_fraction": 0.7648520282227294,
+          "unsupported_perimeter_fraction": 0.6582038006065314,
+          "unsupported_enclosed_area_fraction": 0.7534079254248811,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.7423554301529252,
-          "unsupported_enclosed_area_fraction": 0.5855313668172599,
+          "unsupported_perimeter_fraction": 0.6582038006065314,
+          "unsupported_enclosed_area_fraction": 0.5419657490475248,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.008937189296789706,
+      "grid_shape_change": 0.01663445190265536,
       "deletion_shape_changes": [
-        0.23580210232154372,
-        0.20755744047879934,
-        0.17606492431570414,
-        0.19903566898054914
+        0.33029442483922306,
+        0.2670598845437109,
+        0.18537477663097696,
+        0.28353664885906826
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2260,41 +2390,45 @@
     {
       "level_cm": 30.60642861603698,
       "status": "closed",
-      "area_km2": 50103.012649957265,
+      "area_km2": 43574.1558911855,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.9256989448556663,
-          "unsupported_enclosed_area_fraction": 0.9036147150727336,
+          "unsupported_perimeter_fraction": 0.8744218074113093,
+          "unsupported_enclosed_area_fraction": 0.9064297535064403,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7853518225861277,
-          "unsupported_enclosed_area_fraction": 0.7792889080277392,
+          "unsupported_perimeter_fraction": 0.7251677627228497,
+          "unsupported_enclosed_area_fraction": 0.7834473885688834,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.6963172807248584,
-          "unsupported_enclosed_area_fraction": 0.5488408633457297,
+          "unsupported_perimeter_fraction": 0.6389146444041114,
+          "unsupported_enclosed_area_fraction": 0.51102243633014,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.007717622534944984,
+      "grid_shape_change": 0.017260544993470534,
       "deletion_shape_changes": [
-        0.2300144673153614,
-        0.2167101507414522,
-        0.18252872875979315,
-        0.17365165179566483
+        0.3266113169486986,
+        0.27449607239500623,
+        0.19755842403404175,
+        0.2833959555882924
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2307,41 +2441,45 @@
     {
       "level_cm": 35.191860938018586,
       "status": "closed",
-      "area_km2": 35263.60631483204,
+      "area_km2": 31018.65035715756,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8588850535017002,
-          "unsupported_enclosed_area_fraction": 0.8955415849385335,
+          "unsupported_perimeter_fraction": 0.8377153225059144,
+          "unsupported_enclosed_area_fraction": 0.9026922198968697,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
             "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7087562337658491,
-          "unsupported_enclosed_area_fraction": 0.7824716676380677,
+          "unsupported_perimeter_fraction": 0.6895195201669869,
+          "unsupported_enclosed_area_fraction": 0.787201176697232,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.5996946294080123,
-          "unsupported_enclosed_area_fraction": 0.5115451201402187,
+          "unsupported_perimeter_fraction": 0.5591750715433068,
+          "unsupported_enclosed_area_fraction": 0.47050907053468227,
           "eligible": false,
           "reasons": [
-            "perimeter_leaves_local_support"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved"
           ]
         }
       },
-      "grid_shape_change": 0.00887229621596792,
+      "grid_shape_change": 0.02374805467136943,
       "deletion_shape_changes": [
-        0.24099461946763362,
-        0.22741125143090699,
-        0.1984653054766878,
-        0.16850488463306995
+        0.31959343138077523,
+        0.27943110636635066,
+        0.21702545075716242,
+        0.29279289540165576
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2354,12 +2492,12 @@
     {
       "level_cm": 40.46427931261191,
       "status": "closed",
-      "area_km2": 23239.50225585805,
+      "area_km2": 20734.299800237302,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8339858114903382,
-          "unsupported_enclosed_area_fraction": 0.8965296300091413,
+          "unsupported_perimeter_fraction": 0.8204338017659334,
+          "unsupported_enclosed_area_fraction": 0.9044801097333388,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2368,8 +2506,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.6978059331264116,
-          "unsupported_enclosed_area_fraction": 0.8063047024005026,
+          "unsupported_perimeter_fraction": 0.6824926279439474,
+          "unsupported_enclosed_area_fraction": 0.8055269652244184,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2378,8 +2516,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.5549797290427747,
-          "unsupported_enclosed_area_fraction": 0.47829525628474673,
+          "unsupported_perimeter_fraction": 0.48737271791596604,
+          "unsupported_enclosed_area_fraction": 0.44225638064686873,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2387,12 +2525,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.014876984658783251,
+      "grid_shape_change": 0.02881502676397899,
       "deletion_shape_changes": [
-        0.25078679823657807,
-        0.24370043815287368,
-        0.2432096607711084,
-        0.17597022199055656
+        0.3135013614449457,
+        0.2994037204288272,
+        0.26495196211296307,
+        0.30570610503041723
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2405,12 +2543,12 @@
     {
       "level_cm": 46.52660747815691,
       "status": "closed",
-      "area_km2": 14305.477104480147,
+      "area_km2": 12752.16776309664,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8219702687896568,
-          "unsupported_enclosed_area_fraction": 0.9099444440443231,
+          "unsupported_perimeter_fraction": 0.8273173469415408,
+          "unsupported_enclosed_area_fraction": 0.9181544710648384,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2420,8 +2558,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.6906280016947456,
-          "unsupported_enclosed_area_fraction": 0.8358384395529234,
+          "unsupported_perimeter_fraction": 0.7002298407941542,
+          "unsupported_enclosed_area_fraction": 0.8414827420228745,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2431,8 +2569,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.39613016281561897,
-          "unsupported_enclosed_area_fraction": 0.4514072029872139,
+          "unsupported_perimeter_fraction": 0.40167959776311396,
+          "unsupported_enclosed_area_fraction": 0.4305126865476446,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2441,12 +2579,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.017880436042510012,
+      "grid_shape_change": 0.0720140967480186,
       "deletion_shape_changes": [
-        0.2531565288927155,
-        0.2511985673415157,
-        0.30507408887472376,
-        0.18661308221880596
+        0.33384918407196823,
+        0.31627509765401124,
+        0.3501357767179226,
+        0.3249911093980962
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2459,12 +2597,12 @@
     {
       "level_cm": 53.49718913075471,
       "status": "closed",
-      "area_km2": 7799.524211398989,
+      "area_km2": 7067.516730498291,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8306498450529317,
-          "unsupported_enclosed_area_fraction": 0.9138977399949083,
+          "unsupported_perimeter_fraction": 0.8587515214033657,
+          "unsupported_enclosed_area_fraction": 0.9280596112276048,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2474,8 +2612,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7144508052954478,
-          "unsupported_enclosed_area_fraction": 0.8668759484762012,
+          "unsupported_perimeter_fraction": 0.7565377885557603,
+          "unsupported_enclosed_area_fraction": 0.8819966211627727,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2485,8 +2623,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.40797370197408306,
-          "unsupported_enclosed_area_fraction": 0.4550588105823291,
+          "unsupported_perimeter_fraction": 0.429669052548306,
+          "unsupported_enclosed_area_fraction": 0.42199295490780603,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2495,12 +2633,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.024843808766413473,
+      "grid_shape_change": 0.10051035609915443,
       "deletion_shape_changes": [
-        0.23549881560582014,
-        0.2449618517532088,
-        0.3798993966824342,
-        0.20086230475061276
+        0.36358133085180994,
+        0.3168880155892169,
+        0.4590190888742825,
+        0.32841764190496914
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2513,12 +2651,12 @@
     {
       "level_cm": 61.51209813084601,
       "status": "closed",
-      "area_km2": 3173.7601544407676,
+      "area_km2": 3405.964525826548,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 0.8429526402888007,
-          "unsupported_enclosed_area_fraction": 0.9428076159146187,
+          "unsupported_perimeter_fraction": 0.8740523665255018,
+          "unsupported_enclosed_area_fraction": 0.947566265250967,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2528,8 +2666,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 0.7721407597262433,
-          "unsupported_enclosed_area_fraction": 0.9269641260736163,
+          "unsupported_perimeter_fraction": 0.8088490069017283,
+          "unsupported_enclosed_area_fraction": 0.931418215139203,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2539,8 +2677,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.42540648444220575,
-          "unsupported_enclosed_area_fraction": 0.4430944537996045,
+          "unsupported_perimeter_fraction": 0.4274845897158942,
+          "unsupported_enclosed_area_fraction": 0.4119251957283907,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2550,12 +2688,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.06462501987546458,
+      "grid_shape_change": 0.15070847809883817,
       "deletion_shape_changes": [
-        0.35719944311206037,
-        0.18340080476156395,
-        0.5604015009476682,
-        0.1948926063365604
+        0.42325789225481475,
+        0.30040680531429703,
+        0.5533131045902167,
+        0.3302439921152045
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2568,12 +2706,12 @@
     {
       "level_cm": 70.72779482321644,
       "status": "closed",
-      "area_km2": 715.8771259230163,
+      "area_km2": 1184.452830092127,
       "components": 1,
       "policies": {
         "strict": {
-          "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 1.0000000000000002,
+          "unsupported_perimeter_fraction": 0.9820227865636642,
+          "unsupported_enclosed_area_fraction": 0.9998890194632892,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2583,8 +2721,8 @@
           ]
         },
         "standard": {
-          "unsupported_perimeter_fraction": 1.0,
-          "unsupported_enclosed_area_fraction": 1.0000000000000002,
+          "unsupported_perimeter_fraction": 0.9820227865636642,
+          "unsupported_enclosed_area_fraction": 0.9998890194632892,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2594,8 +2732,8 @@
           ]
         },
         "permissive": {
-          "unsupported_perimeter_fraction": 0.4694916073966744,
-          "unsupported_enclosed_area_fraction": 0.43655947288495767,
+          "unsupported_perimeter_fraction": 0.4526302747415555,
+          "unsupported_enclosed_area_fraction": 0.36667792979605085,
           "eligible": false,
           "reasons": [
             "perimeter_leaves_local_support",
@@ -2605,12 +2743,12 @@
           ]
         }
       },
-      "grid_shape_change": 0.27979905677430017,
+      "grid_shape_change": 0.26706288255661575,
       "deletion_shape_changes": [
-        0.6527602006230202,
-        0.48512262738159856,
-        0.8298611501781729,
-        0.15116195726027032
+        0.5101992761880969,
+        0.2718523175917252,
+        0.7148526672108046,
+        0.3604814011435959
       ],
       "bracketing": {
         "above_inside_each_component": [
@@ -2622,28 +2760,57 @@
     },
     {
       "level_cm": 81.32418032488604,
-      "status": "above_resolved_peak",
-      "area_km2": null,
-      "components": 0,
+      "status": "closed",
+      "area_km2": 183.47011564838948,
+      "components": 1,
       "policies": {
         "strict": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9999999999999999,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         },
         "standard": {
+          "unsupported_perimeter_fraction": 1.0,
+          "unsupported_enclosed_area_fraction": 0.9999999999999999,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         },
         "permissive": {
+          "unsupported_perimeter_fraction": 0.47459866379861737,
+          "unsupported_enclosed_area_fraction": 0.47261566604472605,
           "eligible": false,
           "reasons": [
-            "above_resolved_peak"
+            "perimeter_leaves_local_support",
+            "contour_not_grid_resolved",
+            "fewer_than_three_bracketing_sites",
+            "unstable_under_geographic_deletion"
           ]
         }
+      },
+      "grid_shape_change": 0.5303190011014534,
+      "deletion_shape_changes": [
+        0.42959245783196265,
+        0.40791170261133125,
+        0.9012328941116214,
+        0.3538400500249294
+      ],
+      "bracketing": {
+        "above_inside_each_component": [
+          0
+        ],
+        "below_outside": 24,
+        "below_inside_each_hole": []
       }
     }
   ],

@@ -1,4 +1,4 @@
-# Geographic reach of nested isopachs
+# Principal Bayesian nested isopachs with dispersal corridors
 
 A distant ash bed establishes thickness at its location. It supplies limited information about a distant site on another bearing, even when both locations have the same radius in an idealized isopach. The geographic reach fit retains the nested thinning model, its source and detached-fan alternatives, and its analogue-informed distal continuation. It adds uncertainty about how far measured bearings can be continued across wind and beyond the last finding. The companion whole-area fit shows how much this choice matters. [Paired estimates](../../comparisons/nested-reach/README.md) · [Tests against actual surveys](../../comparisons/nested-reach/field-surveys/README.md) · [Original thinning and shape model](nested-isopachs.md)
 
@@ -36,14 +36,15 @@ The final update marginalizes over all ten reach laws for every parent particle.
 
 The central map is the pointwise median field. The global volume estimate is the median of complete-draw integrals. The local map marks a contour solid only where a retained triangle has exact observations on both sides at distinct vertices and at least 90% of posterior draws cross that level between its vertices. The per-triangle file records each decision. The full-compass view includes the unsampled flanks and a conditional 10–90% exceedance belt. The measured footprint, local bracket and full-contour support screen answer different questions. [Shared support protocol](supported-isopachs.md)
 
-Publication keeps both reach assumptions visible. Use held measurements, censoring bounds and independently surveyed deposits to judge geographic reliability. The Calbuco tests use a campaign and a mapped distal contour that stayed outside the fit. Simulation provides analytic totals and known missing lobes for testing behavior under specified conditions. It supplies no frequency estimate for real eruption dynamics. [Independent surveys](../../comparisons/nested-reach/field-surveys/README.md) · [Known-surface checks](../../comparisons/nested-reach/known-surfaces.csv)
+The corridor supplies the principal nested map, volume and held-out score for every eruption. The whole-area field supplies the paired sensitivity. Use held measurements, censoring bounds and independently surveyed deposits to judge geographic reliability. The Calbuco tests use a campaign and a mapped distal contour that stayed outside the fit. Simulation provides analytic totals and known missing lobes for testing behavior under specified conditions. It supplies no frequency estimate for real eruption dynamics. [Independent surveys](../../comparisons/nested-reach/field-surveys/README.md) · [Known-surface checks](../../comparisons/nested-reach/known-surfaces.csv)
 
 ## Reproduction
 
 The default full comparison generates both nested fields. A stand-alone run can also use the geographic model directly.
 
 ```sh
-tephra-isopachs global Aso-4 --geometry nested-reach --output results/aso-reach
+tephra-isopachs global Aso-4 --geometry nested-isopachs --output results/aso-corridor
+tephra-isopachs global Aso-4 --geometry nested-whole-area --output results/aso-whole-area
 python -m benchmarks.nested_reach --output results/nested-reach-cases --workers 2
 python -m benchmarks.nested_reach_challenge --design quadrants --output results/nested-reach-quadrants --workers 2
 python -m benchmarks.nested_reach_challenge --design known --output results/nested-reach-known --workers 2

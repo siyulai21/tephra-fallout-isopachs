@@ -78,9 +78,9 @@ def main():
     if a.case:
         run((a.case,a.fitted,a.output))
         return
-    records=[(r["path"],Path("eruptions")/r["slug"]/"results/nested-isopachs",a.output/r["slug"]) for r in datasets()]
+    records=[(r["path"],Path("eruptions")/r["slug"]/"results/nested-whole-area",a.output/r["slug"]) for r in datasets()]
     if a.extra:
-        records.append((a.extra,Path("comparisons/nested-isopachs/pinatubo-preview/nested-isopachs"),a.output/"pinatubo-1991"))
+        records.append((a.extra,Path("comparisons/nested-isopachs/pinatubo-preview/nested-whole-area"),a.output/"pinatubo-1991"))
     with ProcessPoolExecutor(a.workers) as pool:
         list(pool.map(run,records))
 

@@ -50,12 +50,12 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
         calls.append("directional")
         return {"principal_estimate": "uncertain fan direction"}
     monkeypatch.setattr(directional, "directional_dataset", directional_run)
-    monkeypatch.setattr(cli, "nested_dataset", lambda *a, **k: calls.append("nested"))
+    monkeypatch.setattr(cli, "whole_area_dataset", lambda *a, **k: calls.append("nested"))
     def check_reach(path, output, **kwargs):
-        assert kwargs["parent"] == tmp_path/"a/nested-isopachs"
-        assert output == tmp_path/"a/nested-reach"
+        assert kwargs["parent"] == tmp_path/"a/nested-whole-area"
+        assert output == tmp_path/"a/nested-isopachs"
         calls.append("geographic reach")
-    monkeypatch.setattr(cli, "reach_dataset", check_reach)
+    monkeypatch.setattr(cli, "nested_dataset", check_reach)
     monkeypatch.setattr(cli, "review_continuations", lambda *a: calls.append("sensitivities"))
     monkeypatch.setattr(cli, "compare_dataset", lambda *a, **kw: calls.append("regional"))
     monkeypatch.setattr(global_reporting, "global_dataset", spherical_run)
@@ -75,6 +75,17 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     calls.clear()
     assert cli.main(["global", "YTT", "--geometry", "directional", "--output", str(tmp_path/"d")]) is None
     assert calls == ["directional"]
+
+
+@pytest.mark.parametrize("geometry,expected", [
+    ("nested-isopachs", "corridor"), ("nested-reach", "corridor"), ("nested-whole-area", "whole-area")])
+def test_nested_geometry_selects_the_named_continuation(tmp_path, monkeypatch, geometry, expected):
+    from src.empirical_isopach import cli
+    calls = []
+    monkeypatch.setattr(cli, "nested_dataset", lambda *a, **k: calls.append(("corridor", k["resume"])))
+    monkeypatch.setattr(cli, "whole_area_dataset", lambda *a, **k: calls.append(("whole-area", k["resume"])))
+    cli.main(["global", "YTT", "--geometry", geometry, "--resume", "--output", str(tmp_path)])
+    assert calls == [(expected, True)]
 
 
 @pytest.mark.parametrize("dataset, override, focused", [

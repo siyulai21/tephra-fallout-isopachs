@@ -1,6 +1,6 @@
 # Publish and revise a case
 
-The case home is the reading copy. It shows the four maps, volumes, validation and material limitations. The audit owns source decisions. The result directories own the fitted fields, volume draws, geographic tests and diagnostics. Cite those files from related studies.
+The case home is the reading copy. It shows the five principal maps, volumes, validation and material limitations. The audit owns source decisions. The result directories own the fitted fields, volume draws, geographic tests and diagnostics. Cite those files from related studies.
 
 ## Revising a result
 
@@ -11,7 +11,7 @@ The case home is the reading copy. It shows the four maps, volumes, validation a
 
 ## Checking a map
 
-Each case opens with four maps of pointwise median thickness. All panels share the same contours, colour scale and geographic frame for that eruption. The full observation hull and every accepted site are in view. The regional fields end at the hull boundary. For the directional ensemble and spherical mixture, the whole-Earth maps show where contours continue beyond the comparison frame.
+Each case opens with the principal nested corridor map. Its solid fragments mark local thickness brackets and its dashed fragments show continuation. The four peer panels beneath it share the same contours, colour scale and geographic frame for that eruption. The full observation hull and every accepted site are in view. The regional fields end at the hull boundary. For the three global families, the whole-Earth maps show where contours continue beyond the comparison frame.
 
 ### What to check
 
