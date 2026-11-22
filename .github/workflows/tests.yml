@@ -43,7 +43,7 @@ jobs:
           root = data_directory()
           pinatubo = next(r for r in datasets() if r["slug"] == "pinatubo-1991-layer-c")
           data, meta = audited_data(pinatubo["path"])
-          assert (len(data.xy), int((~data.censored).sum()), int(data.lower_censored.sum())) == (194, 140, 26)
+          assert (len(data.xy), int((~data.censored).sum()), int(data.lower_censored.sum())) == (194, 143, 23)
           principal = json.loads((root / pinatubo["audit"]).read_text())["cases"]["principal"]
           assert meta["input_sha256"] == principal["sha256"]
           archive, _ = load_inventory(pinatubo["path"])

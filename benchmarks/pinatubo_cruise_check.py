@@ -7,19 +7,20 @@ from pathlib import Path
 import numpy as np
 from src.Laea import make_laea_transform
 
-from .pinatubo import AUDIT, INPUT
+from .pinatubo import AUDIT, ROOT
 from .pinatubo_evidence import read
 from .refresh_figures import recorded_observations, regional_models
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.visualization.deposit_field import open_field
 
 PREVIOUS_INPUT = "d0db42a7c01582285a7b5a4317798bbfa9d5efb4b5955727afddedb0062352a8"
+CRUISE_INTAKE = ROOT / "archive/2026-11-22-pinatubo-intake/pre-visual-review/input.csv"
 
 
 def check(training, home, output):
     if sha256(training.read_bytes()).hexdigest() != PREVIOUS_INPUT:
         raise ValueError("This test uses the archived 193-observation intake.")
-    previous, current = read(training), read(INPUT)
+    previous, current = read(training), read(CRUISE_INTAKE)
     if previous != current[:-1] or current[-1]["EvidenceID"] != "S99-SO-114-23":
         raise ValueError("Expected the new core to be the only additional fitted observation.")
     data, meta = recorded_observations({"path":training}, home)

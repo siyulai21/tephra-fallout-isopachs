@@ -1,5 +1,7 @@
 # Pinatubo 1991 (Layer C) fallout reconstruction
 
+**Pre-review fit.** These results use the 194-site input from before the four Koyaguchi C1 corrections. The next fit will combine both land-map reviews. [Exact input, results and validation snapshot](../../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md)
+
 ## Volumes and geographic prediction
 
 Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.

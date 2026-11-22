@@ -1,5 +1,7 @@
 # Which source decisions change the Pinatubo estimate?
 
+**Pre-review fit.** These results use the 194-site input from before the four Koyaguchi C1 corrections. The next fit will combine both land-map reviews. [Exact input, results and validation snapshot](../../../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md)
+
 The nested-corridor tests change one source selection or reading rule at a time. The volume column integrates the median-thickness field over Earth. The interval describes coherent whole-deposit draws under that fit.
 
 | Fit | Training sites | Volume (km³) | Conditional 95% (km³) | Exact withheld beds within 95% | Numerical checks |

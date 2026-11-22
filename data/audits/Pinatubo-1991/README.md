@@ -1,12 +1,12 @@
 # Pinatubo climactic fallout audit
 
-**194 fitted observations comprise 140 measured thicknesses, 26 lower bounds and 28 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
+**194 accepted observations comprise 143 measured thicknesses, 23 lower bounds and 28 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
 
 | Evidence | Measured | Lower | Upper | Original scope |
 |---|---:|---:|---:|---|
 | Paladio-Melosantos Table 2 | 12 | 0 | 0 | Whole-deposit thickness at 12 grain-size sections |
 | Paladio-Melosantos Figure 7 | 72 | 5 | 18 | Independently legible field markers and whole-section totals |
-| Koyaguchi Figure 3 | 37 | 10 | 4 | C1 and C2 sampled at paired sites |
+| Koyaguchi Figure 3 | 40 | 7 | 4 | C1 and C2 sampled at paired sites |
 | Wiesner and Wang Table 1 | 7 | 0 | 3 | Ten marine cores |
 | Wiesner et al. Table 1 | 11 | 0 | 0 | Bulk beds with documented cruise-station positions |
 | Hess et al. Table 1 and discussion | 0 | 11 | 1 | Named station groups after checking repeat visits and disturbed beds |
@@ -14,6 +14,8 @@
 | Casadevall et al. | 0 | 0 | 2 | Manila and Sangley Point airfield accumulations |
 
 Every accepted row has an evidence ID and every candidate numeric reading has a recorded decision. The larger evidence inventory also holds coarse units, reconnaissance reports, revisits and source-map positions with no numeric limit. Several records can describe one station. [Selection decisions](selection.csv) · [Source originals and citations](../../sources/pinatubo-1991/README.md)
+
+The field review resolved four C1 labels. The two sublayers give 8.5 cm at K-07, >5.8 cm at K-23, 20.0 cm at K-34 and 4.0 cm at K-52. [Four original crops and reading decisions](koyaguchi-c1-review.md)
 
 ## Map coordinates
 

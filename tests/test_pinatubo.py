@@ -17,13 +17,16 @@ def test_input_replays_from_original_readings_and_units():
     for path, content in products().items():
         assert content == path.read_bytes()
     accepted = rows(INPUT)
-    assert Counter(r["Kind"] for r in accepted) == {"measurement": 140, "lower_limit": 26, "upper_limit": 28}
+    assert Counter(r["Kind"] for r in accepted) == {"measurement": 143, "lower_limit": 23, "upper_limit": 28}
     records = {r["EvidenceID"]: r for r in accepted}
     assert len(records) == len({(r["Lon"], r["Lat"]) for r in accepted}) == 194
     core = records["S99-SO-114-23"]
     assert (core["Lon"], core["Lat"], core["Thickness"]) == ("117.74", "14.07", "1.0")
     assert "S99-SO-114-6" not in records
     assert records["K-03"]["Limit_cm"] == "2.0"
+    for key, thickness in {"K-07": "8.5", "K-34": "20.0", "K-52": "4.0"}.items():
+        assert (records[key]["Kind"], records[key]["Thickness"]) == ("measurement", thickness)
+    assert (records["K-23"]["Kind"], records["K-23"]["Limit_cm"]) == ("lower_limit", "5.8")
     assert records["H01-14"]["Kind"] == "upper_limit"
     assert float(records["H01-14"]["Limit_cm"]) == 2
     assert records["W04-SO-140-03"]["Thickness"] == "0.7"

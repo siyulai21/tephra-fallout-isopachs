@@ -1,5 +1,7 @@
 # Pinatubo 1991 (Layer C) · Bayesian nested corridors
 
+**Pre-review fit.** These results use the 194-site input from before the four Koyaguchi C1 corrections. The next fit will combine both land-map reviews. [Exact input, results and validation snapshot](../../../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md)
+
 The principal bulk volume is **7.58 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **5.7–9.08 km³** across complete posterior draws.
 
 ![Pinatubo 1991 (Layer C), Bayesian nested corridors. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)

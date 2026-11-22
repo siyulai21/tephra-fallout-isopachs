@@ -79,6 +79,34 @@ def coordinate_example():
     sheet.save(OUT/"coordinate-check.png", optimize=True)
 
 
+def reviewed_c1_labels():
+    """Show the original characters and nearby compilation at the recorded review pixels."""
+    with (AUDIT / "koyaguchi-c1-review.csv").open(newline="") as stream:
+        reviews = list(csv.DictReader(stream))
+    koya = Image.open(SOURCE / "koyaguchi-figure-3.gif").convert("RGB")
+    paladio = Image.open(SOURCE / "paladio-figure-7.gif").convert("RGB")
+    columns = [(koya, "c1", 32, 14, 5, "Koyaguchi C1 · mm"),
+               (koya, "c2", 32, 14, 5, "Koyaguchi C2 · mm"),
+               (paladio, "figure7", 40, 18, 4, "Nearby Figure 7 label · cm")]
+    canvas = Image.new("RGB", (1135, 52 + 165 * len(reviews)), "white")
+    draw = ImageDraw.Draw(canvas)
+    for column, (raw, prefix, dx, dy, scale, heading) in enumerate(columns):
+        left = 81 + 345 * column
+        draw.text((left, 10), heading, fill=INK, font=font(18))
+        for index, review in enumerate(reviews):
+            top = 50 + 165 * index
+            if column == 0:
+                draw.text((5, top + 47), review["evidence_id"], fill=INK, font=font(18))
+            x, y = int(review[prefix + "_x"]), int(review[prefix + "_y"])
+            crop = raw.crop((x - dx, y - dy, x + dx + 1, y + dy + 1))
+            canvas.paste(crop.resize((crop.width * scale, crop.height * scale),
+                                     Image.Resampling.NEAREST), (left, top))
+            cx, cy = left + dx * scale + scale // 2, top + dy * scale + scale // 2
+            draw.polygon([(cx - 4, top - 6), (cx + 4, top - 6), (cx, top - 1)], fill=BLUE)
+            draw.polygon([(left - 6, cy - 4), (left - 6, cy + 4), (left - 1, cy)], fill=BLUE)
+    canvas.save(OUT / "koyaguchi-c1-review.png", optimize=True)
+
+
 def distal_sheet():
     """Print the original small-scale symbols with their map locators outside the pixels."""
     readings = src("context/paladio-figure-9-localities.csv")
@@ -108,6 +136,7 @@ def draw_sheets():
         schematic = {r["site"]:r for r in csv.DictReader(f)}
     distal_sheet()
     coordinate_example()
+    reviewed_c1_labels()
     index = []
     guide = ["# Check the Pinatubo measurements by eye", "",
              "Three examples take about a minute to check. The [CAB-1 table entry and mapped section](field-check.md) give a measured 15 cm. On [K-03](visual/k3-01.png), 20 mm is clear and the other value carries a question mark, giving a 2 cm minimum. The [P7-056 symbol](visual/p7-07.png) is ambiguous and was excluded.", "",
@@ -118,6 +147,7 @@ def draw_sheets():
         raw = Image.open(SOURCE/filename).convert("RGB")
         guide += [f"## {title}", "", f"[Original image](../../sources/pinatubo-1991/{filename})", ""]
         if tag == "K3":
+            guide += ["Four C1 readings were reviewed against both original panels and the neighbouring Figure 7 labels. [Read the four decisions](koyaguchi-c1-review.md) · [Compare the original pixels](visual/koyaguchi-c1-review.png)", ""]
             guide += ["The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md#position-on-the-two-sublayer-maps)", ""]
         if tag == "P2":
             guide += ["[Printed sample names, thicknesses and geographic coordinates](field-check.md)", ""]

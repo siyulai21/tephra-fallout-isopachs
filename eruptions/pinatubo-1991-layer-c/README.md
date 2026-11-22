@@ -2,9 +2,9 @@
 
 The 15 June 1991 climactic eruption deposited pumice and ash across Luzon and the South China Sea. This case combines the C1 and C2 fall layers on land with their marine equivalents, including co-ignimbrite fallout. Volumes refer to accumulated bulk deposit. The archive also identifies the separate layers A, B and D. [Field stratigraphy](https://pubs.usgs.gov/pinatubo/paladio/index.html) · [Offshore stratigraphy](https://doi.org/10.1007/s00445-003-0306-x)
 
-**194 observations enter every principal fit.** They comprise 140 measured thicknesses, 26 lower bounds and 28 upper bounds. The evidence inventory contains 464 records, including repeat visits, uncertain readings, coarse units, distal reports and survey coverage. Beyond 100 km the exact measurements leave a 294° gap in direction. [Accepted data](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Evidence inventory](../../data/audits/Pinatubo-1991/full-evidence.csv) · [Audit and directional coverage](../../data/audits/Pinatubo-1991/README.md)
+**The reviewed Layer C input has 194 sites, comprising 143 measured thicknesses, 23 lower bounds and 28 upper bounds.** The Koyaguchi C1 review revised four readings. The inventory covers 464 evidence records. Beyond 100 km the measured sites leave a 294° gap in bearing. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Four original map crops and decisions](../../data/audits/Pinatubo-1991/koyaguchi-c1-review.md) · [Full evidence inventory](../../data/audits/Pinatubo-1991/full-evidence.csv)
 
-**Input under visual review.** The results below use the frozen 194-site transcription with SHA-256 `5400069fea176a055aebf2395d0f92dabf51ce3c7354f17c559f4e9ccea0bfda`. Four C1 labels at K-07, K-23, K-34 and K-52 are under review against the original printed figures. These fits supply a baseline for measuring the effect of any corrections. [Original Koyaguchi map](../../data/sources/pinatubo-1991/koyaguchi-figure-3.gif) · [Original Paladio-Melosantos map](../../data/sources/pinatubo-1991/paladio-figure-7.gif)
+**Model status.** All volumes, maps and geographic scores below use the 194-site input from before the four corrections, with 140 measurements and 26 lower bounds. The next five-model comparison will use the Koyaguchi and Paladio-Melosantos reviews together. [Archived fit input and reports](../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md) · [Reviewed input checksum](../../data/audits/Pinatubo-1991/provenance.json)
 
 ## Volumes and geographic prediction
 
@@ -61,7 +61,7 @@ Wiesner and colleagues reported 5.5 km³ for the 15 June airfall deposit. Earlie
 
 ## Reproduce the case
 
-Run the commands from the repository root. The model command runs both regional families and all three whole-Earth families with their ordinary fit settings, prior sensitivities, support audits and buffered geographic holdouts.
+These commands use the reviewed observations in this checkout. For the maps and numbers shown above, use the revision in the [pre-review archive](../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md). The model command runs both regional families and all three whole-Earth families with their ordinary fit settings, prior sensitivities, support audits and buffered geographic holdouts.
 
 ```sh
 python -m benchmarks.pinatubo
