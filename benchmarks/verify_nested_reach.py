@@ -42,9 +42,12 @@ def verify_case(rec):
         assert fit["identity"]["training_rows"] == train.row_ids.tolist()
         model = ReachDraws.load(file)
         original = Corridors.from_training(train, lat)
-        np.testing.assert_array_equal(original.radii, model.corridors.radii)
-        np.testing.assert_array_equal(original.bearings, model.corridors.bearings)
-        assert original.proximal == model.corridors.proximal
+        # PROJ and libm differ by a few nanometres in projected distances on arm64 and
+        # x86_64. Input IDs and packet digests above still match byte for byte.
+        np.testing.assert_allclose(original.radii, model.corridors.radii, rtol=2e-12, atol=1e-9)
+        np.testing.assert_allclose(np.sin(original.bearings-model.corridors.bearings), 0., atol=2e-12)
+        np.testing.assert_allclose(np.cos(original.bearings-model.corridors.bearings), 1., atol=2e-12)
+        np.testing.assert_allclose(original.proximal, model.corridors.proximal, rtol=2e-12, atol=1e-9)
         if test is not None:
             assert fit["identity"]["test_rows"] == test.row_ids.tolist()
             np.testing.assert_allclose(model.score(test), fit["row_log_scores"], atol=1e-8)
