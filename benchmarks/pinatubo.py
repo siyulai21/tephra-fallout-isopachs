@@ -169,14 +169,18 @@ def observations(cross_map_km=2.0, *, proximity_only=False):
             row["kind"] = ""
     for r in src("paladio-figure-7.csv"):
         mark, reading = r["mark"], r["reading_cm"]
-        if mark in ("solid", "total") and "?" not in reading:
-            if mark == "total":
+        if mark in ("solid", "total") and reading and "?" not in reading:
+            value = float(reading.lstrip("<>"))
+            if mark == "total" and reading.startswith(">"):
+                kind, value, reason = "", "", "A minimum for the whole section supplies no bound on Layer C alone."
+            elif mark == "total":
                 kind, reason = "upper_limit", "Total section may include A or B; Layer C is at most the reported total."
+            elif reading.startswith("<"):
+                kind, reason = "upper_limit", "Published upper limit for Layer C."
             elif reading.startswith(">"):
                 kind, reason = "lower_limit", "Published minimum for Layer C."
             else:
                 kind, reason = "measurement", "Legible Layer C field marker and thickness."
-            value = float(reading.lstrip(">"))
         else:
             kind, value, reason = "", "", r["note"] or "Square from the sublayer survey or unresolved reading."
         row = record(r["id"], "P7", position("P7", r["x"], r["y"]), kind, value, reason)

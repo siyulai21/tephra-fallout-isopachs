@@ -2,9 +2,9 @@
 
 The 15 June 1991 climactic eruption deposited pumice and ash across Luzon and the South China Sea. This case combines the C1 and C2 fall layers on land with their marine equivalents, including co-ignimbrite fallout. Volumes refer to accumulated bulk deposit. The archive also identifies the separate layers A, B and D. [Field stratigraphy](https://pubs.usgs.gov/pinatubo/paladio/index.html) · [Offshore stratigraphy](https://doi.org/10.1007/s00445-003-0306-x)
 
-**The reviewed Layer C input has 194 sites, comprising 143 measured thicknesses, 23 lower bounds and 28 upper bounds.** The Koyaguchi C1 review revised four readings. The inventory covers 464 evidence records. Beyond 100 km the measured sites leave a 294° gap in bearing. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Four original map crops and decisions](../../data/audits/Pinatubo-1991/koyaguchi-c1-review.md) · [Full evidence inventory](../../data/audits/Pinatubo-1991/full-evidence.csv)
+**The reviewed Layer C input has 208 sites, comprising 150 measurements, 28 lower bounds and 30 upper bounds.** Two readers compared Koyaguchi C1 and C2 and checked 32 entries in Paladio-Melosantos Figure 7. The inventory contains 464 source records. The exact sites beyond 100 km leave a 294° gap in direction. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Koyaguchi review](../../data/audits/Pinatubo-1991/koyaguchi-c1-review.md) · [Figure 7 review and original crops](../../data/audits/Pinatubo-1991/paladio-figure-7-review.md)
 
-**Model status.** All volumes, maps and geographic scores below use the 194-site input from before the four corrections, with 140 measurements and 26 lower bounds. The next five-model comparison will use the Koyaguchi and Paladio-Melosantos reviews together. [Archived fit input and reports](../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md) · [Reviewed input checksum](../../data/audits/Pinatubo-1991/provenance.json)
+**Model status.** The five-model rerun uses the combined 208-site input. The maps, volumes and geographic scores shown below are the 194-site baseline from before either figure review. [Archived fit input and reports](../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md)
 
 ## Volumes and geographic prediction
 

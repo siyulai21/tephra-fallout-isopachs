@@ -1,11 +1,11 @@
 # Pinatubo climactic fallout audit
 
-**194 accepted observations comprise 143 measured thicknesses, 23 lower bounds and 28 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
+**208 accepted observations comprise 150 measured thicknesses, 28 lower bounds and 30 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
 
 | Evidence | Measured | Lower | Upper | Original scope |
 |---|---:|---:|---:|---|
 | Paladio-Melosantos Table 2 | 12 | 0 | 0 | Whole-deposit thickness at 12 grain-size sections |
-| Paladio-Melosantos Figure 7 | 72 | 5 | 18 | Independently legible field markers and whole-section totals |
+| Paladio-Melosantos Figure 7 | 79 | 10 | 20 | Independently legible field markers and whole-section totals |
 | Koyaguchi Figure 3 | 40 | 7 | 4 | C1 and C2 sampled at paired sites |
 | Wiesner and Wang Table 1 | 7 | 0 | 3 | Ten marine cores |
 | Wiesner et al. Table 1 | 11 | 0 | 0 | Bulk beds with documented cruise-station positions |
@@ -25,13 +25,13 @@ One Koyaguchi source pixel spans about 0.25 km. A Paladio source pixel spans abo
 
 The sublayers are in millimetres. Add them once, then divide by ten. A visible component with a questioned partner supplies only a lower bound. The sum of two upper bounds supplies an upper bound. December measurements and the June observations printed in parentheses have separate survey labels. Koyaguchi describes erosion and compaction at some revisited sites. [Original caption and field methods](https://pubs.usgs.gov/pinatubo/koya/index.html)
 
-Paladio Table 2 sometimes repeats total deposit thickness beside each grain-size subsample. Each section contributes one total. On Figure 7, a filled circle identifies a field reading, an open circle identifies a total that may include layers A or B, and squares reproduce readings from Koyaguchi and Listanco. The ledger keeps unresolved digits, unclear marker assignments and the squares outside the fit. In particular P7-056, P7-101 and P7-148 were fitted in the old preview and fail this visual review. [Figure 7 and caption](https://pubs.usgs.gov/pinatubo/paladio/index.html) · [Numbered reading sheets](VISUAL-CHECK.md)
+Paladio Table 2 sometimes repeats total deposit thickness beside each grain-size subsample. Each section contributes one total. On Figure 7, a filled circle identifies a field reading, an open circle identifies a total that may include layers A or B, and squares reproduce readings from Koyaguchi and Listanco. The ledger keeps unresolved digits, unclear marker assignments and the squares outside the fit. A second reading of 32 Figure 7 entries resolved P7-101 as 15 cm and P7-148 as 5.1 cm. P7-056 remains unresolved. Fourteen field records entered the fit and two measured values changed. [Decisions and four sheets of source pixels](paladio-figure-7-review.md) [Figure 7 and caption](https://pubs.usgs.gov/pinatubo/paladio/index.html) · [Numbered reading sheets](VISUAL-CHECK.md)
 
 ## Cross-survey repeats
 
 A named Table 2 section has priority within 0.8 km of a Figure 7 marker because the printed triangle spans that neighbourhood. Between the sublayer survey and the other field surveys we flag positions within 0.4 km as possible repeats. Out to 2 km we flag a pair whose published numeric thresholds or readings agree within 0.1 cm. Directly copied square symbols are suppressed regardless of distance. These choices are explicit conventions for unresolved site identities. Distinct survey markers can remain close together. The geographic holdouts buffer training observations. [Every row and its reason](selection.csv)
 
-With agreement screening and a 0.5, 1, 2 or 3 km maximum search radius, 199, 195, 194 or 190 observations survive respectively. Merging every nearby cross-survey pair at those radii leaves 197, 183, 162 or 142. These are changes in site count. They do not give an uncertainty interval for volume. [Replayable counts](provenance.json)
+With agreement screening and a 0.5, 1, 2 or 3 km maximum search radius, 213, 209, 208 or 204 observations survive respectively. Merging every nearby cross-survey pair at those radii leaves 210, 193, 171 or 147. These are changes in site count. They do not give an uncertainty interval for volume. [Replayable counts](provenance.json)
 
 ## Airfields and distal reports
 
@@ -43,7 +43,7 @@ The Singapore sample confirms micrometre-scale particles at great distance. The 
 
 ## Geographic coverage
 
-![Locations of the 194 accepted observations on Luzon and in the South China Sea, with distance and bearing from Pinatubo](coverage.png)
+![Locations of the 208 accepted observations on Luzon and in the South China Sea, with distance and bearing from Pinatubo](coverage.png)
 
 The northern sector has one exact measurement, 14.15 km from the source. Beyond 100 km the exact-site bearings leave a 294.1° gap. Marine deposits extend the measured footprint predominantly west and southwest. An uninterrupted isopach across the remaining directions depends on the model. The later offshore survey documents a local distal thickening and a bend in the lobe, both challenging a smooth thinning field. [Sector counts and distances](coverage.csv) · [Marine evidence and preservation](marine-check.md) · [Wiesner et al.](https://doi.org/10.1007/s00445-003-0306-x)
 

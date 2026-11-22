@@ -2,7 +2,7 @@
 
 [Data guide](../README.md) · [Accepted CSVs](../eruptions/README.md) · [Reports](../../eruptions/README.md)
 
-- [Pinatubo 1991, Layer C](Pinatubo-1991/README.md) links 194 accepted field and marine observations to original maps, numbered reading sheets and station tables.
+- [Pinatubo 1991, Layer C](Pinatubo-1991/README.md) links 208 accepted field and marine observations to original maps, numbered reading sheets and station tables.
 - [Sakurajima Satsuma (P14)](Sakurajima-Satsuma/README.md) traces 57 accepted observations to field descriptions, native workbooks and a marine core, with measurement coverage by distance and bearing.
 - [Ilopango TBJ Unit G](Ilopango-TBJ/README.md) links every thickness and geographic position to a published spreadsheet cell or core reading and quantifies coverage by bearing and distance.
 - [B-Tm](B-Tm/README.md) derives three site-specific cryptotephra limits and tests alternative archive responses. Its earlier review covers 84 previously fitted records, 83 Costa Table S1 entries and additional primary field sites.

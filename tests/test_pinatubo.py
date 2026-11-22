@@ -17,9 +17,9 @@ def test_input_replays_from_original_readings_and_units():
     for path, content in products().items():
         assert content == path.read_bytes()
     accepted = rows(INPUT)
-    assert Counter(r["Kind"] for r in accepted) == {"measurement": 143, "lower_limit": 23, "upper_limit": 28}
+    assert Counter(r["Kind"] for r in accepted) == {"measurement": 150, "lower_limit": 28, "upper_limit": 30}
     records = {r["EvidenceID"]: r for r in accepted}
-    assert len(records) == len({(r["Lon"], r["Lat"]) for r in accepted}) == 194
+    assert len(records) == len({(r["Lon"], r["Lat"]) for r in accepted}) == 208
     core = records["S99-SO-114-23"]
     assert (core["Lon"], core["Lat"], core["Thickness"]) == ("117.74", "14.07", "1.0")
     assert "S99-SO-114-6" not in records
@@ -30,7 +30,11 @@ def test_input_replays_from_original_readings_and_units():
     assert records["H01-14"]["Kind"] == "upper_limit"
     assert float(records["H01-14"]["Limit_cm"]) == 2
     assert records["W04-SO-140-03"]["Thickness"] == "0.7"
-    assert {"H01-03", "WW-SCS-C", "P7-056", "P7-101", "P7-148"}.isdisjoint(records)
+    assert {"H01-03", "WW-SCS-C", "P7-028", "P7-056", "P7-064", "P7-080", "P7-156", "P7-170"}.isdisjoint(records)
+    assert (records["P7-066"]["Kind"], records["P7-066"]["Limit_cm"]) == ("upper_limit", "25.0")
+    assert (records["P7-048"]["Kind"], records["P7-048"]["Limit_cm"]) == ("lower_limit", "14.0")
+    assert (records["P7-172"]["Kind"], records["P7-172"]["Limit_cm"]) == ("upper_limit", "9.5")
+    assert records["P7-101"]["Thickness"] == "15.0" and records["P7-148"]["Thickness"] == "5.1"
     ledger = rows(AUDIT / "full-evidence.csv")
     assert len(ledger) == len({r["evidence_id"] for r in ledger}) == 464
     fitted = {r["evidence_id"]: int(r["accepted_csv_row"]) for r in ledger if r["accepted_csv_row"]}
@@ -39,8 +43,8 @@ def test_input_replays_from_original_readings_and_units():
 
     with Image.open(AUDIT / "coverage.png") as figure:
         coverage = json.loads(figure.info["Description"])
-    assert coverage == {"input_sha256":sha256(INPUT.read_bytes()).hexdigest(), "observations":194,
-                        "group_counts":{"Terrestrial surveys":158, "Marine cores":34, "Airfield limits":2}}
+    assert coverage == {"input_sha256":sha256(INPUT.read_bytes()).hexdigest(), "observations":208,
+                        "group_counts":{"Terrestrial surveys":172, "Marine cores":34, "Airfield limits":2}}
     sheets = rows(AUDIT / "reading-index.csv")
     assert {r["evidence_id"] for r in sheets} >= {key for key in records if key.startswith(("P2-", "K-", "P7-"))}
     assert all((AUDIT / r["sheet"]).is_file() for r in sheets)
@@ -50,6 +54,32 @@ def test_input_replays_from_original_readings_and_units():
             assert float(site["longitude_e"]) == float(accepted_row["Lon"])
             assert float(site["latitude_n"]) == float(accepted_row["Lat"])
     assert (AUDIT / "visual/coordinate-check.png").is_file()
+
+
+def test_visual_review_replays_the_field_labels_and_empty_sites():
+    from benchmarks.pinatubo import ROOT
+
+    history = ROOT / "archive/2026-11-22-pinatubo-intake"
+    before = {r["EvidenceID"]: r for r in rows(history / "koyaguchi-reviewed/input.csv")}
+    after = {r["EvidenceID"]: r for r in rows(INPUT)}
+    review = rows(AUDIT / "paladio-figure-7-review.csv")
+    original = {r["id"]: r for r in rows(history / "pre-visual-review/paladio-figure-7.csv")}
+    current = {r["id"]: r for r in rows(SOURCE / "paladio-figure-7.csv")}
+    assert len(review) == len({r["evidence_id"] for r in review}) == 32
+    assert before.keys() <= after.keys()
+    assert {k for k in before if before[k] != after[k]} == {"P7-072", "P7-074"}
+    additions = {r["evidence_id"] for r in review if r["model_kind"] and r["evidence_id"] not in before}
+    assert len(additions) == 14 and additions == after.keys() - before.keys()
+    for r in review:
+        key = r["evidence_id"]
+        assert r["curator_reading"]
+        assert (r["previous_reading_cm"], r["previous_mark"]) == (original[key]["reading_cm"], original[key]["mark"])
+        assert (r["reviewed_reading_cm"], r["reviewed_mark"]) == (current[key]["reading_cm"], current[key]["mark"])
+        assert (r["source_x"], r["source_y"]) == (current[key]["x"], current[key]["y"])
+        if r["model_kind"]:
+            assert (r["model_kind"], r["model_value_cm"]) == (after[key]["Kind"], after[key]["Thickness"] or after[key]["Limit_cm"])
+        else:
+            assert key not in after
 
 
 def test_preserved_sources_and_marine_station_matches():

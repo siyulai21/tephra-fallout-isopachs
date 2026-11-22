@@ -37,6 +37,8 @@ The mapped coordinate on each card comes from the C1 panel. Compare it with the 
 
 [Original image](../../sources/pinatubo-1991/paladio-figure-7.gif)
 
+[Review of 32 Figure 7 entries with original crops and fitting decisions](paladio-figure-7-review.md)
+
 - [P7-001 through P7-008](visual/p7-01.png)
 - [P7-009 through P7-016](visual/p7-02.png)
 - [P7-017 through P7-024](visual/p7-03.png)

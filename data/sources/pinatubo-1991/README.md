@@ -4,7 +4,7 @@ The fitted case represents the climactic 15 June 1991 airborne fallout. Each obs
 
 | Source | Original evidence | Project transcription |
 |---|---|---|
-| Paladio-Melosantos and colleagues (1996) | [Layer C sections, Table 2 and Figure 7](https://pubs.usgs.gov/pinatubo/paladio/index.html) | [12 whole-section totals](paladio-table-2.csv) · [22 original sample entries](context/paladio-table-2-subsamples.csv) · [Figure 7 markers](paladio-figure-7.csv) |
+| Paladio-Melosantos and colleagues (1996) | [Layer C sections, Table 2 and Figure 7](https://pubs.usgs.gov/pinatubo/paladio/index.html) | [12 whole-section totals](paladio-table-2.csv) · [22 original sample entries](context/paladio-table-2-subsamples.csv) · [Figure 7 markers](paladio-figure-7.csv) · [32 visually reviewed readings](../../audits/Pinatubo-1991/paladio-figure-7-review.md) |
 | Koyaguchi (1996) | [C1 and C2 panels, Figure 3](https://pubs.usgs.gov/pinatubo/koya/index.html) | [52 paired locations, both original readings in mm](koyaguchi-figure-3.csv) |
 | Wiesner and Wang (1996) | [Core and trap readings, Table 1](https://pubs.usgs.gov/pinatubo/wiesner/index.html) | [10 measured core horizons and one trap equivalent](wiesner-wang-table-1.csv) |
 | Wiesner and colleagues (2004, corrected 2005) | [Bulk ash and units I and II, Table 1](https://link.springer.com/article/10.1007/s00445-003-0306-x/tables/1) · [Corrected figures](https://doi.org/10.1007/s00445-005-0421-y) | [11 bulk beds with station coordinates](wiesner-2004-table-1.csv) · [Coring events](pangaea-coring-events.csv) |

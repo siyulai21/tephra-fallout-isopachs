@@ -107,6 +107,76 @@ def reviewed_c1_labels():
     canvas.save(OUT / "koyaguchi-c1-review.png", optimize=True)
 
 
+def reviewed_figure7_labels():
+    """Rebuild the four review plates from the registered pixels on Figure 7."""
+    with (AUDIT / "paladio-figure-7-review.csv").open(newline="") as stream:
+        reviews = list(csv.DictReader(stream))
+    raw = Image.open(SOURCE / "paladio-figure-7.gif").convert("RGB")
+    kind_label = {"measurement": "Measured", "upper_limit": "Upper bound", "lower_limit": "Lower bound"}
+    symbol_label = {"solid": "Field circle", "square": "Compilation square", "total": "Open circle",
+                    "place": "Place name", "no_reading": "No thickness at pointer", "amb": "Crowded symbols"}
+    for start in range(0, len(reviews), 8):
+        part = reviews[start:start + 8]
+        canvas = Image.new("RGB", (1160, 67 + 220 * ((len(part) + 1) // 2)), "white")
+        draw = ImageDraw.Draw(canvas)
+        draw.text((12, 8), f"Paladio-Melosantos Figure 7  ·  {part[0]['evidence_id']} to {part[-1]['evidence_id']}",
+                  fill=INK, font=font(22))
+        draw.text((12, 39), "Original pixels ×5. The teal pointers mark the recorded position. Thicknesses are in centimetres.",
+                  fill=INK, font=font(15))
+        for i, row in enumerate(part):
+            left, top = 14 + (i % 2) * 580, 69 + (i // 2) * 220
+            x, y = int(row["source_x"]), int(row["source_y"])
+            text = f"{row['evidence_id']}   ·   curator reading {row['curator_reading']}   ·   pixel ({x}, {y})"
+            draw.text((left, top), text, fill=INK, font=font(16))
+            crop = raw.crop((x - 51, y - 14, x + 52, y + 15))
+            l, t = left + 9, top + 32
+            canvas.paste(crop.resize((515, 145), Image.Resampling.NEAREST), (l, t))
+            cx, cy = l + 257, t + 72
+            draw.polygon([(cx-4,t-6), (cx+4,t-6), (cx,t-1)], fill=BLUE)
+            draw.polygon([(l-6,cy-4), (l-6,cy+4), (l-1,cy)], fill=BLUE)
+            kind = row["model_kind"]
+            result = f"{kind_label[kind]} {float(row['model_value_cm']):g} cm" if kind else "Outside fitted input"
+            draw.text((left, top + 185), f"{symbol_label[row['reviewed_mark']]}   ·   {result}",
+                      fill=BLUE if kind else INK, font=font(16))
+        canvas.save(OUT / f"p7-review-{start // 8 + 1:02d}.png", optimize=True)
+
+
+def reviewed_figure7_context():
+    """Compare the Botolan town dot and two coastal compilation marks with the other plates."""
+    paladio = Image.open(SOURCE / "paladio-figure-7.gif").convert("RGB")
+    koya = Image.open(SOURCE / "koyaguchi-figure-3.gif").convert("RGB")
+    records = {r["id"]: r for r in src("paladio-figure-7.csv")}
+    pairs = {r["id"]: r for r in src("koyaguchi-figure-3.csv")}
+    rows = []
+    botolan = records["P7-028"]
+    lon, lat = position("P7", botolan["x"], botolan["y"])
+    panels = [(paladio, int(botolan["x"]), int(botolan["y"]), "Figure 7 · Layer C")]
+    for ticks in src("context/phase-graticules.csv"):
+        if ticks["figure"] in ("6", "13"):
+            bounds = {k: float(v) for k, v in ticks.items()}
+            x = bounds["west_x"] + (lon - bounds["west_lon"]) * (bounds["east_x"] - bounds["west_x"]) / (bounds["east_lon"] - bounds["west_lon"])
+            y = bounds["north_y"] + (lat - bounds["north_lat"]) * (bounds["south_y"] - bounds["north_y"]) / (bounds["south_lat"] - bounds["north_lat"])
+            other = Image.open(SOURCE / "context" / f"paladio-figure-{ticks['figure']}.gif").convert("RGB")
+            panels.append((other, round(x), round(y), f"Figure {ticks['figure']} · same map location"))
+    rows.append(("P7-028 · Botolan locality", panels))
+    for key, partner in (("P7-162", "K-52"), ("P7-170", "K-48")):
+        point, pair = records[key], pairs[partner]
+        panels = [(paladio, int(point["x"]), int(point["y"]), "Figure 7 · cm")]
+        for field in ("c1", "c2"):
+            panels.append((koya, int(pair[field + "_x"]), int(pair[field + "_y"]), partner + " · " + field.upper() + " · mm"))
+        rows.append((key + " · field and compilation marks", panels))
+    sheet = Image.new("RGB", (1130, len(rows) * 201), "white")
+    draw = ImageDraw.Draw(sheet)
+    for i, (title, panels) in enumerate(rows):
+        top = 201 * i
+        draw.text((10, top + 3), title, fill=INK, font=font(18))
+        for j, (raw, x, y, label) in enumerate(panels):
+            left = 12 + j * 375
+            draw.text((left, top + 34), label, fill=INK, font=font(15))
+            crop_panel(sheet, raw, (x, y), left + 5, top + 61, marked=True)
+    sheet.save(OUT / "p7-review-context.png", optimize=True)
+
+
 def distal_sheet():
     """Print the original small-scale symbols with their map locators outside the pixels."""
     readings = src("context/paladio-figure-9-localities.csv")
@@ -137,6 +207,8 @@ def draw_sheets():
     distal_sheet()
     coordinate_example()
     reviewed_c1_labels()
+    reviewed_figure7_labels()
+    reviewed_figure7_context()
     index = []
     guide = ["# Check the Pinatubo measurements by eye", "",
              "Three examples take about a minute to check. The [CAB-1 table entry and mapped section](field-check.md) give a measured 15 cm. On [K-03](visual/k3-01.png), 20 mm is clear and the other value carries a question mark, giving a 2 cm minimum. The [P7-056 symbol](visual/p7-07.png) is ambiguous and was excluded.", "",
@@ -151,6 +223,8 @@ def draw_sheets():
             guide += ["The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md#position-on-the-two-sublayer-maps)", ""]
         if tag == "P2":
             guide += ["[Printed sample names, thicknesses and geographic coordinates](field-check.md)", ""]
+        if tag == "P7":
+            guide += ["[Review of 32 Figure 7 entries with original crops and fitting decisions](paladio-figure-7-review.md)", ""]
         for offset in range(0,len(readings),8):
             subset=readings[offset:offset+8]
             dest=f"{tag.lower()}-{1+offset//8:02d}.png"
