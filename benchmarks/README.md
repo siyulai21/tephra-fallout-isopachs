@@ -6,6 +6,8 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 
 ## Current evaluations
 
+Replay the principal global plates and physical map integrals with `python -m benchmarks.deposit_maps --output results/deposit-maps --workers 3`. Refresh the matched five-family table with `python -m benchmarks.principal_volumes --output results/principal-volumes.csv`. Both commands include the separate Pinatubo study.
+
 | Command | What it does | Method family |
 |---|---|---|
 | `python -m benchmarks.azimuth_continuation --help` | Fit and check uncertain fan directions, geographic and quadrant holdouts, median maps and joint volumes | Principal directional ensemble |
@@ -45,7 +47,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 | `python -m benchmarks.verify_directional` | The 13 directional policies for each registered eruption, plus the original study’s independent replications and known-volume trials |
 | `python -m benchmarks.verify_directional_ensemble` | Earlier fixed-direction maps and complete-field volumes, geographic predictions and the published simulation trials |
 | `python -m benchmarks.verify_aso_evidence` | Aso-4 source records, matched validation and posterior attempts |
-| `python -m benchmarks.verify_visuals` | Published file hashes, current cross-eruption tables and four-panel maps |
+| `python -m benchmarks.verify_visuals` | Published file hashes, current cross-eruption tables, global map integrals and complete-hull regional maps |
 
 The [SHA-256 inventory](published-evidence.sha256) covers published data, machine-readable results, maps and source files used in regression checks. Verify it from the repository root with `shasum -a 256 -c benchmarks/published-evidence.sha256` or use the Python visual verifier. Earlier suites and their exact inputs can be run at the matching [release commit](../CHANGELOG.md#earlier-results). [Reproduce figures](../docs/maintenance/README.md#checking-a-map)
 

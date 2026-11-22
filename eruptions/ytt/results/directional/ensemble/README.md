@@ -1,6 +1,6 @@
 # YTT · fixed-direction ensemble
 
-**985.7 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **1,274.1 km³**, with a conditional 95% interval of **765.6–3,514.0 km³**.
+**985.7 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. The conditional 95% volume interval is **765.6–3,514.0 km³**.
 
 The measured triangles contain **193.8 km³** (19.7%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.
 
@@ -14,37 +14,37 @@ The star marks the supplied vent. Its median thickness is 27.2 cm. The largest m
 
 ## Direction and observational support
 
-| Direction | Exact rows | Bounds | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Direction | Exact rows | Bounds | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|---:|---:|
-| N | 0 | 0 | 95.4 | 158.9 [19.0–328.0] |
-| NE | 5 | 0 | 78.7 | 81.9 [43.5–188.6] |
-| E | 1 | 0 | 84.2 | 90.5 [17.6–813.8] |
-| SE | 2 | 0 | 75.2 | 84.4 [19.1–1,619.6] |
-| S | 1 | 0 | 40.6 | 46.5 [15.0–227.9] |
-| SW | 0 | 0 | 14.4 | 20.0 [5.4–107.5] |
-| W | 11 | 0 | 256.6 | 302.4 [205.1–491.2] |
-| NW | 26 | 0 | 340.4 | 367.8 [272.4–633.9] |
+| N | 0 | 0 | 95.4 | 19.0–328.0 |
+| NE | 5 | 0 | 78.7 | 43.5–188.6 |
+| E | 1 | 0 | 84.2 | 17.6–813.8 |
+| SE | 2 | 0 | 75.2 | 19.1–1,619.6 |
+| S | 1 | 0 | 40.6 | 15.0–227.9 |
+| SW | 0 | 0 | 14.4 | 5.4–107.5 |
+| W | 11 | 0 | 256.6 | 205.1–491.2 |
+| NW | 26 | 0 | 340.4 | 272.4–633.9 |
 
-| Domain | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|
-| Measured triangles | 193.8 | 196.5 [144.3–276.5] |
-| Transition at triangle edges | 119.7 | 124.6 [90.5–175.8] |
-| Proximal background | 3.0 | 3.1 [0.3–6.2] |
-| Background between sampled radii | 659.5 | 903.9 [464.2–2,440.8] |
-| Distal background | 9.7 | 23.7 [2.8–768.7] |
+| Measured triangles | 193.8 | 144.3–276.5 |
+| Transition at triangle edges | 119.7 | 90.5–175.8 |
+| Proximal background | 3.0 | 0.3–6.2 |
+| Background between sampled radii | 659.5 | 464.2–2,440.8 |
+| Distal background | 9.7 | 2.8–768.7 |
 
 The median-map entries add to its global volume before rounding. Each simulated deposit uses one structure everywhere. Pointwise thickness bounds describe uncertainty at a location. The volume interval comes from integrating each complete field.
 
 ## Assumptions and weights
 
-| Fan half-width | Additional fan in largest distal gap | Predictive weight | Complete-field volume, median [95%] (km³) | Fit and mass checks |
+| Fan half-width | Additional fan in largest distal gap | Predictive weight | Conditional 95% volume interval (km³) | Fit and mass checks |
 |---:|---|---:|---:|---|
-| 22.5° | Absent from this structure | 16.2% | 909.3 [695.6–1,445.1] | passed |
-| 45° | Absent from this structure | 17.8% | 1,170.0 [848.5–1,926.9] | passed |
-| 90° | Absent from this structure | 14.3% | 1,372.6 [1,080.7–1,906.0] | passed |
-| 22.5° | Possible | 15.4% | 1,081.4 [744.6–4,020.4] | passed |
-| 45° | Possible | 18.3% | 1,541.3 [943.7–7,366.2] | passed |
-| 90° | Possible | 18.0% | 1,412.5 [1,114.2–2,042.3] | passed |
+| 22.5° | Absent from this structure | 16.2% | 695.6–1,445.1 | passed |
+| 45° | Absent from this structure | 17.8% | 848.5–1,926.9 | passed |
+| 90° | Absent from this structure | 14.3% | 1,080.7–1,906.0 | passed |
+| 22.5° | Possible | 15.4% | 744.6–4,020.4 | passed |
+| 45° | Possible | 18.3% | 943.7–7,366.2 | passed |
+| 90° | Possible | 18.0% | 1,114.2–2,042.3 | passed |
 
 Equal weights give a median-map volume of **982.0 km³**. Restricting to the three structures without an extra fan gives **932.0 km³**. Allowing an extra fan in all three gives **1,058.7 km³**. These possibilities share the same observations. A fan missed entirely by sampling remains weakly identified.
 

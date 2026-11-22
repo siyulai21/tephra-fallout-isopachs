@@ -53,9 +53,8 @@ def build(output, cases, known, quadrants, regional):
             for i,(family, quantiles) in enumerate(zip(run["method_order"],run["volume_km3"],strict=True)):
                 a = np.asarray(truth["area_km2"])[i]
                 known_rows.append({"scenario":run["scenario"],"seed":run["seed"],"truth":label,"method":family,
-                    "true_km3":truth["volume_km3"],"lower95_km3":quantiles[0],"median_km3":quantiles[1],
+                    "true_km3":truth["volume_km3"],"lower95_km3":quantiles[0],
                     "upper95_km3":quantiles[2],"covered":truth["coverage"][i],
-                    "absolute_log_volume_error":float(abs(np.log(quantiles[1]/truth["volume_km3"]))),
                     "false_1cm_km2":a[0,0],"missed_1cm_km2":a[0,1],"false_west_1cm_km2":a[0,2],"missed_west_1cm_km2":a[0,3]})
     table(output / "known-surfaces.csv", known_rows)
     comparison, area_rows, links = [], [], {}
@@ -66,12 +65,14 @@ def build(output, cases, known, quadrants, regional):
         j = read(folder / "report.json")
         if digest(rec["path"]) != j["input_sha256"]:
             raise ValueError(f"Case input changed for {slug}")
-        previous = j["reference_volume_km3"]
-        new = j["volume_km3"]
+        broad_map = read(home.parent/"nested-whole-area/median-field.json")
+        map_receipt = read(folder/"deposit.json")
+        assert map_receipt["input_sha256"] == j["input_sha256"]
+        new = j["conditional_volume_interval95_km3"]
         areas = np.asarray(j["paired_areas"]["area_km2"])
         qs = [x for x in quadrant_rows if x["slug"] == slug and x["status"] == "estimated"]
         comparison.append({"slug":slug,"case":rec["name"],"catalogued":slug!="pinatubo-1991","input_sha256":j["input_sha256"],
-                           "previous_km3":previous[1],"lower95_km3":new[0],"median_km3":new[1],"upper95_km3":new[2],
+                           "whole_area_map_km3":broad_map["median_map_volume_km3"],"lower95_km3":new[0],"median_map_km3":map_receipt["median_map_volume_km3"],"upper95_km3":new[-1],
                            "previous_geographic_score":j["reference_geographic_score"],"geographic_score":j["geographic_score"],
                            "previous_quadrant_score":float(np.mean([q["previous_score"] for q in qs])),
                            "quadrant_score":float(np.mean([q["corridor_score"] for q in qs])),
@@ -104,13 +105,13 @@ def build(output, cases, known, quadrants, regional):
              "[Independent surveys, archive bounds and field-map checks](field-surveys/README.md)", "",
              "**B-Tm has the clearest evidence for the narrower map.** Mazama improves on buffered geographic predictions and changes little on whole-quadrant predictions. Aso-4’s western footprint shrinks substantially, while independent compass predictions favor broader continuation. "
              "The paired results are published together. Global volume remains conditional on how a fan continues across unvisited ground.", "",
-             "| Eruption | Principal corridor median [conditional 95%], km³ | Whole-area sensitivity median, km³ | Buffered score, whole-area → corridor | Compass score, whole-area → corridor |",
+             "| Eruption | Corridor median-map integral [conditional 95%], km³ | Whole-area median-map integral (km³) | Buffered score, whole-area → corridor | Compass score, whole-area → corridor |",
              "|---|---:|---:|---:|---:|"]
     for r in comparison:
         name = r["case"] + (" (separate intake)" if not r["catalogued"] else "")
-        lines.append(f"| [{name}]({links[r['slug']]}) | **{r['median_km3']:,.1f}** [{r['lower95_km3']:,.1f}–{r['upper95_km3']:,.1f}] | {r['previous_km3']:,.1f} | "
+        lines.append(f"| [{name}]({links[r['slug']]}) | **{r['median_map_km3']:,.1f}** [{r['lower95_km3']:,.1f}–{r['upper95_km3']:,.1f}] | {r['whole_area_map_km3']:,.1f} | "
                      f"{r['previous_geographic_score']:.3f} → {r['geographic_score']:.3f} | {r['previous_quadrant_score']:.3f} → {r['quadrant_score']:.3f} |")
-    lines += ["", "Each map is the pointwise median. Volumes summarize the integrals of complete posterior draws. These are bulk deposit volumes. "
+    lines += ["", "Each volume integrates the pointwise median-thickness map. The 95% interval uses the two tails of the volume distribution. These are bulk deposit volumes. "
               "The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. "
               "[Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)", "",
               f"Across the {len(reg)} catalogued eruptions the mean buffered score changes from {avg('previous_geographic_score'):.3f} to {avg('geographic_score'):.3f}. "
@@ -124,10 +125,9 @@ def build(output, cases, known, quadrants, regional):
                      f"The accepted table has {row['exact']} exact and {row['bounded']} bounded readings there. [Both maps and sector volumes]({links[slug]})")
     methods = [[r for r in known_rows if r["method"] == method] for method in ("whole_area_rank","corridor")]
     covered = [sum(x["covered"] for x in group) for group in methods]
-    errors = [np.median([x["absolute_log_volume_error"] for x in group]) for group in methods]
     lost = [r["missed_west_1cm_km2"] for r in methods[1] if r["scenario"]=="broad_umbrella"]
     lines += ["", "## Recovery of deposits with known thickness", "",
-              f"The whole-area and corridor fits covered the known total in {covered[0]}/{len(methods[0])} and {covered[1]}/{len(methods[1])} cases, respectively. Median absolute log-volume error changed from {errors[0]:.3f} to {errors[1]:.3f}. "
+              f"The whole-area and corridor fits covered the known total in {covered[0]}/{len(methods[0])} and {covered[1]}/{len(methods[1])} cases, respectively. "
               "The 20 truths come from 18 surveys, including two pairs with identical observations and different hidden deposits. These are development stress tests.",
               "",f"For a genuinely broad, circular deposit surveyed only on its eastern half, the two corridor fits missed {min(lost):,.0f}–{max(lost):,.0f} km² of the true western 1 cm footprint. "
               "Both conditional volume intervals included the known total. A volume interval can cover the truth while the median contour misses a real lobe. "

@@ -36,6 +36,8 @@ def render(job):
     write_json(out/"report.json", report)
     (out/"README.md").write_text(case_text(report, whole_area_link="../nested-whole-area/README.md"))
     principal_map(data, meta, record["name"], out, ReachDraws.load(home/"full.npz"), report)
+    from src.empirical_isopach.visualization.deposit import render_deposit
+    render_deposit(home,"nested-isopachs",data,meta,record["name"],output=out)
     return record["slug"]
 
 

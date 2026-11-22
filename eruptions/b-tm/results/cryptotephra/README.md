@@ -1,8 +1,6 @@
 # How cryptotephra changes the B-Tm reconstruction
 
-The spherical estimates and omission comparisons in this November 19 study use the broad parent geometry on each evidence selection. The [current spherical case](../spherical-mixture/README.md) includes the three interpreted bounds and integrates uncertain bearing continuation. [Spherical parent fitted to the 71-site input](../spherical-mixture/bearing/parent-report.json)
-
-The principal directional median map integrates to **33.6 km³** of bulk airborne fallout, compared with **44.1 km³** on the preceding 68-site input. Complete simulated deposits have a median of **37.2 km³** and a conditional 95% interval of **23.5–77.1 km³**. The central map integrates the pointwise median thickness. The interval integrates each spatially coherent deposit separately.
+The principal directional median map integrates to **33.6 km³** of bulk airborne fallout, compared with **44.1 km³** on the preceding 68-site input. The conditional 95% volume interval is **23.5–77.1 km³**. The central map integrates the pointwise median thickness. The interval integrates each spatially coherent deposit separately.
 
 The three additions are positive occurrences with unknown primary bed thickness. The principal fits use conditional upper limits of 0.06 cm at Lake Sihailongwan, 0.64 cm at Quanyang peat and 0.45 cm at Lake Kushu. The lake limits transfer a same-eruption count response from Suigetsu. The peat limit assumes full retention in a three-slice dry-mass budget, a maximum host dry density and a minimum fallout bulk density. Local variation enters the censoring likelihood. An interpreted bound gives neither an exact thickness nor a numerical lower endpoint. [Primary sources and calculations](../../../../data/audits/B-Tm/README.md) · [Accepted observations](../../../../data/eruptions/B-Tm_cryptotephra.csv)
 
@@ -35,7 +33,7 @@ The table gives the probability of a local observation below the stated upper li
 
 With Sihailongwan and Quanyang both withheld in the western fold, the directional local median at Sihailongwan returns to **4.76 cm**. The directional model assigns the 0.06 cm upper observation 20.7% probability. The westward retreat therefore relies on the cores. The GP and spline give Sihailongwan local medians of 6.1e-16 and 2.8e-16 cm. Values that small can score well against an upper limit. The positive glass occurrence establishes arrival, while its magnitude remains conditional on archive response.
 
-[Scores on 64 exact thicknesses and on 67 direct records excluding the Suigetsu reference](heldout-by-evidence.csv) · [Individual archive scores](heldout-archive-probabilities.csv) · [All regional holdouts](../heldout_predictions.csv) · [All directional holdouts](../directional/azimuth/heldout.csv) · [Spherical holdouts in the original study](https://github.com/siyulai21/tephra-fallout-isopachs/blob/843a2eef0fc669e38d95e4153ac8d7464f4d4a98/eruptions/b-tm/results/spherical-mixture/heldout_predictions.csv)
+[Scores on 64 exact thicknesses and on 67 direct records excluding the Suigetsu reference](heldout-by-evidence.csv) · [Individual archive scores](heldout-archive-probabilities.csv) · [All regional holdouts](../heldout_predictions.csv) · [All directional holdouts](../directional/azimuth/heldout.csv) · [All spherical holdouts](../spherical-mixture/heldout_predictions.csv)
 
 ## Where the contours move
 
@@ -66,14 +64,14 @@ These probabilities include site variability. A low exceedance probability signa
 
 ## Bulk volume under alternative archive responses
 
-Volumes are km³ of bulk fallout inferred from the reported thicknesses. The study applies no universal decompaction correction. Each cell below gives the median of complete volume draws and their conditional 95% interval, except the separate column for the integrated directional median map. GP and spline cover their own regional hull. The directional ensemble and spherical mixture integrate over the Earth.
+Volumes are km³ of bulk fallout inferred from the reported thicknesses. The study applies no universal decompaction correction. Diamonds in the plot and point estimates in the table integrate median thickness. The bounds describe conditional 95% volume uncertainty. A dash marks a sensitivity with no stored median-field integral. GP and spline cover their own regional hull. The directional ensemble and spherical mixture integrate over the Earth.
 
-| Archive assumption | GP, hull | Spline, hull | Directional median map | Directional complete deposits | Spherical complete deposits |
-|---|---:|---:|---:|---:|---:|
-| Previous, 68 directly quantitative sites | 23.6 [15.7–37.1] | 24.0 [15.5–66.2] | 44.1 | 72.9 [31.0–1,507.8] | 158.1 [40.7–4,461.6] |
-| Principal, site-derived limits | 28.6 [18.9–46.1] | 64.6 [33.0–664.4] | 33.6 | 37.2 [23.5–77.1] | 49.1 [30.7–341.7] |
-| Tenfold weaker limits | 29.8 [19.5–48.7] | 55.9 [28.8–595.8] | 33.3 | 39.3 [24.5–85.2] | 56.4 [33.4–689.5] |
-| Visible-bed analogues, 1 / 2 / 1 cm | 29.3 [19.3–47.6] | 59.6 [29.8–688.0] | 33.5 | 39.4 [23.9–81.0] | 53.8 [32.4–477.6] |
+| Archive assumption | GP, hull | Spline, hull | Directional, Earth | Spherical, Earth |
+|---|---:|---:|---:|---:|
+| Previous, 68 directly quantitative sites | 22.8 [15.7–37.1] | 19.8 [15.5–66.2] | 44.1 [31.0–1,507.8] | — [40.7–4,461.6] |
+| Principal, site-derived limits | 27.6 [18.9–46.1] | 50.7 [33.0–664.4] | 33.6 [23.5–77.1] | — [30.7–341.7] |
+| Tenfold weaker limits | 28.9 [19.5–48.7] | 40.0 [28.8–595.8] | 33.3 [24.5–85.2] | — [33.4–689.5] |
+| Visible-bed analogues, 1 / 2 / 1 cm | 28.4 [19.3–47.6] | 44.8 [29.8–688.0] | 33.5 [23.9–81.0] | — [32.4–477.6] |
 
 ![Conditional volume intervals under the four archive interpretations](volume-sensitivity.png)
 
@@ -81,11 +79,11 @@ The weaker response allows upper limits of 0.60, 6.4 and 4.5 cm. The visible-bed
 
 ## Regional footprint and the spline's upper tail
 
-Adding the cores expands the hull from 549,464 to 796,162 km². On the original footprint the GP mean changes from 24.33 to 23.25 km³. Including the new ground gives 29.59 km³. The standard interpolation footprint defined by exact thickness sites covers 96,131 km². [Matched-domain calculations](regional-sensitivities.csv) · [Footprint and contour screen](../support/README.md)
+Adding the cores expands the hull from 549,464 to 796,162 km². On the original footprint the GP median-map volume changes from 22.82 to 21.83 km³. Including the new ground gives 27.64 km³. The standard interpolation footprint defined by exact thickness sites covers 96,131 km². [Matched-domain calculations](regional-sensitivities.csv) · [Footprint and contour screen](../support/README.md)
 
-The selected cubic spline gives a formal regional mean of 6.09e+11 km³. Its log-thickness standard deviation reaches 9.70 near the bounded Lake Suigetsu site. The highest-contributing 1% of hull area contributes 99.99970% of the mean. The fitted surface's median thickness at the peak-expectation quadrature node is 5e-06 cm. This instability also occurs on the original footprint. Holding the preceding spline tuning fixed on all 71 observations gives an analytical mean of 101.8 km³. Model selection and poorly constrained local variance both matter.
+The selected cubic spline has a long upper uncertainty tail. Its log-thickness standard deviation reaches 9.70 near the bounded Lake Suigetsu site. The highest-contributing 1% of hull area contributes 99.99970% of the mean. The fitted surface's median thickness at the peak-expectation quadrature node is 5e-06 cm. This instability also occurs on the original footprint. Model selection and poorly constrained local variance both matter.
 
-The retuned spline's median-map integral is 50.75 km³. In a check with 20,000 complete draws and 3 integration orders, the finest rule gives a volume median of 66.0 km³ and a conditional 95% interval of 33.5–683.8 km³. Its two half-sample upper endpoints are 708 and 665 km³. The ordinary 2,000-draw run appears in the main table. The GP predicted the withheld regions better on this input. Both regional families remain visible. [Spline numerical checks](spline-tail.json) · [Six-eruption matched regional benchmark](matched-regional.csv) · [Benchmark and synthetic-trial checks](regional-benchmark-check.json)
+The retuned spline's median-map integral is 50.75 km³. In a check with 20,000 complete draws and 3 integration orders, the finest rule gives a conditional 95% interval of 33.5–683.8 km³. Its two half-sample upper endpoints are 708 and 665 km³. The ordinary 2,000-draw run appears in the main table. The GP predicted the withheld regions better on this input. Both regional families remain visible. [Spline numerical checks](spline-tail.json) · [Six-eruption matched regional benchmark](matched-regional.csv) · [Benchmark and synthetic-trial checks](regional-benchmark-check.json)
 
 ![Regional spline log-thickness uncertainty on both survey footprints](spline-uncertainty.png)
 
@@ -100,9 +98,9 @@ The full-data directional structures passed sampling checks in 6 of 6 fits. Spat
 | Directional geographic holdouts | 0 (sampling or phase check) |
 | Directional quadrants holdouts | 2 (empty) |
 | Spherical geographic holdouts | 0, 3 |
-| Spherical full-data assumptions | five_fans, gaussian_errors |
+| Spherical full-data assumptions | wide_geography, five_fans, gaussian_errors |
 
-Across the eight spherical prior fits, the outer conditional interval endpoints span 25.6–1,225.6 km³. This envelope measures sensitivity to the published priors. Numerical warnings are retained. [Original prior estimates, diagnostics and held-out fits](../spherical-mixture/bearing/parent-report.json)
+Across the eight spherical prior fits, the outer conditional interval endpoints span 25.2–782.9 km³. This envelope measures sensitivity to the published priors. Numerical warnings are retained. [Prior-by-prior estimates](../spherical-mixture/estimates.csv) · [Diagnostics, held-out fits and normalization](../spherical-mixture/report.json)
 
 0 of 12 family–policy combinations support a complete isopach band. Measured-bracketed fragments have a different evidential status from continuation through gaps. Both global estimates condition on the geometry of unsampled fallout.
 

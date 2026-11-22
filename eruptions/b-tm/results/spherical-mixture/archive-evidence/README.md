@@ -1,10 +1,10 @@
 # Spherical fallout estimates at inspected archives
 
-Each row integrates complete deposits over the Earth. The intervals are conditional on the spherical model and, where specified, on the assumed response of the archive.
+These whole-Earth volume intervals are conditional on the spherical model and the archive response specified for each row.
 
-| Archive interpretation | Median bulk volume (km³) | Conditional 95% interval (km³) | Numerical check |
-|---|---:|---:|---|
-| Quantitative thickness evidence | 47.0 | 30.2–275.5 | Passed |
+| Archive interpretation | Conditional 95% interval (km³) | Numerical check |
+|---|---:|---|
+| Quantitative thickness evidence | 30.2–275.5 | Passed |
 
 ## Thickness at the inspected horizons
 

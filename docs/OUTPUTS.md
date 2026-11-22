@@ -2,7 +2,7 @@
 
 [Eruption cases](../eruptions/README.md) · [Method relationships](methods/README.md) · [Commands](QUICKSTART.md)
 
-Start with the case home. It links the accepted evidence, regional comparison, support audit and **both** global families. The normal `compare` command writes the layout below. A standalone `global --output PATH` command writes its chosen family's report directly to `PATH`.
+Start with the case home. It links the accepted evidence, regional comparison, support audit and all three global families. The normal `compare` command writes the layout below. A standalone `global --output PATH` command writes its chosen family's report directly to `PATH`.
 
 | Location relative to a case's `results/` | Scope |
 |---|---|
@@ -15,17 +15,19 @@ Start with the case home. It links the accepted evidence, regional comparison, s
 
 Older records use `global/` for the spherical-only files. Those files were moved without altering their scientific contents; execution paths and hashes remain as originally recorded. The [cross-eruption comparison](../comparisons/README.md) links the five families on matched geographic tests.
 
-## Visual reading route
+## Read the map and its volume
 
-Start on the case home. The principal corridor map is `nested-isopachs/isopachs.png`. The adjacent `four-method-evidence.png` compares four median fields in the same observation frame. The directional panel uses the uncertain-fan-direction field. `directional/azimuth/isopachs.png` shows that field at deposit and near-source scales. Expand the whole-Earth comparison for the directional, spherical and nested corridor maps. The five-family volume and prediction plot is `overview.png`.
+Each case home compares the three full deposits and the regional pair. In each global family folder, `deposit.png` shows the full 0.5 cm footprint, a near-vent view and the thickness–area curve. Land and inland lakes come from Natural Earth. Circles are measurements, triangles are reported lower or upper limits, and diamonds mark interpreted upper limits. Symbols take the colour of the measured thickness or stated limit. A site's true thickness can lie beyond its reported bound.
 
-`map-display.json` records the rendering grid, frame, coastlines and global plotting subset. It is separate from the original scientific `report.json`. A figure refresh also includes `figure-replay.json` with original report/posterior hashes and regional integral parity. Display grids never set mass. [Rendering policy and interpretation](maintenance/README.md#checking-a-map).
+For a thickness $t$, the curve plots $t$ against $\sqrt{A(T\ge t)}$ in kilometres. Areas in `thickness-area.csv` include every disjoint patch across Earth. Each row reports the coarser-grid comparison. The renderer doubles radial and angular resolution when a contour area changes by more than both 5% and 1 km², or its map integral differs from independent field quadrature by more than 1.2%. Any remaining area sensitivity is recorded in the CSV. A zero area means the corresponding sampled field never reached that level. The near-vent half-width is the lower quartile of distances to distinct exact sites, so all three methods show the same window for an eruption.
 
-The five principal fits use the same accepted measurements and bounds, including any site-specific interpreted limits. The source audit gives its derivation and the shared source-review protocol explains the decision. [Site decision protocol](methods/sites-without-measured-thickness.md) The next table labels the model and evidence for each sensitivity, including the uncertain-direction result conditioned on recognizable beds when available. `directional/bearing/README.md` gives the full set of assumptions, site probabilities, sector volumes and numerical warnings. [B-Tm omission and weaker-response comparisons](../eruptions/b-tm/results/cryptotephra/README.md)
+Every principal estimate is $V=10^{-5}\int_D T(x)\,dA$ in km³, with mapped thickness in cm and area in km². The regional domain is the observation hull and its integral is `regional_volume.median_surface_km3`. Each global `deposit.json` reports `median_map_volume_km3`, integrated across the physical WGS84 Earth including all thin tails. The inferred surface between saved polar nodes is bilinear in log thickness and periodic in bearing. Positive quadrature integrates that same surface with the equal-area radial Jacobian. Two independent Sobol scrambles evaluate the original fit directly. The receipt records both scrambles, mesh refinement, the display-edge test and the input and posterior hashes. Finite resolution limits the smallest detectable patches.
+
+Complete simulated deposits have their own volume distribution. The interval column gives its conditional 95% range. A map integral can fall outside that interval. Read sampling, integration and spatial support warnings alongside each estimate. [Matched map volumes and complete-draw intervals](../comparisons/principal-volumes.csv)
 
 ## Regional GP and cubic spline
 
-Both integrate the same observation hull. Regional maps share colour/contour scales, and their contours stop at the hull. Neither a hull nor a smooth contour establishes uniform observational support. The median-surface integral differs from the median of random whole-field volumes.
+Both integrate the same observation hull. Regional maps share colour/contour scales, and their contours stop at the hull. Neither a hull nor a smooth contour establishes uniform observational support. The reported regional point estimate integrates the median surface over that hull.
 
 | File | Read it for |
 |---|---|
@@ -53,7 +55,7 @@ The regional support report records `methods.<method>.footprint_volumes` and `co
 
 ## Directional ensemble
 
-Open `directional/README.md` for the principal estimate. In `directional/azimuth/report.json`, **`volume.median_map_km3`** integrates the quantitative pointwise median and **`volume.coherent_volume_km3`** summarizes whole-deposit draws. `volume.median_map_parts_by_sector_km3` partitions the central volume into five support classes and eight compass sectors. `fields.npz` stores the coherent draws and their volumes. `median-grids.npz`, `isopachs.png` and `world.png` reproduce the primary maps. The geographic score and exact-site observation coverage in the comparison come from this same model. The overview diamond marks the median-map volume. [Uncertain-fan-direction protocol](methods/uncertain-azimuth.md)
+Open `directional/README.md` for the principal estimate. In `directional/azimuth/report.json`, **`volume.median_map_km3`** integrates the quantitative pointwise median and **`volume.coherent_volume_km3`** gives the two conditional 95% volume endpoints. `volume.median_map_parts_by_sector_km3` partitions the central volume into five support classes and eight compass sectors. `fields.npz` stores the coherent draws and their volumes. `median-grids.npz`, `isopachs.png` and `world.png` reproduce the direct-field diagnostic maps. The geographic score and exact-site observation coverage in the comparison come from this same model. The overview diamond marks the median-map volume. [Uncertain-fan-direction protocol](methods/uncertain-azimuth.md)
 
 The matched fixed-direction control is `volume.matched_control_map_km3` in the same report. The original fixed-direction weights and volume are recorded separately in `directional/ensemble/report.json`. Archive-conditioned scenarios retain their own assumptions and intervals.
 
@@ -75,7 +77,7 @@ The matched fixed-direction control is `volume.matched_control_map_km3` in the s
 
 ## Spherical-mixture global posterior
 
-The principal volume in `fits.baseline.volume` integrates complete bearing-conditioned fields. Each fit’s `training_checks.rmse_log` gives its in-sample thickness error. The raw `posterior.npz` describes parent amplitudes and kernel parameters. The baseline packet `bearing/baseline.npz` pairs them with retained volumes, orientations, sectors and support classes. `bearing/parent-report.json` stores the original broad spherical result. [Calculation and assumptions](methods/spherical-bearings.md)
+The mapped integral is in `deposit.json`. The quantiles in `fits.baseline.volume` summarize complete bearing-conditioned fields. Each fit’s `training_checks.rmse_log` gives its in-sample thickness error. The raw `posterior.npz` describes parent amplitudes and kernel parameters. The baseline packet `bearing/baseline.npz` pairs them with retained volumes, orientations, sectors and support classes. `bearing/parent-report.json` stores the original broad spherical result. [Calculation and assumptions](methods/spherical-bearings.md)
 
 | File in `spherical-mixture/` | Read it for |
 |---|---|
@@ -87,10 +89,10 @@ The principal volume in `fits.baseline.volume` integrates complete bearing-condi
 | `source.png` when present | Source-region shape and maximum checks |
 | `artifacts.json` | Published file hashes |
 
-`fits.baseline.volume` contains its conditional median and 95% credible interval. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` combines the parent sampling status, retained-mass integration check and split-draw volume check. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
+`fits.baseline.volume` contains its two conditional 95% credible interval endpoints. `sensitivity_envelope_km3` has no joint 95% probability interpretation. `mass_partition` describes sampling geometry, not geological confidence. `diagnostics.passed` combines the parent sampling status, retained-mass integration check and split-draw volume check. `normalization_refinements` preserves preceding lower-resolution fits. `source_checks` records source-geometry diagnostics. Read small mass fractions with their refinement errors. [Spherical protocol](methods/probabilistic-global.md) · [Source-focused geometry](methods/source-anchored-fans.md).
 
 All volumes are **bulk fallout**, not dense-rock equivalent or total erupted material including ignimbrite deposits. Regional conditional intervals, global credible intervals, geographic-deletion ranges and prior-sensitivity envelopes remain separate. Passing numerical checks does not identify an unseen deposit.
 
 ## Bayesian nested isopachs
 
-Open `nested-isopachs/README.md` for the principal corridor median, conditional 95% interval, and median isopachs. In `report.json`, `volume_km3` gives the 2.5%, 50% and 97.5% quantiles of whole-deposit integrals. The historical key `conditional_volume_km3` exposes the same principal quantiles. `median_map_volume_km3` is the integral of pointwise median thickness. The report records each buffered split, exact withheld predictive CDFs, the three numerical checks and the prior-odds sensitivities. `volume-budget.npz` contains the volume and sector allocations of coherent draws. `support.json` and `local-brackets.csv.gz` identify eligible contour fragments and rejected bands. The broad sensitivity has its own packets and area–thickness curve in `nested-whole-area/`. [Principal estimates](../comparisons/nested-isopachs/README.md) · [Model and map definitions](methods/nested-reach.md)
+The corridor point estimate is the integral in `nested-isopachs/deposit.json`. Its `report.json` lists the two conditional 95% endpoints in `conditional_volume_interval95_km3`, source hashes, held-out predictions, prior sensitivities and numerical checks. The whole-area sensitivity uses `nested-whole-area/median-field.json`. Spatially correlated draws allow independent checks of uncertainty and support. [Principal estimates](../comparisons/nested-isopachs/README.md) · [Corridor model](methods/nested-reach.md)

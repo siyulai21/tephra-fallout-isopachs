@@ -6,22 +6,22 @@ The final physical model and priors were fixed before these runs. There are **12
 
 **11/12 baseline intervals contain the known total. 10/12 baseline fits pass numerical checks.** Among those passing, 9/10 intervals contain the truth. These small development counts do not establish 95% calibration. A numerical pass also does not establish model correctness; provisional trial intervals remain uncertain computational summaries.
 
-| Scenario · seed · assumption | True km³ | Median km³ | Conditional 95% interval km³ | Contains truth | Sampling |
-|---|---:|---:|---:|---|---|
-| Smooth exponential · 10 · baseline | 33.6 | 41.4 | 33.2–3.12e+03 | yes | pass |
-| Smooth exponential · 11 · baseline | 33.6 | 39.3 | 33.1–1.02e+03 | yes | pass |
-| Secondary fan · 10 · baseline | 52.4 | 54.5 | 47.2–1.03e+03 | yes | pass |
-| Secondary fan · 11 · baseline | 52.4 | 58.8 | 50.2–546 | yes | pass |
-| Missing sector · 10 · baseline | 52.4 | 46.1 | 34.5–2.51e+03 | yes | pass |
-| Missing sector · 11 · baseline | 52.4 | 48.9 | 32.1–3.6e+03 | yes | **provisional** |
-| Invisible proximal cap · 10 · baseline | 55.7 | 293 | 42.5–3.65e+04 | yes | pass |
-| Invisible proximal cap · 11 · baseline | 55.7 | 121 | 25.9–1.16e+04 | yes | pass |
-| Matched spherical fans · 10 · baseline | 120 | 120 | 114–315 | yes | **provisional** |
-| Matched spherical fans · 11 · baseline | 120 | 128 | 122–306 | **no** | pass |
-| Diffuse global tail · 10 · baseline | 120 | 38.4 | 22.1–1.81e+03 | yes | pass |
-| Diffuse global tail · 10 · diffuse-tail prior | 120 | 114 | 87.2–235 | yes | pass |
-| Diffuse global tail · 11 · baseline | 120 | 130 | 26.2–3.11e+03 | yes | pass |
-| Diffuse global tail · 11 · diffuse-tail prior | 120 | 116 | 89.2–460 | yes | pass |
+| Scenario · seed · assumption | True km³ | Conditional 95% interval km³ | Contains truth | Sampling |
+|---|---:|---:|---|---|
+| Smooth exponential · 10 · baseline | 33.6 | 33.2–3.12e+03 | yes | pass |
+| Smooth exponential · 11 · baseline | 33.6 | 33.1–1.02e+03 | yes | pass |
+| Secondary fan · 10 · baseline | 52.4 | 47.2–1.03e+03 | yes | pass |
+| Secondary fan · 11 · baseline | 52.4 | 50.2–546 | yes | pass |
+| Missing sector · 10 · baseline | 52.4 | 34.5–2.51e+03 | yes | pass |
+| Missing sector · 11 · baseline | 52.4 | 32.1–3.6e+03 | yes | **provisional** |
+| Invisible proximal cap · 10 · baseline | 55.7 | 42.5–3.65e+04 | yes | pass |
+| Invisible proximal cap · 11 · baseline | 55.7 | 25.9–1.16e+04 | yes | pass |
+| Matched spherical fans · 10 · baseline | 120 | 114–315 | yes | **provisional** |
+| Matched spherical fans · 11 · baseline | 120 | 122–306 | **no** | pass |
+| Diffuse global tail · 10 · baseline | 120 | 22.1–1.81e+03 | yes | pass |
+| Diffuse global tail · 10 · diffuse-tail prior | 120 | 87.2–235 | yes | pass |
+| Diffuse global tail · 11 · baseline | 120 | 26.2–3.11e+03 | yes | pass |
+| Diffuse global tail · 11 · diffuse-tail prior | 120 | 89.2–460 | yes | pass |
 
 ![Estimated versus true global volume](stress.png)
 
@@ -36,7 +36,7 @@ The final physical model and priors were fixed before these runs. There are **12
 
 The original four truths use an equal-area chart; the exponential/Gaussian mass omitted beyond the physical Earth chart is below 10⁻⁸⁰ of the total. The compact proximal cap is wholly inside it. The two spherical truths use exact whole-Earth normalizers. Each scenario adds independent log-observation noise with SD 0.15. True volumes are calculated analytically, not from the fitting model's posterior or a plotting window.
 
-Large upper tails and biased medians can coexist. A conditional credible interval is not a data-only bound, and a finite prior cannot guarantee coverage of every unseen deposit. The results support continuing to report explicit assumptions and sensitivity, rather than presenting the new global model as universally calibrated or as a demonstrated improvement over GP/spline for regional prediction.
+A conditional credible interval is not a data-only bound, and a finite prior cannot guarantee coverage of every unseen deposit. The results support continuing to report explicit assumptions and sensitivity, rather than presenting the new global model as universally calibrated or as a demonstrated improvement over GP/spline for regional prediction.
 
 ## Reproduce and inspect
 

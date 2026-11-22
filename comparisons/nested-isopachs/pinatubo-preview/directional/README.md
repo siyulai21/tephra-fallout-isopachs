@@ -1,14 +1,12 @@
-# Pinatubo 1991 Layer C directional fallout
+# Pinatubo 1991 Layer C · Directional ensemble
 
-**4.9 km³ of bulk fallout** is the whole-Earth integral of the median thickness map. The principal fit uses 137 accepted thickness observations and bounds and allows the fan direction to vary in unsampled sectors. Fixing fan directions with the same data and structure weights gives **5.3 km³**.
+The principal bulk volume is **4.92 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **3.2–11 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
 
-Under uncertain azimuth, integrating each complete deposit gives a volume median of **5.7 km³** and a conditional 95% range of **3.2–11.0 km³**. Measured interpolation triangles contribute 10.7% of the median-map volume. The rest relies on continuation.
+![Pinatubo 1991 Layer C, Directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-![Principal uncertain-fan-direction median isopachs](azimuth/isopachs.png)
+Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-Solid marks require a triangle whose measured sites bracket the thickness and whose posterior crossing probability reaches 90%. Dashes show the remaining median contour. White circles are thickness observations. An empty sector can contain fallout.
-
-The deposit panel includes the accepted sites and the display search for the 0.1 cm contour. [Whole-Earth thickness map](azimuth/world.png) · [Display extent and checks](azimuth/map-display.json)
+Fixing the fan directions gives a median-map volume of 5.27 km³. Solid fragments require thicknesses on opposite sides of the contour and at least 90% posterior crossing probability. [Whole-Earth context](azimuth/world.png) · [Earlier 0.1 cm extent and its edge checks](azimuth/map-display.json)
 
 ## Reach from the volcano
 

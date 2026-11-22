@@ -1,71 +1,36 @@
 # Sakurajima Satsuma fallout, southern Japan
 
-**Principal Bayesian nested estimate.** The corridor model gives 6.7 km³ of bulk fallout (conditional 95% interval 3.1–30.7), compared with 12.5 km³ under the whole-area continuation. Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
-
 The 12.8 ka Satsuma eruption (P14, Sz-S) deposited ash and pumice east and west of Sakurajima. The reconstruction combines primary fallout from its eruptive phases. **50 measured thicknesses, five lower bounds and two upper bounds** come from field sections, written excavation records, an island outcrop and a seafloor core. Each location and thickness comes from a numeric source record. [Accepted data](../../data/eruptions/Sakurajima_Satsuma.csv) · [Published sources](../../data/sources/sakurajima-satsuma/README.md) · [202-row selection audit](../../data/audits/Sakurajima-Satsuma/README.md)
 
-## Five matched thickness-only fits
+## Volumes and geographic prediction
 
-![Principal nested corridor median isopachs for Sakurajima Satsuma (P14)](results/nested-isopachs/isopachs.png)
+Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
 
-On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
+| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---:|---:|---:|---:|
+| GP ensemble | **3.08** | 2.64–4.02 | 1.264 | 94.0% |
+| Cubic spline | **9.12** | 4.18–41.5 | 1.371 | 90.0% |
+| [Directional ensemble](results/directional/README.md) | **7.07** | 3.79–70.6 | 1.164 † | 96.0% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **7.32** | 5.1–667 | 1.376 | 88.0% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **6.33** | 3.1–30.7 (provisional) | 1.016 † | 98.0% |
 
-![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Sakurajima Satsuma (P14)](results/four-method-evidence.png)
+Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
+## Full deposits and near-vent detail
 
-## Volume and predictive performance
+The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
 
-| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---|---:|---:|---:|
-| GP ensemble | Hull mean **3.33** | 2.64–4.02 | 1.264 | 94.0% |
-| Cubic spline | Hull mean **13.04** | 4.18–41.49 | 1.371 | 90.0% |
-| [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **7.1** · volume median 10.0 | 3.8–70.6 | 1.164 † | 96.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **11.3** | 5.1–666.5 | 1.376 | 88.0% |
-| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **6.7** | 3.1–30.7 **(provisional)** | 1.016 † | 98.0% |
+![Sakurajima Satsuma (P14) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
-The nested corridor assigns a median 3.0% of bulk volume to the retained exact-site triangles and 14.7% beyond the farthest exact site. Its median map integrates to 6.3 km³. 1/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
+![Sakurajima Satsuma (P14) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
+![Sakurajima Satsuma (P14) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **2.6%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+## Inside the observation hull
 
-<details>
-<summary>Compare the three whole-Earth maps</summary>
+![Sakurajima Satsuma (P14) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
-| Uncertain fan direction | Spherical mixture | Nested corridor |
-|---|---|---|
-| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
-
-Each map is centred on the vent longitude and has its own thickness key.
-
-</details>
-
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **9.1 km³**.
-
-<details>
-<summary>View the directional deposit extent and source area</summary>
-
-![Principal uncertain-fan-direction median isopachs for Sakurajima Satsuma (P14)](results/directional/azimuth/isopachs.png)
-
-</details>
-
-## Directional assumptions
-
-The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
-
-| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---|---:|---:|---:|
-| Measured fan directions | Thicknesses and bounds | 8.2 | 9.9 | 4.3–73.4 |
-
-<details>
-<summary>View agreement between the directional sensitivities</summary>
-
-![Agreement on median isopach extent](results/directional/bearing/isopach-agreement.png)
-
-</details>
-
-[Measured-fan maps, held-out tests and site evidence](results/directional/bearing/README.md)
+The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
 ## Where the thicknesses constrain the deposit
 
@@ -75,15 +40,15 @@ Glass chemistry also correlates HGY1026 in Lake Huguangyan, southern China, with
 
 ![Measured Satsuma thickness and radial coverage by compass sector](../../data/audits/Sakurajima-Satsuma/coverage.png)
 
-The GP and cubic spline integrate a common 24,004 km² hull. Within the 635 km² of well-connected measurement triangles both regional models give an expected partial volume of 0.19 km³. These triangles contain 2.6% of the directional median-map volume. The common standard support screen accepts no complete isopach band for any family. Values outside that footprint depend on extrapolation across the proximal gap, between sampled directions and beyond measured distances. [Support geometry and partial volumes](results/support/README.md)
+The GP and cubic spline integrate a common 24,004 km² hull. Within the 635 km² of well-connected measurement triangles both regional median-thickness maps integrate to 0.18 km³. These triangles contain 2.6% of the directional median-map volume. The common standard support screen accepts no complete isopach band for any family. Values outside that footprint depend on extrapolation across the proximal gap, between sampled directions and beyond measured distances. [Support geometry and partial volumes](results/support/README.md)
 
 The largest cubic-spline median on the in-hull prediction grid is 447 cm, about 42 km west and 44 km north of the source. The nearest measured site is 49 km away. The GP predicts 5.5 cm at the same point, and the peak lies outside the standard interpolation triangles. The spline peak helps explain why the two regional hull volumes diverge even though their estimates agree inside the well-sampled footprint. The accepted beds reach 95 cm. [Grid values and nearest measurement](results/source-audit/regional-map-peak.csv)
 
 ## Global estimates and sensitivity
 
-The uncertain-direction median map integrates to **7.1 km³**. Complete draws give **10.0 [3.8–70.6] km³** (median and conditional 95% interval). All six full-data model fits passed their sampler checks. All four geographic folds were scored, with one fold retaining a sampling warning. All four quadrant folds passed. For the geographic holdouts, uncertain directions gave a mean negative log score of 1.164 compared with 1.028 for fixed directions. Lower is better. [Directional estimates, withheld-site results and maps](results/directional/README.md)
+The uncertain-direction median map integrates to **7.1 km³**. The conditional 95% volume interval is **3.8–70.6 km³**. All six full-data model fits passed their sampler checks. All four geographic folds were scored, with one fold retaining a sampling warning. All four quadrant folds passed. For the geographic holdouts, uncertain directions gave a mean negative log score of 1.164 compared with 1.028 for fixed directions. Lower is better. [Directional estimates, withheld-site results and maps](results/directional/README.md)
 
-The spherical mixture gives **11.3 [5.1–666.5] km³**. The baseline passed its sampler, integration and draw-split checks. Medians across eight fixed prior fits range from 6.5 to 15.4 km³. The shifted-volume prior retained a draw-split warning. With the western lenticular marine bed removed, the spherical median rises to **54.7 km³** and the directional map integral rises to **9.6 km³**. The full refits and predictions for the withheld core quantify how strongly that one observation constrains distal fallout. [Marine-core sensitivity](results/source-audit/README.md) · [Spherical estimates and validation](results/spherical-mixture/README.md)
+The spherical baseline passed its sampler, integration and draw-split checks. The shifted-volume prior retained a draw-split warning. With the western lenticular marine bed removed, the directional median-map integral rises to **9.6 km³**. The full refits and predictions for the withheld core quantify how strongly that one observation constrains distal fallout. [Marine-core sensitivity](results/source-audit/README.md) · [Spherical estimates and validation](results/spherical-mixture/README.md)
 
 At Kuwanoki, the directional median is 12.6 cm and the spherical median is about 11 cm. The excavation report identifies minerals and glass in terrace sediment and gives no preserved Satsuma bed thickness. This discrepancy is a reason to look for nearby undisturbed sections. Kuwanoki and four other occurrence records carry zero additional likelihood weight. [Archive site checks](results/spherical-mixture/archive-evidence/README.md) · [Original Kuwanoki report](https://doi.org/10.24484/sitereports.3454)
 
@@ -91,4 +56,6 @@ Nishihara et al. report 11.1 km³ of bulk P14 fallout. Their isopachs use overla
 
 ## Reproduce the case
 
-The source replay verifies the two original workbooks, site identifiers, source-row decisions and coverage. The intake workflow reproduces the four registered fits, their matched geographic tests and the conditional global volume estimates. [Source replay](../../data/audits/Sakurajima-Satsuma/README.md) · [Run instructions](../../docs/NEW_ERUPTION.md) · [Directional verification receipt](results/source-audit/release.json)
+The source replay verifies the two original workbooks, site identifiers, source-row decisions and coverage. The intake workflow reproduces the five registered fits, their matched geographic tests and the conditional global volume estimates. [Source replay](../../data/audits/Sakurajima-Satsuma/README.md) · [Run instructions](../../docs/NEW_ERUPTION.md) · [Directional verification receipt](results/source-audit/release.json)
+
+Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)

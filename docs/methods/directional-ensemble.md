@@ -43,7 +43,7 @@ The local evidence panel clips isopachs of the actual median display grid to tri
 
 ## Two volume summaries
 
-With thickness in cm and authalic area in km², the headline quantity is $10^{-5}\int T_{50}(x)\,dA$. It equals the volume represented by the central map, including its conditional continuation beyond sampled terrain. In a second calculation each draw selects one member for the entire planet and integrates one complete latent thickness field. The weighted median and central 95% of those totals describe uncertainty in whole-deposit volume conditional on the structures, priors, accepted input and weights.
+With thickness in cm and authalic area in km², the headline quantity is $10^{-5}\int T_{50}(x)\,dA$. It equals the volume represented by the central map, including its conditional continuation beyond sampled terrain. In a second calculation each draw selects one member for the entire planet and integrates one complete latent thickness field. The weighted 2.5th and 97.5th percentiles of those totals describe uncertainty in whole-deposit volume conditional on the structures, priors, accepted input and weights.
 
 For example, consider three equal-area sectors with thickness 1 everywhere and an additional 9 units in exactly one sector, equally likely in each. Every complete field totals 12 volume units. The median map has thickness 1 in each sector and totals 3. A coherent-field interval can therefore exclude the integral of the median map. Pointwise thickness limits do not form a simultaneous contour band. Observational scatter enters neither volume.
 

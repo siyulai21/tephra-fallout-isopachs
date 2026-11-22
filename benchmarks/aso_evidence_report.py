@@ -79,15 +79,16 @@ def diagnosis_figures(root,output,original_report,original_global):
     nearest=RADIUS*np.arccos(np.clip(np.einsum("dki,ni->dkn",c,sites).max(axis=-1),-1,1))
     distance=np.sum(flat["weights"]*nearest,axis=1)
     volume=np.exp(flat["log_volume"])
-    deletion=pd.read_csv(root/"diagnosis/single-row-deletion.csv").sort_values("median_km3")
+    deletion=pd.read_csv(root/"diagnosis/single-row-deletion.csv").sort_values("upper95_km3")
     selected=pd.concat([deletion.iloc[:5],deletion.iloc[-4:]])
     with plt.rc_context(STYLE):
         fig,axes=plt.subplots(1,2,figsize=(12,5.8),layout="constrained")
-        x=selected.median_km3.to_numpy();lo=selected.lower95_km3.to_numpy();hi=selected.upper95_km3.to_numpy()
-        axes[0].errorbar(x,np.arange(len(x)),xerr=[x-lo,hi-x],fmt="o",color="#187E86",capsize=3)
-        axes[0].axvline(original_report["fits"]["baseline"]["volume"]["median"],color="#B4573F",ls="--",label="All 87 records")
-        axes[0].set(yticks=np.arange(len(x)),yticklabels=[f"Omit row {r.csv_row}: {r.thickness_cm:g} cm" for r in selected.itertuples()],
-            xscale="log",xlabel="Bulk fallout (km³); conditional 95% interval",title="A · Single-record influence\nPSIS deletion approximation")
+        y=np.arange(len(selected))
+        axes[0].hlines(y,selected.lower95_km3,selected.upper95_km3,color="#187E86",lw=2)
+        full=original_report["fits"]["baseline"]["volume"]
+        axes[0].axvspan(full["lower95"],full["upper95"],color="#B4573F",alpha=.12,label="All 87 records · 95%")
+        axes[0].set(yticks=y,yticklabels=[f"Omit row {r.csv_row}: {r.thickness_cm:g} cm" for r in selected.itertuples()],
+            xscale="log",xlabel="Bulk fallout (km³), conditional 95% interval",title="A · Single-record influence by upper endpoint")
         axes[0].invert_yaxis();axes[0].legend(loc="lower right",fontsize=9)
         axes[1].hexbin(distance,volume,xscale="log",yscale="log",gridsize=45,mincnt=1,cmap="Blues",bins="log")
         axes[1].set(xlabel="Mass-weighted centre-to-nearest-site distance (km)",ylabel="Posterior total bulk fallout (km³)",
@@ -112,16 +113,16 @@ def diagnosis_figures(root,output,original_report,original_global):
             ax.clabel(cs,fmt=lambda v:f"{np.exp(v):g}",fontsize=8)
             ax.scatter(*data.xy.T,s=10,c="white",edgecolors="#183843",linewidths=.4,zorder=6)
             ax.scatter(0,0,marker="*",s=140,c="#0D607D",edgecolors="white",zorder=7)
-            v=np.quantile(volume[mask],[.025,.5,.975])
+            v=np.quantile(volume[mask],[.025,.975])
             ax.set(xlim=(x[0],x[-1]),ylim=(y[0],y[-1]),aspect="equal",xlabel="Source-relative easting (km)",ylabel="Northing (km)",
-                title=f"{label}\nWithin-group median total {v[1]:,.0f} km³")
-            panel_records.append({"group":label,"selected_draw_indices":idx.tolist(),"conditional_group_volume_quantiles":v.tolist()})
+                title=f"{label}\nConditional 95% range {v[0]:,.0f}–{v[1]:,.0f} km³")
+            panel_records.append({"group":label,"selected_draw_indices":idx.tolist(),"conditional_group_volume_interval95_km3":v.tolist()})
         cb=fig.colorbar(fill,ax=axes,shrink=.75,pad=.02,ticks=levels)
         cb.ax.set_yticklabels(["0.1","1","3","10","30","100","300","1,000"]);cb.set_label("Conditional median thickness (cm)")
         fig.suptitle("Same original posterior, split by total volume\nDots: observations · star: volcano · map extent never sets volume",fontsize=13)
         fig.savefig(output/"low-high-volume-fields.png",dpi=160);plt.close(fig)
         dump(output/"map-design.json",{"groups":panel_records,"grid_km":{"x":[-3000,4500,151],"y":[-3000,4500,151]},
-            "scope":"192 deterministically spaced posterior fields per group; map is pointwise log-thickness median. Its integral is not the posterior median volume. Dashed contours are model summaries, not certified supported isopachs."})
+            "scope":"192 deterministically spaced posterior fields per group; map is pointwise log-thickness median. Dashed contours are model summaries, not certified supported isopachs."})
 
 
 def summarize(root,output,original_global=ORIGINAL_GLOBAL):
@@ -135,7 +136,7 @@ def summarize(root,output,original_global=ORIGINAL_GLOBAL):
     conflict=json.loads((root/"conflict/report.json").read_text())
     assert set(marine["results"]) == {"offset_sd3", "offset_sd1"}
     assert set(conflict["results"]) == {"primary_6p5", "primary_7"}
-    row=lambda key,fit,scope:{"case":key,"scope":scope,**{k:fit["volume"][k] for k in ("lower95","median","upper95")},
+    row=lambda key,fit,scope:{"case":key,"scope":scope,**{k:fit["volume"][k] for k in ("lower95","upper95")},
         "sampling_passed":fit["diagnostics"]["passed"],"attempts":len(fit["attempts"]),"posterior_sha256":fit["posterior_sha256"]}
     rows=[row("original",original["fits"]["baseline"],"Original 87 exact records; displacement SD 3")]
     rows += [row(name,r["fit"],CASES[name]) for name,r in results.items()]
@@ -172,9 +173,8 @@ def summarize(root,output,original_global=ORIGINAL_GLOBAL):
         for i,r in enumerate(rows):
             color="#A86627" if "offset" in r["case"] else "#087E8B"
             ax.plot([r["lower95"],r["upper95"]],[i,i],color=color,lw=2)
-            ax.scatter(r["median"],i,c=color,marker="o" if r["sampling_passed"] else "x")
         ax.set(xscale="log",yticks=np.arange(len(rows)),yticklabels=[labels[r["case"]] for r in rows],
-            xlabel="Whole-Earth bulk fallout (km³; log scale)",title="Aso-4: source and geometry experiments\nPoints: medians · lines: separate conditional 95% credible intervals")
+            xlabel="Whole-Earth bulk fallout (km³; log scale)",title="Aso-4: source and geometry experiments\nSeparate conditional 95% credible intervals")
         ax.invert_yaxis();ax.grid(axis="x",alpha=.2)
         fig.savefig(output/"experiment-intervals.png",dpi=160);plt.close(fig)
         fig,axes=plt.subplots(1,2,figsize=(11,4.8),layout="constrained")

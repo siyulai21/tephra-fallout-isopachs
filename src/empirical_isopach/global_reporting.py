@@ -36,22 +36,18 @@ def assumption_label(key, report):
     return LABELS[key]
 
 
-def figures(output, name, data, meta, samples, report):
-    import matplotlib
-    matplotlib.use("Agg")
+
+def prior_intervals(output, name, report):
     import matplotlib.pyplot as plt
-    from src.empirical_isopach.visualization.style import STYLE
-    from .visualization.global_maps import global_maps
-    global_maps(output, name, data, meta, samples, report)
+    from .visualization.style import STYLE
     with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 2, figsize=(13, 6), layout="constrained")
         for i, (key, fit) in enumerate(report["fits"].items()):
             v = fit["volume"]
             color = "#157F88" if key == "baseline" else "#AD633E"
-            axes[0].plot([v["lower95"], v["upper95"]], [i, i], c=color, lw=2)
-            axes[0].scatter(v["median"], i, c=color, marker="o" if fit["diagnostics"]["passed"] else "x", s=35)
+            axes[0].plot([v["lower95"], v["upper95"]], [i, i], c=color, lw=2, ls="-" if fit["diagnostics"]["passed"] else "--")
         axes[0].set(yticks=range(len(report["fits"])), yticklabels=[assumption_label(k, report) for k in report["fits"]],
-            xscale="log", xlabel="Global bulk fallout (km³; log scale)", title="Assumption sensitivity\nEach line is its own conditional 95% interval")
+            xscale="log", xlabel="Global bulk fallout (km³; log scale)", title="Assumption sensitivity\nConditional 95% intervals · dashed = numerical warning")
         axes[0].invert_yaxis()
         for i, (key, entry) in enumerate(report["mass_partition"]["parts"].items()):
             v = entry["fraction"]
@@ -66,6 +62,17 @@ def figures(output, name, data, meta, samples, report):
         fig.savefig(output/"volume.png", dpi=160)
         plt.close(fig)
 
+
+
+def figures(output, name, data, meta, samples, report):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from src.empirical_isopach.visualization.style import STYLE
+    from .visualization.global_maps import global_maps
+    global_maps(output, name, data, meta, samples, report)
+    prior_intervals(output, name, report)
+    with plt.rc_context(STYLE):
         fig, axes = plt.subplots(1, 2, figsize=(12, 4.7), layout="constrained")
         from .models.mass_mixture.bearings.field import PROTOCOL
         bearing = report.get("protocol")==PROTOCOL
@@ -135,7 +142,7 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
             "interpretation": "In-sample posterior predictive checks. Optimistic; not heldout validation, model weights, or a selection criterion."}
         chain, draw = np.indices(values.shape)
         frames.append(pd.DataFrame({"assumption": key, "chain": chain.ravel(), "draw": draw.ravel(), "volume_km3": values.ravel()}))
-        table.append({"assumption": key, **{k: fit["volume"][k] for k in ("median", "lower95", "upper95")},
+        table.append({"assumption": key, **{k: fit["volume"][k] for k in ("lower95", "upper95")},
                       "training_rmse_log": fit["training_checks"]["rmse_log"],
                       "diagnostics_passed": fit["diagnostics"]["passed"]})
     csv = pd.concat(frames).to_csv(index=False).encode()
@@ -155,4 +162,6 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
     principal = assemble(output,data,meta,report,output/"posteriors",output/"posteriors"/"bearing-integration")
     from .models.mass_mixture.archive_check import case_archives
     case_archives(path,output,data,meta,archives)
+    from .visualization.deposit import render_deposit
+    render_deposit(output,"spherical-mixture",data,meta,principal["name"])
     return principal

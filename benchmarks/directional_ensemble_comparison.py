@@ -22,12 +22,11 @@ def volume_figure(table, output):
                                          gridspec_kw={"width_ratios":[2.4,1]},sharey=True)
         for i,r in enumerate(tab.itertuples()):
             volume.plot([r.lower95_km3,r.upper95_km3],[i,i],color="#7966A4",lw=2)
-            volume.scatter(r.coherent_median_km3,i,marker="o",s=46,edgecolor="#614887",facecolor="white",zorder=3)
             volume.scatter(r.median_map_km3,i,marker="D",s=42,c="#087D80",zorder=4)
             support.barh(i,100*r.footprint_fraction,height=.44,color="#58A8A3")
             support.text(100*r.footprint_fraction+.8,i,f"{r.footprint_fraction:.1%}",va="center",fontsize=9)
         volume.set(yticks=np.arange(len(tab)),yticklabels=tab.dataset,xscale="log",
-                   xlabel="Whole-Earth bulk fallout (km³, logarithmic scale)",title="Integrated median map and complete deposits")
+                   xlabel="Whole-Earth bulk fallout (km³, logarithmic scale)",title="Median-thickness map integral and uncertainty")
         support.set(xlim=(0,max(15,100*tab.footprint_fraction.max()+11)),xlabel="Share of central volume (%)",
                     title="Inside measured triangles")
         volume.set_ylim(len(tab)-.35,-.65)
@@ -35,7 +34,7 @@ def volume_figure(table, output):
             ax.grid(axis="x",alpha=.18)
         fig.suptitle("Directional ensemble across six eruptions",fontsize=15)
         handles=[Line2D([],[],marker="D",color="#087D80",ls="",label="Median-map volume"),
-                 Line2D([],[],marker="o",markerfacecolor="white",color="#7966A4",label="Complete-field median and conditional 95% interval")]
+                 Line2D([],[],color="#7966A4",label="Conditional 95% volume interval")]
         fig.legend(handles=handles,loc="outside lower center",ncols=2,frameon=False)
         fig.savefig(output/"volumes.png",dpi=170,bbox_inches="tight")
         plt.close(fig)
@@ -62,8 +61,8 @@ def summarize(known, regional, output, cli_replay=None):
         m = np.array(c["parts_sectors_km3"])
         v = j["volume_km3"]
         cases.append(dict(slug=rec["slug"], dataset=r["dataset"],input_sha256=r["input"]["input_sha256"],
-            median_map_km3=c["volume_km3"],coherent_median_km3=v["median"],lower95_km3=v["lower95"],upper95_km3=v["upper95"],
-            uniform_map_km3=c["weight_sensitivity_km3"]["uniform"],old_reference_median_km3=old["fits"]["reference"]["volume_km3"]["median"],
+            median_map_km3=c["volume_km3"],lower95_km3=v["lower95"],upper95_km3=v["upper95"],
+            uniform_map_km3=c["weight_sensitivity_km3"]["uniform"],
             footprint_km3=m[0].sum(),footprint_fraction=m[0].sum()/m.sum(),
             geographic_score=geo["equal_region_log_score"],uniform_score=geo["uniform_score"],reference_score=geo["reference_score"],
             geographic_coverage=geo["metrics"].get("coverage95_observations"),quadrant_score=q["equal_region_log_score"],
@@ -80,11 +79,10 @@ def summarize(known, regional, output, cli_replay=None):
         v=joint["volume_km3"]
         trials.append(dict(scenario=scenario,seed=int(sd),truth_km3=truth,median_map_km3=c["volume_km3"],
                            relative_error=c["volume_km3"]/truth-1,
-                           uniform_map_km3=c["weight_sensitivity_km3"]["uniform"],coherent_median_km3=v["median"],
+                           uniform_map_km3=c["weight_sensitivity_km3"]["uniform"],
                            lower95=v["lower95"],upper95=v["upper95"],covers_truth=v["lower95"]<=truth<=v["upper95"],
                            median_map_numerical_passed=c["passed"],full_members_passed=sum(x["passed"] for x in joint["members"].values()),
-                           alternate_truth_km3=a["truth"].get("same_data_hidden_total_km3"),
-                           reference_coherent_median_km3=joint["members"]["reference"]["volume_km3"]["median"]))
+                           alternate_truth_km3=a["truth"].get("same_data_hidden_total_km3")))
         contours.extend({"scenario":scenario,"seed":int(sd),**v} for v in a["contour_accuracy"])
     if len(trials)!=14:
         raise ValueError("Expected seven stress designs and two independent seeds per design")
@@ -98,14 +96,14 @@ def summarize(known, regional, output, cli_replay=None):
     wins = int((tab.geographic_score<tab.uniform_score).sum())
     lines = ["# Fixed-direction ensemble calibration","",
         "This study uses the earlier six-structure calibration with fixed fan directions. Its central volume integrates pointwise median thickness over the Earth. The matched control in the principal study instead uses the same structure weights as its uncertain-direction fit. "
-        "A second summary gives the median and conditional 95% interval across complete simulated deposits. Each of the six combinations of fan width and gap treatment "
+        "The 95% volume interval comes from integrating spatially correlated draws. Each of the six combinations of fan width and gap treatment "
         "is fitted to the same accepted observations. The reported eruption contributes no holdout scores to its own predictive weights.", "",
         "![Central isopach volumes, complete-field intervals and measured shares](volumes.png)","",
-        "| Eruption | Median-map km³ | Complete-field median [95%], km³ | Median map inside measured triangles | Full structures passing | Map checks |",
+        "| Eruption | Median-map km³ | Conditional 95% volume interval (km³) | Median map inside measured triangles | Full structures passing | Map checks |",
         "|---|---:|---:|---:|---:|---|"]
     for a in tab.itertuples():
         lines.append(f"| [{a.dataset}](../../../eruptions/{a.slug}/results/directional/ensemble/README.md) | **{a.median_map_km3:,.1f}** | "
-                     f"{a.coherent_median_km3:,.1f} [{a.lower95_km3:,.1f}–{a.upper95_km3:,.1f}] | {a.footprint_fraction:.1%} | "
+                     f"{a.lower95_km3:,.1f}–{a.upper95_km3:,.1f} | {a.footprint_fraction:.1%} | "
                      f"{a.full_members_passed}/6 | {'passed' if a.median_map_numerical_passed else '**review**'} |")
     lines += ["","These are model-conditional bulk fallout estimates. A median map can combine common features from incompatible deposits. The joint-field interval "
               "describes plausible complete-deposit volumes. Thick unmeasured source caps, hidden lobes, distal tails, reworking and preservation can sit outside it.", "",

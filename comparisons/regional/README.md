@@ -1,6 +1,6 @@
 # GP and cubic spline inside the observation hull
 
-Each pair uses the same accepted sites, geographic holdouts and integration area. The volume column integrates each model’s pointwise median thickness. Each case also reports its expected volume and the conditional interval from whole-surface draws.
+Each pair uses the same accepted sites, geographic holdouts and integration area. The volume column integrates each model’s pointwise median thickness. Whole-surface draws give each case’s conditional 95% volume interval.
 
 | Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |
 |---|---|---:|---:|---:|
@@ -21,7 +21,7 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [YTT](../../eruptions/ytt/results/README.md) | GP ensemble | 1079.21 | 1.934 | 91.3% |
 | [YTT](../../eruptions/ytt/results/README.md) | Trend-regularized cubic spline | 943.74 | 2.153 | 82.6% |
 
-Lower negative log predictive scores indicate better predictions in withheld regions. Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical volume integration warning. [Full benchmark table, including expected volumes](comparison.csv)
+Lower negative log predictive scores indicate better predictions in withheld regions. Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical volume integration warning. [Median-map volumes and held-out scores](comparison.csv)
 
 ![Regional median-map volumes and geographic prediction scores](comparison.png)
 

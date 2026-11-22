@@ -26,7 +26,7 @@ def case_table(cases=None, published_root=Path("eruptions")):
         v = r["volume"]
         row = dict(eruption=r["dataset"],slug=slug,input_sha256=r["input"]["input_sha256"],accepted=len(r["data_rows"]),
                    fixed_map_km3=v["matched_control_map_km3"],uncertain_map_km3=v["median_map_km3"],
-                   **{"joint_"+k:x for k,x in v["coherent_volume_km3"].items()})
+                   **{"joint_"+k:v["coherent_volume_km3"][k] for k in ("lower95","upper95")})
         for design in ("geographic","quadrants"):
             for subset in ("all_estimated","passed_only"):
                 score = r["validation"][design][subset]
@@ -62,12 +62,14 @@ def summarize(cases, synthetic, output):
     areas = synthetic_areas(synthetic, output)
     rows = ["# How much does uncertain fan direction change the fit?", "",
         "Each pair uses the same observations and structure weights. The control fixes fan direction. "
-        "The principal fit lets it vary across possible deposits. Integrating the pointwise median map gives "
-        "the first volume. Integrating each complete deposit gives the volume median and conditional interval in the last column.", "",
-        "| Eruption | Accepted observations | Uncertain median map (km³) | Fixed median map (km³) | Complete-deposit median [95%] (km³) |",
+        "The principal fit lets it vary across possible deposits. The uncertain-direction median-thickness map gives "
+        "the principal estimate. The fixed-direction control uses direct posterior quadrature. The interval describes uncertainty in total volume across complete draws.", "",
+        "| Eruption | Accepted observations | Median-thickness map (km³) | Fixed-direction control (km³) | Conditional 95% interval (km³) |",
         "|---|---:|---:|---:|---:|"]
     for a in table.itertuples():
-        rows.append(f"| [{a.eruption}](../../eruptions/{a.slug}/results/directional/README.md) | {a.accepted} | **{a.uncertain_map_km3:,.1f}** | {a.fixed_map_km3:,.1f} | {a.joint_median:,.1f} [{a.joint_lower95:,.1f}–{a.joint_upper95:,.1f}] |")
+        path = Path("eruptions")/a.slug/"results/directional/deposit.json"
+        mapped = json.loads(path.read_text())
+        rows.append(f"| [{a.eruption}](../../eruptions/{a.slug}/results/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {a.fixed_map_km3:,.1f} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
     rows += ["", "At B-Tm the source review adds two lake limits and one peat limit to the directly measured thicknesses and bounds. "
         "The before-and-after study isolates how those interpretations move the western contours. Each eruption report above gives "
         "all eight compass bearings, supported contour fragments and numerical warnings. "

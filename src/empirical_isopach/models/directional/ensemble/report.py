@@ -56,7 +56,7 @@ def save_draws(output, model, mass):
 
 
 def formatted(q):
-    return f"{q['median']:,.1f} [{q['lower95']:,.1f}–{q['upper95']:,.1f}]"
+    return f"{q['lower95']:,.1f}–{q['upper95']:,.1f}"
 
 
 def narrative(output, r, *, family_page=False):
@@ -67,7 +67,7 @@ def narrative(output, r, *, family_page=False):
     full = [s.replace("_"," ") for s,v in j["members"].items() if not v["passed"]]
     lines = [f"# {r['dataset']} directional ensemble", "",
         f"**{c['volume_km3']:,.1f} km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. "
-        f"Across complete simulated deposits the median volume is **{j['volume_km3']['median']:,.1f} km³**, with a conditional 95% interval of "
+        f"The conditional 95% volume interval is "
         f"**{j['volume_km3']['lower95']:,.1f}–{j['volume_km3']['upper95']:,.1f} km³**.", "",
         f"The measured triangles contain **{m[0].sum():,.1f} km³** ({m[0].sum()/m.sum():.1%}) of the median map. "
         "The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. "
@@ -80,18 +80,18 @@ def narrative(output, r, *, family_page=False):
         f"![Local median thickness and pointwise 95% uncertainty]({prefix}local.png)", "",
         f"![Median thickness over the Earth]({prefix}world.png)", "",
         "## Direction and observational support", "",
-        "| Direction | Exact rows | Bounds | Median-map volume (km³) | Complete fields, median [95%] (km³) |",
+        "| Direction | Exact rows | Bounds | Median-map volume (km³) | Conditional 95% volume interval (km³) |",
         "|---|---:|---:|---:|---:|"]
     for i, s in enumerate(COMPASS):
         counts = r["sector_observations"][i]
         lines.append(f"| {s} | {len(counts['exact_row_ids'])} | {len(counts['bound_row_ids'])} | {m[:,i].sum():,.1f} | {formatted(j['sectors'][i])} |")
-    lines += ["", "| Domain | Median-map volume (km³) | Complete fields, median [95%] (km³) |","|---|---:|---:|"]
+    lines += ["", "| Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) |","|---|---:|---:|"]
     for i, label in enumerate(("Measured triangles","Transition at triangle edges","Proximal background","Background between sampled radii","Distal background")):
         lines.append(f"| {label} | {m[i].sum():,.1f} | {formatted(j['parts'][i])} |")
     lines += ["","The median-map entries add to its global volume before rounding. Each simulated deposit uses one structure everywhere. "
               "Pointwise thickness bounds describe uncertainty at a location. The volume interval comes from integrating each complete field.", "",
               "## Assumptions and weights","",
-              "| Fan half-width | Additional fan in largest distal gap | Predictive weight | Complete-field volume, median [95%] (km³) | Fit and mass checks |",
+              "| Fan half-width | Additional fan in largest distal gap | Predictive weight | Conditional 95% volume interval (km³) | Fit and mass checks |",
               "|---:|---|---:|---:|---|"]
     for policy, weight in zip(MEMBERS,w["weights"],strict=True):
         item = j["members"][policy.name]

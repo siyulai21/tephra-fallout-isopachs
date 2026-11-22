@@ -1,5 +1,7 @@
 """Read and verify the SHA-256 identities of the published evidence."""
+from functools import lru_cache
 from hashlib import sha256
+import subprocess
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -49,3 +51,29 @@ def verify_files(hashes, root=ROOT):
         path = root / name
         if not path.is_file() or sha256(path.read_bytes()).hexdigest() != expected:
             raise ValueError(f"Published evidence is missing or changed: {name}")
+
+
+# The signed source study predates the bearing revisions. Its originals live at this Git
+# revision. The publication inventory authenticates today's outputs independently.
+SIGNED_STUDY_REVISION = "843a2eef0fc669e38d95e4153ac8d7464f4d4a98"
+
+
+@lru_cache(maxsize=1)
+def signed_revision_available():
+    return subprocess.run(["git", "cat-file", "-e", SIGNED_STUDY_REVISION + "^{commit}"],
+                          cwd=ROOT, capture_output=True).returncode == 0
+
+
+def signed_file(name, expected, current):
+    """Check a signed original and independently verify its current replacement, when present."""
+    path = ROOT / name
+    if path.is_file() and sha256(path.read_bytes()).hexdigest() == expected:
+        return True
+    if name in current:
+        verify_files({name: current[name]})
+    if not signed_revision_available():
+        return False
+    source = subprocess.check_output(["git", "cat-file", "blob", f"{SIGNED_STUDY_REVISION}:{name}"], cwd=ROOT)
+    if sha256(source).hexdigest() != expected:
+        raise ValueError(f"Signed source differs at {name}")
+    return True

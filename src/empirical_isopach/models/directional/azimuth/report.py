@@ -167,12 +167,14 @@ def heldout_rows(data,latitude,work,r):
 
 
 def record_principal(report):
+    from ....volume_reporting import directional_intervals
+    directional_intervals(report)
     folder = Path(__file__).parent
     conditioning = ("source thicknesses, direct bounds and interpreted archive bounds"
                     if report["input"].get("interpreted_upper_limits") else "quantitative thicknesses and bounds")
     report["principal_estimate"] = {"conditioning":conditioning,
         "map":"isopachs.png","whole_earth_map":"world.png","volume_key":"volume.median_map_km3",
-        "joint_volume_key":"volume.coherent_volume_km3","heldout_predictions":"heldout.csv",
+        "conditional_volume_interval_key":"volume.coherent_volume_km3","heldout_predictions":"heldout.csv",
         "reporting_sha256":{name:digest(folder/name) for name in ("report.py","primary.py","maps.py","narrative.py")}}
 
 

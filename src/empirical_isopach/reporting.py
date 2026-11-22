@@ -94,19 +94,14 @@ def save_figures(output, name, data, metadata, region, models, report):
         for index, (method, color) in enumerate(zip(methods, colors)):
             result = report["methods"][method]
             q = result["joint_volume"]["conditional_quantiles_km3"]
-            volume_ax.errorbar(q["0.5"], index, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
-                            fmt="o", color=color, capsize=4)
-            volume_ax.scatter(result["regional_volume"]["expected_km3"], index, marker="D", color=color, s=30)
-            deletion = [v["regional_deletion_volume"]["expected_km3"]
+            volume_ax.hlines(index, q["0.025"], q["0.975"], color=color, linewidth=2)
+            volume_ax.scatter(result["regional_volume"]["median_surface_km3"], index, marker="D", color=color, s=36, zorder=3)
+            deletion = [v["regional_deletion_volume"]["median_surface_km3"]
                         for v in report["validation"]["methods"][method]["selections"]]
             volume_ax.plot([min(deletion), max(deletion)], [index+.12, index+.12], ":", color=color, lw=2)
         volume_ax.set(yticks=range(len(methods)), yticklabels=[labels[m] for m in methods], ylim=(-.6, len(methods)-.4),
-                    xlabel="Bulk fallout within observation hull (km³)",
-                    title="Regional volume\nDotted: geographic-deletion range")
-        if any(report["methods"][m]["regional_volume"]["expected_km3"] >
-               report["methods"][m]["joint_volume"]["conditional_quantiles_km3"]["0.975"] for m in methods):
-            volume_ax.set_xscale("log")
-            volume_ax.set_title("Hull volumes on a log scale\nDiamond · analytical mean")
+                      xscale="log", xlabel="Bulk fallout within observation hull (km³)",
+                      title="Diamond · map integral   Line · 95% interval\nDotted line · geographic-deletion range")
         volume_ax.grid(axis="x", alpha=.15)
         fig.suptitle(f"{name} · geographic holdouts and conditional 95% intervals\n"
                      "Intervals omit parameter/selection uncertainty; bounds contribute scores, not RMSE.", fontsize=13)
@@ -130,8 +125,7 @@ def write_readme(output, name, report):
         lines.append("| "+label+" | "+" | ".join(format(x, fmt) for x in values)+" |")
     rows = [report["methods"][m] for m in methods]
     metrics = [report["validation"]["methods"][m]["metrics"] for m in methods]
-    pair("Expected regional bulk fallout (km³)", [r["regional_volume"]["expected_km3"] for r in rows])
-    pair("Integral of median thickness surface (km³)", [r["regional_volume"]["median_surface_km3"] for r in rows])
+    pair("Principal median-map volume inside hull (km³)", [r["regional_volume"]["median_surface_km3"] for r in rows])
     interval = [r["joint_volume"]["conditional_quantiles_km3"] for r in rows]
     lines.append("| Conditional 95% volume interval (km³) | "+" | ".join(f"{q['0.025']:.2f}–{q['0.975']:.2f}" for q in interval)+" |")
     pair("Outer equal-region negative log score ↓", [r["equal_region_log_score"] for r in metrics], ".3f")
@@ -140,12 +134,8 @@ def write_readme(output, name, report):
     lines += ["", "Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.", "",
               "![Withheld predictions and regional volumes](diagnostics.png)", "", "## Scope", "",
               "The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.", "",
-              "The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.", "",
+              "Volume integrates pointwise median thickness over the observation hull. The interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.", "",
               "## Fitted methods", ""]
-    for method, q in zip(methods, interval, strict=True):
-        item = report["methods"][method]
-        if item["regional_volume"]["expected_km3"] > q["0.975"]:
-            lines.extend([f"The {labels[method]} analytical mean lies above the 97.5th percentile of the complete-surface volumes. Rare thick surfaces dominate that expectation. The complete-volume median is {q['0.5']:,.2f} km³ and its conditional interval is {q['0.025']:,.2f}–{q['0.975']:,.2f} km³.", ""])
     for method in methods:
         lines += [f"### {labels[method]}", "", "```json",
                   json.dumps(report["methods"][method]["model"], indent=2), "```", ""]
@@ -185,7 +175,7 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
         methods[method] = {"model": model.describe(), "selection": selection,
                            "regional_volume": volume, "joint_volume": joint}
         if volume["expected_km3"] > joint["conditional_quantiles_km3"]["0.975"]:
-            notes.append(f"{labels[method]}: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields dominate the expectation. See the integral of the median map and the complete-volume quantiles.")
+            notes.append(f"{labels[method]}: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields influence the conditional uncertainty calculation.")
         if not volume["converged"]:
             notes.append(f"{labels[method]} regional integration did not reach the stated refinement tolerance.")
         if not joint["expected_grid_converged"]:
@@ -221,6 +211,8 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     for method in active_methods():
         withheld.update({method+"_"+k: v for k, v in validation["methods"][method]["predictions"].items()})
     pd.DataFrame(withheld).to_csv(output/"heldout_predictions.csv", index=False)
+    from .volume_reporting import regional_estimates
+    regional_estimates(report)
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
     save_figures(output, name, data, meta, region, models, report)
     write_readme(output, name, report)

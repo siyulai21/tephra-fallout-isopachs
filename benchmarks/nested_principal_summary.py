@@ -21,26 +21,27 @@ def build(output, peer_rows):
         for current, source in zip(corridor["folds"], read(home/"nested-whole-area/geographic.json")["folds"], strict=True):
             if any(current[k] != source["identity"][k] for k in ("training_rows", "test_rows")):
                 raise ValueError(f"Unmatched partitions for {slug} fold {current['fold']}")
-        lo, med, hi = corridor["volume_km3"]
+        lo, hi = corridor["conditional_volume_interval95_km3"]
         rows.extend(peers)
         rows.append(dict(eruption=record["name"], slug=slug, method="Nested corridor", lower95_km3=lo,
-                         median_km3=med, upper95_km3=hi, equal_region_log_score=corridor["geographic_score"],
+                         median_map_km3=read(home/"nested-isopachs/deposit.json")["median_map_volume_km3"], upper95_km3=hi, equal_region_log_score=corridor["geographic_score"],
                          input_sha256=corridor["input_sha256"]))
         reports.append((slug, corridor, broad))
     table(output/"cases.csv", rows)
     comparison_plot(rows, output/"volumes.png", nested_family="Nested corridor")
     lines = ["# Global fallout volume from nested dispersal corridors", "",
-             "The principal Bayesian nested estimate is the median bulk volume obtained by integrating each posterior deposit over Earth. The published isopachs trace the pointwise median thickness. Each case also reports the integral of that map.", "",
-             "![Directional, spherical and principal nested medians with conditional 95% volume intervals](volumes.png)", "",
-             "| Eruption | Corridor median [conditional 95%], km³ | Whole-area sensitivity median, km³ | Corridor geographic score ↓ | Withheld exact readings inside 95% | Full-data checks | Geographic fits passing |",
-             "|---|---:|---:|---:|---:|---|---:|"]
+             "The corridor volume integrates the median-thickness map over Earth. The plot shows the posterior uncertainty in complete-deposit volume under each global model.", "",
+             "![Directional, spherical and principal nested median-map integrals with conditional 95% volume intervals](volumes.png)", "",
+             "| Eruption | Median-thickness map (km³) | Conditional 95% interval (km³) | Whole-area median-map integral (km³) | Corridor geographic score ↓ | Withheld exact readings inside 95% | Full-data checks | Geographic fits passing |",
+             "|---|---:|---:|---:|---:|---:|---|---:|"]
     for slug, j, broad in reports:
-        lo, med, hi = j["volume_km3"]
+        lo, hi = j["conditional_volume_interval95_km3"]
+        mapped = read(ROOT/"eruptions"/slug/"results/nested-isopachs/deposit.json")
         c = j["exact_site_coverage95"]
         warnings = [name for name, passed in j["numerics"].items() if not passed]
         status = "passed" if not warnings else "**warning** ("+", ".join(warnings)+")"
-        lines.append(f"| [{j['name']}](../../eruptions/{slug}/results/nested-isopachs/README.md) | **{med:,.1f}** [{lo:,.1f}–{hi:,.1f}] | "
-                     f"{broad['conditional_volume_km3'][1]:,.1f} | {j['geographic_score']:.3f} | {c['covered']}/{c['exact_sites']} | "
+        lines.append(f"| [{j['name']}](../../eruptions/{slug}/results/nested-isopachs/README.md) | **{mapped['median_map_volume_km3']:,.3g}** | {lo:,.1f}–{hi:,.1f} | "
+                     f"{read(ROOT/'eruptions'/slug/'results/nested-whole-area/median-field.json')['median_map_volume_km3']:,.1f} | {j['geographic_score']:.3f} | {c['covered']}/{c['exact_sites']} | "
                      f"{status} | {sum(f['passed'] for f in j['folds'])}/{len(j['folds'])} |")
     scored = [j for _, j, _ in reports]
     bands = sum(bool(j["supported_band_policies"]) for j in scored)
@@ -50,7 +51,7 @@ def build(output, peer_rows):
               f"A complete band passed at least one nested support policy in {bands} of {len(scored)} eruptions. [Three-family estimates and scores](cases.csv) · [Matched regional replay](regional-replay.csv)", "",
               "## What the observations constrain", "",
               "Local contour fragments drawn solid have exact measurements on both sides and at least 90% posterior probability of crossing in a retained triangle. Gaps and sectors without observations retain conditional predictions. The common prior gives 25% probability to broad continuation. The data can update those odds. Each case reports sensitivity to alternative prior odds.", "",
-              "| Eruption | Median volume fraction in retained triangles | Median fraction beyond the farthest exact site | Median-map integral (km³) |",
+              "| Eruption | Median volume fraction in retained triangles | Median fraction beyond the farthest exact site | Independent map integral from the fitted posterior (km³) |",
               "|---|---:|---:|---:|"]
     for _, j, _ in reports:
         inside, far, _ = j["allocation_fraction"]

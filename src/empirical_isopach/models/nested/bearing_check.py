@@ -105,7 +105,7 @@ def review(data,meta,home,name):
     write_json(out/"report.json",result)
     scores=result["paired_scores"]
     page=[f"# {name} · How much ash is assigned to bearings with limited evidence?","",
-          f"The uncertain-bearing median is **{q[1]:,.1f} km³** with a conditional 95% interval of **{q[0]:,.1f}–{q[2]:,.1f} km³**. Allowing a concentrated hidden fan to carry extra ash gives {enhanced[1]:,.1f} km³ [{enhanced[0]:,.1f}–{enhanced[2]:,.1f}]. The principal nested median is {result['baseline_km3'][1]:,.1f} km³.","",
+          f"The conditional 95% interval is **{q[0]:,.1f}–{q[2]:,.1f} km³** with uncertain bearing and **{enhanced[0]:,.1f}–{enhanced[2]:,.1f} km³** with a concentrated extra fan.","",
           "Every training location keeps its fitted thickness. The existing spherical bearing policy progressively allows an unseen fan to turn beyond the reach of measured bearings. The same policy includes broad continuation as a possibility. The extra-fallout experiment normalizes the rotating fan to unit mean over an unknown direction.","",
           f"The paired geographic scores are {scores['reference_score']:.3f} for the nested control and {scores['bearing_score']:.3f} for uncertain bearings. The finite-Earth integration and posterior-draw refinement {'passed' if history[-1]['passed'] else 'retained a warning'}. The scenario depends on its assigned angular widths and hidden-fan probabilities.","",
           "![Nested contours with broad and uncertain continuation](isopachs.png)","",

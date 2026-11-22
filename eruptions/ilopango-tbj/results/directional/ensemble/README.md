@@ -1,6 +1,6 @@
 # Ilopango TBJ (Unit G) · fixed-direction ensemble
 
-**47.3 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **64.2 km³**, with a conditional 95% interval of **33.5–368.2 km³**.
+**47.3 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. The conditional 95% volume interval is **33.5–368.2 km³**.
 
 The measured triangles contain **1.6 km³** (3.4%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.
 
@@ -14,37 +14,37 @@ The star marks the supplied vent. Its median thickness is 504.9 cm. The largest 
 
 ## Direction and observational support
 
-| Direction | Exact rows | Bounds | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Direction | Exact rows | Bounds | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|---:|---:|
-| N | 3 | 0 | 1.3 | 1.3 [0.9–16.7] |
-| NE | 2 | 1 | 2.0 | 2.4 [0.9–41.0] |
-| E | 9 | 1 | 6.1 | 8.6 [2.4–118.2] |
-| SE | 5 | 1 | 13.0 | 15.9 [5.6–117.5] |
-| S | 12 | 0 | 9.9 | 10.9 [5.8–65.5] |
-| SW | 2 | 0 | 6.2 | 6.5 [3.4–34.5] |
-| W | 12 | 1 | 4.8 | 5.0 [2.7–23.8] |
-| NW | 7 | 0 | 3.9 | 4.3 [2.2–27.6] |
+| N | 3 | 0 | 1.3 | 0.9–16.7 |
+| NE | 2 | 1 | 2.0 | 0.9–41.0 |
+| E | 9 | 1 | 6.1 | 2.4–118.2 |
+| SE | 5 | 1 | 13.0 | 5.6–117.5 |
+| S | 12 | 0 | 9.9 | 5.8–65.5 |
+| SW | 2 | 0 | 6.2 | 3.4–34.5 |
+| W | 12 | 1 | 4.8 | 2.7–23.8 |
+| NW | 7 | 0 | 3.9 | 2.2–27.6 |
 
-| Domain | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|
-| Measured triangles | 1.6 | 1.6 [1.3–1.9] |
-| Transition at triangle edges | 3.1 | 3.2 [2.7–3.8] |
-| Proximal background | 0.6 | 0.6 [0.3–1.4] |
-| Background between sampled radii | 24.3 | 26.8 [18.5–39.5] |
-| Distal background | 17.8 | 31.3 [6.4–329.5] |
+| Measured triangles | 1.6 | 1.3–1.9 |
+| Transition at triangle edges | 3.1 | 2.7–3.8 |
+| Proximal background | 0.6 | 0.3–1.4 |
+| Background between sampled radii | 24.3 | 18.5–39.5 |
+| Distal background | 17.8 | 6.4–329.5 |
 
 The median-map entries add to its global volume before rounding. Each simulated deposit uses one structure everywhere. Pointwise thickness bounds describe uncertainty at a location. The volume interval comes from integrating each complete field.
 
 ## Assumptions and weights
 
-| Fan half-width | Additional fan in largest distal gap | Predictive weight | Complete-field volume, median [95%] (km³) | Fit and mass checks |
+| Fan half-width | Additional fan in largest distal gap | Predictive weight | Conditional 95% volume interval (km³) | Fit and mass checks |
 |---:|---|---:|---:|---|
-| 22.5° | Absent from this structure | 15.5% | 56.2 [29.9–341.5] | passed |
-| 45° | Absent from this structure | 16.8% | 69.9 [35.8–449.3] | passed |
-| 90° | Absent from this structure | 11.9% | 88.9 [40.2–525.3] | passed |
-| 22.5° | Possible | 14.8% | 60.2 [31.0–388.1] | passed |
-| 45° | Possible | 23.0% | 63.1 [36.5–239.4] | passed |
-| 90° | Possible | 18.0% | 59.7 [35.6–295.5] | passed |
+| 22.5° | Absent from this structure | 15.5% | 29.9–341.5 | passed |
+| 45° | Absent from this structure | 16.8% | 35.8–449.3 | passed |
+| 90° | Absent from this structure | 11.9% | 40.2–525.3 | passed |
+| 22.5° | Possible | 14.8% | 31.0–388.1 | passed |
+| 45° | Possible | 23.0% | 36.5–239.4 | passed |
+| 90° | Possible | 18.0% | 35.6–295.5 | passed |
 
 Equal weights give a median-map volume of **47.6 km³**. Restricting to the three structures without an extra fan gives **49.9 km³**. Allowing an extra fan in all three gives **46.5 km³**. These possibilities share the same observations. A fan missed entirely by sampling remains weakly identified.
 

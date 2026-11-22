@@ -49,12 +49,13 @@ def run(base, output):
                 volume = integrate_region(fitted, mesh)
                 model = fitted.describe()
                 save_selection(output, f"selection/{record['slug']}-{fraction:g}.csv", selection)
+            volume.pop("expected_km3", None)
             runs.append({"padding_fraction": fraction, "fit_bounds_km": bounds.tolist(),
                          "volume": volume, "model": model, "selection": selection})
         result["runs"].append({"dataset": record["name"], "slug": record["slug"],
             "input_sha256": meta["input_sha256"], "parent_report_sha256": sha256(parent.read_bytes()).hexdigest(),
             "parent_support_sha256": sha256(support_path.read_bytes()).hexdigest(),
-            "area_km2": mesh.area, "gp_expected_km3": support["methods"]["stacked"]["footprint_volumes"]["standard"]["expected_km3"],
+            "area_km2": mesh.area, "gp_median_map_km3": support["methods"]["stacked"]["footprint_volumes"]["standard"]["median_surface_km3"],
             "spline": runs})
         (output/"report.json").write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")
         print(f"Fitting-domain sensitivity {record['name']} complete", flush=True)

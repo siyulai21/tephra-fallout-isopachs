@@ -44,7 +44,8 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             sensitivity_warnings.append(f"{name} ({', '.join(failed)})")
         row = {'eruption': name, 'slug': slug, 'geometry':report.get('geometry','displaced'),
             'review_status':record.get('global_review_status','conditional'),
-            **{k: base['volume'][k] for k in ('median', 'lower95', 'upper95')},
+            'median_map_volume_km3': json.loads((folder/'deposit.json').read_text())['median_map_volume_km3'],
+            **{k: base['volume'][k] for k in ('lower95', 'upper95')},
             'sensitivity_lower': report['sensitivity_envelope_km3'][0],
             'sensitivity_upper': report['sensitivity_envelope_km3'][1],
             'baseline_sampling_passed': base['diagnostics']['passed'],
@@ -78,8 +79,9 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
         label = row["geometry"] + (" · **questioned**" if row["review_status"] == "questioned" else "")
         case = f"[{row['eruption']}](../../eruptions/{slug}/README.md)"
         baseline_warning = "" if row["baseline_sampling_passed"] else " · **provisional**"
+        mapped = json.loads((case_dirs[slug]/"deposit.json").read_text())
         volumes.append(
-            f"| {case} | {label} | {earlier.parent_volume_km3:,.1f} → **{row['median']:,.1f}**{baseline_warning} "
+            f"| {case} | {label} | **{mapped['median_map_volume_km3']:,.3g}**{baseline_warning} "
             f"| {row['lower95']:,.1f}–{row['upper95']:,.1f} | {row['sensitivity_lower']:.3g}–{row['sensitivity_upper']:.3g} |"
         )
         status = "pass" if row["all_outer_sampling_passed"] else "**provisional**"
@@ -96,9 +98,9 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
                 else "All alternative refits passed their numerical checks.")
     (output/'README.md').write_text(f"""# Spherical-mixture maps and volumes
 
-Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The table shows the median volume under each continuation, the principal conditional interval and the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
+Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The principal volume integrates the median-thickness map. The interval describes uncertainty in total fallout across complete posterior draws. The last column gives the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
 
-| Eruption | Kernel geometry | Broad → principal volume (km³) | Principal 95% interval (km³) | Prior-sensitivity envelope (km³) |
+| Eruption | Kernel geometry | Median-thickness map (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) |
 |---|---|---:|---:|---:|
 {table}
 
@@ -135,7 +137,7 @@ def figures(output, rows):
         for i, row in enumerate(rows):
             axes[0].plot([row['sensitivity_lower'], row['sensitivity_upper']], [i, i], ':', color='#8F9698', lw=1.5)
             axes[0].plot([row['lower95'], row['upper95']], [i, i], color='#157F88', lw=3)
-            axes[0].scatter(row['median'], i, color='#157F88', marker='o' if row['baseline_sampling_passed'] else 'x', s=40)
+            axes[0].scatter(row['median_map_volume_km3'], i, color='#157F88', marker='o' if row['baseline_sampling_passed'] else 'x', s=40)
             for offset, key, color, label in ((-.15, 'global', '#157F88', 'Global mixture'),
                     (0, 'stacked', '#C57B3D', 'GP ensemble'), (.15, 'spline', '#78639F', 'Cubic spline')):
                 axes[1].scatter(row[key+'_equal_region_negative_log_score'], i+offset,

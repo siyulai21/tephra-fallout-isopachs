@@ -1,28 +1,28 @@
-# Ilopango TBJ (Unit G) spherical-mixture fallout
+# Ilopango TBJ (Unit G) · Spherical mixture
 
-**190.9 km³ of bulk fallout** is the principal whole-Earth volume. The conditional 95% interval is **62.9–3,300.8 km³**. Each simulated deposit carries one fan direction through the unsampled ground. The map shows median thickness at each location. The volume and its interval summarize the integrals of complete deposits.
+The principal bulk volume is **145 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **62.9–3.3e+03 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
 
-![Principal spherical mixture with uncertain continuation across unsampled bearings](field.png)
+![Ilopango TBJ (Unit G), Spherical mixture. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-The underlying spherical mixture gave 255.6 [78.3–4,482.4] km³. The extension leaves thickness at each accepted site and inside supported interpolation triangles unchanged. Beyond finite measured bearings it averages three assumptions with equal weight. A deposit can retain the original broad field, or continue preferentially along one broad or narrower fan. A site carrying only an upper limit constrains its own location and supplies no positive ray.
+Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-[Near-observation field](local.png) · [Source region](source.png) · [Whole-Earth map](world.png) · [Sector-by-sector isopach areas](bearing/sector-areas.csv) · [All crossings along eight bearings](bearing/ray-crossings.json)
+Every contour on these maps is conditional. [Spatial uncertainty and measurement footprint](field.png)
 
 ## What the unobserved directions contribute
 
-| Continuation assumption | Whole-deposit median [conditional 95%], km³ |
+| Continuation assumption | Conditional 95% volume interval (km³) |
 |---|---:|
-| Broad parent continuation | 255.6 [78.3–4,482.4] |
-| Unknown fan, 90° half-thickness angle | 182.9 [63.6–3,096.7] |
-| Unknown fan, 47° half-thickness angle | 151.6 [57.3–2,544.9] |
-| Enhanced narrow hidden fan, separate sensitivity | 220.1 [68.3–4,160.2] |
+| Broad parent continuation | 78.3–4,482.4 |
+| Unknown fan, 90° half-thickness angle | 63.6–3,096.7 |
+| Unknown fan, 47° half-thickness angle | 57.3–2,544.9 |
+| Enhanced narrow hidden fan, separate sensitivity | 68.3–4,160.2 |
 
 The three principal assumptions allow local thickness up to the parent prediction in the same draw. The enhanced-fan sensitivity allows extra ash along a hidden axis. Changing the angular spread of measured reach also changes the inferred mass.
 
-| Angle at which measured reach halves | Whole-deposit median [conditional 95%], km³ | Numerical checks |
+| Angle at which measured reach halves | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---|
-| 11.25° | 155.7 [47.5–2,973.5] | Warning |
-| 45° | 226.2 [73.7–4,266.0] | Passed |
+| 11.25° | 47.5–2,973.5 | Warning |
+| 45° | 73.7–4,266.0 | Passed |
 
 The median fraction inside the screened measurement footprint is **0.8%**. The median fraction beyond the farthest exact site is **61.3%**. Other mass lies in the intervening gaps and the unmeasured proximal cap. These are sampling classes.
 
@@ -34,16 +34,16 @@ Across 18 held-out readings with gap exposure of at least 0.5, mean negative log
 
 The shared contour audit identified no qualifying standard-policy band. [Complete decisions and geographic deletions](complete-contour-audit.json)
 
-| Spherical prior | Whole-deposit median [conditional 95%], km³ | Numerical checks |
+| Spherical prior | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---|
-| baseline | 190.9 [62.9–3,300.8] | volume draw split warning |
-| diffuse tail | 276.7 [79.1–4,336.7] | Passed |
-| wide geography | 350.4 [98.0–19,135.6] | Passed |
-| volume prior shift | 210.7 [64.0–5,448.9] | volume draw split warning |
-| one fan | 64.7 [43.3–108.3] | Passed |
-| five fans | 219.6 [64.8–4,110.7] | Passed |
-| gaussian errors | 209.7 [43.3–21,116.2] | Passed |
-| diffuse mixture weights | 235.1 [66.4–1,899.2] | Passed |
+| baseline | 62.9–3,300.8 | volume draw split warning |
+| diffuse tail | 79.1–4,336.7 | Passed |
+| wide geography | 98.0–19,135.6 | Passed |
+| volume prior shift | 64.0–5,448.9 | volume draw split warning |
+| one fan | 43.3–108.3 | Passed |
+| five fans | 64.8–4,110.7 | Passed |
+| gaussian errors | 43.3–21,116.2 | Passed |
+| diffuse mixture weights | 66.4–1,899.2 | Passed |
 
 The resolved 1, 10 and 100 cm contour areas passed the split-draw test at 384 parent draws per chain. Sparsely represented or empty contour unions remain unresolved.
 

@@ -115,6 +115,8 @@ def publish(posterior, data, meta, inventory, output, *, bearing_packet=None):
         report["bearing_packet_sha256"] = digest(bearing_packet)
         report["accepted_archive_bounds_cm"] = {s["id"]:float(s["limit_cm"]) for s in meta.get("interpreted_upper_limits",[])}
         report["method"] = "Whole-deposit bearing continuation with any additional inspected-archive likelihood. Effective size groups the three widths of each parent draw."
+    for item in report["scenarios"].values():
+        item["full_field_volume_km3"].pop("median", None)
     write_json(output/"spherical-archive-checks.json",report)
     return report
 
@@ -123,15 +125,15 @@ def write_summary(report, output):
     if report is None:
         return
     lines = ["# Spherical fallout estimates at inspected archives", "",
-             "Each row integrates complete deposits over the Earth. The intervals are conditional on the spherical model and, where specified, on the assumed response of the archive.", "",
-             "| Archive interpretation | Median bulk volume (km³) | Conditional 95% interval (km³) | Numerical check |",
-             "|---|---:|---:|---|"]
+             "These whole-Earth volume intervals are conditional on the spherical model and the archive response specified for each row.", "",
+             "| Archive interpretation | Conditional 95% interval (km³) | Numerical check |",
+             "|---|---:|---|"]
     for result in report["scenarios"].values():
         scenario = result["scenario"]
         title = scenario["title"] if scenario else "Quantitative thickness evidence"
         interval = result["full_field_volume_km3"]
         check = "Passed" if result["importance_checks_passed"] else "Independent refit required"
-        lines.append(f"| {title} | {interval['median']:,.1f} | {interval['lower95']:,.1f}–{interval['upper95']:,.1f} | {check} |")
+        lines.append(f"| {title} | {interval['lower95']:,.1f}–{interval['upper95']:,.1f} | {check} |")
     if "bearing_packet_sha256" in report:
         lines += ["", "## Thickness at the inspected horizons", "",
                   "These predictions use the accepted thicknesses and bounds. The final column gives the probability that a new local reading would lie below a fitted bound, conditional on its archive interpretation.", "",

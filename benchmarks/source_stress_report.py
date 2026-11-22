@@ -49,13 +49,12 @@ def publish(source, output):
                 "assumption":key, "chain":chain.ravel(), "draw":draw.ravel(),
                 "volume_km3":volume_draws.ravel()}))
             rows.append({"scenario":run["scenario"], "seed":run["seed"], "assumption":key,
-                "truth_km3":run["truth_km3"], **{k:volume[k] for k in ("lower95", "median", "upper95")},
+                "truth_km3":run["truth_km3"], **{k:volume[k] for k in ("lower95", "upper95")},
                 "covers_truth":fit["covers_truth"], "sampling_passed":diagnostics["passed"],
                 "sampling_only_passed":diagnostics["sampling_only_passed"],
                 "normalization_passed":diagnostics["normalization_passed"],
                 "angular_nodes":fit["source_checks"]["normalization"]["angular_nodes_fitted"],
-                "max_rhat":diagnostics["max_label_invariant_rhat"], "divergences":diagnostics["divergences"],
-                "median_relative_error":fit["median_relative_error"]})
+                "max_rhat":diagnostics["max_label_invariant_rhat"], "divergences":diagnostics["divergences"]})
     output.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output/"stress-comparison.csv", index=False)
     (output/"stress-volume-draws.csv.gz").write_bytes(gzip.compress(
@@ -70,7 +69,7 @@ def publish(source, output):
         "reporting_source_sha256":sha256(Path(__file__).read_bytes()).hexdigest()}
     (output/"stress-report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
     labels = {**LABELS, "matched_two_fans":"Displaced spherical truth"}
-    table = "\n".join(f"| {labels[r['scenario']]} · {r['seed']} · {r['assumption']} | {r['truth_km3']:.3g} | {r['median']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {'yes' if r['covers_truth'] else '**no**'} | {'pass' if r['sampling_passed'] else '**provisional**'} |" for r in rows)
+    table = "\n".join(f"| {labels[r['scenario']]} · {r['seed']} · {r['assumption']} | {r['truth_km3']:.3g} | {r['lower95']:.3g}–{r['upper95']:.3g} | {'yes' if r['covers_truth'] else '**no**'} | {'pass' if r['sampling_passed'] else '**provisional**'} |" for r in rows)
     s = report["summary"]
     (output/"stress-tests.md").write_text(f"""# Source-focused model: known-truth challenges
 
@@ -80,8 +79,8 @@ These are all **12 declared baseline trials**, six scenarios with seeds 20 and 2
 
 **{s['baseline_intervals_containing_truth']}/12 baseline intervals contain the true total; {s['baseline_numerically_passed']}/12 pass the sampling and mass-normalization checks.** Among numerically passing fits, {s['passing_intervals_containing_truth']}/{s['baseline_numerically_passed']} intervals contain the truth. This small development suite does not establish 95% calibration or superior global-volume accuracy. Intervals from failed samplers are provisional computational summaries.
 
-| Scenario · seed · prior | True bulk km³ | Median km³ | Conditional 95% interval km³ | Contains truth | Numerical checks |
-|---|---:|---:|---:|---|---|
+| Scenario · seed · prior | True bulk km³ | Conditional 95% interval km³ | Contains truth | Numerical checks |
+|---|---:|---:|---|---|
 {table}
 
 ![Estimated and known global volumes](stress.png)

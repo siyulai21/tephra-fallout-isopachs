@@ -1,66 +1,6 @@
-# B-Tm fallout reconstruction
+# B-Tm · regional fits inside the observation hull
 
-## Four fits with interpreted archive limits
-
-![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at B-Tm](four-method-evidence.png)
-
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, white dashes show conditional continuation. Solid white segments connect thicknesses bracketed by measured sites in a supported triangle. Gaps inside the hull can still be poorly constrained.
-
-## Volume and predictive performance
-
-| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---|---:|---:|---:|
-| GP ensemble | Hull mean **29.59** | 18.88–46.13 | 1.459 | 89.1% |
-| Cubic spline | Hull median map **50.75** · volume median 64.64 · unstable mean 6.1e+11 | 33.03–664.44 | 4.295 | 75.0% |
-| [Directional ensemble · uncertain fan direction](directional/README.md) | Whole-Earth median map **33.6** · volume median 37.2 | 23.5–77.1 | 1.243 † | 93.8% |
-| [Spherical mixture](spherical-mixture/README.md) | Whole-Earth volume median **49.1** | 30.7–341.7 | 1.492 † | 93.8% |
-
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
-
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **13.9%** of its volume. The directional volume interval comes from complete simulated deposits. The regional intervals condition on fitted settings.
-
-<details>
-<summary>Compare the two whole-Earth maps</summary>
-
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for B-Tm](directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for B-Tm](spherical-mixture/world.png) |
-
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
-
-</details>
-
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **34.6 km³**.
-
-<details>
-<summary>View the directional deposit extent and source area</summary>
-
-![Principal uncertain-fan-direction median isopachs for B-Tm](directional/azimuth/isopachs.png)
-
-</details>
-
-## Directional assumptions
-
-Both fits include the same interpreted archive limits. The measured-fan sensitivity fixes the directions of the continuation to the sampled bearings.
-
-| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---|---:|---:|---:|
-| Measured fan directions | Thicknesses and bounds | 34.2 | 36.9 | 23.6–62.7 |
-
-<details>
-<summary>View agreement between the directional sensitivities</summary>
-
-![Agreement on median isopach extent](directional/bearing/isopach-agreement.png)
-
-</details>
-
-[Measured-fan maps, held-out tests and site evidence](directional/bearing/README.md)
-
-[Volume and geographic prediction plot](overview.png)
-
-## Regional fit details
-
-All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
+The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **64 exact measurements, 3 lower bounds, 4 upper limits.** The observation hull covers 796,162 km². The automatic validation buffer is 23.22 km.
 
@@ -70,9 +10,8 @@ The full observation hull and every accepted location are in view. The coloured 
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 29.59 | 608794465625.21 |
-| Integral of median thickness surface (km³) | 27.64 | 50.75 |
-| Conditional 95% volume interval (km³) | 18.88–46.13 | 33.03–664.44 |
+| Principal median-map volume inside hull (km³) | 27.64 | 50.75 |
+| Complete-draw conditional 95% volume interval (km³) | 18.88–46.13 | 33.03–664.44 |
 | Outer equal-region negative log score ↓ | 1.459 | 4.295 |
 | Outer log-thickness RMSE ↓ | 1.085 | 2.202 |
 | Outer 95% observation-interval coverage | 89.1% | 75.0% |
@@ -85,11 +24,10 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.
+Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
 
 ## Fitted methods
 
-The Trend-regularized cubic spline analytical mean lies above the 97.5th percentile of the complete-surface volumes. Rare thick surfaces dominate that expectation. The complete-volume median is 64.64 km³ and its conditional interval is 33.03–664.44 km³.
 
 ### GP ensemble
 
@@ -190,7 +128,7 @@ Every explored candidate is retained in the selection tables. All response-depen
 - GP ensemble regional integration did not reach the stated refinement tolerance.
 - GP ensemble joint-draw quadrature needs further refinement; inspect its grid checks before using intervals.
 - GP ensemble: held-out 95% observation coverage is only 89.1%; uncertainty is undercovered.
-- Trend-regularized cubic spline: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields dominate the expectation. See the integral of the median map and the complete-volume quantiles.
+- Trend-regularized cubic spline: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields dominate the expectation. The conditional interval remains sensitive to the upper tail.
 - Trend-regularized cubic spline: held-out 95% observation coverage is only 75.0%; uncertainty is undercovered.
 
 ## Reproduce and inspect

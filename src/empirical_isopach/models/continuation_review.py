@@ -61,7 +61,7 @@ def emit(folder,result,note):
     q = result["sensitivity_volume_km3"]
     scores = result["paired_scores"]
     lines = [f"# {result['name']} · {result['label']}", "",
-             f"The candidate median complete-deposit volume is **{q[1]:,.1f} km³**. The conditional 95% interval is {q[0]:,.1f}–{q[2]:,.1f} km³.", "",
+             f"The conditional 95% volume interval for this sensitivity is {q[0]:,.1f}–{q[2]:,.1f} km³.", "",
              note, "", f"Matched buffered geographic scores averaged {scores['reference_score']:.3f} under the reference and {scores['sensitivity_score']:.3f} under the candidate. Smaller values indicate better site predictions. Both scores use the same posterior subset within each fold.", "",
              f"Numerical and parent sampling checks together **{'passed' if result['passed'] else 'retained warnings'}**. The output includes every attempted fold and its parent status.", "",
              "![Matched median isopachs](isopachs.png)", "",
@@ -79,8 +79,8 @@ def directional_review(path, base, output, work):
     model = read_field(base/"azimuth",data,ref)
     mass,history = integrated_amount(model)
     original = ref["volume"]["coherent_volume_km3"]
-    expected = [original[k] for k in ("lower95","median","upper95")]
-    recovery = float(np.max(abs(inverse_cdf(mass[1],model.weights,PROBS)/expected-1)))
+    expected = [original[k] for k in ("lower95","upper95")]
+    recovery = float(np.max(abs(inverse_cdf(mass[1],model.weights,[.025,.975])/expected-1)))
     folds = holdouts(data,meta["vent_lonlat"][1],work,ref["weights"],ref)
     def evaluate(xy):
         _,fields,bary = model.components(xy)

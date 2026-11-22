@@ -8,7 +8,7 @@ Numerical correctness, predictive skill, uncertainty coverage and geological evi
 |---|---|---|
 | Solver and probability tests | Do likelihoods, covariance, normalization, geometry and numerical calculations match reference cases? | [Test catalogue](../tests/README.md) |
 | Regional geographic holdouts | How well does the entire tuned GP/spline procedure predict withheld regions? | [Regional comparison](../comparisons/regional/README.md) and each case's held-out rows |
-| Matched geographic prediction | How do both regional and both global methods predict withheld locations? | [Four-method comparison](../comparisons/README.md) |
+| Matched geographic prediction | How do the two regional and three global methods predict withheld locations? | [Five-method comparison](../comparisons/README.md) |
 | Principal spherical mixture | How do finite measured bearings affect false extent, missed fans and global volume? | [Registered cases and 24 known-volume fits](../comparisons/spherical-mixture/README.md) |
 | Principal directional ensemble | How do uncertain and fixed fan directions compare on the same regions, whole quadrants and simulated sampling gaps? | [Registered cases and 14 simulated deposits](../comparisons/directional/README.md) |
 | Earlier fixed-direction ensemble | How do the weighted structures perform against equal weights and a single structure, and how often do simulated volume intervals cover truth? | [Six eruptions and 14 known-deposit trials](../comparisons/directional/fixed-ensemble/README.md) |

@@ -1,66 +1,6 @@
-# Sakurajima Satsuma (P14) fallout reconstruction
+# Sakurajima Satsuma (P14) · regional fits inside the observation hull
 
-## Four matched thickness-only fits
-
-![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Sakurajima Satsuma (P14)](four-method-evidence.png)
-
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
-
-## Volume and predictive performance
-
-| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---|---:|---:|---:|
-| GP ensemble | Hull mean **3.33** | 2.64–4.02 | 1.264 | 94.0% |
-| Cubic spline | Hull mean **13.04** | 4.18–41.49 | 1.371 | 90.0% |
-| [Directional ensemble · uncertain fan direction](directional/README.md) | Whole-Earth median map **7.1** · volume median 10.0 | 3.8–70.6 | 1.164 † | 96.0% |
-| [Spherical mixture](spherical-mixture/README.md) | Whole-Earth volume median **11.3** | 5.1–666.5 | 1.376 | 88.0% |
-
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
-
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **2.6%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings.
-
-<details>
-<summary>Compare the two whole-Earth maps</summary>
-
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for Sakurajima Satsuma (P14)](directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Sakurajima Satsuma (P14)](spherical-mixture/world.png) |
-
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
-
-</details>
-
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **9.1 km³**.
-
-<details>
-<summary>View the directional deposit extent and source area</summary>
-
-![Principal uncertain-fan-direction median isopachs for Sakurajima Satsuma (P14)](directional/azimuth/isopachs.png)
-
-</details>
-
-## Directional assumptions
-
-The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
-
-| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---|---:|---:|---:|
-| Measured fan directions | Thicknesses and bounds | 8.2 | 9.9 | 4.3–73.4 |
-
-<details>
-<summary>View agreement between the directional sensitivities</summary>
-
-![Agreement on median isopach extent](directional/bearing/isopach-agreement.png)
-
-</details>
-
-[Measured-fan maps, held-out tests and site evidence](directional/bearing/README.md)
-
-[Volume and geographic prediction plot](overview.png)
-
-## Regional fit details
-
-All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
+The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **50 exact measurements, 5 lower bounds, 2 upper limits.** The observation hull covers 24,004 km². The automatic validation buffer is 4.23 km.
 
@@ -70,9 +10,8 @@ The full observation hull and every accepted location are in view. The coloured 
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 3.33 | 13.04 |
-| Integral of median thickness surface (km³) | 3.08 | 9.12 |
-| Conditional 95% volume interval (km³) | 2.64–4.02 | 4.18–41.49 |
+| Principal median-map volume inside hull (km³) | 3.08 | 9.12 |
+| Complete-draw conditional 95% volume interval (km³) | 2.64–4.02 | 4.18–41.49 |
 | Outer equal-region negative log score ↓ | 1.264 | 1.371 |
 | Outer log-thickness RMSE ↓ | 0.751 | 0.862 |
 | Outer 95% observation-interval coverage | 94.0% | 90.0% |
@@ -85,7 +24,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.
+Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
 
 ## Fitted methods
 

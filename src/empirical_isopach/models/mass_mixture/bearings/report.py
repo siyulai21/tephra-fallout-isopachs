@@ -16,7 +16,7 @@ from .volume import checked_volumes
 def design():
     here=Path(__file__).parent
     return {"half_reach_degrees":HALF_REACH,"powers":list(POWERS),"probabilities":[1/3]*3,"orientation_seed":SEED,
-            "model_sha256":{p.name:digest(p) for p in sorted(here.glob("*.py"))},
+            "model_sha256":{name:digest(here/name) for name in ("field.py","maps.py","study.py","volume.py")},
             "posterior_interpretation":"Parent amplitude and kernel parameters follow the original posterior. "
             "The principal mass is its integrated retained fraction times parent volume. A single latent orientation applies to a complete deposit."}
 
@@ -86,8 +86,8 @@ def assemble(output,data,meta,parent,cache,work, *, precomputed=False):
     table.to_csv(output/"heldout_predictions.csv",index=False)
     draws=pd.concat(frames,ignore_index=True)
     draws.to_csv(output/"volume_draws.csv.gz",index=False,float_format="%.12g",compression={"method":"gzip","mtime":0})
-    pd.DataFrame([{"assumption":k,**{q:f["volume"][q] for q in ("median","lower95","upper95")},
-                   "parent_median":f["parent_volume"]["median"],"diagnostics_passed":f["diagnostics"]["passed"]}
+    pd.DataFrame([{"assumption":k,**{q:f["volume"][q] for q in ("lower95","upper95")},
+                   "diagnostics_passed":f["diagnostics"]["passed"]}
                   for k,f in report["fits"].items()]).to_csv(output/"estimates.csv",index=False)
     support=BearingSupport(data,lat)
     if np.max(support.evaluate(data.xy)[0])>1e-12:
@@ -134,6 +134,8 @@ def assemble(output,data,meta,parent,cache,work, *, precomputed=False):
     report["published_artifact_sha256"]={name:digest(output/name) for name in ("posterior.npz","volume_draws.csv.gz",
          "estimates.csv","heldout_predictions.csv","complete-contour-audit.json","bearing/baseline.npz","bearing/sector-areas.csv",
          "bearing/ray-crossings.json","bearing/parent-report.json")}
+    from ....volume_reporting import spherical_intervals
+    spherical_intervals(report)
     save(output/"report.json",report)
     from ....global_reporting import figures
     from ....source_reporting import source_figure

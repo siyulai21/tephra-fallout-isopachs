@@ -57,53 +57,33 @@ def metrics(regional, directional, spherical, nested=None):
     return records
 
 
-def case_overview(output, name, regional, directional, spherical, nested=None):
+def case_overview(output, name, regional, directional, spherical, nested=None, *, map_home=None):
     with plt.rc_context(STYLE):
         fig, axs = plt.subplots(2, 2, figsize=(12.6, 8.5), layout="constrained")
         for i, (key, label) in enumerate((("stacked", "GP ensemble"), ("spline", "Cubic spline"))):
             item = regional["methods"][key]
             q = item["joint_volume"]["conditional_quantiles_km3"]
-            axs[0, 0].errorbar(q["0.5"], i, xerr=[[q["0.5"]-q["0.025"]], [q["0.975"]-q["0.5"]]],
-                              fmt="o", color=COLORS[label], capsize=4, markersize=7)
-            expectation = item["regional_volume"]["expected_km3"]
-            if expectation <= q["0.975"]:
-                axs[0, 0].scatter(expectation, i, marker="D", s=34, color=COLORS[label], zorder=4)
-            else:
-                axs[0, 0].annotate(f"Unstable mean {expectation:.2g} km³", xy=(.98, i),
-                                   xycoords=("axes fraction", "data"), xytext=(0, 10),
-                                   textcoords="offset points", ha="right", fontsize=8, color=COLORS[label])
+            mapped = item["regional_volume"]["median_surface_km3"]
+            axs[0, 0].hlines(i, q["0.025"], q["0.975"], color=COLORS[label], linewidth=2)
+            axs[0, 0].scatter(mapped, i, color=COLORS[label], marker="D", zorder=4)
         axs[0, 0].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(1.6, -.6),
-                      xscale="log", xlabel="Hull bulk volume (km³, logarithmic scale)",
-                      title="Regional volume inside the same hull\nCircle = median · diamond = mean")
-        ensemble = directional.get("median_surface")
-        if directional.get("protocol")=="uncertain-azimuth-v1":
-            volume = directional["volume"]
-            centre = volume["median_map_km3"]
-            dq = volume["coherent_volume_km3"]
-            passed = (all(v["diagnostics"]["passed"] for v in directional["members"].values()) and
-                      volume["numerical"]["spatial_passed"] and volume["numerical"]["joint_quantile_split_passed"])
-        elif ensemble:
-            centre = ensemble["volume_km3"]
-            dq = directional["coherent_fields"]["volume_km3"]
-            passed = directional["coherent_fields"]["all_members_passed"]
-        else:
-            centre = None
-            dq = directional["fits"]["reference"]["volume_km3"]
-            passed = directional["fits"]["reference"]["passed"]
-        sphere = spherical["fits"]["baseline"]
-        global_rows = [("Directional", dq, passed), ("Spherical mixture", sphere["volume"], sphere["diagnostics"]["passed"])]
+                      xscale="log", xlabel="Hull bulk volume (km³)", title="Inside the observation hull")
+        folder = Path(map_home or output)
+        families = [("Directional", "directional"), ("Spherical mixture", "spherical-mixture")]
         if nested is not None:
-            q = dict(zip(("lower95", "median", "upper95"), nested["volume_km3"], strict=True))
-            global_rows.append(("Nested corridor", q, all(nested["numerics"].values())))
-        for i, (label, q, passed) in enumerate(global_rows):
-            axs[0, 1].errorbar(q["median"], i, xerr=[[q["median"]-q["lower95"]], [q["upper95"]-q["median"]]],
-                              fmt="o" if passed else "x", color=COLORS[label], capsize=4, markersize=7)
-        if centre is not None:
-            axs[0, 1].scatter(centre, -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
-        axs[0, 1].set(yticks=range(len(global_rows)), yticklabels=[r[0] for r in global_rows], ylim=(len(global_rows)-.4, -.6),
-                      xscale="log", xlabel="Whole-Earth bulk volume (km³, logarithmic scale)",
-                      title=("Whole-deposit volume · diamond = directional median map\nComplete-field median and 95% interval · × = numerical warning"
-                             if centre is not None else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
+            families.append(("Nested corridor", "nested-isopachs"))
+        for i, (label, family) in enumerate(families):
+            receipt = folder/family/"deposit.json"
+            if receipt.is_file():
+                record = json.loads(receipt.read_text())
+                lo, hi = record["conditional_volume_interval95_km3"]
+                ax = axs[0, 1]
+                ax.hlines(i, lo, hi, color=COLORS[label], linewidth=2,
+                          linestyle="-" if record["complete_field_checks_passed"] else "--")
+                ax.scatter(record["median_map_volume_km3"], i, marker="D", color=COLORS[label], zorder=4)
+        axs[0, 1].set(yticks=range(len(families)), yticklabels=[r[0] for r in families],
+                      ylim=(len(families)-.4, -.6), xscale="log", xlabel="Whole-Earth bulk volume (km³)",
+                      title="Whole-Earth deposits")
         for ax in axs[0]:
             ax.xaxis.set_major_locator(LogLocator(subs=(1, 2, 5)))
             ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.3g}"))
@@ -134,7 +114,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None):
             ax.set_axisbelow(True)
             ax.title.set_fontsize(10.5)
         fig.suptitle(f"{name} · regional and whole-deposit fallout estimates", fontsize=16)
-        fig.supxlabel("Intervals are conditional on the fitted model. The two volume panels integrate different geographic areas.", fontsize=9)
+        fig.supxlabel("Diamonds give median-thickness map integrals. Lines span the conditional 95% volume interval. Dashed intervals have numerical warnings.", fontsize=9)
         fig.savefig(Path(output)/"overview.png", dpi=190, bbox_inches="tight", pad_inches=.16)
         plt.close(fig)
 

@@ -28,7 +28,8 @@ def verify_case(rec):
     assert r["protocol"]==PROTOCOL and r["parent_protocol"]==parent["protocol"]
     assert meta["input_sha256"]==r["input"]["input_sha256"]==parent["input"]["input_sha256"]
     assert r["bearing"]["parent_report_sha256"]==digest(home/"bearing/parent-report.json")
-    assert r["bearing"]["model_sha256"]==design()["model_sha256"]
+    for module, checksum in design()["model_sha256"].items():
+        assert r["bearing"]["model_sha256"][module] == checksum, module
     for file,identity in read(home/"artifacts.json").items():
         assert digest(home/file)==identity,(rec["slug"],file)
     assert r["validation"]["fits"]==parent["validation"]["fits"]
@@ -42,9 +43,10 @@ def verify_case(rec):
     for name,fit in r["fits"].items():
         sub=mass[mass.assumption==name]
         assert fit["posterior_sha256"]==parent["fits"][name]["posterior_sha256"]
-        assert fit["parent_volume"]==parent["fits"][name]["volume"]
+        original = parent["fits"][name]["volume"]
+        assert fit["parent_volume"] == {k:v for k,v in original.items() if k not in ("mean","median")}
         q=fit["volume"]
-        np.testing.assert_allclose(sub.volume_km3.quantile([.025,.5,.975]),[q[k] for k in ("lower95","median","upper95")],rtol=1e-10)
+        np.testing.assert_allclose(sub.volume_km3.quantile([.025,.975]),[q[k] for k in ("lower95","upper95")],rtol=1e-10)
         assert not sub.duplicated(["parent_flat_index","width_power"]).any()
     lat=meta["vent_lonlat"][1];support=BearingSupport(data,lat)
     np.testing.assert_allclose(support.evaluate(data.xy)[0],0.,atol=1e-12)
@@ -70,8 +72,8 @@ def verify_case(rec):
         from src.empirical_isopach.core.catalog import data_directory
         assert archives["archive_inventory_sha256"]==digest(data_directory()/rec["archive_evidence"])
         q=archives["scenarios"]["quantitative"]["full_field_volume_km3"]
-        np.testing.assert_allclose([q[k] for k in ("lower95","median","upper95")],
-                                   [r["fits"]["baseline"]["volume"][k] for k in ("lower95","median","upper95")])
+        np.testing.assert_allclose([q[k] for k in ("lower95","upper95")],
+                                   [r["fits"]["baseline"]["volume"][k] for k in ("lower95","upper95")])
     extent=pd.read_csv(home/"bearing/sector-areas.csv")
     assert np.all(extent.principal_km2<=extent.reference_km2+1e-8)
     current=extent_diagnostics(extent.to_dict("records"))
@@ -112,7 +114,11 @@ def verify_previous_release(check_history):
         for name, expected in hashes.items():
             content = subprocess.check_output(["git", "cat-file", "blob", f"{revision}:{name}"], cwd=ROOT)
             assert sha256(content).hexdigest() == expected, name
-        print(f"Verified all {len(hashes)} original files against Git commit {revision}.")
+        from .publication import signed_file
+        release = read(ROOT/"eruptions/b-tm/results/cryptotephra/release.json")["files"]
+        current = read_hashes()
+        assert all(signed_file(name, expected, current) for name, expected in release.items())
+        print(f"Verified {len(hashes)} spherical and {len(release)} B-Tm original files against Git commit {revision}.")
 
 
 def main():

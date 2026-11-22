@@ -16,9 +16,9 @@ The colour scale is shared across panels. Values below 0.01 cm share the lowest 
 
 Each segment lies inside an accepted interpolation triangle with measurements on both sides of the level and at least 90% conditional probability that the level crosses its nodes. Gaps and disconnected patches remain. Candidate narrow rays in the full-field panels can extend beyond the station that fixes their bearing. Only the segments here passed the local bracketing test.
 
-| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | Numerical checks |
+| Continuation | Integral of median map (km³) | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---:|---|
-| Measured fan directions | 49.62 | 69.1 (32.3–433.2) | Passed |
+| Measured fan directions | 49.62 | 32.3–433.2 | Passed |
 
 ### Bulk volume of the median map by direction
 

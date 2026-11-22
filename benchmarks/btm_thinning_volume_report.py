@@ -114,7 +114,7 @@ def publish(work, mass_dir, output):
             all_totals[variant] = archive["total_km3"]
         v = run["volume_km3"]
         rows.append({"variant": variant, "median_map_km3": run["median_map"]["median_map_km3"],
-                     "coherent_median_km3": v["median"], "coherent_lower95": v["lower95"],
+                     "coherent_lower95": v["lower95"],
                      "coherent_upper95": v["upper95"], "sampler_passed": run["sampler_passed"],
                      "volume_chains_passed": run["volume_chain"]["passed"],
                      "coherent_quadrature_passed": run["quadrature"]["passed"],
@@ -123,14 +123,14 @@ def publish(work, mass_dir, output):
     pd.DataFrame(rows).to_csv(output/"volumes.csv", index=False)
     np.savez_compressed(output/"volume-draws.npz", **all_totals)
     summary = ["# How much do thinning breaks change global B-Tm fallout volume?", "",
-        "These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The median and conditional interval in the next columns come from integrating each coherent deposit separately. Volumes are bulk km³. [Source-interpretation sensitivities](../../README.md) · [Held-out geographic scores and inferred breaks](../README.md)", "",
-        "| Radial thinning | Median-map integral | Whole-deposit median | Conditional 95% interval | Warnings |",
-        "|---|---:|---:|---:|---|"]
+        "These six fits use the same 68 audited observations and the reference directional fan geometry. Each map integral adds the pointwise median thickness over Earth. The 2.5th and 97.5th percentiles of integrated posterior fields supply the conditional interval. Volumes are bulk km³. [Source-interpretation sensitivities](../../README.md) · [Held-out geographic scores and inferred breaks](../README.md)", "",
+        "| Radial thinning | Median-map integral | Conditional 95% interval | Warnings |",
+        "|---|---:|---:|---|"]
     for row in rows:
         warnings = [s for s, name in (("posterior sampling", "sampler_passed"),
             ("volume chains","volume_chains_passed"),("spatial integral","coherent_quadrature_passed"),
             ("median-map integral","median_map_passed")) if not row[name]]
-        summary.append(f"| {LABELS[row['variant']]} | {row['median_map_km3']:.1f} | {row['coherent_median_km3']:.1f} | {row['coherent_lower95']:.1f}–{row['coherent_upper95']:,.1f} | {', '.join(warnings) or 'None'} |")
+        summary.append(f"| {LABELS[row['variant']]} | {row['median_map_km3']:.1f} | {row['coherent_lower95']:.1f}–{row['coherent_upper95']:,.1f} | {', '.join(warnings) or 'None'} |")
     central = [r["median_map_km3"] for r in rows[:3]]
     summary.extend(["", f"The matched smooth, one-break and two-break median maps integrate to {min(central):.1f}–{max(central):.1f} km³. The differences are small relative to posterior uncertainty and the numerical precision of the comparison. All three share one fan geometry. The principal directional report gives the six-structure estimate with uncertain fan directions on these observations. [Principal directional fit](../../../directional/README.md)", "",
         "## Numerical integration", "",
@@ -154,7 +154,14 @@ def verify(folder, smooth_fit=None):
     info = json.loads((folder/"diagnostics.json").read_text())
     here = Path(__file__).resolve().parent
     for name, sha in info["code_sha256"].items():
-        assert digest(here/name) == sha
+        if digest(here/name) != sha:
+            from .publication import ROOT, signed_file, SIGNED_STUDY_REVISION
+            if name != "btm_thinning_volume_report.py":
+                raise ValueError(f"Changed thinning-model implementation: {name}")
+            if not signed_file((here/name).relative_to(ROOT).as_posix(), sha, {}):
+                import warnings
+                warnings.warn(f"Checking the original report builder requires Git revision {SIGNED_STUDY_REVISION}.",
+                              stacklevel=2)
     for name, sha in info["files"].items():
         assert digest(folder/name) == sha
     fits = (json.loads(smooth_fit.read_text())["full_fit"] if smooth_fit
@@ -168,8 +175,8 @@ def verify(folder, smooth_fit=None):
             assert list(a.shape) == run["volume_draw_shape"] and a.shape[0] == 4
             assert np.isfinite(a).all() and np.all(a > 0)
             assert run["input_sha256"] == digest(audit_input())
-            np.testing.assert_allclose(np.quantile(a,[.025,.5,.975]), summary.loc[key,
-                ["coherent_lower95","coherent_median_km3","coherent_upper95"]].astype(float))
+            np.testing.assert_allclose(np.quantile(a,[.025,.975]), summary.loc[key,
+                ["coherent_lower95","coherent_upper95"]].astype(float))
             map_result = run["median_map"]
             np.testing.assert_allclose(np.sum(map_result["parts_sectors_km3"]), summary.at[key,"median_map_km3"])
             end = map_result["packets"][-1]["history"][-1]

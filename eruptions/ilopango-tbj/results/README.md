@@ -1,66 +1,6 @@
-# Ilopango TBJ (Unit G) fallout reconstruction
+# Ilopango TBJ (Unit G) · regional fits inside the observation hull
 
-## Four matched thickness-only fits
-
-![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](four-method-evidence.png)
-
-All four maps use the same frame, contour levels and thickness scale. Thickness below the first colour-bar tick shares the lowest shade. The dashed line encloses the observation hull. The regional fits stop there. The global fits also show how thickness continues into unsampled ground. On the directional map, solid white segments connect thicknesses bracketed by measured sites in a supported triangle. White dashes on the global maps show conditional isopachs. Gaps inside the hull can still be poorly constrained.
-
-## Volume and predictive performance
-
-| Method | Bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---|---:|---:|---:|
-| GP ensemble | Hull mean **24.99** | 17.93–33.81 | 1.343 | 98.1% |
-| Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
-| [Directional ensemble · uncertain fan direction](directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
-| [Spherical mixture](spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
-
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
-
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.9%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings.
-
-<details>
-<summary>Compare the two whole-Earth maps</summary>
-
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for Ilopango TBJ (Unit G)](directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Ilopango TBJ (Unit G)](spherical-mixture/world.png) |
-
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
-
-</details>
-
-With the same observations and structure weights, fixing the fan directions gives a median-map volume of **46.7 km³**.
-
-<details>
-<summary>View the directional deposit extent and source area</summary>
-
-![Principal uncertain-fan-direction median isopachs for Ilopango TBJ (Unit G)](directional/azimuth/isopachs.png)
-
-</details>
-
-## Directional assumptions
-
-The principal fit above uses quantitative thicknesses and bounds. The measured-fan model extends fallout along sampled bearings.
-
-| Fan direction | Evidence assumption | Median-map volume (km³) | Complete-deposit median (km³) | Conditional 95% interval (km³) |
-|---|---|---:|---:|---:|
-| Measured fan directions | Thicknesses and bounds | 49.6 | 69.1 | 32.3–433.2 |
-
-<details>
-<summary>View agreement between the directional sensitivities</summary>
-
-![Agreement on median isopach extent](directional/bearing/isopach-agreement.png)
-
-</details>
-
-[Measured-fan maps, held-out tests and site evidence](directional/bearing/README.md)
-
-[Volume and geographic prediction plot](overview.png)
-
-## Regional fit details
-
-All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
+The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **52 exact measurements, 4 lower bounds, 0 upper limits.** The observation hull covers 166,961 km². The automatic validation buffer is 8.11 km.
 
@@ -70,9 +10,8 @@ The full observation hull and every accepted location are in view. The coloured 
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 24.99 | 26.75 |
-| Integral of median thickness surface (km³) | 23.31 | 25.67 |
-| Conditional 95% volume interval (km³) | 17.93–33.81 | 22.61–31.55 |
+| Principal median-map volume inside hull (km³) | 23.31 | 25.67 |
+| Complete-draw conditional 95% volume interval (km³) | 17.93–33.81 | 22.61–31.55 |
 | Outer equal-region negative log score ↓ | 1.343 | 1.462 |
 | Outer log-thickness RMSE ↓ | 0.964 | 1.053 |
 | Outer 95% observation-interval coverage | 98.1% | 92.3% |
@@ -85,7 +24,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.
+Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
 
 ## Fitted methods
 

@@ -165,7 +165,7 @@ def main():
     for row in trials.itertuples():
         result = evidence[f"{row.scenario}-{row.seed}"]
         assert row.passed == result["fit"]["passed"]
-        assert np.isclose(row.median, result["fit"]["volume_km3"]["median"])
+        np.testing.assert_allclose([row.lower95, row.upper95], [result["fit"]["volume_km3"][k] for k in ("lower95", "upper95")])
         assert np.isclose(row.truth_km3, result["truth"]["total_km3"])
     with gzip.open(root/"independent-replications.json.gz","rt") as f:
         replicas = json.load(f)

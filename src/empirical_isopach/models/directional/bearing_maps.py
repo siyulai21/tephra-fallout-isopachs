@@ -227,7 +227,7 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
            "Each panel compares the same thickness level across the mapped scenarios. Ochre marks locations where changing the assumptions changes which side of an isopach the site occupies. The dashed outline encloses the measured interpolation footprint. The diamond marks an inspected archive where one is available. A scenario median below a level still permits ash at that site.","",
            "![Conditional median isopachs on a common scale](conditional-isopachs.png)","","![Median isopachs across the complete survey region](median-deposit.png)","","The colour scale is shared across panels. Values below 0.01 cm share the lowest colour. Diamonds mark inspected archives. The full-deposit integrals extend beyond the displayed survey area through the antipode.","",
            "![Median isopach segments bracketed by measured sites](measured-fragments.png)","","Each segment lies inside an accepted interpolation triangle with measurements on both sides of the level and at least 90% conditional probability that the level crosses its nodes. Gaps and disconnected patches remain. Candidate narrow rays in the full-field panels can extend beyond the station that fixes their bearing. Only the segments here passed the local bracketing test.","",
-           "| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | Numerical checks |",
+           "| Continuation | Integral of median map (km³) | Conditional 95% volume interval (km³) | Numerical checks |",
            "|---|---:|---:|---|"]
     sector_rows = ["| Continuation | " + " | ".join(COMPASS) + " |", "|---|" + "---:|"*len(COMPASS)]
     for key in ["quantitative",*(s["id"] for s in inv["scenarios"])]:
@@ -241,7 +241,7 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
         if not m["passed"]:flags.append("median integral")
         bad=sum(not b["passed"] for b in j["members"].values())
         if bad:flags.append(f"{bad} member diagnostics")
-        lines.append(f"| {labels[key]} | {m['volume_km3']:,.2f} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {', '.join(flags) or 'Passed'} |")
+        lines.append(f"| {labels[key]} | {m['volume_km3']:,.2f} | {q['lower95']:,.1f}–{q['upper95']:,.1f} | {', '.join(flags) or 'Passed'} |")
     lines+=["","### Bulk volume of the median map by direction","",
             "Each entry is km³ in a 45° sector centred on the named bearing from the vent.","",*sector_rows,"",
             "The sector volumes sum through the antipode and include extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. The sector draws are retained for each fitted deposit. Agreement among medians cannot establish an observation-supported closed band.",""]
@@ -279,12 +279,12 @@ def render_bearing_reports(path,output,inventory=None,spherical_posterior=None):
         lines+=["## Broad spherical continuation control","",
                 "This comparison uses the original unattenuated spherical draws. The principal spherical case integrates a range of possible continuations across unobserved bearings.","",
                 ("These archive predictions use the spherical posterior fitted to the quantitative measurements and bounds. Each complete deposit retains its original weight." if not inv["scenarios"] else "The same readings update the weights of complete mass-normalized spherical deposits. The likelihood includes the spherical model’s local scatter and contamination component. The whole-deposit volumes below come from the updated draws. Each retains its own physical normalization. The effective sample size and the consistency of the independent chain estimates check whether the update is numerically usable."),"",
-                "| Archive transfer | Complete-deposit median (conditional 95%, km³) | Weight ESS | Numerical check |","|---|---:|---:|---|"]
+                "| Archive transfer | Conditional 95% volume interval (km³) | Weight ESS | Numerical check |","|---|---:|---:|---|"]
         for key,v in sphere["scenarios"].items():
             if (v["scenario"] or {}).get("role")=="cross_prediction":continue
             q=v["full_field_volume_km3"]
             evidence_label = "Principal observation bounds and thicknesses" if key == "quantitative" else labels[key]
-            lines.append(f"| {evidence_label} | {q['median']:,.1f} ({q['lower95']:,.1f}–{q['upper95']:,.1f}) | {v['raw_weight_ess']:,.0f} | {'Passed' if v['importance_checks_passed'] else 'Requires independent refit'} |")
+            lines.append(f"| {evidence_label} | {q['lower95']:,.1f}–{q['upper95']:,.1f} | {v['raw_weight_ess']:,.0f} | {'Passed' if v['importance_checks_passed'] else 'Requires independent refit'} |")
         if (output/"spherical-archive-isopachs.png").exists():
             lines+=["","![Independent spherical median isopachs before and after archive conditioning](spherical-archive-isopachs.png)"]
         lines+=["","[Spherical archive probabilities, chain checks and hull membership](spherical-archive-checks.json) · [Posterior weights by chain](spherical-archive-weights.npz)",""]

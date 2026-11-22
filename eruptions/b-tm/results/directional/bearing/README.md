@@ -16,9 +16,9 @@ The colour scale is shared across panels. Values below 0.01 cm share the lowest 
 
 Each segment lies inside an accepted interpolation triangle with measurements on both sides of the level and at least 90% conditional probability that the level crosses its nodes. Gaps and disconnected patches remain. Candidate narrow rays in the full-field panels can extend beyond the station that fixes their bearing. Only the segments here passed the local bracketing test.
 
-| Continuation | Integral of median map (km³) | Median complete deposit (conditional 95%, km³) | Numerical checks |
+| Continuation | Integral of median map (km³) | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---:|---|
-| Measured fan directions | 34.17 | 36.9 (23.6–62.7) | median integral |
+| Measured fan directions | 34.17 | 23.6–62.7 | median integral |
 
 ### Bulk volume of the median map by direction
 
@@ -36,9 +36,9 @@ The sector volumes sum through the antipode and include extrapolated proximal, u
 
 These predictions use the spherical posterior fitted with the same interpreted upper limits. Each saved deposit contributes its original weight.
 
-| Archive transfer | Complete-deposit median (conditional 95%, km³) | Weight ESS | Numerical check |
+| Archive transfer | Conditional 95% volume interval (km³) | Weight ESS | Numerical check |
 |---|---:|---:|---|
-| Principal observation bounds and thicknesses | 49.1 (30.7–341.8) | 24,000 | Passed |
+| Principal observation bounds and thicknesses | 30.7–341.8 | 24,000 | Passed |
 
 [Spherical archive probabilities, chain checks and hull membership](spherical-archive-checks.json) · [Posterior weights by chain](spherical-archive-weights.npz)
 

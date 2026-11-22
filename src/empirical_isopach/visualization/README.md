@@ -6,6 +6,8 @@ This package presents recorded fits. It does not choose models, alter observatio
 
 | File | Responsibility |
 |---|---|
+| [deposit.py](deposit.py), [deposit_field.py](deposit_field.py), [deposit_integrals.py](deposit_integrals.py) and [deposit_maps.py](deposit_maps.py) | Verified global median surfaces, whole-Earth map integrals, doubling contours, land and lake fills, near-vent detail and thickness–area curves |
+| [principal.py](principal.py) | Five-method table of map integrals and complete-draw intervals |
 | [maps.py](maps.py) | Pinned fine coastlines, complete observation frames, aspect-aware layouts and global display-edge checks |
 | [style.py](style.py) | Shared colours and typography for report figures |
 | [regional.py](regional.py) | Common-scale median fields clipped to the exact observation hull |
@@ -13,6 +15,6 @@ This package presents recorded fits. It does not choose models, alter observatio
 | [comparison.py](comparison.py) | Four median isopach maps in a common observation-area frame and the case results table |
 | [summary.py](summary.py) | Separate regional/global volume panels and matched geographic prediction scores |
 
-The current directional ensemble and spherical-mixture maps show pointwise median thickness. The earlier single-structure directional study displays geometric-mean thickness. The four-panel comparison uses the saved ensemble median grid, the spherical posterior display draws and the two regional median fields clipped to the observation hull. Each comparison PNG records its inputs, scale and extent in the Description metadata.
+The current directional ensemble and spherical-mixture maps show pointwise median thickness. The earlier single-structure directional study displays geometric-mean thickness. The earlier four-panel comparison uses the saved ensemble median grid, the spherical posterior display draws and the two regional median fields clipped to the observation hull. Each comparison PNG records its inputs, scale and extent in the Description metadata.
 
-Current case figures can be replayed without retuning with `python -m benchmarks.refresh_figures --output results/new-figures`. The replay checks regional parameters and integrals against the stored execution; it reads global draws unchanged. Publish only reviewed visual files and their explicit provenance. Never copy the scratch prediction raster over a published scientific table.
+Regional and historical diagnostic figures can be replayed without retuning with `python -m benchmarks.refresh_figures --output results/new-figures`. The replay checks regional parameters and integrals against the stored execution; it reads global draws unchanged. Publish only reviewed visual files and their explicit provenance. Never copy the scratch prediction raster over a published scientific table.

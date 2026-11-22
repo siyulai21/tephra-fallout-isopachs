@@ -10,7 +10,7 @@ The matched comparison region is the convex hull of all accepted exact and upper
 
 The spline fitting rectangle is the coordinate bounding box plus 5% of each span. This geometry-only rule defines a numerical domain, not a deposit boundary. Both methods integrate the same hull. The spline refuses predictions beyond its rectangle. No global tails or artificially closed contours enter the comparison.
 
-Expected volume is integral E[T(x)] dx. The integral of pointwise median thickness is also reported; it is not the median of random volume. Centimetres times square kilometres convert to cubic kilometres by 10^-5.
+The volume estimate integrates pointwise median thickness across the observation hull. Spatially correlated field draws give the two conditional 95% volume endpoints. Centimetres times square kilometres convert to cubic kilometres by 10^-5.
 
 The hull is triangulated about its centroid. Positive Gauss–Duffy quadrature uses orders 8, 12, 20, 32, 48 and 64. Two consecutive changes below 0.1% in expected and median-surface volume are required. Failed convergence remains visible. Numerical agreement cannot establish geological accuracy.
 

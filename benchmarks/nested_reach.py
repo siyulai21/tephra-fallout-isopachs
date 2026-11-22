@@ -18,7 +18,7 @@ def run(job):
     slug = rec["slug"]
     parent = parents / slug if parents else case_home(slug) / "nested-whole-area"
     result = reach_dataset(rec["path"], out / slug, rec["name"], parent=parent, resume=resume)
-    print(slug, result["volume_km3"], result["numerics"], flush=True)
+    print(slug, result["median_map_volume_km3"], result["numerics"], flush=True)
 
 
 def main():

@@ -7,14 +7,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
-from matplotlib.colors import Normalize
+from matplotlib.colors import BoundaryNorm, ListedColormap
 from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
 
 from ..core.distributions import predictive_distribution
-from src.empirical_isopach.visualization.style import STYLE, CMAP
+from src.empirical_isopach.visualization.style import STYLE
 from .maps import (ASSET, INK, AMBER, frame_bounds, grid_axes, panel_layout,
-                   setup_map, observations, observation_legend, contour_levels, level_labels)
+                   level_labels)
 
 
 def regional_grid(fit_bounds, region, models):
@@ -46,55 +46,60 @@ def regional_maps(output, name, data, metadata, region, models, report):
     x, y, inside, fields, table = regional_grid(fit_bounds, region, models)
     pd.DataFrame(table).to_csv(output/"predictions.csv", index=False)
     values = np.concatenate([v.ravel()[inside] for v in fields.values()])
-    low, high = float(values.min()), max(float(values.max()), float(values.min())+.1)
-    norm = Normalize(low, high)
+    from .deposit_field import doubling_levels
+    from .deposit_maps import LAND, UNDER, FMT, colours, draw_land, plot_observations
+    levels = doubling_levels(10.**max(values.max(),data.log_value.max()/np.log(10.)))
+    palette = colours(len(levels))
+    cut = np.r_[min(-5.,values.min()-.1), np.log10(levels), max(values.max()+1,np.log10(levels[-1])+1)]
+    cmap = ListedColormap([UNDER,*palette])
+    norm = BoundaryNorm(cut,cmap.N,clip=True)
     methods = tuple(report["methods"])
-    shape, size = panel_layout(bounds, len(methods))
+    layout, size = panel_layout(bounds,len(methods))
+    probes = {}
     with plt.rc_context(STYLE):
-        fig, axs = plt.subplots(*shape, figsize=size, layout="constrained", squeeze=False)
-        for ax, method in zip(axs.flat, methods):
-            image = ax.pcolormesh(x, y, fields[method], shading="auto", cmap=CMAP,
-                                  norm=norm, rasterized=True, zorder=1)
-            # Clip the raster at the exact polygon, not at cell centres. The
-            # complete hull therefore stays filled up to its extreme vertices.
-            image.set_clip_path(Polygon(region.vertices, closed=True, transform=ax.transData))
-            z = np.ma.array(fields[method], mask=(~inside).reshape(len(y), len(x)))
-            levels = contour_levels(z.filled(np.nan))
-            if len(levels):
-                lines = ax.contour(x, y, z, levels=levels, colors=INK, linewidths=.65, zorder=4)
-                text = ax.clabel(lines, fmt=level_labels, fontsize=8)
-                for label in text:
-                    label.set_path_effects([pe.withStroke(linewidth=2.3, foreground="white", alpha=.8)])
-            boundary = np.vstack((region.vertices, region.vertices[0]))
-            ax.plot(*boundary.T, color=AMBER, lw=1.25, ls=(0, (5, 3)), zorder=5)
-            setup_map(ax, bounds, metadata["vent_lonlat"])
-            observations(ax, data, meta=metadata)
-            item = report["methods"][method]
-            volume = item["regional_volume"]["expected_km3"]
-            description = f"Expected hull volume · {volume:,.1f} km³"
-            if volume > item["joint_volume"]["conditional_quantiles_km3"]["0.975"]:
-                central = item["regional_volume"]["median_surface_km3"]
-                description = f"Median map · {central:,.1f} km³ · upper-tail-sensitive mean"
-            ax.set_title(f"{report_label(report, method)}\n{description}", fontsize=11)
-        bar = fig.colorbar(image, ax=list(axs.flat), location="bottom", shrink=.85, pad=.055,
-                          aspect=48, label="Posterior median thickness (cm; identical scale for every regional family)")
-        levels = contour_levels(values)
-        if len(levels) > 10:
-            levels = levels[::2]
-        bar.set_ticks(levels, labels=[level_labels(t) for t in levels])
-        observation_legend(fig, data, [Line2D([], [], c=AMBER, ls="--", label="Complete observation hull")], meta=metadata)
-        fig.suptitle(f"{name} · regional isopachs\nAll accepted locations and the complete hull are shown; gaps inside remain model-dependent.", fontsize=14)
-        for suffix in ("png", "svg"):
-            fig.savefig(output/f"isopachs.{suffix}", dpi=190, bbox_inches="tight", pad_inches=.16)
+        fig, axs = plt.subplots(*layout,figsize=size,layout="constrained",squeeze=False)
+        for ax, method in zip(axs.flat,methods,strict=True):
+            ax.set(xlim=(bounds[0],bounds[2]),ylim=(bounds[1],bounds[3]),aspect="equal",
+                   xlabel="Easting from vent (km)",ylabel="Northing (km)")
+            ax.xaxis.set_major_formatter(FMT)
+            ax.yaxis.set_major_formatter(FMT)
+            draw_land(ax,bounds,metadata["vent_lonlat"],720)
+            image = ax.pcolormesh(x,y,fields[method],shading="auto",cmap=cmap,norm=norm,alpha=.43,rasterized=True,zorder=1)
+            image.set_clip_path(Polygon(region.vertices,closed=True,transform=ax.transData))
+            z = np.ma.array(fields[method],mask=(~inside).reshape(len(y),len(x)))
+            selected = np.log10(levels)
+            selected = selected[(selected>z.min()) & (selected<z.max())]
+            if len(selected):
+                contours = ax.contour(x,y,z,levels=selected,colors=INK,linewidths=.66,zorder=3)
+                labels = ax.clabel(contours,levels=list(selected[::max(1,int(np.ceil(len(selected)/5)))]),
+                                   fmt=lambda v:f"{10**v:g}",fontsize=8)
+                for lab in labels:
+                    lab.set_path_effects([pe.withStroke(linewidth=2,foreground="white")])
+            ax.add_patch(Polygon(region.vertices,closed=True,fill=False,ec=AMBER,ls="--",lw=1.1,zorder=5))
+            handles,_ = plot_observations(ax,data,metadata,levels,palette,bounds)
+            volume = report["methods"][method]["regional_volume"]["median_surface_km3"]
+            ax.set_title(f"{report_label(report,method)} · {volume:,.3g} km³ inside hull",fontsize=11)
+            k = np.flatnonzero(inside)[np.linspace(0,inside.sum()-1,9).astype(int)]
+            iy,ix = np.unravel_index(k,z.shape)
+            probes[method] = np.column_stack((x[ix],y[iy],fields[method][iy,ix])).tolist()
+        legend = plt.cm.ScalarMappable(norm=norm,cmap=cmap)
+        bar = fig.colorbar(legend,ax=list(axs.flat),location="bottom",shrink=.85,pad=.075,aspect=46,
+                           label="Thickness bracket starts at (cm)")
+        bar.set_ticks((cut[1:]+cut[:-1])/2,labels=["<0.5",*[f"{v:g}" for v in levels]])
+        handles.append(Line2D([],[],color=AMBER,ls="--",label="Observation hull"))
+        fig.legend(handles=handles,loc="outside lower center",ncol=min(6,len(handles)),frameon=False,fontsize=8)
+        fig.suptitle(f"{name} · regional median thickness",fontsize=15)
+        fig.savefig(output/"isopachs.png",dpi=155)
         plt.close(fig)
     contained = bool(np.all(region.vertices >= bounds[:2]) and np.all(region.vertices <= bounds[2:]))
     if not contained:
         raise AssertionError("The map must contain every hull vertex")
-    display = {"protocol":"report-cartography-v1", "input_sha256":metadata["input_sha256"],
+    display = {"protocol":"regional-median-deposit-v2", "input_sha256":metadata["input_sha256"],
         "display_bounds_km":bounds.tolist(), "unchanged_fit_bounds_km":fit_bounds.tolist(),
         "entire_observation_hull_in_frame":contained, "hull_raster_clip":"Exact polygon, not grid-centre mask",
         "all_accepted_locations_in_frame":bool(np.all(data.xy >= bounds[:2]) and np.all(data.xy <= bounds[2:])),
         "grid_shape":[len(y), len(x)], "coastline_scale":"1:10 million", "coastline_sha256":sha256(ASSET.read_bytes()).hexdigest(),
-        "central_statistic":"Posterior median thickness", "volume_calculation_changed":False}
+        "land_sha256":sha256(LAND.read_bytes()).hexdigest(), "check_points_x_y_km_log10_cm":probes,
+        "levels_cm":levels.tolist(), "central_statistic":"Posterior median thickness", "volume_calculation_changed":False}
     (output/"map-display.json").write_text(json.dumps(display, indent=2)+"\n")
     return display

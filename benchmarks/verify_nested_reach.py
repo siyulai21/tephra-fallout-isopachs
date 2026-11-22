@@ -33,7 +33,8 @@ def verify_case(rec):
     data, meta = audited_data(rec["path"], allow_intervals=True)
     assert j["input_sha256"] == meta["input_sha256"] and j["engine_sha256"] == signature()
     assert j["protocol"] == PROTOCOL and j["model_role"] == "principal"
-    assert j["conditional_volume_km3"] == j["volume_km3"]
+    assert set(j).isdisjoint({"volume_km3","conditional_volume_km3"})
+    assert j["estimate_source"] == "deposit.json#median_map_volume_km3"
     lat = meta["vent_lonlat"][1]
     covered = exact = 0
     for index,train,test in [(None,data,None),*splits(data,lat,"geographic")]:
@@ -69,19 +70,19 @@ def verify_case(rec):
                 shown = json.loads(image.info["Description"])
             assert shown["protocol"] == PROTOCOL and shown["posterior_sha256"] == digest(file)
             assert shown["input_sha256"] == meta["input_sha256"]
-            np.testing.assert_allclose(shown["volume_km3"], j["volume_km3"])
+            np.testing.assert_allclose(shown["conditional_volume_interval95_km3"], j["conditional_volume_interval95_km3"])
             np.testing.assert_allclose(shown["median_map_volume_km3"], j["median_map_volume_km3"])
             points = np.asarray(shown["x_km_y_km_log10_median_cm"])
             expected = np.median(model.reduced(shown["map_draws"]).field(points[:,:2]), axis=0)/np.log(10.)
             np.testing.assert_allclose(points[:,2], expected, atol=1e-8)
-            np.testing.assert_allclose(j["reference_volume_km3"],np.quantile(load_packet(old/"full.npz").volume(),PROBS))
+            np.testing.assert_allclose(j["reference_volume_interval95_km3"],np.quantile(load_packet(old/"full.npz").volume(),[.025,.975]))
     assert j["exact_site_coverage95"] == {"covered":covered, "exact_sites":exact, "fraction":covered/exact if exact else None}
     with np.load(home/"volume-budget.npz",allow_pickle=False) as b:
         np.testing.assert_allclose(b["sector_km3"].sum(axis=1), b["volume_km3"])
-        np.testing.assert_allclose(np.quantile(b["volume_km3"],PROBS),j["volume_km3"])
+        np.testing.assert_allclose(np.quantile(b["volume_km3"],[.025,.975]),j["conditional_volume_interval95_km3"])
         scenarios=prior_sensitivity(b)["broad_prior_scenarios"]
         for p,s in scenarios.items():
-            np.testing.assert_allclose(s["volume_km3"],j["prior_sensitivity"]["broad_prior_scenarios"][p]["volume_km3"])
+            np.testing.assert_allclose(np.asarray(s["volume_km3"])[[0,-1]],j["prior_sensitivity"]["broad_prior_scenarios"][p]["conditional_volume_interval95_km3"])
     mesh=read(home/"support.json")
     assert j["supported_band_policies"] == [k for k,v in mesh["policies"].items() if v["selected_band"]]
     with gzip.open(home/"local-brackets.csv.gz","rt") as stream:
@@ -101,7 +102,9 @@ def main():
             continue
         row = rows.pop(rec["slug"])
         assert row["input_sha256"] == j["input_sha256"]
-        np.testing.assert_allclose([float(row[k]) for k in ("lower95_km3","median_km3","upper95_km3")],j["volume_km3"])
+        np.testing.assert_allclose([float(row[k]) for k in ("lower95_km3","upper95_km3")],
+                                   j["conditional_volume_interval95_km3"])
+        np.testing.assert_allclose(float(row["median_map_km3"]), read(case_home(rec["slug"])/"nested-isopachs/deposit.json")["median_map_volume_km3"])
         np.testing.assert_allclose(float(row["equal_region_log_score"]),j["geographic_score"])
     assert not rows
     known=json.loads(gzip.decompress((comp/"validation.json.gz").read_bytes()))

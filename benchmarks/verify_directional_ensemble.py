@@ -123,7 +123,7 @@ def main():
                for check in verification["regional_benchmark"].values())
     # The study retains the hashes of its original publication, including its old text.
     for path, checksum in verification["artifacts"].items():
-        if path == "README.md":
+        if path in {"README.md","volumes.png","comparison.csv","known-volumes.csv"}:
             name = str(root/path)
             verify_files({name: read_hashes()[name]})
         else:

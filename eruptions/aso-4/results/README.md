@@ -1,18 +1,17 @@
-# Aso-4: empirical methods on one regional footprint
+# Aso-4 · regional fits inside the observation hull
 
-All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
+The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **83 exact measurements, 3 lower bounds, 1 upper limits.** The observation hull covers 3,482,991 km². The automatic validation buffer is 41.74 km.
 
 ![Matched median isopachs](isopachs.png)
 
-The full observation hull and every accepted location are visible. The coloured field is clipped to the exact hull; fine coastlines provide context only. [Current display frame](map-display.json) · [Replay and unchanged-volume checks](figure-replay.json).
+The colours follow the same doubling thickness brackets as the global maps. The dashed boundary marks the full observation hull. [Map frame and numerical checks](map-display.json).
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Expected regional bulk fallout (km³) | 202.65 | 248.15 |
-| Integral of median thickness surface (km³) | 170.96 | 200.94 |
-| Conditional 95% volume interval (km³) | 155.87–266.97 | 168.43–452.02 |
+| Principal median-map volume inside hull (km³) | 170.96 | 200.94 |
+| Complete-draw conditional 95% volume interval (km³) | 155.87–266.97 | 168.43–452.02 |
 | Outer equal-region negative log score ↓ | 1.514 | 1.662 |
 | Outer log-thickness RMSE ↓ | 1.074 | 1.257 |
 | Outer 95% observation-interval coverage | 94.0% | 90.4% |
@@ -25,7 +24,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-The mean volume integrates expected thickness. The median-surface integral is a separate quantity; it is not the median volume. Volume intervals come from complete correlated surface draws, not sums of pointwise interval endpoints.
+Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
 
 ## Fitted methods
 

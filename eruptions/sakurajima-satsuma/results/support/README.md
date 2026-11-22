@@ -8,16 +8,16 @@
 
 The common footprint keeps well-connected triangles between exact measurement sites and removes long bridges and thin triangles. Its holes remain holes. Bounds still enter both model likelihoods, but do not count as exact thickness sites for this geometric screen.
 
-| Policy | Area (km²) | Method | Expected bulk volume (km³) | Median-surface integral (km³) | Deletion range (km³) |
-|---|---:|---|---:|---:|---:|
-| strict | 208 | GP ensemble | 0.07 | 0.06 | 0.07–0.08 |
-| strict | 208 | Trend-regularized cubic spline | 0.07 | 0.06 | 0.06–0.08 |
-| standard | 635 | GP ensemble | 0.19 | 0.18 | 0.19–0.24 |
-| standard | 635 | Trend-regularized cubic spline | 0.19 | 0.18 | 0.18–0.22 |
-| permissive | 2,612 | GP ensemble | 0.60 | 0.57 | 0.59–0.72 |
-| permissive | 2,612 | Trend-regularized cubic spline | 0.57 | 0.56 | 0.60–0.69 |
+| Policy | Area (km²) | Method | Median-thickness integral (km³) | Median-map deletion range (km³) |
+|---|---:|---|---:|---:|
+| strict | 208 | GP ensemble | 0.06 | unavailable for this fit |
+| strict | 208 | Trend-regularized cubic spline | 0.06 | unavailable for this fit |
+| standard | 635 | GP ensemble | 0.18 | unavailable for this fit |
+| standard | 635 | Trend-regularized cubic spline | 0.18 | unavailable for this fit |
+| permissive | 2,612 | GP ensemble | 0.57 | unavailable for this fit |
+| permissive | 2,612 | Trend-regularized cubic spline | 0.56 | unavailable for this fit |
 
-These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**. The median-surface integral is not the median of total volume.
+These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**.
 
 ## Complete-contour gate
 

@@ -1,17 +1,17 @@
 # How much does uncertain fan direction change the fit?
 
-Each pair uses the same observations and structure weights. The control fixes fan direction. The principal fit lets it vary across possible deposits. Integrating the pointwise median map gives the first volume. Integrating each complete deposit gives the volume median and conditional interval in the last column.
+Each pair uses the same observations and structure weights. The control fixes fan direction. The principal fit lets it vary across possible deposits. The uncertain-direction median-thickness map gives the principal estimate. The fixed-direction control uses direct posterior quadrature. The interval describes uncertainty in total volume across complete draws.
 
-| Eruption | Accepted observations | Uncertain median map (km³) | Fixed median map (km³) | Complete-deposit median [95%] (km³) |
+| Eruption | Accepted observations | Median-thickness map (km³) | Fixed-direction control (km³) | Conditional 95% interval (km³) |
 |---|---:|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | 87 | **659.1** | 779.7 | 916.3 [297.9–3,511.5] |
-| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | 71 | **33.6** | 34.6 | 37.2 [23.5–77.1] |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/directional/README.md) | 56 | **40.8** | 46.7 | 59.4 [30.1–384.8] |
-| [Mazama](../../eruptions/mazama/results/directional/README.md) | 45 | **166.1** | 177.0 | 213.5 [138.6–1,265.1] |
-| [Minoan](../../eruptions/minoan/results/directional/README.md) | 101 | **28.8** | 32.9 | 39.1 [21.3–138.5] |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/directional/README.md) | 57 | **7.1** | 9.1 | 10.0 [3.8–70.6] |
-| [Tambora](../../eruptions/tambora/results/directional/README.md) | 26 | **95.7** | 107.7 | 117.5 [73.2–203.8] |
-| [YTT](../../eruptions/ytt/results/directional/README.md) | 46 | **900.6** | 1,005.6 | 1,272.1 [736.5–3,660.9] |
+| [Aso-4](../../eruptions/aso-4/results/directional/README.md) | 87 | **659** | 779.7 | 297.9–3,511.5 |
+| [B-Tm](../../eruptions/b-tm/results/directional/README.md) | 71 | **33.5** | 34.6 | 23.5–77.1 |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/directional/README.md) | 56 | **40.8** | 46.7 | 30.1–384.8 |
+| [Mazama](../../eruptions/mazama/results/directional/README.md) | 45 | **166** | 177.0 | 138.6–1,265.1 |
+| [Minoan](../../eruptions/minoan/results/directional/README.md) | 101 | **28.8** | 32.9 | 21.3–138.5 |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/directional/README.md) | 57 | **7.07** | 9.1 | 3.8–70.6 |
+| [Tambora](../../eruptions/tambora/results/directional/README.md) | 26 | **95.7** | 107.7 | 73.2–203.8 |
+| [YTT](../../eruptions/ytt/results/directional/README.md) | 46 | **900** | 1,005.6 | 736.5–3,660.9 |
 
 At B-Tm the source review adds two lake limits and one peat limit to the directly measured thicknesses and bounds. The before-and-after study isolates how those interpretations move the western contours. Each eruption report above gives all eight compass bearings, supported contour fragments and numerical warnings. [B-Tm occurrence study](../../eruptions/b-tm/results/cryptotephra/README.md)
 

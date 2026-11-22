@@ -1,6 +1,6 @@
 # Aso-4 · fixed-direction ensemble
 
-**740.0 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. Across complete simulated deposits the median volume is **882.7 km³**, with a conditional 95% interval of **397.5–2,931.7 km³**.
+**740.0 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. The conditional 95% volume interval is **397.5–2,931.7 km³**.
 
 The measured triangles contain **24.8 km³** (3.3%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.
 
@@ -14,37 +14,37 @@ The star marks the supplied vent. Its median thickness is 39.8 cm. The largest m
 
 ## Direction and observational support
 
-| Direction | Exact rows | Bounds | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Direction | Exact rows | Bounds | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|---:|---:|
-| N | 8 | 0 | 50.2 | 56.7 [11.4–308.8] |
-| NE | 60 | 4 | 357.7 | 376.0 [168.0–944.7] |
-| E | 11 | 0 | 243.2 | 249.9 [92.5–1,262.9] |
-| SE | 2 | 0 | 50.5 | 57.6 [13.3–378.8] |
-| S | 2 | 0 | 8.3 | 9.1 [4.5–190.1] |
-| SW | 0 | 0 | 12.8 | 14.1 [4.7–401.7] |
-| W | 0 | 0 | 9.5 | 11.1 [4.6–249.1] |
-| NW | 0 | 0 | 7.8 | 8.8 [4.3–184.0] |
+| N | 8 | 0 | 50.2 | 11.4–308.8 |
+| NE | 60 | 4 | 357.7 | 168.0–944.7 |
+| E | 11 | 0 | 243.2 | 92.5–1,262.9 |
+| SE | 2 | 0 | 50.5 | 13.3–378.8 |
+| S | 2 | 0 | 8.3 | 4.5–190.1 |
+| SW | 0 | 0 | 12.8 | 4.7–401.7 |
+| W | 0 | 0 | 9.5 | 4.6–249.1 |
+| NW | 0 | 0 | 7.8 | 4.3–184.0 |
 
-| Domain | Median-map volume (km³) | Complete fields, median [95%] (km³) |
+| Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|
-| Measured triangles | 24.8 | 25.3 [20.4–32.0] |
-| Transition at triangle edges | 28.2 | 30.3 [24.7–38.8] |
-| Proximal background | 4.6 | 4.7 [2.3–9.5] |
-| Background between sampled radii | 238.9 | 262.7 [169.3–540.3] |
-| Distal background | 443.5 | 559.5 [146.4–2,384.5] |
+| Measured triangles | 24.8 | 20.4–32.0 |
+| Transition at triangle edges | 28.2 | 24.7–38.8 |
+| Proximal background | 4.6 | 2.3–9.5 |
+| Background between sampled radii | 238.9 | 169.3–540.3 |
+| Distal background | 443.5 | 146.4–2,384.5 |
 
 The median-map entries add to its global volume before rounding. Each simulated deposit uses one structure everywhere. Pointwise thickness bounds describe uncertainty at a location. The volume interval comes from integrating each complete field.
 
 ## Assumptions and weights
 
-| Fan half-width | Additional fan in largest distal gap | Predictive weight | Complete-field volume, median [95%] (km³) | Fit and mass checks |
+| Fan half-width | Additional fan in largest distal gap | Predictive weight | Conditional 95% volume interval (km³) | Fit and mass checks |
 |---:|---|---:|---:|---|
-| 22.5° | Absent from this structure | 15.6% | 756.9 [350.0–2,453.1] | passed |
-| 45° | Absent from this structure | 17.2% | 743.5 [391.5–2,030.2] | passed |
-| 90° | Absent from this structure | 11.4% | 1,214.2 [477.5–3,171.5] | passed |
-| 22.5° | Possible | 14.9% | 827.3 [382.1–2,700.5] | passed |
-| 45° | Possible | 23.9% | 827.0 [411.6–2,780.3] | passed |
-| 90° | Possible | 17.0% | 1,351.4 [510.5–3,511.7] | passed |
+| 22.5° | Absent from this structure | 15.6% | 350.0–2,453.1 | passed |
+| 45° | Absent from this structure | 17.2% | 391.5–2,030.2 | passed |
+| 90° | Absent from this structure | 11.4% | 477.5–3,171.5 | passed |
+| 22.5° | Possible | 14.9% | 382.1–2,700.5 | passed |
+| 45° | Possible | 23.9% | 411.6–2,780.3 | passed |
+| 90° | Possible | 17.0% | 510.5–3,511.7 | passed |
 
 Equal weights give a median-map volume of **753.6 km³**. Restricting to the three structures without an extra fan gives **710.0 km³**. Allowing an extra fan in all three gives **776.2 km³**. These possibilities share the same observations. A fan missed entirely by sampling remains weakly identified.
 

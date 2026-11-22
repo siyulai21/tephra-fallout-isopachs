@@ -1,6 +1,6 @@
 # Tambora · Soft source displacement prior
 
-The candidate median complete-deposit volume is **151.6 km³**. The conditional 95% interval is 99.2–494.0 km³.
+The conditional 95% volume interval for this sensitivity is 99.2–494.0 km³.
 
 The prior favors component centres within several component widths of the source. The penalty is smooth and retains positive probability for detached maxima. Source-focused kernels receive unit weight. Effective draw counts diagnose the importance reweighting.
 
