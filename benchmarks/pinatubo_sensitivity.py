@@ -46,7 +46,7 @@ def scenario(name, root):
     test=None
     alternate={}
     if name=="marine-holdout":
-        withheld=np.isin(source,["WW1","H01","W04"])
+        withheld=np.isin(source,["WW1","H01","W04","S99"])
     elif name=="tabulated-thickness":
         withheld=np.isin(source,["P7","K3"])
     elif name=="marine-intervals":

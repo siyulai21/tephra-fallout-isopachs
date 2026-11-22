@@ -4,8 +4,8 @@ CSV row 166 most frequently sets the last measured rank. The first test withhold
 
 | Withheld | Rows | Conditional 95% volume interval (km³) | Full-fit population check |
 |---|---:|---:|---|
-| One site | 1 | 9.6–36.8 | passed |
-| Site and local cluster | 1 | 9.6–36.8 | passed |
+| One site | 1 | 8.9–37.2 | passed |
+| Site and local cluster | 1 | 8.9–37.2 | passed |
 
 These sites were selected from their influence on the fitted geometry. The change measures sensitivity to that part of the survey. The observations retain their published provenance and acceptance status.
 

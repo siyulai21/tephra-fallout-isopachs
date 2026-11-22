@@ -5,7 +5,7 @@ from pathlib import Path
 
 from pyproj import Geod, Transformer
 
-from .pinatubo import AUDIT, SOURCE, src
+from .pinatubo import AUDIT, SOURCE, cruise_position, minutes, src
 
 GEOD = Geod(ellps="WGS84")
 
@@ -47,6 +47,22 @@ def schematic():
     return result
 
 
+def cruise_registration():
+    """Check the local station-23 graticule transform against separately reported positions."""
+    hess = {r["site"]: r for r in src("hess-table-1.csv")}
+    result = []
+    for r in src("context/suedmeer-figure-2-checks.csv"):
+        original = hess[r["hess_site"]]
+        assert r["station"] in original["stations"].split("|")
+        lon, lat = cruise_position(r["page_x"], r["page_y"])
+        x, y = minutes(original["lon_deg_min_e"]), minutes(original["lat_deg_min_n"])
+        distance = GEOD.inv(lon, lat, x, y)[2]/1000
+        result.append({**r, "figure_longitude": round(lon, 4), "figure_latitude": round(lat, 4),
+                       "station_longitude": round(x, 5), "station_latitude": round(y, 5),
+                       "discrepancy_km": round(distance, 2)})
+    return result
+
+
 def transcripts():
     original={}
     for r in src("paladio-table-2.csv"):
@@ -63,6 +79,8 @@ def transcripts():
         original["H01-"+r["site"].zfill(2)]=(r["stations"],r["thickness_mm"] if r["site"]!="14" else "<2 cm in discussion","mm unless stated","Table 1 grouped station coordinates","Core revisits combined")
     for r in src("casadevall-airfields.csv"):
         original["AIR-"+r["station"]]=(r["station"],r["reported_total_cm"],"cm","Named facility reference point","June 15–16 accumulation")
+    for r in src("suedmeer-1999-cores.csv"):
+        original["S99-"+r["station"]]=(r["station"],r["reading_cm"],"cm",r["coordinate_source"],"Section 3.4 and Figure 29")
     return original
 
 
@@ -93,6 +111,7 @@ def archive_inventory():
 
 def build():
     archive_inventory()
+    write(AUDIT/"survey-coverage/suedmeer-registration.csv", cruise_registration())
     schematic_rows=schematic()
     write(AUDIT/"survey-coverage"/"david-schematic.csv",schematic_rows)
     cards={r["evidence_id"]:r["sheet"] for r in read(AUDIT/"reading-index.csv")}
@@ -104,7 +123,7 @@ def build():
                            model_value_cm=value,accepted_csv_row=row,decision=note,verification=verification))
     for s in read(AUDIT/"selection.csv"):
         i=s["id"];locator,raw,unit,pos,role=originals[i]
-        page=cards.get(i,"marine-check.md" if s["source"] in ("WW1","W04","H01") else "README.md#airfields-and-distal-reports")
+        page=cards.get(i,"marine-check.md" if s["source"] in ("WW1","W04","H01","S99") else "README.md#airfields-and-distal-reports")
         add(i,s["source"],locator,raw,unit,s["longitude"],s["latitude"],pos,s["kind"],s["value_cm"] if s["kind"] else "",
             s["accepted_csv_row"],role+". "+s["decision"],page)
     for r in schematic_rows:

@@ -9,6 +9,7 @@ The fitted case represents the climactic 15 June 1991 airborne fallout. Each obs
 | Wiesner and Wang (1996) | [Core and trap readings, Table 1](https://pubs.usgs.gov/pinatubo/wiesner/index.html) | [10 measured core horizons and one trap equivalent](wiesner-wang-table-1.csv) |
 | Wiesner and colleagues (2004, corrected 2005) | [Bulk ash and units I and II, Table 1](https://link.springer.com/article/10.1007/s00445-003-0306-x/tables/1) · [Corrected figures](https://doi.org/10.1007/s00445-005-0421-y) | [11 bulk beds with station coordinates](wiesner-2004-table-1.csv) · [Coring events](pangaea-coring-events.csv) |
 | Hess and colleagues (2001) | [Station groups, Table 1, p. 123 and discussion of diversity](https://doi.org/10.1016/S0377-8398%2801%2900025-1) | [All 30 groups, readings, repeat stations and qualifications](hess-table-1.csv) |
+| SÜDMEER I + II, Teil A (1999) | [Thicknesses in section 3.4](https://edocs.tib.eu/files/e001/322739942.pdf#page=40) · [SO-114 route](https://edocs.tib.eu/files/e001/322739942.pdf#page=58) | [Two named core readings](suedmeer-1999-cores.csv) · [Graticule controls](context/suedmeer-figure-2-controls.csv) |
 | Casadevall and colleagues (1996) | [Airport surface accumulations and aircraft reports](https://pubs.usgs.gov/pinatubo/casa/index.html) | [Five named facilities](casadevall-airfields.csv) |
 | David and colleagues (1996) | [Coarse pumice unit, Table 1 and sampling sites, Figure 3](https://pubs.usgs.gov/pinatubo/david/index.html) | [All seven coarse-unit sections in cm](david-table-1.csv) |
 | Wetzel (2009) | [X-radiograph observations of mixing, burial and preservation](https://doi.org/10.1111/j.1365-3091.2009.01066.x) | [Identified sections and reconstructed thicknesses](context/wetzel-2009-sections.csv) |
@@ -20,6 +21,8 @@ PANGAEA provides the ship coordinates and cast descriptions. A station footprint
 Facility coordinates come from OurAirports. Philippine populated-place positions and stable identifiers come from GeoNames under CC BY 4.0. They locate the schematic for the verification exercise. [OurAirports data](https://ourairports.com/data/) · [GeoNames data and attribution](https://www.geonames.org/export/) · [Named places used](context/geonames-luzon.csv)
 
 ## Other 1991 deposits
+
+The [separate inventory with numbered reading sheets](../../audits/Pinatubo-1991/other-phases/README.md) gives the precursor and postclimactic site readings. [Koyaguchi A/B transcriptions](context/precursor-thickness.csv) · [Paladio-Melosantos A/B/D transcriptions](context/paladio-other-phase-marks.csv)
 
 The early phreatic ash, layer A of 12 June, preclimactic layer B and postclimactic layer D have distinct timing and footprints. These original maps and the stratigraphic chapter preserve that context. Adding thicknesses from different sampling locations would create unsupported totals. [Early fallout](context/paladio-figure-2.gif) · [Layer A](context/paladio-figure-3.gif) · [Layer B](context/paladio-figure-6.gif) · [Koyaguchi A and B](context/koyaguchi-figure-3ab.gif) · [Layer D](context/paladio-figure-13.gif)
 

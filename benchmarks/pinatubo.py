@@ -77,6 +77,33 @@ def possible_repeat(row, candidate, radius, proximity_only):
     return bool(a != "" and b != "" and abs(float(a) - float(b)) <= .1000001)
 
 
+def cruise_position(x, y):
+    """Local graticule registration of SÜDMEER Figure 2 at 160 dpi."""
+    controls = src("context/suedmeer-figure-2-controls.csv")
+    pixels = np.array([[float(c["page_x"]), float(c["page_y"]), 1.] for c in controls])
+    lonlat = np.array([[float(c["longitude"]), float(c["latitude"])] for c in controls])
+    transform = np.linalg.lstsq(pixels, lonlat, rcond=None)[0]
+    return np.array([float(x), float(y), 1.]) @ transform
+
+
+def cruise_cores():
+    """One new text measurement and one explicit rereading of a known station."""
+    rows = []
+    hess = src("hess-table-1.csv")
+    for r in src("suedmeer-1999-cores.csv"):
+        if r["linked"]:
+            site = next(h for h in hess if r["station"] in h["stations"].split("|"))
+            lonlat = minutes(site["lon_deg_min_e"]), minutes(site["lat_deg_min_n"])
+            kind, value = "", ""
+            note = "Repeat station. The printed 8.5–9.0 cm range agrees with Hess group 5. See "+r["linked"]+"."
+        else:
+            lonlat = np.round(cruise_position(r["figure2_x"], r["figure2_y"]), 2)
+            kind, value = "measurement", float(r["reading_cm"])
+            note = "Section 3.4 reports the bulk ash thickness. Figure 2 locates the core to chart precision. Figure 29 identifies the profile."
+        rows.append(record("S99-"+r["station"], "S99", lonlat, kind, value, note))
+    return rows
+
+
 def marine_and_airfield_rows():
     rows = []
     for r in src("wiesner-2004-table-1.csv"):
@@ -175,6 +202,7 @@ def observations(cross_map_km=2.0, *, proximity_only=False):
         rows.append(record("WW-"+r["station"], "WW1", (minutes(r["lon_deg_min_e"]), minutes(r["lat_deg_min_n"])),
                            kind, value, note))
     rows.extend(marine_and_airfield_rows())
+    rows.extend(cruise_cores())
     for row in rows:
         az, _, dist = GEOD.inv(*VENT, row["longitude"], row["latitude"])
         row["km"] = round(dist/1000, 3)

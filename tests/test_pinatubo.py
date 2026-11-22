@@ -17,16 +17,19 @@ def test_input_replays_from_original_readings_and_units():
     for path, content in products().items():
         assert content == path.read_bytes()
     accepted = rows(INPUT)
-    assert Counter(r["Kind"] for r in accepted) == {"measurement": 139, "lower_limit": 26, "upper_limit": 28}
+    assert Counter(r["Kind"] for r in accepted) == {"measurement": 140, "lower_limit": 26, "upper_limit": 28}
     records = {r["EvidenceID"]: r for r in accepted}
-    assert len(records) == len({(r["Lon"], r["Lat"]) for r in accepted}) == 193
+    assert len(records) == len({(r["Lon"], r["Lat"]) for r in accepted}) == 194
+    core = records["S99-SO-114-23"]
+    assert (core["Lon"], core["Lat"], core["Thickness"]) == ("117.74", "14.07", "1.0")
+    assert "S99-SO-114-6" not in records
     assert records["K-03"]["Limit_cm"] == "2.0"
     assert records["H01-14"]["Kind"] == "upper_limit"
     assert float(records["H01-14"]["Limit_cm"]) == 2
     assert records["W04-SO-140-03"]["Thickness"] == "0.7"
     assert {"H01-03", "WW-SCS-C", "P7-056", "P7-101", "P7-148"}.isdisjoint(records)
     ledger = rows(AUDIT / "full-evidence.csv")
-    assert len(ledger) == len({r["evidence_id"] for r in ledger}) == 462
+    assert len(ledger) == len({r["evidence_id"] for r in ledger}) == 464
     fitted = {r["evidence_id"]: int(r["accepted_csv_row"]) for r in ledger if r["accepted_csv_row"]}
     assert fitted == {r["EvidenceID"]: i for i, r in enumerate(accepted, 2)}
     sheets = rows(AUDIT / "reading-index.csv")
@@ -60,3 +63,18 @@ def test_preserved_sources_and_marine_station_matches():
     assert all(site["reported_fallout_limit_cm"] is None for site in probes["sites"])
     inventory = {row["evidence_id"] for row in rows(AUDIT / "full-evidence.csv")}
     assert {site["id"] for site in probes["sites"]} <= inventory
+
+def test_other_fall_layers_and_cruise_chart_are_separately_traceable():
+    from benchmarks.pinatubo_evidence import cruise_registration
+    from benchmarks.pinatubo_phases import inventory
+
+    supplemental = inventory()
+    index = rows(AUDIT / "other-phases/readings.csv")
+    assert len(index) == len(supplemental) == 366
+    assert len({r["evidence_id"] for r in index}) == len(index)
+    assert {r["evidence_id"] for r in supplemental}.isdisjoint(r["EvidenceID"] for r in rows(INPUT))
+    assert all((AUDIT / "other-phases" / r["sheet"]).is_file() for r in index)
+    assert all(float(r["single_positive_cm"]) > 0 for r in index if r["single_positive_cm"])
+    assert all(r["review"] == "positive point reading" for r in index if r["single_positive_cm"])
+    assert len(cruise_registration()) == 15
+    assert {r["evidence_id"]: r["reported_or_candidate"] for r in index}["P6-068"] == "23"

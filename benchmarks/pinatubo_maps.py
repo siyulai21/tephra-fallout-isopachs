@@ -111,6 +111,8 @@ def draw_sheets():
         guide.append("")
     guide.extend(["## Regional ashfall reports", "", "[Nineteen labelled places on Figure 9](visual/distal-localities.png) · [Original figure and reporting qualifications](distal-reports.md)", "", "## Offshore stations and airfields","",
         "The marine bulk-thickness table identifies 11 cores by cruise and station. Compare its values with our [side-by-side station crosswalk](marine-check.md). The original corrected marine map uses station numbers, including 03 and 04. A number at a marine dot identifies its station. Thickness comes from the published table. The [airfield audit](README.md#airfields-and-distal-reports) documents two additional accumulation bounds.",""])
+    guide.extend(["The SÜDMEER report identifies SO-114-23 as a 1 cm core. The PDF opens directly at the thickness statement, station chart and depth profiles in the [three-step verification guide](marine-check.md#südmeer-core-23).", ""])
+    guide.extend(["## Other fall layers", "", "[Separate layer A, B and D reading sheets and coordinate index](other-phases/README.md)", ""])
     (AUDIT/"VISUAL-CHECK.md").write_text("\n".join(guide))
     with (AUDIT/"reading-index.csv").open("w",newline="") as f:
         w=csv.DictWriter(f,fieldnames=index[0],lineterminator="\n");w.writeheader();w.writerows(index)

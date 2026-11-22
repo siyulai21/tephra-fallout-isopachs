@@ -1,6 +1,6 @@
 # Pinatubo climactic fallout audit
 
-**193 fitted observations comprise 139 measured thicknesses, 26 lower bounds and 28 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
+**194 fitted observations comprise 140 measured thicknesses, 26 lower bounds and 28 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
 
 | Evidence | Measured | Lower | Upper | Original scope |
 |---|---:|---:|---:|---|
@@ -10,6 +10,7 @@
 | Wiesner and Wang Table 1 | 7 | 0 | 3 | Ten marine cores |
 | Wiesner et al. Table 1 | 11 | 0 | 0 | Bulk beds with documented cruise-station positions |
 | Hess et al. Table 1 and discussion | 0 | 11 | 1 | Named station groups after checking repeat visits and disturbed beds |
+| SÜDMEER report, section 3.4 | 1 | 0 | 0 | Named core with a chart position and depth profile |
 | Casadevall et al. | 0 | 0 | 2 | Manila and Sangley Point airfield accumulations |
 
 Every accepted row has an evidence ID and every candidate numeric reading has a recorded decision. The larger evidence inventory also holds coarse units, reconnaissance reports, revisits and source-map positions with no numeric limit. Several records can describe one station. [Selection decisions](selection.csv) · [Source originals and citations](../../sources/pinatubo-1991/README.md)
@@ -28,7 +29,7 @@ Paladio Table 2 sometimes repeats total deposit thickness beside each grain-size
 
 A named Table 2 section has priority within 0.8 km of a Figure 7 marker because the printed triangle spans that neighbourhood. Between the sublayer survey and the other field surveys we flag positions within 0.4 km as possible repeats. Out to 2 km we flag a pair whose published numeric thresholds or readings agree within 0.1 cm. Directly copied square symbols are suppressed regardless of distance. These choices are explicit conventions for unresolved site identities. Distinct survey markers can remain close together. The geographic holdouts buffer training observations. [Every row and its reason](selection.csv)
 
-With agreement screening and a 0.5, 1, 2 or 3 km maximum search radius, 198, 194, 193 or 189 observations survive respectively. Merging every nearby cross-survey pair at those radii leaves 196, 182, 161 or 141. These are changes in site count. They do not give an uncertainty interval for volume. [Replayable counts](provenance.json)
+With agreement screening and a 0.5, 1, 2 or 3 km maximum search radius, 199, 195, 194 or 190 observations survive respectively. Merging every nearby cross-survey pair at those radii leaves 197, 183, 162 or 142. These are changes in site count. They do not give an uncertainty interval for volume. [Replayable counts](provenance.json)
 
 ## Airfields and distal reports
 
@@ -45,3 +46,5 @@ The northern sector has one exact measurement, 14.15 km from the source. Beyond 
 ## Reproduction
 
 Run `python -m benchmarks.pinatubo` from the repository root to check the principal CSV and selection against the source transcripts. `python -m benchmarks.pinatubo_maps` rebuilds the reading sheets, and `python -m benchmarks.pinatubo_evidence` rebuilds the combined evidence inventory. [Case results](../../../eruptions/pinatubo-1991-layer-c/README.md) · [New eruption workflow](../../../docs/NEW_ERUPTION.md)
+
+The additional layers have a separate [phase-specific observation index and original pixel checks](other-phases/README.md). Rebuild it with `python -m benchmarks.pinatubo_phases`.

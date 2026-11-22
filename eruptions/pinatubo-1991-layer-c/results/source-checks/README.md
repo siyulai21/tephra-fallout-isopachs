@@ -1,24 +1,33 @@
-# Pinatubo source sensitivities
+# Which source decisions change the Pinatubo estimate?
 
-The original measurements support three checks on the nested-corridor estimate and a matched upper-endpoint check on both regional models. All fits use the same vent and model policies. Each fits its own training selection. The numbers are whole-Earth integrals of median thickness and conditional 95% intervals for coherent bulk-volume draws.
+The nested-corridor tests change one source selection or reading rule at a time. The volume column integrates the median-thickness field over Earth. The interval describes coherent whole-deposit draws under that fit.
 
-| Fit | Training rows | Estimated volume (km³) | Conditional 95% (km³) | Exact withheld beds inside 95% | Numerical checks |
+| Fit | Training sites | Volume (km³) | Conditional 95% (km³) | Exact withheld beds within 95% | Numerical checks |
 |---|---:|---:|---:|---:|---|
-| [Common five-family input](../nested-isopachs/README.md) | 193 | 7.75 | 7.01–9.35 | 84/139 over four geographic folds | Full fit passed, 1/4 geographic fits passed |
-| [Withhold all offshore core evidence](marine-holdout/result.json) | 160 | 0.70 | 0.61–1.56 | [0/18](marine-holdout/heldout.csv) | Parent populations disagreed |
-| [Withhold numerical readings from the two land maps](tabulated-thickness/result.json) | 47 | 7.73 | 6.47–12.10 | [100/109](tabulated-thickness/heldout.csv) | Importance weights failed |
-| [Use both endpoints of nine marine replicate ranges](marine-intervals/result.json) | 193 | 5.42 | 4.48–7.96 | — | Passed |
+| [Common five-family input](../nested-isopachs/README.md) | 194 | 7.59 | 5.70–9.08 | — | Passed |
+| [Withhold every offshore thickness and bound](marine-holdout/result.json) | 160 | 0.70 | 0.61–1.56 | [0/19](marine-holdout/heldout.csv) | Warning · parent population check |
+| [Withhold the numerical land-map readings](tabulated-thickness/result.json) | 48 | 7.64 | 6.55–10.43 | [95/109](tabulated-thickness/heldout.csv) | Warning · importance weights |
+| [Use both observed endpoints of nine marine station ranges](marine-intervals/result.json) | 194 | 5.16 | 4.44–7.06 | — | Passed |
 
-The land-only model systematically missed the offshore deposit. The principal survey continues hundreds of kilometres into the South China Sea, where later cores record a secondary thickness maximum. Assigning an unsurveyed distal sector a thin deposit can give an artificially small volume. The land-only volume also carries a population warning. [Predictions at all 33 offshore records](marine-holdout/heldout.csv) · [Wiesner et al.](https://doi.org/10.1007/s00445-003-0306-x)
+The land-only model predicts the 34 marine records without seeing any of them. The later offshore cruises document a secondary thickness maximum. Their measurements change both the estimated reach and the total. [Predictions at every withheld marine station](marine-holdout/heldout.csv) · [Original offshore survey](https://doi.org/10.1007/s00445-003-0306-x)
 
-Table-based thicknesses retain 47 observations, including named terrestrial sections located from their map. The 146 withheld rows are the numerical Figure 7 and C1/C2 map readings. The interval is wider, and the alternative fit failed its importance-weight check. Its central value alone gives little evidence of robustness. [All withheld map readings](tabulated-thickness/heldout.csv)
+The second test keeps 48 published section, core and text readings, including named sections positioned from maps. It withholds 146 land markers whose thickness was transcribed from map figures. The archived site table retains their reading and predictive error. [Withheld land markers](tabulated-thickness/heldout.csv)
 
-Nine Hess rows represent ranges between replicate observations. The common input takes the lower endpoint as a minimum because all five families can fit that evidence. The interval experiment gives each location its full reported bracket. This tests a different interpretation of variation within a station group. It gives a materially smaller inferred deposit and is explicit model uncertainty beyond any single reported interval. [Both endpoints at each station](marine-intervals/interval-input.csv) · [Marine reading guide](../../../../data/audits/Pinatubo-1991/marine-check.md)
+At nine marine stations Hess and colleagues report replicate thickness ranges. All five principal fits can use the minimum as a lower bound. The two-sided nested test represents the measured range as an interval at each station. The two endpoints also supply a separate check on both regional fits. [Published ranges](../../../../data/sources/pinatubo-1991/hess-table-1.csv) · [Interval input](marine-intervals/interval-input.csv)
 
-## What the spline predicts at an actual core
+## Regional sensitivity to the upper endpoints
 
-At H01-16 (SO-114-13) the source gives a 1–2 mm replicate range. The common input uses ≥0.1 cm. The spline predicts 3,199 cm at that coordinate and the GP predicts 0.49 cm. A northern lobe is visible along the hull boundary. The nearest other exact reading to its plotted grid maximum is about 117 km away. Every conditional mean inside the exported hull grid is finite, although the spline overflows at 71 grid cells outside it. The spline’s median integral and conditional interval both carry numerical warnings. [Raw peak and site checks](regional-peak.json) · [Source range](../../../../data/audits/Pinatubo-1991/marine-check.md)
+These two regional fits keep every site and replace the nine lower limits with the corresponding measured upper endpoints as upper limits. Using a single side of a finite range discards information. This controlled change exposes how much either regional fit depends on which side is retained.
 
-Using the other endpoint as an upper limit at the same nine sites changes the GP hull estimate from 3.51 to 3.21 km³ and the spline from 14.07 to 5.75 km³. The spline still has an extremely long upper volume tail. Both fits use the same coordinates, common hull and geographic partitions. The two endpoint fits illustrate information lost when a two-sided reading must be represented by one inequality. Their difference is a sensitivity result. [Matched regional refits](regional-upper-endpoints/regional/README.md) · [Upper-endpoint input](regional-upper-endpoints/upper-endpoints.csv) · [Median thickness from every fitted family at all nine stations](range-predictions.csv)
+| Observation-hull median map | Shared lower endpoints (km³) | Alternative upper endpoints (km³) |
+|---|---:|---:|
+| GP ensemble | 3.50 | 3.07 |
+| Cubic spline | 13.17 | 5.30 |
 
-Reproduce all four checks with `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests`. Each numerical report includes training and withheld row IDs, population checks, quadrature history and the posterior packet hash.
+At SO-114-13 (H01-16), the source gives 1–2 mm, or 0.1–0.2 cm. Under the shared lower-bound rule the spline median at that core is 24.1 m and the GP median is 0.49 cm. A lower bound alone permits much thicker predictions. The spline’s upper draw interval fails its regional integration check. [Regional field checks](regional-median-field-checks.json) · [Upper-endpoint regional report](regional-upper-endpoints/regional/README.md)
+
+## Independent cruise core
+
+The 1.0 cm reading at SO-114-23 became available after the archived 193-site audit. Its preceding fits predicted 0.89 cm (spline), 1.54 cm (GP) and 3.78 cm (nested corridor). Applying the 15 independently measured chart-position discrepancies at the core gave 0.70–0.94, 1.45–1.57 and 3.58–3.84 cm respectively. Those ranges measure sensitivity to position. This check concerns one additional core. All principal fits include it once. [Numerical receipt](cruise-core-holdout/result.json) · [Training evidence and replay](../../../../archive/2026-11-22-pinatubo-intake/README.md) · [Original core verification](../../../../data/audits/Pinatubo-1991/marine-check.md#südmeer-core-23)
+
+Reproduce the source refits with `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests`. Each receipt records its training rows, input hash, fit diagnostics and integration checks.
