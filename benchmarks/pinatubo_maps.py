@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 from matplotlib import font_manager
 
 from .pinatubo import AUDIT, FRAMES, SOURCE, position, src
+from .pinatubo_locators import locator_guide, make_locator
 
 OUT = AUDIT / "visual"
 FONT_PATH = font_manager.findfont("DejaVu Sans")
@@ -211,6 +212,7 @@ def draw_sheets():
     reviewed_figure7_context()
     index = []
     guide = ["# Check the Pinatubo measurements by eye", "",
+             "Find an audit ID on either full map. Each numbered figure has a lookup by ID and links to the original-pixel reading sheets. [Koyaguchi Figure 3](#koyaguchi-figure-3) · [Paladio-Melosantos Figure 7](#paladio-melosantos-figure-7)", "",
              "Three examples take about a minute to check. The [CAB-1 table entry and mapped section](field-check.md) give a measured 15 cm. On [K-03](visual/k3-01.png), 20 mm is clear and the other value carries a question mark, giving a 2 cm minimum. The [P7-056 symbol](visual/p7-07.png) is ambiguous and was excluded.", "",
              "Find an evidence ID in the [row index](reading-index.csv), then open its sheet below. Each card shows the original pixels enlarged four times. The small teal marks in the margin point to the recorded pixel centre. On the sublayer sheets the left and right panels show the same site in C1 and C2. On the other sheets the second panel repeats the location with the margin marks.", "",
              "P7 filled circles are independent Layer C field readings. Open circles are whole-section totals and bound Layer C from above. Squares report the Koyaguchi or Listanco survey. Triangles locate the sampled sections in Table 2. The section totals are printed in the table. A question mark records an unresolved reading. The [selection ledger](selection.csv) explains each fitting decision.", "",
@@ -218,6 +220,9 @@ def draw_sheets():
     for tag,title,filename,readings in sources():
         raw = Image.open(SOURCE/filename).convert("RGB")
         guide += [f"## {title}", "", f"[Original image](../../sources/pinatubo-1991/{filename})", ""]
+        if tag in ("K3", "P7"):
+            image, locations = make_locator(tag, title, SOURCE/filename, readings, OUT, font)
+            guide.extend(locator_guide(tag, title, image, locations))
         if tag == "K3":
             guide += ["Four C1 readings were reviewed against both original panels and the neighbouring Figure 7 labels. [Read the four decisions](koyaguchi-c1-review.md) · [Compare the original pixels](visual/koyaguchi-c1-review.png)", ""]
             guide += ["The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md#position-on-the-two-sublayer-maps)", ""]

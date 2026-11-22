@@ -82,6 +82,62 @@ def test_visual_review_replays_the_field_labels_and_empty_sites():
             assert key not in after
 
 
+def test_numbered_full_maps_locate_every_reading_card_on_the_original_pixels():
+    import numpy as np
+    from PIL import Image
+
+    guide = (AUDIT / "VISUAL-CHECK.md").read_text()
+    cards = rows(AUDIT / "reading-index.csv")
+    teal = (0, 85, 103)
+    figures = [
+        ("koyaguchi-figure-3", "K3", [f"K-{i:02d}" for i in range(1, 53)], ["C1", "C2"]),
+        ("paladio-figure-7", "P7", [f"P7-{i:03d}" for i in range(1, 173)], ["Figure 7"]),
+    ]
+    for stem, tag, ids, names in figures:
+        image_path = f"visual/{stem}-numbered.png"
+        assert f"]({image_path})" in guide
+        index = {r["evidence_id"]: r for r in cards if r["source"] == tag}
+        assert set(index) == set(ids)
+        with Image.open(AUDIT / image_path) as image, Image.open(SOURCE / (stem + ".gif")) as source:
+            meta = json.loads(image.info["Description"])
+            assert meta["source"] == stem + ".gif"
+            assert meta["source_sha256"] == sha256((SOURCE / meta["source"]).read_bytes()).hexdigest()
+            assert meta["source_size"] == list(source.size)
+            assert [p["name"] for p in meta["panels"]] == names
+            original = np.asarray(source.convert("RGB"))
+            scale = meta["scale"]
+            previous_stop = 0
+            for number, panel in enumerate(meta["panels"], 1):
+                start, stop = panel["source_y"]
+                assert start == previous_stop
+                previous_stop = stop
+                left, top, right, bottom = panel["frame"]
+                ox, oy = panel["paste_origin"]
+                assert 0 <= ox and ox + source.width * scale <= image.width
+                assert 0 <= oy and oy + (stop - start) * scale <= image.height
+                assert [e["id"] for e in panel["entries"]] == ids
+                for entry in panel["entries"]:
+                    key = entry["id"]
+                    card = index[key]
+                    x, y = entry["pixel"]
+                    assert (x, y) == (int(card[f"x{number}"]), int(card[f"y{number}"]))
+                    assert left <= x < right and top <= y < bottom and start <= y < stop
+                    col = (x - left) * meta["columns"] // (right - left)
+                    row = (y - top) * meta["rows"] // (bottom - top) + 1
+                    assert entry["square"] == chr(65 + col) + str(row)
+                    line, = [line for line in guide.splitlines() if line.startswith("| [")
+                             and f'({card["sheet"]})' in line and f"{key} **" in line]
+                    assert entry["square"] in line.split(f"{key} **", 1)[1].split("**", 1)[0]
+                    cx, cy = ox + x*scale + scale//2, oy + (y-start)*scale + scale//2
+                    assert image.getpixel((cx, cy)) == tuple(original[y, x])
+                    for sign in (-1, 1):
+                        assert any(image.getpixel((cx + sign*dx, cy + dy)) == teal
+                                   for dx in range(1, 4*scale+1) for dy in (-1, 0, 1)), key
+                    l, t, r, b = entry["badge"]
+                    assert (original[t:b+1, l:r+1].max(axis=2) >= 185).all(), key
+            assert previous_stop == source.height
+
+
 def test_preserved_sources_and_marine_station_matches():
     manifest = json.loads((SOURCE / "sources.json").read_text())
     for entry in manifest["sources"]:
