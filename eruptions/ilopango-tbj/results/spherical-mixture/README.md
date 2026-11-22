@@ -1,12 +1,18 @@
 # Ilopango TBJ (Unit G) · Spherical mixture
 
-The principal bulk volume is **145 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **62.9–3.3e+03 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
+The principal bulk volume is **133 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **59.7–1.95e+03 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
 
 ![Ilopango TBJ (Unit G), Spherical mixture. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
 Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-Every contour on these maps is conditional. [Spatial uncertainty and measurement footprint](field.png)
+The principal map uses the geographic continuation evaluated on all registered eruptions. [Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · [Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)
+
+[Conditional intervals under all eight fixed prior fits](extent/prior-sensitivity.json)
+
+## Earlier continuation and its diagnostics
+
+The following figures and statistics describe the fitted parent and its broader continuation. The principal estimate and its interval appear above.
 
 ## What the unobserved directions contribute
 

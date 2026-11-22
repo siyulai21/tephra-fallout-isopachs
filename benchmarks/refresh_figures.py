@@ -220,7 +220,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     cases = [refresh_case(r, args.output, args.scopes) for r in rows]
     if len(cases) == len(datasets()):
-        all_case_scores(args.output, cases)
+        all_case_scores(args.output, cases,homes={r["name"]:Path("eruptions")/r["slug"]/"results" for r in rows})
 
 
 if __name__ == "__main__":

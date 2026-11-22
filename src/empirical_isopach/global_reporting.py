@@ -163,5 +163,7 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
     from .models.mass_mixture.archive_check import case_archives
     case_archives(path,output,data,meta,archives)
     from .visualization.deposit import render_deposit
+    from .models.extent_release import review_dataset
+    review_dataset(output,"spherical-mixture",data,meta,principal["name"],input_path=path)
     render_deposit(output,"spherical-mixture",data,meta,principal["name"])
     return principal

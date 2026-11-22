@@ -10,6 +10,8 @@ The [optional intake template](../templates/README.md) gives the observation sch
 
 The default full run writes the principal corridor fit to `nested-isopachs/` and its broad sensitivity to `nested-whole-area/`. Use the corridor median isopachs, integral of median thickness, interval and geographic scores in case and catalogue summaries. Give independent surveys and buffered measurements priority when discussing how far a deposit actually extended. [Output and evidence hierarchy](methods/nested-reach.md)
 
+Each global family now writes its geographic continuation, blocked predictions and support decisions under `extent/`. The principal map and volume are in `deposit.png` and `deposit.json`. [Continuation and uncertainty](methods/finite-spread.md)
+
 ## From upload to published case
 
 1. **Audit the sources.** Preserve original files and hashes and record row identities and units in the case audit. Review each actual site lacking a measured thickness. Trace important locations to their original descriptions, calculate any defensible limits, and document the missing physical quantity or the demonstrated low geometric influence for an omission. Save the calculations and the links from source records to fitted rows. [Site review worksheet](../templates/SITE_EVIDENCE.md)

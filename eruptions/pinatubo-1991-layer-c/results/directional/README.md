@@ -1,12 +1,16 @@
 # Pinatubo 1991 (Layer C) · Directional ensemble
 
-The principal bulk volume is **6.42 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **4.96–11.8 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
+The principal bulk volume is **6.38 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **4.92–10.8 km³** across complete posterior draws. **Numerical warning on the fitted deposit distribution.**
 
 ![Pinatubo 1991 (Layer C), Directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
 Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-Fixing the fan directions gives a median-map volume of 6.65 km³. Solid fragments require thicknesses on opposite sides of the contour and at least 90% posterior crossing probability. [Whole-Earth context](azimuth/world.png) · [Earlier 0.1 cm extent and its edge checks](azimuth/map-display.json)
+The principal map uses the geographic continuation evaluated on all registered eruptions. [Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · [Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)
+
+## Earlier continuation and its diagnostics
+
+The following figures and statistics describe the fitted parent and its broader continuation. The principal estimate and its interval appear above.
 
 ## Reach from the volcano
 

@@ -1,0 +1,633 @@
+{
+  "protocol": "finite-spread-and-angular-resolution-v1",
+  "family": "nested-isopachs",
+  "name": "Aso-4",
+  "input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+  "parent_sha256": {
+    "report.json": "59e4e17af43790b1bcaa09a207535b178de4bd998374b2b7bba0d63699dc66da",
+    "full.npz": "0336d33a085cec96615d4744dbe680e2c17d760cf375d8e2bbb1001b51abcf93"
+  },
+  "calibration": {
+    "states": [
+      "broad",
+      "resolved"
+    ],
+    "weights": [
+      0.6520934321613822,
+      0.3479065678386179
+    ],
+    "donors": [
+      "mazama",
+      "tambora",
+      "b-tm",
+      "ytt",
+      "minoan",
+      "ilopango-tbj",
+      "sakurajima-satsuma",
+      "pinatubo-1991-layer-c"
+    ],
+    "eligible_folds": 24
+  },
+  "calibration_sha256": "6ba944f53c1ff03af2efff120faa783da8a2d4e434b2283d9594e108ed2f9652",
+  "exact_parent_identity": false,
+  "conditional_interval95_km3": [
+    196.7260903840696,
+    10061.762441283154
+  ],
+  "draw_checks_passed": true,
+  "parent_conditional_interval95_km3": [
+    249.51327519267343,
+    9990.076060458938
+  ],
+  "parent_draw_checks_passed": true,
+  "state_conditional_intervals95_km3": {
+    "parent": [
+      249.734613776247,
+      9991.647340075684
+    ],
+    "broad": [
+      209.59331004102,
+      9991.647340075684
+    ],
+    "resolved": [
+      185.38799270267532,
+      9991.647340075684
+    ]
+  },
+  "state_order": [
+    "parent",
+    "broad",
+    "resolved"
+  ],
+  "volume_draws_sha256": "34834b6f02461ef0a7da8a6a8bbd0d136d6b41bb60e9bcea92571fb528bbaee3",
+  "draw_refinements": [
+    {
+      "draws_per_state": 2048,
+      "split_relative_difference": 0.16273439915262833,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              248.55674283264997,
+              677.3320988958847,
+              9873.376371642531
+            ],
+            [
+              211.02807865552538,
+              558.4944209908035,
+              9873.376371642531
+            ],
+            [
+              186.1798244490888,
+              487.19005791807876,
+              9873.376371642531
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.003808990745154608,
+            0.012768201414589725,
+            0.016143723170955204
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              247.2073460686888,
+              677.6844322467773,
+              9872.753166403729
+            ],
+            [
+              209.31585845517193,
+              559.7512604930652,
+              9872.753166403729
+            ],
+            [
+              184.91123627314835,
+              487.0774378213712,
+              9872.753166403729
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.0010246375881657718,
+            0.002754164030069471,
+            0.004480038980725937
+          ],
+          "max_relative_refinement_by_state": [
+            0.005458562560621605,
+            0.008180078724040696,
+            0.006860525090354841
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "draws_per_state": 4096,
+      "split_relative_difference": 0.07294446445628672,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              250.56067398437816,
+              653.0350003578067,
+              9991.44101763322
+            ],
+            [
+              211.0522824384484,
+              540.1610257132165,
+              9991.44101763322
+            ],
+            [
+              186.90042207408294,
+              470.1507716065822,
+              9991.44101763322
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.004492188076613555,
+            0.014225276250048173,
+            0.013600192179685918
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              249.734613776247,
+              653.0465581324712,
+              9991.647340075684
+            ],
+            [
+              209.59331004102,
+              540.3705555344978,
+              9991.647340075684
+            ],
+            [
+              185.38799270267532,
+              471.3132562581122,
+              9991.647340075684
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.001374201444238214,
+            0.0027800961456071424,
+            0.006360905187213912
+          ],
+          "max_relative_refinement_by_state": [
+            0.003307752159944055,
+            0.00696096834933746,
+            0.008158184083870257
+          ],
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "geographic": {
+      "negative_log_score": 1.584218149725499,
+      "parent_matched_score": 1.5559059532088937,
+      "state_scores": {
+        "parent": 1.5559059532088937,
+        "broad": 1.5779654024873526,
+        "resolved": 1.5966324277441513
+      },
+      "fold_scores": [
+        1.6085194558905482,
+        1.173003813563813,
+        1.8950712475307052,
+        1.6602780819169298
+      ],
+      "passed_folds": 3,
+      "attempted_folds": 4,
+      "all_folds_passed": false,
+      "passed_only_score": 1.480600450457097,
+      "n_rows": 87,
+      "n_exact": 83,
+      "coverage95_exact": 0.9156626506024096,
+      "matched_parent_coverage95": 0.9156626506024096
+    }
+  },
+  "folds": [
+    {
+      "design": "geographic",
+      "fold": 0,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        49,
+        24,
+        25,
+        32,
+        26,
+        15,
+        67,
+        68,
+        45,
+        64,
+        84,
+        61,
+        52,
+        76,
+        63,
+        16,
+        7,
+        81,
+        59,
+        78,
+        10,
+        77,
+        82,
+        72,
+        70,
+        71,
+        35,
+        51,
+        18,
+        73,
+        75,
+        41,
+        43,
+        50,
+        54,
+        13,
+        29,
+        11,
+        36,
+        44,
+        30,
+        38,
+        42,
+        55,
+        12,
+        39,
+        40,
+        23,
+        56,
+        58,
+        57,
+        17,
+        8,
+        33,
+        2,
+        5,
+        3,
+        22,
+        19,
+        46,
+        47,
+        31,
+        48
+      ],
+      "test": [
+        14,
+        4,
+        20,
+        6,
+        85,
+        87,
+        88,
+        86,
+        80,
+        66,
+        79,
+        62,
+        65,
+        74,
+        21,
+        53,
+        83,
+        37,
+        27,
+        9,
+        28
+      ],
+      "source_sha256": {
+        "posterior": "3345b7021edef11d7205550e493567ef7112a2244e803e4f93290e70cca609e0"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 1,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        14,
+        4,
+        20,
+        6,
+        85,
+        87,
+        88,
+        86,
+        80,
+        66,
+        79,
+        62,
+        65,
+        74,
+        21,
+        53,
+        83,
+        37,
+        9,
+        10,
+        77,
+        82,
+        72,
+        70,
+        71,
+        35,
+        51,
+        18,
+        73,
+        75,
+        41,
+        43,
+        50,
+        54,
+        13,
+        29,
+        11,
+        36,
+        44,
+        30,
+        38,
+        42,
+        55,
+        12,
+        39,
+        40,
+        23,
+        56,
+        58,
+        57,
+        17,
+        8,
+        33,
+        2,
+        5,
+        3,
+        22,
+        19,
+        46,
+        47,
+        31,
+        48
+      ],
+      "test": [
+        49,
+        24,
+        25,
+        32,
+        26,
+        15,
+        67,
+        68,
+        45,
+        64,
+        84,
+        61,
+        52,
+        76,
+        63,
+        16,
+        7,
+        81,
+        34,
+        59,
+        60,
+        69
+      ],
+      "source_sha256": {
+        "posterior": "cc6d5c244274d35878db421d8007a0498e7a65aca65f55cdaaae31c09b9708e4"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 2,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        14,
+        4,
+        20,
+        49,
+        6,
+        24,
+        85,
+        87,
+        88,
+        86,
+        25,
+        80,
+        66,
+        79,
+        62,
+        32,
+        65,
+        26,
+        15,
+        67,
+        74,
+        21,
+        53,
+        83,
+        68,
+        45,
+        64,
+        84,
+        37,
+        61,
+        52,
+        76,
+        63,
+        16,
+        7,
+        81,
+        34,
+        27,
+        9,
+        60,
+        69,
+        28,
+        38,
+        55,
+        12,
+        39,
+        40,
+        23,
+        56,
+        58,
+        57,
+        17,
+        8,
+        33,
+        2,
+        5,
+        3,
+        22,
+        19,
+        46,
+        47,
+        31,
+        48
+      ],
+      "test": [
+        78,
+        10,
+        77,
+        82,
+        72,
+        70,
+        71,
+        35,
+        51,
+        18,
+        73,
+        75,
+        41,
+        43,
+        50,
+        54,
+        13,
+        29,
+        11,
+        36,
+        44,
+        30
+      ],
+      "source_sha256": {
+        "posterior": "0a5fc065ff9313c14a5aba9db56f9ed7f4aa8806db31b070e7ce5db980a4a7e6"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 3,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        14,
+        4,
+        20,
+        49,
+        6,
+        24,
+        85,
+        87,
+        88,
+        86,
+        25,
+        80,
+        66,
+        79,
+        62,
+        32,
+        65,
+        26,
+        15,
+        67,
+        74,
+        21,
+        53,
+        83,
+        68,
+        45,
+        64,
+        84,
+        37,
+        61,
+        52,
+        76,
+        63,
+        16,
+        7,
+        81,
+        34,
+        59,
+        27,
+        9,
+        60,
+        69,
+        28,
+        78,
+        10,
+        77,
+        82,
+        72,
+        70,
+        71,
+        35,
+        51,
+        18,
+        73,
+        75,
+        41,
+        43,
+        50,
+        54,
+        13,
+        29,
+        11,
+        36,
+        44
+      ],
+      "test": [
+        38,
+        42,
+        55,
+        12,
+        39,
+        40,
+        23,
+        56,
+        58,
+        57,
+        17,
+        8,
+        33,
+        2,
+        5,
+        3,
+        22,
+        19,
+        46,
+        47,
+        31,
+        48
+      ],
+      "source_sha256": {
+        "posterior": "ae54111c06287402a42f6f8d61423832f3da4ba2a8119481c722f4d8a981838d"
+      },
+      "maximum_training_log_cm_change": 0.0
+    }
+  ],
+  "heldout_sha256": "e3cb17e773fd70fba5469b875b7d04b07e30349ddd36ed84c4613da322938a4e",
+  "interpretation": "Conditional on the recorded sites, likelihood, family and continuation choices. Independent whole-Earth integrals of coherent fields give the interval. Complete-contour eligibility is assessed separately."
+}

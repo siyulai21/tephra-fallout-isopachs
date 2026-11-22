@@ -22,7 +22,7 @@ def digest(path):
     return sha256(Path(path).read_bytes()).hexdigest()
 
 
-def open_field(folder, family, data, meta):
+def parent_view(folder, family, data, meta):
     """Return the published median evaluator, support model and source identities."""
     folder = Path(folder)
     if family == "directional":
@@ -62,6 +62,25 @@ def open_field(folder, family, data, meta):
         model = ReachDraws.load(folder/paths[1])
         view = MapView(model.reduced(report["quadrature"][-1]["draws"]))
     return view, model, identity
+
+
+def open_field(folder, family, data, meta, *, review=None):
+    """Prefer the current complete-deposit model when a reviewed continuation exists."""
+    path = Path(review) if review is not None else Path(folder)/"extent"/"report.json"
+    view, model, sources = parent_view(folder, family, data, meta)
+    if not path.is_file():
+        return view, model, sources
+    from ..models.extent_review import ExtentFields, ExtentView, PROTOCOL
+    report = json.loads(path.read_text())
+    if (report["protocol"]!=PROTOCOL or report["family"]!=family or report["input_sha256"]!=meta["input_sha256"]
+            or report["parent_sha256"]!=sources):
+        raise ValueError("Conditional continuation belongs to different input or posterior")
+    cal = report["calibration"]
+    if not report["exact_parent_identity"]:
+        parent = view.field if family=="spherical-mixture" else view.model
+        fields = ExtentFields(family,parent,data,meta["vent_lonlat"][1],cal["states"])
+        view = ExtentView(fields,view.domain,cal["weights"])
+    return view,model,{**sources,"extent/report.json":digest(path)}
 
 
 @dataclass

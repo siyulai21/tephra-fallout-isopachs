@@ -1,5 +1,7 @@
 # How far can a measured isopach be continued?
 
+The following experiment documents the original finite-corridor and whole-area comparison. Current estimates add a check on transverse spread and turning ridges. [Current nested estimates](../nested-isopachs/README.md) · [Paired test of the new continuation](../global-extent/README.md)
+
 A distant core establishes fallout at its location. Extending the same thickness across an unsampled flank can contribute much more bulk volume than the core itself constrains. The paired fits below use identical accepted observations and the same nested thickness profile. The principal corridor model allows finite angular and down-range reach around positive sites and retains a broad alternative. Bounds constrain thickness through their observation likelihood. [Geographic reach model and assumptions](../../docs/methods/nested-reach.md)
 
 Real surveys provide the primary comparison. On Calbuco 2015 the corridor fit improved predictions on a separate field campaign and reduced the average extra span against an independently mapped 0.1 mm isopach. The Aso-4 and Pinatubo marine transfers favored the broader fit. Synthetic deposits have a separate role in testing failure modes and numerical recovery. [Independent surveys, archive bounds and field-map checks](field-surveys/README.md)

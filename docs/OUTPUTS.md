@@ -4,6 +4,8 @@
 
 Start with the case home. It links the accepted evidence, regional comparison, support audit and all three global families. The normal `compare` command writes the layout below. A standalone `global --output PATH` command writes its chosen family's report directly to `PATH`.
 
+The `extent/` directory in each global family contains the current conditional interval, scores from withheld regions, parent comparisons and the complete contour audit. The spherical directory also contains the eight fixed prior sensitivities. [Current continuation rules](methods/finite-spread.md)
+
 | Location relative to a case's `results/` | Scope |
 |---|---|
 | `README.md`, `report.json`, maps and `selection/` | GP ensemble and cubic spline, fitted separately on a common regional hull |

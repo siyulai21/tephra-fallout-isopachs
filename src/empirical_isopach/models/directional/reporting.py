@@ -211,5 +211,7 @@ def directional_dataset(path, output, name=None, resume=False, *, archives=None)
     result = uncertain_azimuth(path,work,output/"azimuth",name,archives)
     family_page(output)
     from ...visualization.deposit import render_deposit
+    from ..extent_release import review_dataset
+    review_dataset(output,"directional",data,meta,result["dataset"],work=work,input_path=path)
     render_deposit(output,"directional",data,meta,result["dataset"])
     return result

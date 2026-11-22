@@ -1,0 +1,517 @@
+{
+  "protocol": "finite-spread-and-angular-resolution-v1",
+  "family": "spherical-mixture",
+  "name": "Sakurajima Satsuma (P14)",
+  "input_sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1",
+  "parent_sha256": {
+    "report.json": "718213592038aae0c5e2ae761b6a5552765ce8b0df6558f1564f6765d11734e5",
+    "posterior.npz": "c255df6966ca5dd07e48e7b062c8807ffb6e7e1d941a45586d2a844fa08b1d3f"
+  },
+  "calibration": {
+    "states": [
+      "broad",
+      "resolved"
+    ],
+    "weights": [
+      0.7694337672901,
+      0.23056623270990004
+    ],
+    "donors": [
+      "mazama",
+      "tambora",
+      "aso-4",
+      "b-tm",
+      "ytt",
+      "minoan",
+      "ilopango-tbj",
+      "pinatubo-1991-layer-c"
+    ],
+    "eligible_folds": 26
+  },
+  "calibration_sha256": "6ba944f53c1ff03af2efff120faa783da8a2d4e434b2283d9594e108ed2f9652",
+  "exact_parent_identity": false,
+  "conditional_interval95_km3": [
+    4.886720766008983,
+    304.6418140687464
+  ],
+  "draw_checks_passed": true,
+  "parent_conditional_interval95_km3": [
+    5.104078751934502,
+    666.5464015363515
+  ],
+  "parent_draw_checks_passed": true,
+  "state_conditional_intervals95_km3": {
+    "parent": [
+      5.102706394399991,
+      664.7572946507884
+    ],
+    "broad": [
+      5.015640865945207,
+      323.4961492800509
+    ],
+    "resolved": [
+      4.570263609731012,
+      245.33915748859556
+    ]
+  },
+  "state_order": [
+    "parent",
+    "broad",
+    "resolved"
+  ],
+  "volume_draws_sha256": "c7c125f74e6eeefe68cbbd42e1db633e6695f7ce3e3af1c805a0c2c3d815403d",
+  "draw_refinements": [
+    {
+      "draws_per_state": 3072,
+      "split_relative_difference": 0.4255196497944949,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              5.115502850005065,
+              11.194784366907706,
+              691.6665139087834
+            ],
+            [
+              5.010923739530843,
+              10.316517348118197,
+              313.16221369682575
+            ],
+            [
+              4.574723803971985,
+              8.91511222219536,
+              247.6785673824253
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.003807037430135255,
+            0.0025806094326432556,
+            0.0034389133268438476
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              5.1217230011433275,
+              11.189585737058497,
+              689.9119460176828
+            ],
+            [
+              5.003794392158842,
+              10.312430367784897,
+              312.97368418066793
+            ],
+            [
+              4.578255328110787,
+              8.912263091295584,
+              247.13688054812133
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.001468084668197791,
+            0.0019558086254493705,
+            0.0015491968406379148
+          ],
+          "max_relative_refinement_by_state": [
+            0.0025431765622094815,
+            0.0014247882333400241,
+            0.0021918494443347036
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "draws_per_state": 6144,
+      "split_relative_difference": 0.02277899234321608,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              5.1021270558270535,
+              11.345937783037108,
+              664.2719642128106
+            ],
+            [
+              5.0156069225653805,
+              10.475994818428951,
+              322.78093509606924
+            ],
+            [
+              4.571255822108278,
+              9.034443351537295,
+              245.5114966564553
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.007468708813681035,
+            0.0021126547471416682,
+            0.0024370010015293923
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              5.102706394399991,
+              11.346342266505253,
+              664.7572946507884
+            ],
+            [
+              5.015640865945207,
+              10.473546392533795,
+              323.4961492800509
+            ],
+            [
+              4.570263609731012,
+              9.038073826062691,
+              245.33915748859556
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.0019459592355350708,
+            0.000954846672693462,
+            0.001727277972183831
+          ],
+          "max_relative_refinement_by_state": [
+            0.0007300866675448159,
+            0.0022108893276576724,
+            0.0007024527581487305
+          ],
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "geographic": {
+      "negative_log_score": 1.3507222427364904,
+      "parent_matched_score": 1.36736878319416,
+      "state_scores": {
+        "parent": 1.36736878319416,
+        "broad": 1.3522014781388194,
+        "resolved": 1.4293060059984475
+      },
+      "fold_scores": [
+        1.4490629016821683,
+        0.9601069303135124,
+        2.2362205000397504,
+        0.7574986389105309
+      ],
+      "passed_folds": 4,
+      "attempted_folds": 4,
+      "all_folds_passed": true,
+      "passed_only_score": 1.3507222427364904,
+      "n_rows": 57,
+      "n_exact": 50,
+      "coverage95_exact": 0.88,
+      "matched_parent_coverage95": 0.88
+    }
+  },
+  "folds": [
+    {
+      "design": "geographic",
+      "fold": 0,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        32,
+        8,
+        9,
+        34,
+        30,
+        10,
+        11,
+        12,
+        13,
+        7,
+        14,
+        56,
+        15,
+        5,
+        16,
+        17,
+        6,
+        21,
+        20,
+        22,
+        18,
+        4,
+        24,
+        31,
+        19,
+        25,
+        26,
+        23,
+        47,
+        46,
+        58,
+        45,
+        29,
+        48,
+        52,
+        51,
+        28,
+        54,
+        27,
+        50,
+        55,
+        53,
+        49
+      ],
+      "test": [
+        57,
+        41,
+        38,
+        37,
+        40,
+        39,
+        36,
+        42,
+        2,
+        43,
+        44,
+        3,
+        35,
+        33
+      ],
+      "source_sha256": {
+        "posterior": "f70647bdf7dd1e44c7158fbe882f7ae830458cfd31b4c754a281224fcd714f6d"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 1,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        57,
+        41,
+        38,
+        37,
+        40,
+        39,
+        36,
+        42,
+        2,
+        43,
+        44,
+        3,
+        35,
+        33,
+        16,
+        17,
+        6,
+        18,
+        4,
+        24,
+        31,
+        19,
+        25,
+        26,
+        23,
+        47,
+        46,
+        58,
+        45,
+        29,
+        48,
+        52,
+        51,
+        28,
+        54,
+        27,
+        50,
+        55,
+        53,
+        49
+      ],
+      "test": [
+        32,
+        8,
+        9,
+        34,
+        30,
+        10,
+        11,
+        12,
+        13,
+        7,
+        14,
+        56,
+        15,
+        5
+      ],
+      "source_sha256": {
+        "posterior": "b019c17b569c6e257aee20d8b36f876001719d31132ed6fa971ccbd72cb1e105"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 2,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        57,
+        41,
+        38,
+        37,
+        40,
+        39,
+        36,
+        42,
+        2,
+        43,
+        44,
+        3,
+        35,
+        33,
+        32,
+        8,
+        9,
+        34,
+        30,
+        10,
+        11,
+        12,
+        13,
+        7,
+        14,
+        56,
+        15,
+        5,
+        16,
+        6,
+        21,
+        20,
+        22,
+        4,
+        24,
+        19,
+        23,
+        52,
+        51,
+        54,
+        50,
+        53,
+        49
+      ],
+      "test": [
+        17,
+        18,
+        31,
+        25,
+        26,
+        47,
+        46,
+        58,
+        45,
+        29,
+        48,
+        28,
+        27,
+        55
+      ],
+      "source_sha256": {
+        "posterior": "b01adfa649135f9b0de35ffabe79eb083a4d07a9048764f66c4f676fd970b247"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 3,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        57,
+        41,
+        38,
+        37,
+        40,
+        39,
+        36,
+        42,
+        2,
+        43,
+        44,
+        3,
+        35,
+        33,
+        32,
+        8,
+        9,
+        34,
+        30,
+        10,
+        11,
+        12,
+        13,
+        7,
+        14,
+        56,
+        17,
+        18,
+        31,
+        25,
+        26,
+        47,
+        46,
+        58,
+        45,
+        29,
+        48,
+        28,
+        27,
+        55
+      ],
+      "test": [
+        16,
+        6,
+        21,
+        20,
+        22,
+        4,
+        24,
+        19,
+        23,
+        52,
+        51,
+        54,
+        50,
+        53,
+        49
+      ],
+      "source_sha256": {
+        "posterior": "28b89afb1c5a22076a8addde71bf434f36868b9f2d8fb94455d48277c4a9e734"
+      },
+      "maximum_training_log_cm_change": 0.0
+    }
+  ],
+  "heldout_sha256": "21f13d2967ba0f427e3bcec61f803bc1388942e5a66661fa6c26ffbe2ff1ea44",
+  "interpretation": "Conditional on the recorded sites, likelihood, family and continuation choices. Independent whole-Earth integrals of coherent fields give the interval. Complete-contour eligibility is assessed separately."
+}

@@ -377,5 +377,7 @@ def nested_dataset(path, output, name=None, *, archives=None, resume=False, pare
     result = reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
     from ...visualization.deposit import render_deposit
     data, meta = audited_data(path,allow_intervals=True)
+    from ..extent_release import review_dataset
+    review_dataset(output,"nested-isopachs",data,meta,result["name"],input_path=path)
     render_deposit(output,"nested-isopachs",data,meta,result["name"])
     return result

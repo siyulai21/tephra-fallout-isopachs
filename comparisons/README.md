@@ -2,6 +2,10 @@
 
 Each global family reports the integral of the median-thickness map, its conditional volume interval and its held-out predictions. [All mapped volumes, conditional intervals and held-out scores](principal-volumes.csv)
 
+The current comparison includes checks on displaced spherical peaks, transverse corridor spread and angular resolution. [Paired maps, independent surveys and known-deposit trials](global-extent/README.md)
+
+The preceding reach study is described below.
+
 The nested family uses dispersal corridors for its principal isopachs and volume, with whole-area continuation as its sensitivity. B-Tm’s withheld archive bounds favor the narrower map, while withheld Aso-4 and Pinatubo marine deposits favor the broader one. [Conditional isopachs and volumes](nested-reach/README.md) · [Independent field surveys](nested-reach/field-surveys/README.md)
 
 The published Pinatubo comparison uses 208 observations, including 34 offshore records. Its land measurements incorporate both the Koyaguchi and Paladio-Melosantos figure reviews. The earlier field-survey experiments keep their own fitted inputs and held-out predictions. [Audited Pinatubo case](../eruptions/pinatubo-1991-layer-c/README.md) · [Effect of the two land-map reviews](../eruptions/pinatubo-1991-layer-c/results/source-checks/figure7-review/README.md) · [Earlier survey tests](nested-isopachs/pinatubo-preview/README.md)

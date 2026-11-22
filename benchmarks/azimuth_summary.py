@@ -32,6 +32,14 @@ def case_table(cases=None, published_root=Path("eruptions")):
                 score = r["validation"][design][subset]
                 for key in ("folds","rows","control_score","revised_score"):
                     row[design+"_"+subset+"_"+key] = score[key] if score else None
+        if cases is None and (path.parent.parent/"extent/report.json").is_file():
+            home=path.parent.parent
+            current=json.loads((home/"extent/report.json").read_text())
+            row["uncertain_map_km3"]=json.loads((home/"deposit.json").read_text())["median_map_volume_km3"]
+            row["joint_lower95"],row["joint_upper95"]=current["conditional_interval95_km3"]
+            for kind,detail in current["validation"].items():
+                row[kind+"_all_estimated_revised_score"]=detail["negative_log_score"]
+                row[kind+"_passed_only_revised_score"]=detail["passed_only_score"]
         records.append(row)
     return pd.DataFrame(records).sort_values("slug").reset_index(drop=True)
 
