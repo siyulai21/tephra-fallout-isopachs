@@ -3,15 +3,15 @@
   "name": "Pinatubo 1991 (Layer C)",
   "input": {
     "source": "data/eruptions/Pinatubo_1991_layer_C.csv",
-    "input_sha256": "5400069fea176a055aebf2395d0f92dabf51ce3c7354f17c559f4e9ccea0bfda",
+    "input_sha256": "2899fd9e79d88f81065dc87e50da41e0673b525bf370b6788a8f72d4ad14f5ce",
     "vent_lonlat": [
       120.345455,
       15.142857
     ],
     "projection": "+proj=laea +lat_0=15.142857 +lon_0=120.345455 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
-    "n_measurements": 140,
-    "n_upper_limits": 28,
-    "n_lower_limits": 26,
+    "n_measurements": 150,
+    "n_upper_limits": 30,
+    "n_lower_limits": 28,
     "ignored_pseudo_rows": [],
     "ignored_extra_columns": [
       "EvidenceID",
@@ -19,21 +19,21 @@
     ],
     "audit": {
       "file": "audits/Pinatubo-1991/provenance.json",
-      "sha256": "1f756182f0617dde8ec3651c0aa10edde462e6de6ffbd2a589642fa68531f75a",
+      "sha256": "7b164278e9abbeae469fe1b5ce06309abfb35e96724fda358dc77c54f02fbd73",
       "case": "principal",
       "definition": "June 15 climactic Layer C including C1+C2 and survey-attributed marine equivalents; accumulated bulk fall thickness."
     }
   },
   "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
-  "posterior_sha256": "fe2900785e93d36aeb0d1b4d95d412e06c1db123a30514e769534b4ccbece33c",
-  "draws": 3072,
+  "posterior_sha256": "2530480a79a5e81b8fde1d2be520dd12acab426421b1c156738788d5b3449837",
+  "draws": 24576,
   "population_check_passed": true,
   "area_check": [
     {
       "nodes_per_scramble": 8192,
-      "median_relative_error": 0.0002967609199848731,
-      "q95_relative_error": 0.0004565492137973859,
-      "maximum_relative_error": 0.0008136353586253309,
+      "median_relative_error": 0.0003298290404669668,
+      "q95_relative_error": 0.0005560611097896628,
+      "maximum_relative_error": 0.0009069459957018466,
       "passed": true
     }
   ],
@@ -56,212 +56,212 @@
     ],
     "fraction_by_part": [
       [
-        0.028520687289945338,
-        0.06697049220734602,
-        0.07601737242889102
+        0.029385183706420487,
+        0.06978080204347159,
+        0.07932356274611525
       ],
       [
-        0.0015406651850718824,
-        0.003613779157798822,
-        0.004339430564437667
+        0.0014159279048511814,
+        0.0032489579965882666,
+        0.004264218451123742
       ],
       [
-        0.019677301925922226,
-        0.0984992065694788,
-        0.6023016471579473
+        0.015220072109380024,
+        0.08337246814137407,
+        0.5869126342765256
       ],
       [
-        0.367453606129764,
-        0.829978701786213,
-        0.9014209223235634
+        0.3816296977725768,
+        0.8429960598419037,
+        0.9034450313809963
       ]
     ],
     "fraction_by_sector": [
       [
-        0.006602218242243791,
-        0.012324676035485909,
-        0.02766455324654663
+        0.008742864333847473,
+        0.01331917953321616,
+        0.026315321252233244
       ],
       [
-        0.004127039783429056,
-        0.0043803696596367465,
-        0.01713177346491848
+        0.004153629794450881,
+        0.004388593305678014,
+        0.012043294999427977
       ],
       [
-        0.004125590266950384,
-        0.00431135226069415,
-        0.016937388896632464
+        0.004115803438965386,
+        0.004125989111141696,
+        0.01188107992286856
       ],
       [
-        0.005507250235099658,
-        0.008735938477327124,
-        0.02282955766221093
+        0.005375022666290059,
+        0.006584972492984916,
+        0.018311138716656367
       ],
       [
-        0.042718631608081065,
-        0.09218152436395283,
-        0.12948757669595976
+        0.04251355006168759,
+        0.06346504488947485,
+        0.09699045290629761
       ],
       [
-        0.28489555944057265,
-        0.38585357714185703,
-        0.43716874256347416
+        0.282539794173096,
+        0.34134045186845674,
+        0.3949123995586923
       ],
       [
-        0.3424628332025559,
-        0.3949414726631121,
-        0.4642758815091611
+        0.36315385519864696,
+        0.4372100520265688,
+        0.4647855774967155
       ],
       [
-        0.06347295753941455,
-        0.09504736983506241,
-        0.1753100776464217
+        0.09218284163242896,
+        0.13004897249174902,
+        0.17753999940262977
       ]
     ],
     "highest_5pct_by_total_median_fraction": [
-      0.028352334895761635,
-      0.0015300642910117223,
-      0.6054820849784328,
-      0.3640557597939694
+      0.029256180918474005,
+      0.001415301564044385,
+      0.588473552600049,
+      0.38058292716722397
     ],
     "sampled_fields": 256,
     "highest_5pct_fields": 13
   },
   "exact_site_coverage95": {
-    "exact_sites": 140,
-    "covered": 101,
-    "fraction": 0.7214285714285714
+    "exact_sites": 150,
+    "covered": 103,
+    "fraction": 0.6866666666666666
   },
   "prior_sensitivity": {
     "baseline": {
-      "effective_draws": 3071.9999999999854,
-      "relative_ess": 0.9999999999999952,
+      "effective_draws": 24576.000000000946,
+      "relative_ess": 1.0000000000000384,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.416686063421754,
-        27.78830245481862
+        9.754255423782974,
+        27.695601647764775
       ]
     },
     "weak_profile_transfer": {
-      "effective_draws": 332.40305517085267,
-      "relative_ess": 0.10820411952176194,
+      "effective_draws": 11680.311995322885,
+      "relative_ess": 0.4752731117888544,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.570737971894573,
-        25.452961519208884
+        9.884966129258759,
+        26.02539185726412
       ]
     },
     "broader_peak_prior": {
-      "effective_draws": 3071.8063588045766,
-      "relative_ess": 0.9999369657566981,
+      "effective_draws": 24572.573539816545,
+      "relative_ess": 0.9998605769782123,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.4164670120221,
-        27.79173000763361
+        9.757061983888862,
+        27.706007495336827
       ]
     },
     "power_tail_prior_80pct": {
-      "effective_draws": 2300.013896487576,
-      "relative_ess": 0.7487024402628828,
+      "effective_draws": 15813.612141652427,
+      "relative_ess": 0.643457525295102,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.369511035189424,
-        25.314015646031915
+        9.735824588232878,
+        29.40394833907696
       ]
     },
     "exponential_tail_prior_80pct": {
-      "effective_draws": 2218.791510460761,
-      "relative_ess": 0.7222628614781123,
+      "effective_draws": 21293.564118762384,
+      "relative_ess": 0.8664373420720372,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.461001562088875,
-        29.59866045009229
+        9.758972034083344,
+        26.726633356780795
       ]
     },
     "detached_prior_50pct": {
-      "effective_draws": 3071.9999999999854,
-      "relative_ess": 0.9999999999999952,
+      "effective_draws": 24576.000000000946,
+      "relative_ess": 1.0000000000000384,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.4164670120221,
-        27.79173000763361
+        9.754197115303754,
+        27.706007495336827
       ]
     },
     "more_distal_ash_prior": {
-      "effective_draws": 1958.0759514866977,
-      "relative_ess": 0.6373945154579094,
+      "effective_draws": 20868.414432479152,
+      "relative_ess": 0.8491379570507468,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.371470851249365,
-        28.261563162627716
+        9.68149473996004,
+        27.506299684314804
       ]
     },
     "less_distal_ash_prior": {
-      "effective_draws": 2233.781577022039,
-      "relative_ess": 0.7271424404368617,
+      "effective_draws": 17264.490686293913,
+      "relative_ess": 0.7024939244097458,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.387879804366756,
-        26.046033220218586
+        9.700746863772677,
+        28.097187346206525
       ]
     },
     "distal_prior_without_Santa Maria 1902": {
-      "effective_draws": 1288.416673603316,
-      "relative_ess": 0.4194064692719128,
+      "effective_draws": 18487.21675981429,
+      "relative_ess": 0.7522467757085893,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.485344981056853,
-        28.813772036744098
+        9.871760765330441,
+        27.205080381903617
       ]
     },
     "distal_prior_without_Quizapu 1932": {
-      "effective_draws": 2949.5210101153643,
-      "relative_ess": 0.9601305371469285,
+      "effective_draws": 23468.32837900456,
+      "relative_ess": 0.9549287263592351,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.39086856584404,
-        27.3614895060528
+        9.718424174757143,
+        27.756110124128945
       ]
     },
     "distal_prior_without_Novarupta 1912": {
-      "effective_draws": 2945.4381507300177,
-      "relative_ess": 0.9588014813574276,
+      "effective_draws": 23395.986859349625,
+      "relative_ess": 0.9519851423889008,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.39086856584404,
-        27.3614895060528
+        9.712314876088817,
+        27.749207240774513
       ]
     },
     "distal_prior_without_Hudson 1991": {
-      "effective_draws": 2911.7884295457175,
-      "relative_ess": 0.9478477960760799,
+      "effective_draws": 23041.219569964756,
+      "relative_ess": 0.9375496244289044,
       "weight_check_passed": true,
       "volume_interval95_km3": [
-        9.387879804366756,
-        27.748887038704073
+        9.698998434588288,
+        27.728280806860305
       ]
     }
   },
   "area_km2_at_cm": {
     "0.01": [
-      1243178.885159433,
-      3557290.2638021726,
-      47445741.77957677
+      1324086.837403183,
+      3758869.241071568,
+      43650230.4212125
     ],
     "0.1": [
-      519133.5812212166,
-      669711.9132701041,
-      1003433.0866964526
+      502606.495546527,
+      624924.2787867626,
+      855619.7278618594
     ],
     "1.0": [
-      192392.56827481565,
-      222531.41359986976,
-      249442.24086846082
+      176075.91137477147,
+      213522.14046381263,
+      241746.25073717575
     ],
     "10.0": [
-      9042.148069218136,
-      12426.891140506068,
-      16279.434898038242
+      10916.873985707432,
+      20450.260429069196,
+      32122.089863728736
     ],
     "100.0": [
       0.0,
@@ -282,221 +282,221 @@
     100.0,
     1000.0
   ],
-  "power_tail_posterior_fraction": 0.5283203125,
-  "geographic_score": 2.057314496981571,
+  "power_tail_posterior_fraction": 0.2421875,
+  "geographic_score": 2.1574033638414694,
   "geographic_folds_passed": 3,
   "support_status": "completed",
   "supported_band_policies": [],
   "fitted_bound_checks": [
     {
-      "row_id": 166,
+      "row_id": 180,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 0.10000000000000002,
       "latent_cm": [
-        0.02699520432986704,
-        0.06113665381652005,
-        0.12550276606246893
+        0.028041169423031566,
+        0.05703129419583467,
+        0.11381392551872406
       ],
-      "latent_satisfies": 0.9283854166666666,
-      "predictive_probability_of_event": 0.7713143006942077
+      "latent_satisfies": 0.9543050130208334,
+      "predictive_probability_of_event": 0.8196757977951106
     },
     {
-      "row_id": 186,
+      "row_id": 200,
       "name": null,
       "event": "lower",
       "lower_cm": 0.2,
       "upper_cm": null,
       "latent_cm": [
-        0.4888360883951064,
-        0.7312955529791548,
-        1.0692521631599559
+        0.532743642747827,
+        0.8489206128006586,
+        1.1890868396983967
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9815908900362368
+      "predictive_probability_of_event": 0.9875046017133471
     },
     {
-      "row_id": 187,
+      "row_id": 201,
       "name": null,
       "event": "lower",
       "lower_cm": 0.8,
       "upper_cm": null,
       "latent_cm": [
-        1.1259190460399633,
-        1.3673766340729736,
-        1.6511789861027653
+        1.0652519871065051,
+        1.4322998926700958,
+        1.7135507612512355
       ],
-      "latent_satisfies": 0.9986979166666666,
-      "predictive_probability_of_event": 0.841138448967475
+      "latent_satisfies": 0.9981282552083334,
+      "predictive_probability_of_event": 0.8636231370622934
     },
     {
-      "row_id": 188,
+      "row_id": 202,
       "name": null,
       "event": "lower",
       "lower_cm": 0.5,
       "upper_cm": null,
       "latent_cm": [
-        1.0648704934527191,
-        1.3428332428466265,
-        1.5509847114950304
+        0.9295385465941325,
+        1.266261342985071,
+        1.5347114462890477
       ],
-      "latent_satisfies": 0.9993489583333334,
-      "predictive_probability_of_event": 0.9561555478325169
+      "latent_satisfies": 0.9999593098958334,
+      "predictive_probability_of_event": 0.9532526261215443
     },
     {
-      "row_id": 189,
+      "row_id": 203,
       "name": null,
       "event": "lower",
       "lower_cm": 0.3,
       "upper_cm": null,
       "latent_cm": [
-        0.7918206516646965,
-        1.0900091245490613,
-        1.3150100464303642
+        0.6372714903077382,
+        0.9410475469427785,
+        1.2827000117459653
       ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9809308490566586
+      "latent_satisfies": 0.9999593098958334,
+      "predictive_probability_of_event": 0.9729570791686853
     },
     {
-      "row_id": 190,
+      "row_id": 204,
       "name": null,
       "event": "lower",
       "lower_cm": 0.6,
       "upper_cm": null,
       "latent_cm": [
-        1.7588468026080954,
-        2.069022815691149,
-        2.398244601453569
+        1.6912336996292252,
+        2.1012467999954123,
+        2.5139835027551993
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9802493169195361
+      "predictive_probability_of_event": 0.9830274154325793
     },
     {
-      "row_id": 191,
+      "row_id": 205,
       "name": null,
       "event": "lower",
       "lower_cm": 1.4,
       "upper_cm": null,
       "latent_cm": [
-        1.9658929525948317,
-        2.2966368069882432,
-        2.7215164041440194
+        2.01731792959057,
+        2.589725951754056,
+        2.961500081553294
       ],
-      "latent_satisfies": 0.9957682291666666,
-      "predictive_probability_of_event": 0.8220884950913557
+      "latent_satisfies": 0.9977213541666666,
+      "predictive_probability_of_event": 0.8702758156188412
     },
     {
-      "row_id": 192,
+      "row_id": 206,
       "name": null,
       "event": "lower",
       "lower_cm": 1.2,
       "upper_cm": null,
       "latent_cm": [
-        1.373814477928027,
-        1.8457630654296633,
-        2.566218727986248
+        1.5445467928365044,
+        2.325147726281098,
+        2.9625043497072996
       ],
-      "latent_satisfies": 0.9964192708333334,
-      "predictive_probability_of_event": 0.7868476676178977
+      "latent_satisfies": 0.9980875651041666,
+      "predictive_probability_of_event": 0.8789730118675104
     },
     {
-      "row_id": 181,
+      "row_id": 195,
       "name": null,
       "event": "lower",
       "lower_cm": 3.1,
       "upper_cm": null,
       "latent_cm": [
-        4.389841599920755,
-        4.977348131156696,
-        5.9574525527879
+        4.719062519528971,
+        6.263359295113843,
+        7.375076629535331
       ],
-      "latent_satisfies": 0.9954427083333334,
-      "predictive_probability_of_event": 0.8105203124023327
+      "latent_satisfies": 0.9978434244791666,
+      "predictive_probability_of_event": 0.8969179339452767
     },
     {
-      "row_id": 185,
+      "row_id": 199,
       "name": null,
       "event": "lower",
       "lower_cm": 0.10000000000000002,
       "upper_cm": null,
       "latent_cm": [
-        1.346275168581483,
-        2.0952352113985517,
-        3.47001563032885
+        1.7725207208283937,
+        3.067244247031959,
+        4.36670847468078
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9988269163725674
+      "predictive_probability_of_event": 0.9993928991002777
     },
     {
-      "row_id": 160,
+      "row_id": 174,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 6.200000000000001,
       "latent_cm": [
-        10.907457957044496,
-        12.15967580225895,
-        13.510560752751765
+        11.461015440293718,
+        12.99173384559392,
+        14.175935842874384
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.10741997466965836
+      "predictive_probability_of_event": 0.08271422662407092
     },
     {
-      "row_id": 184,
+      "row_id": 198,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 2.0,
       "latent_cm": [
-        3.2236394236752735,
-        4.647092325486318,
-        7.358091710766329
+        4.332404106235879,
+        7.623572606892771,
+        10.321741666729247
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.057806108417999984
+      "predictive_probability_of_event": 0.02041545555753999
     },
     {
-      "row_id": 183,
+      "row_id": 197,
       "name": null,
       "event": "lower",
       "lower_cm": 2.2,
       "upper_cm": null,
       "latent_cm": [
-        8.58066049532808,
-        10.08118419547206,
-        12.179477360765734
+        9.61479625808952,
+        12.185508585854583,
+        13.583892530696517
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9905344528527517
+      "predictive_probability_of_event": 0.9930875805649318
     },
     {
-      "row_id": 161,
+      "row_id": 175,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 6.0,
       "latent_cm": [
-        10.301884949912951,
-        11.463076897063427,
-        12.683660024359542
+        10.760056585089416,
+        12.030259509509905,
+        13.362678187914135
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.11510532904978128
+      "predictive_probability_of_event": 0.09302445783297746
     },
     {
-      "row_id": 182,
+      "row_id": 196,
       "name": null,
       "event": "lower",
       "lower_cm": 3.5,
       "upper_cm": null,
       "latent_cm": [
-        7.228512687374713,
-        8.59710828057604,
-        9.569505185231444
+        7.697500271665417,
+        9.076306134274418,
+        11.129873246121713
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9443461482932198
+      "predictive_probability_of_event": 0.9598961922202395
     },
     {
       "row_id": 32,
@@ -505,54 +505,40 @@
       "lower_cm": 9.699999999999998,
       "upper_cm": null,
       "latent_cm": [
-        14.440766371346566,
-        16.57533036996931,
-        18.8327833419903
+        14.335416889154855,
+        16.18810263724931,
+        18.802704238412993
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.8398522141739626
+      "predictive_probability_of_event": 0.8400500088823802
     },
     {
-      "row_id": 103,
+      "row_id": 109,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 19.999999999999996,
       "latent_cm": [
-        14.955743770227299,
-        17.121851889455243,
-        19.46715497953257
+        14.560129796214582,
+        16.53766180445082,
+        19.37421082674364
       ],
-      "latent_satisfies": 0.9879557291666666,
-      "predictive_probability_of_event": 0.6143523820086869
+      "latent_satisfies": 0.9958089192708334,
+      "predictive_probability_of_event": 0.6452390580511392
     },
     {
-      "row_id": 20,
-      "name": null,
-      "event": "lower",
-      "lower_cm": 4.999999999999999,
-      "upper_cm": null,
-      "latent_cm": [
-        13.340160718600382,
-        15.3932205935594,
-        17.748950525719813
-      ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9741074092081917
-    },
-    {
-      "row_id": 106,
+      "row_id": 112,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 17.999999999999996,
       "latent_cm": [
-        15.009962421348543,
-        17.304035333017882,
-        19.624378064295318
+        14.621141992199107,
+        16.6000988625686,
+        19.342249603805445
       ],
-      "latent_satisfies": 0.7711588541666666,
-      "predictive_probability_of_event": 0.5294583808226665
+      "latent_satisfies": 0.8846028645833334,
+      "predictive_probability_of_event": 0.5645742677095541
     },
     {
       "row_id": 51,
@@ -561,12 +547,12 @@
       "lower_cm": 9.600000000000001,
       "upper_cm": null,
       "latent_cm": [
-        14.570130418044567,
-        16.858115065435154,
-        18.955449512872676
+        14.338493669021053,
+        16.131693461304934,
+        18.78128479799345
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.8522251795084711
+      "predictive_probability_of_event": 0.8434755206457291
     },
     {
       "row_id": 84,
@@ -575,68 +561,68 @@
       "lower_cm": null,
       "upper_cm": 17.999999999999996,
       "latent_cm": [
-        14.578244731451427,
-        16.853295308727994,
-        19.371258977020585
+        14.500860210906698,
+        16.55021774198156,
+        19.26069385795512
       ],
-      "latent_satisfies": 0.8649088541666666,
-      "predictive_probability_of_event": 0.5515355323139033
+      "latent_satisfies": 0.91259765625,
+      "predictive_probability_of_event": 0.5682699519714577
     },
     {
-      "row_id": 46,
-      "name": null,
-      "event": "lower",
-      "lower_cm": 10.000000000000002,
-      "upper_cm": null,
-      "latent_cm": [
-        14.870284628018883,
-        17.346263789091548,
-        19.537016549531558
-      ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.846322654899561
-    },
-    {
-      "row_id": 115,
+      "row_id": 121,
       "name": null,
       "event": "lower",
       "lower_cm": 19.999999999999996,
       "upper_cm": null,
       "latent_cm": [
-        16.195608692875197,
-        18.909254870188708,
-        21.679342326252353
+        15.396791658110098,
+        17.713898176160846,
+        21.18308006528238
       ],
-      "latent_satisfies": 0.15397135416666666,
-      "predictive_probability_of_event": 0.4585949124927444
+      "latent_satisfies": 0.084716796875,
+      "predictive_probability_of_event": 0.4068105415464485
     },
     {
-      "row_id": 116,
+      "row_id": 124,
       "name": null,
       "event": "lower",
       "lower_cm": 13.0,
       "upper_cm": null,
       "latent_cm": [
-        16.192404418651027,
-        18.920379926605545,
-        21.655511512995528
+        15.275548497019045,
+        17.552668813245656,
+        20.937240515515377
       ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.7593604550714209
+      "latent_satisfies": 0.9999186197916666,
+      "predictive_probability_of_event": 0.7206631399099298
     },
     {
-      "row_id": 142,
+      "row_id": 122,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 13.0,
+      "upper_cm": null,
+      "latent_cm": [
+        15.392306766844348,
+        17.705717317232796,
+        21.178383116569794
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7264540027511743
+    },
+    {
+      "row_id": 153,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 15.0,
       "latent_cm": [
-        11.3561797914892,
-        13.151574088808307,
-        14.83009769464019
+        11.380484108814953,
+        12.879775617604462,
+        14.55218238143044
       ],
-      "latent_satisfies": 0.9889322916666666,
-      "predictive_probability_of_event": 0.598167807521932
+      "latent_satisfies": 0.9914143880208334,
+      "predictive_probability_of_event": 0.6152435081033204
     },
     {
       "row_id": 79,
@@ -645,12 +631,12 @@
       "lower_cm": 4.5,
       "upper_cm": null,
       "latent_cm": [
-        12.217170572666411,
-        14.257011261072408,
-        16.911978784911557
+        13.029263917023128,
+        15.045682059199736,
+        17.25780146944269
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9762112587876232
+      "predictive_probability_of_event": 0.9819129891852495
     },
     {
       "row_id": 59,
@@ -659,12 +645,12 @@
       "lower_cm": 6.700000000000001,
       "upper_cm": null,
       "latent_cm": [
-        11.011903698358942,
-        12.799280076140569,
-        14.429880072012626
+        10.965501101527476,
+        12.56260417610442,
+        14.183166441418285
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.8831684671534054
+      "predictive_probability_of_event": 0.8870469826664705
     },
     {
       "row_id": 80,
@@ -673,68 +659,96 @@
       "lower_cm": 6.999999999999999,
       "upper_cm": null,
       "latent_cm": [
-        10.83020262786452,
-        12.14216253083891,
-        14.1215472656595
-      ],
-      "latent_satisfies": 0.9993489583333334,
-      "predictive_probability_of_event": 0.8493107736460922
-    },
-    {
-      "row_id": 143,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 11.199999999999998,
-      "latent_cm": [
-        9.287661818414735,
-        11.202000949133684,
-        12.615654385292938
-      ],
-      "latent_satisfies": 0.4993489583333333,
-      "predictive_probability_of_event": 0.5119014896476766
-    },
-    {
-      "row_id": 147,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 15.0,
-      "latent_cm": [
-        8.081370816098373,
-        10.107491838150516,
-        11.555553668459625
+        11.435013895285312,
+        13.444058734348028,
+        15.059183679065573
       ],
       "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.7807810757696888
-    },
-    {
-      "row_id": 155,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 4.999999999999999,
-      "latent_cm": [
-        5.565081815893316,
-        7.916654134476475,
-        9.338303806334727
-      ],
-      "latent_satisfies": 0.0029296875,
-      "predictive_probability_of_event": 0.22270703934135427
+      "predictive_probability_of_event": 0.8893114610331424
     },
     {
       "row_id": 154,
       "name": null,
       "event": "upper",
       "lower_cm": null,
+      "upper_cm": 11.199999999999998,
+      "latent_cm": [
+        9.234825198372054,
+        11.140903075859745,
+        12.821293687594475
+      ],
+      "latent_satisfies": 0.5262044270833334,
+      "predictive_probability_of_event": 0.511124329414119
+    },
+    {
+      "row_id": 173,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 9.500000000000002,
+      "latent_cm": [
+        8.362410996851105,
+        10.29804568624419,
+        12.242103867265737
+      ],
+      "latent_satisfies": 0.20772298177083334,
+      "predictive_probability_of_event": 0.4444645368437483
+    },
+    {
+      "row_id": 158,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 15.0,
+      "latent_cm": [
+        8.265899990623792,
+        10.110283179805677,
+        12.137166917629266
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7800271731261802
+    },
+    {
+      "row_id": 92,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 6.999999999999999,
+      "upper_cm": null,
+      "latent_cm": [
+        11.017734459449096,
+        12.625417645188351,
+        13.79999842138428
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8648238740415909
+    },
+    {
+      "row_id": 167,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        5.877898549185324,
+        7.460833631908044,
+        9.715963296280103
+      ],
+      "latent_satisfies": 0.0027262369791666665,
+      "predictive_probability_of_event": 0.21729325594496177
+    },
+    {
+      "row_id": 166,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
       "upper_cm": 7.999999999999998,
       "latent_cm": [
-        6.3280112386332705,
-        8.478682048537506,
-        9.961477692163182
+        6.757285098991427,
+        8.217526911630323,
+        10.226999223459856
       ],
-      "latent_satisfies": 0.3873697916666667,
-      "predictive_probability_of_event": 0.48201194162240996
+      "latent_satisfies": 0.4308675130208333,
+      "predictive_probability_of_event": 0.4666978560519675
     },
     {
       "row_id": 58,
@@ -743,26 +757,40 @@
       "lower_cm": 7.400000000000001,
       "upper_cm": null,
       "latent_cm": [
-        5.939875974373758,
-        8.006983856623478,
-        9.510289064664269
+        6.280614684085025,
+        7.711826665871599,
+        9.853609850936637
       ],
-      "latent_satisfies": 0.6305338541666666,
-      "predictive_probability_of_event": 0.5317853404581747
+      "latent_satisfies": 0.664794921875,
+      "predictive_probability_of_event": 0.5463738373441569
     },
     {
-      "row_id": 91,
+      "row_id": 93,
       "name": null,
       "event": "lower",
       "lower_cm": 19.999999999999996,
       "upper_cm": null,
       "latent_cm": [
-        8.259932072359419,
-        9.079667398073678,
-        10.044271120947087
+        8.730383719127754,
+        10.656695101792478,
+        12.170899826452944
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.07335501442340311
+      "predictive_probability_of_event": 0.10572875703102529
+    },
+    {
+      "row_id": 95,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 13.999999999999996,
+      "upper_cm": null,
+      "latent_cm": [
+        8.012106642331073,
+        10.123924303417814,
+        11.734013030243098
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.24457088921569847
     },
     {
       "row_id": 28,
@@ -771,124 +799,152 @@
       "lower_cm": 13.5,
       "upper_cm": null,
       "latent_cm": [
-        7.520982690956097,
-        8.235988828059561,
-        9.18507544226013
+        7.924200935604644,
+        10.048514541702604,
+        11.629808852640998
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.17798143412882858
+      "predictive_probability_of_event": 0.26211845225750574
     },
     {
-      "row_id": 148,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 11.499999999999998,
-      "latent_cm": [
-        5.864886142131872,
-        7.570791069886308,
-        9.044451132227133
-      ],
-      "latent_satisfies": 0.9996744791666666,
-      "predictive_probability_of_event": 0.7955893325201017
-    },
-    {
-      "row_id": 156,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 4.999999999999999,
-      "latent_cm": [
-        4.0884997865653565,
-        6.194662787979987,
-        7.758557173219774
-      ],
-      "latent_satisfies": 0.17936197916666666,
-      "predictive_probability_of_event": 0.3880952194868144
-    },
-    {
-      "row_id": 124,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 16.5,
-      "latent_cm": [
-        5.08455070330549,
-        5.883551022958903,
-        6.986704402107138
-      ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9657699363918621
-    },
-    {
-      "row_id": 122,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 17.999999999999996,
-      "latent_cm": [
-        5.362884279041039,
-        5.857592764682578,
-        6.667976747804168
-      ],
-      "latent_satisfies": 1.0,
-      "predictive_probability_of_event": 0.9738713333312569
-    },
-    {
-      "row_id": 150,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 7.499999999999999,
-      "latent_cm": [
-        3.8285762483265136,
-        5.308644226175423,
-        6.744943726551817
-      ],
-      "latent_satisfies": 0.9964192708333334,
-      "predictive_probability_of_event": 0.76235446512527
-    },
-    {
-      "row_id": 158,
-      "name": null,
-      "event": "upper",
-      "lower_cm": null,
-      "upper_cm": 6.0,
-      "latent_cm": [
-        4.811904775419554,
-        5.320700131457136,
-        6.249500162835244
-      ],
-      "latent_satisfies": 0.9583333333333334,
-      "predictive_probability_of_event": 0.5878570872627976
-    },
-    {
-      "row_id": 64,
+      "row_id": 94,
       "name": null,
       "event": "lower",
-      "lower_cm": 3.0000000000000004,
+      "lower_cm": 17.999999999999996,
       "upper_cm": null,
       "latent_cm": [
-        2.8481888378812337,
-        4.65660297731785,
-        6.219208087533449
+        8.052326641932622,
+        10.158328207514849,
+        11.75904387208112
       ],
-      "latent_satisfies": 0.9680989583333334,
-      "predictive_probability_of_event": 0.7419945198923004
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.12354366002938473
     },
     {
       "row_id": 159,
       "name": null,
       "event": "upper",
       "lower_cm": null,
+      "upper_cm": 11.499999999999998,
+      "latent_cm": [
+        6.284941374114567,
+        7.617827670250538,
+        9.50532974699616
+      ],
+      "latent_satisfies": 0.9989420572916666,
+      "predictive_probability_of_event": 0.7839401148840531
+    },
+    {
+      "row_id": 96,
+      "name": null,
+      "event": "lower",
+      "lower_cm": 13.999999999999996,
+      "upper_cm": null,
+      "latent_cm": [
+        7.446605696686346,
+        9.630863241312161,
+        11.067217772456416
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.21381187028659568
+    },
+    {
+      "row_id": 106,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 24.999999999999996,
+      "latent_cm": [
+        7.515211319883618,
+        9.661869073976783,
+        11.133360001839097
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9643552929876792
+    },
+    {
+      "row_id": 168,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        4.075880339946073,
+        5.3628523977075675,
+        7.215492566396331
+      ],
+      "latent_satisfies": 0.3022867838541667,
+      "predictive_probability_of_event": 0.4326333582911417
+    },
+    {
+      "row_id": 133,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 16.5,
+      "latent_cm": [
+        5.388271780888663,
+        6.4756016789124295,
+        7.61797086295483
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9573438879685016
+    },
+    {
+      "row_id": 131,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 17.999999999999996,
+      "latent_cm": [
+        5.650565122814129,
+        7.125580967365891,
+        8.315509330437624
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9597013141627383
+    },
+    {
+      "row_id": 161,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.499999999999999,
+      "latent_cm": [
+        3.900392431953325,
+        4.749857098133195,
+        6.147621016747248
+      ],
+      "latent_satisfies": 0.9963785807291666,
+      "predictive_probability_of_event": 0.7912708926102267
+    },
+    {
+      "row_id": 171,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        5.081583873632704,
+        6.646569519130247,
+        7.886109452660891
+      ],
+      "latent_satisfies": 0.301025390625,
+      "predictive_probability_of_event": 0.43783376804715385
+    },
+    {
+      "row_id": 172,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
       "upper_cm": 6.999999999999999,
       "latent_cm": [
-        3.417045200915181,
-        4.499582722831303,
-        5.8472025104432275
+        3.4556680016226657,
+        4.193301057786156,
+        5.223852790605361
       ],
-      "latent_satisfies": 0.9983723958333334,
-      "predictive_probability_of_event": 0.8071910733736801
+      "latent_satisfies": 0.9979654947916666,
+      "predictive_probability_of_event": 0.8315750701798702
     },
     {
       "row_id": 16,
@@ -897,12 +953,12 @@
       "lower_cm": 2.0,
       "upper_cm": null,
       "latent_cm": [
-        2.2484491305752172,
-        2.5615028946604963,
-        2.9795289309055577
+        2.2820347922931186,
+        2.8670796763298503,
+        3.587479273181614
       ],
-      "latent_satisfies": 0.9986979166666666,
-      "predictive_probability_of_event": 0.6832766944224327
+      "latent_satisfies": 0.995361328125,
+      "predictive_probability_of_event": 0.7534873684515894
     },
     {
       "row_id": 14,
@@ -911,26 +967,26 @@
       "lower_cm": null,
       "upper_cm": 0.6,
       "latent_cm": [
-        1.0575671994776192,
-        1.281681892792501,
-        1.53474848423622
+        0.9645753549648721,
+        1.318355880268228,
+        1.6370926844892364
       ],
       "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.08294178889887092
+      "predictive_probability_of_event": 0.07407328464445022
     },
     {
       "row_id": 35,
       "name": null,
       "event": "lower",
-      "lower_cm": 10.8,
+      "lower_cm": 5.8,
       "upper_cm": null,
       "latent_cm": [
-        3.553949727373265,
-        3.9386447872878008,
-        4.758928880549483
+        3.742816766896978,
+        4.66795345480347,
+        5.400357322544282
       ],
-      "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.037568741055987356
+      "latent_satisfies": 0.0015869140625,
+      "predictive_probability_of_event": 0.3336539698887508
     },
     {
       "row_id": 77,
@@ -939,26 +995,26 @@
       "lower_cm": null,
       "upper_cm": 2.5,
       "latent_cm": [
-        2.1149139238095938,
-        2.417368627860004,
-        2.7785133694456907
+        2.132279923845052,
+        2.6759542907962217,
+        3.068175805590772
       ],
-      "latent_satisfies": 0.6790364583333334,
-      "predictive_probability_of_event": 0.5200691800029322
+      "latent_satisfies": 0.24369303385416666,
+      "predictive_probability_of_event": 0.45347334221770685
     },
     {
-      "row_id": 132,
+      "row_id": 141,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 3.5,
       "latent_cm": [
-        1.9973464597239585,
-        2.3108052152022553,
-        2.6510689336209072
+        1.9661699192437205,
+        2.50841992791441,
+        2.8201382544599207
       ],
-      "latent_satisfies": 0.9996744791666666,
-      "predictive_probability_of_event": 0.7804884056599031
+      "latent_satisfies": 0.9991455078125,
+      "predictive_probability_of_event": 0.7546682140374209
     },
     {
       "row_id": 41,
@@ -967,12 +1023,12 @@
       "lower_cm": null,
       "upper_cm": 2.0,
       "latent_cm": [
-        1.5492463188374288,
-        1.819518069240897,
-        2.12566464727331
+        1.4495230940047505,
+        1.8548506487472618,
+        2.1234849671259117
       ],
-      "latent_satisfies": 0.8541666666666666,
-      "predictive_probability_of_event": 0.5688326797616714
+      "latent_satisfies": 0.790283203125,
+      "predictive_probability_of_event": 0.5707292106298453
     },
     {
       "row_id": 56,
@@ -981,26 +1037,26 @@
       "lower_cm": null,
       "upper_cm": 1.0,
       "latent_cm": [
-        0.966667410895734,
-        1.3182049475381068,
-        1.7920791360114412
+        0.7954535024241749,
+        1.1408675933751866,
+        1.5898562038392743
       ],
-      "latent_satisfies": 0.043619791666666664,
-      "predictive_probability_of_event": 0.3048013889826725
+      "latent_satisfies": 0.177490234375,
+      "predictive_probability_of_event": 0.3995651836046898
     },
     {
-      "row_id": 98,
+      "row_id": 103,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 1.2,
       "latent_cm": [
-        1.4199295420831453,
-        1.6689967785073268,
-        1.9389619794549742
+        1.328566890693714,
+        1.7000832436785336,
+        1.9736507419635756
       ],
-      "latent_satisfies": 0.0,
-      "predictive_probability_of_event": 0.268900297551426
+      "latent_satisfies": 0.005411783854166667,
+      "predictive_probability_of_event": 0.25439557895691706
     },
     {
       "row_id": 37,
@@ -1009,40 +1065,40 @@
       "lower_cm": null,
       "upper_cm": 2.0,
       "latent_cm": [
-        1.3266154808317288,
-        1.5857952673948317,
-        1.8431756822476262
+        1.1976975329543285,
+        1.5902410705110337,
+        1.8362332277373503
       ],
-      "latent_satisfies": 0.9947916666666666,
-      "predictive_probability_of_event": 0.6703718120455703
+      "latent_satisfies": 0.9967041015625,
+      "predictive_probability_of_event": 0.6781553970334165
     },
     {
-      "row_id": 194,
+      "row_id": 208,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 1.0,
       "latent_cm": [
-        0.08754026831337386,
-        0.2995382128769935,
-        0.7172813312591863
+        0.04792113999699479,
+        0.10942385650399714,
+        0.37885235289800556
       ],
-      "latent_satisfies": 0.9957682291666666,
-      "predictive_probability_of_event": 0.9684494581803801
+      "latent_satisfies": 0.9996337890625,
+      "predictive_probability_of_event": 0.99136919065158
     },
     {
-      "row_id": 193,
+      "row_id": 207,
       "name": null,
       "event": "upper",
       "lower_cm": null,
       "upper_cm": 1.0,
       "latent_cm": [
-        0.02791231918055395,
-        0.11826854541681474,
-        0.3163935829454512
+        0.018801303392612725,
+        0.04286713691815583,
+        0.17341855946174017
       ],
-      "latent_satisfies": 0.9993489583333334,
-      "predictive_probability_of_event": 0.9939294686034591
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9979699593516197
     }
   ],
   "archive_predictions": {
@@ -1051,918 +1107,918 @@
       "WW-open-01": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          8.068447124209047e-07,
-          0.0013178014662238024,
-          0.03207445699840478
+          4.9307807803108895e-06,
+          0.0031621608319017717,
+          0.02962922536682196
         ],
         "coincident_with_training": false
       },
       "WW-open-02": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.00034111865943597816,
-          0.009118218561749445,
-          0.05595507083003375
+          0.0009611296467339202,
+          0.01488875986434044,
+          0.05042996861299328
         ],
         "coincident_with_training": false
       },
       "WW-open-03": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.000603218355706209,
-          0.011636377111047395,
-          0.06095467898020818
+          0.0016502667623932814,
+          0.017563131963785797,
+          0.05400559762110771
         ],
         "coincident_with_training": false
       },
       "WW-open-04": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.00026043918546186435,
-          0.008177551937054012,
-          0.05451214394434168
+          0.0007548489938685735,
+          0.014124530967650165,
+          0.04916934973607844
         ],
         "coincident_with_training": false
       },
       "WW-open-05": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.000760268325776414,
-          0.013191659321592247,
-          0.06305873466773347
+          0.0021898777893646325,
+          0.019100051418234707,
+          0.0559031984846378
         ],
         "coincident_with_training": false
       },
       "WW-open-06": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.00035511366494721497,
-          0.009528402712172233,
-          0.0572358666294704
+          0.0010630696815665506,
+          0.015725200822884703,
+          0.051257922829310264
         ],
         "coincident_with_training": false
       },
       "WW-open-07": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0011155622412814046,
-          0.01531748887842898,
-          0.06512186246816885
+          0.002942432086704732,
+          0.02100882540150457,
+          0.05832856115784954
         ],
         "coincident_with_training": false
       },
       "WW-open-08": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0004437999451311748,
-          0.010446468615499303,
-          0.05908509712583537
+          0.0013181703500585679,
+          0.016838585716009637,
+          0.05266233860203778
         ],
         "coincident_with_training": false
       },
       "WW-open-09": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          3.619114752993397e-05,
-          0.0038450687865471352,
-          0.044052670875015874
+          0.00012267469592315357,
+          0.008001165697774142,
+          0.04044558062022006
         ],
         "coincident_with_training": false
       },
       "WW-open-10": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0014996206668758253,
-          0.018049509703696353,
-          0.06817847153757232
+          0.004060793542173163,
+          0.02324709545390817,
+          0.06128392665905112
         ],
         "coincident_with_training": false
       },
       "WW-open-11": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0007334989261631053,
-          0.0132423229997351,
-          0.0628894143043326
+          0.002195929967740655,
+          0.019691231609793698,
+          0.05633624202823047
         ],
         "coincident_with_training": false
       },
       "WW-open-12": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0001345095468412694,
-          0.006295376625160623,
-          0.05133778067264936
+          0.00041459529877267915,
+          0.011788721504873416,
+          0.04600456388103
         ],
         "coincident_with_training": false
       },
       "WW-open-13": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0027986976331275558,
-          0.023319286910745776,
-          0.07244495495548299
+          0.006577243664146234,
+          0.02616676145756772,
+          0.0663844677114571
         ],
         "coincident_with_training": false
       },
       "WW-open-14": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0036112027627507185,
-          0.02700114512937523,
-          0.07851913357915198
+          0.008839409717660382,
+          0.03132188564514947,
+          0.07617211196959922
         ],
         "coincident_with_training": false
       },
       "WW-open-15": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0005691806536102137,
-          0.011644968030838832,
-          0.06119753964915239
+          0.0017049148964826395,
+          0.018349654774283988,
+          0.05435946202994824
         ],
         "coincident_with_training": false
       },
       "WW-open-16": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0026498503554103106,
-          0.024093956693725743,
-          0.07576419686668413
+          0.007051073686072827,
+          0.02924929703492749,
+          0.07604718132525859
         ],
         "coincident_with_training": false
       },
       "WW-open-17": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.00567459132972269,
-          0.033080342165765275,
-          0.08877412994902828
+          0.012769676364365509,
+          0.036377804271779696,
+          0.08890311113319067
         ],
         "coincident_with_training": false
       },
       "WW-open-18": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.005836437539306459,
-          0.03356979137111017,
-          0.09132239075650703
+          0.013156764732589709,
+          0.03799346799659077,
+          0.0911134807706739
         ],
         "coincident_with_training": false
       },
       "WW-open-19": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.01228612219386345,
-          0.04432761638486578,
-          0.11265143554430503
+          0.021246838667919096,
+          0.05700356378194786,
+          0.12139230571790839
         ],
         "coincident_with_training": false
       },
       "WW-open-20": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0003845299233392731,
-          0.009445574382359993,
-          0.056645218998338416
+          0.0010405204478907298,
+          0.015394177058394813,
+          0.050767928977024535
         ],
         "coincident_with_training": false
       },
       "WW-open-21": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.014389350092624728,
-          0.045677129667656316,
-          0.10620180581883999
+          0.022037536681894097,
+          0.05041290611119653,
+          0.10571602318351163
         ],
         "coincident_with_training": false
       },
       "WW-open-22": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.016305856622157895,
-          0.04785144952356181,
-          0.11234460399239338
+          0.02386816603814348,
+          0.05746084118876781,
+          0.11785519247976715
         ],
         "coincident_with_training": false
       },
       "WW-open-23": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.05598826323592376,
-          0.11917340619118981,
-          0.29718606856039986
+          0.08156475331171006,
+          0.17809528285102885,
+          0.32350957433624
         ],
         "coincident_with_training": false
       },
       "WW-open-24": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.017899287479617644,
-          0.052090072371759076,
-          0.23533082590009277
+          0.029759815642644637,
+          0.08130455315582645,
+          0.26543699075559285
         ],
         "coincident_with_training": false
       },
       "WW-open-25": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.10211822106912506,
-          0.19049681716404757,
-          0.386802962669073
+          0.13902705837378823,
+          0.2622549861111094,
+          0.42277727878349736
         ],
         "coincident_with_training": false
       },
       "WW-open-26": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.10079372451515269,
-          0.1857064984459665,
-          0.3650564667338691
+          0.13087480510456453,
+          0.2411205653198114,
+          0.3861425132355405
         ],
         "coincident_with_training": false
       },
       "WW-open-27": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.05900756115283868,
-          0.11271647445564845,
-          0.22367313575901127
+          0.0741331038231493,
+          0.13931809177434656,
+          0.22173018777693385
         ],
         "coincident_with_training": false
       },
       "WW-open-28": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.04722955732325429,
-          0.09169343038644075,
-          0.18005498785354462
+          0.0552667710605077,
+          0.1090252564409448,
+          0.18230365845056987
         ],
         "coincident_with_training": false
       },
       "WW-open-29": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.12081568845038008,
-          0.2720778566076985,
-          0.40259675027798214
+          0.07187502197096819,
+          0.14932682370328818,
+          0.3387570186436143
         ],
         "coincident_with_training": false
       },
       "WW-open-30": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.09825091435398157,
-          0.2325269315312604,
-          0.3661683099730791
+          0.055228660290481575,
+          0.12315294658878796,
+          0.30182846507650873
         ],
         "coincident_with_training": false
       },
       "WW-open-31": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.04039026284261309,
-          0.13651089055225238,
-          0.24720858960524708
+          0.01955236133587941,
+          0.055896774974668086,
+          0.19272205869811365
         ],
         "coincident_with_training": false
       },
       "WW-open-32": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.010338532035442978,
-          0.04116415159578082,
-          0.08997713947161938
+          0.009106725819783128,
+          0.029361754955042275,
+          0.07689864240458745
         ],
         "coincident_with_training": false
       },
       "WW-open-33": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.004656771736395856,
-          0.029807245078716123,
-          0.07508086492325654
+          0.004379592610812127,
+          0.02217382065369684,
+          0.06502846576515832
         ],
         "coincident_with_training": false
       },
       "WW-open-34": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.004280046336907108,
-          0.028922804380476543,
-          0.07406897329637505
+          0.003977945058554577,
+          0.021490213283258387,
+          0.0640322000174422
         ],
         "coincident_with_training": false
       },
       "WW-open-35": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.003081286790190384,
-          0.025003479616194764,
-          0.071392654865385
+          0.002696877684405166,
+          0.01898093103178322,
+          0.06032486345976269
         ],
         "coincident_with_training": false
       },
       "WW-open-36": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.0030611188659801893,
-          0.024919853741019248,
-          0.07129501404961393
+          0.002611003095888715,
+          0.018803047228539645,
+          0.060144583920375506
         ],
         "coincident_with_training": false
       },
       "WW-open-37": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.00270776755311595,
-          0.023748590458235252,
-          0.0703143559442015
+          0.002406389704838383,
+          0.0182283152846443,
+          0.05915969037602043
         ],
         "coincident_with_training": false
       },
       "W04-probe-01": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.7915744219070137,
-          1.0897532303410509,
-          1.3147899458782437
+          0.6370395470675236,
+          0.9407279652975723,
+          1.2824597546091958
         ],
         "coincident_with_training": false
       },
       "W04-probe-02": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.759921047014814,
-          2.070149230499665,
-          2.3997055504579383
+          1.692386380734301,
+          2.1027947417212465,
+          2.515606317410645
         ],
         "coincident_with_training": false
       },
       "W04-probe-03": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          1.9476912537801778,
-          2.271346535920095,
-          2.6827303593290104
+          1.9739161752469212,
+          2.5275912361494135,
+          2.903235535866592
         ],
         "coincident_with_training": false
       },
       "W04-probe-04": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.9664224185200978,
-          2.297431802891183,
-          2.722500815954497
+          2.0184263591381764,
+          2.591160206678667,
+          2.962983044232103
         ],
         "coincident_with_training": false
       },
       "W04-probe-05": {
         "reading": "occurrence_only",
         "latent_cm": [
-          2.7709791774238473,
-          3.2137394566686894,
-          3.9633900414641454
+          2.981183973720861,
+          3.8126464540458955,
+          4.429037412909497
         ],
         "coincident_with_training": true
       },
       "W04-probe-06": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.8779178931502636,
-          2.312201658733768,
-          2.8436857866050667
+          2.036588049663757,
+          2.7541874515115787,
+          3.2497444662060175
         ],
         "coincident_with_training": true
       },
       "W04-probe-07": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.0438096163721466,
-          1.3791667380131158,
-          1.7673519715906807
+          1.1290831683128728,
+          1.57983891647535,
+          2.0103322612421373
         ],
         "coincident_with_training": false
       },
       "W04-probe-08": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.3725540347600123,
-          1.8444017430388622,
-          2.565103005842541
+          1.5433043019745254,
+          2.3238969722980807,
+          2.9613860348864227
         ],
         "coincident_with_training": false
       },
       "W04-probe-09": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.8014868985659995,
-          1.233222713515605,
-          1.9553371552910555
+          0.9931071869178686,
+          1.5984929100295233,
+          2.2999332164395514
         ],
         "coincident_with_training": false
       },
       "W04-probe-10": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.6083400499306187,
-          1.028074498728395,
-          1.8472387019205099
+          0.7791341523675824,
+          1.4160234870459483,
+          2.1652049845358636
         ],
         "coincident_with_training": false
       },
       "W04-probe-11": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.01559144639233266,
-          0.045492794283125276,
-          0.09566948523147788
+          0.014566668759933623,
+          0.034403666926933155,
+          0.08383178538293198
         ],
         "coincident_with_training": false
       },
       "W04-probe-12": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.6260597147215528,
-          2.24379915922238,
-          3.1896363582079523
+          1.919570056993136,
+          3.010581299912723,
+          3.947785068243365
         ],
         "coincident_with_training": false
       },
       "W04-probe-13": {
         "reading": "occurrence_only",
         "latent_cm": [
-          2.114830204193141,
-          2.7714293414168876,
-          3.648848748024141
+          2.4392777490491278,
+          3.590859905334071,
+          4.4473879228123945
         ],
         "coincident_with_training": false
       },
       "W04-probe-14": {
         "reading": "unresolved_horizon",
         "latent_cm": [
-          2.4197732771438494,
-          3.022883696468043,
-          3.8607049864961045
+          2.705695032583533,
+          3.8360646324326018,
+          4.613657216050458
         ],
         "coincident_with_training": false
       },
       "W04-probe-15": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          3.7418527210794563,
-          4.539251446707445,
-          5.827838825832805
+          4.210759530851072,
+          6.07946898729545,
+          7.623303221291001
         ],
         "coincident_with_training": false
       },
       "W04-probe-16": {
         "reading": "unresolved_horizon",
         "latent_cm": [
-          2.9303856637967254,
-          3.7964660857252595,
-          5.177535150244064
+          3.4414965296741356,
+          5.201006308461339,
+          6.682367393871899
         ],
         "coincident_with_training": false
       },
       "W04-probe-17": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.93517658547331,
-          5.782531807086793,
-          7.0286985295466256
+          5.458479932690407,
+          7.8612092271589455,
+          9.880899291312197
         ],
         "coincident_with_training": false
       },
       "W04-probe-18": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.793364406156192,
-          5.487630139590972,
-          6.594023344408846
+          5.1749598079131935,
+          7.150554448086876,
+          8.687420117180979
         ],
         "coincident_with_training": false
       },
       "W04-probe-19": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.391803501551396,
-          4.979502558454433,
-          5.960990367231064
+          4.7215466402723525,
+          6.267898301247781,
+          7.381589172446709
         ],
         "coincident_with_training": false
       },
       "W04-probe-20": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.898226594073528,
-          5.434375988238367,
-          6.208069324980395
+          5.177125415959694,
+          6.562665588606081,
+          7.5866102293011455
         ],
         "coincident_with_training": true
       },
       "W04-probe-21": {
         "reading": "occurrence_only",
         "latent_cm": [
-          6.211925761146366,
-          6.811358297683241,
-          7.578383688234437
+          6.565652831717529,
+          8.275525344736142,
+          9.88678458539541
         ],
         "coincident_with_training": true
       },
       "W04-probe-22": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.026747403047882055,
-          0.06684369870356374,
-          0.12372145590984857
+          0.02363044827057536,
+          0.04734049840340806,
+          0.10880123223361311
         ],
         "coincident_with_training": false
       },
       "W04-probe-23": {
         "reading": "occurrence_only",
         "latent_cm": [
-          5.127450957942012,
-          5.704575079513784,
-          6.479464800936033
+          5.420541225913195,
+          6.480578649298543,
+          7.738319943764832
         ],
         "coincident_with_training": false
       },
       "W04-probe-24": {
         "reading": "occurrence_only",
         "latent_cm": [
-          3.8495864166147884,
-          4.403504684026758,
-          5.084315287718786
+          4.033325742551217,
+          4.758077065372805,
+          5.861451081767551
         ],
         "coincident_with_training": false
       },
       "W04-probe-25": {
         "reading": "occurrence_only",
         "latent_cm": [
-          3.3042238014085243,
-          4.209879419433044,
-          4.883264250236662
+          3.237329386768125,
+          4.123224858594467,
+          5.176091355633853
         ],
         "coincident_with_training": false
       },
       "W04-probe-26": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.9549690412855587,
-          3.085811232586962,
-          3.7990918273529903
+          1.6712866274400293,
+          2.6288529136865204,
+          3.59194546078289
         ],
         "coincident_with_training": false
       },
       "W04-probe-27": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.9205957243493976,
-          1.9962374616093272,
-          2.7135234884697748
+          0.6081231162928377,
+          1.3649021423810406,
+          2.3828464779576404
         ],
         "coincident_with_training": false
       },
       "W04-probe-28": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.5731675890400967,
-          3.248435701796827,
-          4.288071247653966
+          1.1778081494248993,
+          2.4472319120828026,
+          3.779411213819377
         ],
         "coincident_with_training": false
       },
       "W04-probe-29": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          4.273689383094634,
-          5.8561012878420104,
-          6.751618993202447
+          4.370178691276352,
+          5.530858529696373,
+          7.31878252034292
         ],
         "coincident_with_training": false
       },
       "W04-probe-30": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.5573824025691385,
-          5.968071040535547,
-          6.828291908169413
+          4.677068691104041,
+          5.91651196367171,
+          7.524998455076138
         ],
         "coincident_with_training": true
       },
       "W04-probe-31": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          6.0828366588743625,
-          7.35561103319137,
-          8.251166923170459
+          6.517622333274196,
+          7.9519595489947,
+          9.630420396022881
         ],
         "coincident_with_training": false
       },
       "W04-probe-32": {
         "reading": "occurrence_only",
         "latent_cm": [
-          7.390195177669186,
-          8.52188148070683,
-          9.45242708151587
+          7.835139715610739,
+          9.193377998351734,
+          11.227660519653522
         ],
         "coincident_with_training": false
       },
       "W04-probe-33": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          7.7987017557098355,
-          8.67736251882667,
-          9.598240785223732
+          8.200196491480188,
+          9.659689578123418,
+          11.631057556030473
         ],
         "coincident_with_training": false
       },
       "W04-probe-34": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.13800928563570747,
-          0.22938048809735076,
-          0.323633707710614
+          0.11232491953249335,
+          0.19378938888656325,
+          0.2955564971280996
         ],
         "coincident_with_training": false
       },
       "W04-probe-35": {
         "reading": "occurrence_only",
         "latent_cm": [
-          10.297331180778261,
-          11.456915186360659,
-          12.678332779658128
+          10.75527843749884,
+          12.024589367226811,
+          13.359582786488286
         ],
         "coincident_with_training": false
       },
       "W04-probe-36": {
         "reading": "occurrence_only",
         "latent_cm": [
-          9.83605018866393,
-          10.824559035240672,
-          11.953327623539392
+          10.284982205797856,
+          11.77107347303641,
+          13.09616436413127
         ],
         "coincident_with_training": true
       },
       "W04-probe-37": {
         "reading": "occurrence_only",
         "latent_cm": [
-          10.905633820277114,
-          12.157991273905429,
-          13.508330013787448
+          11.459434740793938,
+          12.990419067893594,
+          14.17369624644849
         ],
         "coincident_with_training": false
       },
       "W04-probe-38": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          10.783394682620985,
-          12.248475797824804,
-          14.049186144524795
+          11.553266662551396,
+          13.34433657659648,
+          14.701505246113555
         ],
         "coincident_with_training": false
       },
       "W04-probe-39": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          9.40652719919604,
-          10.796706726706809,
-          12.426984297779466
+          10.27085615166126,
+          12.35789981127717,
+          13.656650157455037
         ],
         "coincident_with_training": false
       },
       "W04-probe-40": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          10.036026868341525,
-          11.431031472460477,
-          13.199459504603967
+          10.866191081154824,
+          12.849495156670796,
+          14.084003688798722
         ],
         "coincident_with_training": false
       },
       "W04-probe-41": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          1.2162236061473173,
-          2.082518348585754,
-          3.9407727157572965
+          1.7577451446515278,
+          3.31939233900732,
+          5.087581045352293
         ],
         "coincident_with_training": false
       },
       "W04-probe-42": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          2.101365445096664,
-          3.1661506555616086,
-          5.182741833323444
+          2.812610739905346,
+          4.905974213275743,
+          7.034178357197088
         ],
         "coincident_with_training": false
       },
       "W04-probe-43": {
         "reading": "occurrence_only",
         "latent_cm": [
-          6.951605661154969,
-          8.332674699536732,
-          10.398960953646219
+          7.911104561349954,
+          10.737409733065103,
+          12.535557272815185
         ],
         "coincident_with_training": false
       },
       "W04-probe-44": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.2448691231305645,
-          0.35193535721355934,
-          0.4566115566398005
+          0.22604077879740042,
+          0.3177928975579289,
+          0.43166165381886046
         ],
         "coincident_with_training": true
       },
       "W04-probe-45": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          8.569696918767049,
-          10.063766184533355,
-          12.165012245099277
+          9.598158583052802,
+          12.176276153958181,
+          13.575404476781037
         ],
         "coincident_with_training": false
       },
       "W04-probe-46": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.561144704196847,
-          0.761647087378445,
-          1.0412923319276342
+          0.5621573228376316,
+          0.8221979997089469,
+          1.0757257796546822
         ],
         "coincident_with_training": true
       },
       "W04-probe-47": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.1267823221325464,
-          1.3687718513694285,
-          1.652759489220759
+          1.0670352372666265,
+          1.4342318247568142,
+          1.71578448358828
         ],
         "coincident_with_training": false
       },
       "W04-probe-48": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.0651299703683097,
-          1.3429904378858264,
-          1.551242557150598
+          0.9298086566753325,
+          1.266566543259233,
+          1.5350362635139831
         ],
         "coincident_with_training": false
       },
       "W04-probe-49": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.006572954841980213,
-          0.03198537854526534,
-          0.0787643675511975
+          0.010504121673751726,
+          0.029641457165343305,
+          0.07261327796297194
         ],
         "coincident_with_training": false
       },
       "W04-probe-50": {
         "reading": "inspected_no_bed",
         "latent_cm": [
-          0.01507229027396137,
-          0.044618616643443285,
-          0.09459476767212735
+          0.014260355617059775,
+          0.03403717084508999,
+          0.08296168787636662
         ],
         "coincident_with_training": false
       },
       "W04-probe-51": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.393560871875917,
-          4.981262434873279,
-          5.962421096072871
+          4.723150251934729,
+          6.269734090912404,
+          7.383065881735402
         ],
         "coincident_with_training": false
       },
       "W04-probe-52": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.8959467675724975,
-          5.431984500840535,
-          6.2053146193885205
+          5.17488460938859,
+          6.558143776423199,
+          7.58411177270756
         ],
         "coincident_with_training": false
       },
       "W04-probe-53": {
         "reading": "occurrence_only",
         "latent_cm": [
-          4.554142428925832,
-          5.965359809255001,
-          6.825317466977589
+          4.670860743310549,
+          5.911281530853109,
+          7.522082023795149
         ],
         "coincident_with_training": false
       },
       "W04-probe-54": {
         "reading": "occurrence_only",
         "latent_cm": [
-          7.383446865854224,
-          8.51339942077648,
-          9.445477669111504
+          7.828157072840474,
+          9.188165110241645,
+          11.214440153306478
         ],
         "coincident_with_training": false
       },
       "W04-probe-55": {
         "reading": "occurrence_only",
         "latent_cm": [
-          10.290156578476381,
-          11.447875894984822,
-          12.668891831629653
+          10.747873447331214,
+          12.016918169176783,
+          13.354859060763541
         ],
         "coincident_with_training": false
       },
       "W04-probe-56": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          11.838547310454741,
-          13.481933763353958,
-          15.332185109878095
+          12.467953361660868,
+          14.286952950823025,
+          15.875226037413153
         ],
         "coincident_with_training": false
       },
       "W04-probe-57": {
         "reading": "occurrence_only",
         "latent_cm": [
-          10.89837329840917,
-          12.147874963697587,
-          13.496890486631589
+          11.453139485180548,
+          12.98678087681608,
+          14.166819506012803
         ],
         "coincident_with_training": false
       },
       "W04-probe-58": {
         "reading": "occurrence_only",
         "latent_cm": [
-          11.047802494957486,
-          12.32138974037139,
-          13.6591482033276
+          11.49146761317794,
+          12.963434652166274,
+          14.115401943485562
         ],
         "coincident_with_training": true
       },
       "W04-probe-59": {
         "reading": "occurrence_only",
         "latent_cm": [
-          0.37631390908874124,
-          0.5461695184078919,
-          0.8055643791336133
+          0.395667941028873,
+          0.6033386535856378,
+          0.8196082564219299
         ],
         "coincident_with_training": true
       },
       "W04-probe-60": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.04356551347137,
-          1.3789853646350532,
-          1.7672125424055716
+          1.128874663771667,
+          1.5796128412740478,
+          2.01017697449819
         ],
         "coincident_with_training": true
       },
       "W04-probe-61": {
         "reading": "unclear_thickness",
         "latent_cm": [
-          1.3164743042612763,
-          1.702662101328292,
-          2.2206349791730458
+          1.4271454567298902,
+          1.9741605051857773,
+          2.443583229530869
         ],
         "coincident_with_training": false
       },
       "W04-probe-62": {
         "reading": "occurrence_only",
         "latent_cm": [
-          1.8778436508248075,
-          2.3121454727525044,
-          2.843602219196555
+          2.0365154340776814,
+          2.7542289743550765,
+          3.2497580567409896
         ],
         "coincident_with_training": false
       },
       "W04-probe-63": {
         "reading": "occurrence_only",
         "latent_cm": [
-          3.1307932725897936,
-          3.6530132628989054,
-          4.58273539461179
+          3.406718983281469,
+          4.481774055616576,
+          5.252575141885006
         ],
         "coincident_with_training": false
       },
       "W04-probe-64": {
         "reading": "occurrence_only",
         "latent_cm": [
-          2.11783007816502,
-          2.774612727948428,
-          3.6519194059537163
+          2.4422275849666253,
+          3.594508408003215,
+          4.451210640512822
         ],
         "coincident_with_training": false
       },
       "W04-probe-65": {
         "reading": "unresolved_horizon",
         "latent_cm": [
-          2.9307019627678117,
-          3.796824776332861,
-          5.17794973338307
+          3.441848498357226,
+          5.201613668510271,
+          6.6831786880113215
         ],
         "coincident_with_training": false
       }
@@ -1989,86 +2045,86 @@
     "centre_log_odds": -0.012954807438836993,
     "scale_log_odds": 1.609013260484478,
     "reference_log_odds": [
-      -3.3017034938710994,
-      -0.6492705438640901,
-      3.026443919647094
+      -2.2856245228622676,
+      0.4670574131244998,
+      1.6449893541989515
     ],
     "physical_distal_volume_fraction": [
-      0.0068811109961891635,
-      0.2273633204290494,
-      0.8281198153932461
+      0.03914944193130239,
+      0.6598130018387574,
+      0.8718288959803691
     ]
   },
   "terminal_continuation": {
     "volume_fraction_beyond_last_sampled_rank": [
-      0.01977561527131528,
-      0.11086098252633014,
-      0.6478642633914485
+      0.01757803412056444,
+      0.09927902409637118,
+      0.6260859759671044
     ],
     "sampling_rule": "Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit.",
     "unrestricted_volume_interval95_km3": [
-      9.168200025249254,
-      51.91219961472429
+      9.405241739519726,
+      16.547053914406348
     ],
     "transfer_multiplier_intervals95_km3": {
       "0.25": [
-        9.035958457875905,
-        14.700719406125524
+        9.412921182307725,
+        15.188751273472882
       ],
       "1.0": [
-        9.416686063421754,
-        27.78830245481862
+        9.754255423782974,
+        27.695601647764775
       ],
       "4.0": [
-        10.199450724913648,
-        67.37763114163128
+        10.669704817656958,
+        63.65531702092916
       ]
     }
   },
-  "median_map_volume_km3": 10.869500223357313,
+  "median_map_volume_km3": 11.399474943370148,
   "estimate_source": "median-field.json#median_map_volume_km3",
   "conditional_volume_interval95_km3": [
-    9.416686063421754,
-    27.78830245481862
+    9.754255423782974,
+    27.695601647764775
   ],
   "slab_volume_intervals95_km3": [
     [
-      0.21341047920897502,
-      12.012311362456991
+      0.2107992026504617,
+      12.460487342525212
     ],
     [
-      0.6550436507131873,
-      7.044379117390251
+      0.6168373783206338,
+      5.81056049473854
     ],
     [
-      2.7036503253056416,
-      3.5757320672099637
+      2.422267333831007,
+      3.4390175432951837
     ],
     [
-      4.823998155933442,
-      6.351006564601736
+      5.1658262095660294,
+      7.247750167877242
     ],
     [
-      0.1988628005413936,
-      0.5477988890201575
+      0.243178690375911,
+      0.7613097932659268
     ],
     [
-      -0.0,
-      0.0
+      0.0,
+      -0.0
     ],
     [
-      -0.0,
-      0.0
+      0.0,
+      -0.0
     ]
   ],
   "volume_intervals95_by_tail_km3": {
     "power": [
-      9.34399647638726,
-      24.06336882044722
+      9.731438221722213,
+      31.23291935217242
     ],
     "exponential": [
-      9.471852248403723,
-      30.933441262520233
+      9.759872443921093,
+      26.38908260885958
     ]
   }
 }

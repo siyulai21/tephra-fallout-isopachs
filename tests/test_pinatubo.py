@@ -138,3 +138,50 @@ def test_paired_position_refit_changes_only_the_51_sublayer_coordinates(tmp_path
     assert len(pairs) == 51 and changed == set(pairs)
     assert pairs["K-03"]["c2_x"] == "302" and pairs["K-03"]["c2_y"] == "458"
     assert pairs["K-03"]["c2_lon"] == "120.580682" and pairs["K-03"]["c2_lat"] == "15.339644"
+
+def test_two_map_reviews_compare_the_same_families_and_only_new_sites(tmp_path):
+    from benchmarks.pinatubo import ROOT
+    from benchmarks.pinatubo_field_review import ARCHIVE, volume_changes
+
+    home = ROOT / "eruptions/pinatubo-1991-layer-c/results"
+    release = home / "source-checks/figure7-review"
+    old_rows = {r["EvidenceID"]: r for r in rows(ARCHIVE / "input.csv")}
+    new_rows = {r["EvidenceID"]: r for r in rows(INPUT)}
+    predictions = rows(release / "previous-field-predictions.csv")
+    assert len(predictions) == 14
+    assert {r["EvidenceID"] for r in predictions} == new_rows.keys() - old_rows.keys()
+    for r in predictions:
+        observed = new_rows[r["EvidenceID"]]
+        assert r["nearest_earlier_id"] in old_rows
+        assert r["Kind"] == observed["Kind"]
+        assert float(r["reported_cm"]) == float(observed["Thickness"] or observed["Limit_cm"])
+        assert all(float(r[k + "_median_cm"]) > 0 for k in
+                   ("stacked", "spline", "directional", "spherical-mixture", "nested-isopachs"))
+    replay = tmp_path / "volumes.csv"
+    volume_changes(home, replay)
+    assert rows(replay) == rows(release / "volume-changes.csv")
+
+
+def test_reviewed_pinatubo_families_use_identical_geographic_holdouts():
+    from benchmarks.pinatubo import ROOT
+
+    home = ROOT / "eruptions/pinatubo-1991-layer-c/results"
+
+    def read(relative):
+        return json.loads((home / relative).read_text())
+
+    def membership(folds, train_key, test_key):
+        return {f["fold"]: (set(f[train_key]), set(f[test_key])) for f in folds}
+
+    regional = read("report.json")["validation"]["methods"]
+    expected = membership(regional["stacked"]["selections"], "training_row_ids", "withheld_row_ids")
+    assert len(expected) == 4
+    withheld = [i for train, test in expected.values() for i in test]
+    assert len(withheld) == len(set(withheld)) == len(rows(INPUT))
+    assert all(train.isdisjoint(test) for train, test in expected.values())
+    assert membership(regional["spline"]["selections"], "training_row_ids", "withheld_row_ids") == expected
+    directional = read("directional/azimuth/report.json")["validation"]["geographic"]
+    spherical = read("spherical-mixture/report.json")["validation"]
+    assert membership(directional["folds"], "train", "test") == expected
+    assert membership(spherical["fits"], "training_row_ids", "withheld_row_ids") == expected
+    assert membership(read("nested-isopachs/report.json")["folds"], "training_rows", "test_rows") == expected

@@ -2,7 +2,7 @@
 
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
-**140 exact measurements, 17 lower bounds, 37 upper limits.** The observation hull covers 279,806 km². The automatic validation buffer is 2.05 km.
+**150 exact measurements, 19 lower bounds, 39 upper limits.** The observation hull covers 279,806 km². The automatic validation buffer is 1.84 km.
 
 ![Matched median isopachs](isopachs.png)
 
@@ -10,11 +10,11 @@ The full observation hull and every accepted location are in view. The coloured 
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Principal median-map volume inside hull (km³) | 3.07 | 5.30 |
-| Conditional 95% volume interval (km³) | 2.59–5.25 | 4.96–13937306530.19 |
-| Outer equal-region negative log score ↓ | 3.334 | 1.211 |
-| Outer log-thickness RMSE ↓ | 6.713 | 6.840 |
-| Outer 95% observation-interval coverage | 86.4% | 86.4% |
+| Principal median-map volume inside hull (km³) | 3.00 | 5.04 |
+| Conditional 95% volume interval (km³) | 2.57–4.88 | 4.82–10794581257.41 |
+| Outer equal-region negative log score ↓ | 2.368 | 1.432 |
+| Outer log-thickness RMSE ↓ | 7.106 | 7.217 |
+| Outer 95% observation-interval coverage | 87.3% | 85.3% |
 
 Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.
 
@@ -37,7 +37,7 @@ Volume integrates pointwise median thickness over the observation hull. The inte
   },
   "components": [
     {
-      "weight": 0.06883406015687124,
+      "weight": 0.034971269048542454,
       "model": {
         "candidate": {
           "tail": "exponential",
@@ -45,22 +45,22 @@ Volume integrates pointwise median thickness over the observation hull. The inte
           "noise_ratio": 1.5
         },
         "beta": [
-          3.113338477101138,
-          1.0874203314894024,
-          -0.8770439775569391,
-          -0.24156871022681545
+          3.1064883688080385,
+          1.070313025116635,
+          -0.8589397222564347,
+          -0.24626912251439065
         ],
         "radius_scale_km": 31.316630953439937,
-        "length_km": 67.83852333066935,
-        "amplitude_log": 0.499333910017021,
-        "noise_log": 0.7490008650255315,
-        "jitter": 2.493343536928864e-10,
+        "length_km": 66.63195536609143,
+        "amplitude_log": 0.5005937903155155,
+        "noise_log": 0.7508906854732733,
+        "jitter": 2.5059414290245434e-10,
         "trend_on_constraint_boundary": false,
         "uncertainty": "conditional Laplace"
       }
     },
     {
-      "weight": 0.9311659398431288,
+      "weight": 0.9650287309514576,
       "model": {
         "candidate": {
           "tail": "power",
@@ -68,23 +68,23 @@ Volume integrates pointwise median thickness over the observation hull. The inte
           "noise_ratio": 1.5
         },
         "beta": [
-          4.484714069710353,
-          3.497456296335601,
-          -1.4218441646345348,
-          -0.4698207488208634
+          4.46528507983074,
+          3.464115251912443,
+          -1.3820655105201594,
+          -0.483244728168785
         ],
         "radius_scale_km": 31.316630953439937,
-        "length_km": 67.83852333066935,
-        "amplitude_log": 0.6568062536478659,
-        "noise_log": 0.985209380471799,
-        "jitter": 4.3139445483094485e-10,
+        "length_km": 66.63195536609143,
+        "amplitude_log": 0.64756476655253,
+        "noise_log": 0.9713471498287951,
+        "jitter": 4.193401268802327e-10,
         "trend_on_constraint_boundary": true,
         "uncertainty": "conditional Laplace"
       }
     }
   ],
   "dominant_tail": "power",
-  "observation_discrepancy_variance_log": 1.3946006180361834,
+  "observation_discrepancy_variance_log": 1.7123331168962808,
   "trend_on_constraint_boundary": true,
   "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
 }
@@ -114,18 +114,18 @@ Volume integrates pointwise median thickness over the observation hull. The inte
     3
   ],
   "n_coefficients": 54,
-  "noise_log": 0.37717493829908333,
-  "amplitude_log": 0.5028999177321111,
+  "noise_log": 0.3730179325892552,
+  "amplitude_log": 0.4973572434523402,
   "trend_beta": [
-    3.7815253097213857,
-    2.690165565740689,
-    -1.1670581538115934,
-    -0.7575812112487085
+    3.774086491085778,
+    2.671732398483353,
+    -1.1451682481927397,
+    -0.7687753132936445
   ],
   "trend_radius_scale_km": 31.316630953439937,
   "trend_on_constraint_boundary": false,
-  "effective_df_exact": 18.62458533221122,
-  "newton_decrement": 1.0212659800385568e-22,
+  "effective_df_exact": 18.825891920288974,
+  "newton_decrement": 3.3898517271422004e-23,
   "newton_iterations": 9,
   "quadrature_order": 6,
   "uncertainty": "Conditional Laplace",
@@ -147,11 +147,11 @@ Every explored candidate is retained in the selection tables. All response-depen
 - All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.
 - Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.
 - Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals.
-- GP ensemble: held-out 95% observation coverage is only 86.4%; uncertainty is undercovered.
+- GP ensemble: held-out 95% observation coverage is only 87.3%; uncertainty is undercovered.
 - Trend-regularized cubic spline: the analytic expected volume exceeds the 97.5th percentile of complete deposits. Rare thick fields influence the conditional uncertainty calculation.
 - Trend-regularized cubic spline regional integration did not reach the stated refinement tolerance.
 - Trend-regularized cubic spline joint-draw quadrature needs further refinement; inspect its grid checks before using intervals.
-- Trend-regularized cubic spline: held-out 95% observation coverage is only 86.4%; uncertainty is undercovered.
+- Trend-regularized cubic spline: held-out 95% observation coverage is only 85.3%; uncertainty is undercovered.
 
 ## Reproduce and inspect
 

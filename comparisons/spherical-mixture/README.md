@@ -9,12 +9,12 @@ Each eruption uses the same observations for the broad control and the principal
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/README.md) | displaced | **145** · **provisional** | 62.9–3,300.8 | 43.3–2.11e+04 |
 | [Mazama](../../eruptions/mazama/README.md) | displaced | **178** | 140.1–2,614.3 | 137–9.27e+04 |
 | [Minoan](../../eruptions/minoan/README.md) | displaced | **29.2** | 24.6–1,989.1 | 23.1–1.91e+04 |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/README.md) | displaced | **13.7** · **provisional** | 8.8–25.4 | 6.29–431 |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/README.md) | displaced | **13.9** | 9.2–26.1 | 6.52–172 |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/README.md) | displaced | **7.32** | 5.1–666.5 | 4.51–3.34e+03 |
 | [Tambora](../../eruptions/tambora/README.md) | displaced | **126** | 100.8–920.1 | 93–3.85e+03 |
 | [YTT](../../eruptions/ytt/README.md) | displaced | **1.28e+03** | 1,054.3–48,708.5 | 1.01e+03–1.09e+05 |
 
-7 of 9 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Ilopango TBJ (Unit G) (baseline, volume prior shift), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Pinatubo 1991 (Layer C) (baseline, volume prior shift, five fans), Sakurajima Satsuma (P14) (volume prior shift), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
+8 of 9 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Ilopango TBJ (Unit G) (baseline, volume prior shift), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Pinatubo 1991 (Layer C) (five fans, gaussian errors), Sakurajima Satsuma (P14) (volume prior shift), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
 
 ## Where the map changes
 
@@ -43,12 +43,12 @@ All methods faced the same held-out observations, bounds, regions and buffers fo
 | Ilopango TBJ (Unit G) | 1.173 → 1.225 | 1.343 | 1.462 | 94.2% | pass |
 | Mazama | 1.577 → 1.561 | 1.272 | 1.971 | 88.9% | **provisional** |
 | Minoan | 1.570 → 1.575 | 1.451 | 1.601 | 94.6% | pass |
-| Pinatubo 1991 (Layer C) | 1.020 → 0.986 | 4.300 | 1.599 | 97.1% | **provisional** |
+| Pinatubo 1991 (Layer C) | 0.905 → 0.910 | 3.023 | 1.590 | 97.3% | **provisional** |
 | Sakurajima Satsuma (P14) | 1.513 → 1.376 | 1.264 | 1.371 | 88.0% | pass |
 | Tambora | 1.471 → 1.477 | 1.620 | 1.548 | 100.0% | pass |
 | YTT | 1.777 → 1.756 | 1.934 | 2.153 | 84.8% | pass |
 
-The geographic score averaged equally across eruptions changed from 1.469 to 1.453. Of the withheld readings, 191 had gap exposure of at least 0.5. Within those readings the site-weighted score was 1.603 → 1.546. Giving each represented eruption equal weight gives 1.688 → 1.632. [Paired predictions and gap-exposure scores](bearings/paired-cases.csv)
+The geographic score averaged equally across eruptions changed from 1.457 to 1.444. Of the withheld readings, 204 had gap exposure of at least 0.5. Within those readings the site-weighted score was 1.563 → 1.546. Giving each represented eruption equal weight gives 1.680 → 1.634. [Paired predictions and gap-exposure scores](bearings/paired-cases.csv)
 
 ![Conditional spherical volumes, prior envelopes and withheld-region scores](comparison.png)
 

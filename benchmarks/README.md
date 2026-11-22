@@ -40,6 +40,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 | Command | Evidence checked |
 |---|---|
 | `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests` | Pinatubo marine holdout, map-reading holdout, two-sided marine ranges and upper-endpoint regional refits. [Checks and results](../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md) |
+| `python -m benchmarks.pinatubo_field_review --output results/pinatubo-new-sites.csv --volume-output results/pinatubo-review-volumes.csv` | Compare the archived fields at 14 newly read sites and the five median-map volumes before and after both source reviews. [Record of the original fits](../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md) |
 | `python -m benchmarks.pinatubo` | Pinatubo’s measured sections, paired sublayers, marine bounds, map coordinates and accepted decisions. [Visual checks](../data/audits/Pinatubo-1991/VISUAL-CHECK.md) |
 | `python -m benchmarks.sakurajima_satsuma` | Satsuma source cells, numerical literature readings, original bounds and eight-sector coverage |
 | `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |

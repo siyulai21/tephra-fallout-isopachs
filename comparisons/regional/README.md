@@ -14,8 +14,8 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 128.90 | 1.971 | 82.2% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |
 | [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.78 | 1.601 | 96.7% |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | GP ensemble | 3.50 | 4.300 | 86.4% |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | Trend-regularized cubic spline | 13.17 † | 1.599 | 87.1% |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | GP ensemble | 3.45 | 3.023 | 87.3% |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | Trend-regularized cubic spline | 14.82 † | 1.590 | 85.3% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | GP ensemble | 3.08 | 1.264 | 94.0% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | Trend-regularized cubic spline | 9.12 | 1.371 | 90.0% |
 | [Tambora](../../eruptions/tambora/results/README.md) | GP ensemble | 91.14 | 1.620 | 96.2% |

@@ -1,20 +1,18 @@
 # Which source decisions change the Pinatubo estimate?
 
-**Pre-review fit.** These results use the 194-site input from before the four Koyaguchi C1 corrections. The next fit will combine both land-map reviews. [Exact input, results and validation snapshot](../../../../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md)
-
 The nested-corridor tests change one source selection or reading rule at a time. The volume column integrates the median-thickness field over Earth. The interval describes coherent whole-deposit draws under that fit.
 
 | Fit | Training sites | Volume (km³) | Conditional 95% (km³) | Exact withheld beds within 95% | Numerical checks |
 |---|---:|---:|---:|---:|---|
-| [Common five-family input](../nested-isopachs/README.md) | 194 | 7.58 | 5.70–9.08 | — | Passed |
-| [Withhold every offshore thickness and bound](marine-holdout/result.json) | 160 | 0.70 | 0.61–1.56 | [0/19](marine-holdout/heldout.csv) | Warning · parent population check |
-| [Withhold the numerical land-map readings](tabulated-thickness/result.json) | 48 | 7.64 | 6.55–10.43 | [95/109](tabulated-thickness/heldout.csv) | Warning · importance weights |
-| [Use both observed endpoints of nine marine station ranges](marine-intervals/result.json) | 194 | 5.16 | 4.44–7.06 | — | Passed |
-| [Use the C2 map coordinates for the same 51 paired beds](paired-map-coordinates/result.json) | 194 | 7.76 | 6.54–9.23 | — | Warning · parent population check |
+| [Common five-family input](../nested-isopachs/README.md) | 208 | 8.36 | 7.42–9.60 | — | Passed |
+| [Withhold every offshore thickness and bound](marine-holdout/result.json) | 174 | 0.70 | 0.62–1.37 | [0/19](marine-holdout/heldout.csv) | Warning · parent population check |
+| [Withhold the numerical land-map readings](tabulated-thickness/result.json) | 48 | 7.64 | 6.55–10.43 | [103/119](tabulated-thickness/heldout.csv) | Warning · importance weights |
+| [Use both observed endpoints of nine marine station ranges](marine-intervals/result.json) | 208 | 5.20 | 4.55–7.21 | — | Passed |
+| [Use the C2 map coordinates for the same 51 paired beds](paired-map-coordinates/result.json) | 208 | 8.27 | 6.48–9.45 | — | Warning · parent population check |
 
 The land-only model predicts the 34 marine records without seeing any of them. The later offshore cruises document a secondary thickness maximum. Their measurements change both the estimated reach and the total. [Predictions at every withheld marine station](marine-holdout/heldout.csv) · [Original offshore survey](https://doi.org/10.1007/s00445-003-0306-x)
 
-The second test keeps 48 published section, core and text readings, including named sections positioned from maps. It withholds 146 land markers whose thickness was transcribed from map figures. The archived site table retains their reading and predictive error. [Withheld land markers](tabulated-thickness/heldout.csv)
+The second test keeps 48 published section, core and text readings, including named sections positioned from maps. It withholds 160 land markers whose thickness was transcribed from map figures. The archived site table retains their reading and predictive error. [Withheld land markers](tabulated-thickness/heldout.csv)
 
 At nine marine stations Hess and colleagues report replicate thickness ranges. All five principal fits can use the minimum as a lower bound. The two-sided nested test represents the measured range as an interval at each station. The two endpoints also supply a separate check on both regional fits. [Published ranges](../../../../data/sources/pinatubo-1991/hess-table-1.csv) · [Interval input](marine-intervals/interval-input.csv) · [Median predictions from all five fits at every station](marine-intervals/fitted-bed-thickness.csv)
 
@@ -24,10 +22,10 @@ These two regional fits keep every site and replace the nine lower limits with t
 
 | Observation-hull median map | Shared lower endpoints (km³) | Alternative upper endpoints (km³) |
 |---|---:|---:|
-| GP ensemble | 3.50 | 3.07 |
-| Cubic spline | 13.17 | 5.30 |
+| GP ensemble | 3.45 | 3.00 |
+| Cubic spline | 14.82 | 5.04 |
 
-At SO-114-13 (H01-16), the source gives 1–2 mm, or 0.1–0.2 cm. Under the shared lower-bound rule the spline median at that core is 24.1 m and the GP median is 0.49 cm. A lower bound alone permits much thicker predictions. The spline’s upper draw interval fails its regional integration check. [Regional field checks](regional-median-field-checks.json) · [Upper-endpoint regional report](regional-upper-endpoints/regional/README.md)
+At SO-114-13 (H01-16), the source gives 1–2 mm, or 0.1–0.2 cm. Under the shared lower-bound rule the spline median at that core is 37.6 m and the GP median is 0.47 cm. A lower bound alone permits much thicker predictions. The spline’s upper draw interval fails its regional integration check. [Regional field checks](regional-median-field-checks.json) · [Upper-endpoint regional report](regional-upper-endpoints/regional/README.md)
 
 ## Independent cruise core
 
@@ -37,13 +35,13 @@ Reproduce the source refits with `python -m benchmarks.pinatubo_sensitivity --ou
 
 ## Position on the two sublayer maps
 
-Koyaguchi printed the same 51 accepted stations on the C1 and C2 panels. Independently registered positions differ by a median 0.16 km and a maximum 0.55 km. The alternative refit uses the C2 coordinates and keeps all 194 bed measurements and limits. The observed discrepancies provide an empirical check on registration. Both panels can share survey error. [Pixel coordinates on both maps](paired-map-coordinates/paired-coordinates.csv) · [Alternative model input](paired-map-coordinates/c2-positions.csv)
+Koyaguchi printed the same 51 accepted stations on the C1 and C2 panels. Independently registered positions differ by a median 0.16 km and a maximum 0.55 km. The alternative refit uses the C2 coordinates and keeps all 208 bed measurements and limits. The observed discrepancies provide an empirical check on registration. Both panels can share survey error. [Pixel coordinates on both maps](paired-map-coordinates/paired-coordinates.csv) · [Alternative model input](paired-map-coordinates/c2-positions.csv)
 
 | Median-thickness volume (km³) | Published C1 positions | Alternative C2 positions |
 |---|---:|---:|
-| Regional GP | 3.50 | 3.50 |
-| Regional cubic spline | 13.17 | 13.16 |
-| Global nested corridors | 7.58 | 7.76 |
+| Regional GP | 3.45 | 3.45 |
+| Regional cubic spline | 14.82 | 14.83 |
+| Global nested corridors | 8.36 | 8.27 |
 
 The alternative regional hull covers 279,806 km², compared with 279,806 km² for the principal fits. The alternative nested fit flags a warning in its numerical checks. [Regional fits and diagnostics](paired-map-coordinates/regional/report.json) · [Nested volume interval and diagnostics](paired-map-coordinates/result.json)
 
@@ -52,3 +50,7 @@ The five principal fields can also be evaluated directly at each of the two coor
 ## Marine surveys with a mapped location and no thickness limit
 
 The three global families predict latent thickness at all 102 marine survey symbols. The table preserves the inspected or unresolved horizon classification, the site coordinates, and each model’s median and conditional 95% interval. The survey symbols supply no detection threshold. Some coincide with independently measured beds. Rebuild this table by adding `--probe-output results/pinatubo-probe-predictions.csv` to the station-prediction command. [Predictions by survey location](marine-probe-predictions.csv) · [Original surveys and source symbols](../../../../data/audits/Pinatubo-1991/marine-check.md)
+
+## Effect of the land-map reviews
+
+Both reviews were entered before the five refits. The previous fields supply predictions at all 14 newly accepted sites. [Volumes before and after review and prediction by site](figure7-review/README.md)
