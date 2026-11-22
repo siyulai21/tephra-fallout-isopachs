@@ -110,7 +110,19 @@ def main():
     known=json.loads(gzip.decompress((comp/"validation.json.gz").read_bytes()))
     assert len(known["quadrants"])==36 and len(known["known"])==18
     assert sum(len(r["truths"]) for r in known["known"])==20
-    for j in known["quadrants"]:
+    quadrant_receipts = list(known["quadrants"])
+    represented = {r["slug"] for r in quadrant_receipts}
+    for rec in records():
+        if rec["slug"] in represented:
+            continue
+        data, meta = audited_data(rec["path"], allow_intervals=True)
+        for i, train, test in splits(data, meta["vent_lonlat"][1], "quadrants"):
+            trial = read(case_home(rec["slug"])/"nested-isopachs/compass-holdouts"/f"quadrant-{i}.json")
+            assert (trial["slug"], trial["quadrant"], trial["input_sha256"]) == (rec["slug"], i, meta["input_sha256"])
+            assert trial["test_rows"] == test.row_ids.tolist()
+            assert trial["training_rows"] == ([] if train is None else train.row_ids.tolist())
+            quadrant_receipts.append(trial)
+    for j in quadrant_receipts:
         assert not (set(j["test_rows"]) & set(j["training_rows"]))
         if j["status"]=="estimated":
             assert len(j["test_rows"])==len(j["previous_log_score"])==len(j["corridor_log_score"])

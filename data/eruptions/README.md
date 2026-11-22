@@ -12,6 +12,7 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 | Sakurajima Satsuma (P14) | [Sakurajima_Satsuma.csv](Sakurajima_Satsuma.csv) | [Field and excavation thicknesses, core measurements, bounds and exclusions](../audits/Sakurajima-Satsuma/README.md) |
 | Mazama | [Mazama_tephra.csv](Mazama_tephra.csv) | Supplied inclusion flags |
 | Minoan | [Minoan_tephra.csv](Minoan_tephra.csv) | [Combined fallout and incomplete-core bounds](../audits/Minoan/README.md) |
+| Pinatubo 1991, Layer C | [Pinatubo_1991_layer_C.csv](Pinatubo_1991_layer_C.csv) | [Original field readings and marine bed correlations](../audits/Pinatubo-1991/README.md) |
 | Tambora | [Tambora_tephra.csv](Tambora_tephra.csv) | Supplied inclusion flags |
 | Younger Toba Tuff | [YTT_tephra.csv](YTT_tephra.csv) | [Core selection and sensitivity inputs](../audits/YTT/README.md) |
 

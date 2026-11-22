@@ -39,8 +39,20 @@ def build(output, cases, known, quadrants, regional):
         records_by_design = json.loads(gzip.decompress((COMPARISON / receipts.name).read_bytes()))
         if receipts.resolve() != (COMPARISON / receipts.name).resolve():
             receipts.write_bytes((COMPARISON / receipts.name).read_bytes())
+    quadrants = list(records_by_design["quadrants"])
+    represented = {r["slug"] for r in quadrants}
+    for rec in records():
+        slug = rec["slug"]
+        if slug in represented:
+            continue
+        folder = case_home(slug) / "nested-isopachs/compass-holdouts"
+        for i in range(4):
+            row = read(folder / f"quadrant-{i}.json")
+            if (row["slug"], row["quadrant"], row["input_sha256"]) != (slug, i, digest(rec["path"])):
+                raise ValueError(f"Mismatched published compass holdout for {slug}, quadrant {i}")
+            quadrants.append(row)
     quadrant_rows = []
-    for item in records_by_design["quadrants"]:
+    for item in quadrants:
         row = {k:item[k] for k in ("slug","quadrant","status")}
         q = [float(-np.mean(item[k])) for k in ("previous_log_score","corridor_log_score")] if row["status"] == "estimated" else [None,None]
         row.update(test_rows=len(item["test_rows"]), training_rows=len(item["training_rows"]),
@@ -115,7 +127,7 @@ def build(output, cases, known, quadrants, regional):
               "The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. "
               "[Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)", "",
               f"Across the {len(reg)} catalogued eruptions the mean buffered score changes from {avg('previous_geographic_score'):.3f} to {avg('geographic_score'):.3f}. "
-              f"The mean whole-quadrant score changes from {avg('previous_quadrant_score'):.3f} to {avg('quadrant_score'):.3f}. B-Tm accounts for the improvement in the latter average. "
+              f"The mean whole-quadrant score changes from {avg('previous_quadrant_score'):.3f} to {avg('quadrant_score'):.3f}. "
               f"A complete contour band passes the shared support screen in {bands} of {len(reg)} cases. The separate Pinatubo Layer C snapshot is excluded from those averages.", "",
               "## What the three disputed maps show", ""]
     for slug, sector in (("b-tm","W"),("aso-4","W"),("mazama","SW")):

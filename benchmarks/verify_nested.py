@@ -187,20 +187,26 @@ def main():
     assert sha256(gzip.decompress(source.read_bytes())).hexdigest() == prior["source_sha256"]
     comp = ROOT/"comparisons/nested-isopachs"
     expected_cases, expected_sensitivities, expected_sectors = [], [], []
-    for record in sorted(datasets(),key=lambda r:r["slug"]):
+    with gzip.open(comp/"challenge-receipts.json.gz", "rt") as stream:
+        import json
+        receipts = json.load(stream)
+    registered = {record["slug"]: record for record in datasets()}
+    original = set(receipts["outer"]) - {"unregistered"}
+    archive = ROOT/"archive/2026-11-21-nested-initial"
+    assert original | {"pinatubo-1991"} == {p.name for p in archive.iterdir() if p.is_dir()}
+    assert original <= registered.keys()
+    for slug in sorted(original):
+        path = registered[slug]["path"]
+        verify_case(ROOT/"archive/2026-11-21-nested-initial"/slug, path)
+        verify_distal_holdout(receipts["outer"][slug], path)
+    for record in sorted(registered.values(), key=lambda r:r["slug"]):
         home = ROOT/"eruptions"/record["slug"]/"results"
         verify_case(home/"nested-whole-area",record["path"])
-        verify_case(ROOT/"archive/2026-11-21-nested-initial"/record["slug"],record["path"])
         rows, peer, report = case_results(record)
         expected_cases.extend(rows)
         expected_sensitivities.extend(peer)
         expected_sectors.extend(sector_evidence(record,report))
-    with gzip.open(comp/"challenge-receipts.json.gz","rt") as stream:
-        import json
-        receipts = json.load(stream)
     assert len(receipts["nested"]) == 26
-    for record in datasets():
-        verify_distal_holdout(receipts["outer"][record["slug"]], record["path"])
     pairs = {(s["scenario"],s["seed"]):s for s in receipts["spherical"]}
     assert len(pairs) == 14
     assert all("candidate_quantiles_km3" in s for s in pairs.values())

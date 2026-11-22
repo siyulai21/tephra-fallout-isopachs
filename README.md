@@ -10,6 +10,6 @@ The **GP ensemble** and **trend-regularized cubic spline** map the same observat
 
 Each global figure shows the full modeled footprint down to 0.5 cm, a near-vent view and thickness versus the square root of cumulative area. Contours and observation colours follow 0.5, 1, 2, 4 cm and successive doublings. The global volumes include thinner fallout. A case’s support audit shows which contour fragments have local measurement brackets and where continuation relies on assumptions. [Map and volume definitions](docs/OUTPUTS.md)
 
-Minoan combines Plinian and co-ignimbrite fallout in one deposit. B-Tm includes interpreted upper bounds from lake and peat archives. The Pinatubo Layer C study compares all five fits outside the eight-eruption catalogue. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [Pinatubo Layer C](comparisons/nested-isopachs/pinatubo-preview/README.md)
+Minoan combines Plinian and co-ignimbrite fallout in one deposit. B-Tm includes interpreted upper bounds from lake and peat archives. Pinatubo combines the 15 June 1991 climactic land deposit with its correlated marine ash. The case links each mapped reading to its original pixels and each accepted core to its source. [Minoan](eruptions/minoan/README.md) · [B-Tm](eruptions/b-tm/README.md) · [Pinatubo Layer C](eruptions/pinatubo-1991-layer-c/README.md)
 
 [Prediction tests and sensitivity studies](comparisons/README.md) · [Repository and code guides](docs/README.md) · [Agent workflow](AGENTS.md)
