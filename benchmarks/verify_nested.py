@@ -164,7 +164,7 @@ def verify_preview_peers(preview, source):
     with np.load(spherical/"bearing/baseline.npz",allow_pickle=False) as packet:
         q = [s["fits"]["baseline"]["volume"][k] for k in ("lower95","median","upper95")]
         np.testing.assert_allclose(np.quantile(packet["volume_km3"],[.025,.5,.975]),q)
-    folds = read(preview/"nested-isopachs/geographic.json")["folds"]
+    folds = read(preview/"nested-whole-area/geographic.json")["folds"]
     for n,dr,sr in zip(folds,d["validation"]["geographic"]["folds"],s["validation"]["fits"],strict=True):
         for nk,dk,sk in (("training_rows","train","training_row_ids"),("test_rows","test","withheld_row_ids")):
             assert n["identity"][nk]==dr[dk]==sr[sk]
@@ -182,7 +182,7 @@ def main():
     expected_cases, expected_sensitivities, expected_sectors = [], [], []
     for record in sorted(datasets(),key=lambda r:r["slug"]):
         home = ROOT/"eruptions"/record["slug"]/"results"
-        verify_case(home/"nested-isopachs",record["path"])
+        verify_case(home/"nested-whole-area",record["path"])
         verify_case(ROOT/"archive/2026-11-21-nested-initial"/record["slug"],record["path"])
         rows, peer, report = case_results(record)
         expected_cases.extend(rows)
@@ -204,7 +204,7 @@ def main():
         assert example["truth"]["outside_earth_upper_bound_km3"]<1e-7*example["truth"]["bulk_km3"]
     assert len(receipts["initial"]) == 26
     v,a = matched_challenges(receipts["nested"],pairs,receipts["initial"])
-    for file, expected in (("cases.csv",expected_cases),("peer-sensitivities.csv",expected_sensitivities),("sector-evidence.csv",expected_sectors),
+    for file, expected in (("whole-area-cases.csv",expected_cases),("peer-sensitivities.csv",expected_sensitivities),("sector-evidence.csv",expected_sectors),
                            ("known-volumes.csv",v),("known-areas.csv",a)):
         actual = csv_rows(comp/file)
         assert len(actual) == len(expected), file
@@ -227,7 +227,7 @@ def main():
             stored = path.read_bytes()
             raw = gzip.decompress(stored) if path.suffix == ".gz" else stored
             assert len(raw) == entry["source_bytes"] and sha256(raw).hexdigest() == entry["source_sha256"]
-        verify_case(preview/"nested-isopachs",file)
+        verify_case(preview/"nested-whole-area",file)
         verify_preview_peers(preview,file)
     print(f"Verified {len(expected_cases)//3} registered cases, the extra published snapshot, "
           f"{len(receipts['nested'])} challenge designs, paired fields, scores, budgets and source identities.")

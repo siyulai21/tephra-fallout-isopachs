@@ -253,6 +253,27 @@ def nested_comparison(home, prefix=""):
     if not p.is_file():
         return None
     model = read_report(p)
+    if model.get("protocol") == "nested-corridor-reach-v4":
+        regional = read_report(Path(home)/"report.json")
+        if model["input_sha256"] != regional["input"]["input_sha256"]:
+            raise ValueError("Nested and regional results use different accepted observations")
+        lo, med, hi = model["volume_km3"]
+        warning = "" if all(model["numerics"].values()) else " **(provisional)**"
+        passed = sum(f["passed"] for f in model["folds"])
+        total = len(model["folds"])
+        cov = model["exact_site_coverage95"]["fraction"]
+        coverage = "—" if cov is None else f"{cov:.1%}"
+        row = (f"| [Bayesian nested · corridor]({prefix}nested-isopachs/README.md) | Whole-Earth volume median **{med:,.1f}** "
+               f"| {lo:,.1f}–{hi:,.1f}{warning} | {model['geographic_score']:.3f}{' †' if passed < total else ''} | {coverage} |")
+        inside, far, _ = model["allocation_fraction"]
+        note = (f"The nested corridor assigns a median {inside[1]:.1%} of bulk volume to the retained exact-site triangles "
+                f"and {far[1]:.1%} beyond the farthest exact site. Its median map integrates to "
+                f"{model['median_map_volume_km3']:,.1f} km³. {passed}/{total} buffered fits passed their numerical checks. "
+                f"[Whole-area sensitivity]({prefix}nested-whole-area/README.md) · "
+                f"[Paired median isopachs]({prefix}nested-isopachs/paired-isopachs.png)")
+        if prefix:
+            note += f" · [Five-family volume and geographic prediction plot]({prefix}overview.png)"
+        return row, note
     if model["input"]["input_sha256"] != read_report(Path(home)/"report.json")["input"]["input_sha256"]:
         raise ValueError("Nested and regional results use different accepted observations")
     lo,med,hi = model["conditional_volume_km3"]
@@ -325,15 +346,22 @@ def comparison_section(home, *, prefix=""):
         coverage_text = "—" if coverage is None else f"{coverage:.1%}"
         lines.append(f"| {label} | {volume} | {interval} | {score_text}{'' if passed else ' †'} | {coverage_text} |")
     nested = nested_comparison(home,prefix)
+    corridor = nested and read_report(Path(home)/"nested-isopachs/report.json").get("model_role") == "principal"
+    if corridor:
+        lines[2:2] = [
+            f"![Principal nested corridor median isopachs for {name}]({prefix}nested-isopachs/isopachs.png)", "",
+            "On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. "
+            f"[Corridor estimate, support and uncertainties]({prefix}nested-isopachs/README.md)", ""]
     if nested:
         lines.append(nested[0])
         lines.extend(["",nested[1]])
     lines.extend(["", "A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out "
                       "observations inside the 95% predictive interval."
                       + (" † A geographic fit had a numerical warning or incomplete scoring."
-                         if any(not r[3] for r in performance) else ""),
+                         if any(not r[3] for r in performance) or (nested and " †" in nested[0]) else ""),
                   "", f"The directional map integrates pointwise median thickness. Measured interpolation triangles account for **{measured:.1%}** "
-                      "of its volume. The directional volume interval comes from complete simulated deposits. "
+                      "of its volume. The directional volume interval comes from "
+                      + ("complete posterior deposit draws. " if corridor else "complete simulated deposits. ")
                       + ("The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. " if spherical.get("bearing") else "") + "The regional intervals condition on fitted settings."
                       + (f" [Regional maps, fits and diagnostics]({prefix}README.md)" if prefix else ""),
                   "", "<details>", "<summary>Compare the two whole-Earth maps</summary>", "",
@@ -342,6 +370,14 @@ def comparison_section(home, *, prefix=""):
                   f"| ![Spherical-mixture median thickness over the Earth for {name}]({prefix}{SPHERICAL}/world.png) |", "",
                   "Both maps use the vent longitude as their central meridian. Read the thickness key under each map.", "",
                   "</details>", ""])
+    if corridor:
+        index = lines.index("<summary>Compare the two whole-Earth maps</summary>")
+        lines[index:index+7] = ["<summary>Compare the three whole-Earth maps</summary>", "",
+            "| Uncertain fan direction | Spherical mixture | Nested corridor |", "|---|---|---|",
+            f"| ![Directional whole-Earth median]({prefix}{DIRECTIONAL}/world.png) | "
+            f"![Spherical whole-Earth median]({prefix}{SPHERICAL}/world.png) | "
+            f"![Nested corridor whole-Earth median]({prefix}nested-isopachs/world.png) |", "",
+            "Each map is centred on the vent longitude and has its own thickness key."]
     from ..models.directional.azimuth.primary import numerical_notes
     lines += [f"With the same observations and structure weights, fixing the fan directions gives a median-map volume "
               f"of **{centre['matched_control_map_km3']:,.1f} km³**.", ""]

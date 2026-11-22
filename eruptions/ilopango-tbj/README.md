@@ -1,10 +1,14 @@
 # Ilopango Tierra Blanca Joven, Unit G
 
-**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 40.9 km³ of bulk fallout (conditional 95% interval 25.1–94.2), compared with 50.5 km³ under the whole-area continuation. Both geographic and compass holdouts favor the broader fit. The full-data proposal retained a numerical warning. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+**Principal Bayesian nested estimate.** The corridor model gives 40.9 km³ of bulk fallout (conditional 95% interval 25.1–94.2), compared with 50.5 km³ under the whole-area continuation. Both geographic and compass holdouts favor the broader fit. The full-data proposal retained a numerical warning. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
 
-The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All four models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
+The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All five models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
 ## Five matched thickness-only fits
+
+![Principal nested corridor median isopachs for Ilopango TBJ (Unit G)](results/nested-isopachs/isopachs.png)
+
+On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Ilopango TBJ (Unit G)](results/four-method-evidence.png)
 
@@ -18,24 +22,22 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **26.75** | 22.61–31.55 | 1.462 | 92.3% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **40.8** · volume median 59.4 | 30.1–384.8 | 1.528 | 92.3% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **190.9** | 62.9–3,300.8 **(provisional)** | 1.225 | 94.2% |
-| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **50.5** | 37.5–181.8 **(provisional)** | 1.159 † | 94.2% |
+| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **40.9** | 25.1–94.2 **(provisional)** | 1.274 † | 94.2% |
 
-[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
+The nested corridor assigns a median 3.8% of bulk volume to the retained exact-site triangles and 5.8% beyond the farthest exact site. Its median map integrates to 39.1 km³. 1/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
 
-The nested estimate puts a median 3.4% of the fallout volume inside the retained exact-site triangles and 11.3% beyond the farthest exact measurement. 1/4 geographic refits passed the independent-population check.
+A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval. † A geographic fit had a numerical warning or incomplete scoring.
 
-A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
-
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.9%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **3.9%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
-<summary>Compare the two whole-Earth maps</summary>
+<summary>Compare the three whole-Earth maps</summary>
 
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for Ilopango TBJ (Unit G)](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Ilopango TBJ (Unit G)](results/spherical-mixture/world.png) |
+| Uncertain fan direction | Spherical mixture | Nested corridor |
+|---|---|---|
+| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
 
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+Each map is centred on the vent longitude and has its own thickness key.
 
 </details>
 
@@ -77,11 +79,11 @@ Every 45° compass sector contains at least two measured thicknesses. In the nor
 
 Smith et al. also identified TBJ glass in the TUNU2013 ice core about 7,755 km from Ilopango. It documents long-distance transport. The core supplies no separate thickness or bound for Unit G. [Ice-core evidence and fitting decision](../../data/audits/Ilopango-TBJ/README.md#greenland-ice-core-occurrence)
 
-The two regional models integrate the same 166,961 km² hull. The standard measured-site support screen covers 15,973 km². It gives expected partial volumes of 1.54 km³ for the GP and 1.52 km³ for the spline. The standard screen accepted no complete isopach band for any of the four models. A full deposit still requires assumptions about the proximal region, gaps and distal continuation. [Support geometry, partial volumes and contour decisions](results/support/README.md)
+The two regional models integrate the same 166,961 km² hull. The standard measured-site support screen covers 15,973 km². It gives expected partial volumes of 1.54 km³ for the GP and 1.52 km³ for the spline. The standard screen accepted no complete isopach band for any of the five models. A full deposit still requires assumptions about the proximal region, gaps and distal continuation. [Support geometry, partial volumes and contour decisions](results/support/README.md)
 
 The workbook distinguishes the final ash layer from earlier falls and from pyroclastic density-current deposits. In the offshore cores, chemistry supports a TBJ correlation more securely than attribution to an individual phase. The 550 cm Unit G value at Istagua and the two adjacent 3 cm distal cores in the west remain in the input. Tazumal's conflicting 20 cm and 40–50 cm reports remain in the audit. [Source decisions](../../data/audits/Ilopango-TBJ/README.md)
 
-Smith et al. estimated **85–188 km³ of bulk co-ignimbrite fallout** with a physical dispersal model. That estimate provides a comparison based on overlapping thickness measurements. All four empirical fits used the site data directly. [Published dispersal estimate](https://pmc.ncbi.nlm.nih.gov/articles/PMC7584997/)
+Smith et al. estimated **85–188 km³ of bulk co-ignimbrite fallout** with a physical dispersal model. That estimate provides a comparison based on overlapping thickness measurements. All five empirical fits used the site data directly. [Published dispersal estimate](https://pmc.ncbi.nlm.nih.gov/articles/PMC7584997/)
 
 ## Reproduce the calculation
 

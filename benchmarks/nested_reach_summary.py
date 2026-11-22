@@ -32,7 +32,7 @@ def build(output, cases, known, quadrants, regional):
     if known is not None:
         records_by_design = {"known":[read(p) for p in sorted(known.glob("*.json"))],
                              "quadrants":[read(p) for p in sorted(quadrants.glob("*.json"))]}
-        if len(records_by_design["known"]) != 18 or len(records_by_design["quadrants"]) != 36:
+        if len(records_by_design["known"]) != 18 or len(records_by_design["quadrants"]) != 4*len(records()):
             raise ValueError("Expected all known-surface and compass holdouts, including empty sectors")
         receipts.write_bytes(gzip.compress(json.dumps(records_by_design, separators=(",",":")).encode(), mtime=0))
     else:
@@ -61,7 +61,7 @@ def build(output, cases, known, quadrants, regional):
     comparison, area_rows, links = [], [], {}
     for rec in sorted(records(), key=lambda r:r["slug"]):
         slug = rec["slug"]
-        home = case_home(slug) / "nested-reach"
+        home = case_home(slug) / "nested-isopachs"
         folder = cases / slug if cases else home
         j = read(folder / "report.json")
         if digest(rec["path"]) != j["input_sha256"]:
@@ -94,27 +94,28 @@ def build(output, cases, known, quadrants, regional):
         replay[key] = {"path":ref.as_posix(),"sha256":digest(ref),"rows":len(ref.read_text().splitlines())-1}
     write_json(output / "regional-parity.json",replay)
     reg = [r for r in comparison if r["catalogued"]]
+    bands = sum(bool(r["complete_band_policies"]) for r in reg)
     avg = lambda key:np.mean([r[key] for r in reg])
     lines = ["# How far can a measured isopach be continued?", "",
              "A distant core establishes fallout at its location. Extending the same thickness across an unsampled flank can contribute much more bulk volume than the core itself constrains. "
-             "The paired fits below use identical accepted observations and the same nested thickness profile. The new fit gives a positive site a finite angular width and a finite extension beyond its range. "
+             "The paired fits below use identical accepted observations and the same nested thickness profile. The principal corridor model allows finite angular and down-range reach around positive sites and retains a broad alternative. "
              "Bounds constrain thickness through their observation likelihood. [Geographic reach model and assumptions](../../docs/methods/nested-reach.md)", "",
              "Real surveys provide the primary comparison. On Calbuco 2015 the corridor fit improved predictions on a separate field campaign and reduced the average extra span against an independently mapped 0.1 mm isopach. The Aso-4 and Pinatubo marine transfers favored the broader fit. Synthetic deposits have a separate role in testing failure modes and numerical recovery. "
              "[Independent surveys, archive bounds and field-map checks](field-surveys/README.md)", "",
              "**B-Tm has the clearest evidence for the narrower map.** Mazama improves on buffered geographic predictions and changes little on whole-quadrant predictions. Aso-4’s western footprint shrinks substantially, while independent compass predictions favor broader continuation. "
              "The paired results are published together. Global volume remains conditional on how a fan continues across unvisited ground.", "",
-             "| Eruption | Whole-area median, km³ | Corridor median [conditional 95%], km³ | Buffered score, old → new | Compass score, old → new |",
+             "| Eruption | Principal corridor median [conditional 95%], km³ | Whole-area sensitivity median, km³ | Buffered score, whole-area → corridor | Compass score, whole-area → corridor |",
              "|---|---:|---:|---:|---:|"]
     for r in comparison:
         name = r["case"] + (" (separate intake)" if not r["catalogued"] else "")
-        lines.append(f"| [{name}]({links[r['slug']]}) | {r['previous_km3']:,.1f} | **{r['median_km3']:,.1f}** [{r['lower95_km3']:,.1f}–{r['upper95_km3']:,.1f}] | "
+        lines.append(f"| [{name}]({links[r['slug']]}) | **{r['median_km3']:,.1f}** [{r['lower95_km3']:,.1f}–{r['upper95_km3']:,.1f}] | {r['previous_km3']:,.1f} | "
                      f"{r['previous_geographic_score']:.3f} → {r['geographic_score']:.3f} | {r['previous_quadrant_score']:.3f} → {r['quadrant_score']:.3f} |")
     lines += ["", "Each map is the pointwise median. Volumes summarize the integrals of complete posterior draws. These are bulk deposit volumes. "
               "The two scores average withheld log predictive densities with equal weight for each nonempty region. Smaller values indicate better predictions. A quadrant with no observations supplies no predictive test. "
               "[Numerical checks per case](cases.csv) · [Every held compass sector](compass-holdouts.csv) · [Contour areas by bearing](contour-areas.csv)", "",
-              f"Across the eight catalogued eruptions the mean buffered score changes from {avg('previous_geographic_score'):.3f} to {avg('geographic_score'):.3f}. "
+              f"Across the {len(reg)} catalogued eruptions the mean buffered score changes from {avg('previous_geographic_score'):.3f} to {avg('geographic_score'):.3f}. "
               f"The mean whole-quadrant score changes from {avg('previous_quadrant_score'):.3f} to {avg('quadrant_score'):.3f}. B-Tm accounts for the improvement in the latter average. "
-              "None of the eight has a complete contour band that passes the shared support screen. The separate Pinatubo Layer C snapshot is excluded from those averages.", "",
+              f"A complete contour band passes the shared support screen in {bands} of {len(reg)} cases. The separate Pinatubo Layer C snapshot is excluded from those averages.", "",
               "## What the three disputed maps show", ""]
     for slug, sector in (("b-tm","W"),("aso-4","W"),("mazama","SW")):
         row = next(r for r in area_rows if r["slug"]==slug and r["bearing"]==sector and r["level_cm"]==1.)
@@ -126,7 +127,7 @@ def build(output, cases, known, quadrants, regional):
     errors = [np.median([x["absolute_log_volume_error"] for x in group]) for group in methods]
     lost = [r["missed_west_1cm_km2"] for r in methods[1] if r["scenario"]=="broad_umbrella"]
     lines += ["", "## Recovery of deposits with known thickness", "",
-              f"The two models covered the known total in {covered[0]}/{len(methods[0])} and {covered[1]}/{len(methods[1])} cases, respectively. Median absolute log-volume error changed from {errors[0]:.3f} to {errors[1]:.3f}. "
+              f"The whole-area and corridor fits covered the known total in {covered[0]}/{len(methods[0])} and {covered[1]}/{len(methods[1])} cases, respectively. Median absolute log-volume error changed from {errors[0]:.3f} to {errors[1]:.3f}. "
               "The 20 truths come from 18 surveys, including two pairs with identical observations and different hidden deposits. These are development stress tests.",
               "",f"For a genuinely broad, circular deposit surveyed only on its eastern half, the two corridor fits missed {min(lost):,.0f}–{max(lost):,.0f} km² of the true western 1 cm footprint. "
               "Both conditional volume intervals included the known total. A volume interval can cover the truth while the median contour misses a real lobe. "

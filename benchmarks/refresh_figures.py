@@ -22,7 +22,7 @@ from src.empirical_isopach.models.directional.reporting import figures as direct
 from src.empirical_isopach.models.directional.geometry import Geometry
 from src.empirical_isopach.support import SupportMesh, POLICIES
 from src.empirical_isopach.support_reporting import support_figures
-from src.empirical_isopach.visualization.summary import case_overview, all_case_scores
+from src.empirical_isopach.visualization.summary import case_overview, all_case_scores, principal_report
 from src.empirical_isopach.visualization.maps import grid_axes
 from src.empirical_isopach.core.distributions import predictive_distribution
 
@@ -179,10 +179,11 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
             gx, gy, _, fields, _ = regional_grid(regional["fit_bounds_km"], region, models)
             comparison_grid = gx, gy, fields
         draw_comparison(home, target, comparison_grid)
-    case_overview(target, name, regional, directional, spherical)
+    nested = principal_report(home)
+    case_overview(target, name, regional, directional, spherical, nested)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")
     print(f"{name}: figures complete", flush=True)
-    return name, regional, directional, spherical
+    return name, regional, directional, spherical, nested
 
 
 def main():

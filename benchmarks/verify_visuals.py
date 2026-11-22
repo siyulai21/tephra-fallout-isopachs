@@ -127,7 +127,11 @@ def main():
     root = Path(__file__).resolve().parents[1]
     verify_comparison_tables(root)
     with Image.open(root/"comparisons/method-scores.png") as figure:
-        panels = json.loads(figure.info["Description"])["eruption_panels"]
+        score_info = json.loads(figure.info["Description"])
+        panels = score_info["eruption_panels"]
+        assert set(score_info["methods_by_case"]) == set(panels)
+        assert all(names == ["GP ensemble", "Cubic spline", "Directional", "Spherical mixture", "Nested corridor"]
+                   for names in score_info["methods_by_case"].values())
     assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()
     verify_files(hashes)

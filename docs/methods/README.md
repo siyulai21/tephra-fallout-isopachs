@@ -26,7 +26,7 @@ The principal spherical field integrates the retained kernel mass along measured
 
 ## Bayesian nested isopachs
 
-The model learns a decreasing whole-Earth area–thickness profile and the geographic shape of its contours jointly. Complete draws give global bulk volume, including the unmeasured proximal core and distal tail. Each case includes the support decisions, thinning-law sensitivity and direct numerical verification of the integral. [Equations and external analogue data](nested-isopachs.md) · [Matched results and known-volume tests](../../comparisons/nested-isopachs/README.md)
+The nested model combines a fitted thickness profile with uncertain crosswind and down-range reach around positive observations. Upper limits enter through their observation likelihood. The principal corridor map shows the pointwise median, and the principal bulk volume is the median across integrated deposits. Each case retains the broad whole-area sensitivity. [Corridor construction and assumptions](nested-reach.md) · [Underlying thinning model](nested-isopachs.md) · [Global estimates and field validation](../../comparisons/nested-isopachs/README.md)
 
 ## Interpreting the maps
 

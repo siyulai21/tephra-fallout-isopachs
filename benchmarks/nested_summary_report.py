@@ -5,9 +5,10 @@ from src.empirical_isopach.models.nested.geometry import DIAMETER
 
 def write_report(folder, rows, experiments, reports, challenges, areas, recovery):
     families = ("Directional", "Spherical", "Nested")
-    out = ["# Whole-deposit volume from Bayesian nested isopachs", "",
+    out = ["# Whole-area sensitivity for Bayesian nested isopachs", "",
+           "This study uses the broad whole-area continuation throughout. [Principal corridor estimates and maps](README.md)", "",
            "Each row compares the same accepted thickness measurements and bounds. Each interval integrates complete simulated deposits over the Earth. The directional case home also reports the integral of its median map. Those two summaries can differ appreciably when a fan can turn.", "",
-           "![Whole-deposit median volumes and conditional intervals](volumes.png)", "",
+           "![Whole-deposit median volumes and conditional intervals](whole-area-volumes.png)", "",
            "| Eruption | Directional median | Spherical median | Nested median [conditional 95%], km³ | Nested site coverage | Full fit · geographic fits passing |",
            "|---|---:|---:|---:|---:|---|"]
     for slug, report in reports.items():
@@ -15,12 +16,12 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
         lo, med, hi = report["conditional_volume_km3"]
         cov = report["exact_site_coverage95"]
         status = "passed" if report["population_check_passed"] else "**warning**"
-        path = f"../../eruptions/{slug}/results/nested-isopachs/README.md"
+        path = f"../../eruptions/{slug}/results/nested-whole-area/README.md"
         out.append(f"| [{report['name']}]({path}) | {group[0]['median_km3']:,.1f} | {group[1]['median_km3']:,.1f} | "
                    f"**{med:,.1f}** [{lo:,.1f}–{hi:,.1f}] | {cov['covered']}/{cov['exact_sites']} | {status} · {report['geographic_folds_passed']}/4 |")
     scores = [np.mean([r["equal_region_log_score"] for r in rows if r["method"] == f]) for f in families]
     bands = sum(bool(x["supported_band_policies"]) for x in reports.values())
-    out += ["", f"The equal-eruption mean geographic negative log scores are {scores[0]:.3f} for directional, {scores[1]:.3f} for spherical and {scores[2]:.3f} for nested. Each case gives its four buffered regions equal weight. Lower scores indicate better prediction at the withheld sites. Complete contour bands qualified under at least one nested support policy in {bands} of {len(reports)} cases. Ancient global volumes have no independent measured total here. [Case volumes and scores](cases.csv) · [Matched regional rerun](regional-replay.csv)", "",
+    out += ["", f"The equal-eruption mean geographic negative log scores are {scores[0]:.3f} for directional, {scores[1]:.3f} for spherical and {scores[2]:.3f} for nested. Each case gives its four buffered regions equal weight. Lower scores indicate better prediction at the withheld sites. Complete contour bands qualified under at least one nested support policy in {bands} of {len(reports)} cases. Ancient global volumes have no independent measured total here. [Case volumes and scores](whole-area-cases.csv) · [Matched regional rerun](regional-replay.csv)", "",
             "## Where the nested estimate comes from", "",
             "| Eruption | Median volume fraction in measured triangles | Median fraction beyond the farthest exact site | That distal fraction among the largest 5% of volumes | Median if exponential / power tail (km³) |",
             "|---|---:|---:|---:|---:|"]
@@ -70,7 +71,7 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
             trials = d["edge_deletion"]["fits"]
             one,cluster = trials["single"],trials["cluster"]
             status = ["passed" if trial["numerical"]["passed"] else "warning" for trial in (one,cluster)]
-            path=f"../../eruptions/{slug}/results/nested-isopachs/edge-deletion/README.md"
+            path=f"../../eruptions/{slug}/results/nested-whole-area/edge-deletion/README.md"
             group.append(f"| [{d['name']}]({path}) | {d['conditional_volume_km3'][1]:,.1f} | "
                          f"{one['volume_km3'][1]:,.1f} | {cluster['volume_km3'][1]:,.1f} | {len(cluster['test_rows'])} | {' / '.join(status)} |")
         out[where:where] = [*group,""]
@@ -85,7 +86,7 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
         distal_lines.append(f"| {d['name']} | {d['conditional_volume_km3'][1]:,.1f} | {q[0]:,.1f} | {q[1]:,.1f} | {q[2]:,.1f} | "
                             f"{d['geographic_score']:.3f} → {t['1.0']['equal_region_negative_log_score']:.3f} |")
     bound = next(b for b in reports["b-tm"]["fitted_bound_checks"] if b["name"]=="Lake Sihailongwan")
-    distal_lines += ["",f"Lake Sihailongwan has a conditional upper bound of {bound['upper_cm']:.2f} cm in the accepted B-Tm table. The nested median field gives {bound['latent_cm'][1]:.2f} cm there, and the fitted model assigns the upper-bound event a probability of {bound['predictive_probability_of_event']:.2%}. Its western contours merit particular caution. [B-Tm bounds and predictions](../../eruptions/b-tm/results/nested-isopachs/README.md)",""]
+    distal_lines += ["",f"Lake Sihailongwan has a conditional upper bound of {bound['upper_cm']:.2f} cm in the accepted B-Tm table. The nested median field gives {bound['latent_cm'][1]:.2f} cm there, and the fitted model assigns the upper-bound event a probability of {bound['predictive_probability_of_event']:.2%}. Its western contours merit particular caution. [B-Tm bounds and predictions](../../eruptions/b-tm/results/nested-whole-area/README.md)",""]
     distal_lines.extend(["## How sensitive are the nested volumes to unmeasured bearings?", "",
                          "This comparison keeps the fitted thickness at every training site. It allows a hidden fan to turn in poorly sampled bearings. A separate high-ash scenario increases its thickness along its unknown axis. The two columns give the medians of the corresponding complete deposits.", "",
                          "| Eruption | Principal (km³) | Uncertain bearing (km³) | Enhanced hidden fan (km³) | Paired site scores, principal / uncertain bearing |",
@@ -93,7 +94,7 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
     for slug,d in reports.items():
         study=d["bearing_study"]
         score=study["paired_scores"]
-        link=f"../../eruptions/{slug}/results/nested-isopachs/bearing-study/README.md"
+        link=f"../../eruptions/{slug}/results/nested-whole-area/bearing-study/README.md"
         distal_lines.append(f"| [{d['name']}]({link}) | {study['baseline_km3'][1]:,.1f} | "
                             f"{study['retained_volume_km3'][1]:,.1f} | {study['enhanced_hidden_fan_km3'][1]:,.1f} | "
                             f"{score['reference_score']:.3f} / {score['bearing_score']:.3f} |")
@@ -158,4 +159,4 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
     preview = folder/"pinatubo-preview"
     if preview.is_dir():
         out += ["", "The unregistered 1991 Pinatubo Layer C snapshot has a separate report. [Pinatubo data and estimates](pinatubo-preview/README.md)"]
-    (folder/"README.md").write_text("\n".join(out)+"\n")
+    (folder/"whole-area-study.md").write_text("\n".join(out)+"\n")

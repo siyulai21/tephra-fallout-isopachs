@@ -7,7 +7,7 @@ from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
 from src.empirical_isopach.visualization.style import STYLE
 
 COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
-          "Directional":"#6657A1", "Spherical mixture":"#346DA4"}
+          "Directional":"#6657A1", "Spherical mixture":"#346DA4", "Nested corridor":"#933F66"}
 
 
 def saved_case_overview(output, name=None):
@@ -18,10 +18,19 @@ def saved_case_overview(output, name=None):
     directional = next((p for p in ("directional/azimuth/report.json","directional/ensemble/report.json",
                                     "directional/single-structure/report.json","directional/report.json") if (output/p).is_file()),"directional/azimuth/report.json")
     reports = [json.loads((output/p).read_text()) for p in ("report.json",directional,"spherical-mixture/report.json")]
-    case_overview(output, name or reports[0]["dataset"], *reports)
+    case_overview(output, name or reports[0]["dataset"], *reports, nested=principal_report(output))
 
 
-def metrics(regional, directional, spherical):
+def principal_report(home):
+    path = Path(home)/"nested-isopachs/report.json"
+    if path.is_file():
+        result = json.loads(path.read_text())
+        if result.get("protocol") == "nested-corridor-reach-v4":
+            return result
+    return None
+
+
+def metrics(regional, directional, spherical, nested=None):
     records = []
     for key, label in (("stacked", "GP ensemble"), ("spline", "Cubic spline")):
         m = regional["validation"]["methods"][key]["metrics"]
@@ -40,10 +49,15 @@ def metrics(regional, directional, spherical):
                   else val["all_estimable_passed"] and val["scored_rows"] == val["total_rows"])
         score = val["equal_region_log_score"] if "equal_region_log_score" in val else m["equal_region_log_score"]
         records.append((label, score, m["coverage95_observations"], passed))
+    if nested is not None:
+        if nested["input_sha256"] != regional["input"]["input_sha256"]:
+            raise ValueError("Corridor and regional inputs differ")
+        records.append(("Nested corridor", nested["geographic_score"], nested["exact_site_coverage95"]["fraction"],
+                        all(f["passed"] for f in nested["folds"])))
     return records
 
 
-def case_overview(output, name, regional, directional, spherical):
+def case_overview(output, name, regional, directional, spherical, nested=None):
     with plt.rc_context(STYLE):
         fig, axs = plt.subplots(2, 2, figsize=(12.6, 8.5), layout="constrained")
         for i, (key, label) in enumerate((("stacked", "GP ensemble"), ("spline", "Cubic spline"))):
@@ -76,14 +90,17 @@ def case_overview(output, name, regional, directional, spherical):
             centre = None
             dq = directional["fits"]["reference"]["volume_km3"]
             passed = directional["fits"]["reference"]["passed"]
-        for i, (label, q, passed) in enumerate((
-                ("Directional", dq, passed),
-                ("Spherical mixture", spherical["fits"]["baseline"]["volume"], spherical["fits"]["baseline"]["diagnostics"]["passed"]))):
+        sphere = spherical["fits"]["baseline"]
+        global_rows = [("Directional", dq, passed), ("Spherical mixture", sphere["volume"], sphere["diagnostics"]["passed"])]
+        if nested is not None:
+            q = dict(zip(("lower95", "median", "upper95"), nested["volume_km3"], strict=True))
+            global_rows.append(("Nested corridor", q, all(nested["numerics"].values())))
+        for i, (label, q, passed) in enumerate(global_rows):
             axs[0, 1].errorbar(q["median"], i, xerr=[[q["median"]-q["lower95"]], [q["upper95"]-q["median"]]],
                               fmt="o" if passed else "x", color=COLORS[label], capsize=4, markersize=7)
         if centre is not None:
             axs[0, 1].scatter(centre, -.17, marker="D", s=45, color=COLORS["Directional"], zorder=4)
-        axs[0, 1].set(yticks=[0, 1], yticklabels=["Directional", "Spherical mixture"], ylim=(1.6, -.6),
+        axs[0, 1].set(yticks=range(len(global_rows)), yticklabels=[r[0] for r in global_rows], ylim=(len(global_rows)-.4, -.6),
                       xscale="log", xlabel="Whole-Earth bulk volume (km³, logarithmic scale)",
                       title=("Whole-deposit volume · diamond = directional median map\nComplete-field median and 95% interval · × = numerical warning"
                              if centre is not None else "Conditional whole-deposit volume\nMedian and 95% interval · × = numerical warning"))
@@ -91,7 +108,7 @@ def case_overview(output, name, regional, directional, spherical):
             ax.xaxis.set_major_locator(LogLocator(subs=(1, 2, 5)))
             ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.3g}"))
             ax.xaxis.set_minor_formatter(NullFormatter())
-        records = metrics(regional, directional, spherical)
+        records = metrics(regional, directional, spherical, nested)
         for i, (label, score, coverage, passed) in enumerate(records):
             if coverage is not None:
                 axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)
@@ -103,7 +120,7 @@ def case_overview(output, name, regional, directional, spherical):
             axs[1, 0].annotate(f"{score:.3f}", (score, i), xytext=(8, 0), textcoords="offset points", va="center", fontsize=9)
         labels = [r[0] for r in records]
         for ax in axs[1]:
-            ax.set(yticks=range(4), yticklabels=labels, ylim=(3.6, -.6))
+            ax.set(yticks=range(len(records)), yticklabels=labels, ylim=(len(records)-.4, -.6))
         scores = [r[1] for r in records if r[1] is not None] or [0.]
         span = max(max(scores)-min(scores), .25)
         axs[1, 0].set(xlim=(min(scores)-.2*span, max(scores)+.65*span),
@@ -116,7 +133,7 @@ def case_overview(output, name, regional, directional, spherical):
             ax.grid(axis="x", alpha=.18)
             ax.set_axisbelow(True)
             ax.title.set_fontsize(10.5)
-        fig.suptitle(f"{name} · four methods, two different volume questions", fontsize=16)
+        fig.suptitle(f"{name} · regional and whole-deposit fallout estimates", fontsize=16)
         fig.supxlabel("Intervals are conditional on the fitted model. The two volume panels integrate different geographic areas.", fontsize=9)
         fig.savefig(Path(output)/"overview.png", dpi=190, bbox_inches="tight", pad_inches=.16)
         plt.close(fig)
@@ -130,8 +147,8 @@ def all_case_scores(output, cases):
                                  squeeze=False, layout="constrained")
         for ax in axes.flat[len(cases):]:
             ax.set_visible(False)
-        for ax, (name, regional, directional, spherical) in zip(axes.flat, cases):
-            rows = metrics(regional, directional, spherical)
+        for ax, (name, *reports) in zip(axes.flat, cases):
+            rows = metrics(*reports)
             for i, (label, score, coverage, passed) in enumerate(rows):
                 if score is None:
                     ax.text(.02,i,"Unscored",transform=ax.get_yaxis_transform())
@@ -142,16 +159,16 @@ def all_case_scores(output, cases):
                             textcoords="offset points", va="center", fontsize=8)
             scores = [r[1] for r in rows if r[1] is not None] or [0.]
             span = max(max(scores)-min(scores), .3)
-            ax.set(yticks=range(4), yticklabels=[r[0] for r in rows], ylim=(3.5, -.6),
+            ax.set(yticks=range(len(rows)), yticklabels=[r[0] for r in rows], ylim=(len(rows)-.5, -.6),
                    xlim=(min(scores)-.2*span, max(scores)+1.2*span), title=name,
                    xlabel="Geographic prediction score ↓")
             ax.grid(axis="x", alpha=.18)
             ax.tick_params(labelsize=8)
-        fig.suptitle(f"{len(cases)} eruptions · matched predictive evidence across all four families\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
+        fig.suptitle(f"{len(cases)} eruptions · geographically withheld fallout measurements\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
         fig.legend(handles=[Line2D([], [], c="#4B6068", marker="o", ls="", label="Completed geographic fits"),
                             Line2D([], [], c="#4B6068", marker="x", ls="", label="At least one global geographic fit has a numerical warning")],
                    loc="outside lower center", ncols=2, frameon=False, fontsize=9)
         panels = [ax.get_title() for ax in axes.flat if ax.get_visible()]
         fig.savefig(Path(output)/"method-scores.png", dpi=190, bbox_inches="tight", pad_inches=.16,
-                    metadata={"Description": json.dumps({"eruption_panels": panels})})
+                    metadata={"Description": json.dumps({"eruption_panels": panels, "methods_by_case": {case[0]: [r[0] for r in metrics(*case[1:])] for case in cases}})})
         plt.close(fig)

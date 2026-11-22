@@ -1,10 +1,14 @@
 # Minoan fallout reconstruction
 
-**Geographic reach of nested isopachs.** Limiting the lateral and down-range reach of each positive site gives 28.4 km³ of bulk fallout (conditional 95% interval 17.4–67.6), compared with 37.6 km³ under the whole-area continuation. All accepted Plinian and co-ignimbrite fans enter the fit together. Both sets of held-out thicknesses favor the broader continuation. [Paired maps, volumes and checks](results/nested-reach/README.md) · [Full-compass isopachs](results/nested-reach/compass.png)
+**Principal Bayesian nested estimate.** The corridor model gives 28.4 km³ of bulk fallout (conditional 95% interval 17.4–67.6), compared with 37.6 km³ under the whole-area continuation. All accepted Plinian and co-ignimbrite fans enter the fit together. Both sets of held-out thicknesses favor the broader continuation. [Corridor map, volume and checks](results/nested-isopachs/README.md) · [Full-compass isopachs](results/nested-isopachs/compass.png)
 
 The accepted dataset contains 92 exact measurements and 9 lower bounds. The regional fits share an observation hull of 760,879 km². [Accepted thickness CSV](../../data/eruptions/Minoan_tephra.csv) · [Row-level source audit](../../data/audits/Minoan/README.md)
 
 ## Isopach fits
+
+![Principal nested corridor median isopachs for Minoan](results/nested-isopachs/isopachs.png)
+
+On the nested map, solid contour segments have a local thickness bracket and at least 90% posterior crossing probability. Dashes show conditional continuation. [Corridor estimate, support and uncertainties](results/nested-isopachs/README.md)
 
 ![Median thickness contours for the GP ensemble, cubic spline, directional ensemble and spherical mixture at Minoan](results/four-method-evidence.png)
 
@@ -18,24 +22,22 @@ All four maps use the same frame, contour levels and thickness scale. Thickness 
 | Cubic spline | Hull mean **24.78** | 24.79–25.00 | 1.601 | 96.7% |
 | [Directional ensemble · uncertain fan direction](results/directional/README.md) | Whole-Earth median map **28.8** · volume median 39.1 | 21.3–138.5 | 1.782 | 94.6% |
 | [Spherical mixture](results/spherical-mixture/README.md) | Whole-Earth volume median **40.8** | 24.6–1,989.1 | 1.575 | 94.6% |
-| [Bayesian nested isopachs](results/nested-isopachs/README.md) | Whole-Earth volume median **37.6** | 25.1–91.8 | 1.536 | 92.4% |
+| [Bayesian nested · corridor](results/nested-isopachs/README.md) | Whole-Earth volume median **28.4** | 17.4–67.6 | 1.621 | 93.5% |
 
-[Nested median isopachs and the area–thickness curve](results/nested-isopachs/isopachs.png) · [Nested whole-Earth map](results/nested-isopachs/world.png) · [Nested sensitivity in poorly sampled bearings](results/nested-isopachs/bearing-study/README.md) · [Uncertain gap amount](results/directional/sensitivity-study/README.md) · [Soft source displacement](results/spherical-mixture/sensitivity-study/README.md)
-
-The nested estimate puts a median 6.7% of the fallout volume inside the retained exact-site triangles and 9.5% beyond the farthest exact measurement. 4/4 geographic refits passed the independent-population check.
+The nested corridor assigns a median 8.6% of bulk volume to the retained exact-site triangles and 2.7% beyond the farthest exact site. Its median map integrates to 24.9 km³. 4/4 buffered fits passed their numerical checks. [Whole-area sensitivity](results/nested-whole-area/README.md) · [Paired median isopachs](results/nested-isopachs/paired-isopachs.png) · [Five-family volume and geographic prediction plot](results/overview.png)
 
 A lower negative log predictive score means better prediction across withheld regions. Each region gets equal weight. Coverage is the share of exact held-out observations inside the 95% predictive interval.
 
-The directional map integrates pointwise median thickness. Measured interpolation triangles account for **8.5%** of its volume. The directional volume interval comes from complete simulated deposits. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
+The directional map integrates pointwise median thickness. Measured interpolation triangles account for **8.5%** of its volume. The directional volume interval comes from complete posterior deposit draws. The spherical mixture reports the median integrated volume across broad and uncertain fan continuations. The regional intervals condition on fitted settings. [Regional maps, fits and diagnostics](results/README.md)
 
 <details>
-<summary>Compare the two whole-Earth maps</summary>
+<summary>Compare the three whole-Earth maps</summary>
 
-| Uncertain fan direction | Spherical mixture |
-|---|---|
-| ![Uncertain-fan-direction median thickness over the Earth for Minoan](results/directional/azimuth/world.png) | ![Spherical-mixture median thickness over the Earth for Minoan](results/spherical-mixture/world.png) |
+| Uncertain fan direction | Spherical mixture | Nested corridor |
+|---|---|---|
+| ![Directional whole-Earth median](results/directional/azimuth/world.png) | ![Spherical whole-Earth median](results/spherical-mixture/world.png) | ![Nested corridor whole-Earth median](results/nested-isopachs/world.png) |
 
-Both maps use the vent longitude as their central meridian. Read the thickness key under each map.
+Each map is centred on the vent longitude and has its own thickness key.
 
 </details>
 
