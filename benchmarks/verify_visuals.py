@@ -113,12 +113,21 @@ def verify_comparison_tables(root):
             assert row.volume_converged == vol["converged"]
         sphere = read(home/"spherical-mixture/report.json")
         row = spherical.loc[slug]
-        volume = sphere["fits"]["baseline"]["volume"]
+        receipt = read(home/"spherical-mixture/deposit.json")
+        current = home/"spherical-mixture/extent"
+        if current.is_dir():
+            val = read(current/"report.json")["validation"]["geographic"]
+            priors = read(current/"prior-sensitivity.json")
+            envelope = [min(v["conditional_interval"][0] for v in priors.values()),max(v["conditional_interval"][-1] for v in priors.values())]
+            score,coverage = val["negative_log_score"],val["coverage95_exact"]
+        else:
+            envelope = sphere["sensitivity_envelope_km3"]
+            val = sphere["validation"]["metrics"]
+            score,coverage=val["equal_region_log_score"],val["coverage95_observations"]
         np.testing.assert_allclose(
             [row.median_map_volume_km3, row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
              row.global_equal_region_negative_log_score, row.global_observation_coverage95],
-            [read(home/"spherical-mixture/deposit.json")["median_map_volume_km3"], volume["lower95"], volume["upper95"], *sphere["sensitivity_envelope_km3"],
-             sphere["validation"]["metrics"]["equal_region_log_score"], sphere["validation"]["metrics"]["coverage95_observations"]],
+            [receipt["median_map_volume_km3"],*receipt["conditional_volume_interval95_km3"],*envelope,score,coverage],
             rtol=1e-12)
     assert regional.index.is_unique and set(regional.index) == expected_rows
 

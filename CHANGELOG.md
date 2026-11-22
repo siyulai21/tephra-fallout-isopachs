@@ -1,5 +1,9 @@
 # Release history
 
+## Geographic extent and angular resolution
+
+The 22 November 2026 comparison updates all nine eruptions. The three global families preserve the observation likelihood and publish paired predictions for the earlier and revised deposits, complete-draw intervals and a fresh support screen. [Paired results and failures](comparisons/global-extent/README.md) · [Earlier release](archive/2026-11-22-global-extent/README.md)
+
 ## Global median-thickness maps and volume integrals
 
 All eight catalogue cases and the separate Pinatubo study now show the full median-thickness footprint down to 0.5 cm, near-vent detail and a thickness–area curve for each global method. Each mapped integral includes the thin tail. The regional pair reports its median-map integrals inside the observation hull. The earlier four-method figures and duplicate corridor redirect pages are retired. [Current figures and estimates](eruptions/README.md)

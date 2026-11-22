@@ -14,9 +14,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **3.45** | 2.97–4.95 | 3.023 | 87.3% |
 | Cubic spline | **14.8** | 10.4–1.69e+11 (provisional) | 1.590 | 85.3% |
-| [Directional ensemble](results/directional/README.md) | **6.42** | 4.96–11.8 (provisional) | 1.549 † | 89.3% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **13.9** | 9.22–26.1 | 0.910 † | 97.3% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **8.36** | 7.42–9.6 | 3.142 † | 62.0% |
+| [Directional ensemble](results/directional/README.md) | **6.38** | 4.92–10.8 (provisional) | 1.744 † | 88.7% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **11.1** | 7.33–20.2 | 0.965 † | 94.7% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **6.77** | 5.57–8.09 | 3.342 † | 60.7% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -35,6 +35,8 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 ![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 
 ## What changed after the two map reviews
 
@@ -55,11 +57,11 @@ With all 34 offshore records withheld, the land-only nested fit covers 0 of 19 m
 
 The GP and spline integrate over the same 279,806 km² hull. At SO-114-13 the measured marine bed spans 1–2 mm. Under the shared lower-bound treatment, the spline median reaches 37.6 m at this station and its upper volume interval fails the integration check. Using the upper endpoints of the nine replicate ranges as upper bounds changes its regional volume from 14.82 to 5.04 km³. The regional spline is highly sensitive to how these ranges enter the fit. [Endpoint and location checks](results/source-checks/README.md#regional-sensitivity-to-the-upper-endpoints)
 
-The uncertain-direction ensemble covers 134 of 150 scored measurements with its geographic 95% prediction intervals, out of 150 exact sites overall. 4 of 6 full-data members pass sampling checks. The spherical family places a median 4.0% of its mass inside the screened measurement footprint and 94.3% in intervening gaps and sectors. Those fractions are calculated across whole-deposit draws. The spherical 0.5 cm contour extends well south of the offshore cores, where its reach depends on the assumed fallout geometry. [Directional holdouts](results/directional/azimuth/heldout.csv) · [Spherical mass by region](results/spherical-mixture/README.md)
+In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), the uncertain-direction ensemble covers 134 of 150 scored measurements with its geographic 95% prediction intervals, out of 150 exact sites overall. 4 of 6 full-data members pass sampling checks. The spherical family places a median 4.0% of its mass inside the screened measurement footprint and 94.3% in intervening gaps and sectors. Those fractions are calculated across whole-deposit draws. The spherical 0.5 cm contour extends well south of the offshore cores, where its reach depends on the assumed fallout geometry. [Directional holdouts](results/directional/azimuth/heldout.csv) · [Spherical mass by region](results/spherical-mixture/README.md)
 
-The spherical baseline passes its sampling checks with 0 divergent transitions. Across the eight fixed prior assumptions, 6 fits pass their numerical checks. The combined range of the eight conditional intervals is 6.52–171.56 km³. This sensitivity range has no joint probability level. Only one of the four geographic training fits passes sampling checks. [Prior choices and diagnostics](results/spherical-mixture/report.json)
+In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), the spherical baseline passes its sampling checks with 0 divergent transitions. Across the eight fixed prior assumptions, 6 fits pass their numerical checks. The combined range of the eight conditional intervals is 6.52–171.56 km³. This sensitivity range has no joint probability level. Only one of the four geographic training fits passes sampling checks. [Prior choices and diagnostics](results/spherical-mixture/report.json)
 
-The nested corridor full fit passes its population and integration checks. 3 of its four geographic training fits pass. The geographic prediction intervals cover 93 of 150 withheld measurements. None of the tested support policies accepts a complete nested contour band. Beyond 100 km the measured sites leave a 294° unsampled arc. Whole-Earth totals depend on continuation across those bearings. [Observed geographic coverage](../../data/audits/Pinatubo-1991/README.md#geographic-coverage) · [Nested support and extrapolation](results/nested-isopachs/README.md) · [Whole-area sensitivity to withholding the outermost influential core](results/nested-whole-area/edge-deletion/README.md)
+In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), the nested corridor full fit passes its population and integration checks. 3 of its four geographic training fits pass. The geographic prediction intervals cover 93 of 150 withheld measurements. None of the tested support policies accepts a complete nested contour band. Beyond 100 km the measured sites leave a 294° unsampled arc. Whole-Earth totals depend on continuation across those bearings. [Observed geographic coverage](../../data/audits/Pinatubo-1991/README.md#geographic-coverage) · [Nested support and extrapolation](results/nested-isopachs/README.md) · [Whole-area sensitivity to withholding the outermost influential core](results/nested-whole-area/edge-deletion/README.md)
 
 Wiesner and colleagues reported 5.5 km³ for the 15 June airfall deposit. Earlier thinning fits ranged from 1.7 to 4.4 km³ as distal extrapolation assumptions varied. Those estimates and the five fits here share field evidence. [Later land and marine estimate](https://doi.org/10.1007/s00445-003-0306-x) · [Earlier thinning scenarios](../../data/sources/pinatubo-1991/context/paladio-published-volume-comparisons.csv)
 

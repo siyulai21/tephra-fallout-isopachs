@@ -60,6 +60,12 @@ def case_results(record):
               nested["geographic_score"]]
     maps = [read(home/family/file)["median_map_volume_km3"] for family,file in (
         ("directional","deposit.json"), ("spherical-mixture","deposit.json"), ("nested-whole-area","median-field.json"))]
+    if (home/"directional/extent/report.json").is_file():
+        # This study compares the original whole-area ranks with the contemporaneous peers.
+        prior = {r["method"]:r for r in csv_rows(ROOT/"archive/2026-11-22-global-extent/principal-volumes.csv")
+                 if r["slug"]==slug and r["input_sha256"]==key}
+        if prior:
+            maps[:2] = [float(prior[f]["median_map_volume_km3"]) for f in ("directional","spherical-mixture")]
     results = [dict(eruption=record["name"], slug=slug, method=name, lower95_km3=q[0],
                     median_map_km3=volume, upper95_km3=q[-1], equal_region_log_score=score, input_sha256=key)
                for name, q, volume, score in zip(FAMILIES, draws, maps, scores, strict=True)]

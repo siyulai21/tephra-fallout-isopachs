@@ -16,9 +16,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **171** | 156–267 | 1.514 | 94.0% |
 | Cubic spline | **201** | 168–452 | 1.662 | 90.4% |
-| [Directional ensemble](results/directional/README.md) | **659** | 298–3.51e+03 | 1.502 | 90.4% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **599** | 403–2.78e+04 | 1.632 | 95.2% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **545** | 250–9.99e+03 | 1.556 † | 91.6% |
+| [Directional ensemble](results/directional/README.md) | **661** | 293–3.58e+03 | 1.482 | 90.4% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **473** | 333–6.99e+03 | 1.636 | 94.0% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **432** | 197–1.01e+04 | 1.584 † | 91.6% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -38,12 +38,14 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+
 ## Evidence and limitations
 
 The reviewed input corrects two cruise locations and retains the Biwa source conflict and the Hokkaido erosion interpretation. The nearest accepted site is 88 km from the vent. The southeast, south and west have two, two and zero exact measurements. The large spherical-mixture total remains questioned. In the earlier broad spherical fit, omitting all 28 source-labelled marine records gave a conditional 95% volume interval of 536–143,867 km³. A regional deletion also makes the spline partial volume unstable. [Source, geometry and influence experiments](../../comparisons/aso-4-audit/README.md)
 
-The spherical 10 cm footprint contracts to the south, southeast and west. The displaced-kernel map still places its near-source grid maximum southeast of the volcano, away from the closest measurements. Its location and the large upper volume tail depend on extrapolation. The south and southwest 10 cm areas retain numerical warnings. [Near-source spherical map](results/spherical-mixture/source.png) · [Matched isopach areas and known-deposit tests](../../comparisons/spherical-mixture/README.md#where-the-map-changes)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the spherical 10 cm footprint contracts to the south, southeast and west. The displaced-kernel map still places its near-source grid maximum southeast of the volcano, away from the closest measurements. Its location and the large upper volume tail depend on extrapolation. The south and southwest 10 cm areas retain numerical warnings. [Near-source spherical map](results/spherical-mixture/source.png) · [Matched isopach areas and known-deposit tests](../../comparisons/spherical-mixture/README.md#where-the-map-changes)
 
 The standard local-support footprint covers 711,348 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)
 
-The western sector has no measured thickness and its median 1 cm footprint changes from 6.32 million to 48,000 km². On a separate test, 28 actual submarine cores were better predicted by the broader fit. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the western sector has no measured thickness and its median 1 cm footprint changes from 6.32 million to 48,000 km². On a separate test, 28 actual submarine cores were better predicted by the broader fit. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)

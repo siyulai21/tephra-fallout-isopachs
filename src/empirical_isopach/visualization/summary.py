@@ -30,7 +30,7 @@ def principal_report(home):
     return None
 
 
-def metrics(regional, directional, spherical, nested=None):
+def metrics(regional, directional, spherical, nested=None, *, home=None):
     records = []
     for key, label in (("stacked", "GP ensemble"), ("spline", "Cubic spline")):
         m = regional["validation"]["methods"][key]["metrics"]
@@ -54,6 +54,12 @@ def metrics(regional, directional, spherical, nested=None):
             raise ValueError("Corridor and regional inputs differ")
         records.append(("Nested corridor", nested["geographic_score"], nested["exact_site_coverage95"]["fraction"],
                         all(f["passed"] for f in nested["folds"])))
+    if home is not None:
+        for i,family in enumerate(("directional","spherical-mixture","nested-isopachs"),2):
+            path = Path(home)/family/"extent/report.json"
+            if i<len(records) and path.is_file():
+                val = json.loads(path.read_text())["validation"]["geographic"]
+                records[i] = (records[i][0],val["negative_log_score"],val["coverage95_exact"],val["all_folds_passed"])
     return records
 
 
@@ -88,7 +94,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
             ax.xaxis.set_major_locator(LogLocator(subs=(1, 2, 5)))
             ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.3g}"))
             ax.xaxis.set_minor_formatter(NullFormatter())
-        records = metrics(regional, directional, spherical, nested)
+        records = metrics(regional, directional, spherical, nested,home=folder)
         for i, (label, score, coverage, passed) in enumerate(records):
             if coverage is not None:
                 axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)
@@ -119,7 +125,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
         plt.close(fig)
 
 
-def all_case_scores(output, cases):
+def all_case_scores(output, cases, *, homes=None):
     from matplotlib.lines import Line2D
     with plt.rc_context(STYLE):
         rows_needed = (len(cases) + 2) // 3
@@ -128,7 +134,7 @@ def all_case_scores(output, cases):
         for ax in axes.flat[len(cases):]:
             ax.set_visible(False)
         for ax, (name, *reports) in zip(axes.flat, cases):
-            rows = metrics(*reports)
+            rows = metrics(*reports,home=homes.get(name) if homes else None)
             for i, (label, score, coverage, passed) in enumerate(rows):
                 if score is None:
                     ax.text(.02,i,"Unscored",transform=ax.get_yaxis_transform())

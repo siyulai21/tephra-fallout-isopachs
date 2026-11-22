@@ -102,10 +102,14 @@ def main():
             continue
         row = rows.pop(rec["slug"])
         assert row["input_sha256"] == j["input_sha256"]
+        home = case_home(rec["slug"])/"nested-isopachs"
+        receipt = read(home/"deposit.json")
         np.testing.assert_allclose([float(row[k]) for k in ("lower95_km3","upper95_km3")],
-                                   j["conditional_volume_interval95_km3"])
-        np.testing.assert_allclose(float(row["median_map_km3"]), read(case_home(rec["slug"])/"nested-isopachs/deposit.json")["median_map_volume_km3"])
-        np.testing.assert_allclose(float(row["equal_region_log_score"]),j["geographic_score"])
+                                   receipt["conditional_volume_interval95_km3"])
+        np.testing.assert_allclose(float(row["median_map_km3"]),receipt["median_map_volume_km3"])
+        current = home/"extent/report.json"
+        expected = read(current)["validation"]["geographic"]["negative_log_score"] if current.exists() else j["geographic_score"]
+        np.testing.assert_allclose(float(row["equal_region_log_score"]),expected)
     assert not rows
     known=json.loads(gzip.decompress((comp/"validation.json.gz").read_bytes()))
     assert len(known["quadrants"])==36 and len(known["known"])==18

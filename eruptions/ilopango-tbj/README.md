@@ -10,9 +10,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **23.3** | 17.9–33.8 | 1.343 | 98.1% |
 | Cubic spline | **25.7** | 22.6–31.5 | 1.462 | 92.3% |
-| [Directional ensemble](results/directional/README.md) | **40.8** | 30.1–385 | 1.528 | 92.3% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **145** | 62.9–3.3e+03 (provisional) | 1.225 | 94.2% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **39.1** | 25.1–94.2 (provisional) | 1.274 † | 94.2% |
+| [Directional ensemble](results/directional/README.md) | **41.9** | 29.6–384 | 1.493 | 94.2% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **133** | 59.7–1.95e+03 (provisional) | 1.284 | 94.2% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **35.9** | 21–96.3 (provisional) | 1.359 † | 94.2% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -32,9 +32,11 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+
 ## Reading the global uncertainty
 
-Across two halves of the spherical draws, the median changed by 0.12% and the upper interval endpoint by 17.3%. The latter exceeded the 10% numerical tolerance. The parent sampler and spatial integration passed. One directional quadrant fit also retained a sampling warning. [Spherical numerical checks](results/spherical-mixture/README.md) · [Directional holdouts](results/directional/README.md)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), across two halves of the spherical draws, the median changed by 0.12% and the upper interval endpoint by 17.3%. The latter exceeded the 10% numerical tolerance. The parent sampler and spatial integration passed. One directional quadrant fit also retained a sampling warning. [Spherical numerical checks](results/spherical-mixture/README.md) · [Directional holdouts](results/directional/README.md)
 
 ## What the observations constrain
 

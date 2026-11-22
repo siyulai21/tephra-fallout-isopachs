@@ -56,7 +56,14 @@ def previous_fields(output):
 
 def volume_changes(home, output):
     before = pd.read_csv(ARCHIVE / "volumes.csv").set_index("method")
-    after = pd.DataFrame(volume_rows(home)).set_index("method")
+    if (home / "spherical-mixture/extent/report.json").is_file():
+        # The historical comparison isolates a source-table change with both model versions held fixed.
+        archived = ROOT / "archive/2026-11-22-global-extent/principal-volumes.csv"
+        volumes = ("median_map_volume_km3", "conditional_volume_lower95_km3", "conditional_volume_upper95_km3")
+        release = pd.read_csv(archived, converters={name: float for name in volumes})
+        after = release.loc[release.slug == "pinatubo-1991-layer-c"].set_index("method")
+    else:
+        after = pd.DataFrame(volume_rows(home)).set_index("method")
     old_hash = sha256((ARCHIVE / "input.csv").read_bytes()).hexdigest()
     new_hash = sha256(INPUT.read_bytes()).hexdigest()
     if set(before.index) != set(after.index) or not before.input_sha256.eq(old_hash).all() or not after.input_sha256.eq(new_hash).all():

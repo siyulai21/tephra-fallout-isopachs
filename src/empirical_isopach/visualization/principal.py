@@ -27,11 +27,12 @@ def volume_rows(home, reports=None, *, regional_home=None):
         receipt = read_json(home/key/"deposit.json")
         if receipt["input_sha256"]!=regional["input"]["input_sha256"] or receipt["family"]!=key:
             raise ValueError("A principal deposit uses a different input or family")
-        q,passed = volume_interval(key,report)
+        ext = home/key/"extent/report.json"
+        q,passed = volume_interval(key,report,read_json(ext) if ext.exists() else None)
         values.append((key,"whole Earth",receipt["median_map_volume_km3"],q,receipt["integration_passed"],passed))
     rows = []
     for (key,domain,volume,q,map_ok,draw_ok),(name,score,coverage,validation_ok) in zip(
-            values,metrics(*reports,nested),strict=True):
+            values,metrics(*reports,nested,home=home),strict=True):
         rows.append(dict(method=key,domain=domain,median_map_volume_km3=volume,
                          conditional_volume_lower95_km3=q[0],conditional_volume_upper95_km3=q[1],
                          map_integration_passed=bool(map_ok),complete_draw_checks_passed=bool(draw_ok),

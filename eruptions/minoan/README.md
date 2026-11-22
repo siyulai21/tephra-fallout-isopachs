@@ -10,9 +10,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **22** | 18.2–40.3 | 1.451 | 96.7% |
 | Cubic spline | **24.8** | 24.8–25 | 1.601 | 96.7% |
-| [Directional ensemble](results/directional/README.md) | **28.8** | 21.3–138 | 1.782 | 94.6% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **29.2** | 24.6–1.99e+03 | 1.575 | 94.6% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **24.9** | 17.4–67.6 | 1.621 | 93.5% |
+| [Directional ensemble](results/directional/README.md) | **29.2** | 21.2–121 | 1.716 | 94.6% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **26.9** | 22.9–834 | 1.586 | 95.7% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **22.6** | 14.9–62.5 | 1.694 | 94.6% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -31,6 +31,8 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 ![Minoan · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 
 ## Evidence and limitations
 

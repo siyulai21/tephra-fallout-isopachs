@@ -2,6 +2,8 @@
 
 Users submit eruption data in chat. Follow the [intake workflow](docs/NEW_ERUPTION.md) for new and recalculated eruptions, run all active families and publish a readable case on GitHub.
 
+For each global family, publish the current `extent/report.json`, `extent/heldout.csv.gz` and `extent/support.json.gz` with its principal median-deposit plate. Publish all eight spherical intervals in `extent/prior-sensitivity.json`. The family-specific fit reports preserve the underlying posterior and earlier continuation. [Current continuation rules](docs/methods/finite-spread.md)
+
 ## Sources of truth
 
 - `data/datasets.json` identifies the accepted CSV, audit and reviewed spherical-mixture geometry. Aso-4 uses its reviewed input. B-Tm uses source-focused spherical fans. Preserve original units, row identities, hashes, bounds and reasons for inclusion or exclusion. Never invent evidence, observation errors, pseudo-data or zero deposits.

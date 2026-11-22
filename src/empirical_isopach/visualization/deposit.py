@@ -11,8 +11,10 @@ from .deposit_maps import LAND, frames, plate
 from .maps import boundary_points
 
 
-def volume_interval(family, report):
+def volume_interval(family, report, extent=None):
     """Return only the two conditional volume uncertainty endpoints."""
+    if extent is not None:
+        return tuple(extent["conditional_interval95_km3"]), extent["draw_checks_passed"]
     if family=="nested-isopachs":
         q = report.get("conditional_volume_interval95_km3") or report["volume_km3"]
         return (q[0], q[-1]), all(report["numerics"].values())
@@ -49,6 +51,23 @@ def deposit_page(old, family, name, receipt, report):
              "[Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)", ""]
     if not receipt["integration_passed"]:
         first.extend(["**Map integration warning.** The independent or refinement check exceeded its tolerance. See the numerical record.", ""])
+    if "extent/report.json" in receipt["sources_sha256"]:
+        markers = {"directional":"## Reach from the volcano","spherical-mixture":"## What the unobserved directions contribute",
+                   "nested-isopachs":"The buffered geographic score is"}
+        pivot = markers[family]
+        _,found,tail = old.partition(pivot)
+        if not found:
+            raise ValueError("Cannot locate the parent diagnostics")
+        first.extend(["The principal map uses the geographic continuation evaluated on all registered eruptions. "
+                     "[Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · "
+                     "[Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)", "",
+                     "## Earlier continuation and its diagnostics", "",
+                     "The following figures and statistics describe the fitted parent and its broader continuation. "
+                     "The principal estimate and its interval appear above.", ""])
+        if family=="spherical-mixture":
+            index=first.index("## Earlier continuation and its diagnostics")
+            first[index:index]=["[Conditional intervals under all eight fixed prior fits](extent/prior-sensitivity.json)", ""]
+        return "\n".join(first)+"\n"+pivot+tail
     if family=="directional":
         pivot = "## Reach from the volcano"
         vol = report["volume"]
@@ -113,7 +132,10 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     folder=Path(folder)
     dest=Path(output) if output else folder
     dest.mkdir(parents=True,exist_ok=True)
-    view,model,sources=open_field(folder,family,data,meta)
+    review = dest/"extent/report.json"
+    if not review.is_file():
+        review = folder/"extent/report.json"
+    view,model,sources=open_field(folder,family,data,meta,review=review)
     latitude=meta["vent_lonlat"][1]
     if sampled is None:
         field,checks=checked_field(view,data,latitude)
@@ -122,7 +144,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         if identity!=sources:
             raise ValueError("Scratch field belongs to different saved fits")
     report=read_json(folder/next(iter(sources)))
-    interval,fit_ok=volume_interval(family,report)
+    interval,fit_ok=volume_interval(family,report,read_json(review) if review.exists() else None)
     maximum=max(field.log10_cm.max(),data.log_value.max()/np.log(10.))
     levels=doubling_levels(10.**maximum)
     bounds,_,_=frames(field,data)

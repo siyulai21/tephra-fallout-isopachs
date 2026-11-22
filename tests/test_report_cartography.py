@@ -131,17 +131,31 @@ def test_old_fit_packets_use_median_maps_and_do_not_substitute_an_unmapped_volum
     assert section.count("Hull median map") == 2
 
 
-def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch):
+def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch, tmp_path):
     from src.empirical_isopach.visualization import comparison
 
     home = Path(__file__).resolve().parents[1] / "eruptions/ilopango-tbj/results"
+    import json
+    import shutil
+    for name in ("directional","spherical-mixture","nested-isopachs"):
+        (tmp_path/name).mkdir()
+        shutil.copy2(home/name/"deposit.json",tmp_path/name/"deposit.json")
+    shutil.copy2(home/"nested-isopachs/report.json",tmp_path/"nested-isopachs/report.json")
     reports = comparison.comparison_reports(home)
     spherical = reports[2]
     monkeypatch.setattr(comparison, "comparison_reports", lambda _: reports)
     for volume_ok, prediction_ok in ((False, True), (True, False)):
         spherical["fits"]["baseline"]["diagnostics"]["passed"] = volume_ok
         spherical["validation"]["all_fits_passed_diagnostics"] = prediction_ok
-        section = comparison.comparison_section(home)
+        path = home/"spherical-mixture/extent/report.json"
+        if path.exists():
+            current = json.loads(path.read_text())
+            current["draw_checks_passed"] = volume_ok
+            current["validation"]["geographic"]["all_folds_passed"] = prediction_ok
+            target = tmp_path/"spherical-mixture/extent"
+            target.mkdir(exist_ok=True)
+            (target/"report.json").write_text(json.dumps(current))
+        section = comparison.comparison_section(tmp_path)
         row = next(line for line in section.splitlines() if line.startswith("| [Spherical mixture]"))
         _, _, _, interval, score, _, _ = row.split("|")
         assert ("provisional" in interval) == (not volume_ok)

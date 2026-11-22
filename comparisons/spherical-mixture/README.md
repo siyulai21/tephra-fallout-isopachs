@@ -1,74 +1,21 @@
-# Spherical-mixture maps and volumes
+# Spherical mixture across the eruption catalogue
 
-Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The principal volume integrates the median-thickness map. The interval describes uncertainty in total fallout across complete posterior draws. The last column gives the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
+The spherical mixture limits how much a displaced component can rise above its sampled flank. The two continuations retain different crosswind spreads. A separate interval for each of eight prior fits shows how much uncertainty comes from the assumptions about the kernels.
 
-| Eruption | Kernel geometry | Median-thickness map (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) |
-|---|---|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/README.md) | displaced · **questioned** | **599** | 402.9–27,836.6 | 380–8.51e+07 |
-| [B-Tm](../../eruptions/b-tm/README.md) | source-fans | **37.1** | 30.2–275.5 | 25.2–783 |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/README.md) | displaced | **145** · **provisional** | 62.9–3,300.8 | 43.3–2.11e+04 |
-| [Mazama](../../eruptions/mazama/README.md) | displaced | **178** | 140.1–2,614.3 | 137–9.27e+04 |
-| [Minoan](../../eruptions/minoan/README.md) | displaced | **29.2** | 24.6–1,989.1 | 23.1–1.91e+04 |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/README.md) | displaced | **13.9** | 9.2–26.1 | 6.52–172 |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/README.md) | displaced | **7.32** | 5.1–666.5 | 4.51–3.34e+03 |
-| [Tambora](../../eruptions/tambora/README.md) | displaced | **126** | 100.8–920.1 | 93–3.85e+03 |
-| [YTT](../../eruptions/ytt/README.md) | displaced | **1.28e+03** | 1,054.3–48,708.5 | 1.01e+03–1.09e+05 |
+[Model and uncertainty](../../docs/methods/finite-spread.md) · [Paired maps and withheld-site tests](../global-extent/README.md)
 
-8 of 9 baseline fits passed the sampling and integration checks. Numerical warnings occurred in Aso-4 (diffuse tail, one fan, five fans, gaussian errors), B-Tm (wide geography, five fans, gaussian errors), Ilopango TBJ (Unit G) (baseline, volume prior shift), Mazama (wide geography, one fan, gaussian errors), Minoan (wide geography), Pinatubo 1991 (Layer C) (five fans, gaussian errors), Sakurajima Satsuma (P14) (volume prior shift), Tambora (wide geography, five fans). Their results contribute to the envelope. Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
-
-## Where the map changes
-
-![Broad and principal spherical 10 cm isopachs by eruption](bearings/paired-isopachs.png)
-
-Each panel compares the same 10 cm threshold. Tan shading identifies ground where only the earlier median reaches 10 cm. Blue shading identifies ground where both medians reach it. Only sites inside each frame are visible. The area calculations below cover the entire Earth.
-
-| Eruption and compass sector | Area ≥10 cm, earlier → principal (km²) | Split-draw area disagreement |
-|---|---:|---:|
-| Aso-4, S | 393,291 → 233,542 | 10.1% |
-| Aso-4, SE | 358,352 → 273,568 | 6.2% |
-| Aso-4, W | 56,454 → 27,251 | 6.3% |
-| B-Tm, W | 79 → 69 | Unresolved |
-| Mazama, SW | 9,989 → 8,041 | 2.9% |
-
-These are modelled areas in 45° sectors, averaged over two scrambled whole-Earth integration grids. The sites do not establish the actual deposit edge. The downloadable tables give both grid results, contour-area split checks and all eight bearings at 1, 10 and 100 cm.
-
-## Predictions in withheld regions
-
-All methods faced the same held-out observations, bounds, regions and buffers for each eruption. Lower scores indicate better prediction. Coverage is the fraction of exact thickness readings inside the principal spherical 95% predictive interval.
-
-| Eruption | Spherical score, broad → principal | GP score | Spline score | Spherical coverage | Spherical holdout checks |
-|---|---:|---:|---:|---:|---|
-| Aso-4 | 1.632 → 1.632 | 1.514 | 1.662 | 95.2% | pass |
-| B-Tm | 1.492 → 1.487 | 1.459 | 4.295 | 93.8% | **provisional** |
-| Ilopango TBJ (Unit G) | 1.173 → 1.225 | 1.343 | 1.462 | 94.2% | pass |
-| Mazama | 1.577 → 1.561 | 1.272 | 1.971 | 88.9% | **provisional** |
-| Minoan | 1.570 → 1.575 | 1.451 | 1.601 | 94.6% | pass |
-| Pinatubo 1991 (Layer C) | 0.905 → 0.910 | 3.023 | 1.590 | 97.3% | **provisional** |
-| Sakurajima Satsuma (P14) | 1.513 → 1.376 | 1.264 | 1.371 | 88.0% | pass |
-| Tambora | 1.471 → 1.477 | 1.620 | 1.548 | 100.0% | pass |
-| YTT | 1.777 → 1.756 | 1.934 | 2.153 | 84.8% | pass |
-
-The geographic score averaged equally across eruptions changed from 1.457 to 1.444. Of the withheld readings, 204 had gap exposure of at least 0.5. Within those readings the site-weighted score was 1.563 → 1.546. Giving each represented eruption equal weight gives 1.680 → 1.634. [Paired predictions and gap-exposure scores](bearings/paired-cases.csv)
-
-![Conditional spherical volumes, prior envelopes and withheld-region scores](comparison.png)
-
-## Deposits with known volumes
-
-The existing spherical tests contain 24 fits across two kernel geometries, six deposit designs and two seeds per geometry. On the 24 original truths, the earlier and principal conditional intervals contained the true volume in **21/24 and 21/24** fits, respectively. At 10 cm the principal fit reduced false extension and increased missed fallout in the simulations.
-
-| Area tested | Threshold | Resolved pairs / 24 | False-positive area, earlier → principal (km²) | Missed fallout area, earlier → principal (km²) |
+| Eruption | Median-map bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | Exact coverage |
 |---|---:|---:|---:|---:|
-| Whole Earth | 1 cm | 24 | 214,354 → 206,848 | 4,188 → 4,689 |
-| Whole Earth | 10 cm | 24 | 26,557 → 24,427 | 4,640 → 5,056 |
-| Whole Earth | 100 cm | 20 | 741 → 739 | 4,726 → 4,727 |
-| Gap exposure ≥0.5 | 1 cm | 4 | 7,613 → 1,130 | 0 → 761 |
-| Gap exposure ≥0.5 | 10 cm | 4 | 37 → 0 | 11,577 → 13,513 |
-| Gap exposure ≥0.5 | 100 cm | 0 | — | — |
+| [Aso-4](../../eruptions/aso-4/results/spherical-mixture/README.md) | **473** | 333–6,989 | 1.636 | 94.0% |
+| [B-Tm](../../eruptions/b-tm/results/spherical-mixture/README.md) | **37.1** | 30.2–276 | 1.496 † | 93.8% |
+| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/spherical-mixture/README.md) | **133** | 59.7–1,950 · provisional | 1.284 | 94.2% |
+| [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | **171** | 135–914 | 1.559 † | 84.4% |
+| [Minoan](../../eruptions/minoan/results/spherical-mixture/README.md) | **26.9** | 22.9–834 | 1.586 | 95.7% |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/spherical-mixture/README.md) | **11.1** | 7.33–20.2 | 0.965 † | 94.7% |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/spherical-mixture/README.md) | **6.94** | 4.89–305 | 1.351 | 88.0% |
+| [Tambora](../../eruptions/tambora/results/spherical-mixture/README.md) | **117** | 93.2–589 | 1.590 | 100.0% |
+| [YTT](../../eruptions/ytt/results/spherical-mixture/README.md) | **1,227** | 997–22,009 | 1.737 | 84.8% |
 
-Each resolved fit receives equal weight. Both model–truth unions must have at least 64 effective area nodes. Empty or inadequately resolved unions are listed in the CSV. 3 parent fits had sampling warnings and 5 bearing-volume estimates retained split-draw warnings. The scores describe these development simulations.
+A dagger marks a geographic fit warning. A provisional interval retains a full-data sampling or integration warning.
 
-Four missing-quadrant fits also have a second compatible truth. Within an 80 km disk centred 110 km east and north of the source, a weaker hidden fan gives identical thickness at every sampled site. The tables retain both truths. [Volume errors and failures](bearings/known-volumes.csv) · [Contour errors by threshold and truth](bearings/known-areas.csv) · [Quadrature replicates and numerical checks](bearings/known-deposits.json.gz)
-
-## Data and reproduction
-
-[Case estimates and prior diagnostics](comparison.csv) · [Input identities and matched validation](report.json) · [Kernel-geometry experiment](../source-revision/README.md) · [Displaced-kernel trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Reproduction commands](../../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility) · [Preceding release](../../archive/2026-11-20-spherical-continuation/README.md)
+[Prior and geometry comparison](comparison.csv) · [Earlier bearing tests on known deposits](bearings/known-volumes.csv) · [Underlying spherical likelihood](../../docs/methods/probabilistic-global.md)

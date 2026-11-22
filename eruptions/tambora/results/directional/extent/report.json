@@ -1,0 +1,531 @@
+{
+  "protocol": "finite-spread-and-angular-resolution-v1",
+  "family": "directional",
+  "name": "Tambora",
+  "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+  "parent_sha256": {
+    "azimuth/report.json": "09a0a53b195b906323335a8ad90bd03ca8526a4bd01b9338f264d6d8b98979d6",
+    "azimuth/fields.npz": "53633b53c2ae30fbf4d817d581af1b202157f98eeb46e6dadb66af33addc8b69"
+  },
+  "calibration": {
+    "states": [
+      "broad",
+      "resolved"
+    ],
+    "weights": [
+      0.42529883069656527,
+      0.5747011693034346
+    ],
+    "donors": [
+      "mazama",
+      "aso-4",
+      "b-tm",
+      "ytt",
+      "minoan",
+      "ilopango-tbj",
+      "sakurajima-satsuma",
+      "pinatubo-1991-layer-c"
+    ],
+    "eligible_folds": 26
+  },
+  "calibration_sha256": "6ba944f53c1ff03af2efff120faa783da8a2d4e434b2283d9594e108ed2f9652",
+  "exact_parent_identity": false,
+  "conditional_interval95_km3": [
+    68.78994607605915,
+    192.4294460034056
+  ],
+  "draw_checks_passed": false,
+  "parent_conditional_interval95_km3": [
+    73.1712259315531,
+    203.75511961772662
+  ],
+  "parent_draw_checks_passed": false,
+  "state_conditional_intervals95_km3": {
+    "parent": [
+      73.18568348819181,
+      203.97544334530716
+    ],
+    "broad": [
+      69.84329286238352,
+      196.33156540645655
+    ],
+    "resolved": [
+      68.17186906610169,
+      187.19491472931668
+    ]
+  },
+  "state_order": [
+    "parent",
+    "broad",
+    "resolved"
+  ],
+  "volume_draws_sha256": "20fa689414c611cd2b502d53bc83f181c871505af9f5bbebeceed9d42e11f0c4",
+  "draw_refinements": [
+    {
+      "draws_per_state": 1536,
+      "split_relative_difference": 0.021058370268495052,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              73.01305290409354,
+              117.35752494720339,
+              204.86650487971346
+            ],
+            [
+              69.5844834964376,
+              115.64048515154438,
+              196.32555768027532
+            ],
+            [
+              67.99607259362283,
+              114.28166694601109,
+              187.26381165828036
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.003020258643833003,
+            0.00540729124804146,
+            0.004422300978989811
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              73.18568348819181,
+              117.4616918174481,
+              203.97544334530716
+            ],
+            [
+              69.84329286238352,
+              115.76015085203223,
+              196.33156540645655
+            ],
+            [
+              68.17186906610169,
+              114.34131909178583,
+              187.19491472931668
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.001824047957524432,
+            0.001357312597684544,
+            0.0007961157805684681
+          ],
+          "max_relative_refinement_by_state": [
+            0.004368474556507573,
+            0.0037055722223159338,
+            0.0025787245514481416
+          ],
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "geographic": {
+      "negative_log_score": 2.028516984249116,
+      "parent_matched_score": 2.069864907545479,
+      "state_scores": {
+        "parent": 2.069864907545479,
+        "broad": 2.0509368710115456,
+        "resolved": 2.0156849368555774
+      },
+      "fold_scores": [
+        1.5173857711740701,
+        1.9253092729412074,
+        2.5794192207240334,
+        2.091953672157154
+      ],
+      "passed_folds": 1,
+      "attempted_folds": 4,
+      "all_folds_passed": false,
+      "passed_only_score": 2.5794192207240334,
+      "n_rows": 26,
+      "n_exact": 26,
+      "coverage95_exact": 0.8461538461538461,
+      "matched_parent_coverage95": 0.8461538461538461
+    },
+    "quadrants": {
+      "negative_log_score": 1.8740138477462025,
+      "parent_matched_score": 1.9144038380368091,
+      "state_scores": {
+        "parent": 1.9144038380368091,
+        "broad": 1.8913736739704061,
+        "resolved": 1.862626177578376
+      },
+      "fold_scores": [
+        2.428720303546877,
+        1.2614614432942526,
+        1.8952254565412066,
+        1.9106481876024732
+      ],
+      "passed_folds": 0,
+      "attempted_folds": 4,
+      "all_folds_passed": false,
+      "passed_only_score": null,
+      "n_rows": 26,
+      "n_exact": 26,
+      "coverage95_exact": 0.9615384615384616,
+      "matched_parent_coverage95": 0.9615384615384616
+    }
+  },
+  "folds": [
+    {
+      "design": "geographic",
+      "fold": 0,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        16,
+        23,
+        13,
+        5,
+        2,
+        3,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        18,
+        14,
+        12,
+        11,
+        7,
+        10
+      ],
+      "source_sha256": {
+        "narrow_fans": "ae1add00ce681fa8a21ae2f82a56a865d8fa701f2ad6d0dae31487c51db33d3c",
+        "reference": "4b2a46f3554d7de41cbc4292633f69dad12cbd9c60779df1119284544f8bb500",
+        "broad_fans": "3e9e4b39308911bb25c7ca97f1a67c6acdbe6ea7c9dba394381ca77f3c31afce",
+        "narrow_missing_fan": "48cdec75f8eb0f5bdd586bf3ce2f2a0404e905c7f14f7a92fd302604c9d60d76",
+        "possible_missing_fan": "3aba25d347387c6944e57c45aefc906d10e111057ae70b43797b5f2a9f62165a",
+        "broad_missing_fan": "1a1fc8f6abd0d8fabc58262111d8154040c4488f0435756c052d12f0762d7d73"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 1,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        5,
+        2,
+        3,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        20,
+        19,
+        17,
+        16,
+        15,
+        23,
+        13
+      ],
+      "source_sha256": {
+        "narrow_fans": "780993b49a1234ccd162173d6d4a999c9318396b31d378d19a53012319edcc2e",
+        "reference": "8d9351f91015c75d8be951112d88b9e8d9749de9830395fefbdfdcb81f3256c1",
+        "broad_fans": "4e2bd2a4c0175120e2d20a2eb7a3d3c21ea489be46fbecd6894a3c9a89ce7223",
+        "narrow_missing_fan": "e4c47967870736fb0053eaf4f9203c15ae03abd53116793240cb9810048a6d38",
+        "possible_missing_fan": "ecf8bb2796ec2c3d2bbb56cdbdb34a406f5a6133de8dbe45c5ab2edd27caf9f2",
+        "broad_missing_fan": "552510e7c66ae861affed0418a63165c11c733321c231536ae88b6c87aa64c53"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 2,
+      "fit_passed": true,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        7,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        8,
+        9,
+        5,
+        2,
+        3,
+        6
+      ],
+      "source_sha256": {
+        "narrow_fans": "ca2b69ff2468d5627b162a49a25b6aa40e05581d8e98391d1e2eedb828d28f84",
+        "reference": "edcfff83bcb32ea56d1339d38a64e5ad5b1bf026944494b2f99f31fb0bced4b2",
+        "broad_fans": "14354111d32faa17482ffaad7835fcbed913cfe1ad741fa08c3ff39ff783c0ef",
+        "narrow_missing_fan": "d7484f4c2d8419cae62928b805579fb070f3a2f7440687d2d2756406ffe1b156",
+        "possible_missing_fan": "094e6ef95a26ae2e4003194aa9ab0cda06142448666eb63c3589a495755ea997",
+        "broad_missing_fan": "7f9a3f55a8c18cf0837c6a87839aae3b4f6a6129cd77e72604daaae8278b46e5"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "geographic",
+      "fold": 3,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        5,
+        6
+      ],
+      "test": [
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "source_sha256": {
+        "narrow_fans": "24ace2d5383bac64f0b14fe172aae003e3144cde917f7c1af2acf3833d642e22",
+        "reference": "08ab7aeab31152714b6e10829956f0042b1e62c20f9d3700cce37e6e93d2216d",
+        "broad_fans": "b46279f0d5ea5229cd7c3812bcb3f4ad8dae85cd976f6096fa2b895c3fd7b8cb",
+        "narrow_missing_fan": "4f30ff27ecf07fb2ca924c770675c054089eb25a46a19a41cea37a01227219c5",
+        "possible_missing_fan": "20254e786d3a4887fbce89ee89a359dc4c8f28a2aecbf36e87f77e230a5ccc25",
+        "broad_missing_fan": "30b3df6d68cba884bc168febdf1e34594559a42b8028835ab653c1e883739113"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "quadrants",
+      "fold": 0,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        5,
+        2,
+        3,
+        6,
+        4
+      ],
+      "test": [
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "source_sha256": {
+        "narrow_fans": "3f1ef5c4d87d0de0d3e6ec8eadfb80a59abc4053c7f7f5711b6f6f8fb06822d3",
+        "reference": "befddd2ca41ee7123a7a58a9e2c63267e46e8a34156d1f42735429c0d6b0910c",
+        "broad_fans": "de234ebdfb11dcbe04b7f4aee05d924e55fa82886d5ac17e313e6a4a14c900e1",
+        "narrow_missing_fan": "395f7e6954ee86b7c6abbb2eae4d969820a1c778384208dff318c815e185851a",
+        "possible_missing_fan": "aae0f7e5e8e489573d2e778553738a27cb8682147973c0e0ffa9d651191b323c",
+        "broad_missing_fan": "5afc3fdfa3d681161c4745ed2856a2f4e4b66e018e18e2e8a357246c5841ab0b"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "quadrants",
+      "fold": 1,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        12,
+        11,
+        7,
+        10,
+        8,
+        9,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        2,
+        3,
+        6,
+        4
+      ],
+      "source_sha256": {
+        "narrow_fans": "2f0fde879259b90e12777646ece5b0bd1f5b588c9d89a033468c59256e9aa818",
+        "reference": "6868982d70943e8bcd47a135cc94aec0baf002ae2c43a15c92aa7414debafebd",
+        "broad_fans": "4e841c6193665777589cbd6bba779095c1b8ba3ee6a5ced5ce225d1501063bdb",
+        "narrow_missing_fan": "0c695d2a6083fc08ae13f25324c9f961e7d417992330fbedd0efde8f5c7ae72e",
+        "possible_missing_fan": "df8a2b36d5bae752295d832c4d5b90af7bb62fd327fec597975b7cb73e9afe0d",
+        "broad_missing_fan": "ea203e4f59892ca08d4c1936f20bd84f6dcd50166ffc363eb6f4863d9cdfa2ea"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "quadrants",
+      "fold": 2,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        12,
+        11,
+        7,
+        8,
+        5
+      ],
+      "source_sha256": {
+        "narrow_fans": "f5be5740e2371f48b523afc7e1740d059f8abb99559f6e148870991a183c8b1f",
+        "reference": "9b23e5e2cb296dde26cc55d7320bf9c57b27298fc7372bb112e16c5413185186",
+        "broad_fans": "4ad12136049c243c3e4775d33e9adf9cc18a58b1bc25327110f00a79705a7c1d",
+        "narrow_missing_fan": "1b36ea15c361db9578a5e8dc8c055b3c24ed3c75b8c56083df129af32bf38925",
+        "possible_missing_fan": "3f9c9604fc56365054627ad05ceae4bf0fe7ef3fc39a8bb1361367f4ef195480",
+        "broad_missing_fan": "4f6debed5f94a0d03f60aa8ec4cd223c46659f34e56d2a7b34e7ce4d3a773da3"
+      },
+      "maximum_training_log_cm_change": 0.0
+    },
+    {
+      "design": "quadrants",
+      "fold": 3,
+      "fit_passed": false,
+      "status": "estimated",
+      "train": [
+        12,
+        7,
+        5,
+        2,
+        3,
+        6,
+        4,
+        22,
+        24,
+        21,
+        25,
+        27,
+        26
+      ],
+      "test": [
+        20,
+        19,
+        18,
+        17,
+        16,
+        15,
+        14,
+        23,
+        13,
+        10,
+        9
+      ],
+      "source_sha256": {
+        "narrow_fans": "30187e81d260a815bcc03a140aa93e8a8525be9ddfa972e0caa406e3939ae659",
+        "reference": "9d74ff9df5afdaca27f1119bae060edb0ef2158c41a4f731b6c4bce943f79093",
+        "broad_fans": "144aed230bc3ebde73446f197e627e24dddba0338e68e00853fcc36a6c281be3",
+        "narrow_missing_fan": "98ab12a8db8a888bda2e4e283e65e71dbd1aa8a13671ab112ea6904e4960118c",
+        "possible_missing_fan": "83a1d283476783b60ae0b35033f15f39d8f16831472135cb835d7cf627e64ac6",
+        "broad_missing_fan": "b43eace38502370f7390c7cde001ecaab5f08323502aafa1c876bbb30141ac40"
+      },
+      "maximum_training_log_cm_change": 0.0
+    }
+  ],
+  "heldout_sha256": "49c465b0033a9d638e786e7de949b6833fa8f22e913ecba9d62d7569918d1f79",
+  "interpretation": "Conditional on the recorded sites, likelihood, family and continuation choices. Independent whole-Earth integrals of coherent fields give the interval. Complete-contour eligibility is assessed separately."
+}

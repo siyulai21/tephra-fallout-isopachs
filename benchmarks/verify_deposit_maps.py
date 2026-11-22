@@ -33,7 +33,8 @@ def verify_global(folder, family, data, meta):
         assert all({"median","mean"}.isdisjoint(item["volume"]) for item in fit["fits"].values())
     else:
         assert {"volume_km3","conditional_volume_km3"}.isdisjoint(fit)
-    q,ok=volume_interval(family,fit)
+    revised = folder/"extent/report.json"
+    q,ok=volume_interval(family,fit,read_json(revised) if revised.exists() else None)
     np.testing.assert_allclose(q,r["conditional_volume_interval95_km3"])
     assert ok==r["complete_field_checks_passed"]
     areas=pd.read_csv(folder/"thickness-area.csv")

@@ -10,9 +10,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **3.08** | 2.64–4.02 | 1.264 | 94.0% |
 | Cubic spline | **9.12** | 4.18–41.5 | 1.371 | 90.0% |
-| [Directional ensemble](results/directional/README.md) | **7.07** | 3.79–70.6 | 1.164 † | 96.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **7.32** | 5.1–667 | 1.376 | 88.0% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **6.33** | 3.1–30.7 (provisional) | 1.016 † | 98.0% |
+| [Directional ensemble](results/directional/README.md) | **7.21** | 3.73–70.3 | 1.156 † | 96.0% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **6.94** | 4.89–305 | 1.351 | 88.0% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **5.79** | 2.51–33.1 (provisional) | 1.054 † | 98.0% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -32,6 +32,8 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+
 ## Where the thicknesses constrain the deposit
 
 At least two measured beds fall in each 45° compass sector around the Kitadake summit reference. Measured thicknesses range from 0.8 to 95 cm at 9–163 km. Both northwest readings are within 12 km. The largest gap between measured bearings increases from 44° across all sites to 107° beyond 50 km and 251° beyond 100 km. Three western measurements cover 18, 32 and 163 km. Their reported thicknesses are 70, 15 and 0.8 cm. The excavation report describes the 70 cm bed as a persistent primary deposit. [Counts and distances by sector](../../data/audits/Sakurajima-Satsuma/coverage.csv) · [Original excavation report, printed p. 11](https://www.jomon-no-mori.jp/old/pdf_data/H46001-2-0110-1.pdf)
@@ -46,11 +48,11 @@ The largest cubic-spline median on the in-hull prediction grid is 447 cm, about 
 
 ## Global estimates and sensitivity
 
-The uncertain-direction median map integrates to **7.1 km³**. The conditional 95% volume interval is **3.8–70.6 km³**. All six full-data model fits passed their sampler checks. All four geographic folds were scored, with one fold retaining a sampling warning. All four quadrant folds passed. For the geographic holdouts, uncertain directions gave a mean negative log score of 1.164 compared with 1.028 for fixed directions. Lower is better. [Directional estimates, withheld-site results and maps](results/directional/README.md)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the uncertain-direction median map integrates to **7.1 km³**. The conditional 95% volume interval is **3.8–70.6 km³**. All six full-data model fits passed their sampler checks. All four geographic folds were scored, with one fold retaining a sampling warning. All four quadrant folds passed. For the geographic holdouts, uncertain directions gave a mean negative log score of 1.164 compared with 1.028 for fixed directions. Lower is better. [Directional estimates, withheld-site results and maps](results/directional/README.md)
 
-The spherical baseline passed its sampler, integration and draw-split checks. The shifted-volume prior retained a draw-split warning. With the western lenticular marine bed removed, the directional median-map integral rises to **9.6 km³**. The full refits and predictions for the withheld core quantify how strongly that one observation constrains distal fallout. [Marine-core sensitivity](results/source-audit/README.md) · [Spherical estimates and validation](results/spherical-mixture/README.md)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the spherical baseline passed its sampler, integration and draw-split checks. The shifted-volume prior retained a draw-split warning. With the western lenticular marine bed removed, the directional median-map integral rises to **9.6 km³**. The full refits and predictions for the withheld core quantify how strongly that one observation constrains distal fallout. [Marine-core sensitivity](results/source-audit/README.md) · [Spherical estimates and validation](results/spherical-mixture/README.md)
 
-At Kuwanoki, the directional median is 12.6 cm and the spherical median is about 11 cm. The excavation report identifies minerals and glass in terrace sediment and gives no preserved Satsuma bed thickness. This discrepancy is a reason to look for nearby undisturbed sections. Kuwanoki and four other occurrence records carry zero additional likelihood weight. [Archive site checks](results/spherical-mixture/archive-evidence/README.md) · [Original Kuwanoki report](https://doi.org/10.24484/sitereports.3454)
+In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), at Kuwanoki, the directional median is 12.6 cm and the spherical median is about 11 cm. The excavation report identifies minerals and glass in terrace sediment and gives no preserved Satsuma bed thickness. This discrepancy is a reason to look for nearby undisturbed sections. Kuwanoki and four other occurrence records carry zero additional likelihood weight. [Archive site checks](results/spherical-mixture/archive-evidence/README.md) · [Original Kuwanoki report](https://doi.org/10.24484/sitereports.3454)
 
 Nishihara et al. report 11.1 km³ of bulk P14 fallout. Their isopachs use overlapping thickness observations. The published volume provides context and played no part in selecting priors or fitting these estimates. [Published volumes, Table 4](https://doi.org/10.3389/feart.2022.988373)
 
@@ -58,4 +60,4 @@ Nishihara et al. report 11.1 km³ of bulk P14 fallout. Their isopachs use overla
 
 The source replay verifies the two original workbooks, site identifiers, source-row decisions and coverage. The intake workflow reproduces the five registered fits, their matched geographic tests and the conditional global volume estimates. [Source replay](../../data/audits/Sakurajima-Satsuma/README.md) · [Run instructions](../../docs/NEW_ERUPTION.md) · [Directional verification receipt](results/source-audit/release.json)
 
-Both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
+In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)

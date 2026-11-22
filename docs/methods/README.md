@@ -2,6 +2,8 @@
 
 An eruption has one accepted table of measured thicknesses and documented bounds. Each of the five models fits that evidence independently. A case page puts their isopachs, bulk volumes and geographic prediction scores side by side. [Eruption catalogue](../../eruptions/README.md) · [Matched comparisons](../../comparisons/README.md)
 
+Each global family now limits extrapolation according to the sampled directions and retains its earlier field as a sensitivity. [Current continuation rules](finite-spread.md) · [Nine-eruption tests](../../comparisons/global-extent/README.md)
+
 ## Observations and bounds
 
 A confirmed tephra occurrence can constrain a fan edge even when the source gives no bed thickness. Review the original core or section, record what was observed and determine whether it supports a quantitative thickness bound. An accepted bound enters the shared likelihood once. The audit retains the assumptions behind transferred bounds, the grounds for omission, and the weaker or omission comparisons for influential sites. B-Tm works through two lake profiles and a peat mass budget. [Site decision protocol](sites-without-measured-thickness.md) · [Site worksheet](../../templates/SITE_EVIDENCE.md) · [B-Tm source audit](../../data/audits/B-Tm/README.md)

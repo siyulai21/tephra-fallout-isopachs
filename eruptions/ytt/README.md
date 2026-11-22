@@ -10,9 +10,9 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 |---|---:|---:|---:|---:|
 | GP ensemble | **1,079** | 760–1.86e+03 | 1.934 | 91.3% |
 | Cubic spline | **944** | 798–2e+03 | 2.153 | 82.6% |
-| [Directional ensemble](results/directional/README.md) | **900** | 736–3.66e+03 | 1.531 † | 100.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **1,284** | 1.05e+03–4.87e+04 | 1.756 | 84.8% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **1,245** | 771–3e+03 (provisional) | 1.429 † | 97.8% |
+| [Directional ensemble](results/directional/README.md) | **900** | 683–2.97e+03 | 1.534 † | 100.0% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **1,227** | 997–2.2e+04 | 1.737 | 84.8% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **1,194** | 701–3e+03 (provisional) | 1.408 † | 100.0% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -32,10 +32,12 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
+The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+
 ## Evidence and limitations
 
 The principal selection includes the two qualified Maninjau beds and core U1445B at 8 cm. The audit records source qualifications and alternative selections. All six full-data directional fits passed their checks. Two buffered geographic folds carry sampling warnings.
 
 The standard local-support footprint covers 1,196,058 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)
 
-The corridor fit improves buffered predictions and fares worse on withheld quadrants. The full-data fit and volume population checks retained numerical warnings. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
+In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), the corridor fit improves buffered predictions and fares worse on withheld quadrants. The full-data fit and volume population checks retained numerical warnings. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
