@@ -1,0 +1,77 @@
+{
+  "audit_date": "2026-11-23",
+  "scope": "All 293 original catalogue rows and 178 additional records, leads or controls. Verification level is recorded at each site.",
+  "original_input": {
+    "file": "data/eruptions/Mazama_tephra.csv",
+    "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
+  },
+  "source": {
+    "file": "data/sources/mazama/buckland2020-esm1.xlsx",
+    "sha256": "9621d02d5a081df03c2b468eabb366e5507a9032b078cf1b19c4027c278914a3",
+    "doi": "https://doi.org/10.1007/s00445-020-1362-1"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Mazama_reviewed.csv",
+      "sha256": "9d26214fe1dac10f89560537198ce15c7077f3ec219ef90752d07bc694ac7020",
+      "n_measurements": 47,
+      "n_lower_limits": 24,
+      "n_upper_limits": 5,
+      "definition": "Climactic Mazama airborne bulk fallout. 47 point values, 24 lower bounds and five upper bounds are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews. Bounds and sensitivity alternatives are in the locality ledger."
+    }
+  },
+  "principal_limits": [
+    {
+      "evidence_id": "MW1986-SKULL",
+      "interpreted_upper_cm": 5,
+      "derivation": "Mehringer and Wigand1986, Journal of Arid Environments11:117\u2013138, doi:10.1016/S0140-1963(18)31224-2; pp.118,122\u2013125 and Fig.7; original indexed full text, scan not recovered. Source-estimated original fallout ceiling, conservatively widened to5 cm; not a direct5 cm bed",
+      "qualifications": "Original local climactic fallout, conditional on the author primary-fall estimate and treating target as contained in their Mazama package. Published1986, not1996 as some repository metadata states. Most mapped ash-rich sediments contain less than10% unmixed primary ash; 25 cm mixed deposit is excluded. Do not multiply this percentage into a thickness. Quantitative basis of original estimate is not fully documented; test isolated omission and a weaker10 cm upper ceiling. If two falls include a precursor, an upper bound on their nonnegative sum also bounds the climactic share. Exact decimal typography pending."
+    },
+    {
+      "evidence_id": "B2020-206",
+      "interpreted_upper_cm": 5,
+      "derivation": "Dyck et al. (1965), p.33. The bottom of the overlying muck sample is 70 cm and the top of the underlying sample is 75 cm, leaving at most 5 cm for the observed bed.",
+      "qualifications": "Conditional on the authors\u2019 70 cm horizon being climactic Mazama, both samples clearing the bed, sufficiently complete primary capture and negligible erosion/compaction. Double to 10 cm and omit in source checks."
+    },
+    {
+      "evidence_id": "S2003-MEDICINE",
+      "interpreted_upper_cm": 13.75,
+      "derivation": "The two identified non-target stratigraphic levels in B100NC-1 enclose at most 151.25 \u2212 137.5 = 13.75 cm. Uses the primary Table 2 bracket without assuming which bed contact 147.5 cm represents.",
+      "qualifications": "Requires correct stratigraphy, capture of primary fallout within the bracket and negligible loss/compaction for transfer to original thickness. Use a lake station as location proxy, not the volcano summit; double bound and omit in sensitivities."
+    },
+    {
+      "evidence_id": "H1997-MAHONEY",
+      "interpreted_upper_cm": 63,
+      "derivation": "The May 1985 core places the entire identified ash interval between 282 and 345 cm. Later input is documented. Under full primary capture, the 63 cm preserved total is a ceiling on its primary share.",
+      "qualifications": "Assumes primary fallout was sufficiently retained in this interval at the deep meromictic basin and bulk compaction/loss is negligible. Prolonged enrichment and other descriptions of 70\u201380 cm make the conversion conditional. Compare weaker upper and omission."
+    },
+    {
+      "evidence_id": "SG1989-LODGEPOLE",
+      "interpreted_upper_cm": 50,
+      "derivation": "The field guide describes a mature outwash soil and lag buried by approximately 50 cm of Mazama ash. A climactic portion of the retained package cannot exceed its total under the stated preservation assumptions.",
+      "qualifications": "An approximate field ceiling. Requires retention of the climactic deposit and negligible net thinning/compaction; earlier or imported material could inflate the total. Double the ceiling and omit in sensitivities; exact face offset from the turnoff unreported."
+    }
+  ],
+  "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
+  "thickness_convention": "Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.",
+  "coordinate_datum": "Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.",
+  "primary_audit_complete": false,
+  "prior_release": {
+    "commit": "0a53d02",
+    "url": "https://github.com/siyulai21/tephra-fallout-isopachs/tree/0a53d02",
+    "input": "data/eruptions/Mazama_tephra.csv",
+    "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+    "scope": "Current GitHub release preceding the Mazama source revision; the earlier local audit was performed on41b8f2f. Latest five-family results remain accessible at this immutable revision."
+  },
+  "preparation_script": {
+    "file": "benchmarks/mazama.py",
+    "sha256": "6d609179e4de3225abbf91b350de13bee42687b99f1da895dcca6d5b5e209b16"
+  },
+  "audit_artifacts": {
+    "model-selection.json": "3894bdc6e312ec6861a62137b8ed9d160097a06ba60cd1519c514b9265500f31",
+    "model-selection.csv": "3d4d5fb852c969243b6dec042d76899481767980d588204b94798d685822249a",
+    "site-evidence-decisions.csv": "195f1484a63f8a6addfbdc6ab4c8b00e95b33e9de67fbc56381cd66fc3bd8b02",
+    "revised-locality-ledger.csv": "6b118732b76528a015c738fd46cc18fcbe6cc9e37d54588aca795493092f048f",
+    "supplied-row-crosswalk.csv": "9ce6ff8aaca8c193dfb7f7abae1a6a85fc52484f9f5e9f0968f6f471e50bf4bc"
+  }
+}

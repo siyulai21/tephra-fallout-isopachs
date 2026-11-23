@@ -139,7 +139,7 @@ def main():
     for r in records:
         assert r.get('accepted_for_model') is False
         if r.get('quantity_kind') in ('cryptotephra','trace_no_numeric_limit','tentative_signal'):
-            assert all(r.get(x,'') == '' for x in ['observed_point_cm','observed_min_cm','observed_max_cm','bound_cm'])
+            assert all(r.get(x,'') == '' for x in ['observed_point_cm','observed_min_cm','observed_max_cm'])
         if r.get('bound_cm','') != '':
             assert r.get('bound_target') and r.get('bound_relation') in ('<','<=','>','>=')
         for key in ('latitude','longitude'):

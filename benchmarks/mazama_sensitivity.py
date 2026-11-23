@@ -23,25 +23,32 @@ from src.empirical_isopach.visualization.deposit_integrals import independent_in
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES = {
-    'omit-bounds': 'Omit all23 conditional lower bounds and the Skull Creek upper bound; no claim that any deposit is absent.',
-    'half-transfer': 'Halve all23 lower limits coherently as a hypothetical twofold depositional-thickening allowance, and double the Skull Creek upper ceiling to10 cm as a weaker author-estimate assumption. These are stress assumptions, not measured focusing, loss or compaction factors.',
-    'portage-upper': 'Use Portage <=1.905 cm instead of >=1.27 cm, once. This alternative requires negligible loss and compaction as well as the same identity and primary-deposition assumptions. It is not the two-sided interval likelihood.',
-    'range-upper': 'Use Independence <=6 cm, Cleveland <=6 cm and Newman <=30 cm instead of their lower endpoints, once per locality. All other bounds remain principal. This grouped one-sided approximation additionally assumes negligible loss and compaction; it is not a two-sided interval likelihood or independent replication.',
-    'omit-new-records': 'Omit the27 observations added after the frozen40-row audit trial. This tests the combined Yellowstone, lake/marine and final citation-pass evidence; it does not assert absence at those sites.',
-    'new-beds-lower': 'Treat the17 newly admitted point beds as lower limits at their reported thickness. This relaxes complete preservation, retaining correct correlation and no focusing/import; it is not a correction for sediment redistribution.',
-    'weak-identity-omit': 'Omit Shadow, Sunrise, Little Sunrise, Lost, Round Washington, Long, Patjens, ClelandF-09, Dog Lake Oregon, White Pine Marsh and Connley Cave2 together. Recovered sources do not provide site-specific glass analyses for these beds. Omission tests correlation/depth qualifications without declaring a different eruption.',
-    'yellowstone-one': 'RetainYL16-5A as one explicitly chosen central Yellowstone Lake representative, omitting six other principal lake locations. Goose Lake remains separate. This tests spatial clustering, not evidence that six cores are duplicates.',
-    'yellowstone-2c-5mm': 'Use Schiller2020 YL16-2C0.5 cm instead of Morgan2023 0.4 cm. One core observation, not two replicates or an invented error interval.',
-    'yellowstone-slump': 'AddYL16-6A0.5 cm under the extra assumption that its slump-toe irregular bed preserves local fallout thickness. Principal excludes it because deformation/import are unresolved.',
-    'omit-gold': 'Omit Gold Lake74 cm coarse-component minimum to test possible unrecognized precursor material and lake focusing; no substitute thickness assigned.',
-    'late-source-omit': 'Omit Dog Lake Oregon, White Pine Marsh, Connley Cave2, Skull Creek and Lyman Lake together, recovering the frozen62-site selection. Tests dependence on the final citation pass and lake/section representative positions.',
-    'skull-omit': 'Omit only the Skull Creek conditional upper estimate. Its original-fall estimate and unresolved decimal typography must not become an unquestioned distal cap.',
+    'omit-bounds': 'Omit every conditional upper and lower bound. The remaining likelihood consists of measured beds.',
+    'half-transfer': 'Halve the lower limits and double the upper limits together. This tests weaker preservation and original-to-recovered transfer across sites. A factor of two is a stress assumption.',
+    'portage-upper': 'Replace the Portage lower endpoint of 1.27 cm with the upper endpoint of 1.905 cm. This one-sided approximation adds negligible loss and compaction assumptions.',
+    'range-upper': 'Replace the lower endpoints for Independence, Cleveland and Newman with upper endpoints of 6, 6 and 30 cm. Each horizon enters once. The upper endpoints additionally assume negligible loss and compaction.',
+    'omit-new-records': 'Retain the frozen 40-row selection to assess the combined effect of subsequent primary-source discoveries.',
+    'new-beds-lower': 'Treat point beds added since the 40-row trial as lower limits at their observed thickness, conditional on primary attribution and negligible import. This tests incomplete preservation.',
+    'weak-identity-omit': 'Omit the listed beds whose local climactic correlation or stratigraphic assignment is particularly uncertain. See WEAK_IDS in the reproduction script.',
+    'yellowstone-one': 'Retain YL16-5A as the central Yellowstone Lake representative and omit six other lake sites. Goose Lake remains a separate observation.',
+    'yellowstone-2c-5mm': 'Use Schiller 2020 YL16-2C 0.5 cm in place of Morgan 2023 0.4 cm at the same core.',
+    'yellowstone-slump': 'Admit YL16-6A 0.5 cm under the assumption that the deformed slump-toe bed retains the original local thickness.',
+    'omit-gold': 'Omit the 74 cm Gold Lake coarse-component minimum to test uncertain precursor contribution and lake focusing.',
+    'late-source-omit': 'Omit Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake to isolate their joint influence.',
+    'skull-omit': 'Omit the Skull Creek author-estimated upper limit to test its uncertain decimal typography and transfer from a mixed interval.',
+    'field-source-omit': 'Remove the nine additions from the final primary-source review. This isolates the change from the 67-observation reference.',
+    'bracket-omit': 'Remove the four new conditional upper limits at Deep Creek, Medicine Lake, Mahoney Lake and Lodgepole Quarry. The Skull Creek estimate remains.',
+    'lake-core-alternates': 'Use the separate Little Lake core 91 bed of 1 cm and the companion Mahoney Lake 80 cm package. Each lake enters once under the principal preservation assumptions.',
+    'bachelor-west-alternate': 'Replace the Mount Bachelor 44 cm upper-pumice minimum with the historical nearby West Village two-unit package as a 38 cm ceiling. Exclude the overlying 70 cm reworked material. This tests an alternative section, phase attribution and preservation together.',
 }
 
 LEGACY = AUDIT/'history/2026-11-23-before-yellowstone/Mazama_reviewed_40.csv'
+BRACKET_IDS = {'B2020-206','S2003-MEDICINE','H1997-MAHONEY','SG1989-LODGEPOLE'}
+FIELD_IDS = BRACKET_IDS | {'B2020-095','B2020-052','L2007-LOST-OR','J1985-FLODELLE','P1999-BEAVER-OR'}
 WEAK_IDS = {'W2017-SHADOW','W2017-SUNRISE','W2017-LSUNRISE','D2025-LOST',
             'M2024-ROUNDWA','R2021-LONG','MK2012-PATJENS','M2014-CLELAND-F',
-            'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2'}
+            'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2','B2020-095',
+            'B2020-206','L2007-LOST-OR','P1999-BEAVER-OR'}
 LATE_IDS = {'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2','MW1986-SKULL','W2016-LYMAN'}
 
 
@@ -100,7 +107,7 @@ def local_checks(view, folder):
                     crossing_grid_brackets_authalic_km=[[float(domain.arc_km(radii[j])),float(domain.arc_km(radii[j+1]))] for j in changes]))
     np.savez_compressed(folder/'local-profiles.npz', radii_km=radii, log10_cm=np.asarray(rays))
     return dict(sites=sites, crossings=crossings,
-        profile_order='Canonical probe order (all67 principal sites plus YL16-6A), then bearing offsets -11.25, 0, +11.25 degrees',
+        profile_order='Canonical order of model-probes.csv, then bearing offsets -11.25, 0, +11.25 degrees',
         scope='Conditional latent thickness and all sampled median-field crossings; no claim of measured contour support. Crossing brackets show radial sampling resolution; sub-grid structure is unresolved.')
 
 
@@ -148,9 +155,27 @@ def prepare(root):
             rows = [r for r in rows if r['EvidenceID']!='B2023-GOLD']
         elif name == 'late-source-omit':
             rows = [r for r in rows if r['EvidenceID'] not in LATE_IDS]
-            assert len(rows) == 62
+            assert len(rows) == len(source) - len(LATE_IDS)
         elif name == 'skull-omit':
             rows = [r for r in rows if r['EvidenceID'] != 'MW1986-SKULL']
+        elif name in ('field-source-omit', 'bracket-omit'):
+            excluded = FIELD_IDS if name == 'field-source-omit' else BRACKET_IDS
+            rows = [r for r in rows if r['EvidenceID'] not in excluded]
+            assert len(rows) == len(source) - len(excluded)
+        elif name == 'lake-core-alternates':
+            r = next(r for r in rows if r['EvidenceID'] == 'B2020-052')
+            r.update(EvidenceID='L1998-LITTLE91', Site='Little Lake, core 91', Thickness=1,
+                     Evidence='Long et al. 1998 Table 2, core 91, 7.74–7.75 m, lake-scale coordinates.')
+            r = next(r for r in rows if r['EvidenceID'] == 'H1997-MAHONEY')
+            r.update(Limit_cm=80, Evidence='Alternate retained package from Overmann et al. 1993 Fig. 3 and text. Same primary-capture assumption as the principal upper bound.')
+        elif name == 'bachelor-west-alternate':
+            with (AUDIT/'revised-locality-ledger.csv').open() as stream:
+                west = next(r for r in csv.DictReader(stream) if r['record_id'] == 'SG1989-WEST')
+            r = next(r for r in rows if r['EvidenceID'] == 'B2020-046')
+            r.update(EvidenceID=west['record_id'], Site=west['locality'], Lat=west['latitude'],
+                     Lon=west['longitude'], Kind='upper_limit', Limit_cm=west['bound_cm'],
+                     Reference=west['primary_reference'], Evidence=west['evidence_locator'],
+                     Qualification=west['caveats'])
         path = folder / 'input.csv'
         write_csv(path, rows)
         result[name] = dict(file=str(path), sha256=sha(path), definition=definition,

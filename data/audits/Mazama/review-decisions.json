@@ -4,8 +4,17 @@
     "fallout_model_status": "occurrence_only_no_detection_limit"
   },
   "3": {
-    "caveats": "The compiler encodes trace as 0.1 cm. This is not a measured thickness or documented detection threshold; neither 0.1 cm nor <0.1 cm is justified as a fallout observation.",
-    "fallout_model_status": "occurrence_only_no_detection_limit"
+    "caveats": "The catalogue’s 0.1 cm is its trace convention. The new primary comparison is with a precursor deposit. Original compiled coordinates and attribution retained in source cells. Neither an ash thickness nor absence of the climactic phase is established.",
+    "fallout_model_status": "exclude_unresolved_climactic_identity",
+    "verification": "primary_phase_reassessment_checked",
+    "primary_reference": "Haynes et al. 1967; Davis 1978; Zielinski and Otton 1986, USGS OFR 86-342",
+    "evidence_source": "ofr86-0342.pdf",
+    "evidence_locator": "Petrographic observations and Table 1; Osgood sample compared with site 2, western Nevada",
+    "identity": "Green hornblende in the sampled Osgood ash led Davis to assign it to the earlier Tsoyawata Bed. Climactic Mazama is not established for the catalogue trace.",
+    "identity_quality": "Primary phase comparison and retrospective mineralogy",
+    "deposit_class": "precursor_or_phase_ambiguous",
+    "quantity_kind": "trace_no_numeric_limit",
+    "core_depth_or_sample_interval": "Peat and wood dates are distinct from ash thickness."
   },
   "7": {
     "caveats": "The compiler encodes trace as 0.1 cm. This is not a measured thickness or documented detection threshold; neither 0.1 cm nor <0.1 cm is justified as a fallout observation.",
@@ -28,10 +37,18 @@
     "fallout_model_status": "occurrence_only_no_detection_limit"
   },
   "286": {
-    "caveats": "Nonvisible ash identified by major chemistry according to compilation. Neither the23 cm host zone nor the0.1 cm trace code is bulk ash thickness or a defensible censoring threshold.",
-    "fallout_model_status": "occurrence_only_no_detection_limit",
-    "quantity_kind": "cryptotephra",
-    "core_depth_or_sample_interval": "23 cm ash-rich host-sediment zone, per compilation"
+    "caveats": "The author qualifies the identity. Neither the 23 cm chemically enriched host window nor the 0.1 cm compilation default supplies a thickness or recognition threshold. Local ash fraction, background, total mineral loading and capture remain unresolved.",
+    "fallout_model_status": "tentative_occurrence_only",
+    "quantity_kind": "tentative_signal",
+    "core_depth_or_sample_interval": "23 cm ash-rich host-sediment zone, per compilation",
+    "verification": "primary_abstract_checked",
+    "primary_reference": "Chagué-Goff, Goodarzi and Fyfe 1996, doi:10.1086/629860",
+    "evidence_source": "https://doi.org/10.1086/629860",
+    "evidence_locator": "Primary abstract on inorganic constituents and possible nonvisible tephra; raw catalogue row 298",
+    "identity": "Authors report elemental enrichment possibly associated with Mazama. Bulk Al, Fe, Mg, Na, Si and Ti do not uniquely identify this eruption.",
+    "identity_quality": "Tentative bulk chemistry, no individual glass match established",
+    "deposit_class": "tentative_peat_mineral_signal",
+    "thickness_quality": "No quantified target mass or bed thickness. The compilation gives a 23 cm host zone."
   },
   "6": {
     "verification": "primary_text_checked",
@@ -129,16 +146,17 @@
     "deposit_class": "mixed_flow_and_fall_context"
   },
   "28": {
-    "verification": "primary_description_checked_web_only",
-    "evidence_source": "Valastro et al.1968 web text; egan2016-thesis.pdf; buckland2020-esm1.xlsx",
-    "evidence_locator": "Valastro1968 Tx-487; Egan2016 dating compilation; S1 row40",
+    "verification": "primary_date_and_exposed_lithology_checked",
+    "evidence_source": "valastro1968.pdf; valastro1968.pdf; Valastro et al.1968 web text; egan2016-thesis.pdf; buckland2020-esm1.xlsx",
+    "evidence_locator": "Valastro et al., Tx-487 Muir Creek, PDF p.6; earlier classification conflict in source ledger",
     "primary_reference": "Valastro et al. (1968), University of Texas at Austin Radiocarbon Dates VI, Radiocarbon 10:384-401, Tx-487; Kittleman (1973)",
-    "local_age": "Tx-487 6940 +/-120 radiocarbon yr BP; GaK-1124 7010 +/-120 on same charcoal",
+    "local_age": "Tx-487 6940 ± 120 conventional 14C yr BP in pumice; same-sample/laboratory links described by authors.",
     "age_basis": "Conventional radiocarbon, not calibrated; same charcoal is not independent replication",
     "quantity_kind": "facies_ambiguous_thickness",
     "deposit_class": "fall_or_pyroclastic_flow_unresolved",
     "fallout_model_status": "quarantine_flow_fall_ambiguity",
-    "caveats": "850 cm comes from exposed 8.5 m lapillistone in roadcut, overlain by 1-6 m stratified pumiceous sandstone. Primary dating description does not establish airfall. Egan thesis describes the Kittleman charcoal context as tephra flow. Source DMS 43°02 N,122°22 W differs from compiler; no silent relocation or definite PDC diagnosis. Original full facies description still required."
+    "caveats": "850 cm comes from exposed 8.5 m lapillistone in roadcut, overlain by 1-6 m stratified pumiceous sandstone. Primary dating description does not establish airfall. Egan thesis describes the Kittleman charcoal context as tephra flow. Source DMS 43°02 N,122°22 W differs from compiler; no silent relocation or definite PDC diagnosis. Original full facies description still required. Valastro et al. describe ca.8.5 m exposed lapillistone below 1–6 m of sorted stratified pumiceous sandstone. Both the roadcut and original field party are documented. The 5 m overburden to charcoal and 8.5 m exposure do not isolate local airborne fallout. Valastro et al. describe ca.8.5 m exposed lapillistone below 1–6 m of sorted stratified pumiceous sandstone. Both the roadcut and original field party are documented. The 5 m overburden to charcoal and 8.5 m exposure do not isolate local airborne fallout.",
+    "identity_quality": "Dated associated charcoal and Mazama attribution; facies unresolved"
   },
   "32": {
     "quantity_kind": "reported_preserved_range",
@@ -386,7 +404,7 @@
     "verification": "primary_text_checked",
     "primary_reference": "Spano et al.2017 doi:10.1130/G39394.1",
     "evidence_source": "spano2017.pdf",
-    "evidence_locator": "Methods; Fig.3; Table DR1; accepted-manuscript lines67-69,122-125",
+    "evidence_locator": "Spano et al. Fig.3, Supplement Table DR1, fine 1 cm samples. See cryptotephra-profile-samples.csv and cryptotephra-profile-calculations.json.",
     "coordinate_quality": "primary core coordinates rounded to0.01 degree",
     "identity": "Major/minor glass chemistry and stratigraphy favor climactic Mazama over Llao Rock",
     "identity_quality": "primary glass analyses; age-dependent phase correlation",
@@ -397,7 +415,7 @@
     "age_basis": "paleomagnetism and geochemical correlation",
     "deposit_class": "cryptotephra_lake",
     "fallout_model_status": "occurrence_only_no_bulk_thickness",
-    "caveats": "4 cm host-sediment interval is not4 cm ash or an upper bound. 25 micrometre sieve truncates fine shards; no ash mass/bulk-thickness conversion. Isle Royale is a second core retained separately."
+    "caveats": "4 cm host-sediment interval is not4 cm ash or an upper bound. 25 micrometre sieve truncates fine shards; no ash mass/bulk-thickness conversion. Isle Royale is a second core retained separately. Primary study reports approximately 2000–4000 recovered fragments/cm² for both sites. Distinguish reported areal counts from the separately reconstructed wet-mass profiles. Recovered fragments are a size-selected component; no core-specific fallout response is calibrated. Primary study reports approximately 2000–4000 recovered fragments/cm² for both sites. Distinguish reported areal counts from the separately reconstructed wet-mass profiles. Recovered fragments are a size-selected component; no core-specific fallout response is calibrated."
   },
   "119": {
     "verification": "primary_text_checked",
@@ -496,8 +514,8 @@
   "159": {
     "verification": "primary_reanalysis_checked",
     "primary_reference": "Pyne-O'Donnell et al.2012; Jensen et al.2021 doi:10.1016/j.quascirev.2021.107242",
-    "evidence_source": "jensen2021.pdf; buckland2020-esm1.xlsx",
-    "evidence_locator": "Jensen2021 Tables1-2 and section4.2; S1 row171",
+    "evidence_source": "jensen2021.pdf; jensen2021-profiles.xlsx; jensen2021-chemistry.xlsx",
+    "evidence_locator": "Jensen 2021 methods 3.1, Table S15, individual fine-bin cells in jensen2021-fine-profiles.csv, and section 4.2.",
     "quantity_kind": "cryptotephra",
     "observed_point_cm": "",
     "identity": "Mazama glass correlation in primary reanalysis",
@@ -505,15 +523,26 @@
     "local_age": "7805-7055 cal yr BP (independent Model1 in Jensen2021 Table2)",
     "age_basis": "site age model excluding this tephra tie; correlated eruption age separate",
     "fallout_model_status": "occurrence_only_no_bulk_thickness",
-    "caveats": "Jensen2021 coordinates49.164,-53.600 differ from original49.15188889,-53.5972; retain original as locality coordinate until core reconciliation. Shard size and host-sediment thickness do not give bulk ash thickness."
+    "caveats": "Jensen2021 coordinates49.164,-53.600 differ from original49.15188889,-53.5972; retain original as locality coordinate until core reconciliation. Shard size and host-sediment thickness do not give bulk ash thickness. Integrated fine-profile component in cryptotephra-profile-calculations.json. Windows use depth labels 544–549 cm. Concentrations include glass without individual chemical attribution and exclude overlapping coarse samples. Integrated fine-profile component in cryptotephra-profile-calculations.json. Windows use depth labels 544–549 cm. Concentrations include glass without individual chemical attribution and exclude overlapping coarse samples."
   },
   "162": {
     "caveats": "3.048 cm is inferred from0.1 ft core-depth difference (32.6-32.7 ft). Verify that these are actual ash contacts, not sample limits; personal-communication record only.",
     "fallout_model_status": "hold_contact_vs_sample_interval"
   },
   "168": {
-    "caveats": "IDs168 Lower Arrow Lake and169 Twobit Creek have identical coordinates despite distinct descriptions. Keep distinct source rows; do not double-count them as independent coordinates. Project8 cm candidate matches169.",
-    "fallout_model_status": "hold_duplicate_coordinate"
+    "caveats": "The distance to dated detritus does not measure ash thickness. Possible hiatus or detrital mixing in a fan. Do not duplicate Twobit Creek at a shared compiler coordinate.",
+    "fallout_model_status": "hold_duplicate_coordinate",
+    "latitude": 49.333333333333336,
+    "longitude": -117.86666666666666,
+    "coordinate_basis": "Dyck 1965 GSC-213, mouth of Syringa Creek, primary DMS",
+    "primary_reference": "Dyck, Fyles and Blake 1965, Geological Survey of Canada Radiocarbon Dates IV, doi:10.1017/S0033822200037061",
+    "verification": "primary_text_checked",
+    "evidence_source": "dyck1965.pdf",
+    "evidence_locator": "pp.32–33, GSC-213",
+    "identity": "Ash identified as Mount Mazama by R.E. Wilcox; exact phase remains conditional.",
+    "local_age": "8380 ± 150 14C yr BP for detritus 5 in below the bed.",
+    "deposit_class": "ash_in_alluvial_fan",
+    "core_depth_or_sample_interval": "40 ft Shelby-tube sample; plant detritus 5 in below ash."
   },
   "169": {
     "caveats": "Original DMS resolves the duplicated Lower Arrow Lake coordinate. Do not combine the separate3 cm upper ash.8 cm lower bed is included only conditional on the later Mazama correlation and in-place peat preservation.",
@@ -662,9 +691,23 @@
   },
   "282": {
     "quantity_kind": "tentative_signal",
-    "identity": "Mineral peak assigned to Mazama in compilation; shard confirmation not independently established",
+    "identity": "Author-associated mineral peak around 7500 cal BP; local shard fingerprint not demonstrated. Younger proposed St Helens horizon is separate.",
     "fallout_model_status": "tentative_occurrence_only",
-    "caveats": "Nonvisible mineral peak is not a visible bed and not a numerical detection limit."
+    "caveats": "Small headwater fen receives groundwater and runoff. The archived densities at 382, 384 and 385 cm are 0.150, 0.109 and 0.129 g/cm³ of ash-free organic matter. Ash mass additionally needs mineral or organic mass fraction and volcanic attribution. No independent recovery floor.",
+    "latitude": 53.583333333333336,
+    "longitude": -118.01666666666667,
+    "coordinate_basis": "Yu et al. 2003, study site: 53°35′ N 118°01′ W. LiPD site location is 53.5833, −118.0167. The compilation treated minutes as decimal digits.",
+    "coordinate_quality": "Rounded original DMS and independent deposited coordinate; datum unreported",
+    "primary_reference": "Yu, Vitt, Campbell and Apps 2003, Understanding Holocene peat accumulation pattern of continental fens in western Canada, doi:10.1139/b03-016; Yu 2006; original archived series doi:10.25921/mds3-9f36",
+    "verification": "primary_site_and_archived_density_checked",
+    "evidence_source": "upper-pinto-yu2003.lpd; https://doi.org/10.1139/b03-016",
+    "evidence_locator": "Study site and chronology; dated 384–385 cm peat Beta-135662. LiPD UpperPintoFen.Yu.2003 v1.0.12 organic density column.",
+    "identity_quality": "Tentative mineral and age association",
+    "local_age": "384–385 cm peat 6750 ± 40 conventional 14C yr BP, 7670–7568 cal BP on the original INTCAL98 chronology.",
+    "age_basis": "Local dated host peat and tentative mineral correlation, not a dated individual shard",
+    "core_depth_or_sample_interval": "Main dated 397 cm profile, 5 cm diameter Macaulay; catalogue describes a 350 cm core. No position alignment between these cores assumed.",
+    "deposit_class": "tentative_peat_mineral_signal",
+    "thickness_quality": "Mineral anomaly unquantified; archived ash-free organic density is not bulk ash mass."
   },
   "283": {
     "quantity_kind": "reported_preserved_range",
@@ -740,8 +783,25 @@
     "caveats": "Dog/Cobb charcoal AMS ages verified in primary abstract; thickness and coordinates still inherited from compilation. Do not substitute pooled6730 +/-40 radiocarbon age as independent local dating."
   },
   "52": {
-    "fallout_model_status": "hold_core_specific_thickness_check",
-    "caveats": "Compilation reports 2 cm (Long1998). Baitis et al.2015 p.5 instead cites Worona and Whitlock1995 for 1 cm at Little Lake. The original core-specific logs must resolve whether these are different cores or conflicting measurements; neither is silently preferred."
+    "fallout_model_status": "conditional_primary_measurement",
+    "caveats": "The 2 and 1 cm reports refer to different core intervals at this lake. Use one principal lake reading; adjacent cores and rereports are not extra independent observations. Later literature gives slightly different lake coordinates.",
+    "primary_reference": "Long, Whitlock, Bartlein and Millspaugh 1998, doi:10.1139/x98-051; Long et al. 2007, Holocene vegetation and fire history of the Coast Range, western Oregon, USA",
+    "evidence_source": "long1998.pdf; long2007.pdf",
+    "evidence_locator": "Long 1998 Methods and Table 2, Core 93 vs Core 91; 2007 Study sites and Results",
+    "verification": "primary_text_and_table_checked",
+    "latitude": 44.166666666666664,
+    "longitude": -123.58333333333333,
+    "coordinate_basis": "1998 primary site coordinate 44°10′ N 123°35′ W; 2007 prints 44°09′56″ N 123°34′14″ W for the lake.",
+    "coordinate_quality": "Rounded lake location; core-specific offsets unresolved",
+    "identity": "Both papers attribute the discrete beds to Mazama O. The later paper repeats core 93.",
+    "local_age": "7630 cal BP event tie; 1998 Table 2 imports Bacon 6850 ± 50 conventional 14C yr BP",
+    "age_basis": "Imported tephra tie alongside dated charcoal in the core; not an independent ash date",
+    "quantity_kind": "reported_bed_thickness",
+    "observed_point_cm": 2,
+    "deposit_class": "discrete_lacustrine_bed",
+    "identity_quality": "Primary investigator stratigraphic attribution",
+    "thickness_quality": "Explicit 2 cm from core 93, 10.44–10.46 m; core 91 separately has 7.74–7.75 m.",
+    "core_depth_or_sample_interval": "Core 93, 10.44–10.46 m"
   },
   "134": {
     "latitude": 48.46388888888889,
@@ -870,5 +930,71 @@
     "identity_quality": "primary abstract supports Mazama occurrence; analytical details pending",
     "thickness_quality": "10 cm retained from Buckland2020 compilation; original Mack1983 thickness log still pending",
     "caveats": "Buckland S148.788147,-115.101281 identifies another same-named lake about73 km north-northeast of the study site. Location corrected using the explicit published site inventory and independent Forest Service setting. A later thesis position48.714,-115.420 also conflicts and is not used. The1 cm thickness and4.99 m depth in Kuehn S1 concern Glacier Peak G, not Mazama, and are not substituted. Exact core position and primary Mazama thickness/preservation remain unverified."
+  },
+  "206": {
+    "latitude": 50.38611111111111,
+    "longitude": -119.27777777777777,
+    "coordinate_basis": "Primary pit at 50°23′10″ N, 119°16′40″ W on printed p.33. Original catalogue coordinates preserved separately.",
+    "coordinate_quality": "Primary DMS pit location; datum unreported",
+    "primary_reference": "Dyck, Fyles and Blake 1965, Geological Survey of Canada Radiocarbon Dates IV, doi:10.1017/S0033822200037061",
+    "evidence_source": "dyck1965.pdf",
+    "evidence_locator": "Printed p.33, Deep Creek series, GSC-206 and GSC-214",
+    "verification": "primary_table_and_text_checked",
+    "identity": "Authors tentatively correlate the 70 cm horizon by bracketing radiocarbon dates. The 40 cm horizon is separate; no shard chemistry reported.",
+    "local_age": "Underlying organic muck GSC-206 7510 ± 150 and overlying organic muck GSC-214 6270 ± 140 conventional 14C yr BP",
+    "age_basis": "Two conventional local radiocarbon determinations, different material from the ash",
+    "deposit_class": "discrete_ash_bog_pit",
+    "quantity_kind": "interpreted_stratigraphic_upper_limit",
+    "identity_quality": "Published age-based correlation",
+    "core_depth_or_sample_interval": "70 cm ash between 65–70 cm and 75–80 cm organic muck; separate ash at 40 cm and marl at 50 cm.",
+    "bound_relation": "<=",
+    "bound_cm": 5,
+    "bound_target": "Preserved vertical bed; interpreted original local fallout under recognition, capture and compaction assumptions.",
+    "thickness_quality": "Maximum contiguous space between stated overlying and underlying non-ash sample intervals. No point thickness reported.",
+    "fallout_model_status": "conditional_interpreted_upper_limit",
+    "caveats": "A bed lying wholly between those samples can occupy at most 75 minus 70 cm. Undetected dispersed ash, substantial loss, compaction or a different ash identity could invalidate transfer to primary bulk fallout. Older drainage-channel setting; do not use the 40 or 70 cm depths as thickness."
+  },
+  "95": {
+    "primary_reference": "Brown RE (1970) Interrelationships of geologic formations and processes affecting ecology as exposed at Rattlesnake Spring, Hanford project. Battelle-Northwest, Richland, Wash. Pacific Northwest Lab.",
+    "evidence_source": "brown1970.pdf",
+    "evidence_locator": "Section Recent Eolian Sediments and the Mazama Ash, printed p.17 / PDF p.25",
+    "verification": "primary_text_checked",
+    "identity": "Brown attributes the bed to Mazama by stratigraphy, association with eolian silt and comparison with Richmond et al.; no local glass assay reported.",
+    "identity_quality": "Field stratigraphic correlation",
+    "local_age": "6000–6900 yr ago, source-era inherited event age; no local radiometric determination",
+    "age_basis": "Age imported by field author",
+    "deposit_class": "discrete_bed_in_eolian_silt",
+    "quantity_kind": "reported_bed_thickness",
+    "observed_point_cm": 15.24,
+    "thickness_quality": "Six inches reported; exact unit conversion, approximate field bed.",
+    "fallout_model_status": "conditional_primary_measurement",
+    "caveats": "A six-inch bed traceable intermittently for more than two miles up Dry Creek; later deflation and incision are documented. One locality-scale observation. Exact surveyed position of the six-inch reading was not specified. Compiler supplies a representative position."
+  },
+  "164": {
+    "latitude": 49.24583333333334,
+    "longitude": -122.95416666666667,
+    "coordinate_basis": "Primary DMS at Sperling Street interchange, west end of Burnaby Lake",
+    "verification": "primary_text_checked",
+    "primary_reference": "Dyck et al. 1966, doi:10.1017/S0033822200000072",
+    "evidence_source": "dyck1966.pdf",
+    "evidence_locator": "Geological Survey of Canada Radiocarbon Dates V, Burnaby Lake sample, PDF p.15",
+    "identity": "Two ashes described as indistinguishable from Mazama O. Relative position of dated peat and correlation of both layers uncertain.",
+    "local_age": "Peat at 13.5 ft, 7340 ± 360 conventional 14C yr BP; authors question sidedness of dated sample.",
+    "deposit_class": "two_ash_horizons_in_peat",
+    "core_depth_or_sample_interval": "Two layers separated by 6 in (15.24 cm) of peat in a Shelby tube.",
+    "caveats": "The intervening peat thickness is not an ash layer or an upper bound on either. Duplication, precursor, and mixing are unresolved."
+  },
+  "34": {
+    "latitude": 43.333333333333336,
+    "longitude": -122.7,
+    "coordinate_basis": "Rubin and Alexander, W-858 original rounded DMS, 27 mi NW of Crater Lake. Disagrees with compiler named Toketee Falls position.",
+    "primary_reference": "Rubin and Alexander 1960, doi:10.1017/S1061592X00020652",
+    "verification": "primary_text_checked",
+    "evidence_source": "rubin1960.pdf",
+    "evidence_locator": "U.S. Geological Survey radiocarbon dates V, W-858, Crater Lake, Oregon",
+    "identity": "Pumice believed to derive from Mazama. No described facies separating fallout and flow.",
+    "local_age": "Charcoal within pumice W-858, 6640 ± 250 conventional 14C yr BP.",
+    "deposit_class": "pumice_facies_unresolved",
+    "caveats": "Named roadcut and charcoal support an occurrence; no vertical bed dimension or transport classification sufficient for original airborne thickness."
   }
 }

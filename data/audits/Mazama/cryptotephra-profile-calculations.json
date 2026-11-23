@@ -1,0 +1,361 @@
+{
+  "source_sha256": "8d599f19e80d079c8cdae0cf9975599190ef5432b3f26023cacd8a74d4cccc15",
+  "sample_table_sha256": "5a870f1e23ef96e8e232b2327b6b16996e30a1652d8679b79937ac3e1e587dec",
+  "script_sha256": "cc38d5df14c45a76014422c55de3914b27cffe3ba0dc93b139f7e12c1ceff2c0",
+  "formula": "J=sum((recovered_shards/wet_mass_g)*width_cm); process the fine bins once, never add overlapping 10 cm screening samples.",
+  "profiles": {
+    "B2020-110": {
+      "samples": [
+        "LS18",
+        "LS19",
+        "LS20",
+        "LS21",
+        "LS22",
+        "LS23",
+        "LS24",
+        "LS25",
+        "LS26",
+        "LS27"
+      ],
+      "window_m": [
+        4.3500000000000005,
+        4.45
+      ],
+      "units": "shard cm / g wet sediment",
+      "raw_count_mass_index": 1798.0144773640577,
+      "wet_mass_sum_g": 12.1343,
+      "raw_shards_sum": 2519,
+      "conditional_max_target_mass_g_per_cm2_if_full_one_cm2_column": 12.1343,
+      "nominal_max_bulk_cm_if_full_capture_and_density_0_7": 17.334714285714288,
+      "wet_mass_scope": "Target dry mass cannot exceed all weighed wet material. An areal budget additionally needs these subsamples to exhaust the same known footprint at all depths and retain the complete event. The article gives an approximate 1 cm\u00b2 inventory for both cores, with differing subsample weights and mixing. The 0.7 g/cm\u00b3 illustration is Young 1990 Table 1.1 upland standard, without evidence of a site-specific lower bound on original bulk density or capture.",
+      "sum_of_printed_rounded_concentrations": 1797.9845000000003,
+      "background_subtracted_index": 1249.6284839380962,
+      "background_shards_per_wet_g": 70,
+      "background_scope": "Reported approximate background used only as an alternative; not an independently estimated error or a required correction.",
+      "window_without_first_and_last_bin_index": 1746.94805647506,
+      "counting_only_simultaneous_95_interval": [
+        1520.5204345839752,
+        2125.64200818348
+      ],
+      "counting_assumptions": "Poisson recovered counts with fixed reported masses, widths and representativeness; simultaneous Bonferroni interval. Does not include overdispersion, extraction loss, grain size, host density, sediment transport, attribution or unsampled tails.",
+      "response_upper_requirements": [
+        {
+          "proposed_fallout_cm": 0.5,
+          "nominal_index_per_cm_upper": 3596.0289547281154,
+          "counting_95_index_per_cm_upper": 4251.28401636696
+        },
+        {
+          "proposed_fallout_cm": 1.0,
+          "nominal_index_per_cm_upper": 1798.0144773640577,
+          "counting_95_index_per_cm_upper": 2125.64200818348
+        },
+        {
+          "proposed_fallout_cm": 5.0,
+          "nominal_index_per_cm_upper": 359.60289547281155,
+          "counting_95_index_per_cm_upper": 425.12840163669597
+        },
+        {
+          "proposed_fallout_cm": 10.0,
+          "nominal_index_per_cm_upper": 179.80144773640578,
+          "counting_95_index_per_cm_upper": 212.56420081834798
+        }
+      ],
+      "response_meaning": "For a total original thickness T>=t, a nonnegative target contribution within this window requires k_window<=J_upper/t. This is a requirement on an unknown response, not a thickness bound or inferred calibration.",
+      "principal_original_fallout_bound_cm": null
+    },
+    "S2017-IR": {
+      "samples": [
+        "LS41",
+        "LS42",
+        "LS43",
+        "LS44",
+        "LS45",
+        "LS46",
+        "LS47",
+        "LS48",
+        "LS49",
+        "LS50"
+      ],
+      "window_m": [
+        2.829,
+        2.929
+      ],
+      "units": "shard cm / g wet sediment",
+      "raw_count_mass_index": 4282.739094239094,
+      "wet_mass_sum_g": 16.9,
+      "raw_shards_sum": 6262,
+      "conditional_max_target_mass_g_per_cm2_if_full_one_cm2_column": 16.9,
+      "nominal_max_bulk_cm_if_full_capture_and_density_0_7": 24.142857142857142,
+      "wet_mass_scope": "Target dry mass cannot exceed all weighed wet material. An areal budget additionally needs these subsamples to exhaust the same known footprint at all depths and retain the complete event. The article gives an approximate 1 cm\u00b2 inventory for both cores, with differing subsample weights and mixing. The 0.7 g/cm\u00b3 illustration is Young 1990 Table 1.1 upland standard, without evidence of a site-specific lower bound on original bulk density or capture.",
+      "sum_of_printed_rounded_concentrations": 4282.735,
+      "background_subtracted_index": 3946.25641025641,
+      "background_shards_per_wet_g": 60,
+      "background_scope": "Reported approximate background used only as an alternative; not an independently estimated error or a required correction.",
+      "window_without_first_and_last_bin_index": 4246.405760905761,
+      "counting_only_simultaneous_95_interval": [
+        4015.0735237994227,
+        4590.698049121665
+      ],
+      "counting_assumptions": "Poisson recovered counts with fixed reported masses, widths and representativeness; simultaneous Bonferroni interval. Does not include overdispersion, extraction loss, grain size, host density, sediment transport, attribution or unsampled tails.",
+      "response_upper_requirements": [
+        {
+          "proposed_fallout_cm": 0.5,
+          "nominal_index_per_cm_upper": 8565.478188478188,
+          "counting_95_index_per_cm_upper": 9181.39609824333
+        },
+        {
+          "proposed_fallout_cm": 1.0,
+          "nominal_index_per_cm_upper": 4282.739094239094,
+          "counting_95_index_per_cm_upper": 4590.698049121665
+        },
+        {
+          "proposed_fallout_cm": 5.0,
+          "nominal_index_per_cm_upper": 856.5478188478188,
+          "counting_95_index_per_cm_upper": 918.1396098243329
+        },
+        {
+          "proposed_fallout_cm": 10.0,
+          "nominal_index_per_cm_upper": 428.2739094239094,
+          "counting_95_index_per_cm_upper": 459.06980491216643
+        }
+      ],
+      "response_meaning": "For a total original thickness T>=t, a nonnegative target contribution within this window requires k_window<=J_upper/t. This is a requirement on an unknown response, not a thickness bound or inferred calibration.",
+      "principal_original_fallout_bound_cm": null
+    }
+  },
+  "lake_superior_author_inventory": {
+    "approximate_fragments_per_cm2": [
+      2000,
+      4000
+    ],
+    "applies_to": "Authors give an approximate range for both sites. Endpoints are not site assignments.",
+    "nominal_upper_solid_recovered_glass_cm": 0.007812500000000002,
+    "assumptions": "Illustration only. A continuous 1 cm\u00b2 footprint, 4000 counted fragments, and all three dimensions of every counted fragment at most 125 micrometres. The reported largest size and rounded inventory are not hard bounds. Unobserved glass, crystals, pores and redistribution remain unconstrained."
+  },
+  "jensen_source_sha256": "82a3b4f40f879be104e14dbc6f751d49a560b4fd88373f2b1be0558d60198c37",
+  "jensen_sample_table_sha256": "34b1f190cee2787314b2c37e47195c57d1c0c617eb73eb7532539bbb41bfc01f",
+  "jensen_profiles": {
+    "J2021-BB": {
+      "source_table": "TableS12 BB profile",
+      "observed_depth_labels_cm": [
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "gross_window_shards_per_cm2": 2071.0,
+      "alternate_depth_labels_inclusive_cm": [
+        176,
+        182
+      ],
+      "alternate_window_shards_per_cm2": 2033.0,
+      "selected_horizon_labels_cm": [
+        177,
+        180
+      ],
+      "selected_slice_total_glass_per_cm2": 1440.0,
+      "largest_slice_concentration_shards_per_cm3": 1333.0,
+      "nominal_maximum_window_response_if_T_at_least_t": {
+        "0.5": 4142.0,
+        "1.0": 2071.0,
+        "5.0": 414.2,
+        "10.0": 207.1
+      },
+      "principal_original_fallout_bound_cm": null
+    },
+    "J2021-SB-C2": {
+      "source_table": "TableS14 SBCore2 profile",
+      "observed_depth_labels_cm": [
+        536,
+        537,
+        538,
+        539,
+        540
+      ],
+      "gross_window_shards_per_cm2": 1132.0,
+      "alternate_depth_labels_inclusive_cm": [
+        537,
+        539
+      ],
+      "alternate_window_shards_per_cm2": 63.0,
+      "selected_horizon_labels_cm": [
+        540
+      ],
+      "selected_slice_total_glass_per_cm2": 1067.0,
+      "largest_slice_concentration_shards_per_cm3": 1067.0,
+      "nominal_maximum_window_response_if_T_at_least_t": {
+        "0.5": 2264.0,
+        "1.0": 1132.0,
+        "5.0": 226.4,
+        "10.0": 113.2
+      },
+      "principal_original_fallout_bound_cm": null
+    },
+    "B2020-159": {
+      "source_table": "TableS15 NDN profile",
+      "observed_depth_labels_cm": [
+        544,
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      "gross_window_shards_per_cm2": 1267.0,
+      "alternate_depth_labels_inclusive_cm": [
+        545,
+        548
+      ],
+      "alternate_window_shards_per_cm2": 193.0,
+      "selected_horizon_labels_cm": [
+        548
+      ],
+      "selected_slice_total_glass_per_cm2": 138.0,
+      "largest_slice_concentration_shards_per_cm3": 1067.0,
+      "nominal_maximum_window_response_if_T_at_least_t": {
+        "0.5": 2534.0,
+        "1.0": 1267.0,
+        "5.0": 253.4,
+        "10.0": 126.7
+      },
+      "principal_original_fallout_bound_cm": null
+    },
+    "J2021-TI": {
+      "source_table": "TableS16 Thin-Ice Pond",
+      "observed_depth_labels_cm": [
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354
+      ],
+      "gross_window_shards_per_cm2": 7702.0,
+      "alternate_depth_labels_inclusive_cm": [
+        345,
+        350
+      ],
+      "alternate_window_shards_per_cm2": 7515.0,
+      "selected_horizon_labels_cm": [
+        346
+      ],
+      "selected_slice_total_glass_per_cm2": 5150.0,
+      "largest_slice_concentration_shards_per_cm3": 5150.0,
+      "nominal_maximum_window_response_if_T_at_least_t": {
+        "0.5": 15404.0,
+        "1.0": 7702.0,
+        "5.0": 1540.4,
+        "10.0": 770.2
+      },
+      "principal_original_fallout_bound_cm": null
+    }
+  },
+  "jensen_scope": "Gross glass concentration times contiguous 1 cm sample width. Blank recounts and overlapping 5 cm screening samples are excluded. Chemical identification of selected shards is not an attribution of all glass. Window endpoints are analyst choices, not bed contacts. Requirements on response use the gross component in that selected window and have no statistical confidence level.",
+  "other_recovered_components": {
+    "R2019-BCK284": {
+      "peak_shards_per_cm3": 220,
+      "sample_width_cm": 1,
+      "nominal_peak_slice_shards_per_cm2": 220,
+      "scope": "284\u2013285 cm Mazama-associated slice only. Excludes older BCK-325; no conversion of sample width to ash thickness."
+    },
+    "M2023-10G195": {
+      "window_cm": [
+        190,
+        195
+      ],
+      "concentration_upper_shards_per_dry_g": 40,
+      "window_index_upper_shard_cm_per_dry_g": 200,
+      "scope": "Source-wide <40 shards/g ceiling times 5 cm, outward <=200. Finite-window component ceiling, not a whole-event bound; the source reports unresolved peaks and translocation."
+    },
+    "D2024-NGRIP": {
+      "sample_name": "NGRIP 1163.75",
+      "sample_depth_m": [
+        1163.7,
+        1163.75
+      ],
+      "measured_long_axes": 100,
+      "measured_axis_min_mean_max_um": [
+        10.0,
+        36.55,
+        80.0
+      ],
+      "source_files_sha256": {
+        "northgrip-sizes.xlsx": "f791f53630adbca9587e81ac3032bafee90d81f57d35b0ba1e72d8a51dd88b2e",
+        "northgrip-sup3.docx": "1253c2880950bdcb6fb6deaab87f53c36a09ee2055c1da29b2dc0e8184351b24",
+        "northgrip-drill.html": "3876b22c3db01ab60e7bcdbb0aad32da17aef7aadfc87aec10957ccec6122573"
+      },
+      "axis_transcription_sha256": "16be3027182999996e02948c361533dedbbb5559bb2f976444e8d07ea32de2a3",
+      "recovered_shards": 1200,
+      "major_analyses": 18,
+      "trace_analyses": 14,
+      "drill_diameter_cm": 9.8,
+      "illustrated_edge_width_cm": 1.0,
+      "full_core_max_area_cm2": 75.42963961269095,
+      "sampled_semicircle_edge_area_cm2": 2.021896226451232,
+      "nominal_recovered_shards_per_cm2": 593.502269948939,
+      "minimum_recovered_shards_per_cm2_if_full_disc": 15.908865615183204,
+      "measured_subset_box_volume_per_area_cm": 3.5839500095010345e-06,
+      "all_shards_at_observed_80_um_max_box_volume_per_area_cm": 0.0003038731622138568,
+      "effective_recovered_count_response_at_t_cm": {
+        "0.5": 1187.004539897878,
+        "1.0": 593.502269948939,
+        "5.0": 118.70045398978777,
+        "10.0": 59.35022699489389
+      },
+      "reading": "Figure S1 shows a 1 cm edge cut through a semicircle of radius 4.9 cm. The area is half a circular segment. Scaling the count uses the illustrated cut for the resampled interval. It assumes the reported count corresponds to that sampled footprint. The diameter-only bound uses a complete circular slice.",
+      "volume_scope": "Solid recovered-glass illustrations. The measured two-dimensional long axis must bound all three particle dimensions, and the all-particle illustration applies the measured maximum to the unmeasured particles. Missing grain sizes, vesicles, ice thinning, wind redistribution and the original bulk density limit transfer.",
+      "independent_visibility_control": {
+        "measured_visible_thickness_cm": 0.1,
+        "archive": "GRIP, a different core, ice sample and tephra observed in another sampling campaign (Davies et al. 2024 section 2).",
+        "minimum_visible_response_needed_for_t_cm": {
+          "0.5": 0.2,
+          "1.0": 0.1,
+          "5.0": 0.02,
+          "10.0": 0.01
+        },
+        "interpretation": "Assuming a 0.1 cm visible-bed threshold would require a retained coherent fraction of at least 0.20 to exclude 0.5 cm. This control establishes that one distinct layer was visible. It does not calibrate that fraction for Mazama at NGRIP."
+      },
+      "principal_original_fallout_bound_cm": null
+    },
+    "B2020-292": {
+      "core": "GISP2",
+      "source_sha256": "8c6459da452e2fe467495087e75d370cb3bba361ec2cd84f81e79a9ba52fd0e0",
+      "four_positive_filters_m": [
+        1325.11,
+        1326.15
+      ],
+      "selected_filter_m": [
+        1325.89,
+        1326.15
+      ],
+      "analysed_shards_above_10_um": 10,
+      "membrane_pore_um": 0.2,
+      "optical_shard_diameter_range_um": "at most 1 to 20",
+      "electron_microscope_reference": "Zdanowicz, Zielinski and Germani 1999 pp. 621\u2013623, Figs. 1\u20133 and Table 1.",
+      "total_microparticle_counter_size_window_um": [
+        0.65,
+        12
+      ],
+      "scope": "Ten selected large grains verify attribution on one filter. The independent counter includes all insoluble particles within a different size window. Four positive filters span 104 cm of ice. The source gives neither a complete count of attributed grains in each filter nor the processed horizontal area. The sulphate peak estimates atmospheric sulphur, a different material."
+    }
+  },
+  "conclusion": "No independently anchored count response, mass-transfer denominator or recognition floor was recovered. No numerical original-fallout limits are created by this calculation."
+}

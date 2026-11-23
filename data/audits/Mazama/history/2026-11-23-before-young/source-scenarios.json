@@ -1,0 +1,141 @@
+{
+  "principal_input_sha256": "9d26214fe1dac10f89560537198ce15c7077f3ec219ef90752d07bc694ac7020",
+  "cases": {
+    "omit-bounds": {
+      "file": "sensitivities/omit-bounds/input.csv",
+      "sha256": "3b8ebc368182c99bd4e79a4a6649c77f3293966e4f4636faa321cd3b0b4fbce8",
+      "definition": "Omit every conditional upper and lower bound. The remaining likelihood consists of measured beds.",
+      "measurements": 47,
+      "lower_limits": 0,
+      "upper_limits": 0
+    },
+    "half-transfer": {
+      "file": "sensitivities/half-transfer/input.csv",
+      "sha256": "f85fc552afb219a565f5979c8b70ccff5979a6a6bf9dc48eef171cb118a1401e",
+      "definition": "Halve the lower limits and double the upper limits together. This tests weaker preservation and original-to-recovered transfer across sites. A factor of two is a stress assumption.",
+      "measurements": 47,
+      "lower_limits": 24,
+      "upper_limits": 5
+    },
+    "portage-upper": {
+      "file": "sensitivities/portage-upper/input.csv",
+      "sha256": "3947a8571d79297e5be08f020aa9cf47b56539c1e2fd0a730ab1411f29f0f741",
+      "definition": "Replace the Portage lower endpoint of 1.27 cm with the upper endpoint of 1.905 cm. This one-sided approximation adds negligible loss and compaction assumptions.",
+      "measurements": 47,
+      "lower_limits": 23,
+      "upper_limits": 6
+    },
+    "range-upper": {
+      "file": "sensitivities/range-upper/input.csv",
+      "sha256": "ea3b2d823b4c9989bdc1ef38e93403e4f46adb4f4ff9402cfa96711ee4b045cd",
+      "definition": "Replace the lower endpoints for Independence, Cleveland and Newman with upper endpoints of 6, 6 and 30 cm. Each horizon enters once. The upper endpoints additionally assume negligible loss and compaction.",
+      "measurements": 47,
+      "lower_limits": 21,
+      "upper_limits": 8
+    },
+    "omit-new-records": {
+      "file": "sensitivities/omit-new-records/input.csv",
+      "sha256": "bebf5132d4fb5a743cf0aaa418de53dfe358adc8da3fd8bbb90d5d170766284d",
+      "definition": "Retain the frozen 40-row selection to assess the combined effect of subsequent primary-source discoveries.",
+      "measurements": 26,
+      "lower_limits": 14,
+      "upper_limits": 0
+    },
+    "new-beds-lower": {
+      "file": "sensitivities/new-beds-lower/input.csv",
+      "sha256": "b6b46f3936fd5f9f5272f464ea2fe2cb3abec83ed34c7a37c0b32b35f5a617bb",
+      "definition": "Treat point beds added since the 40-row trial as lower limits at their observed thickness, conditional on primary attribution and negligible import. This tests incomplete preservation.",
+      "measurements": 26,
+      "lower_limits": 45,
+      "upper_limits": 5
+    },
+    "weak-identity-omit": {
+      "file": "sensitivities/weak-identity-omit/input.csv",
+      "sha256": "521cd9482b6e4860e98fb81e0767411717a9f42ec49021324ff87a94bed66d48",
+      "definition": "Omit the listed beds whose local climactic correlation or stratigraphic assignment is particularly uncertain. See WEAK_IDS in the reproduction script.",
+      "measurements": 41,
+      "lower_limits": 16,
+      "upper_limits": 4
+    },
+    "yellowstone-one": {
+      "file": "sensitivities/yellowstone-one/input.csv",
+      "sha256": "c2ebb0afdb4d0d331f815fca0e5801d0b6f9b622468906521bd950f856ff37bf",
+      "definition": "Retain YL16-5A as the central Yellowstone Lake representative and omit six other lake sites. Goose Lake remains a separate observation.",
+      "measurements": 41,
+      "lower_limits": 24,
+      "upper_limits": 5
+    },
+    "yellowstone-2c-5mm": {
+      "file": "sensitivities/yellowstone-2c-5mm/input.csv",
+      "sha256": "29340d3ec8a811927566f29d2d98b61e0054703651ef2aac3dad311656b09b6f",
+      "definition": "Use Schiller 2020 YL16-2C 0.5 cm in place of Morgan 2023 0.4 cm at the same core.",
+      "measurements": 47,
+      "lower_limits": 24,
+      "upper_limits": 5
+    },
+    "yellowstone-slump": {
+      "file": "sensitivities/yellowstone-slump/input.csv",
+      "sha256": "14e64fdda4a880893e81e748ae623c0a9acc3f908b6ab6f123580b92fcf3e052",
+      "definition": "Admit YL16-6A 0.5 cm under the assumption that the deformed slump-toe bed retains the original local thickness.",
+      "measurements": 48,
+      "lower_limits": 24,
+      "upper_limits": 5
+    },
+    "omit-gold": {
+      "file": "sensitivities/omit-gold/input.csv",
+      "sha256": "41840bd6e14567a9d86965179eb0a2387027fcf6d1d4d39559e0a83ed59f923e",
+      "definition": "Omit the 74 cm Gold Lake coarse-component minimum to test uncertain precursor contribution and lake focusing.",
+      "measurements": 47,
+      "lower_limits": 23,
+      "upper_limits": 5
+    },
+    "late-source-omit": {
+      "file": "sensitivities/late-source-omit/input.csv",
+      "sha256": "ca5a77c4b0b0f06c321b49131c3ff6d376334edffe2352ea0f916e8b2f690d93",
+      "definition": "Omit Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake to isolate their joint influence.",
+      "measurements": 46,
+      "lower_limits": 21,
+      "upper_limits": 4
+    },
+    "skull-omit": {
+      "file": "sensitivities/skull-omit/input.csv",
+      "sha256": "1443409d17a1f71c3cfa805f213ac5136b1e2826e08260b1fa6680fbd5bc626d",
+      "definition": "Omit the Skull Creek author-estimated upper limit to test its uncertain decimal typography and transfer from a mixed interval.",
+      "measurements": 47,
+      "lower_limits": 24,
+      "upper_limits": 4
+    },
+    "field-source-omit": {
+      "file": "sensitivities/field-source-omit/input.csv",
+      "sha256": "8a56d5ef181e497295edddc525ed28faad64a1647c33e59b81b884b7edc3b1de",
+      "definition": "Remove the nine additions from the final primary-source review. This isolates the change from the 67-observation reference.",
+      "measurements": 43,
+      "lower_limits": 23,
+      "upper_limits": 1
+    },
+    "bracket-omit": {
+      "file": "sensitivities/bracket-omit/input.csv",
+      "sha256": "122a53b6290271d336a16e9ef619bbe8ba6e58b4caeb9a7ee037b9a6007f02b8",
+      "definition": "Remove the four new conditional upper limits at Deep Creek, Medicine Lake, Mahoney Lake and Lodgepole Quarry. The Skull Creek estimate remains.",
+      "measurements": 47,
+      "lower_limits": 24,
+      "upper_limits": 1
+    },
+    "lake-core-alternates": {
+      "file": "sensitivities/lake-core-alternates/input.csv",
+      "sha256": "eecf876d70e37b599da1559debcf9f823ca303789ae99e35e617818e6a3e3fe2",
+      "definition": "Use the separate Little Lake core 91 bed of 1 cm and the companion Mahoney Lake 80 cm package. Each lake enters once under the principal preservation assumptions.",
+      "measurements": 47,
+      "lower_limits": 24,
+      "upper_limits": 5
+    },
+    "bachelor-west-alternate": {
+      "file": "sensitivities/bachelor-west-alternate/input.csv",
+      "sha256": "66597d4298b061042a7ff8c0b34a54ef5b16d577a8e5e78836b9931d311ec2a9",
+      "definition": "Replace the Mount Bachelor 44 cm upper-pumice minimum with the historical nearby West Village two-unit package as a 38 cm ceiling. Exclude the overlying 70 cm reworked material. This tests an alternative section, phase attribution and preservation together.",
+      "measurements": 47,
+      "lower_limits": 23,
+      "upper_limits": 6
+    }
+  }
+}

@@ -28,7 +28,7 @@ def check(home):
     accepted = rows(INPUT)
     probes = rows(AUDIT/'model-probes.csv')
     ids = {r['EvidenceID'] for r in probes}
-    assert len(accepted) == 67 and len(probes) == len(ids) == 68
+    assert len(probes) == len(ids) == len(accepted) + 1
     assert ids - {r['EvidenceID'] for r in accepted} == {'M2023-YL16-6A'}
     scenarios = set(CASES) | {'omit-williams'}
     assert {p.name for p in cases.iterdir() if p.is_dir()} == scenarios | {'principal'}
@@ -106,15 +106,16 @@ def check(home):
                 if not all(flags.values()):
                     warnings.append(dict(scenario=case, family=family, **flags))
     local_report = read(source/'local-comparison.json')
-    assert local_report['site_rows'] == 75*68
-    assert local_report['crossing_rows'] == 75*68*12
+    family_cases = 5 * (len(scenarios) + 1)
+    assert local_report['site_rows'] == family_cases * len(ids)
+    assert local_report['crossing_rows'] == family_cases * len(ids) * 12
     volumes = rows(source/'source-sensitivity-volumes.csv')
-    assert len(volumes) == 75
+    assert len(volumes) == family_cases
     assert {(r['scenario'], r['method']) for r in volumes} == {
         (case, method) for case in scenarios | {'principal'}
         for method in ('stacked', 'spline', *family_names)}
-    return dict(input_sha256=reference, principal_observations=67,
-        source_scenarios=14, family_scenario_reports=56,
+    return dict(input_sha256=reference, principal_observations=len(accepted),
+        source_scenarios=len(scenarios), family_scenario_reports=4*len(scenarios),
         artifact_hashes_verified=artifact_count, principal=principal_checks,
         source_numerical_warnings=warnings, source_prior_sensitivities=8,
         local_site_predictions=local_report['site_rows'],

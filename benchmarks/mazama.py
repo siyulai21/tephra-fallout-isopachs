@@ -1,6 +1,8 @@
 """Rebuild the conditional Mazama input and site-level evidence decisions."""
 import csv
 import hashlib
+import io
+from collections import Counter
 import json
 from pathlib import Path
 
@@ -17,9 +19,13 @@ def sha(path):
 
 
 def write_csv(path, rows):
-    with path.open('w', newline='') as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
-        writer.writeheader(); writer.writerows(rows)
+    stream = io.StringIO(newline='')
+    writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
+    writer.writeheader()
+    writer.writerows(rows)
+    data = stream.getvalue().encode('utf-8')
+    if not path.is_file() or path.read_bytes() != data:
+        path.write_bytes(data)
 
 
 def prepare():
@@ -37,10 +43,9 @@ def prepare():
             EvidenceID=item['record_id'],Site=record['locality'],Reference=record['primary_reference'],
             Evidence=item['decision_basis'],Qualification=item['preservation_assumption'])
         rows.append(row); chosen[item['record_id']]={**item,'accepted_csv_row':len(rows)+1}
-    assert len(rows)==67 and sum(r['Kind']=='measurement' for r in rows)==43
-    assert len(chosen)==67
-    assert sum(r['Kind']=='lower_limit' for r in rows)==23
-    assert sum(r['Kind']=='upper_limit' for r in rows)==1
+    counts = Counter(r['Kind'] for r in rows)
+    assert len(chosen) == len(rows) == len(selection)
+    assert counts == {'measurement':47, 'lower_limit':24, 'upper_limit':5}
     write_csv(INPUT,rows)
     slump = lookup['M2023-YL16-6A']
     probe = {k:'' for k in rows[0]}
@@ -58,7 +63,7 @@ def prepare():
         else:
             reason=r['fallout_model_status']+': '+r['caveats']
             if r['quantity_kind'] in ('cryptotephra','tentative_signal'):
-                missing='Original local loading requires profile-integrated target mass (or compatible count index), a site-specific capture/focusing response, and bulk-density or calibrated count response. No positive response floor or upper focusing factor was established. Sample depth/width is not bulk thickness.'
+                missing='Recovered glass, mineral or concentration data and site-specific alternatives are recorded in THICKNESSLESS_SITES.md and cryptotephra-profile-calculations.json. A source-supported original-bulk transfer or recognition threshold is unresolved at this location. '+r['caveats']+''
             elif r['quantity_kind']=='trace_no_numeric_limit':
                 missing='Positive trace has no established bulk-thickness recognition scale or minimum preserved response. The 0.1 cm convention is not a measured value or a detection threshold.'
             elif r['deposit_class'] in ('compiler_secondary','compiler_both','secondary_or_mixed_sedimentary_context') or 'rework' in r['fallout_model_status']:
@@ -83,14 +88,17 @@ def prepare():
             influence_scope='No low-influence claim. Source support, not modeled volume, determines inclusion.'))
     write_csv(AUDIT/'model-selection.csv',[dict(record_id=r['EvidenceID'],accepted_csv_row=i,kind=r['Kind'],thickness_cm=r['Thickness'],limit_cm=r['Limit_cm'],latitude=r['Lat'],longitude=r['Lon'],decision_basis=r['Evidence'],qualification=r['Qualification']) for i,r in enumerate(rows,2)])
     write_csv(AUDIT/'site-evidence-decisions.csv',decisions)
-    definition='Source-qualified climactic Mazama airborne fallout reference: 43 reported point values, 23 conditional lower bounds and one conditional upper bound. Compilation-supported values are not claimed independently primary-verified. Primary components, ranges and three Camp Creek section groups are documented in BOUND_REVIEW.md. Seven Yellowstone Lake locations use explicit 4–5 mm beds, paired cores counted once; see YELLOWSTONE.md. Nevada, Great Salt Lake, Goose Lake, Effingham Inlet and other lake/marine records are documented in FOLLOWUP_SEARCH.md. The final citation pass adds Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake; see LATE_SOURCE_REVIEW.md. One endpoint per physical reading; separate range-endpoint, weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds.'
-    provenance=dict(audit_date='2026-11-23',scope='Complete 293-entry compilation reconciliation plus 166 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.',
+    definition = ('Climactic Mazama airborne bulk fallout. 47 point values, 24 lower bounds and five upper bounds are shared by all five families. '
+                  'Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, '
+                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews. Bounds and sensitivity alternatives are in the locality ledger.')
+    interpreted = {r['id']: r for r in json.loads((AUDIT/'interpreted-archives.json').read_text())['sites']}
+    upper = [r for r in selection if r['kind'] == 'upper_limit']
+    assert set(interpreted) == {r['record_id'] for r in upper}
+    provenance=dict(audit_date='2026-11-23',scope=f'All 293 original catalogue rows and {len(ledger)-293} additional records, leads or controls. Verification level is recorded at each site.',
       original_input=dict(file='data/eruptions/Mazama_tephra.csv',sha256=sha(ROOT/'data/eruptions/Mazama_tephra.csv')),
       source=dict(file='data/sources/mazama/buckland2020-esm1.xlsx',sha256=sha(ROOT/'data/sources/mazama/buckland2020-esm1.xlsx'),doi='https://doi.org/10.1007/s00445-020-1362-1'),
-      cases={'principal':dict(file='data/eruptions/Mazama_reviewed.csv',sha256=sha(INPUT),n_measurements=43,n_lower_limits=23,n_upper_limits=1,definition=definition)},
-      principal_limits=[dict(evidence_id='MW1986-SKULL',interpreted_upper_cm=5,
-          derivation='Conservative outward ceiling from author-estimated primary fallout: indexed 2-5 cm supports <=5 cm under decimal2.5 or range2–5 reading. Not the25 cm reworked total.',
-          qualifications='Author estimate and phase containment conditional; scan typography unresolved; isolated omission and weaker10 cm upper tested.')],
+      cases={'principal':dict(file='data/eruptions/Mazama_reviewed.csv',sha256=sha(INPUT),n_measurements=counts['measurement'],n_lower_limits=counts['lower_limit'],n_upper_limits=counts['upper_limit'],definition=definition)},
+      principal_limits=[dict(evidence_id=r['record_id'],interpreted_upper_cm=r['limit_cm'],derivation=r['decision_basis'],qualifications=r['preservation_assumption']) for r in upper],
       target='Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.',
       thickness_convention='Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.',
       coordinate_datum='Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.',
