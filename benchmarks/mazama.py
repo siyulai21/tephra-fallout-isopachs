@@ -54,7 +54,9 @@ def prepare():
                  Site=slump['locality'], Reference=slump['primary_reference'],
                  Evidence='Morgan2023 reported5 mm; excluded from principal because of slump-toe deformation.',
                  Qualification='Prediction probe only. Used as a likelihood only in the separately labelled yellowstone-slump scenario.')
-    write_csv(AUDIT/'model-probes.csv', rows+[probe])
+    former = list(csv.DictReader((AUDIT/'history/2026-11-23-before-distal-review/input.csv').open()))
+    probes = [dict(r, **{'Vent Lon':'','Vent Lat':''}, Qualification='Prediction location only. Frozen pre-review selection; omitted from the revised input.') for r in former if r['EvidenceID'] not in chosen]
+    write_csv(AUDIT/'model-probes.csv',rows+[probe]+probes)
     decisions=[]
     for r in ledger:
         rid=r['record_id']; included=rid in chosen; item=chosen.get(rid,{})
@@ -90,7 +92,7 @@ def prepare():
     write_csv(AUDIT/'site-evidence-decisions.csv',decisions)
     definition = (f"Climactic Mazama airborne bulk fallout. {counts['measurement']} point values, {counts['lower_limit']} lower limits and {counts['upper_limit']} upper limits are shared by all five families. "
                   'Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, '
-                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young’s separately mapped upper pumice sections the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages and Mount Baker field sections. Bounds and sensitivity alternatives are in the locality ledger.')
+                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young’s separately mapped upper pumice sections, the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages, Mount Baker field sections and the distal deposit-nature revision. Bounds and sensitivity alternatives are in the locality ledger.')
     interpreted = {r['id']: r for r in json.loads((AUDIT/'interpreted-archives.json').read_text())['sites']}
     upper = [r for r in selection if r['kind'] == 'upper_limit']
     assert set(interpreted) == {r['record_id'] for r in upper}

@@ -1,7 +1,7 @@
 name: Recompute audited Mazama
 on:
   push:
-    branches: [codex/mazama-audit-20261122]
+    branches: [codex/mazama-distal-facies-20261123]
     paths: [data/audits/Mazama/recompute-request.json]
   workflow_dispatch:
 
@@ -208,11 +208,11 @@ jobs:
           python scripts/check_repository_navigation.py
           python -m pytest -q
       - name: Commit verified results on the audit branch
-        if: github.ref == 'refs/heads/codex/mazama-audit-20261122'
+        if: github.ref == 'refs/heads/codex/mazama-distal-facies-20261123'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- benchmarks/published-evidence.sha256 eruptions/mazama eruptions/README.md comparisons data/audits/Mazama/validation.json
           git diff --cached --stat
           git commit -m "Publish five-family Mazama comparison and conditional source studies"
-          git push origin HEAD:refs/heads/codex/mazama-audit-20261122
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"

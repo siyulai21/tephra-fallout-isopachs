@@ -4,11 +4,11 @@
 
 [Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)
 
-The audit reconciles all 293 entries in the Buckland et al. (2020) supplement and 440 additional observations, sample records and controls. The source workbook contains 4,395 checked locality cells. The 52-row supplied project table had 45 candidate field matches and seven contour-construction points. The revised input contains **244 observations, comprising 58 measured beds, 153 lower limits and 33 upper limits**. Each likelihood has a source identity, coordinates and a geological interpretation. [733-record locality ledger](revised-locality-ledger.csv) · [Reviewed fitting input](../../eruptions/Mazama_reviewed.csv) · [Site decisions](site-evidence-decisions.csv) · [Provenance and hashes](provenance.json)
+All 293 Buckland supplement localities and 533 additional records, core samples and controls appear in the ledger. The 52-row supplied table comprises 45 candidate field matches and seven contour-construction points. The 238-location principal input has 35 point values, 139 lower limits and 64 upper limits. The facies review documents every change from the 244-position edition and links to the field descriptions. [Deposit-nature review](distal-review/README.md) · [826-record ledger](revised-locality-ledger.csv) · [Accepted input](../../eruptions/Mazama_reviewed.csv) · [Provenance](provenance.json)
 
 Young’s complete thesis contributed 103 mapped upper-pumice sections to the principal fit. The 25 separately numbered distal entries retain his field-check flags and 700 kg/m³ density convention. The follow-up also distinguishes primary pumice from floated pumice in Oregon borings, revisits borehole locations, and records the possible offshore Willapa bed. [Young and the additional field studies](YOUNG_AND_FIELD_SECTIONS.md) · [Thicknessless-site derivations](THICKNESSLESS_SITES.md) · [Input before Young](history/2026-11-23-before-young/README.md)
 
-The original observer’s record remains pending for 202 entries checked only against the compilation and 17 checked against Young’s own compilation. Twelve and six of those records, respectively, enter the conditional fit. Some other entries have primary evidence for identity or location with incomplete thickness verification. The ledger retains the verification grade for each site. The bibliography search records its retrieval outcome for all 137 references. [Bibliography search](bibliography-screen.csv) · [Outstanding original-source checks](primary-source-work-queue.csv) · [Search history](SEARCH_AND_GAPS.md)
+Original observer verification remains open for 214 of the 293 compilation entries in the source queue. Ten of these are conditionally used in the principal fit. Some other sources confirm only identity, location or the preserved bed. The locality decisions state which link has been checked. [137-reference bibliography screen](bibliography-screen.csv) · [Outstanding observer records](primary-source-work-queue.csv) · [Search coverage](SEARCH_AND_GAPS.md)
 
 The radiocarbon citation crosswalk covers all 81 laboratory entries and both ice-core estimates in Egan’s two tables. Checking the original logs recovered two measured British Columbia beds and four additional conditional field or archive bounds. [Dated sections and their locations](DATED_SECTIONS.md) · [Laboratory age crosswalk](egan-age-crosswalk.csv)
 
@@ -18,7 +18,7 @@ The Great Basin and Carp Lake review adds eight quantitative observations. It ch
 
 | Artifact | Contents |
 |---|---|
-| [Revised locality ledger](revised-locality-ledger.csv) | All 733 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
+| [Revised locality ledger](revised-locality-ledger.csv) | All 826 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
 | [Readable locality register](LOCALITIES.md) | Compact GitHub-readable index of every record |
 | [Original published catalogue](buckland2020-293-localities.csv) | All 293 entries and all 15 original data columns, with Excel row identities |
 | [Original cells](buckland2020-cells.json) | Scalar values including nulls; preserves source spelling and numeric precision |

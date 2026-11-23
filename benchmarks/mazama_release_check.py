@@ -28,9 +28,10 @@ def check(home):
     accepted = rows(INPUT)
     probes = rows(AUDIT/'model-probes.csv')
     ids = {r['EvidenceID'] for r in probes}
-    assert len(probes) == len(ids) == len(accepted) + 1
-    assert ids - {r['EvidenceID'] for r in accepted} == {'M2023-YL16-6A'}
-    scenarios = set(CASES) | {'omit-williams'}
+    old_ids = {r['EvidenceID'] for r in rows(AUDIT/'history/2026-11-23-before-distal-review/input.csv')}
+    assert len(probes) == len(ids)
+    assert ids == old_ids | {r['EvidenceID'] for r in accepted} | {'M2023-YL16-6A'}
+    scenarios = set(CASES)
     assert {p.name for p in cases.iterdir() if p.is_dir()} == scenarios | {'principal'}
     expected = read(cases/'scenarios.json')
     assert expected['principal_input_sha256'] == reference

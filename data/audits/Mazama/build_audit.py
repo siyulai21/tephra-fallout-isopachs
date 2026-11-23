@@ -1,4 +1,4 @@
-"""Rebuild the Mazama evidence ledger; never changes registered model inputs.
+"""Rebuild the Mazama evidence ledger; reconstructs the source selection but leaves the model CSV to benchmarks.mazama.
 Run from any directory with Python 3 (standard library only).
 Scientific judgments live in review-decisions.json and additional-records.json.
 """
@@ -6,6 +6,7 @@ import csv
 import hashlib
 import json
 import math
+import importlib.util
 import shutil
 import statistics
 import xml.etree.ElementTree as ET
@@ -138,6 +139,11 @@ def main():
         records.append(record)
     records.extend(json.loads((HERE/'additional-records.json').read_text()))
     records.extend(followup['additional'])
+    spec = importlib.util.spec_from_file_location('mazama_distal_review', HERE/'distal-review/reconcile.py')
+    review = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(review)
+    review.apply(records)
+    review.registered_selection(records)
     assert len({r['record_id'] for r in records}) == len(records)
     for r in records:
         assert r.get('accepted_for_model') is False

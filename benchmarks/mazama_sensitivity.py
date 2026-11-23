@@ -12,7 +12,6 @@ from pathlib import Path
 import numpy as np
 
 from benchmarks.mazama import INPUT, AUDIT, sha, write_csv
-from benchmarks.mazama_great_basin import BASIN_IDS
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.models.extent_integrals import integrate
@@ -23,50 +22,21 @@ from src.empirical_isopach.models.nested.study import write_json
 from src.empirical_isopach.visualization.deposit_integrals import independent_integral
 from src.probabilistic_isopach.global_volume import EarthDomain
 
-DATED_IDS={'B2020-129','B2020-141','B2020-147','B2020-203','B2020-251','R1982-KOOT-776'}
 CASES = {
-    'great-basin-omit': 'Omit the eight additional quantitative observations in the Great Basin and Carp Lake source review. The predecessor had 236 observations.',
-    'great-basin-alternate': 'Read the Leidy trench at its upper endpoint, omit the less clean first peat hole, double the second cap to test net loss and move the Furnace auger to a corner of its mapped frame. Treat Patterson and Fish as lake ceilings, omit the assumed Lily bed and use the 26 cm Table 1 Dead Horse endpoint. Carp uses the 2 cm compiler alternative.',
-    'dated-sections-omit': 'Omit the two corrected UBC Research Forest beds, both dated host brackets, the complete Huff archive and the Kootenai pit. The other reviewed regions are retained.',
-    'dated-capture-alternate': 'Allow net focusing in both UBC lake beds by treating them as maxima. Allow half capture at Waits and Huff. Replace the Hager mire with the central core host ceiling. Use only basal BCV1 and the western Kootenai section centre.',
-    'kootenai-position-east': 'Move the single Kootenai pit likelihood to the eastern section centre without altering its component minimum.',
-    'lake-field-omit': 'Omit the final lake-core and Mount Baker/Three Sisters interpretation group. Retain the independent Young and Round Meadow sections.',
-    'lake-capture-alternate': 'For British Columbia measured beds, use the whole preserved package as a ceiling. Loosen original-to-preserved capture to at least one half in the three Idaho lake packages, two undated-width Washington beds, Redmountain, Pocket Lake and Pettit. Keep one Redfish core, RDF-4A. The facies cap is doubled for Redfish under the same response assumption.',
-    'field-range-alternate': 'Use the opposite endpoints for mapped Mount Baker (RS–5, 17, 21) and Three Sisters (5, 15, 41) ranges, conditional on capture and no erosion. Omit RS–18 at its ambiguous coordinate.',
-    'young-sections-omit': 'Omit the Young Appendix 1 upper-pumice sections together. The distinct modern measured locations retain their original treatment.',
-    'young-section-positions': 'Translate the Young Appendix 1 observations coherently to the alternative Kirk Hill registration tying Young section 47 to the modern equivalent Upper Kirk site. All measured values are unchanged.',
-    'young-distal-omit': 'Omit the three field-checked bog estimates, the five Young ceilings, and the Lofty Lake alternative-bearing record together. This tests the shared upland conversion and local preservation.',
-    'distal-transfer-alternates': 'Jesmond uses the original observer’s approximately 0.5 cm corer estimate under negligible smearing. Lofty uses Young’s 0.2 cm ceiling. The three field-checked peat estimates retain the principal endpoints.',
-    'round-meadow-one': 'Retain only vibracore 3 from the Round Meadow 2015 group. Its unambiguous 330–130 cm primary section tests the contribution of adjacent borings and less certain contacts.',
-    'offshore-omit': 'Omit the conditional Willapa Canyon ceiling. Marine reworking, compaction or export may decouple the 4 cm bed from local primary fallout.',
-    'western-field-omit': 'Omit the new Stillwater, North Twin Lake, Indian Prairie, Gold Lake Bog, Newberry and Walker Rim field studies together. Other Oregon sections and Young’s table remain in the likelihood.',
-    'omit-bounds': 'Omit every conditional upper and lower bound. The remaining likelihood consists of measured beds.',
-    'half-transfer': 'Halve the lower limits and double the upper limits together. This tests weaker preservation and original-to-recovered transfer across sites. A factor of two is a stress assumption.',
-    'portage-upper': 'Replace the Portage lower endpoint of 1.27 cm with the upper endpoint of 1.905 cm. This one-sided approximation adds negligible loss and compaction assumptions.',
-    'range-upper': 'Replace the lower endpoints for Independence, Cleveland and Newman with upper endpoints of 6, 6 and 30 cm. Each horizon enters once. The upper endpoints additionally assume negligible loss and compaction.',
-    'omit-new-records': 'Retain the frozen 40-row selection to assess the combined effect of subsequent primary-source discoveries.',
-    'new-beds-lower': 'Treat point beds added since the 40-row trial as lower limits at their observed thickness, conditional on primary attribution and negligible import. This tests incomplete preservation.',
-    'weak-identity-omit': 'Omit the listed beds whose local climactic correlation or stratigraphic assignment is particularly uncertain. See WEAK_IDS in the reproduction script.',
-    'yellowstone-one': 'Retain YL16-5A as the central Yellowstone Lake representative and omit six other lake sites. Goose Lake remains a separate observation.',
-    'yellowstone-2c-5mm': 'Use Schiller 2020 YL16-2C 0.5 cm in place of Morgan 2023 0.4 cm at the same core.',
-    'yellowstone-slump': 'Admit YL16-6A 0.5 cm under the assumption that the deformed slump-toe bed retains the original local thickness.',
-    'omit-gold': 'Omit the 74 cm Gold Lake coarse-component minimum to test uncertain precursor contribution and lake focusing.',
-    'late-source-omit': 'Omit Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake to isolate their joint influence.',
-    'skull-omit': 'Omit the Skull Creek author-estimated upper limit to test its uncertain decimal typography and transfer from a mixed interval.',
-    'field-source-omit': 'Remove the nine additions from the final primary-source review. This isolates the change from the 67-observation reference.',
-    'bracket-omit': 'Remove the four new conditional upper limits at Deep Creek, Medicine Lake, Mahoney Lake and Lodgepole Quarry. The Skull Creek estimate remains.',
-    'lake-core-alternates': 'Use the separate Little Lake core 91 bed of 1 cm and the companion Mahoney Lake 80 cm package. Each lake enters once under the principal preservation assumptions.',
-    'bachelor-west-alternate': 'Replace the Mount Bachelor 44 cm upper-pumice minimum with the historical nearby West Village two-unit package as a 38 cm ceiling. Exclude the overlying 70 cm reworked material. This tests an alternative section, phase attribution and preservation together.',
+    'prior-244': 'Exact archived 244-position input. Regional settings come from the revised geographic selection; compare all families on their stated domains.',
+    'omit-reinterpreted-ceilings': 'Omit every new or changed ceiling in the deposit-nature review. This removes the complete-local-retention assumption for those packages.',
+    'half-capture-ceilings': 'Double each new or revised package ceiling as a sensitivity to a retained thickness fraction of 0.5. The factor is a stress assumption.',
+    'omit-all-archive-ceilings': 'Remove all conditional upper limits, including the earlier cryptotephra and enclosing-section upper envelopes.',
+    'omit-qualified-identities': 'Drop low-confidence sources including the one-shard On-off Lake correlation, probable Stowell ash, distal ice/cryptotephra assignments and distorted Hasse horizon.',
+    'cathedral-one': 'Use only the Lake of the Woods A12 central core among the four adjacent Cathedral basins. This tests closely correlated archive behavior and shared source attribution.',
+    'yellowstone-one': 'Retain central core YL16-5A as the single Yellowstone Lake likelihood. All core positions remain in the evidence inventory.',
+    'restore-williams': 'Restore the former 46 cm Williams Lake Fen point alone. The unresolved two-horizon interpretation is a historical stress case.',
+    'restore-thick-archive-readings': 'Restore the former Windy and Thunder Lake measurements and Round Lake lower bound as a joint historical archive-transfer scenario.',
+    'omit-basin-beds': 'Remove conditional lake beds carried as measurements in the Ruby Mountains, Lyman, Roe, Great Salt Lake, Rainier and Yellowstone. This tests shared limnological preservation.',
+    'omit-young-proximal': 'Omit Young’s individually mapped upper pumice minima as a group to test leverage of spatially clustered partial-component constraints.',
 }
-
 LEGACY = AUDIT/'history/2026-11-23-before-yellowstone/Mazama_reviewed_40.csv'
-BRACKET_IDS = {'B2020-206','S2003-MEDICINE','H1997-MAHONEY','SG1989-LODGEPOLE'}
-FIELD_IDS = BRACKET_IDS | {'B2020-095','B2020-052','L2007-LOST-OR','J1985-FLODELLE','P1999-BEAVER-OR'}
-WEAK_IDS = {'W2017-SHADOW','W2017-SUNRISE','W2017-LSUNRISE','D2025-LOST',
-            'M2024-ROUNDWA','R2021-LONG','MK2012-PATJENS','M2014-CLELAND-F',
-            'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2','B2020-095',
-            'B2020-206','L2007-LOST-OR','P1999-BEAVER-OR'}
-LATE_IDS = {'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2','MW1986-SKULL','W2016-LYMAN'}
+OLD244 = AUDIT/'history/2026-11-23-before-distal-review/input.csv'
 
 
 def common_region():
@@ -129,156 +99,61 @@ def local_checks(view, folder):
 
 
 def prepare(root):
-    source = list(csv.DictReader(INPUT.open()))
-    legacy_ids = {r['EvidenceID'] for r in csv.DictReader(LEGACY.open())}
+    import shutil
+    with INPUT.open() as source:
+        principal = list(csv.DictReader(source))
+    with OLD244.open() as source:
+        former = {r['EvidenceID']:r for r in csv.DictReader(source)}
+    interpretations = json.loads((AUDIT/'distal-review/interpretations.json').read_text())
+    changed_caps = {key for key,r in interpretations.items() if r['use']=='upper_limit'}
+    weak = {'M2012-ONOFF02','L2016-STOWELL','B2020-285','B2020-003','P2018-MORT12','B2020-229','B2020-291','FLV93-T206'}
+    basin = {'M2018-OVERLAND','M2018-SOLDIER','W2016-LYMAN','L2012-ROE','J2025-GSL4','W2017-SHADOW','W2017-SUNRISE'}
     result = {}
     for name, definition in CASES.items():
-        folder = root / name
+        folder = root/name
         folder.mkdir(parents=True, exist_ok=True)
-        rows = [dict(r) for r in source]
-        if name == 'great-basin-omit':
-            rows=[r for r in rows if r['EvidenceID'] not in BASIN_IDS]
-        elif name == 'great-basin-alternate':
-            rows=[r for r in rows if r['EvidenceID'] not in {'FLV93-C1','MWB07-LIL'}]
-            for r in rows:
-                sid=r['EvidenceID']
-                if sid=='FLV93-T206':
-                    r.update(Kind='upper_limit',Limit_cm=1,Qualification='Upper end of the preserved range under complete capture with no appreciable thinning.')
-                elif sid in {'MWB07-PAT','B2020-023'}:
-                    r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Whole lake bed bounds the original fall if retained despite focusing or rapid sinking.')
-                elif sid in {'FLV93-C7','MWB07-DH','B2020-079'}:
-                    alt={'FLV93-C7':5,'MWB07-DH':26,'B2020-079':2}
-                    r.update(Limit_cm=alt[sid],Qualification='Alternative retained value or enclosure described in the interpretation tests.')
-                elif sid=='FLV94-FC-AUG':
-                    geo=json.loads((AUDIT/'great-basin-registration.json').read_text())
-                    lat,lon=geo['mapped_positions'][sid]['approximate_area_corners_lat_lon'][2]
-                    r.update(Lat=lat,Lon=lon,Qualification='Position stress at the eastern corner of the mapped study-area frame; it is a location assumption.')
-        elif name == 'dated-sections-omit':
-            rows=[r for r in rows if r['EvidenceID'] not in DATED_IDS]
-        elif name in ('dated-capture-alternate','kootenai-position-east'):
-            registered=json.loads((AUDIT/'kootenai-section-positions.json').read_text())['sections']
-            for r in rows:
-                sid=r['EvidenceID']
-                if sid=='R1982-KOOT-776':
-                    section=registered[0 if name=='dated-capture-alternate' else 1]
-                    r.update(Lon=section['longitude'],Lat=section['latitude'])
-                    if name=='dated-capture-alternate':
-                        r.update(Limit_cm=1.5,Qualification='Only the lower reported thickness of the first secure component is transferred.')
-                elif name=='dated-capture-alternate':
-                    if sid in {'B2020-203','B2020-251'}:
-                        r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Whole discrete bed caps local deposition if focusing can add material and net loss is negligible.')
-                    elif sid in {'B2020-129','B2020-147'}:
-                        r.update(Limit_cm=2*float(r['Limit_cm']),Qualification='Hypothetical half-capture floor for the dated or whole-host interval.')
-                    elif sid=='B2020-141':
-                        r.update(Limit_cm=530,Lat=48.596931,Lon=-116.971806,Site='Hager Lake central coring area',
-                            Reference='Moseley, Bursik and Mehringer (1992), Hager locality 2.',
-                            Evidence='Linked replacement of the 1973 mire bracket by the single 1992 central-basin package. 17.4 minus 12.1 m.',
-                            Qualification='Complete capture in the combined four overlapping drives, despite observed mixing and sinking.')
-        elif name == 'lake-field-omit':
-            rows=[r for r in rows if r['EvidenceID']!='B2020-045' and not r['EvidenceID'].startswith(('SP2007-', 'SP2008-', 'CH2008-', 'HER2014-', 'ROS2004-', 'SC2020-', 'OS2012-', 'MAR2009-', 'SHP2023-'))]
-        elif name == 'lake-capture-alternate':
-            rows=[r for r in rows if r['EvidenceID']!='SHP2023-RDF1A']
-            for r in rows:
-                sid=r['EvidenceID']
-                if sid.startswith(('ROS2004-','CH2008-')) and r['Kind']=='measurement':
-                    r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Complete recovered lake package permits lateral addition. Requires no net thinning relative to original local deposition.')
-                elif sid.startswith(('HER2014-','SP2007-','SP2008-','SHP2023-')) or sid in {'CH2008-RED','OS2012-POC','B2020-045'}:
-                    r['Limit_cm']=2*float(r['Limit_cm'])
-                    r['Qualification']='A recovered thickness at least half the original local deposit; a conditional stress scenario without a measured retention fraction.'
-        elif name == 'field-range-alternate':
-            rows=[r for r in rows if r['EvidenceID']!='SC2020-RS18']
-            endpoints={'SC2020-RS05':5,'SC2020-RS17':4,'SC2020-RS21':4,'MAR2009-S05':9,'MAR2009-S15':66,'MAR2009-S41':8}
-            for r in rows:
-                if r['EvidenceID'] in endpoints:
-                    r.update(Kind='upper_limit',Limit_cm=endpoints[r['EvidenceID']],Qualification='Alternative recovered upper endpoint assumes complete local capture and no net thinning.')
-        elif name == 'young-sections-omit':
-            rows = [r for r in rows if not r['EvidenceID'].startswith('Y1990-A')]
-        elif name == 'young-section-positions':
-            points = {int(v['site']):v for v in csv.DictReader((AUDIT/'young1990-section-positions.csv').open())}
-            for r in rows:
-                if r['EvidenceID'].startswith('Y1990-A'):
-                    v = points[int(r['EvidenceID'].split('-A')[1])]
-                    r.update(Lon=v['upper_kirk_anchor_longitude'], Lat=v['upper_kirk_anchor_latitude'],
-                             Qualification='Alternative coherent registration using the author-identified equivalent section 47.')
-        elif name == 'young-distal-omit':
-            ids = {f'B2020-{n:03}' for n in (4,63,68,76,229,232,264,290,291)}
-            rows = [r for r in rows if r['EvidenceID'] not in ids]
-        elif name == 'distal-transfer-alternates':
-            for r in rows:
-                if r['EvidenceID']=='B2020-229':
-                    r.update(Kind='measurement', Thickness=.5, Limit_cm='', Evidence='Mathews approximate 5 mm with smearing reported. Tests the assumption that the apparent thickness represents the complete bed.')
-                elif r['EvidenceID']=='B2020-291':
-                    r.update(Kind='upper_limit', Limit_cm=.2, Evidence='Young Table 1.1 gives ≤0.2 cm at the upland reference density.')
-        elif name == 'round-meadow-one':
-            rows = [r for r in rows if not r['EvidenceID'].startswith('W2015-RM-') or r['EvidenceID']=='W2015-RM-V3']
-        elif name == 'offshore-omit':
-            rows = [r for r in rows if r['EvidenceID']!='R1967-BB326-36']
-        elif name == 'western-field-omit':
-            rows = [r for r in rows if not r['EvidenceID'].startswith(('W2015-RM-','C2014-','SW1995-','J2025-NTL','BC2010-8','Y1990-C-'))]
-        elif name == 'omit-bounds':
-            rows = [r for r in rows if r['Kind'] == 'measurement']
-        elif name == 'half-transfer':
-            for r in rows:
-                if r['Kind'] == 'lower_limit':
-                    r['Limit_cm'] = float(r['Limit_cm']) / 2
-                elif r['Kind'] == 'upper_limit':
-                    r['Limit_cm'] = float(r['Limit_cm']) * 2
-        elif name == 'portage-upper':
-            r = next(r for r in rows if r['EvidenceID'] == 'B2020-134')
-            r['Kind'], r['Limit_cm'] = 'upper_limit', 1.905
-        elif name == 'range-upper':
-            limits = {'B2020-017':6, 'B2020-019':6, 'B2020-122':30}
-            for r in rows:
-                if r['EvidenceID'] in limits:
-                    r['Kind'], r['Limit_cm'] = 'upper_limit', limits[r['EvidenceID']]
-        elif name == 'omit-new-records':
-            rows = [r for r in rows if r['EvidenceID'] in legacy_ids]
-            assert len(rows) == 40
-        elif name == 'new-beds-lower':
-            for r in rows:
-                if r['EvidenceID'] not in legacy_ids and r['Kind'] == 'measurement':
-                    r['Kind'], r['Limit_cm'], r['Thickness'] = 'lower_limit', r['Thickness'], ''
-        elif name == 'weak-identity-omit':
-            rows = [r for r in rows if r['EvidenceID'] not in WEAK_IDS]
-        elif name == 'yellowstone-one':
-            rows = [r for r in rows if not r['EvidenceID'].startswith('M2023-YL') or r['EvidenceID']=='M2023-YL16-5A']
-        elif name == 'yellowstone-2c-5mm':
-            next(r for r in rows if r['EvidenceID']=='M2023-YL16-2C')['Thickness'] = .5
-        elif name == 'yellowstone-slump':
-            r = next(r for r in csv.DictReader((AUDIT/'model-probes.csv').open()) if r['EvidenceID']=='M2023-YL16-6A')
-            rows.append(r)
-        elif name == 'omit-gold':
-            rows = [r for r in rows if r['EvidenceID']!='B2023-GOLD']
-        elif name == 'late-source-omit':
-            rows = [r for r in rows if r['EvidenceID'] not in LATE_IDS]
-            assert len(rows) == len(source) - len(LATE_IDS)
-        elif name == 'skull-omit':
-            rows = [r for r in rows if r['EvidenceID'] != 'MW1986-SKULL']
-        elif name in ('field-source-omit', 'bracket-omit'):
-            excluded = FIELD_IDS if name == 'field-source-omit' else BRACKET_IDS
-            rows = [r for r in rows if r['EvidenceID'] not in excluded]
-            assert len(rows) == len(source) - len(excluded)
-        elif name == 'lake-core-alternates':
-            r = next(r for r in rows if r['EvidenceID'] == 'B2020-052')
-            r.update(EvidenceID='L1998-LITTLE91', Site='Little Lake, core 91', Thickness=1,
-                     Evidence='Long et al. 1998 Table 2, core 91, 7.74–7.75 m, lake-scale coordinates.')
-            r = next(r for r in rows if r['EvidenceID'] == 'H1997-MAHONEY')
-            r.update(Limit_cm=80, Evidence='Alternate retained package from Overmann et al. 1993 Fig. 3 and text. Same primary-capture assumption as the principal upper bound.')
-        elif name == 'bachelor-west-alternate':
-            with (AUDIT/'revised-locality-ledger.csv').open() as stream:
-                west = next(r for r in csv.DictReader(stream) if r['record_id'] == 'SG1989-WEST')
-            r = next(r for r in rows if r['EvidenceID'] == 'B2020-046')
-            r.update(EvidenceID=west['record_id'], Site=west['locality'], Lat=west['latitude'],
-                     Lon=west['longitude'], Kind='upper_limit', Limit_cm=west['bound_cm'],
-                     Reference=west['primary_reference'], Evidence=west['evidence_locator'],
-                     Qualification=west['caveats'])
-        path = folder / 'input.csv'
-        write_csv(path, rows)
-        result[name] = dict(file=str(path), sha256=sha(path), definition=definition,
-                            measurements=sum(r['Kind']=='measurement' for r in rows),
-                            lower_limits=sum(r['Kind']=='lower_limit' for r in rows),
-                            upper_limits=sum(r['Kind']=='upper_limit' for r in rows))
-    write_json(root / 'scenarios.json', dict(principal_input_sha256=sha(INPUT), cases=result))
+        path = folder/'input.csv'
+        if name == 'prior-244':
+            shutil.copyfile(OLD244,path)
+            rows=list(former.values())
+        else:
+            rows = [r.copy() for r in principal]
+            if name == 'omit-reinterpreted-ceilings':
+                rows = [r for r in rows if r['EvidenceID'] not in changed_caps]
+            elif name == 'half-capture-ceilings':
+                for r in rows:
+                    if r['EvidenceID'] in changed_caps:
+                        r.update(Limit_cm=2*float(r['Limit_cm']),Qualification=definition)
+            elif name == 'omit-all-archive-ceilings':
+                rows = [r for r in rows if r['Kind']!='upper_limit']
+            elif name == 'omit-qualified-identities':
+                rows = [r for r in rows if r['EvidenceID'] not in weak]
+            elif name == 'cathedral-one':
+                rows = [r for r in rows if not r['EvidenceID'].startswith('E1997-') or r['EvidenceID']=='E1997-A12']
+            elif name == 'yellowstone-one':
+                rows = [r for r in rows if not r['EvidenceID'].startswith('M2023-YL') or r['EvidenceID']=='M2023-YL16-5A']
+            elif name == 'restore-williams':
+                rows.append(former['B2020-113'].copy())
+            elif name == 'restore-thick-archive-readings':
+                ids={'CH2008-THU','CH2008-WIN','M2024-ROUNDWA'}
+                rows=[former[r['EvidenceID']].copy() if r['EvidenceID'] in ids else r for r in rows]
+            elif name == 'omit-basin-beds':
+                rows=[r for r in rows if r['EvidenceID'] not in basin and not r['EvidenceID'].startswith('M2023-YL')]
+            elif name=='omit-young-proximal':
+                rows=[r for r in rows if not r['EvidenceID'].startswith('Y1990-A')]
+            else:
+                raise ValueError(name)
+            for i,row in enumerate(rows):
+                for field in ('Vent Lon','Vent Lat'):
+                    row[field]=principal[0][field] if i==0 else ''
+            write_csv(path,rows)
+        assert sha(path)!=sha(INPUT),name
+        result[name]=dict(file=str(path),sha256=sha(path),definition=definition,
+                       measurements=sum(r['Kind']=='measurement' for r in rows),
+                       lower_limits=sum(r['Kind']=='lower_limit' for r in rows),
+                       upper_limits=sum(r['Kind']=='upper_limit' for r in rows))
+    write_json(root/'scenarios.json',dict(principal_input_sha256=sha(INPUT),cases=result))
+
 
 
 def regional(data, full, report):

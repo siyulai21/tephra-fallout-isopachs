@@ -70,21 +70,9 @@ def principal(family):
 
 def source_case(case,family=None):
     from benchmarks import mazama_sensitivity as study
-    from benchmarks import mazama_phase_sensitivity as phase
     from benchmarks.mazama_release import regional_details
-    from src.empirical_isopach.models.nested.study import write_json
-    root=PHASE if case==phase.CASE else STUDIES
-    if case==phase.CASE:
-        target=root/case
-        target.mkdir(parents=True,exist_ok=True)
-        with INPUT.open() as stream:
-            rows=[r for r in csv.DictReader(stream) if r['EvidenceID']!='B2020-113']
-        write_csv(target/'input.csv',rows)
-        write_json(target/'scenario.json',dict(definition=phase.DEFINITION,input_sha256=sha(target/'input.csv'),
-            principal_input_sha256=sha(INPUT),scenario_script_sha256=sha(Path(phase.__file__)),shared_script_sha256=sha(Path(study.__file__))))
-        study.CASES[case]=phase.DEFINITION
-    else:
-        study.prepare(root)
+    root=STUDIES
+    study.prepare(root)
     for item in (FAMILIES if family is None else (family,)):
         study.run(root,case,item,PRINCIPAL)
     if family is None or family=='regional':
@@ -99,7 +87,7 @@ def pack(kind,name):
         def include(path):
             stream.add(path,arcname=path.relative_to(ROOT))
         if kind=='source':
-            include((PHASE if name=='omit-williams' else STUDIES)/name)
+            include(STUDIES/name)
         elif kind=='cache':
             p=PRINCIPAL/'spherical-mixture/posteriors'
             include(p/'validation'/name if name.startswith('fold-') else p/name)
@@ -121,7 +109,7 @@ def list_jobs():
     from src.empirical_isopach.core.catalog import dataset_record
     from src.empirical_isopach.models.mass_mixture.source_protocol import protocol
     prior,alts=protocol(dataset_record(INPUT).get('global_geometry','displaced'))
-    print('sources='+json.dumps([*CASES,'omit-williams']))
+    print('sources='+json.dumps(list(CASES)))
     print('caches='+json.dumps([p.name for p in (prior,*alts)]+[f'fold-{i}' for i in range(4)]))
 
 

@@ -178,7 +178,7 @@ def assessment(home):
     inventory = read(AUDIT/'audit-summary.json')
     kinds = inventory['principal_kinds']
     n = inventory['principal_observations']
-    source_count = len(CASES) + 1
+    source_count = len(CASES)
     lines=['# Mazama source interpretation tests','',
         '[Case home](../../README.md) · [Evidence and calculations](../../../../data/audits/Mazama/BOUND_REVIEW.md) · [Numerical table](source-sensitivity-volumes.csv)','',
         f"The common input contains {n} observations, including {kinds['measurement']} measured beds, {kinds['lower_limit']} lower bounds and {kinds['upper_limit']} upper bounds. The {source_count} source refits test preservation, ash identity, interval endpoints and shared site positions. Global models refit each source scenario using continuation calibration that excludes Mazama. The regional refits keep the principal chosen settings and compare volumes on the original 26-measurement footprint.",'',
@@ -187,16 +187,15 @@ def assessment(home):
     for r in rows:
         lines.append(f"| {r['method']} | {r['scenario']} | {r['median_map_volume_km3']:.3g} | {r['lower95_km3']:.3g}–{r['upper95_km3']:.3g} | {r['draw_checks_passed']} | {r['map_integration_passed']} |")
     lines += ['','The principal case home uses its full accepted hull for regional volumes; the two principal regional rows above deliberately use the smaller common footprint. The median-map integral and the posterior distribution of complete-deposit integrals are different quantities. False numerical flags remain provisional; they are not hidden by a successful map integral.','',
-        f'Local checks cover the {n} principal localities and the omitted YL16-6A slump-toe site. Each has predictions along its bearing and adjacent ±11.25° rays at 0.5, 1, 5 and 10 cm. All contour crossings and their radial-grid brackets are retained. Regional predictions end at each scenario hull. Camp Creek and Skull Creek also retain section-vertex checks.','',
+        f'Local checks cover the {n} principal localities and the omitted previous-fit localities, including the YL16-6A slump-toe site. Each has predictions along its bearing and adjacent ±11.25° rays at 0.5, 1, 5 and 10 cm. All contour crossings and their radial-grid brackets are retained. Regional predictions end at each scenario hull. Camp Creek and Skull Creek also retain section-vertex checks.','',
         'The full comparison uses identical input hashes and geographic folds. The reports retain geographic and quadrant warnings, supported-contour rejection reasons and the eight spherical prior intervals. Numerical convergence does not establish observational support over Earth.','',
-        ' · '.join(f'[{name}](sensitivities/{name}/)' for name in [*CASES,'omit-williams','principal']),'',
+        ' · '.join(f'[{name}](sensitivities/{name}/)' for name in [*CASES,'principal']),'',
         '## Reproduction','',
         f'The reproduction commands run the principal fit and {source_count} source scenarios. Regional source scenarios retain the principal chosen settings and fixed original common hull.','',
         '```sh',
         'python -m src.empirical_isopach.cli compare Mazama --output results/new-mazama',
         'for family in regional directional spherical-mixture nested-isopachs; do',
         '  python -m benchmarks.mazama_sensitivity --output results/new-mazama-sources --principal results/new-mazama --family "$family"',
-        '  python -m benchmarks.mazama_phase_sensitivity --output results/new-mazama-phase --principal results/new-mazama --family "$family"',
         'done',
         'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-sources',
         'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-phase',
@@ -207,7 +206,7 @@ def assessment(home):
     intro=['# Mazama climactic fallout','',
         f"**{n} observations enter all five model families.** The common input has {kinds['measurement']} measurements, {kinds['lower_limit']} lower bounds and {kinds['upper_limit']} upper bounds. The source ledger reconciles {inventory['source_localities']} original catalogue entries and {inventory['additional_records']} additional records, cross-references and controls. The original field evidence remains incomplete at sites identified in the audit.",'',
         '[Accepted input](../../data/eruptions/Mazama_reviewed.csv) · [Audit assessment](../../data/audits/Mazama/README.md) · [Every locality](../../data/audits/Mazama/LOCALITIES.md) · [Young field sections](../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Lake cores and Mount Baker field sections](../../data/audits/Mazama/LAKE_AND_FIELD_RECORDS.md) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md) · [Great Basin and Carp Lake](../../data/audits/Mazama/GREAT_BASIN.md) · [Thicknessless-site derivations](../../data/audits/Mazama/THICKNESSLESS_SITES.md) · [Yellowstone cores](../../data/audits/Mazama/YELLOWSTONE.md) · [Source sensitivities](results/source-audit/README.md)','',
-        'The target is primary airborne bulk fallout from the climactic eruption, including co-ignimbrite ash. Identified precursor beds, flow deposits and reworked totals are excluded. Preserved primary components and range minima enter once as lower bounds, conditional on their identity and preservation. Green and Tepee Lake positions are corrected; the 850 cm Muir Creek facies-ambiguous value is quarantined. The Williams 46 cm phase ambiguity is retained explicitly and tested by omission.','',
+        'The target is primary airborne bulk fallout from the climactic eruption, including co-ignimbrite ash. Identified precursor beds, flow deposits and reworked totals are excluded. Preserved primary components and range minima enter once as lower bounds, conditional on their identity and preservation. Green and Tepee Lake positions are corrected; the 850 cm Muir Creek facies-ambiguous value is quarantined. The two Williams Fen horizons remain unresolved. The 46 cm value is excluded and restored only in a historical sensitivity. See the [distal facies and airfall review](../../data/audits/Mazama/distal-review/README.md).','',
         'These global volumes are conditional estimates. Sparse bearings and unsampled regions remain uncertain even where a whole-Earth integral converges. Each family keeps its own interval, prior sensitivity and numerical status. [Shared support decisions](results/support/README.md) and each global extent report preserve rejected contours and unsupported gaps.','',
         case_section(home,prefix='results/'),'',
         '## Evidence, reproduction and history','',
@@ -240,7 +239,6 @@ def assemble(principal, scenarios, phase):
     shutil.copytree(principal,home,ignore=shutil.ignore_patterns("work","posteriors","predictions.csv"))
     dest=home/'source-audit'
     shutil.copytree(scenarios,dest/'sensitivities')
-    shutil.copytree(phase/'omit-williams',dest/'sensitivities/omit-williams')
     reproduction=dest/'reproduction';reproduction.mkdir(parents=True,exist_ok=True)
     for name in ('mazama.py','mazama_sensitivity.py','mazama_phase_sensitivity.py','mazama_release.py'):
         shutil.copyfile(Path('benchmarks')/name,reproduction/name)
