@@ -4,8 +4,8 @@
   "name": "Mazama",
   "input_sha256": "2a6d9a4c6f23b7000e830a11fdfc2ddfeb27956c3d3990a548c02373aba39870",
   "parent_sha256": {
-    "report.json": "8dacc6d360727f45a1cec98dc45d182e73edbbc83800e6942740d02aaf9f6065",
-    "posterior.npz": "8657e1f1f9daa5e4f6664ac533227858c68cd567dd090a4eb4c5d2e3abebe845"
+    "report.json": "cd94806b8ef0b1e77cbf811668936733cea2667e2ae435c29d5bc35c6020e9f0",
+    "posterior.npz": "18823a41e0dd7464cfe7bc77b48be1a6297ec0c04c2ff7158feea0682e3c2d6a"
   },
   "calibration": {
     "states": [
@@ -13,8 +13,8 @@
       "resolved"
     ],
     "weights": [
-      0.7760160995645479,
-      0.2239839004354521
+      0.7760161791369351,
+      0.22398382086306495
     ],
     "donors": [
       "tambora",
@@ -31,27 +31,27 @@
   "calibration_sha256": "6ba944f53c1ff03af2efff120faa783da8a2d4e434b2283d9594e108ed2f9652",
   "exact_parent_identity": false,
   "conditional_interval95_km3": [
-    217.1071411888554,
-    7164.26562501003
+    212.04119849318846,
+    7166.963559007089
   ],
   "draw_checks_passed": true,
   "parent_conditional_interval95_km3": [
-    221.4303515975789,
-    8346.114021076273
+    221.55704886292193,
+    7502.871073821967
   ],
   "parent_draw_checks_passed": true,
   "state_conditional_intervals95_km3": {
     "parent": [
-      226.10428281396037,
-      7409.923356344172
+      221.42032832588242,
+      7502.660437827127
     ],
     "broad": [
-      221.68227587290275,
-      7219.626204738083
+      216.46422283252582,
+      7208.671681473401
     ],
     "resolved": [
-      206.4221323749203,
-      7001.413986361814
+      200.84278643370172,
+      6870.506172670445
     ]
   },
   "state_order": [
@@ -59,11 +59,11 @@
     "broad",
     "resolved"
   ],
-  "volume_draws_sha256": "d3257c95ce54c09a024000e3ad1afbfdff26adc28a372920323842d1f2c0b988",
+  "volume_draws_sha256": "ca7fb7b6ecc159d9cf12b61c7ea0202a32c184d6181fcc7bccb08b1ba717868a",
   "draw_refinements": [
     {
       "draws_per_state": 3072,
-      "split_relative_difference": 0.02920823734690013,
+      "split_relative_difference": 0.2617578221003611,
       "integration": [
         {
           "nodes_per_scramble": 2048,
@@ -73,25 +73,25 @@
           ],
           "conditional_q025_q50_q975": [
             [
-              225.973644366611,
-              467.3556100488968,
-              7419.148760142396
+              220.3651711155744,
+              447.3267906619725,
+              10100.048889356382
             ],
             [
-              221.26276177193103,
-              456.34129958046367,
-              7143.562351097448
+              216.28032577384388,
+              437.3459308743353,
+              10065.893057438663
             ],
             [
-              206.22333106931197,
-              427.7167007979091,
-              7020.347573470699
+              200.80634627860502,
+              410.0852939982433,
+              9942.724843390233
             ]
           ],
           "max_relative_scramble_by_state": [
-            0.012438843658735882,
-            0.0034689223279154627,
-            0.027681181142067548
+            0.047083584728656654,
+            0.047446955373641436,
+            0.026157478603216044
           ],
           "max_relative_refinement_by_state": null,
           "passed": false
@@ -104,30 +104,174 @@
           ],
           "conditional_q025_q50_q975": [
             [
-              226.10428281396037,
-              467.6146750705983,
-              7409.923356344172
+              220.69309442870045,
+              448.65489365009563,
+              10298.099237939221
             ],
             [
-              221.68227587290275,
-              457.3894853486411,
-              7219.626204738083
+              216.5647796509491,
+              438.3214420840412,
+              10183.189139049551
             ],
             [
-              206.4221323749203,
-              428.32670307682395,
-              7001.413986361814
+              201.14736930649156,
+              411.17472773112274,
+              9942.388723313352
             ]
           ],
           "max_relative_scramble_by_state": [
-            0.0016764765793922075,
-            0.00288869393548963,
-            0.0020364020754326737
+            0.00039749624088231854,
+            0.00040638688599529255,
+            0.0006613472085634385
           ],
           "max_relative_refinement_by_state": [
-            0.0012450066423865813,
-            0.01053570524062808,
-            0.0027042519047961733
+            0.019231738207882265,
+            0.011518599920833483,
+            0.0026495639430248463
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "draws_per_state": 6144,
+      "split_relative_difference": 0.20986639860316855,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              218.7581894181099,
+              458.6846963814912,
+              7317.1547757600965
+            ],
+            [
+              214.37753661941855,
+              448.2162117958477,
+              7076.766845768032
+            ],
+            [
+              198.52462199411906,
+              419.1944191807435,
+              6697.575579515758
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.009112620926212444,
+            0.017921655320509038,
+            0.006541712511154955
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              219.1000297630401,
+              459.38673141991694,
+              7336.891066611218
+            ],
+            [
+              214.53833293602665,
+              448.6437484130672,
+              7007.309944553539
+            ],
+            [
+              198.63595956731152,
+              419.9009806341652,
+              6722.307291927786
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.0012683756589524813,
+            0.0008525582889945,
+            0.0003438813853653387
+          ],
+          "max_relative_refinement_by_state": [
+            0.0026900073439739547,
+            0.009912063511401836,
+            0.003679051155802582
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "draws_per_state": 12288,
+      "split_relative_difference": 0.018585911951497096,
+      "integration": [
+        {
+          "nodes_per_scramble": 2048,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              221.3313310456231,
+              458.27409616641575,
+              7496.630213281845
+            ],
+            [
+              216.34712867045235,
+              447.76210933915263,
+              7200.011715714111
+            ],
+            [
+              200.6609818896543,
+              418.4648499228465,
+              6877.5672000444065
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.005737360800279672,
+            0.0037636052441587984,
+            0.004283983319577981
+          ],
+          "max_relative_refinement_by_state": null,
+          "passed": false
+        },
+        {
+          "nodes_per_scramble": 4096,
+          "scrambles": [
+            32147,
+            81701
+          ],
+          "conditional_q025_q50_q975": [
+            [
+              221.42032832588242,
+              459.11037962072726,
+              7502.660437827127
+            ],
+            [
+              216.46422283252582,
+              448.38971269697885,
+              7208.671681473401
+            ],
+            [
+              200.84278643370172,
+              419.10959692658275,
+              6870.506172670445
+            ]
+          ],
+          "max_relative_scramble_by_state": [
+            0.0015940223933530884,
+            0.004914316685403406,
+            0.0042893398869580475
+          ],
+          "max_relative_refinement_by_state": [
+            0.001821530271222338,
+            0.0013996827760639485,
+            0.0015383732762607183
           ],
           "passed": true
         }
@@ -136,27 +280,27 @@
   ],
   "validation": {
     "geographic": {
-      "negative_log_score": 1.0032354224487903,
-      "parent_matched_score": 0.9296894771639301,
+      "negative_log_score": 1.0004015740027798,
+      "parent_matched_score": 0.9285234950682458,
       "state_scores": {
-        "parent": 0.9296894771639301,
-        "broad": 0.9854101473936258,
-        "resolved": 1.2228353052231804
+        "parent": 0.9285234950682458,
+        "broad": 0.9828509575775872,
+        "resolved": 1.2184863438320057
       },
       "fold_scores": [
-        0.3487702341531934,
-        0.6964614897354536,
-        0.9300707598835514,
-        2.037639206022963
+        0.36021628567497377,
+        0.6977609786625467,
+        0.9320656085647107,
+        2.011563423108888
       ],
       "passed_folds": 4,
       "attempted_folds": 4,
       "all_folds_passed": true,
-      "passed_only_score": 1.0032354224487903,
+      "passed_only_score": 1.0004015740027798,
       "n_rows": 244,
       "n_exact": 58,
       "coverage95_exact": 0.7241379310344828,
-      "matched_parent_coverage95": 0.6551724137931034
+      "matched_parent_coverage95": 0.6379310344827587
     }
   },
   "folds": [
@@ -406,7 +550,7 @@
         122
       ],
       "source_sha256": {
-        "posterior": "8f54a6610f35ed710395bb70fecbf26338d2ea1a9673bc6327dbc2b0fe8873c5"
+        "posterior": "dc0ae70a7e3ca04762675300c960fb8aab2009373c26bc59a3dc4bb66307176c"
       },
       "maximum_training_log_cm_change": 0.0
     },
@@ -650,7 +794,7 @@
         51
       ],
       "source_sha256": {
-        "posterior": "4a39345269caf3eaeff487d1efe8203a2a0be5080a6f14d756ddaa24943f0084"
+        "posterior": "e81127ce51c3e76ce291f8e39af5c1f1b5482e2efe048faf6144614cf2dff698"
       },
       "maximum_training_log_cm_change": 0.0
     },
@@ -906,7 +1050,7 @@
         47
       ],
       "source_sha256": {
-        "posterior": "bd1bfef01937ec81c8c0d060cef6300236ee50041ab23fb83840c165aa6c3f8d"
+        "posterior": "303727633091b6fc67ee9a86437c99ad7e2a34a77e9d037d52a3a5ada6a7ff72"
       },
       "maximum_training_log_cm_change": 0.0
     },
@@ -1164,11 +1308,11 @@
         187
       ],
       "source_sha256": {
-        "posterior": "6f49a72c773a0e71c1eab7e34a5ab06a8bd8a04300e001d00e0135688e2dcd2e"
+        "posterior": "b9c933c55155d3f8ba9e4e4144e71453a542a7fee3ce5dc3c09ace557542f031"
       },
       "maximum_training_log_cm_change": 0.0
     }
   ],
-  "heldout_sha256": "2152e381dcae402229221f65523ceb4cd8a754b3846e06fb7c9ad4b0516a1f74",
+  "heldout_sha256": "1f4305427ccb56fb6b1a950eb7bdaec4fdd8ec050fdf0b77287f898acf70e895",
   "interpretation": "Conditional on the recorded sites, likelihood, family and continuation choices. Independent whole-Earth integrals of coherent fields give the interval. Complete-contour eligibility is assessed separately."
 }
