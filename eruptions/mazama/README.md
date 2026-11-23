@@ -1,5 +1,7 @@
 > **Revised input and maps.** The [665-record evidence ledger](../../data/audits/Mazama/revised-locality-ledger.csv) yields [203 fitting observations](../../data/eruptions/Mazama_reviewed.csv). The [Yellowstone core map](../../data/audits/Mazama/YELLOWSTONE.md) and [Young section audit](../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) document the field evidence. The numerical results shown below still use the archived 45-measurement input while the five families are being refitted.
 
+[Current 230-observation rerun, including regional and nested maps](audit-run/README.md) · [Latest source audit](../../data/audits/Mazama/README.md)
+
 # Mazama fallout reconstruction
 
 The accepted dataset contains 45 exact measurements. The regional fits share an observation hull of 930,447 km². [Accepted thickness CSV](../../data/eruptions/Mazama_tephra.csv) · [Input provenance](../../data/eruptions/README.md)

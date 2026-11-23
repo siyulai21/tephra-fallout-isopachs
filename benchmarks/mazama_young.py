@@ -197,6 +197,9 @@ def review():
     from benchmarks.mazama_field_followup import field_records
     new,decisions,more_archives=field_records(selected,points)
     rows.extend(new);updates.update(decisions);archives['sites'].extend(more_archives)
+    from benchmarks.mazama_lake_sections import records as lake_records
+    new,decisions,more_archives=lake_records(selected)
+    rows.extend(new);updates.update(decisions);archives['sites'].extend(more_archives)
     dump(AUDIT/'young1990-review.json',dict(revisions=updates,additional=rows))
     dump(AUDIT/'model-selection.json',list(selected.values()))
     dump(AUDIT/'interpreted-archives.json',archives)

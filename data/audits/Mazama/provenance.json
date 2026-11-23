@@ -1,6 +1,6 @@
 {
   "audit_date": "2026-11-23",
-  "scope": "All 293 original catalogue rows and 372 additional records, leads or controls. Verification level is recorded at each site.",
+  "scope": "All 293 original catalogue rows and 410 additional records, leads or controls. Verification level is recorded at each site.",
   "original_input": {
     "file": "data/eruptions/Mazama_tephra.csv",
     "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
@@ -13,11 +13,11 @@
   "cases": {
     "principal": {
       "file": "data/eruptions/Mazama_reviewed.csv",
-      "sha256": "4736759f284dc686ed1d091caedfec953f2fa8659a3fa9d0e988151a03af5cf4",
-      "n_measurements": 49,
-      "n_lower_limits": 143,
-      "n_upper_limits": 11,
-      "definition": "Climactic Mazama airborne bulk fallout. 49 point values, 143 lower limits and 11 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections and the Round Meadow borings. Bounds and sensitivity alternatives are in the locality ledger."
+      "sha256": "8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe",
+      "n_measurements": 55,
+      "n_lower_limits": 151,
+      "n_upper_limits": 24,
+      "definition": "Climactic Mazama airborne bulk fallout. 55 point values, 151 lower limits and 24 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages and Mount Baker field sections. Bounds and sensitivity alternatives are in the locality ledger."
     }
   },
   "principal_limits": [
@@ -86,6 +86,84 @@
       "interpreted_upper_cm": 4,
       "derivation": "Four cm of glass-rich sediment is a conditional ceiling if this horizon captured the complete local signal and redeposition or background sediment added thickness.",
       "qualifications": "Possible canyon transport, compaction, winnowing or incomplete retention could invalidate transfer to original airborne bulk. Compare omission. The mixed marine blanket has no positive numerical primary minimum."
+    },
+    {
+      "evidence_id": "SP2007-THU",
+      "interpreted_upper_cm": 119.5,
+      "derivation": "Entire visible horizon lies between two independently dated plant macrofossil levels. 440 \u2212 320.5 = 119.5 cm.",
+      "qualifications": "A geometric ceiling on the preserved horizon. Transferring it to original local fall requires continuous recovery across the bracket with no net thinning sufficient to violate it. Stratigraphic order and bed attribution must hold. Several hundred mg of each tephra were prepared for analysis. Processing yield, ash purity and focusing prevent calibration of a precise original bulk thickness from mounted material."
+    },
+    {
+      "evidence_id": "SP2008-RID",
+      "interpreted_upper_cm": 111,
+      "derivation": "The visible bed lies above the gray-clay contact at 277 cm and below the distinct Glacier Peak bed at 166 cm. 277 \u2212 166 = 111 cm.",
+      "qualifications": "A geometric ceiling on the preserved horizon. Transferring it to original local fall requires continuous recovery across the bracket with no net thinning sufficient to violate it. Stratigraphic order and bed attribution must hold. Several hundred mg of each tephra were prepared for analysis. Processing yield, ash purity and focusing prevent calibration of a precise original bulk thickness from mounted material."
+    },
+    {
+      "evidence_id": "CH2008-RED",
+      "interpreted_upper_cm": 111,
+      "derivation": "The event-age interval lies between 409 and 520 cm. Its entire surviving primary component cannot exceed their 111 cm separation.",
+      "qualifications": "A geometric ceiling on the preserved horizon. Transferring it to original local fall requires continuous recovery across the bracket with no net thinning sufficient to violate it. Stratigraphic order and bed attribution must hold. The 0.5 cm St Helens bed recognized in dark gyttja at Windy does not calibrate visibility in these pale inorganic sediments. No minimum ash or zero is observed."
+    },
+    {
+      "evidence_id": "HER2014-DIS",
+      "interpreted_upper_cm": 141,
+      "derivation": "Mazama-bearing interval 593\u2013734 cm measures 141 cm. Chapter IV explicitly attributes excess thickness to slopewash and focusing. Below the bed are laminated gyttja and the separate Glacier Peak marker.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. Chapter IV explicitly attributes excess thickness to slopewash and focusing. Below the bed are laminated gyttja and the separate Glacier Peak marker."
+    },
+    {
+      "evidence_id": "HER2014-RRL",
+      "interpreted_upper_cm": 161,
+      "derivation": "Mazama-bearing interval 278\u2013439 cm measures 161 cm. A separate uppermost St Helens layer is 0.5 cm. Massive gyttja contains aquatic vegetation mats.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. A separate uppermost St Helens layer is 0.5 cm. Massive gyttja contains aquatic vegetation mats."
+    },
+    {
+      "evidence_id": "HER2014-HOR",
+      "interpreted_upper_cm": 211,
+      "derivation": "Mazama-bearing interval 178\u2013389 cm measures 211 cm. The parallel cores could not be correlated below the ash. The authors separately report recovery of underlying sediment. Omit the ceiling if the splice missed part of the bed.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. The parallel cores could not be correlated below the ash. The authors separately report recovery of underlying sediment. Omit the ceiling if the splice missed part of the bed."
+    },
+    {
+      "evidence_id": "SC2020-RS15",
+      "interpreted_upper_cm": 20,
+      "derivation": "5\u201320 cm. Ash in iron-stained soil beneath a 1.7 m lahar. The published 5\u201320 cm refers to the included ash.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "OS2012-SFL",
+      "interpreted_upper_cm": 30,
+      "derivation": "The pits contain up to 30 cm of O and a separate 3 cm of Baker OP. The reported maximum bounds the preserved group. Individual pits lack separate coordinates.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "OS2012-POC",
+      "interpreted_upper_cm": 38,
+      "derivation": "Mazama at 0.93\u20130.55 m, hence 38 cm. A separate younger Baker bed at 0.48\u20130.41 m and reworked, deeper Baker SC material are excluded.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. A small moraine-dammed cirque can focus ash into the center core."
+    },
+    {
+      "evidence_id": "SHP2023-RDF1A",
+      "interpreted_upper_cm": 8,
+      "derivation": "Group lithofacies range 2\u20138 cm. Use the largest observed facies thickness as a site ceiling; the publication gives no text thickness specific to this bed. The primary horizon overlies Event A. The younger Event B is separately recognizable.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. Correct inclusion of this bed in the published facies envelope is required."
+    },
+    {
+      "evidence_id": "SHP2023-RDF4A",
+      "interpreted_upper_cm": 8,
+      "derivation": "Group lithofacies range 2\u20138 cm. Use the largest observed facies thickness as a site ceiling; the publication gives no text thickness specific to this bed. Microprobe-confirmed Redfish Mazama; the discrete horizon is used in the RDF-4A chronology. XRF also records prolonged remobilization above it.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. Correct inclusion of this bed in the published facies envelope is required."
+    },
+    {
+      "evidence_id": "SHP2023-LRFL",
+      "interpreted_upper_cm": 8,
+      "derivation": "Group lithofacies range 2\u20138 cm. Use the largest observed facies thickness as a site ceiling; the publication gives no text thickness specific to this bed. The authors use both the Mazama and older Glacier Peak horizons in the site age model. Three discrete gray tephras occur; the thin disturbance cap has a separate origin.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. Correct inclusion of this bed in the published facies envelope is required."
+    },
+    {
+      "evidence_id": "B2020-045",
+      "interpreted_upper_cm": 6,
+      "derivation": "The compiler quotes a 6 cm bed. The original authors report approximately 50 kg/m\u00b2 of fall and later a 2\u20138 cm tephra facies range. The thickness and mass imply approximately 833 kg/m\u00b3 if they correspond. Admit 6 cm as a conditional ceiling on original local thickness at the composite.",
+      "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. The precise 6 cm remains a compiled site reading. The independent article confirms the airfall facies and approximate mass. The mass alone requires an original bulk density for a thickness conversion."
     }
   ],
   "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
@@ -101,13 +179,13 @@
   },
   "preparation_script": {
     "file": "benchmarks/mazama.py",
-    "sha256": "9b9f43a4b8ec82f45b40452b02aa467d10aa062e659f7b6841c313f60ca0107d"
+    "sha256": "59b865d1f98503bbdca8bfff4ba1d2c31970cf4df96dd68831f8ebad4dbb7b1e"
   },
   "audit_artifacts": {
-    "model-selection.json": "69e54ba8a64c92dd70667913a74e36a4be16fb40e16619f05f803bd6659e476d",
-    "model-selection.csv": "c2b6ee6be269a420c3822dda7089b3f0bc4eea988a6258c333241cdab563a4ee",
-    "site-evidence-decisions.csv": "99d6588c473a27d5b4b1f2dde1d26587cb9f0c6a01635a9be0c7c1ab79d900dd",
-    "revised-locality-ledger.csv": "9fd67434cf02f954d4bb5404d692ec6807a570d38af8ae632c21c4f288c7126b",
+    "model-selection.json": "4d9c63f4741a5fe85d066865bff3926e8d0ea879d2bc469ccc802c50e13bfa59",
+    "model-selection.csv": "2c6449e30d2fdf5953d0e2826c1bae7dce8a10097805294a4a573049afb4df08",
+    "site-evidence-decisions.csv": "a71c71381323e5875b19a65e19e4eab25ad2904a4b3b6944efb032b7aa9a7908",
+    "revised-locality-ledger.csv": "772714f1028509e9fde9c9fea19d9a68e164b7c1c6f488fb83c86879908d9835",
     "supplied-row-crosswalk.csv": "b12337d2f7564d9ab368da21beb3e6481b1c5cb95fbae30c229d67002ce6cae8"
   }
 }

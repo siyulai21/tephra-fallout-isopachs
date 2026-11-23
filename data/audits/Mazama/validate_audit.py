@@ -52,21 +52,21 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 665
+    assert len(rows) == len({r['record_id'] for r in rows}) == 703
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
     accepted = list(csv.DictReader((ROOT / 'data/eruptions/Mazama_reviewed.csv').open()))
-    assert len(chosen) == len(accepted) == 203
-    assert sum(r['Kind'] == 'measurement' for r in accepted) == 49
-    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 143
-    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 11
+    assert len(chosen) == len(accepted) == 230
+    assert sum(r['Kind'] == 'measurement' for r in accepted) == 55
+    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 151
+    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 24
     assert float(lookup['S2023-DOG-OR']['bound_cm']) == 920 - 908
     assert float(lookup['S2023-WHITEPINE']['bound_cm']) == 79 - 54
     assert float(lookup['S2023-CONNLEY2']['bound_cm']) == 180 - 152
     assert float(lookup['MW1986-SKULL']['bound_cm']) == 5
     assert abs(float(lookup['W2016-LYMAN']['latitude']) - (48 + 11/60 + 30/3600)) < 1e-12
-    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 203
+    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 230
     for a, s in zip(accepted, chosen, strict=True):
         assert a['EvidenceID'] == s['record_id']
         assert float(a['Lat']) == float(s['latitude'])
@@ -95,6 +95,15 @@ def main(published=False):
     assert len(list(csv.DictReader((HERE/'young1990-distal.csv').open())))==25
     for sid,x in [('W2015-RM-V2',290-210),('W2015-RM-V3',330-130),('Y1990-C-NEW',3),('C2014-WIL',87),('J2025-NTL',224-143-5),('B2020-229',1),('R1967-BB326-36',4)]:
         assert float(lookup[sid]['bound_cm'])==x,sid
+    by_id = {row['EvidenceID']:row for row in accepted}
+    for sid, contacts in {'CH2008-THU':(170,202),'CH2008-WIN':(287,373),'HER2014-DIS':(593,734),
+            'HER2014-HOR':(178,389),'HER2014-RRL':(278,439),'ROS2004-FRO':(155,163),
+            'ROS2004-EAG':(81,96),'CH2008-RED':(409,520),'SP2007-THU':(320.5,440),
+            'SP2008-RID':(166,277),'OS2012-POC':(55,93)}.items():
+        row = by_id[sid]
+        assert float(row['Thickness'] or row['Limit_cm']) == contacts[1]-contacts[0],sid
+    assert not {'SC2020-RS10','SC2020-RS12','SC2020-RS25','OS2012-EAS','SHP2023-RDF2A','SHP2023-RDF3A'} & by_id.keys()
+    assert float(by_id['MAR2009-S43']['Thickness'])==3
     assert lookup['B2020-274']['accepted_for_model'] == 'False'
     assert lookup['B2020-028']['accepted_for_model'] == 'False'
     assert lookup['B2020-107']['accepted_for_model'] == 'False'
@@ -147,7 +156,7 @@ def main(published=False):
                   independently_compared_source_cells=count, unique_source_records=293,
                   unique_revised_records=len(rows), additional_records=len(rows)-293, supplied_rows=52,
                   candidate_matches=45, excluded_pseudo_rows=7, principal_observations=len(accepted),
-                  principal_point_values=49, principal_lower_bounds=143, principal_upper_bounds=11, input_sha256=expected,
+                  principal_point_values=sum(r["Kind"]=="measurement" for r in accepted), principal_lower_bounds=sum(r["Kind"]=="lower_limit" for r in accepted), principal_upper_bounds=sum(r["Kind"]=="upper_limit" for r in accepted), input_sha256=expected,
                   missing_decimal_coordinates=sum(not r['latitude'] for r in rows),
                   original_observer_pending_in_queue=len(queued), compilation_only_original_records=sum(r['verification']=='compilation_checked_primary_pending' for r in rows[:293]), deterministic_rebuild=True,
                   derived_output_sha256=before, published_model_input_checks=models,

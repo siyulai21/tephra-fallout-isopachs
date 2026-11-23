@@ -90,7 +90,7 @@ def prepare():
     write_csv(AUDIT/'site-evidence-decisions.csv',decisions)
     definition = (f"Climactic Mazama airborne bulk fallout. {counts['measurement']} point values, {counts['lower_limit']} lower limits and {counts['upper_limit']} upper limits are shared by all five families. "
                   'Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, '
-                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young’s separately mapped upper pumice sections and the Round Meadow borings. Bounds and sensitivity alternatives are in the locality ledger.')
+                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young’s separately mapped upper pumice sections the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages and Mount Baker field sections. Bounds and sensitivity alternatives are in the locality ledger.')
     interpreted = {r['id']: r for r in json.loads((AUDIT/'interpreted-archives.json').read_text())['sites']}
     upper = [r for r in selection if r['kind'] == 'upper_limit']
     assert set(interpreted) == {r['record_id'] for r in upper}

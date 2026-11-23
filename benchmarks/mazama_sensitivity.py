@@ -23,6 +23,9 @@ from src.empirical_isopach.visualization.deposit_integrals import independent_in
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES = {
+    'lake-field-omit': 'Omit the final lake-core and Mount Baker/Three Sisters interpretation group. Retain the independent Young and Round Meadow sections.',
+    'lake-capture-alternate': 'For British Columbia measured beds, use the whole preserved package as a ceiling. Loosen original-to-preserved capture to at least one half in the three Idaho lake packages, two undated-width Washington beds, Redmountain, Pocket Lake and Pettit. Keep one Redfish core, RDF-4A. The facies cap is doubled for Redfish under the same response assumption.',
+    'field-range-alternate': 'Use the opposite endpoints for mapped Mount Baker (RS–5, 17, 21) and Three Sisters (5, 15, 41) ranges, conditional on capture and no erosion. Omit RS–18 at its ambiguous coordinate.',
     'young-sections-omit': 'Omit the Young Appendix 1 upper-pumice sections together. The distinct modern measured locations retain their original treatment.',
     'young-section-positions': 'Translate the Young Appendix 1 observations coherently to the alternative Kirk Hill registration tying Young section 47 to the modern equivalent Upper Kirk site. All measured values are unchanged.',
     'young-distal-omit': 'Omit the three field-checked bog estimates, the five Young ceilings, and the Lofty Lake alternative-bearing record together. This tests the shared upland conversion and local preservation.',
@@ -126,7 +129,24 @@ def prepare(root):
         folder = root / name
         folder.mkdir(parents=True, exist_ok=True)
         rows = [dict(r) for r in source]
-        if name == 'young-sections-omit':
+        if name == 'lake-field-omit':
+            rows=[r for r in rows if r['EvidenceID']!='B2020-045' and not r['EvidenceID'].startswith(('SP2007-', 'SP2008-', 'CH2008-', 'HER2014-', 'ROS2004-', 'SC2020-', 'OS2012-', 'MAR2009-', 'SHP2023-'))]
+        elif name == 'lake-capture-alternate':
+            rows=[r for r in rows if r['EvidenceID']!='SHP2023-RDF1A']
+            for r in rows:
+                sid=r['EvidenceID']
+                if sid.startswith(('ROS2004-','CH2008-')) and r['Kind']=='measurement':
+                    r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Complete recovered lake package permits lateral addition. Requires no net thinning relative to original local deposition.')
+                elif sid.startswith(('HER2014-','SP2007-','SP2008-','SHP2023-')) or sid in {'CH2008-RED','OS2012-POC','B2020-045'}:
+                    r['Limit_cm']=2*float(r['Limit_cm'])
+                    r['Qualification']='A recovered thickness at least half the original local deposit; a conditional stress scenario without a measured retention fraction.'
+        elif name == 'field-range-alternate':
+            rows=[r for r in rows if r['EvidenceID']!='SC2020-RS18']
+            endpoints={'SC2020-RS05':5,'SC2020-RS17':4,'SC2020-RS21':4,'MAR2009-S05':9,'MAR2009-S15':66,'MAR2009-S41':8}
+            for r in rows:
+                if r['EvidenceID'] in endpoints:
+                    r.update(Kind='upper_limit',Limit_cm=endpoints[r['EvidenceID']],Qualification='Alternative recovered upper endpoint assumes complete local capture and no net thinning.')
+        elif name == 'young-sections-omit':
             rows = [r for r in rows if not r['EvidenceID'].startswith('Y1990-A')]
         elif name == 'young-section-positions':
             points = {int(v['site']):v for v in csv.DictReader((AUDIT/'young1990-section-positions.csv').open())}

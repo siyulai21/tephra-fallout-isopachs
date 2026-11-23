@@ -1,12 +1,14 @@
 # Mazama source audit — 23 November 2026
 
+[Lake and field section review](LAKE_AND_FIELD_RECORDS.md) · [Numbered field-section locations](marcott-map.png) · [Geographic registration](marcott-registration.json)
+
 [Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)
 
-The audit reconciles all 293 entries in the Buckland et al. (2020) supplement and 372 additional observations, sample records and controls. The source workbook contains 4,395 checked locality cells. The 52-row supplied project table had 45 candidate field matches and seven contour-construction points. The revised input contains **203 observations, comprising 49 measured beds, 143 lower limits and 11 upper limits**. Each likelihood has a source identity, coordinates and a geological interpretation. [665-record locality ledger](revised-locality-ledger.csv) · [Reviewed fitting input](../../eruptions/Mazama_reviewed.csv) · [Site decisions](site-evidence-decisions.csv) · [Provenance and hashes](provenance.json)
+The audit reconciles all 293 entries in the Buckland et al. (2020) supplement and 410 additional observations, sample records and controls. The source workbook contains 4,395 checked locality cells. The 52-row supplied project table had 45 candidate field matches and seven contour-construction points. The revised input contains **230 observations, comprising 55 measured beds, 151 lower limits and 24 upper limits**. Each likelihood has a source identity, coordinates and a geological interpretation. [703-record locality ledger](revised-locality-ledger.csv) · [Reviewed fitting input](../../eruptions/Mazama_reviewed.csv) · [Site decisions](site-evidence-decisions.csv) · [Provenance and hashes](provenance.json)
 
 Young’s complete thesis contributed 103 mapped upper-pumice sections to the principal fit. The 25 separately numbered distal entries retain his field-check flags and 700 kg/m³ density convention. The follow-up also distinguishes primary pumice from floated pumice in Oregon borings, revisits borehole locations, and records the possible offshore Willapa bed. [Young and the additional field studies](YOUNG_AND_FIELD_SECTIONS.md) · [Thicknessless-site derivations](THICKNESSLESS_SITES.md) · [Input before Young](history/2026-11-23-before-young/README.md)
 
-The original observer’s record remains pending for 222 entries checked only against the compilation and 18 checked against Young’s own compilation. Eighteen and seven of those records, respectively, enter the conditional fit. Some other entries have primary evidence for identity or location with incomplete thickness verification. The ledger retains the verification grade for each site. The bibliography search records its retrieval outcome for all 137 references. [Bibliography search](bibliography-screen.csv) · [Outstanding original-source checks](primary-source-work-queue.csv) · [Search history](SEARCH_AND_GAPS.md)
+The original observer’s record remains pending for 219 entries checked only against the compilation and 18 checked against Young’s own compilation. Eighteen and seven of those records, respectively, enter the conditional fit. Some other entries have primary evidence for identity or location with incomplete thickness verification. The ledger retains the verification grade for each site. The bibliography search records its retrieval outcome for all 137 references. [Bibliography search](bibliography-screen.csv) · [Outstanding original-source checks](primary-source-work-queue.csv) · [Search history](SEARCH_AND_GAPS.md)
 
 ## Deliverables
 
@@ -111,7 +113,7 @@ Felker Lake is now an occurrence record: the2011 primary text reports microprobe
 
 Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 665 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 203 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json)
+An independent extraction checks all 4,395 source workbook cells, 293 original rows, 703 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 230 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json)
 
 Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
 
