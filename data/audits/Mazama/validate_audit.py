@@ -96,6 +96,12 @@ def main(published=False):
     for sid,x in [('W2015-RM-V2',290-210),('W2015-RM-V3',330-130),('Y1990-C-NEW',3),('C2014-WIL',87),('J2025-NTL',224-143-5),('B2020-229',1),('R1967-BB326-36',4)]:
         assert float(lookup[sid]['bound_cm'])==x,sid
     by_id = {row['EvidenceID']:row for row in accepted}
+    for sid, value in {'M2018-OVERLAND':8,'M2018-SOLDIER':4,'J2025-GSL4':1,'W2016-LYMAN':4}.items():
+        assert float(by_id[sid]['Thickness']) == value
+    mapped = json.loads((HERE/'evidence-map.json').read_text())
+    assert mapped['ledger_sha256'] == digest(HERE/'revised-locality-ledger.csv')
+    assert mapped['input_sha256'] == digest(ROOT/'data/eruptions/Mazama_reviewed.csv')
+
     for sid, contacts in {'CH2008-THU':(170,202),'CH2008-WIN':(287,373),'HER2014-DIS':(593,734),
             'HER2014-HOR':(178,389),'HER2014-RRL':(278,439),'ROS2004-FRO':(155,163),
             'ROS2004-EAG':(81,96),'CH2008-RED':(409,520),'SP2007-THU':(320.5,440),

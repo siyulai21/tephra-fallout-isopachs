@@ -115,7 +115,7 @@ Felker Lake is now an occurrence record: the2011 primary text reports microprobe
 
 Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 713 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 236 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json)
+An independent extraction checks all 4,395 source workbook cells, 293 original rows, 713 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 236 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 151 original payloads verified locally](original-payload-verification.json)
 
 Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
 
