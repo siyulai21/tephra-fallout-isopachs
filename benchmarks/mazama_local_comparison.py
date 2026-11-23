@@ -1,9 +1,10 @@
 """Summarize saved Mazama source-refit predictions without refitting models."""
 import argparse
+import csv
 import json
 from pathlib import Path
 
-from benchmarks.mazama import sha, write_csv
+from benchmarks.mazama import AUDIT, sha, write_csv
 
 
 def read(path):
@@ -31,6 +32,8 @@ def collect(root):
 
 def summarize(root, output):
     records, sources = collect(root)
+    probe_ids = {r['EvidenceID'] for r in csv.DictReader((AUDIT/'model-probes.csv').open())}
+    probe_count = len(probe_ids)
     scenarios = {name for name, _ in records}
     assert len(records) == 5*len(scenarios), sorted(records)
     assert 'principal' in scenarios
@@ -41,7 +44,8 @@ def summarize(root, output):
         baseline = {s['evidence_id']: s for s in reference['sites']}
         base_crossings = {(c['evidence_id'], c['bearing_offset_deg'], c['level_cm']): c
                           for c in reference['crossings']}
-        assert len(record['sites']) == 63 and len(record['crossings']) == 63*12
+        assert {s['evidence_id'] for s in record['sites']} == probe_ids
+        assert len(record['sites']) == probe_count and len(record['crossings']) == probe_count*12
         changes = []
         for site in record['sites']:
             sid = site['evidence_id']
@@ -88,13 +92,13 @@ def summarize(root, output):
             largest_comparable_single_crossing_change=extreme_reach,
             comparable_sites=len(changes), comparable_single_crossings=len(single_changes)))
     output.mkdir(parents=True, exist_ok=True)
-    assert len(site_rows) == len(records)*63 and len(reach_rows) == len(records)*63*12
+    assert len(site_rows) == len(records)*probe_count and len(reach_rows) == len(records)*probe_count*12
     write_csv(output/'local-thickness-comparison.csv', site_rows)
     write_csv(output/'local-crossing-comparison.csv', reach_rows)
     (output/'local-comparison.json').write_text(json.dumps(dict(
         script_sha256=sha(Path(__file__)), source_files=sources,
         site_rows=len(site_rows), crossing_rows=len(reach_rows), summaries=summaries,
-        interpretation='Conditional latent-field intervals; no new observations or measured support. Source-refit comparisons are not held-out validation. Largest changes are descriptive maxima across63 probes and189 rays, not uncertainty intervals. Only two single sampled transitions are differenced. Multiple transitions remain explicit. Regional out-of-domain predictions are unavailable. Numerical resolution is given by both crossing brackets.'
+        interpretation=f'Conditional latent-field intervals; no new observations or measured support. Source-refit comparisons are not held-out validation. Largest changes are descriptive maxima across {probe_count} probes and {probe_count*3} rays, not uncertainty intervals. Only two single sampled transitions are differenced. Multiple transitions remain explicit. Regional out-of-domain predictions are unavailable. Numerical resolution is given by both crossing brackets.'
     ), indent=2)+'\n')
     print(f'Summarized {len(site_rows)} site predictions and {len(reach_rows)} contour comparisons')
 

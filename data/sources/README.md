@@ -2,7 +2,7 @@
 
 [Data guide](../README.md) · [Audits](../audits/README.md)
 
-- [Mazama source collection](mazama/README.md) preserves40 original payloads, including the complete2020 supplements, phase descriptions, historical dating reports and distal cryptotephra studies.
+- [Mazama source collection](mazama/README.md) records 79 source payloads with hashes (44 bundled and 35 linked), including the complete 2020 supplements, phase descriptions, historical dating reports and distal cryptotephra studies.
 - The Pinatubo source collection pairs original Luzon maps with named marine beds, cruise positions and preservation evidence. [Original surveys and station tables](pinatubo-1991/README.md)
 - The Satsuma records pair numerical locations with published field measurements and document which archaeological values were taken from drawings. [Source files and original reports](sakurajima-satsuma/README.md)
 - The Ilopango sources provide numeric field sections and distal core measurements for the final co-ignimbrite fall. [Original workbook and printed core readings](ilopango-tbj/README.md)
