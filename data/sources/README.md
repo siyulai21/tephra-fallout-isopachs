@@ -2,7 +2,7 @@
 
 [Data guide](../README.md) · [Audits](../audits/README.md)
 
-- [Mazama source collection](mazama/README.md) records 79 source payloads with hashes (44 bundled and 35 linked), including the complete 2020 supplements, phase descriptions, historical dating reports and distal cryptotephra studies.
+- The Mazama collection identifies 163 acquired source files by checksum. It includes 58 public originals and gives source links and checksums for the other 105. The collection covers the Buckland supplements, Young’s field sections, primary lake and outcrop records, dating studies and distal cryptotephras. [Mazama source collection](mazama/README.md)
 - The Pinatubo source collection pairs original Luzon maps with named marine beds, cruise positions and preservation evidence. [Original surveys and station tables](pinatubo-1991/README.md)
 - The Satsuma records pair numerical locations with published field measurements and document which archaeological values were taken from drawings. [Source files and original reports](sakurajima-satsuma/README.md)
 - The Ilopango sources provide numeric field sections and distal core measurements for the final co-ignimbrite fall. [Original workbook and printed core readings](ilopango-tbj/README.md)

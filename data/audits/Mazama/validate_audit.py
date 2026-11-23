@@ -27,8 +27,12 @@ def historical_checks(file, revision):
 
 
 def main(published=False):
-    manifest = json.loads((SOURCES / 'source-manifest.json').read_text())
+    manifest_file = SOURCES / 'source-manifest.json'
+    manifest = json.loads(manifest_file.read_text())
     assert len({s['file'] for s in manifest}) == len(manifest)
+    originals = json.loads((HERE / 'original-payload-verification.json').read_text())
+    assert originals['source_manifest_sha256'] == digest(manifest_file)
+    assert originals['sources_verified'] == {s['file']: s['sha256'] for s in manifest}
     checked_payloads, linked_only_missing = [], []
     for s in manifest:
         path = SOURCES / s['file']
@@ -170,6 +174,7 @@ def main(published=False):
             models.append(str(p.relative_to(ROOT)))
     result = dict(audit_date='2026-11-23', source_payloads_hash_verified=len(checked_payloads),
                   source_payloads_bundled=sum(s.get('bundled',True) for s in manifest),
+                  original_payloads_in_verified_acquisition_record=len(originals['sources_verified']),
                   linked_only_sources_not_locally_reverified=linked_only_missing,
                   historical_revision='41b8f2f', historical_files_hash_verified=historic,
                   previous_github_revision='0a53d02', previous_release_files_hash_verified=previous,
@@ -182,7 +187,14 @@ def main(published=False):
                   derived_output_sha256=before, published_model_input_checks=models,
                   primary_audit_complete=False,
                   test_and_navigation_results='See case results/source-audit/publication-checks.json; this checker does not invent test results.',
-                  visual_source_checks=['Lemke1975 Table4 scan', 'Crandell1967 Table1 p.8', 'Buckley1970 p.101 fractions', 'Yu2006 Fig.2 qualitative only', 'Morgan2023 Tables S1-S2 core identities and coordinates', 'Munroe2018 Table1 lake positions', 'LacCore GLAD GSL00 hole4A position sheet', 'Walsh2017 Table1 Rainier lake coordinates', 'Wan1995 printed p.60 core TT063-13', 'Dallimore2008 p.1348 core MD02-2494 coordinates', 'Saban2023 pp.37,66,76,95,99,103: bed boundaries, site positions and conflicting summaries'])
+                  visual_source_checks=['Lemke1975 Table4 scan', 'Crandell1967 Table1 p.8', 'Buckley1970 p.101 fractions', 'Yu2006 Fig.2 qualitative only', 'Morgan2023 Tables S1-S2 core identities and coordinates', 'Munroe2018 Table1 lake positions', 'LacCore GLAD GSL00 hole4A position sheet', 'Walsh2017 Table1 Rainier lake coordinates', 'Wan1995 printed p.60 core TT063-13', 'Dallimore2008 p.1348 core MD02-2494 coordinates', 'Saban2023 pp.37,66,76,95,99,103: bed boundaries, site positions and conflicting summaries',
+                      'Young 1990 Table 1.1, Appendix 1a–d and four numbered section maps',
+                      'Ruby Mountains primary basal ash and overlying reworked ash in the Overland and Soldier cores',
+                      'Great Salt Lake hole 4A section 2H-2 and expedition position sheet',
+                      'Lyman Lake composite airfall and younger slopewash units',
+                      'Fish Lake Valley peat-core plots, trench section and hand-auger records',
+                      'Patterson, Lily and Dead Horse Lake core stratigraphy',
+                      'Carp Lake core logs and Egan 2015 radiocarbon and ice-age tables'])
     (HERE / 'validation.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'derived_output_sha256'}, indent=2))
 

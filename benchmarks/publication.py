@@ -1,6 +1,9 @@
 """Read and verify the SHA-256 identities of the published evidence."""
 from functools import lru_cache
 from hashlib import sha256
+from io import BytesIO
+import json
+import tarfile
 import subprocess
 from pathlib import Path
 from zipfile import ZipFile
@@ -20,6 +23,33 @@ def previous_btm_file(name):
     return path
 
 
+MAZAMA_ARCHIVE = Path("archive/2026-11-23-mazama-source-audit")
+
+
+@lru_cache(maxsize=4)
+def previous_mazama_bytes(name, root=ROOT):
+    """Read an original study artifact from the verified 45-observation release."""
+    folder = root / MAZAMA_ARCHIVE
+    name = Path(name).as_posix()
+    fingerprints = json.loads((folder / "files.json").read_text())
+    expected = fingerprints[name]
+    manifest = json.loads((folder / "previous-release.tar.gz.parts.json").read_text())
+    archive = BytesIO()
+    for part in manifest["parts"]:
+        content = (folder / part["file"]).read_bytes()
+        if len(content) != part["bytes"] or sha256(content).hexdigest() != part["sha256"]:
+            raise ValueError(f"Changed Mazama archive part {part['file']}")
+        archive.write(content)
+    if sha256(archive.getbuffer()).hexdigest() != manifest["original_sha256"]:
+        raise ValueError("Changed Mazama release archive")
+    archive.seek(0)
+    with tarfile.open(fileobj=archive, mode="r:gz") as source:
+        content = source.extractfile(name).read()
+    if sha256(content).hexdigest() != expected:
+        raise ValueError(f"Archived Mazama evidence differs at {name}")
+    return content
+
+
 SPHERICAL_REFERENCE = Path("archive/2026-11-20-spherical-continuation")
 
 
@@ -29,7 +59,10 @@ def preceding_spherical_bytes(name, root=ROOT):
     folder = root / SPHERICAL_REFERENCE
     archived = folder / "audit-inputs" / path.relative_to("eruptions")
     if path.match("eruptions/*/results/spherical-mixture/report.json") and not archived.exists():
-        return (root / path.parent / "bearing/parent-report.json").read_bytes()
+        parent = path.parent / "bearing/parent-report.json"
+        if path.is_relative_to("eruptions/mazama"):
+            return previous_mazama_bytes(parent, root)
+        return (root / parent).read_bytes()
     if path.suffix == ".md":
         with ZipFile(folder / "audit-pages.zip") as pages:
             return pages.read(path.as_posix())

@@ -2,7 +2,7 @@
 
 The revised ledger contains 733 evidence records. The current input contains 244 observations, with 58 measured beds, 153 lower bounds and 33 upper bounds. The original field logs supply the Yellowstone, Nevada, Utah and Lyman Lake measurements, Young's mapped sections and the corrected UBC Research Forest lakes and eight additional Great Basin and Carp Lake constraints. [Audit and sources](../../data/audits/Mazama/README.md) · [Accepted observations](../../data/eruptions/Mazama_reviewed.csv) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md) · [Great Basin field logs](../../data/audits/Mazama/GREAT_BASIN.md)
 
-[Earlier 236-observation results](audit-run/README.md) · [GitHub recalculations](https://github.com/siyulai21/tephra-fallout-isopachs/actions/workflows/mazama-recompute.yml)
+The GP, cubic spline and nested-isopach maps are available on the 244-location input. The 4–5 mm Yellowstone cores have a separate enlarged map. The directional, spherical and source-interpretation calculations are in progress. [244-site results and Yellowstone map](https://github.com/siyulai21/tephra-fallout-isopachs/blob/d092d96023a6a59e2764c1385a4e85e1e6cb2d19/eruptions/mazama/audit-run/README.md) · [Full calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45261422486) · [Earlier 236-observation results](audit-run/README.md)
 
 ## Archived model comparison on 45 measurements
 

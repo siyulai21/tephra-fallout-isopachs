@@ -1,8 +1,8 @@
-# Final citation pass and Lyman location review
+# Lyman Lake and the 67-observation citation review
 
 [Audit](README.md) · [All locality decisions](LOCALITIES.md) · [Source manifest](../../sources/mazama/source-manifest.csv) · [Superseded 62-site trial](history/2026-11-23-before-final-citation-pass/README.md)
 
-The final pass reopens earlier exclusions and follows the newly retrieved literature into other sites in the same studies. The principal selection has 67 observations: 43 point values, 23 conditional lower bounds and one conditional upper bound. This is a conditional source selection, not certification that every historical field log has been independently recovered. Each observation has a stable identity, source locator, position basis and preservation assumption in the ledger.
+This stage reopened earlier exclusions and followed primary publications to additional sites. Its 67 observations comprised 43 measurements, 23 conditional lower bounds and one conditional upper bound. The current selection uses 244 locations. Each ledger entry identifies the source passage, location evidence and preservation assumption. [Current locality ledger](revised-locality-ledger.csv)
 
 | Evidence ID / locality | Evidence and principal treatment | Main qualification |
 |---|---|---|

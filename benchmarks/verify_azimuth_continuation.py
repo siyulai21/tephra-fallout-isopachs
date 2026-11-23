@@ -3,7 +3,7 @@ import json
 from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
-from benchmarks.publication import previous_btm_file
+from benchmarks.publication import previous_btm_file, previous_mazama_bytes
 
 import numpy as np
 import pandas as pd
@@ -25,10 +25,15 @@ def verify_published_estimates():
     baseline = json.loads(Path("comparisons/directional/verification.json").read_text())
     for slug, expected in baseline["cases"].items():
         folder = previous_btm_file(Path("eruptions") / slug / "results/directional/azimuth")
-        report = json.loads((folder/"report.json").read_text())
+        if slug == "mazama":
+            report = json.loads(previous_mazama_bytes(folder/"report.json"))
+            fields_sha256 = sha256(previous_mazama_bytes(folder/"fields.npz")).hexdigest()
+        else:
+            report = json.loads((folder/"report.json").read_text())
+            fields_sha256 = digest(folder/"fields.npz")
         assert report["protocol"] == expected["protocol"], slug
         assert report["input"]["input_sha256"] == expected["input_sha256"], slug
-        assert digest(folder/"fields.npz") == expected["fields_sha256"], slug
+        assert fields_sha256 == expected["fields_sha256"], slug
         # Compare the original signed checklist at its own revision. Current quantitative
         # fields are independently replayed from the identical posterior packet below.
         import subprocess

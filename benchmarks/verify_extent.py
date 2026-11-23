@@ -69,7 +69,16 @@ def main():
                 assert set(priors)==set(fits)
                 for key,v in priors.items():
                     assert v["posterior_sha256"]==fits[key]["posterior_sha256"]
-                assert kernels[slug].get("exact_parent_identity") or kernels[slug]["passed"]
+                check = kernels[slug]
+                if "input_sha256" in check:
+                    assert check["input_sha256"] == r["input_sha256"]
+                    assert check["posterior_sha256"] == digest(folder/"posterior.npz")
+                    if not check.get("exact_parent_identity"):
+                        last = check["attempts"][-1]
+                        assert check["passed"] == (last["relative_quantile_difference"] < .08
+                                                   and last["relative_scramble_spread"] < .05)
+                else:
+                    assert check.get("exact_parent_identity") or check["passed"]
     print(f"Verified {len(table)} complete-deposit comparisons and their independent checks.")
 
 

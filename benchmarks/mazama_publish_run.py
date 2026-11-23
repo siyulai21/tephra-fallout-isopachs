@@ -5,6 +5,8 @@ from pathlib import Path
 import shutil
 
 from benchmarks.mazama import AUDIT, INPUT, sha
+from benchmarks.mazama_catalogue import paired_estimates, source_summary, update_pages
+from benchmarks.extent_catalogue import summary as finite_catalogue
 from benchmarks.mazama_recompute import PRINCIPAL, ROOT, STUDIES, PHASE, execute
 from benchmarks.mazama_release import assemble, principal_details, regional_details, save
 from benchmarks.mazama_sensitivity import prepare
@@ -30,10 +32,19 @@ def refresh_summaries():
         folder=ROOT/'summaries'/family
         execute(command,*extra,'--output',folder)
         published=Path('comparisons')/family
-        for path in sorted(folder.iterdir()):
-            if path.is_file() and (published/path.name).is_file():
-                shutil.copy2(path,published/path.name)
-    execute('benchmarks.principal_volumes','--output','comparisons/principal-volumes.csv')
+        for path in sorted(folder.rglob('*')):
+            target = published / path.relative_to(folder)
+            if path.is_file() and target.is_file():
+                shutil.copy2(path,target)
+    # Parent sensitivities above remain accessible alongside the current finite-spread estimates.
+    destination = ROOT / 'summaries/finite-spread'
+    finite_catalogue(destination)
+    for path in sorted(destination.rglob('*')):
+        published = path.relative_to(destination)
+        if path.is_file() and published.is_file():
+            shutil.copy2(path, published)
+    paired, kernel = paired_estimates(HOME, ROOT)
+    update_pages(paired, kernel)
     reviews=[]
     homes={}
     for record in datasets():
@@ -56,7 +67,7 @@ def update_inventory():
     from benchmarks.publication import INVENTORY,read_hashes
     previous=read_hashes()
     areas=('eruptions/mazama/results/','comparisons/regional/','comparisons/nested-isopachs/',
-           'comparisons/directional/','comparisons/spherical-mixture/')
+           'comparisons/directional/','comparisons/spherical-mixture/','comparisons/global-extent/','comparisons/support/')
     specific={'eruptions/mazama/README.md','eruptions/README.md','comparisons/principal-volumes.csv','comparisons/method-scores.png'}
     for name in list(previous):
         if name.startswith(areas) or name in specific:
@@ -81,9 +92,27 @@ def main():
     principal_details(PRINCIPAL,STUDIES)
     assemble(PRINCIPAL,STUDIES,PHASE)
     extra=HOME/'source-audit'
+    receipt = read(extra/'release.json')
+    receipt['directional_median_map_km3'] = read(HOME/'directional/ensemble/report.json')['median_surface']['volume_km3']
+    save(extra/'release.json', receipt)
+    case_page = HOME.parent / 'README.md'
+    overview = '![Mazama evidence coverage](../../data/audits/Mazama/evidence-map.png)'
+    lake_detail = ('Ten Yellowstone Lake cores contain 4–5 mm of Mazama ash at eight positions. '
+                   'Seven positions enter the principal fit. Two core pairs share positions, and YL16-6A lies at a slump toe. '
+                   'The enlarged map resolves the cores that overlap at the continental scale. '
+                   '[Core identities and bed measurements](../../data/audits/Mazama/YELLOWSTONE.md)\n\n'
+                   '![Yellowstone Lake core locations and ash thicknesses](../../data/audits/Mazama/yellowstone-cores.png)\n\n'
+                   'The fit also includes 8 cm at Overland Lake, 4 cm at Soldier Lake, 1 cm in Great Salt Lake core GSL00-4A-2H-2, '
+                   'and the approximately 4 cm airfall bed in the Lyman Lake composite. '
+                   '[Primary core reports](../../data/audits/Mazama/FOLLOWUP_SEARCH.md) · '
+                   '[Lyman position and stratigraphy](../../data/audits/Mazama/LATE_SOURCE_REVIEW.md)')
+    page_text = case_page.read_text()
+    assert page_text.count(overview) == 1
+    case_page.write_text(page_text.replace(overview, overview + '\n\n' + lake_detail))
     execute('benchmarks.mazama_local_comparison','--scenarios',extra/'sensitivities','--output',extra)
     execute('benchmarks.mazama_heldout','--home',HOME,'--output',extra)
     execute('benchmarks.mazama_release_check','--home',HOME,'--output',extra/'publication-checks.json')
+    source_summary(extra)
     from benchmarks.refresh_figures import refresh_case
     record=next(r for r in datasets() if r['slug']=='mazama')
     replay=ROOT/'visual-replay'
@@ -91,9 +120,15 @@ def main():
     shutil.copyfile(replay/'mazama/figure-replay.json',HOME/'figure-replay.json')
     refresh_summaries()
     update_inventory()
-    save(extra/'publication-input.json',dict(input_sha256=sha(INPUT),observations=len(list(csv.DictReader(INPUT.open()))),
+    origin = AUDIT / 'publication-request.json'
+    provenance = dict(input_sha256=sha(INPUT),observations=len(list(csv.DictReader(INPUT.open()))),
         principal_sources={name:sha(HOME/name) for name in ('report.json','nested-isopachs/deposit.json',
-            'spherical-mixture/deposit.json','directional/deposit.json')},prior_evidence_revision='929f26864cce78ff71a9af52492492094784f583'))
+            'spherical-mixture/deposit.json','directional/deposit.json')},prior_evidence_revision='929f26864cce78ff71a9af52492492094784f583')
+    if origin.is_file():
+        computation = read(origin)
+        assert computation['input_sha256'] == provenance['input_sha256']
+        provenance['calculation'] = computation
+    save(extra/'publication-input.json', provenance)
     checkpoint=HOME.parent/'audit-run'
     if checkpoint.exists() and read(checkpoint/'nested-map.json')['input_sha256'] in {sha(INPUT), 'caeb106f5e3e9e835c8569da245cefdbbfa58de7c26ce88636f59fa51221d2db', '8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe'}:
         shutil.rmtree(checkpoint)
