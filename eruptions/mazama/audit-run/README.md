@@ -1,17 +1,23 @@
-# Mazama model results on 236 observations
+# Mazama model results on 244 observations
 
-The two regional fits and the global nested-isopach fit use 57 measured beds, 152 lower bounds and 27 upper bounds. These results include the six observations recovered through the dating and field-log audit. The nested result integrates the finite-spread continuation. The geographic scores use independent held-out regions. [Input and original evidence](../../../data/audits/Mazama/README.md) · [Full five-family calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45255144401)
+This interim report covers the two regional models and the global nested-isopach model. All three use 58 measurements, 153 lower bounds and 33 upper bounds. Eight observations from Great Basin field sections and lake cores enter this version. The directional and spherical calculations and the 33 source-interpretation studies are in progress. [Reviewed input](../../../data/eruptions/Mazama_reviewed.csv) · [Source audit](../../../data/audits/Mazama/README.md) · [Five-family calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45261422486)
 
-| Method | Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) | Held-out score ↓ | 95% coverage of withheld measured beds |
+| Method | Domain | Median-map volume (km³) | Conditional 95% interval (km³) | Geographic score ↓ | Withheld measured beds covered |
 |---|---|---:|---:|---:|---:|
-| GP ensemble | 1,476,452 km² observation hull | 471.43 | 367.77–1,006.00 | 1.145 | 68.4% |
-| Cubic spline | 1,476,452 km² observation hull | 1,130.37 | 1,665.21–6,420,775.27 | 1.066 | 78.9% |
-| Bayesian nested isopachs | Earth, conditional continuation | 262.71 | 181.80–823.50 | 1.064 | 70.2% |
+| GP ensemble | 1,556,082 km² observation hull | 409.47 | 332.36–835.00 | 1.166 | 43/58 (74.1%) |
+| Cubic spline | 1,556,082 km² observation hull | 2,138.33 | 1,125.17–4,716.92 | 2.634 | 47/58 (81.0%) |
+| Bayesian nested isopachs | Earth, conditional continuation | 270.95 | 186.94–724.35 | 1.011 | 42/58 (72.4%) |
 
-The spline volume and its draw interval failed their numerical refinement checks. Integrating a pointwise median surface and taking quantiles of whole-deposit draws give different statistics. Held-out coverage is below 95% for all three methods. The support screen admits no observed regional contour band. [Regional fit and folds](regional-report.json) · [Nested uncertainty and validation](nested-extent.json) · [Independent integration checks](nested-map.json)
+The regional and nested volume integrations passed their numerical checks. All three models undercovered withheld measurements at the nominal 95% level. None admitted a complete contour band under the strict, standard or permissive support policies. [Regional fits and folds](regional-report.json) · [Nested validation](nested-extent.json) · [Nested integration](nested-map.json) · [Regional contour decisions](regional-support.json.gz) · [Nested contour decisions](nested-support.json.gz)
 
-![Regional isopachs](regional-isopachs.png)
+![GP and spline on the common observation hull](regional-isopachs.png)
 
-![Conditional nested-isopach deposit](nested-deposit.png)
+![Conditional global nested isopachs](nested-deposit.png)
 
-[Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md) · [Current evidence map](../../../data/audits/Mazama/evidence-map.png) · [Young field sections](../../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Preceding 230-observation results](https://github.com/siyulai21/tephra-fallout-isopachs/tree/5fa6cae5a4e17636dd878b2776b9f71a837601e4/eruptions/mazama/audit-run)
+## Yellowstone Lake core detail
+
+The 4–5 mm beds reported by Morgan et al. occur in ten cores at eight positions. Seven positions enter the fit. Two pairs of cores share positions. The irregular bed at the YL16-6A slump toe is tested separately. [Core coordinates, depths and identity](../../../data/audits/Mazama/YELLOWSTONE.md)
+
+![Locations and individual Mazama ash beds at Yellowstone Lake](../../../data/audits/Mazama/yellowstone-cores.png)
+
+[Young’s mapped field sections](../../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Earlier 236-observation checkpoint](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f477a71c28e0074d80caa4ebaacff88c1142a645/eruptions/mazama/audit-run)
