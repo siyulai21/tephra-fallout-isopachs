@@ -22,7 +22,11 @@ from src.empirical_isopach.models.nested.study import write_json
 from src.empirical_isopach.visualization.deposit_integrals import independent_integral
 from src.probabilistic_isopach.global_volume import EarthDomain
 
+DATED_IDS={'B2020-129','B2020-141','B2020-147','B2020-203','B2020-251','R1982-KOOT-776'}
 CASES = {
+    'dated-sections-omit': 'Omit the two corrected UBC Research Forest beds, both dated host brackets, the complete Huff archive and the Kootenai pit. Reproduces the preceding 230 observations.',
+    'dated-capture-alternate': 'Allow net focusing in both UBC lake beds by treating them as maxima. Allow half capture at Waits and Huff. Replace the Hager mire with the central core host ceiling. Use only basal BCV1 and the western Kootenai section centre.',
+    'kootenai-position-east': 'Move the single Kootenai pit likelihood to the eastern section centre without altering its component minimum.',
     'lake-field-omit': 'Omit the final lake-core and Mount Baker/Three Sisters interpretation group. Retain the independent Young and Round Meadow sections.',
     'lake-capture-alternate': 'For British Columbia measured beds, use the whole preserved package as a ceiling. Loosen original-to-preserved capture to at least one half in the three Idaho lake packages, two undated-width Washington beds, Redmountain, Pocket Lake and Pettit. Keep one Redfish core, RDF-4A. The facies cap is doubled for Redfish under the same response assumption.',
     'field-range-alternate': 'Use the opposite endpoints for mapped Mount Baker (RS–5, 17, 21) and Three Sisters (5, 15, 41) ranges, conditional on capture and no erosion. Omit RS–18 at its ambiguous coordinate.',
@@ -129,7 +133,28 @@ def prepare(root):
         folder = root / name
         folder.mkdir(parents=True, exist_ok=True)
         rows = [dict(r) for r in source]
-        if name == 'lake-field-omit':
+        if name == 'dated-sections-omit':
+            rows=[r for r in rows if r['EvidenceID'] not in DATED_IDS]
+        elif name in ('dated-capture-alternate','kootenai-position-east'):
+            registered=json.loads((AUDIT/'kootenai-section-positions.json').read_text())['sections']
+            for r in rows:
+                sid=r['EvidenceID']
+                if sid=='R1982-KOOT-776':
+                    section=registered[0 if name=='dated-capture-alternate' else 1]
+                    r.update(Lon=section['longitude'],Lat=section['latitude'])
+                    if name=='dated-capture-alternate':
+                        r.update(Limit_cm=1.5,Qualification='Only the lower reported thickness of the first secure component is transferred.')
+                elif name=='dated-capture-alternate':
+                    if sid in {'B2020-203','B2020-251'}:
+                        r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Whole discrete bed caps local deposition if focusing can add material and net loss is negligible.')
+                    elif sid in {'B2020-129','B2020-147'}:
+                        r.update(Limit_cm=2*float(r['Limit_cm']),Qualification='Hypothetical half-capture floor for the dated or whole-host interval.')
+                    elif sid=='B2020-141':
+                        r.update(Limit_cm=530,Lat=48.596931,Lon=-116.971806,Site='Hager Lake central coring area',
+                            Reference='Moseley, Bursik and Mehringer (1992), Hager locality 2.',
+                            Evidence='Linked replacement of the 1973 mire bracket by the single 1992 central-basin package. 17.4 minus 12.1 m.',
+                            Qualification='Complete capture in the combined four overlapping drives, despite observed mixing and sinking.')
+        elif name == 'lake-field-omit':
             rows=[r for r in rows if r['EvidenceID']!='B2020-045' and not r['EvidenceID'].startswith(('SP2007-', 'SP2008-', 'CH2008-', 'HER2014-', 'ROS2004-', 'SC2020-', 'OS2012-', 'MAR2009-', 'SHP2023-'))]
         elif name == 'lake-capture-alternate':
             rows=[r for r in rows if r['EvidenceID']!='SHP2023-RDF1A']

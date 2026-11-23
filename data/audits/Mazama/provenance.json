@@ -1,6 +1,6 @@
 {
   "audit_date": "2026-11-23",
-  "scope": "All 293 original catalogue rows and 410 additional records, leads or controls. Verification level is recorded at each site.",
+  "scope": "All 293 original catalogue rows and 420 additional records, leads or controls. Verification level is recorded at each site.",
   "original_input": {
     "file": "data/eruptions/Mazama_tephra.csv",
     "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
@@ -13,11 +13,11 @@
   "cases": {
     "principal": {
       "file": "data/eruptions/Mazama_reviewed.csv",
-      "sha256": "8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe",
-      "n_measurements": 55,
-      "n_lower_limits": 151,
-      "n_upper_limits": 24,
-      "definition": "Climactic Mazama airborne bulk fallout. 55 point values, 151 lower limits and 24 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages and Mount Baker field sections. Bounds and sensitivity alternatives are in the locality ledger."
+      "sha256": "caeb106f5e3e9e835c8569da245cefdbbfa58de7c26ce88636f59fa51221d2db",
+      "n_measurements": 57,
+      "n_lower_limits": 152,
+      "n_upper_limits": 27,
+      "definition": "Climactic Mazama airborne bulk fallout. 57 point values, 152 lower limits and 27 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages and Mount Baker field sections. Bounds and sensitivity alternatives are in the locality ledger."
     }
   },
   "principal_limits": [
@@ -164,6 +164,24 @@
       "interpreted_upper_cm": 6,
       "derivation": "The compiler quotes a 6 cm bed. The original authors report approximately 50 kg/m\u00b2 of fall and later a 2\u20138 cm tephra facies range. The thickness and mass imply approximately 833 kg/m\u00b3 if they correspond. Admit 6 cm as a conditional ceiling on original local thickness at the composite.",
       "qualifications": "Conditional upper endpoint. At least the original local bulk thickness must be represented within the recovered interval. Catchment input can enlarge the package. Net export, erosion, compaction or missing core can invalidate the ceiling. The precise 6 cm remains a compiled site reading. The independent article confirms the airfall facies and approximate mass. The mass alone requires an original bulk density for a thickness conversion."
+    },
+    {
+      "evidence_id": "B2020-141",
+      "interpreted_upper_cm": 105,
+      "derivation": "Mack identifies Mazama between Tx-2121 at 500\u2013505 cm and Tx-2116 at 600\u2013605 cm in core 1. The conservative outer sample edges enclose 105 cm, with a 95 cm inner gap. The outer width includes host sediment and permits uncertainty about where each sample fixes the contact.",
+      "qualifications": "Conditional whole-horizon ceiling. Local deposition must be captured between the observed stratigraphic limits, with no net loss sufficient to exceed the endpoint. Additional sediment or imported ash can enlarge the package."
+    },
+    {
+      "evidence_id": "B2020-129",
+      "interpreted_upper_cm": 141,
+      "derivation": "Mack identifies Mazama between Tx-2659 at 315\u2013330 cm and Tx-2660 at 440\u2013456 cm in core 1. The conservative outer sample edges enclose 141 cm, with a 110 cm inner gap. The outer width includes host sediment and permits uncertainty about where each sample fixes the contact.",
+      "qualifications": "Conditional whole-horizon ceiling. Local deposition must be captured between the observed stratigraphic limits, with no net loss sufficient to exceed the endpoint. Additional sediment or imported ash can enlarge the package."
+    },
+    {
+      "evidence_id": "B2020-147",
+      "interpreted_upper_cm": 1080,
+      "derivation": "Upper 0.5 m excavated in blocks and overlapping drives span 0.5 to approximately 10.8 m. Both ashes were recovered. The principal uses 1080 cm, the whole nominal surface-to-base depth. It retains 50 cm of headroom over the nominal 1030 cm span of the drives. No individual ash contacts are reported.",
+      "qualifications": "Conditional whole-horizon ceiling. Local deposition must be captured between the observed stratigraphic limits, with no net loss sufficient to exceed the endpoint. Additional sediment or imported ash can enlarge the package. The approximate basal depth and the probable identification are additional conditions."
     }
   ],
   "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
@@ -182,10 +200,10 @@
     "sha256": "59b865d1f98503bbdca8bfff4ba1d2c31970cf4df96dd68831f8ebad4dbb7b1e"
   },
   "audit_artifacts": {
-    "model-selection.json": "4d9c63f4741a5fe85d066865bff3926e8d0ea879d2bc469ccc802c50e13bfa59",
-    "model-selection.csv": "2c6449e30d2fdf5953d0e2826c1bae7dce8a10097805294a4a573049afb4df08",
-    "site-evidence-decisions.csv": "a71c71381323e5875b19a65e19e4eab25ad2904a4b3b6944efb032b7aa9a7908",
-    "revised-locality-ledger.csv": "772714f1028509e9fde9c9fea19d9a68e164b7c1c6f488fb83c86879908d9835",
+    "model-selection.json": "008a4fd97b4f6f6e5b8117d9cad16ea2b2cdfc591d60c37b8d7c9f92ac5d9fb8",
+    "model-selection.csv": "52fd5030fdd343c50ca568859f176185e3249f7f3b33e3bd9b07588a22e72bef",
+    "site-evidence-decisions.csv": "30543c1fe720dd1764b4dab6af3a67b1962f1255bddf4156237d0bed1cb725a9",
+    "revised-locality-ledger.csv": "40d7516778c4d30a0a0d19fb367781e1780528aeb749ead948b0479f43102371",
     "supplied-row-crosswalk.csv": "b12337d2f7564d9ab368da21beb3e6481b1c5cb95fbae30c229d67002ce6cae8"
   }
 }

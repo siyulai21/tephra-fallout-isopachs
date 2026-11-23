@@ -1,8 +1,10 @@
-> **Revised input and maps.** The [665-record evidence ledger](../../data/audits/Mazama/revised-locality-ledger.csv) yields [203 fitting observations](../../data/eruptions/Mazama_reviewed.csv). The [Yellowstone core map](../../data/audits/Mazama/YELLOWSTONE.md) and [Young section audit](../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) document the field evidence. The numerical results shown below still use the archived 45-measurement input while the five families are being refitted.
+# Mazama source audit and model update
 
-[Current 230-observation rerun, including regional and nested maps](audit-run/README.md) · [Latest source audit](../../data/audits/Mazama/README.md)
+The revised ledger contains 713 evidence records. The current input contains 236 observations, with 57 measured beds, 152 lower bounds and 27 upper bounds. The original field logs supply the Yellowstone, Nevada, Utah and Lyman Lake measurements, Young's mapped sections and two newly located lake beds in the UBC Research Forest. [Audit and sources](../../data/audits/Mazama/README.md) · [Accepted observations](../../data/eruptions/Mazama_reviewed.csv) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md)
 
-# Mazama fallout reconstruction
+[Regional and nested model checkpoint on 230 observations](audit-run/README.md) · [GitHub recalculations](https://github.com/siyulai21/tephra-fallout-isopachs/actions/workflows/mazama-recompute.yml)
+
+## Archived model comparison on 45 measurements
 
 The accepted dataset contains 45 exact measurements. The regional fits share an observation hull of 930,447 km². [Accepted thickness CSV](../../data/eruptions/Mazama_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 

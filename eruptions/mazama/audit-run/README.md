@@ -1,6 +1,6 @@
 # Mazama model rerun on 230 audited observations
 
-The regional GP, cubic spline and global nested-isopach fits below use the same registered input, SHA-256 `8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe`. The directional ensemble, spherical prior suite and source-sensitivity publication are in progress. The existing comparison on the case home is the preceding release.
+The regional GP, cubic spline and global nested-isopach fits below use the same previous 230-observation input, SHA-256 `8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe`. The current audit adds six observations. This checkpoint preserves the estimates from the preceding input.
 
 | Fit | Domain | Integrated median surface, km³ | Conditional 95% volume interval, km³ |
 |---|---|---:|---:|
@@ -14,4 +14,4 @@ The regional held-out log RMSE is 4.060 for the GP and 4.838 for the spline. The
 
 ![Conditional nested-isopach deposit](nested-deposit.png)
 
-[Source ledger](../../../data/audits/Mazama/revised-locality-ledger.csv) · [Accepted observations](../../../data/eruptions/Mazama_reviewed.csv) · [Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md)
+[Source ledger](../../../data/audits/Mazama/revised-locality-ledger.csv) · [230 observations used here](https://github.com/siyulai21/tephra-fallout-isopachs/blob/5fa6cae5a4e17636dd878b2776b9f71a837601e4/data/eruptions/Mazama_reviewed.csv) · [Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md)

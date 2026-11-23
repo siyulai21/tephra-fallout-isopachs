@@ -19,7 +19,7 @@ Audit session dates:22–23 November 2026. The referenced prior chat supplied th
 | Portage Buckley Willis1970; GSC Lowdon Blake1970; Mike Brown1989; Menounos2004/2006; Filippelli2006; Yu2006; Felker2011 | Recovered additional primary thicknesses, DMS positions, age context and the Green Lake wrong-lake match. Preserved original PDFs where downloadable; web-only checks remain labeled. |
 | Mazama Alaska and northern limits | No additional verified Mazama-specific Alaskan thickness/cryptotephra record established by the targeted queries. This is not a geographic non-detection or proof of absence. |
 
-The [primary-source work queue](primary-source-work-queue.csv) groups all 257 compilation-only records by citation and flags those used in the historical fitting input. Partial checks also need completion as described in the ledger.
+The [primary-source work queue](primary-source-work-queue.csv) groups the records still pending by original observer by citation and flags those used in the historical fitting input. Partial checks also need completion as described in the ledger.
 
 ## What remains necessary for a full primary audit
 
@@ -56,4 +56,6 @@ The [expanded bound review](BOUND_REVIEW.md) reopens Wildhorse, Lost Trail, Wild
 
 The [23 November follow-up](FOLLOWUP_SEARCH.md) records Yellowstone, Nevada, Great Salt Lake, Rainier, coastal and marine searches, original data archives, new accepted quantities and unresolved numeric records. It supersedes any earlier statement that the GSL00-4A location or Yellowstone thin beds remain unexamined. Primary verification is still incomplete; compilation reconciliation and an exhaustive literature audit are different claims.
 
-The [final citation pass](LATE_SOURCE_REVIEW.md) adds Saban2023/Saban and Gavin2025, reopens Connley Cave2, georeferences Skull Creek using BLM section polygons, and resolves a representative Lyman Lake position using the EPA lake survey. Mehringer1987 adds primary redeposition context for Blue Lake. These checks reduce the compilation-only queue to257; they do not retroactively certify all other records.
+The [final citation pass](LATE_SOURCE_REVIEW.md) adds Saban2023/Saban and Gavin2025, reopens Connley Cave2, georeferences Skull Creek using BLM section polygons, and resolves a representative Lyman Lake position using the EPA lake survey. Mehringer1987 adds primary redeposition context for Blue Lake. These checks reduced the compilation-only queue to 257 at that stage; they do not retroactively certify all other records.
+
+The [radiocarbon and field-log search](DATED_SECTIONS.md) matched named localities, laboratory identifiers, depositional comments and government place-name records. Its 81 radiocarbon determinations and two ice ages cross-reference 48 candidate compilation IDs. The live work queue gives the current count.
