@@ -144,7 +144,8 @@ def write_summary(report, output):
             q = site["latent_cm"]
             limit = bounds.get(site["id"])
             bound = f"{limit:g}" if limit is not None else "—"
-            prob = f"{site['p_local_below_scale'][str(float(limit))]:.1%}" if limit is not None else "—"
+            probabilities = {float(scale): value for scale, value in site["p_local_below_scale"].items()}
+            prob = f"{probabilities[float(limit)]:.1%}" if limit is not None else "—"
             lines.append(f"| {site['name']} | {q['median']:.3g} | {q['lower95']:.3g}–{q['upper95']:.3g} | {bound} | {prob} |")
     if any(result["scenario"] for result in report["scenarios"].values()):
         lines.extend(["", "## Assumptions", ""])

@@ -49,17 +49,32 @@ jobs:
           src = subprocess.check_output(['git','show',info['head_sha']+':'+path])
           assert hashlib.sha256(src).hexdigest() == request['input_sha256']
           assert pathlib.Path(path).read_bytes() == src
-          for script in ('mazama.py','mazama_sensitivity.py','mazama_phase_sensitivity.py','mazama_release.py'):
+          for script in ('mazama.py','mazama_recompute.py','mazama_sensitivity.py','mazama_phase_sensitivity.py','mazama_release.py'):
               filename = 'benchmarks/'+script
               assert pathlib.Path(filename).read_bytes() == subprocess.check_output(['git','show',info['head_sha']+':'+filename])
           names = subprocess.check_output(['gh','api','--paginate', endpoint+'/artifacts?per_page=100',
                                            '--jq','.artifacts[] | select(.expired == false) | .name'], text=True).splitlines()
           expected = {'principal-'+n for n in ('regional','directional','spherical-mixture','nested-isopachs')}
           expected |= {'source-'+n for n in (*CASES,'omit-williams')}
+          recovered = request.get('spherical_report')
+          if recovered:
+              repair_endpoint = f"repos/{repo}/actions/runs/{int(recovered['run_id'])}"
+              repair = json.loads(subprocess.check_output(['gh','api',repair_endpoint]))
+              assert repair['head_sha'] == recovered['head_sha'] and repair['conclusion'] == 'success'
+              assert repair['name'] == 'Rebuild Mazama spherical report from verified fits'
+              assert repair['head_branch'] == info['head_branch'] and repair['repository']['full_name'] == repo
+              spec = json.loads(subprocess.check_output(['git','show',repair['head_sha']+':data/audits/Mazama/spherical-report-request.json']))
+              assert all(spec[k] == request[k] for k in ('run_id','head_sha','input_sha256','observations'))
+              outputs = subprocess.check_output(['gh','api',repair_endpoint+'/artifacts?per_page=100',
+                  '--jq','.artifacts[] | select(.expired == false) | .name'],text=True).splitlines()
+              assert outputs == ['principal-spherical-mixture']
+              expected.remove('principal-spherical-mixture')
           available = {n for n in names if n.startswith(('principal-','source-'))}
           assert expected == available and all(names.count(n) == 1 for n in expected), sorted(expected ^ available)
           with open(os.environ['GITHUB_OUTPUT'],'a') as output:
               print(f'run_id={run}',file=output)
+              if recovered:
+                  print(f"spherical_run={int(recovered['run_id'])}",file=output)
           PY
       - uses: actions/download-artifact@v4
         with:
@@ -75,16 +90,30 @@ jobs:
           merge-multiple: true
           github-token: ${{ github.token }}
           run-id: ${{ steps.source.outputs.run_id }}
+      - uses: actions/download-artifact@v4
+        if: steps.source.outputs.spherical_run != ''
+        with:
+          name: principal-spherical-mixture
+          path: results/packets
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.source.outputs.spherical_run }}
       - name: Assemble maps, conditional intervals and source comparisons
+        env:
+          SPHERICAL_REPORT_RUN: ${{ steps.source.outputs.spherical_run }}
         run: |
           python - <<'PY'
           from pathlib import Path
-          import tarfile
+          import json, os, tarfile
           target=Path('results/mazama-recompute')
           target.mkdir(parents=True,exist_ok=False)
           for archive in sorted(Path('results/packets').glob('*.tar.gz')):
               with tarfile.open(archive,'r:gz') as src:
                   src.extractall(target,filter='data')
+          if os.environ['SPHERICAL_REPORT_RUN']:
+              recovery=json.loads((target/'principal/spherical-mixture/report-recovery.json').read_text())
+              request=json.loads(Path('data/audits/Mazama/publication-request.json').read_text())
+              assert all(recovery['original_calculation'][k] == request[k] for k in ('run_id','head_sha','input_sha256'))
+              assert len(recovery['source_cache_packets']) == 12 and len(recovery['verified_sampling_attempts']) >= 24
           PY
           python -m benchmarks.mazama_publish_run
       - name: Replay the reported evidence, figures and geographic validation

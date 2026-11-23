@@ -1,0 +1,106 @@
+name: Rebuild Mazama spherical report from verified fits
+on:
+  push:
+    branches: [codex/mazama-audit-20261122]
+    paths: [data/audits/Mazama/spherical-report-request.json]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+env:
+  PYTHONPATH: .
+  MPLBACKEND: Agg
+  OPENBLAS_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1
+  PYTHONUNBUFFERED: 1
+
+jobs:
+  spherical-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - name: Verify all original posterior fits and the report-only correction
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import ast, hashlib, json, os, pathlib, subprocess
+          from benchmarks.mazama import INPUT
+          from src.empirical_isopach.core.catalog import dataset_record
+          from src.empirical_isopach.models.mass_mixture.source_protocol import protocol
+          spec = json.loads(pathlib.Path('data/audits/Mazama/spherical-report-request.json').read_text())
+          repo = os.environ['GITHUB_REPOSITORY']
+          base = spec['head_sha']
+          endpoint = f"repos/{repo}/actions/runs/{int(spec['run_id'])}"
+          info = json.loads(subprocess.check_output(['gh','api',endpoint]))
+          assert info['repository']['full_name'] == repo and info['head_branch'] == os.environ['GITHUB_REF_NAME']
+          assert info['head_sha'] == base and info['name'] == 'Recompute audited Mazama'
+          assert hashlib.sha256(INPUT.read_bytes()).hexdigest() == spec['input_sha256']
+          original = lambda p: subprocess.check_output(['git','show',base+':'+p])
+          assert INPUT.read_bytes() == original('data/eruptions/Mazama_reviewed.csv')
+          archive = 'src/empirical_isopach/models/mass_mixture/archive_check.py'
+          subprocess.run(['git','diff','--exit-code',base,'HEAD','--','src',':(exclude)'+archive,
+                          'benchmarks/mazama_recompute.py','data/datasets.json'],check=True)
+          def scientific_code(source):
+              module = ast.parse(source)
+              module.body = [n for n in module.body if getattr(n,'name',None) != 'write_summary']
+              return ast.dump(module)
+          assert scientific_code(original(archive)) == scientific_code(pathlib.Path(archive).read_bytes())
+          prior, alternatives = protocol(dataset_record(INPUT).get('global_geometry','displaced'))
+          needed = {'cache-'+p.name for p in (prior,*alternatives)} | {f'cache-fold-{k}' for k in range(4)}
+          names = subprocess.check_output(['gh','api','--paginate',endpoint+'/artifacts?per_page=100',
+              '--jq','.artifacts[] | select(.expired == false) | .name'],text=True).splitlines()
+          assert len(needed) == 12 and all(names.count(n) == 1 for n in needed)
+          assert {n for n in names if n.startswith('cache-')} == needed
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              print(f"run_id={int(spec['run_id'])}",file=out)
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: 'cache-*'
+          path: results/cache-packages
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.source.outputs.run_id }}
+      - name: Rebuild the report and prove that every sampling attempt is identical
+        run: |
+          python - <<'PY'
+          import hashlib, json, subprocess, sys, tarfile
+          from pathlib import Path
+          root = Path('results/mazama-recompute')
+          root.mkdir(parents=True,exist_ok=False)
+          packets = sorted(Path('results/cache-packages').glob('cache-*.tar.gz'))
+          assert len(packets) == 12
+          for packet in packets:
+              with tarfile.open(packet,'r:gz') as archive:
+                  archive.extractall(root,filter='data')
+          raw = root/'principal/spherical-mixture/posteriors'
+          def attempts():
+              return {str(p.relative_to(raw)):hashlib.sha256(p.read_bytes()).hexdigest()
+                      for p in sorted(raw.rglob('attempt-*')) if p.suffix in ('.npz','.json')}
+          before = attempts()
+          assert sum(p.endswith('.npz') for p in before) >= 12
+          subprocess.run([sys.executable,'-m','benchmarks.mazama_recompute','principal','spherical-mixture'],check=True)
+          assert attempts() == before, 'Sampling attempt files changed during report recovery'
+          dest = raw.parent/'report-recovery.json'
+          dest.write_text(json.dumps({'original_calculation':json.loads(Path('data/audits/Mazama/spherical-report-request.json').read_text()),
+              'source_cache_packets':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in packets},
+              'verified_sampling_attempts':before},indent=2)+'\n')
+          PY
+          python -m benchmarks.mazama_recompute pack principal spherical-mixture
+      - uses: actions/upload-artifact@v4
+        with:
+          name: principal-spherical-mixture
+          path: results/mazama-packages/principal-spherical-mixture.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

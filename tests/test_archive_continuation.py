@@ -16,6 +16,20 @@ REVIEWED = Path("data/eruptions/B-Tm_reviewed.csv")
 INVENTORY = Path("data/audits/B-Tm/archive-observations.json")
 
 
+@pytest.mark.parametrize("scale_key", ["5", "5.0"])
+def test_spherical_archive_summary_matches_numeric_detection_scales(tmp_path, scale_key):
+    from src.empirical_isopach.models.mass_mixture.archive_check import write_summary
+
+    site = {"id": "core", "name": "Core", "latent_cm": {"median": 2, "lower95": 1, "upper95": 4},
+            "p_local_below_scale": {scale_key: 0.8}}
+    scenario = {"scenario": None, "full_field_volume_km3": {"lower95": 10, "upper95": 20},
+                "importance_checks_passed": True, "sites": [site]}
+    report = {"scenarios": {"quantitative": scenario}, "accepted_archive_bounds_cm": {"core": 5.0},
+              "bearing_packet_sha256": "test"}
+    write_summary(report, tmp_path)
+    assert "| Core | 2 | 1–4 | 5 | 80.0% |" in (tmp_path / "README.md").read_text()
+
+
 def test_bearing_geometry_respects_the_likelihood_and_physical_area():
     data,meta=audited_data(REVIEWED)
     g=Geometry(data,meta["vent_lonlat"][1])
