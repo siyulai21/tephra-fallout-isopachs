@@ -1,6 +1,6 @@
 """Source-interpretation tests with independent all-data refits of the five families.
 
-These scenarios alter only the conditional bounds. They are assumptions,
+These scenarios alter source selection and conditional interpretations. They are assumptions,
 not added geological observations or alternative estimates of measurement error.
 Geographic validation and fixed-prior sweeps belong to the principal comparison.
 """
@@ -23,22 +23,26 @@ from src.empirical_isopach.visualization.deposit_integrals import independent_in
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES = {
-    'omit-bounds': 'Omit all20 conditional lower bounds; no claim that any deposit is absent.',
-    'half-transfer': 'Halve all20 lower limits coherently as a hypothetical twofold depositional-thickening allowance. This is a stress assumption, not a measured focusing or compaction factor.',
+    'omit-bounds': 'Omit all23 conditional lower bounds and the Skull Creek upper bound; no claim that any deposit is absent.',
+    'half-transfer': 'Halve all23 lower limits coherently as a hypothetical twofold depositional-thickening allowance, and double the Skull Creek upper ceiling to10 cm as a weaker author-estimate assumption. These are stress assumptions, not measured focusing, loss or compaction factors.',
     'portage-upper': 'Use Portage <=1.905 cm instead of >=1.27 cm, once. This alternative requires negligible loss and compaction as well as the same identity and primary-deposition assumptions. It is not the two-sided interval likelihood.',
     'range-upper': 'Use Independence <=6 cm, Cleveland <=6 cm and Newman <=30 cm instead of their lower endpoints, once per locality. All other bounds remain principal. This grouped one-sided approximation additionally assumes negligible loss and compaction; it is not a two-sided interval likelihood or independent replication.',
-    'omit-new-records': 'Omit the22 observations added after the frozen40-row audit trial. This tests the combined Yellowstone and lake/marine follow-up evidence; it does not assert absence at those sites.',
-    'new-beds-lower': 'Treat the16 newly admitted point beds as lower limits at their reported thickness. This relaxes complete preservation, retaining correct correlation and no focusing/import; it is not a correction for sediment redistribution.',
-    'weak-identity-omit': 'Omit Shadow, Sunrise, Little Sunrise, Lost, Round Washington, Long, Patjens and ClelandF-09 together. The recovered sources do not provide site-specific glass analyses for these beds. Omission tests correlation/depth qualifications without declaring a different eruption.',
+    'omit-new-records': 'Omit the27 observations added after the frozen40-row audit trial. This tests the combined Yellowstone, lake/marine and final citation-pass evidence; it does not assert absence at those sites.',
+    'new-beds-lower': 'Treat the17 newly admitted point beds as lower limits at their reported thickness. This relaxes complete preservation, retaining correct correlation and no focusing/import; it is not a correction for sediment redistribution.',
+    'weak-identity-omit': 'Omit Shadow, Sunrise, Little Sunrise, Lost, Round Washington, Long, Patjens, ClelandF-09, Dog Lake Oregon, White Pine Marsh and Connley Cave2 together. Recovered sources do not provide site-specific glass analyses for these beds. Omission tests correlation/depth qualifications without declaring a different eruption.',
     'yellowstone-one': 'RetainYL16-5A as one explicitly chosen central Yellowstone Lake representative, omitting six other principal lake locations. Goose Lake remains separate. This tests spatial clustering, not evidence that six cores are duplicates.',
     'yellowstone-2c-5mm': 'Use Schiller2020 YL16-2C0.5 cm instead of Morgan2023 0.4 cm. One core observation, not two replicates or an invented error interval.',
     'yellowstone-slump': 'AddYL16-6A0.5 cm under the extra assumption that its slump-toe irregular bed preserves local fallout thickness. Principal excludes it because deformation/import are unresolved.',
     'omit-gold': 'Omit Gold Lake74 cm coarse-component minimum to test possible unrecognized precursor material and lake focusing; no substitute thickness assigned.',
+    'late-source-omit': 'Omit Dog Lake Oregon, White Pine Marsh, Connley Cave2, Skull Creek and Lyman Lake together, recovering the frozen62-site selection. Tests dependence on the final citation pass and lake/section representative positions.',
+    'skull-omit': 'Omit only the Skull Creek conditional upper estimate. Its original-fall estimate and unresolved decimal typography must not become an unquestioned distal cap.',
 }
 
 LEGACY = AUDIT/'history/2026-11-23-before-yellowstone/Mazama_reviewed_40.csv'
 WEAK_IDS = {'W2017-SHADOW','W2017-SUNRISE','W2017-LSUNRISE','D2025-LOST',
-            'M2024-ROUNDWA','R2021-LONG','MK2012-PATJENS','M2014-CLELAND-F'}
+            'M2024-ROUNDWA','R2021-LONG','MK2012-PATJENS','M2014-CLELAND-F',
+            'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2'}
+LATE_IDS = {'S2023-DOG-OR','S2023-WHITEPINE','S2023-CONNLEY2','MW1986-SKULL','W2016-LYMAN'}
 
 
 def common_region():
@@ -96,7 +100,7 @@ def local_checks(view, folder):
                     crossing_grid_brackets_authalic_km=[[float(domain.arc_km(radii[j])),float(domain.arc_km(radii[j+1]))] for j in changes]))
     np.savez_compressed(folder/'local-profiles.npz', radii_km=radii, log10_cm=np.asarray(rays))
     return dict(sites=sites, crossings=crossings,
-        profile_order='Canonical probe order (all62 principal sites plusYL16-6A), then bearing offsets -11.25, 0, +11.25 degrees',
+        profile_order='Canonical probe order (all67 principal sites plus YL16-6A), then bearing offsets -11.25, 0, +11.25 degrees',
         scope='Conditional latent thickness and all sampled median-field crossings; no claim of measured contour support. Crossing brackets show radial sampling resolution; sub-grid structure is unresolved.')
 
 
@@ -114,6 +118,8 @@ def prepare(root):
             for r in rows:
                 if r['Kind'] == 'lower_limit':
                     r['Limit_cm'] = float(r['Limit_cm']) / 2
+                elif r['Kind'] == 'upper_limit':
+                    r['Limit_cm'] = float(r['Limit_cm']) * 2
         elif name == 'portage-upper':
             r = next(r for r in rows if r['EvidenceID'] == 'B2020-134')
             r['Kind'], r['Limit_cm'] = 'upper_limit', 1.905
@@ -140,6 +146,11 @@ def prepare(root):
             rows.append(r)
         elif name == 'omit-gold':
             rows = [r for r in rows if r['EvidenceID']!='B2023-GOLD']
+        elif name == 'late-source-omit':
+            rows = [r for r in rows if r['EvidenceID'] not in LATE_IDS]
+            assert len(rows) == 62
+        elif name == 'skull-omit':
+            rows = [r for r in rows if r['EvidenceID'] != 'MW1986-SKULL']
         path = folder / 'input.csv'
         write_csv(path, rows)
         result[name] = dict(file=str(path), sha256=sha(path), definition=definition,

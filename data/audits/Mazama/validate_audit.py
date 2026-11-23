@@ -52,15 +52,21 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 453
+    assert len(rows) == len({r['record_id'] for r in rows}) == 459
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
     accepted = list(csv.DictReader((ROOT / 'data/eruptions/Mazama_reviewed.csv').open()))
-    assert len(chosen) == len(accepted) == 62
-    assert sum(r['Kind'] == 'measurement' for r in accepted) == 42
-    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 20
-    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 62
+    assert len(chosen) == len(accepted) == 67
+    assert sum(r['Kind'] == 'measurement' for r in accepted) == 43
+    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 23
+    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 1
+    assert float(lookup['S2023-DOG-OR']['bound_cm']) == 920 - 908
+    assert float(lookup['S2023-WHITEPINE']['bound_cm']) == 79 - 54
+    assert float(lookup['S2023-CONNLEY2']['bound_cm']) == 180 - 152
+    assert float(lookup['MW1986-SKULL']['bound_cm']) == 5
+    assert abs(float(lookup['W2016-LYMAN']['latitude']) - (48 + 11/60 + 30/3600)) < 1e-12
+    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 67
     for a, s in zip(accepted, chosen, strict=True):
         assert a['EvidenceID'] == s['record_id']
         assert float(a['Lat']) == float(s['latitude'])
@@ -109,7 +115,7 @@ def main(published=False):
     subprocess.run([sys.executable, str(HERE / 'build_audit.py')], cwd=ROOT, check=True, capture_output=True)
     assert before == {name: digest(HERE / name) for name in outputs}
     queue = list(csv.DictReader((HERE / 'primary-source-work-queue.csv').open()))
-    assert sum(int(r['record_count']) for r in queue) == 259
+    assert sum(int(r['record_count']) for r in queue) == 257
     models = []
     if published:
         for family in ('', 'directional/azimuth/', 'spherical-mixture/', 'nested-isopachs/', 'nested-whole-area/'):
@@ -123,15 +129,15 @@ def main(published=False):
                   historical_revision='41b8f2f', historical_files_hash_verified=historic,
                   previous_github_revision='0a53d02', previous_release_files_hash_verified=previous,
                   independently_compared_source_cells=count, unique_source_records=293,
-                  unique_revised_records=len(rows), additional_records=160, supplied_rows=52,
-                  candidate_matches=45, excluded_pseudo_rows=7, principal_observations=62,
-                  principal_point_values=42, principal_lower_bounds=20, input_sha256=expected,
+                  unique_revised_records=len(rows), additional_records=166, supplied_rows=52,
+                  candidate_matches=45, excluded_pseudo_rows=7, principal_observations=67,
+                  principal_point_values=43, principal_lower_bounds=23, principal_upper_bounds=1, input_sha256=expected,
                   missing_decimal_coordinates=sum(not r['latitude'] for r in rows),
-                  compilation_only_original_records=259, deterministic_rebuild=True,
+                  compilation_only_original_records=257, deterministic_rebuild=True,
                   derived_output_sha256=before, published_model_input_checks=models,
                   primary_audit_complete=False,
                   test_and_navigation_results='See case results/source-audit/publication-checks.json; this checker does not invent test results.',
-                  visual_source_checks=['Lemke1975 Table4 scan', 'Crandell1967 Table1 p.8', 'Buckley1970 p.101 fractions', 'Yu2006 Fig.2 qualitative only'])
+                  visual_source_checks=['Lemke1975 Table4 scan', 'Crandell1967 Table1 p.8', 'Buckley1970 p.101 fractions', 'Yu2006 Fig.2 qualitative only', 'Morgan2023 Tables S1-S2 core identities and coordinates', 'Munroe2018 Table1 lake positions', 'LacCore GLAD GSL00 hole4A position sheet', 'Walsh2017 Table1 Rainier lake coordinates', 'Wan1995 printed p.60 core TT063-13', 'Dallimore2008 p.1348 core MD02-2494 coordinates', 'Saban2023 pp.37,66,76,95,99,103: bed boundaries, site positions and conflicting summaries'])
     (HERE / 'validation.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'derived_output_sha256'}, indent=2))
 

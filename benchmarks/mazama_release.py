@@ -5,6 +5,7 @@ observation. Publication remains a separate reviewed Git operation.
 """
 import argparse
 import csv
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -111,6 +112,10 @@ def principal_details(principal, target):
     """Use the exact current continuation, including section-location diagnostics."""
     full, meta = audited_data(INPUT)
     georef = read(AUDIT/'camp-creek-georeferencing.json')
+    skull = read(AUDIT/'skull-creek-georeferencing.json')
+    georef += [dict(representative_id=skull['record_id'],
+                   blm_section_id=f['attributes']['FRSTDIVID'],polygon=f['geometry'])
+               for f in skull['blm_features']]
     from src.empirical_isopach.models.directional.ensemble.fields import inverse_cdf
     from src.Laea import make_laea_transform
     forward, _, _ = make_laea_transform(*meta['vent_lonlat'])
@@ -169,21 +174,33 @@ def assessment(home):
     write_csv(source/'source-sensitivity-volumes.csv',rows)
     lines=['# Mazama source interpretation tests','',
         '[Case home](../../README.md) · [Evidence and calculations](../../../../data/audits/Mazama/BOUND_REVIEW.md) · [Numerical table](source-sensitivity-volumes.csv)','',
-        'The principal input contains42 point values and20 lower bounds. Source scenarios test the22 newly added observations, point-to-lower-bound transfer, weaker identities, Yellowstone clustering and reporting/deformation alternatives, and the older range/phase interpretations. Each physical reading appears once. Global scenarios are independent full-data refits, with continuation calibration excluding Mazama. Regional scenarios refit coefficients with the principal chosen settings and weights and integrate the original26-measurement hull. These refits test evidence assumptions; they do not repeat principal geographic validation or fixed-prior studies.','',
-        '| Method | Scenario | Median-map volume (km³) | Conditional95% interval (km³) | Draw checks | Map integration |',
+        'The principal input contains 43 point values, 23 lower bounds and one upper bound. Source scenarios test the 27 newly added observations, point-to-lower-bound transfer, weaker identities, Yellowstone clustering and reporting/deformation alternatives, and the older range/phase interpretations. Each physical reading appears once. Global scenarios are independent full-data refits, with continuation calibration excluding Mazama. Regional scenarios refit coefficients with the principal chosen settings and weights and integrate the original 26-measurement hull. These refits test evidence assumptions; they do not repeat principal geographic validation or fixed-prior studies.','',
+        '| Method | Scenario | Median-map volume (km³) | Conditional 95% interval (km³) | Draw checks | Map integration |',
         '|---|---|---:|---:|---|---|']
     for r in rows:
         lines.append(f"| {r['method']} | {r['scenario']} | {r['median_map_volume_km3']:.3g} | {r['lower95_km3']:.3g}–{r['upper95_km3']:.3g} | {r['draw_checks_passed']} | {r['map_integration_passed']} |")
     lines += ['','The principal case home uses its full accepted hull for regional volumes; the two principal regional rows above deliberately use the smaller common footprint. The median-map integral and the posterior distribution of complete-deposit integrals are different quantities. False numerical flags remain provisional; they are not hidden by a successful map integral.','',
-        'Each scenario folder preserves its input, global posterior packets, attempt histories, local intervals and all sampled0.5,1,5,10 cm crossings on63 probe bearings and adjacent±11.25° bearings. The probes are all62 principal sites plus the excludedYL16-6A slump core. Regional crossings are limited to the scenario observation hull; outside it they are unavailable. Crossing brackets give radial resolution. These are conditional predictions, not independent measured brackets. Principal checks also retain Camp Creek section-vertex predictions.','',
+        'Each scenario folder preserves its input, global posterior packets, attempt histories, local intervals and all sampled 0.5, 1, 5, 10 cm crossings on 68 probe bearings and adjacent ±11.25° bearings. The probes are all 67 principal sites plus the excluded YL16-6A slump core. Regional crossings are limited to the scenario observation hull; outside it they are unavailable. Crossing brackets give radial resolution. These are conditional predictions, not independent measured brackets. Principal checks also retain Camp Creek and Skull Creek section-vertex predictions.','',
         'The full comparison uses identical input hashes and geographic folds. The reports retain geographic and quadrant warnings, supported-contour rejection reasons and the eight spherical prior intervals. Numerical convergence does not establish observational support over Earth.','',
-        '[Omit bounds](sensitivities/omit-bounds/) · [Half transfer](sensitivities/half-transfer/) · [Portage upper endpoint](sensitivities/portage-upper/) · [Other range endpoints](sensitivities/range-upper/) · [Williams omission](sensitivities/omit-williams/) · [Principal local checks](sensitivities/principal/)','',
+        '[Omit bounds](sensitivities/omit-bounds/) · [Weaker bounds](sensitivities/half-transfer/) · [Portage upper endpoint](sensitivities/portage-upper/) · [Other range endpoints](sensitivities/range-upper/) · [All new sites omitted](sensitivities/omit-new-records/) · [New beds as lower bounds](sensitivities/new-beds-lower/) · [Weaker identities omitted](sensitivities/weak-identity-omit/) · [One Yellowstone representative](sensitivities/yellowstone-one/) · [YL16-2C reporting alternative](sensitivities/yellowstone-2c-5mm/) · [Slump core included](sensitivities/yellowstone-slump/) · [Gold omitted](sensitivities/omit-gold/) · [Final citation pass omitted](sensitivities/late-source-omit/) · [Skull Creek omitted](sensitivities/skull-omit/) · [Williams omission](sensitivities/omit-williams/) · [Principal local checks](sensitivities/principal/)','',
+        '## Reproduction','',
+        'Use fresh output destinations. The following commands run the complete principal comparison, 13 source scenarios and the separate Williams omission. The regional scenario calculations retain the principal selected settings and original common hull.','',
+        '```sh',
+        'python -m src.empirical_isopach.cli compare Mazama --output results/new-mazama',
+        'for family in regional directional spherical-mixture nested-isopachs; do',
+        '  python -m benchmarks.mazama_sensitivity --output results/new-mazama-sources --principal results/new-mazama --family "$family"',
+        '  python -m benchmarks.mazama_phase_sensitivity --output results/new-mazama-phase --principal results/new-mazama --family "$family"',
+        'done',
+        'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-sources',
+        'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-phase',
+        'python -m benchmarks.mazama_release principal --principal results/new-mazama --scenarios results/new-mazama-sources',
+        '```','',
         '[Publication checks](publication-checks.json) · [Release identities](release.json) · [Earlier published results](../../../../archive/2026-11-23-mazama-source-audit/README.md)']
     (source/'README.md').write_text('\n'.join(lines)+'\n')
     intro=['# Mazama climactic fallout','',
-        '**62 source-qualified observations:42 reported thicknesses and20 conditional lower bounds.** The ledger reconciles293 compilation entries plus160 additional records, leads and controls. It corrects identity, phase, location and thickness problems and retains traces and cryptotephra without inventing a thickness.259 original records still await independent primary verification; the accepted set remains conditional.','',
-        '[Accepted input](../../data/eruptions/Mazama_reviewed.csv) · [Audit assessment](../../data/audits/Mazama/README.md) · [Every locality](../../data/audits/Mazama/LOCALITIES.md) · [Bound derivations](../../data/audits/Mazama/BOUND_REVIEW.md) · [Sources and hashes](../../data/sources/mazama/README.md) · [Source sensitivities](results/source-audit/README.md)','',
-        'The target is primary airborne bulk fallout from the climactic eruption, including co-ignimbrite ash. Identified precursor beds, flow deposits and reworked totals are excluded. Preserved primary components and range minima enter once as lower bounds, conditional on their identity and preservation. Green and Tepee Lake positions are corrected; the850 cm Muir Creek facies-ambiguous value is quarantined. The Williams46 cm phase ambiguity is retained explicitly and tested by omission.','',
+        '**67 source-qualified observations: 43 reported thicknesses, 23 conditional lower bounds and one conditional upper bound.** The ledger reconciles 293 compilation entries plus 166 additional records, leads and controls. It corrects identity, phase, location and thickness problems and retains traces and cryptotephra without inventing a thickness. 257 original records still await independent primary verification; the accepted set remains conditional.','',
+        '[Accepted input](../../data/eruptions/Mazama_reviewed.csv) · [Audit assessment](../../data/audits/Mazama/README.md) · [Every locality](../../data/audits/Mazama/LOCALITIES.md) · [Bound derivations](../../data/audits/Mazama/BOUND_REVIEW.md) · [Final citation pass and Lyman](../../data/audits/Mazama/LATE_SOURCE_REVIEW.md) · [Yellowstone cores](../../data/audits/Mazama/YELLOWSTONE.md) · [Sources and hashes](../../data/sources/mazama/README.md) · [Source sensitivities](results/source-audit/README.md)','',
+        'The target is primary airborne bulk fallout from the climactic eruption, including co-ignimbrite ash. Identified precursor beds, flow deposits and reworked totals are excluded. Preserved primary components and range minima enter once as lower bounds, conditional on their identity and preservation. Green and Tepee Lake positions are corrected; the 850 cm Muir Creek facies-ambiguous value is quarantined. The Williams 46 cm phase ambiguity is retained explicitly and tested by omission.','',
         'These global volumes are conditional estimates. Sparse bearings and unsampled regions remain uncertain even where a whole-Earth integral converges. Each family keeps its own interval, prior sensitivity and numerical status. [Shared support decisions](results/support/README.md) and each global extent report preserve rejected contours and unsupported gaps.','',
         case_section(home,prefix='results/'),'',
         '## Evidence, reproduction and history','',
@@ -194,8 +211,18 @@ def assessment(home):
 
 def assemble(principal, scenarios, phase):
     home=Path('eruptions/mazama/results')
-    prior=Path('archive/2026-11-23-mazama-source-audit/previous-release.tar.gz')
-    assert prior.is_file() and prior.stat().st_size>0
+    prior=Path('archive/2026-11-23-mazama-source-audit/previous-release.tar.gz.parts.json')
+    retained=read(prior)
+    parts=[prior.parent/p['file'] for p in retained['parts']]
+    assert sum(p.stat().st_size for p in parts)==retained['original_bytes']
+    for path, record in zip(parts,retained['parts'],strict=True):
+        assert sha(path)==record['sha256'],path
+    digest=hashlib.sha256()
+    for path in parts:
+        with path.open('rb') as source:
+            for chunk in iter(lambda:source.read(1024*1024),b''):
+                digest.update(chunk)
+    assert digest.hexdigest()==retained['original_sha256']
     assert read(principal/'report.json')['input']['input_sha256']==sha(INPUT)
     for family in FAMILIES:
         assert read(principal/family/'deposit.json')['input_sha256']==sha(INPUT)

@@ -1,6 +1,6 @@
 {
   "audit_date": "2026-11-23",
-  "scope": "Complete293-entry compilation reconciliation plus160 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.",
+  "scope": "Complete 293-entry compilation reconciliation plus 166 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.",
   "original_input": {
     "file": "data/eruptions/Mazama_tephra.csv",
     "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
@@ -13,13 +13,21 @@
   "cases": {
     "principal": {
       "file": "data/eruptions/Mazama_reviewed.csv",
-      "sha256": "e7122af49743bdfdba07f162279d29c79e3772e1dc08c1d3c6a7cd12bfa5d5d8",
-      "n_measurements": 42,
-      "n_lower_limits": 20,
-      "n_upper_limits": 0,
-      "definition": "Source-qualified climactic Mazama airborne fallout reference: 42 reported point values and 20 conditional lower bounds. Compilation-supported values are not claimed independently primary-verified. The expanded bound review recovers primary components, preserved bed ranges and three georeferenced Camp Creek section groups; see BOUND_REVIEW.md. Seven additional georeferenced Yellowstone Lake locations use explicit4\u20135 mm beds from Morgan2023, paired cores counted once; see YELLOWSTONE.md. Nevada, Great Salt Lake, Goose Lake and Effingham Inlet add measured primary beds; Gold Lake contributes a conditional74 cm coarse-component minimum; see FOLLOWUP_SEARCH.md. One endpoint is used per physical reading, with separate range-endpoint, coherent weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds."
+      "sha256": "8a56d5ef181e497295edddc525ed28faad64a1647c33e59b81b884b7edc3b1de",
+      "n_measurements": 43,
+      "n_lower_limits": 23,
+      "n_upper_limits": 1,
+      "definition": "Source-qualified climactic Mazama airborne fallout reference: 43 reported point values, 23 conditional lower bounds and one conditional upper bound. Compilation-supported values are not claimed independently primary-verified. Primary components, ranges and three Camp Creek section groups are documented in BOUND_REVIEW.md. Seven Yellowstone Lake locations use explicit 4\u20135 mm beds, paired cores counted once; see YELLOWSTONE.md. Nevada, Great Salt Lake, Goose Lake, Effingham Inlet and other lake/marine records are documented in FOLLOWUP_SEARCH.md. The final citation pass adds Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake; see LATE_SOURCE_REVIEW.md. One endpoint per physical reading; separate range-endpoint, weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds."
     }
   },
+  "principal_limits": [
+    {
+      "evidence_id": "MW1986-SKULL",
+      "interpreted_upper_cm": 5,
+      "derivation": "Conservative outward ceiling from author-estimated primary fallout: indexed 2-5 cm supports <=5 cm under decimal2.5 or range2\u20135 reading. Not the25 cm reworked total.",
+      "qualifications": "Author estimate and phase containment conditional; scan typography unresolved; isolated omission and weaker10 cm upper tested."
+    }
+  ],
   "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
   "thickness_convention": "Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.",
   "coordinate_datum": "Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.",
@@ -33,13 +41,13 @@
   },
   "preparation_script": {
     "file": "benchmarks/mazama.py",
-    "sha256": "e3e36765b4bbff0f4141d8f8927a24a3236bbe91f01e08c1715e6b8ec5b51337"
+    "sha256": "fffaafc65428cd3da20df1d752a24f967b7c0a00accee01b6d4d7325229ac8d2"
   },
   "audit_artifacts": {
-    "model-selection.json": "be5b2d171ee419d6f0eceecd1f822af860a64d4bebad5b8707eec843254bc215",
-    "model-selection.csv": "424eedf431914daf92edb900f3349aa379cc7ddc8f02f4600a753c1aad047d9e",
-    "site-evidence-decisions.csv": "8c8e0cfb036d711dd6855b2cb04876291c9184154e5533fe849a26e0ee34d68c",
-    "revised-locality-ledger.csv": "b91069c2ba3d02ab7c07f635017071794b95c4977d7f23ed7a05db69f5c19efa",
+    "model-selection.json": "445719dd9d6619972fc4988dab82e04ef1a725b7eb5885a9ec6d7dd2681ff659",
+    "model-selection.csv": "38697e06b9fcaf6d83ee6465327b2f80ff57f2e34463de4246dc2dfb0be0e5f1",
+    "site-evidence-decisions.csv": "d31965d27c25ea76148e6d7afb5a9651a61fc099e8e8cb5d5c9962be657aaa59",
+    "revised-locality-ledger.csv": "abc9c610ba558ba2889229fdfcf0738fe1cbb11bdafd273ab562083a7516de0f",
     "supplied-row-crosswalk.csv": "cc697169e400ab866fb20da34daad18b06b71ac20865f8c7aabf23104a1b9cbb"
   }
 }

@@ -1,15 +1,15 @@
 # Mazama original sources
 
-[Audit](../../audits/Mazama/README.md) · [Machine-readable manifest](source-manifest.csv) · [JSON](source-manifest.json)
+[Audit](../../audits/Mazama/README.md) · [CSV manifest](source-manifest.csv) · [JSON manifest](source-manifest.json)
 
-75 retrieved source payloads are recorded with original URLs, byte counts and SHA-256 hashes. 42 are bundled unchanged with attribution; the others are linked and hashed. Full texts without an established redistribution licence remain in the ignored local research cache. The500 MB Cleetwood archive is linked and hashed for size, with its unchanged field workbook included separately. Public access and permission to redistribute are recorded separately.
+79 original retrieved payloads have URLs, byte counts and SHA-256 hashes. 44 are bundled unchanged with attribution; other payloads are linked and hashed. Public access and redistribution rights are recorded separately. The500 MB Cleetwood archive is linked for size; its field workbook is included separately.
 
-The original Buckland2020 workbook supplies the293-entry compilation. Source retrieval does not mean that every datum in a source has been independently verified. Primary text, abstracts, indexed passages and secondary reports are distinguished in the locality ledger. No model value comes from an unlabelled source correction.
+Retrieval does not establish that every datum in a source was independently verified. The ledger distinguishes primary text, abstracts, indexed passages and secondary reports.
 
-| Original payload | Primary work / contents | Publication handling |
+| Original payload | Contents | Publication handling |
 |---|---|---|
 | [baitis2015.pdf](baitis2015.pdf) | Baitis, Retallack and James2015; BLM Technical Note447 | US federal report; authored contributions retain applicable rights |
-| [bc-green-lake.html](https://apps.gov.bc.ca/pub/bcgnws/names/2693.html) | BC Geographical Names; Green Lake near Whistler official WGS84 feature centre | See manifest |
+| [bc-green-lake.html](https://apps.gov.bc.ca/pub/bcgnws/names/2693.html) | BC Geographical Names; Green Lake near Whistler official WGS84 feature centre | Original bytes preserved in ignored local evidence cache; URL and SHA256 published. Redistribution permission not established, so full payload is not bundled. |
 | [billy-big-spring2021.pdf](https://plainsanthropologicalsociety.org/sites/default/files/2021_PAC_Boulder.pdf) | Plains Anthropological Conference2021 abstracts; After the Ashfall | Conference abstracts; author rights retained |
 | [buckland2020-esm1.xlsx](buckland2020-esm1.xlsx) | Buckland et al.2020; Sources of uncertainty in the Mazama isopachs | CC BY4.0 stated in article; preserve attribution |
 | [buckland2020-esm2.docx](buckland2020-esm2.docx) | Buckland et al.2020; Sources of uncertainty in the Mazama isopachs | CC BY4.0 stated in article; preserve attribution |
@@ -33,16 +33,16 @@ The original Buckland2020 workbook supplies the293-entry compilation. Source ret
 | [crandell1967.pdf](crandell1967.pdf) | Crandell and Mullineaux1967; Volcanic hazards at Mount Rainier, Washington; USGS Bulletin1238 | US federal report; preserved scan from NPS History archive |
 | [davies2024.pdf](davies2024.pdf) | Davies et al.2024; Greenland early-mid Holocene cryptotephra | CC BY4.0 license checked in publication text; original bytes and attribution retained |
 | [egan2016-thesis.pdf](https://pure.manchester.ac.uk/ws/portalfiles/portal/54585340/FULL_TEXT.PDF) | Egan2016; Manchester PhD thesis, Mazama ecological impacts | Thesis repository copy; author rights retained |
-| [filippelli2006.pdf](https://couplet.unbc.ca/pdfs/biogeochem.pdf) | Filippelli et al.2006; Alpine lake sediment records | See manifest |
+| [filippelli2006.pdf](https://couplet.unbc.ca/pdfs/biogeochem.pdf) | Filippelli et al.2006; Alpine lake sediment records | Original bytes preserved in ignored local evidence cache; URL and SHA256 published. Redistribution permission not established, so full payload is not bundled. |
 | [gisp2-inventory.html](https://icecores.org/inventory/gisp2) | NSF Ice Core Facility; GISP2 inventory | Authoritative core inventory; accessed as location evidence |
 | [jensen2021.pdf](jensen2021.pdf) | Jensen et al.2021; Northeastern North America tephrostratigraphic framework | CC BY-NC-ND4.0 checked in article; unchanged copy for noncommercial scientific audit; attribution retained |
 | [johnson1994.pdf](johnson1994.pdf) | Johnson, Clausnitzer, Mehringer and Oliver1994; Biotic and abiotic processes of eastside ecosystems; PNW-GTR-322 | USDA Forest Service technical report; federal publication |
-| [kuehn2008-s1.pdf](https://static.cambridge.org/content/id/urn%3Acambridge.org%3Aid%3Aarticle%3AS0033589400005779/resource/name/S0033589400005779sup001.pdf) | Kuehn et al.2008; Glacier Peak tephras, supplementary site inventory; location evidence only for Tepee Lake | See manifest |
+| [kuehn2008-s1.pdf](https://static.cambridge.org/content/id/urn%3Acambridge.org%3Aid%3Aarticle%3AS0033589400005779/resource/name/S0033589400005779sup001.pdf) | Kuehn et al.2008; Glacier Peak tephras, supplementary site inventory; location evidence only for Tepee Lake | Original bytes preserved in ignored local evidence cache; URL and SHA256 published. Redistribution permission not established, so full payload is not bundled. |
 | [larsen2016.pdf](https://sites.pitt.edu/~mabbott1/climate/mark/Abstracts/Pubs/Larsenetal16QSR.pdf) | Larsen et al.2016; Teton Range glacial/climate history | Author-hosted copy; publisher rights retained |
 | [lemke1975.pdf](lemke1975.pdf) | Lemke et al.1975; USGS Bulletin1395-H | US federal government publication |
 | [lowdon1970.pdf](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/39A2168FD3D0F3FA822CE54B9E8FDB04/S0033822200036213a.pdf/geological_survey_of_canada_radiocarbon_dates_ix.pdf) | Lowdon and Blake1970; Geological Survey of Canada Radiocarbon Dates IX | Primary publisher or author-hosted source; original attribution and rights retained |
 | [menounos2004.pdf](https://couplet.unbc.ca/pdfs/8200.pdf) | Menounos et al.2004; Early Holocene glacier advance | Primary publisher or author-hosted source; original attribution and rights retained |
-| [menounos2006.pdf](https://couplet.unbc.ca/pdfs/Menounos_2006.pdf) | Menounos2006; Green Lake modern sedimentation and lake position | See manifest |
+| [menounos2006.pdf](https://couplet.unbc.ca/pdfs/Menounos_2006.pdf) | Menounos2006; Green Lake modern sedimentation and lake position | Original bytes preserved in ignored local evidence cache; URL and SHA256 published. Redistribution permission not established, so full payload is not bundled. |
 | [monteath2023.html](monteath2023.html) | Monteath et al.2023; Placentia Bay cryptotephra and marine reservoir offset | CC BY4.0 license checked in publication text; original bytes and attribution retained |
 | [monteath2025.pdf](monteath2025.pdf) | Monteath et al.2025; Increasing tephra deposition in northeastern North America | CC BY4.0 license checked in publication text; original bytes and attribution retained |
 | [mullineaux1974.pdf](mullineaux1974.pdf) | Mullineaux1974; USGS Bulletin1326 | US federal government publication |
@@ -83,3 +83,7 @@ The original Buckland2020 workbook supplies the293-entry compilation. Source ret
 | [wiejaczka2022-zenodo.json](wiejaczka2022-zenodo.json) | Zenodo metadata for Wiejaczka and Giachetti2022 field archive | Zenodo public metadata |
 | [Wiejaczka_Giachetti_Mazama_Pits.xlsx](Wiejaczka_Giachetti_Mazama_Pits.xlsx) | Original field workbook extracted unchanged from Zenodo archive | CC BY4.0; original Cleetwood field observations, not target eruption thicknesses |
 | [wiejaczka2022-data.zip](https://zenodo.org/api/records/5874666/files/Wiejaczka_Giachetti_2022_data.zip/content) | Complete original Wiejaczka and Giachetti2022 data archive | CC BY4.0;500 MB archive linked/hashed, workbook included separately |
+| [saban2023-thesis.pdf](https://scholarsbank.uoregon.edu/server/api/core/bitstreams/ddb83168-488c-422f-8d98-78a7542f3b84/content) | Saban2023, Holocene Vegetation, Drought, and Fire Variability in the Northern Great Basin, Oregon, University of Oregon PhD dissertation | Public repository copy; redistribution rights not established |
+| [skull-creek-blm-sections.json](skull-creek-blm-sections.json) | BLM Oregon PLSS, two enclosing Skull Creek sections | US federal data/report |
+| [lyman-epa.html](lyman-epa.html) | EPA Western Lake Survey Phase I, volume2; Lyman Lake site4B1-043 p.340 | US federal data/report |
+| [mehringer1987.pdf](https://archive.org/download/lateholoceneenvi9157mehr/lateholoceneenvi9157mehr.pdf) | Mehringer1987 Late-Holocene environments on the northern periphery of the Great Basin; BLM final report | Public repository copy; redistribution rights not established |

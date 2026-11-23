@@ -37,8 +37,10 @@ def prepare():
             EvidenceID=item['record_id'],Site=record['locality'],Reference=record['primary_reference'],
             Evidence=item['decision_basis'],Qualification=item['preservation_assumption'])
         rows.append(row); chosen[item['record_id']]={**item,'accepted_csv_row':len(rows)+1}
-    assert len(rows)==62 and sum(r['Kind']=='measurement' for r in rows)==42
-    assert len(chosen)==62
+    assert len(rows)==67 and sum(r['Kind']=='measurement' for r in rows)==43
+    assert len(chosen)==67
+    assert sum(r['Kind']=='lower_limit' for r in rows)==23
+    assert sum(r['Kind']=='upper_limit' for r in rows)==1
     write_csv(INPUT,rows)
     slump = lookup['M2023-YL16-6A']
     probe = {k:'' for k in rows[0]}
@@ -81,11 +83,14 @@ def prepare():
             influence_scope='No low-influence claim. Source support, not modeled volume, determines inclusion.'))
     write_csv(AUDIT/'model-selection.csv',[dict(record_id=r['EvidenceID'],accepted_csv_row=i,kind=r['Kind'],thickness_cm=r['Thickness'],limit_cm=r['Limit_cm'],latitude=r['Lat'],longitude=r['Lon'],decision_basis=r['Evidence'],qualification=r['Qualification']) for i,r in enumerate(rows,2)])
     write_csv(AUDIT/'site-evidence-decisions.csv',decisions)
-    definition='Source-qualified climactic Mazama airborne fallout reference: 42 reported point values and 20 conditional lower bounds. Compilation-supported values are not claimed independently primary-verified. The expanded bound review recovers primary components, preserved bed ranges and three georeferenced Camp Creek section groups; see BOUND_REVIEW.md. Seven additional georeferenced Yellowstone Lake locations use explicit4–5 mm beds from Morgan2023, paired cores counted once; see YELLOWSTONE.md. Nevada, Great Salt Lake, Goose Lake and Effingham Inlet add measured primary beds; Gold Lake contributes a conditional74 cm coarse-component minimum; see FOLLOWUP_SEARCH.md. One endpoint is used per physical reading, with separate range-endpoint, coherent weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds.'
-    provenance=dict(audit_date='2026-11-23',scope='Complete293-entry compilation reconciliation plus160 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.',
+    definition='Source-qualified climactic Mazama airborne fallout reference: 43 reported point values, 23 conditional lower bounds and one conditional upper bound. Compilation-supported values are not claimed independently primary-verified. Primary components, ranges and three Camp Creek section groups are documented in BOUND_REVIEW.md. Seven Yellowstone Lake locations use explicit 4–5 mm beds, paired cores counted once; see YELLOWSTONE.md. Nevada, Great Salt Lake, Goose Lake, Effingham Inlet and other lake/marine records are documented in FOLLOWUP_SEARCH.md. The final citation pass adds Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake; see LATE_SOURCE_REVIEW.md. One endpoint per physical reading; separate range-endpoint, weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds.'
+    provenance=dict(audit_date='2026-11-23',scope='Complete 293-entry compilation reconciliation plus 166 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.',
       original_input=dict(file='data/eruptions/Mazama_tephra.csv',sha256=sha(ROOT/'data/eruptions/Mazama_tephra.csv')),
       source=dict(file='data/sources/mazama/buckland2020-esm1.xlsx',sha256=sha(ROOT/'data/sources/mazama/buckland2020-esm1.xlsx'),doi='https://doi.org/10.1007/s00445-020-1362-1'),
-      cases={'principal':dict(file='data/eruptions/Mazama_reviewed.csv',sha256=sha(INPUT),n_measurements=42,n_lower_limits=20,n_upper_limits=0,definition=definition)},
+      cases={'principal':dict(file='data/eruptions/Mazama_reviewed.csv',sha256=sha(INPUT),n_measurements=43,n_lower_limits=23,n_upper_limits=1,definition=definition)},
+      principal_limits=[dict(evidence_id='MW1986-SKULL',interpreted_upper_cm=5,
+          derivation='Conservative outward ceiling from author-estimated primary fallout: indexed 2-5 cm supports <=5 cm under decimal2.5 or range2–5 reading. Not the25 cm reworked total.',
+          qualifications='Author estimate and phase containment conditional; scan typography unresolved; isolated omission and weaker10 cm upper tested.')],
       target='Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.',
       thickness_convention='Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.',
       coordinate_datum='Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.',

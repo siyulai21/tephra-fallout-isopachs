@@ -30,7 +30,7 @@ def render(output):
         for records,marker,color,size in [(other,'o','#b6c3c6',12),(known,'D','#6252a0',30),(tentative,'x','#bb703d',45)]:
             ax.scatter([float(r['longitude']) for r in records],[float(r['latitude']) for r in records],s=size,marker=marker,c=color,zorder=3)
         ax.scatter([float(r['longitude']) for r in controls],[float(r['latitude']) for r in controls],s=14,marker='s',facecolors='none',edgecolors='#abb3b5',linewidths=.6,zorder=2)
-        for kind,marker,color,size in [('measurement','o','#117c80',31),('lower_limit','^','#c14c32',55)]:
+        for kind,marker,color,size in [('measurement','o','#117c80',31),('lower_limit','^','#c14c32',55),('upper_limit','v','#4f62a5',60)]:
             a=[r for r in accepted if r['Kind']==kind]
             ax.scatter([float(r['Lon']) for r in a],[float(r['Lat']) for r in a],s=size,marker=marker,c=color,edgecolors='white',linewidths=.5,zorder=5)
         ax.scatter(-122.1,42.95,c='#182f38',marker='*',s=120,zorder=6)
@@ -47,8 +47,9 @@ def render(output):
     right.annotate('Ireland: tentative\nreassignment',(-9.505,53.05833),xytext=(-38,38),fontsize=8,arrowprops={'arrowstyle':'-','color':'#52686b'})
     handles=[Line2D([],[],ls='',marker=m,color=c,label=t) for m,c,t in [
         ('o','#117c80',f"{sum(r['Kind']=='measurement' for r in accepted)} fitted point values"),('^','#c14c32',f"{sum(r['Kind']=='lower_limit' for r in accepted)} conditional lower bounds"),
+        ('v','#4f62a5',f"{sum(r['Kind']=='upper_limit' for r in accepted)} conditional upper bound"),
         ('o','#b6c3c6','Other records, omitted from fitting'),('D','#6252a0','Reported cryptotephra'),('x','#bb703d','Tentative signals'),('s','#abb3b5','Coverage / other-event controls')]]
-    fig.legend(handles=handles,loc='lower center',bbox_to_anchor=(.5,.008),ncol=3,fontsize=9,frameon=False)
+    fig.legend(handles=handles,loc='lower center',bbox_to_anchor=(.5,.008),ncol=4,fontsize=8.5,frameon=False)
     fig.suptitle(f'Mazama: {len(ledger)} evidence records, {len(accepted)} fitting observations',fontsize=15,y=.98)
     fig.text(.5,.12,f"{sum(not r['latitude'] for r in ledger)} records lack decimal coordinates. Locations can be approximate; occurrence does not supply a numerical fallout limit.",ha='center',fontsize=9,color='#445b61')
     output.parent.mkdir(parents=True,exist_ok=True)

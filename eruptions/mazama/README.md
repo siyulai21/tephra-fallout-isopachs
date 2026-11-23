@@ -1,4 +1,4 @@
-> **Audit revision in progress:** the [new evidence ledger](../../data/audits/Mazama/README.md) and [Yellowstone core close-up](../../data/audits/Mazama/YELLOWSTONE.md) are available on this branch. The registered input now contains62 observations. Results below are the archived preceding release until all replacement fits, sensitivities and checks finish. Do not associate those older numbers with the new input.
+> **Audit revision in progress:** the [new evidence ledger](../../data/audits/Mazama/README.md) and [Yellowstone core close-up](../../data/audits/Mazama/YELLOWSTONE.md) and [final citation/Lyman review](../../data/audits/Mazama/LATE_SOURCE_REVIEW.md) are available on this branch. The registered input now contains67 observations. Results below are the archived preceding release until all replacement fits, sensitivities and checks finish. Do not associate those older numbers with the new input.
 
 # Mazama fallout reconstruction
 
