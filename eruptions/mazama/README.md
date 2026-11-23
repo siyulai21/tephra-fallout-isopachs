@@ -1,3 +1,5 @@
+> **Audit revision in progress:** the [new evidence ledger](../../data/audits/Mazama/README.md) and [Yellowstone core close-up](../../data/audits/Mazama/YELLOWSTONE.md) are available on this branch. The registered input now contains62 observations. Results below are the archived preceding release until all replacement fits, sensitivities and checks finish. Do not associate those older numbers with the new input.
+
 # Mazama fallout reconstruction
 
 The accepted dataset contains 45 exact measurements. The regional fits share an observation hull of 930,447 km². [Accepted thickness CSV](../../data/eruptions/Mazama_tephra.csv) · [Input provenance](../../data/eruptions/README.md)

@@ -2,7 +2,7 @@
 
 The dataset catalogue pairs each accepted CSV with its source audit and model settings. Use the case home for observation counts and results. [Dataset catalogue](datasets.json) · [Accepted CSVs](eruptions/README.md) · [Eruption results](../eruptions/README.md)
 
-The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. Mazama and Tambora use the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
+The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. Mazama has a separate source-qualified input and a453-record evidence ledger; Tambora uses the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
 
 ## CSV schema
 

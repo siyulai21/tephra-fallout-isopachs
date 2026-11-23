@@ -1,0 +1,18 @@
+{
+  "original_filename": "source-tests.tar.gz",
+  "original_bytes": 43218202,
+  "original_sha256": "cd84fe9131e827000ea3066460ee3570368db2bd7ea577198bfa73a7e95592df",
+  "parts": [
+    {
+      "file": "source-tests.tar.gz.part-01",
+      "bytes": 25165824,
+      "sha256": "7f657085fd45c4c94cd76cf43b4294ebe31fcfaebca82b52e034280348827df2"
+    },
+    {
+      "file": "source-tests.tar.gz.part-02",
+      "bytes": 18052378,
+      "sha256": "dff63f100358abf9d96ba0723694eb4aed161f6c20004cc3c40eb7a147abc325"
+    }
+  ],
+  "instruction": "Concatenate parts in listed order to reconstruct the byte-identical gzip tar archive, then verify original_sha256 before extraction."
+}
