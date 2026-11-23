@@ -1,6 +1,6 @@
 {
   "audit_date": "2026-11-23",
-  "scope": "All 293 original catalogue rows and 178 additional records, leads or controls. Verification level is recorded at each site.",
+  "scope": "All 293 original catalogue rows and 372 additional records, leads or controls. Verification level is recorded at each site.",
   "original_input": {
     "file": "data/eruptions/Mazama_tephra.csv",
     "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
@@ -13,14 +13,20 @@
   "cases": {
     "principal": {
       "file": "data/eruptions/Mazama_reviewed.csv",
-      "sha256": "9d26214fe1dac10f89560537198ce15c7077f3ec219ef90752d07bc694ac7020",
-      "n_measurements": 47,
-      "n_lower_limits": 24,
-      "n_upper_limits": 5,
-      "definition": "Climactic Mazama airborne bulk fallout. 47 point values, 24 lower bounds and five upper bounds are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews. Bounds and sensitivity alternatives are in the locality ledger."
+      "sha256": "4736759f284dc686ed1d091caedfec953f2fa8659a3fa9d0e988151a03af5cf4",
+      "n_measurements": 49,
+      "n_lower_limits": 143,
+      "n_upper_limits": 11,
+      "definition": "Climactic Mazama airborne bulk fallout. 49 point values, 143 lower limits and 11 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections and the Round Meadow borings. Bounds and sensitivity alternatives are in the locality ledger."
     }
   },
   "principal_limits": [
+    {
+      "evidence_id": "B2020-229",
+      "interpreted_upper_cm": 1,
+      "derivation": "Young Table 1.1 site 12 gives \u22641 cm. Mathews reported approximately 5 mm at 433 cm depth. Williams and Goles say he did not directly measure it and warned the Hiller borer smeared ash. Smearing invalidates the former 0.5 cm minimum.",
+      "qualifications": "Use Young\u2019s published upper equivalent if the original target mass is represented by the site estimate and original bulk density is at least 700 kg/m\u00b3. Lower density or net export can violate this ceiling. Other additive phases or imported material can inflate the ceiling. The upper endpoint additionally assumes no material lost by coring. Try the author\u2019s original 0.5 cm estimate separately."
+    },
     {
       "evidence_id": "MW1986-SKULL",
       "interpreted_upper_cm": 5,
@@ -50,6 +56,36 @@
       "interpreted_upper_cm": 50,
       "derivation": "The field guide describes a mature outwash soil and lag buried by approximately 50 cm of Mazama ash. A climactic portion of the retained package cannot exceed its total under the stated preservation assumptions.",
       "qualifications": "An approximate field ceiling. Requires retention of the climactic deposit and negligible net thinning/compaction; earlier or imported material could inflate the total. Double the ceiling and omit in sensitivities; exact face offset from the turnoff unreported."
+    },
+    {
+      "evidence_id": "B2020-004",
+      "interpreted_upper_cm": 5,
+      "derivation": "Young explicitly gives <5 cm for distal site 24. Buckland lists 5 cm. Preserve the strict source reading on the equivalent scale.",
+      "qualifications": "Use Young\u2019s published upper equivalent if the original target mass is represented by the site estimate and original bulk density is at least 700 kg/m\u00b3. Lower density or net export can violate this ceiling. Other additive phases or imported material can inflate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-264",
+      "interpreted_upper_cm": 25,
+      "derivation": "Young gives <25 cm at site 13. The catalogue reports a 12 cm local value and a 42\u201347 inch depth interval at Saskatchewan Crossing.",
+      "qualifications": "Use Young\u2019s published upper equivalent if the original target mass is represented by the site estimate and original bulk density is at least 700 kg/m\u00b3. Lower density or net export can violate this ceiling. Other additive phases or imported material can inflate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-290",
+      "interpreted_upper_cm": 5,
+      "derivation": "Young gives <5 cm at site 14. The Beverly terrace description includes one inch of ash below about three feet of soil. The catalogue carries 1.5 cm.",
+      "qualifications": "Use Young\u2019s published upper equivalent if the original target mass is represented by the site estimate and original bulk density is at least 700 kg/m\u00b3. Lower density or net export can violate this ceiling. Other additive phases or imported material can inflate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-232",
+      "interpreted_upper_cm": 5,
+      "derivation": "Young gives <5 cm for site 16. At the described eastern bluff a sharp basal contact and mixed gradational top make the total a conditional ceiling. Individual nearby river exposures remain distinguished.",
+      "qualifications": "Use Young\u2019s published upper equivalent if the original target mass is represented by the site estimate and original bulk density is at least 700 kg/m\u00b3. Lower density or net export can violate this ceiling. Other additive phases or imported material can inflate the ceiling."
+    },
+    {
+      "evidence_id": "R1967-BB326-36",
+      "interpreted_upper_cm": 4,
+      "derivation": "Four cm of glass-rich sediment is a conditional ceiling if this horizon captured the complete local signal and redeposition or background sediment added thickness.",
+      "qualifications": "Possible canyon transport, compaction, winnowing or incomplete retention could invalidate transfer to original airborne bulk. Compare omission. The mixed marine blanket has no positive numerical primary minimum."
     }
   ],
   "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
@@ -65,13 +101,13 @@
   },
   "preparation_script": {
     "file": "benchmarks/mazama.py",
-    "sha256": "6d609179e4de3225abbf91b350de13bee42687b99f1da895dcca6d5b5e209b16"
+    "sha256": "9b9f43a4b8ec82f45b40452b02aa467d10aa062e659f7b6841c313f60ca0107d"
   },
   "audit_artifacts": {
-    "model-selection.json": "3894bdc6e312ec6861a62137b8ed9d160097a06ba60cd1519c514b9265500f31",
-    "model-selection.csv": "3d4d5fb852c969243b6dec042d76899481767980d588204b94798d685822249a",
-    "site-evidence-decisions.csv": "195f1484a63f8a6addfbdc6ab4c8b00e95b33e9de67fbc56381cd66fc3bd8b02",
-    "revised-locality-ledger.csv": "6b118732b76528a015c738fd46cc18fcbe6cc9e37d54588aca795493092f048f",
-    "supplied-row-crosswalk.csv": "9ce6ff8aaca8c193dfb7f7abae1a6a85fc52484f9f5e9f0968f6f471e50bf4bc"
+    "model-selection.json": "69e54ba8a64c92dd70667913a74e36a4be16fb40e16619f05f803bd6659e476d",
+    "model-selection.csv": "c2b6ee6be269a420c3822dda7089b3f0bc4eea988a6258c333241cdab563a4ee",
+    "site-evidence-decisions.csv": "99d6588c473a27d5b4b1f2dde1d26587cb9f0c6a01635a9be0c7c1ab79d900dd",
+    "revised-locality-ledger.csv": "9fd67434cf02f954d4bb5404d692ec6807a570d38af8ae632c21c4f288c7126b",
+    "supplied-row-crosswalk.csv": "b12337d2f7564d9ab368da21beb3e6481b1c5cb95fbae30c229d67002ce6cae8"
   }
 }

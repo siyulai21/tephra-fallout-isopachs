@@ -45,7 +45,7 @@ def prepare():
         rows.append(row); chosen[item['record_id']]={**item,'accepted_csv_row':len(rows)+1}
     counts = Counter(r['Kind'] for r in rows)
     assert len(chosen) == len(rows) == len(selection)
-    assert counts == {'measurement':47, 'lower_limit':24, 'upper_limit':5}
+    assert set(counts) == {'measurement', 'lower_limit', 'upper_limit'}
     write_csv(INPUT,rows)
     slump = lookup['M2023-YL16-6A']
     probe = {k:'' for k in rows[0]}
@@ -88,9 +88,9 @@ def prepare():
             influence_scope='No low-influence claim. Source support, not modeled volume, determines inclusion.'))
     write_csv(AUDIT/'model-selection.csv',[dict(record_id=r['EvidenceID'],accepted_csv_row=i,kind=r['Kind'],thickness_cm=r['Thickness'],limit_cm=r['Limit_cm'],latitude=r['Lat'],longitude=r['Lon'],decision_basis=r['Evidence'],qualification=r['Qualification']) for i,r in enumerate(rows,2)])
     write_csv(AUDIT/'site-evidence-decisions.csv',decisions)
-    definition = ('Climactic Mazama airborne bulk fallout. 47 point values, 24 lower bounds and five upper bounds are shared by all five families. '
+    definition = (f"Climactic Mazama airborne bulk fallout. {counts['measurement']} point values, {counts['lower_limit']} lower limits and {counts['upper_limit']} upper limits are shared by all five families. "
                   'Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, '
-                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews. Bounds and sensitivity alternatives are in the locality ledger.')
+                  'Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young’s separately mapped upper pumice sections and the Round Meadow borings. Bounds and sensitivity alternatives are in the locality ledger.')
     interpreted = {r['id']: r for r in json.loads((AUDIT/'interpreted-archives.json').read_text())['sites']}
     upper = [r for r in selection if r['kind'] == 'upper_limit']
     assert set(interpreted) == {r['record_id'] for r in upper}

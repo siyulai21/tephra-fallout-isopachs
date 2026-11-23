@@ -52,21 +52,21 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 471
+    assert len(rows) == len({r['record_id'] for r in rows}) == 665
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
     accepted = list(csv.DictReader((ROOT / 'data/eruptions/Mazama_reviewed.csv').open()))
-    assert len(chosen) == len(accepted) == 76
-    assert sum(r['Kind'] == 'measurement' for r in accepted) == 47
-    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 24
-    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 5
+    assert len(chosen) == len(accepted) == 203
+    assert sum(r['Kind'] == 'measurement' for r in accepted) == 49
+    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 143
+    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 11
     assert float(lookup['S2023-DOG-OR']['bound_cm']) == 920 - 908
     assert float(lookup['S2023-WHITEPINE']['bound_cm']) == 79 - 54
     assert float(lookup['S2023-CONNLEY2']['bound_cm']) == 180 - 152
     assert float(lookup['MW1986-SKULL']['bound_cm']) == 5
     assert abs(float(lookup['W2016-LYMAN']['latitude']) - (48 + 11/60 + 30/3600)) < 1e-12
-    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 76
+    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 203
     for a, s in zip(accepted, chosen, strict=True):
         assert a['EvidenceID'] == s['record_id']
         assert float(a['Lat']) == float(s['latitude'])
@@ -82,6 +82,19 @@ def main(published=False):
         for key, dest in [('thickness_cm', 'Thickness'), ('limit_cm', 'Limit_cm')]:
             assert str(s[key]) == a[dest]
         assert a['Kind'] == s['kind'] and a['Pseudo'] == 'No' and not a['LogSD']
+    sections = list(csv.DictReader((HERE/'young1990-appendix1.csv').open()))
+    assert len(sections)==295 and len({r['site'] for r in sections})==138
+    c = {int(r['site']): r['upper_pumice_th_cm'] for r in sections if r['appendix_table']=='C'}
+    yaccepted=[r for r in accepted if r['EvidenceID'].startswith('Y1990-A')]
+    assert len(yaccepted)==103
+    for r in yaccepted:
+        raw=c[int(r['EvidenceID'].split('-A')[1])]
+        assert raw and 'J' not in raw and float(raw.replace('+','').strip())==float(r['Limit_cm'])
+        assert r['Kind']=='lower_limit'
+    assert 'Y1990-A150' not in {r['EvidenceID'] for r in accepted}
+    assert len(list(csv.DictReader((HERE/'young1990-distal.csv').open())))==25
+    for sid,x in [('W2015-RM-V2',290-210),('W2015-RM-V3',330-130),('Y1990-C-NEW',3),('C2014-WIL',87),('J2025-NTL',224-143-5),('B2020-229',1),('R1967-BB326-36',4)]:
+        assert float(lookup[sid]['bound_cm'])==x,sid
     assert lookup['B2020-274']['accepted_for_model'] == 'False'
     assert lookup['B2020-028']['accepted_for_model'] == 'False'
     assert lookup['B2020-107']['accepted_for_model'] == 'False'
@@ -117,7 +130,7 @@ def main(published=False):
     assert before == {name: digest(HERE / name) for name in outputs}
     queue = list(csv.DictReader((HERE / 'primary-source-work-queue.csv').open()))
     queued = {i for r in queue for i in r['record_ids'].split(';')}
-    assert queued == {r['record_id'] for r in rows[:293] if r['verification'] == 'compilation_checked_primary_pending'}
+    assert queued == {r['record_id'] for r in rows[:293] if r['verification'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending')}
     assert sum(int(r['record_count']) for r in queue) == len(queued)
     models = []
     if published:
@@ -134,9 +147,9 @@ def main(published=False):
                   independently_compared_source_cells=count, unique_source_records=293,
                   unique_revised_records=len(rows), additional_records=len(rows)-293, supplied_rows=52,
                   candidate_matches=45, excluded_pseudo_rows=7, principal_observations=len(accepted),
-                  principal_point_values=47, principal_lower_bounds=24, principal_upper_bounds=5, input_sha256=expected,
+                  principal_point_values=49, principal_lower_bounds=143, principal_upper_bounds=11, input_sha256=expected,
                   missing_decimal_coordinates=sum(not r['latitude'] for r in rows),
-                  compilation_only_original_records=len(queued), deterministic_rebuild=True,
+                  original_observer_pending_in_queue=len(queued), compilation_only_original_records=sum(r['verification']=='compilation_checked_primary_pending' for r in rows[:293]), deterministic_rebuild=True,
                   derived_output_sha256=before, published_model_input_checks=models,
                   primary_audit_complete=False,
                   test_and_navigation_results='See case results/source-audit/publication-checks.json; this checker does not invent test results.',

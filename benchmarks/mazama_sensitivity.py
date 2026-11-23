@@ -23,6 +23,13 @@ from src.empirical_isopach.visualization.deposit_integrals import independent_in
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES = {
+    'young-sections-omit': 'Omit the Young Appendix 1 upper-pumice sections together. The distinct modern measured locations retain their original treatment.',
+    'young-section-positions': 'Translate the Young Appendix 1 observations coherently to the alternative Kirk Hill registration tying Young section 47 to the modern equivalent Upper Kirk site. All measured values are unchanged.',
+    'young-distal-omit': 'Omit the three field-checked bog estimates, the five Young ceilings, and the Lofty Lake alternative-bearing record together. This tests the shared upland conversion and local preservation.',
+    'distal-transfer-alternates': 'Jesmond uses the original observer’s approximately 0.5 cm corer estimate under negligible smearing. Lofty uses Young’s 0.2 cm ceiling. The three field-checked peat estimates retain the principal endpoints.',
+    'round-meadow-one': 'Retain only vibracore 3 from the Round Meadow 2015 group. Its unambiguous 330–130 cm primary section tests the contribution of adjacent borings and less certain contacts.',
+    'offshore-omit': 'Omit the conditional Willapa Canyon ceiling. Marine reworking, compaction or export may decouple the 4 cm bed from local primary fallout.',
+    'western-field-omit': 'Omit the new Stillwater, North Twin Lake, Indian Prairie, Gold Lake Bog, Newberry and Walker Rim field studies together. Other Oregon sections and Young’s table remain in the likelihood.',
     'omit-bounds': 'Omit every conditional upper and lower bound. The remaining likelihood consists of measured beds.',
     'half-transfer': 'Halve the lower limits and double the upper limits together. This tests weaker preservation and original-to-recovered transfer across sites. A factor of two is a stress assumption.',
     'portage-upper': 'Replace the Portage lower endpoint of 1.27 cm with the upper endpoint of 1.905 cm. This one-sided approximation adds negligible loss and compaction assumptions.',
@@ -119,7 +126,31 @@ def prepare(root):
         folder = root / name
         folder.mkdir(parents=True, exist_ok=True)
         rows = [dict(r) for r in source]
-        if name == 'omit-bounds':
+        if name == 'young-sections-omit':
+            rows = [r for r in rows if not r['EvidenceID'].startswith('Y1990-A')]
+        elif name == 'young-section-positions':
+            points = {int(v['site']):v for v in csv.DictReader((AUDIT/'young1990-section-positions.csv').open())}
+            for r in rows:
+                if r['EvidenceID'].startswith('Y1990-A'):
+                    v = points[int(r['EvidenceID'].split('-A')[1])]
+                    r.update(Lon=v['upper_kirk_anchor_longitude'], Lat=v['upper_kirk_anchor_latitude'],
+                             Qualification='Alternative coherent registration using the author-identified equivalent section 47.')
+        elif name == 'young-distal-omit':
+            ids = {f'B2020-{n:03}' for n in (4,63,68,76,229,232,264,290,291)}
+            rows = [r for r in rows if r['EvidenceID'] not in ids]
+        elif name == 'distal-transfer-alternates':
+            for r in rows:
+                if r['EvidenceID']=='B2020-229':
+                    r.update(Kind='measurement', Thickness=.5, Limit_cm='', Evidence='Mathews approximate 5 mm with smearing reported. Tests the assumption that the apparent thickness represents the complete bed.')
+                elif r['EvidenceID']=='B2020-291':
+                    r.update(Kind='upper_limit', Limit_cm=.2, Evidence='Young Table 1.1 gives ≤0.2 cm at the upland reference density.')
+        elif name == 'round-meadow-one':
+            rows = [r for r in rows if not r['EvidenceID'].startswith('W2015-RM-') or r['EvidenceID']=='W2015-RM-V3']
+        elif name == 'offshore-omit':
+            rows = [r for r in rows if r['EvidenceID']!='R1967-BB326-36']
+        elif name == 'western-field-omit':
+            rows = [r for r in rows if not r['EvidenceID'].startswith(('W2015-RM-','C2014-','SW1995-','J2025-NTL','BC2010-8','Y1990-C-'))]
+        elif name == 'omit-bounds':
             rows = [r for r in rows if r['Kind'] == 'measurement']
         elif name == 'half-transfer':
             for r in rows:

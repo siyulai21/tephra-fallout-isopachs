@@ -1,4 +1,4 @@
-> **Audit in progress.** The [471-record ledger](../../data/audits/Mazama/revised-locality-ledger.csv) and [preserved-bed and cryptotephra calculations](../../data/audits/Mazama/THICKNESSLESS_SITES.md) cover the 76-observation input. Young’s full 1990 thesis has since been located. The models below come from the preceding 45-measurement release.
+> **Revised input and maps.** The [665-record evidence ledger](../../data/audits/Mazama/revised-locality-ledger.csv) yields [203 fitting observations](../../data/eruptions/Mazama_reviewed.csv). The [Yellowstone core map](../../data/audits/Mazama/YELLOWSTONE.md) and [Young section audit](../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) document the field evidence. The numerical results shown below still use the archived 45-measurement input while the five families are being refitted.
 
 # Mazama fallout reconstruction
 

@@ -53,7 +53,7 @@ def render(output):
     fig.suptitle(f'Mazama: {len(ledger)} evidence records, {len(accepted)} fitting observations',fontsize=15,y=.98)
     fig.text(.5,.12,f"{sum(not r['latitude'] for r in ledger)} records lack decimal coordinates. Locations can be approximate; occurrence does not supply a numerical fallout limit.",ha='center',fontsize=9,color='#445b61')
     output.parent.mkdir(parents=True,exist_ok=True)
-    metadata=dict(ledger_sha256=sha(AUDIT/'revised-locality-ledger.csv'),input_sha256=sha(INPUT),coastline_sha256=sha(ASSET),source='Numeric source locations; no new positions digitized from figures',unlocated_records=sum(not r['latitude'] for r in ledger))
+    metadata=dict(ledger_sha256=sha(AUDIT/'revised-locality-ledger.csv'),input_sha256=sha(INPUT),coastline_sha256=sha(ASSET),source='Source coordinates and qualified site proxies. Young sections, Stillwater, the Oregon fens and other digitized localities carry separate georeferencing evidence.',unlocated_records=sum(not r['latitude'] for r in ledger))
     fig.savefig(output,dpi=160,metadata={'Description':json.dumps(metadata,sort_keys=True)})
     plt.close(fig)
     output.with_suffix('.json').write_text(json.dumps(metadata,indent=2)+'\n')

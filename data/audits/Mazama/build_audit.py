@@ -98,6 +98,7 @@ def main():
     write_csv('buckland2020-293-localities.csv', raw)
     (HERE/'buckland2020-cells.json').write_text(json.dumps(raw, ensure_ascii=False, indent=2)+'\n')
     decisions = json.loads((HERE/'review-decisions.json').read_text())
+    followup = json.loads((HERE/'young1990-review.json').read_text())
     records = []
     for r in raw:
         i = r['buckland_id']
@@ -133,8 +134,10 @@ def main():
         if 'pers comm' in str(r['references_raw']).lower():
             record['caveats'] += ' Personal communication cited; original field record not available in this audit.'
         record.update(decisions.get(str(i), {}))
+        record.update(followup['revisions'].get(str(i), {}))
         records.append(record)
     records.extend(json.loads((HERE/'additional-records.json').read_text()))
+    records.extend(followup['additional'])
     assert len({r['record_id'] for r in records}) == len(records)
     for r in records:
         assert r.get('accepted_for_model') is False
@@ -181,13 +184,13 @@ def main():
     groups = {}
     legacy = {r['record_id'] for r in crosswalk if r['record_id']}
     for r in records[:293]:
-        if r['verification'] == 'compilation_checked_primary_pending':
+        if r['verification'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending'):
             groups.setdefault(r['primary_reference'], []).append(r['record_id'])
     write_csv('primary-source-work-queue.csv', [
         dict(source_citation=citation, record_ids=';'.join(ids),
              legacy_input_record_ids=';'.join(i for i in ids if i in legacy),
              principal_input_record_ids=';'.join(i for i in ids if i in selection),
-             status='not independently verified; not necessarily inaccessible',
+             status='Original observer’s record pending. Review level is recorded separately for each locality in the ledger.',
              priority='principal input' if any(i in selection for i in ids) else ('legacy input' if any(i in legacy for i in ids) else 'catalogue'),
              record_count=len(ids)) for citation, ids in sorted(groups.items())])
     later=workbook_rows(SOURCES/'buckland2022-esm3.xlsx','sheet2.xml')

@@ -6,7 +6,7 @@
 
 The target includes the primary climactic fallout, including co-ignimbrite ash. Incomplete primary beds can give a minimum when recognizable ash was deposited in place. A stratigraphic bracket or mixed package can supply a ceiling conditional on containment of the original fall, sufficient capture and negligible thinning. The ledger retains depths, measurements, interpretations, coordinates, dating material and eruption assignments separately.
 
-| Record | Original observation | Interpretation in the 76-site trial |
+| Record | Original observation | Interpretation retained from the 76-site trial |
 |---|---|---|
 | Deep Creek, British Columbia, B2020-206 | Dyck et al. 1965 p. 33 collected organic muck at 65–70 and 75–80 cm on opposite sides of the 70 cm ash horizon. A second ash occurs at 40 cm. | ≤5 cm from 75 − 70. Age-based correlation, loss, compaction and the possibility of dispersed ash beyond the bed qualify the transfer. |
 | Medicine Lake, California, S2003-MEDICINE | Mazama at 147.5 cm falls between different tephras sampled at 137.5 and 151.25 cm. Nathenson et al. 2007 Table 2 and Starratt et al. identify the horizons. | ≤13.75 cm from the outer samples under stratigraphic continuity, negligible contraction and complete capture. The alternative 2.5 cm literature figure has a different verification status. |
@@ -34,5 +34,4 @@ The original counts specify which component reached the sampler. For a selected 
 
 The [Lake Superior counts](cryptotephra-profile-samples.csv), [Jensen workbook cells](jensen2021-fine-profiles.csv) and [NorthGRIP grain measurements](northgrip-axes.csv) reproduce the [numerical calculations](../../../benchmarks/mazama_profile_indices.py). The archived result includes simultaneous 95% counting intervals under a Poisson model, background and window tests, conditional wet-mass ceilings, and particle-volume illustrations. The assumptions differ by archive and are retained beside each result. The B-Tm case's published calibration uses different material, size recovery, units and sediment conditions. No independent common response floor was established for that transfer.
 
-The evidence map and site ledger retain positive traces and unreported occurrences. Young’s distal table uses an author-specified 700 kg/m³ upland convention. Its measured estimates, inequalities and trace symbols require a separate site-by-site reading of the scanned source.
-
+The 25 distal readings in Young’s thesis retain their original trace symbols, inequalities and reference density of 700 kg/m³. His proximal section tables provide additional primary-component minima. The site-by-site decisions also cover nearby Oregon wetland and peat records. [Young and the field sections](YOUNG_AND_FIELD_SECTIONS.md) · [Raw distal readings](young1990-distal.csv)
