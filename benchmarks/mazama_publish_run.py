@@ -93,9 +93,9 @@ def main():
     update_inventory()
     save(extra/'publication-input.json',dict(input_sha256=sha(INPUT),observations=len(list(csv.DictReader(INPUT.open()))),
         principal_sources={name:sha(HOME/name) for name in ('report.json','nested-isopachs/deposit.json',
-            'spherical-mixture/deposit.json','directional/deposit.json')},prior_evidence_revision='d1c3bf72076ecd2a5f2cf3f09887dde8dc9f4545'))
+            'spherical-mixture/deposit.json','directional/deposit.json')},prior_evidence_revision='929f26864cce78ff71a9af52492492094784f583'))
     checkpoint=HOME.parent/'audit-run'
-    if checkpoint.exists() and read(checkpoint/'nested-map.json')['input_sha256'] in {sha(INPUT), '8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe'}:
+    if checkpoint.exists() and read(checkpoint/'nested-map.json')['input_sha256'] in {sha(INPUT), 'caeb106f5e3e9e835c8569da245cefdbbfa58de7c26ce88636f59fa51221d2db', '8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe'}:
         shutil.rmtree(checkpoint)
     print('Prepared Mazama reports and cross-eruption summaries for verification.',flush=True)
 

@@ -52,21 +52,21 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 713
+    assert len(rows) == len({r['record_id'] for r in rows}) == 733
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
     accepted = list(csv.DictReader((ROOT / 'data/eruptions/Mazama_reviewed.csv').open()))
-    assert len(chosen) == len(accepted) == 236
-    assert sum(r['Kind'] == 'measurement' for r in accepted) == 57
-    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 152
-    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 27
+    assert len(chosen) == len(accepted) == 244
+    assert sum(r['Kind'] == 'measurement' for r in accepted) == 58
+    assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 153
+    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 33
     assert float(lookup['S2023-DOG-OR']['bound_cm']) == 920 - 908
     assert float(lookup['S2023-WHITEPINE']['bound_cm']) == 79 - 54
     assert float(lookup['S2023-CONNLEY2']['bound_cm']) == 180 - 152
     assert float(lookup['MW1986-SKULL']['bound_cm']) == 5
     assert abs(float(lookup['W2016-LYMAN']['latitude']) - (48 + 11/60 + 30/3600)) < 1e-12
-    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 236
+    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 244
     for a, s in zip(accepted, chosen, strict=True):
         assert a['EvidenceID'] == s['record_id']
         assert float(a['Lat']) == float(s['latitude'])
@@ -96,6 +96,12 @@ def main(published=False):
     for sid,x in [('W2015-RM-V2',290-210),('W2015-RM-V3',330-130),('Y1990-C-NEW',3),('C2014-WIL',87),('J2025-NTL',224-143-5),('B2020-229',1),('R1967-BB326-36',4)]:
         assert float(lookup[sid]['bound_cm'])==x,sid
     by_id = {row['EvidenceID']:row for row in accepted}
+    for sid, value in {'M2018-OVERLAND':8,'M2018-SOLDIER':4,'J2025-GSL4':1,'W2016-LYMAN':4}.items():
+        assert float(by_id[sid]['Thickness']) == value
+    mapped = json.loads((HERE/'evidence-map.json').read_text())
+    assert mapped['ledger_sha256'] == digest(HERE/'revised-locality-ledger.csv')
+    assert mapped['input_sha256'] == digest(ROOT/'data/eruptions/Mazama_reviewed.csv')
+
     for sid, contacts in {'CH2008-THU':(170,202),'CH2008-WIN':(287,373),'HER2014-DIS':(593,734),
             'HER2014-HOR':(178,389),'HER2014-RRL':(278,439),'ROS2004-FRO':(155,163),
             'ROS2004-EAG':(81,96),'CH2008-RED':(409,520),'SP2007-THU':(320.5,440),
@@ -107,6 +113,11 @@ def main(published=False):
         assert float(by_id[sid]['Thickness'])==mass
     for sid, limit in [('B2020-129',456-315),('B2020-141',605-500),('B2020-147',1080),('R1982-KOOT-776',1.5+.5)]:
         assert float(by_id[sid]['Limit_cm'])==limit
+    assert float(by_id['MWB07-PAT']['Thickness'])==123-122
+    for sid,threshold in {'FLV93-C1':2,'FLV93-C7':2.5,'FLV93-T206':.1,'FLV94-FC-AUG':1,
+            'MWB07-LIL':774-729,'MWB07-DH':140-113,'B2020-079':368-364}.items():
+        assert float(by_id[sid]['Limit_cm'])==threshold
+    assert not {'MWB07-PAT-LLAO','FLV94-FC-225','P13-C2','P13-C5','KB96-WASHOE','BGH05-WADS'} & by_id.keys()
     ages=list(csv.DictReader((HERE/'egan-age-crosswalk.csv').open()))
     assert len(ages)==83 and len({r['lab_id'].upper() for r in ages[:81]})==81
     assert all(set(filter(None,r['candidate_ledger_ids'].split('|')))<=lookup.keys() for r in ages)

@@ -16,6 +16,8 @@ The target includes the primary climactic fallout, including co-ignimbrite ash. 
 
 Skull Creek's 5 cm estimate, the Portage endpoints, the lower limits on individual proximal units and the grouped Camp Creek profiles have their own [field derivations](BOUND_REVIEW.md). Lyman Lake has a measured 4 cm bed and a separate wash deposit. [Lyman and other dated horizons](LATE_SOURCE_REVIEW.md)
 
+The dated core brackets, Kootenai minimum and further lake ceilings have separate field derivations. The Great Basin review digitizes labelled bed contacts and contrasts these with redeposited cave lenses. [Dated sections](DATED_SECTIONS.md) · [Lakes and additional sections](LAKE_AND_FIELD_RECORDS.md) · [Great Basin field and core evidence](GREAT_BASIN.md)
+
 ## Counts and the size of the recovered component
 
 The original counts specify which component reached the sampler. For a selected set of nonoverlapping bins of width Δz, the volume-based inventory is the sum of concentration times Δz. Counts per gram multiplied only by Δz retain their original wet or dry mass basis. A complete dry mass balance must establish the horizontal area, retained target fraction and original bulk density. A proposed original thickness t requires effective response k ≤ J⁺/t for an upper reading J⁺. Each numerical profile includes response requirements for 0.5, 1, 5 and 10 cm.

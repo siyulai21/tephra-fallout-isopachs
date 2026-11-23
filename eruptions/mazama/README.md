@@ -1,8 +1,8 @@
 # Mazama source audit and model update
 
-The revised ledger contains 713 evidence records. The current input contains 236 observations, with 57 measured beds, 152 lower bounds and 27 upper bounds. The original field logs supply the Yellowstone, Nevada, Utah and Lyman Lake measurements, Young's mapped sections and two newly located lake beds in the UBC Research Forest. [Audit and sources](../../data/audits/Mazama/README.md) · [Accepted observations](../../data/eruptions/Mazama_reviewed.csv) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md)
+The revised ledger contains 733 evidence records. The current input contains 244 observations, with 58 measured beds, 153 lower bounds and 33 upper bounds. The original field logs supply the Yellowstone, Nevada, Utah and Lyman Lake measurements, Young's mapped sections and the corrected UBC Research Forest lakes and eight additional Great Basin and Carp Lake constraints. [Audit and sources](../../data/audits/Mazama/README.md) · [Accepted observations](../../data/eruptions/Mazama_reviewed.csv) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md) · [Great Basin field logs](../../data/audits/Mazama/GREAT_BASIN.md)
 
-[Regional and nested model checkpoint on 230 observations](audit-run/README.md) · [GitHub recalculations](https://github.com/siyulai21/tephra-fallout-isopachs/actions/workflows/mazama-recompute.yml)
+[Earlier 236-observation results](audit-run/README.md) · [GitHub recalculations](https://github.com/siyulai21/tephra-fallout-isopachs/actions/workflows/mazama-recompute.yml)
 
 ## Archived model comparison on 45 measurements
 

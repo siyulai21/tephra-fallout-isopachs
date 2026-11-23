@@ -4,29 +4,31 @@
 
 [Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)
 
-The audit reconciles all 293 entries in the Buckland et al. (2020) supplement and 420 additional observations, sample records and controls. The source workbook contains 4,395 checked locality cells. The 52-row supplied project table had 45 candidate field matches and seven contour-construction points. The revised input contains **236 observations, comprising 57 measured beds, 152 lower limits and 27 upper limits**. Each likelihood has a source identity, coordinates and a geological interpretation. [713-record locality ledger](revised-locality-ledger.csv) · [Reviewed fitting input](../../eruptions/Mazama_reviewed.csv) · [Site decisions](site-evidence-decisions.csv) · [Provenance and hashes](provenance.json)
+The audit reconciles all 293 entries in the Buckland et al. (2020) supplement and 440 additional observations, sample records and controls. The source workbook contains 4,395 checked locality cells. The 52-row supplied project table had 45 candidate field matches and seven contour-construction points. The revised input contains **244 observations, comprising 58 measured beds, 153 lower limits and 33 upper limits**. Each likelihood has a source identity, coordinates and a geological interpretation. [733-record locality ledger](revised-locality-ledger.csv) · [Reviewed fitting input](../../eruptions/Mazama_reviewed.csv) · [Site decisions](site-evidence-decisions.csv) · [Provenance and hashes](provenance.json)
 
 Young’s complete thesis contributed 103 mapped upper-pumice sections to the principal fit. The 25 separately numbered distal entries retain his field-check flags and 700 kg/m³ density convention. The follow-up also distinguishes primary pumice from floated pumice in Oregon borings, revisits borehole locations, and records the possible offshore Willapa bed. [Young and the additional field studies](YOUNG_AND_FIELD_SECTIONS.md) · [Thicknessless-site derivations](THICKNESSLESS_SITES.md) · [Input before Young](history/2026-11-23-before-young/README.md)
 
-The original observer’s record remains pending for 207 entries checked only against the compilation and 17 checked against Young’s own compilation. Fifteen and six of those records, respectively, enter the conditional fit. Some other entries have primary evidence for identity or location with incomplete thickness verification. The ledger retains the verification grade for each site. The bibliography search records its retrieval outcome for all 137 references. [Bibliography search](bibliography-screen.csv) · [Outstanding original-source checks](primary-source-work-queue.csv) · [Search history](SEARCH_AND_GAPS.md)
+The original observer’s record remains pending for 202 entries checked only against the compilation and 17 checked against Young’s own compilation. Twelve and six of those records, respectively, enter the conditional fit. Some other entries have primary evidence for identity or location with incomplete thickness verification. The ledger retains the verification grade for each site. The bibliography search records its retrieval outcome for all 137 references. [Bibliography search](bibliography-screen.csv) · [Outstanding original-source checks](primary-source-work-queue.csv) · [Search history](SEARCH_AND_GAPS.md)
 
 The radiocarbon citation crosswalk covers all 81 laboratory entries and both ice-core estimates in Egan’s two tables. Checking the original logs recovered two measured British Columbia beds and four additional conditional field or archive bounds. [Dated sections and their locations](DATED_SECTIONS.md) · [Laboratory age crosswalk](egan-age-crosswalk.csv)
+
+The Great Basin and Carp Lake review adds eight quantitative observations. It checks the 5 cm Oregon Fish Lake bed, distinguishes the two Nevada Fish Lake Valley cores from it and documents redistributed Paisley Cave ash. [Great Basin field and core records](GREAT_BASIN.md)
 
 ## Deliverables
 
 | Artifact | Contents |
 |---|---|
-| [Revised locality ledger](revised-locality-ledger.csv) | All 713 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
+| [Revised locality ledger](revised-locality-ledger.csv) | All 733 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
 | [Readable locality register](LOCALITIES.md) | Compact GitHub-readable index of every record |
 | [Original published catalogue](buckland2020-293-localities.csv) | All 293 entries and all 15 original data columns, with Excel row identities |
 | [Original cells](buckland2020-cells.json) | Scalar values including nulls; preserves source spelling and numeric precision |
 | [Project-to-source crosswalk](supplied-row-crosswalk.csv) | All 52 supplied rows; both data-row and physical CSV-line numbers; seven pseudo rows excluded |
-| [Additional records](additional-localities.csv) | 166 additional records/leads/controls; includes separate cores, correlated profiles and possible duplicates, not 166 independent new sites |
+| [Additional records](additional-localities.csv) | 440 additions and controls, including separate cores, correlated profiles, aliases and possible duplicates |
 | [Ranges and bounds](bounds-and-ranges.csv) | Source-qualified preserved-deposit quantities; no invented trace thresholds |
 | [Unquantified occurrences](occurrences-and-traces.csv) | Traces, cryptotephras, tentative signals and records without thickness |
 | [2022 reuse comparison](buckland2022-input-comparison.csv) | Later model-input table, including changed 1 cm values; not independent field evidence |
 | [Bibliography](compilation-bibliography.csv) | Complete transcribed S1 reference list; a citation is not a claim of verification |
-| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 79 retrieved source payloads: 44 bundled and 35 linked without redistributing their full text |
+| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 163 retrieved source payloads, including 58 bundled originals and 105 linked with their checksums |
 | [Search and remaining work](SEARCH_AND_GAPS.md) | Search scope, additional leads, failed retrievals and priority unresolved records |
 | [Data dictionary](DATA_DICTIONARY.md) | Quantity, evidence, coordinate and decision semantics |
 
@@ -51,7 +53,7 @@ The seven pseudo rows are retained only in the historical snapshot/crosswalk, ne
 
 ## Newly recovered thin beds and lake records
 
-[Yellowstone Lake](YELLOWSTONE.md) documents all ten4–5 mm ash cores at eight locations; seven locations enter the principal fit, with paired cores counted once and the deformed core tested separately. [The follow-up source review](FOLLOWUP_SEARCH.md) includes Overland8 cm, Soldier4 cm, Great Salt Lake1 cm, Goose1 cm, Effingham0.5 cm, further Rainier and coastal lake records, conditional component minima, and explicit reasons for retaining other numeric beds outside the fit. The original sources distinguish primary ash from later sediment transport.
+[Yellowstone Lake](YELLOWSTONE.md) documents all ten 4–5 mm ash cores at eight locations; seven locations enter the principal fit, with paired cores counted once and the deformed core tested separately. [The follow-up source review](FOLLOWUP_SEARCH.md) includes Overland 8 cm, Soldier 4 cm, Great Salt Lake 1 cm, Goose 1 cm, Effingham 0.5 cm, further Rainier and coastal lake records, conditional component minima, and explicit reasons for retaining other numeric beds outside the fit. The original sources distinguish primary ash from later sediment transport.
 
 The [final citation pass and Lyman review](LATE_SOURCE_REVIEW.md) adds five fitting locations and six ledger records/controls. It also reopens Connley Cave and Montana facies decisions, and preserves the Blue Lake redeposition evidence.
 
@@ -103,7 +105,7 @@ The [Williams Lake Fen note](WILLIAMS_FEN.md) supplements the frozen fitting led
 
 The [range/bound table](bounds-and-ranges.csv) separates **bounds on the preserved bed** from bounds on original fallout. Explicit “up to” or “less than” descriptions yield qualified preserved-bed bounds, for example Cypress Hills<10 cm, Mica Creek≤5.08/10.16 cm, Calgary≤10 cm and Brule approximately≤2 cm. These do not become atmospheric-deposition likelihoods merely because an inequality can be written down. Redistribution can add material, erosion can remove it, and weathering/compaction can alter thickness. The [initial expanded review](BOUND_REVIEW.md) admitted14 conditional lower bounds, including primary components, range minima and three Camp Creek section groups. Each requires an explicit preservation transfer. The original four source tests cover omission, coherent half-transfer, the Portage upper endpoint and alternate Independence/Cleveland/Newman upper endpoints. The35–40 cm Upper Kirk UPU range does not cap the total climactic package.
 
-A trace, isolated patch, absence of visible ash, ash-rich soil, shard count, shard diameter, core sampling interval or chemical anomaly alone cannot determine a numerical bulk-thickness limit. Detection depends on sampling volume, preparation, grain-size recovery, concentration and preservation. No missing observation becomes zero. No shard-count-to-thickness conversion is attempted without the required mass, area, recovery and density information.
+A trace, isolated patch, absence of visible ash, ash-rich soil, shard count, shard diameter, core sampling interval or chemical anomaly alone cannot determine a numerical bulk-thickness limit. Detection depends on sampling volume, preparation, grain-size recovery, concentration and preservation. No missing observation becomes zero. The detailed profiles include inventories, counting intervals and conditional mass or particle-volume calculations. Bulk field thickness requires enough information on mass, area, recovery and density. [Cryptotephra calculations and calibration limits](THICKNESSLESS_SITES.md)
 
 Chronologies retain their original meanings. Conventional radiocarbon years are not calendar years. Local age models are distinct from imported eruption ties, and old-carbon/reworking caveats remain attached. NGRIP's 7562±35 a b1.95k on GICC 05 is not silently averaged with GISP2's older 7627±150 estimate or later 7572±18 chronologies. All ice ages used here identify their 1950 datum. Unknown local ages remain unknown even where a Mazama correlation is reported.
 
@@ -115,7 +117,7 @@ Felker Lake is now an occurrence record: the2011 primary text reports microprobe
 
 Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 713 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 236 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json)
+An independent extraction checks all 4,395 source workbook cells, 293 original rows, 733 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 244 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 163 original payloads verified locally](original-payload-verification.json)
 
 Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
 

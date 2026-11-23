@@ -5,6 +5,10 @@ on:
     paths: [data/audits/Mazama/recompute-request.json]
   workflow_dispatch:
 
+concurrency:
+  group: mazama-recompute-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -18,6 +22,9 @@ env:
 
 jobs:
   plan:
+    permissions:
+      contents: read
+      actions: write
     runs-on: ubuntu-latest
     outputs:
       sources: ${{ steps.plan.outputs.sources }}
@@ -32,6 +39,26 @@ jobs:
         run: |
           python -c "import hashlib,json,pathlib; p=pathlib.Path('data'); r=json.loads((p/'audits/Mazama/recompute-request.json').read_text()); assert hashlib.sha256((p/'eruptions/Mazama_reviewed.csv').read_bytes()).hexdigest()==r['input_sha256']"
           python -m benchmarks.mazama_recompute list >> "$GITHUB_OUTPUT"
+      - name: Retire superseded fits for the same Mazama branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          ref=os.environ['GITHUB_REF_NAME']
+          repo=os.environ['GITHUB_REPOSITORY']
+          request=json.loads(pathlib.Path('data/audits/Mazama/recompute-request.json').read_text())
+          for previous in request.get('superseded_runs', []):
+              url=f"repos/{repo}/actions/runs/{int(previous['run_id'])}"
+              old=json.loads(subprocess.check_output(['gh','api',url]))
+              same=old['head_branch']==ref and old['head_sha']==previous['head_sha'] and old['name']=='Recompute audited Mazama'
+              if same and old['status'] in {'in_progress','queued','waiting','pending','requested'}:
+                  cancel=subprocess.run(['gh','api','--method','POST',url+'/cancel'])
+                  if cancel.returncode:
+                      current=json.loads(subprocess.check_output(['gh','api',url]))
+                      if current['status']!='completed':
+                          print('Earlier run is still finishing. Its immutable input differs from this run.')
+          PY
 
   regional:
     needs: plan

@@ -1,17 +1,17 @@
-# Mazama model rerun on 230 audited observations
+# Mazama model results on 236 observations
 
-The regional GP, cubic spline and global nested-isopach fits below use the same previous 230-observation input, SHA-256 `8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe`. The current audit adds six observations. This checkpoint preserves the estimates from the preceding input.
+The two regional fits and the global nested-isopach fit use 57 measured beds, 152 lower bounds and 27 upper bounds. These results include the six observations recovered through the dating and field-log audit. The nested result integrates the finite-spread continuation. The geographic scores use independent held-out regions. [Input and original evidence](../../../data/audits/Mazama/README.md) · [Full five-family calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45255144401)
 
-| Fit | Domain | Integrated median surface, km³ | Conditional 95% volume interval, km³ |
-|---|---|---:|---:|
-| GP ensemble | 1,476,452 km² observation hull | 536.14 | 381.43–920.31 |
-| Cubic spline | Same hull | 1,187.83 | 1,798.53–8,133,342.98 |
-| Bayesian nested isopachs | Earth, conditional continuation | 282.14 | 184.84–766.72 |
+| Method | Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) | Held-out score ↓ | 95% coverage of withheld measured beds |
+|---|---|---:|---:|---:|---:|
+| GP ensemble | 1,476,452 km² observation hull | 471.43 | 367.77–1,006.00 | 1.145 | 68.4% |
+| Cubic spline | 1,476,452 km² observation hull | 1,130.37 | 1,665.21–6,420,775.27 | 1.066 | 78.9% |
+| Bayesian nested isopachs | Earth, conditional continuation | 262.71 | 181.80–823.50 | 1.064 | 70.2% |
 
-The regional held-out log RMSE is 4.060 for the GP and 4.838 for the spline. Their 95% observation intervals cover 40.0% and 72.7% of exact observations in the geographic tests. The spline integration fails its refinement criterion; the complete-draw interval and integral of its pointwise median are different statistics. Sparse directions, archival transfer and numerical sensitivity matter for interpretation. [Regional fit and folds](regional-report.json) · [Nested interval and validation](nested-extent.json) · [Nested map integration](nested-map.json)
+The spline volume and its draw interval failed their numerical refinement checks. Integrating a pointwise median surface and taking quantiles of whole-deposit draws give different statistics. Held-out coverage is below 95% for all three methods. The support screen admits no observed regional contour band. [Regional fit and folds](regional-report.json) · [Nested uncertainty and validation](nested-extent.json) · [Independent integration checks](nested-map.json)
 
-![Matched regional isopachs](regional-isopachs.png)
+![Regional isopachs](regional-isopachs.png)
 
 ![Conditional nested-isopach deposit](nested-deposit.png)
 
-[Source ledger](../../../data/audits/Mazama/revised-locality-ledger.csv) · [230 observations used here](https://github.com/siyulai21/tephra-fallout-isopachs/blob/5fa6cae5a4e17636dd878b2776b9f71a837601e4/data/eruptions/Mazama_reviewed.csv) · [Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md)
+[Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md) · [Current evidence map](../../../data/audits/Mazama/evidence-map.png) · [Young field sections](../../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Preceding 230-observation results](https://github.com/siyulai21/tephra-fallout-isopachs/tree/5fa6cae5a4e17636dd878b2776b9f71a837601e4/eruptions/mazama/audit-run)

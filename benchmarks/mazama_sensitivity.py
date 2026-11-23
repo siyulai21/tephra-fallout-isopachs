@@ -12,6 +12,7 @@ from pathlib import Path
 import numpy as np
 
 from benchmarks.mazama import INPUT, AUDIT, sha, write_csv
+from benchmarks.mazama_great_basin import BASIN_IDS
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.models.extent_integrals import integrate
@@ -24,7 +25,9 @@ from src.probabilistic_isopach.global_volume import EarthDomain
 
 DATED_IDS={'B2020-129','B2020-141','B2020-147','B2020-203','B2020-251','R1982-KOOT-776'}
 CASES = {
-    'dated-sections-omit': 'Omit the two corrected UBC Research Forest beds, both dated host brackets, the complete Huff archive and the Kootenai pit. Reproduces the preceding 230 observations.',
+    'great-basin-omit': 'Omit the eight additional quantitative observations in the Great Basin and Carp Lake source review. The predecessor had 236 observations.',
+    'great-basin-alternate': 'Read the Leidy trench at its upper endpoint, omit the less clean first peat hole, double the second cap to test net loss and move the Furnace auger to a corner of its mapped frame. Treat Patterson and Fish as lake ceilings, omit the assumed Lily bed and use the 26 cm Table 1 Dead Horse endpoint. Carp uses the 2 cm compiler alternative.',
+    'dated-sections-omit': 'Omit the two corrected UBC Research Forest beds, both dated host brackets, the complete Huff archive and the Kootenai pit. The other reviewed regions are retained.',
     'dated-capture-alternate': 'Allow net focusing in both UBC lake beds by treating them as maxima. Allow half capture at Waits and Huff. Replace the Hager mire with the central core host ceiling. Use only basal BCV1 and the western Kootenai section centre.',
     'kootenai-position-east': 'Move the single Kootenai pit likelihood to the eastern section centre without altering its component minimum.',
     'lake-field-omit': 'Omit the final lake-core and Mount Baker/Three Sisters interpretation group. Retain the independent Young and Round Meadow sections.',
@@ -133,7 +136,24 @@ def prepare(root):
         folder = root / name
         folder.mkdir(parents=True, exist_ok=True)
         rows = [dict(r) for r in source]
-        if name == 'dated-sections-omit':
+        if name == 'great-basin-omit':
+            rows=[r for r in rows if r['EvidenceID'] not in BASIN_IDS]
+        elif name == 'great-basin-alternate':
+            rows=[r for r in rows if r['EvidenceID'] not in {'FLV93-C1','MWB07-LIL'}]
+            for r in rows:
+                sid=r['EvidenceID']
+                if sid=='FLV93-T206':
+                    r.update(Kind='upper_limit',Limit_cm=1,Qualification='Upper end of the preserved range under complete capture with no appreciable thinning.')
+                elif sid in {'MWB07-PAT','B2020-023'}:
+                    r.update(Kind='upper_limit',Limit_cm=r['Thickness'],Thickness='',Qualification='Whole lake bed bounds the original fall if retained despite focusing or rapid sinking.')
+                elif sid in {'FLV93-C7','MWB07-DH','B2020-079'}:
+                    alt={'FLV93-C7':5,'MWB07-DH':26,'B2020-079':2}
+                    r.update(Limit_cm=alt[sid],Qualification='Alternative retained value or enclosure described in the interpretation tests.')
+                elif sid=='FLV94-FC-AUG':
+                    geo=json.loads((AUDIT/'great-basin-registration.json').read_text())
+                    lat,lon=geo['mapped_positions'][sid]['approximate_area_corners_lat_lon'][2]
+                    r.update(Lat=lat,Lon=lon,Qualification='Position stress at the eastern corner of the mapped study-area frame; it is a location assumption.')
+        elif name == 'dated-sections-omit':
             rows=[r for r in rows if r['EvidenceID'] not in DATED_IDS]
         elif name in ('dated-capture-alternate','kootenai-position-east'):
             registered=json.loads((AUDIT/'kootenai-section-positions.json').read_text())['sections']

@@ -17,10 +17,10 @@ def render(output):
     ledger = list(csv.DictReader((AUDIT/'revised-locality-ledger.csv').open()))
     accepted = list(csv.DictReader(INPUT.open()))
     plotted = [r for r in ledger if r['latitude'] and r['accepted_for_model']!='True']
-    controls = [r for r in plotted if r['quantity_kind'] in ('not_a_Mazama_measurement','target_not_established')
+    controls = [r for r in plotted if r['quantity_kind'] in ('not_a_Mazama_measurement','target_not_established','other_eruption_measured_bed','cross_reference_without_target_confirmation')
                 or 'not_confirmed_Mazama' in r['deposit_class']]
     plotted = [r for r in plotted if r not in controls]
-    tentative = [r for r in plotted if r['quantity_kind']=='tentative_signal' or r['fallout_model_status']=='tentative_occurrence_only']
+    tentative = [r for r in plotted if r['quantity_kind'] in {'tentative_signal','tentative_lens_with_measured_thickness','mixed_unidentified_pod','ambiguous_phase_and_unmeasured_bed'} or r['fallout_model_status']=='tentative_occurrence_only']
     known = [r for r in plotted if r['quantity_kind']=='cryptotephra' and r not in tentative]
     other = [r for r in plotted if r not in known and r not in tentative]
     fig,axes = plt.subplots(1,2,figsize=(13.5,6.5),gridspec_kw={'width_ratios':[1,1.45]})
