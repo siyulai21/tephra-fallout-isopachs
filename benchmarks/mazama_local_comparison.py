@@ -1,6 +1,8 @@
 """Summarize saved Mazama source-refit predictions without refitting models."""
 import argparse
 import csv
+import gzip
+import io
 import json
 from pathlib import Path
 
@@ -94,7 +96,12 @@ def summarize(root, output):
     output.mkdir(parents=True, exist_ok=True)
     assert len(site_rows) == len(records)*probe_count and len(reach_rows) == len(records)*probe_count*12
     write_csv(output/'local-thickness-comparison.csv', site_rows)
-    write_csv(output/'local-crossing-comparison.csv', reach_rows)
+    with (output/'local-crossing-comparison.csv.gz').open('wb') as raw:
+        with gzip.GzipFile(fileobj=raw,mode='wb',mtime=0) as compressed:
+            with io.TextIOWrapper(compressed,encoding='utf-8',newline='') as stream:
+                writer=csv.DictWriter(stream,fieldnames=list(reach_rows[0]))
+                writer.writeheader()
+                writer.writerows(reach_rows)
     (output/'local-comparison.json').write_text(json.dumps(dict(
         script_sha256=sha(Path(__file__)), source_files=sources,
         site_rows=len(site_rows), crossing_rows=len(reach_rows), summaries=summaries,
