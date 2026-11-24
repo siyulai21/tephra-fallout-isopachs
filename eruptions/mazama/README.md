@@ -1,8 +1,8 @@
 # Mazama source audit and model results
 
-The deposit-nature review covers 826 records. The revised 238-location fit uses 35 point measurements, 139 primary minima and 64 conditional upper limits. The Yellowstone evidence retains each reported 1992 and 2016 core. [Distal evidence and comparison](../../data/audits/Mazama/distal-review/README.md) · [All localities](../../data/audits/Mazama/revised-locality-ledger.csv) · [Fitting input](../../data/eruptions/Mazama_reviewed.csv) · [Yellowstone core map](../../data/audits/Mazama/yellowstone-cores.png)
+The deposit-nature review covers 836 records. The revised 243-location fit uses 31 point measurements, 137 primary minima and 75 conditional upper limits. The Yellowstone evidence retains each reported 1992 and 2016 core. [Distal evidence and comparison](../../data/audits/Mazama/distal-review/README.md) · [All localities](../../data/audits/Mazama/revised-locality-ledger.csv) · [Fitting input](../../data/eruptions/Mazama_reviewed.csv) · [Yellowstone core map](../../data/audits/Mazama/yellowstone-cores.png)
 
-The five earlier 244-position fits remain available at their fixed revision. The revised fit and its eleven source-choice tests have a separate calculation identity. [Five-family 244-position results](https://github.com/siyulai21/tephra-fallout-isopachs/blob/8130479529dfe2ac4b85c72ad363cd2be279ef50/eruptions/mazama/audit-run/README.md) · [Recalculation request](../../data/audits/Mazama/recompute-request.json)
+The five earlier 244-position fits remain available at their fixed revision. The revised fit and its thirteen source-choice tests have a separate calculation identity. [Five-family 244-position results](https://github.com/siyulai21/tephra-fallout-isopachs/blob/8130479529dfe2ac4b85c72ad363cd2be279ef50/eruptions/mazama/audit-run/README.md) · [Recalculation request](../../data/audits/Mazama/recompute-request.json)
 
 ## Archived pre-audit results
 

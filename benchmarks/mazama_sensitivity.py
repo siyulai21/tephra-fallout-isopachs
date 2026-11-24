@@ -28,10 +28,12 @@ CASES = {
     'half-capture-ceilings': 'Double each new or revised package ceiling as a sensitivity to a retained thickness fraction of 0.5. The factor is a stress assumption.',
     'omit-all-archive-ceilings': 'Remove all conditional upper limits, including the earlier cryptotephra and enclosing-section upper envelopes.',
     'omit-qualified-identities': 'Drop low-confidence sources including the one-shard On-off Lake correlation, probable Stowell ash, distal ice/cryptotephra assignments and distorted Hasse horizon.',
+    'jenny-one': 'Retain the directly registered JEN13-2E photo as the sole Jenny Lake likelihood.',
+    'jenny-omit': 'Omit all five Jenny Lake stations, including their conditional enclosing-section bounds.',
     'cathedral-one': 'Use only the Lake of the Woods A12 central core among the four adjacent Cathedral basins. This tests closely correlated archive behavior and shared source attribution.',
     'yellowstone-one': 'Retain central core YL16-5A as the single Yellowstone Lake likelihood. All core positions remain in the evidence inventory.',
     'restore-williams': 'Restore the former 46 cm Williams Lake Fen point alone. The unresolved two-horizon interpretation is a historical stress case.',
-    'restore-thick-archive-readings': 'Restore the former Windy and Thunder Lake measurements and Round Lake lower bound as a joint historical archive-transfer scenario.',
+    'restore-thick-archive-readings': 'Restore the earlier readings at Windy, Thunder, Round WA, Tumalo, Round OR, Sunrise, Shadow, Dog OR and White Pine Marsh as a joint historical archive-transfer scenario.',
     'omit-basin-beds': 'Remove conditional lake beds carried as measurements in the Ruby Mountains, Lyman, Roe, Great Salt Lake, Rainier and Yellowstone. This tests shared limnological preservation.',
     'omit-young-proximal': 'Omit Young’s individually mapped upper pumice minima as a group to test leverage of spatially clustered partial-component constraints.',
 }
@@ -128,6 +130,9 @@ def prepare(root):
                 rows = [r for r in rows if r['Kind']!='upper_limit']
             elif name == 'omit-qualified-identities':
                 rows = [r for r in rows if r['EvidenceID'] not in weak]
+            elif name in ('jenny-one','jenny-omit'):
+                keep='L2024-JEN13-2E' if name=='jenny-one' else None
+                rows=[r for r in rows if r['EvidenceID']==keep or (r['EvidenceID']!='B2020-042' and not r['EvidenceID'].startswith('L2024-JEN'))]
             elif name == 'cathedral-one':
                 rows = [r for r in rows if not r['EvidenceID'].startswith('E1997-') or r['EvidenceID']=='E1997-A12']
             elif name == 'yellowstone-one':
@@ -135,7 +140,7 @@ def prepare(root):
             elif name == 'restore-williams':
                 rows.append(former['B2020-113'].copy())
             elif name == 'restore-thick-archive-readings':
-                ids={'CH2008-THU','CH2008-WIN','M2024-ROUNDWA'}
+                ids={'CH2008-THU','CH2008-WIN','M2024-ROUNDWA','B2020-047','B2020-054','W2017-SHADOW','W2017-SUNRISE','S2023-DOG-OR','S2023-WHITEPINE'}
                 rows=[former[r['EvidenceID']].copy() if r['EvidenceID'] in ids else r for r in rows]
             elif name == 'omit-basin-beds':
                 rows=[r for r in rows if r['EvidenceID'] not in basin and not r['EvidenceID'].startswith('M2023-YL')]

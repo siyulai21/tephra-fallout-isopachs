@@ -1,6 +1,6 @@
 {
   "audit_date": "2026-11-23",
-  "scope": "All 293 original catalogue rows and 533 additional records, leads or controls. Verification level is recorded at each site.",
+  "scope": "All 293 original catalogue rows and 543 additional records, leads or controls. Verification level is recorded at each site.",
   "original_input": {
     "file": "data/eruptions/Mazama_tephra.csv",
     "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
@@ -13,11 +13,11 @@
   "cases": {
     "principal": {
       "file": "data/eruptions/Mazama_reviewed.csv",
-      "sha256": "7be1c30863f810adcdb3e9de09d1c905eb038f49e7d6bf598043f43f157e473a",
-      "n_measurements": 35,
-      "n_lower_limits": 139,
-      "n_upper_limits": 64,
-      "definition": "Climactic Mazama airborne bulk fallout. 35 point values, 139 lower limits and 64 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections, the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages, Mount Baker field sections and the distal deposit-nature revision. Bounds and sensitivity alternatives are in the locality ledger."
+      "sha256": "efcbec679a4b17b64225d78ef98dc69a41efbc85f6f968d3b55030abeafdc7d1",
+      "n_measurements": 31,
+      "n_lower_limits": 137,
+      "n_upper_limits": 75,
+      "definition": "Climactic Mazama airborne bulk fallout. 31 point values, 137 lower limits and 75 upper limits are shared by all five families. Core duplicates and inferred phase totals carry explicit qualifications. The current input incorporates the published Yellowstone core data, Lyman Lake and the Ruby Mountain, Great Salt Lake, Mazama source and thicknessless-site reviews, Young\u2019s separately mapped upper pumice sections, the Round Meadow borings, North Cascades and British Columbia lake cores, northern Idaho lake packages, Mount Baker field sections and the distal deposit-nature revision. Bounds and sensitivity alternatives are in the locality ledger."
     }
   },
   "principal_limits": [
@@ -25,6 +25,24 @@
       "evidence_id": "B2020-023",
       "interpreted_upper_cm": 5,
       "derivation": "The 5 cm tephra V is independently measured and compositionally distinguished from tephra VI. The investigators specifically discuss rapid settling and possible subaqueous flow in connection with its unusual magnetic direction. The logged deposit may exceed local fallout.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-042",
+      "interpreted_upper_cm": 54.5,
+      "derivation": "Table S2 places ash at 102 cm between wood samples at 75.5 and 130 cm. The enclosing 54.5 cm is a gross ceiling under full capture. The older age of reworked wood at 130 cm invalidates that radiocarbon tie for the age model; its physical depth is documented. S1\u2019s 1 cm is retained separately as a compilation reading.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-047",
+      "interpreted_upper_cm": 50,
+      "derivation": "Long et al. (2011) measured a distinct 50 cm package at 4.84\u20135.34 m in the Tumalo core and assigned it by chronology. Local sediment focusing and retention were not calibrated. The original 50 cm observation is preserved.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "B2020-054",
+      "interpreted_upper_cm": 14,
+      "derivation": "McKay (2012), \u00a73.4.3.4 and Fig. 3.8. A 14 cm silicic bed from 267\u2013281 cm was attributed by grain size and stratigraphy. Other mafic layers are distinct. Sediment delivery at this Round Lake, Oregon, is uncalibrated.",
       "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
     },
     {
@@ -76,6 +94,18 @@
       "qualifications": "Conditional on Young\u2019s published 700 kg/m\u00b3 bulk equivalent, correlation and validity of the author\u2019s recovery and density transfer at this bog."
     },
     {
+      "evidence_id": "W2017-SHADOW",
+      "interpreted_upper_cm": 14,
+      "derivation": "Walsh et al. (2017), Table 2 and \u00a74.1. Shadow Lake SL11C has a separate 14 cm Mazama-O layer, identified visually by J. Vallance with stratigraphic/age control. Deep coring reduces marginal disturbance; deposition per unit lakefloor area remains uncalibrated.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "W2017-SUNRISE",
+      "interpreted_upper_cm": 8,
+      "derivation": "Walsh et al. (2017), Table 2 and \u00a74.2. At Sunrise Lake UL11D the 8 cm Mazama-O layer is distinct from younger and older tephras. Deep coring and cross-lake occurrence support the bed correlation. Catchment capture and redistribution can alter the local thickness.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
       "evidence_id": "M2024-ROUNDWA",
       "interpreted_upper_cm": 60,
       "derivation": "Mark thesis section 5.3.1, Fig. 46. The approximately 606\u2013666 cm event package lies within carbonate-rich sediment. No quantified primary fraction, catchment input or focusing correction supports a minimum of 60 cm.",
@@ -97,6 +127,18 @@
       "evidence_id": "MK2012-PATJENS",
       "interpreted_upper_cm": 4,
       "derivation": "McKay describes a 4 cm silicic bed in a short south-shore fen core. The correlation is presumed from stratigraphy and grain size. The whole bed could have been augmented in this setting.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "S2023-DOG-OR",
+      "interpreted_upper_cm": 13,
+      "derivation": "Saban (2023), pp. 66 and 76. An abrupt-contact package at 908\u2013920 cm has multiple subcentimetre layers; the chronology uses 13 cm. The earlier 928\u2013927 cm bed is separate. Use the larger 13 cm description if the complete local fall is retained.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "S2023-WHITEPINE",
+      "interpreted_upper_cm": 30,
+      "derivation": "Saban (2023), Table 3 and pp. 95\u2013103, 110\u2013113. The marsh bed contains 1\u20132 mm lapilli with basal fine ash, which supports eruptive deposition. Reported package equivalents are 25, 26.5 and approximately 30 cm. Local fallout cannot be bounded below without ruling out concentration in the shallow basin.",
       "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
     },
     {
@@ -382,6 +424,30 @@
       "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
     },
     {
+      "evidence_id": "L2024-JEN13-2E",
+      "interpreted_upper_cm": 4,
+      "derivation": "The source-labelled 2016 Fig. 3a photo is independently matched to 2024 Fig. S3, JEN13-2, first section. Outer contact picks y=402\u2013709 enclose the diffuse ash; ruler 0\u201310 cm is y=15\u2013831 in the original 1028\u00d71298 image. The 3.76 cm outer package rounds upward to 4 cm. The point sample at 93.5 cm and 17 analyses establish identity.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "L2024-JEN15-3A",
+      "interpreted_upper_cm": 63,
+      "derivation": "Fig. 3 places the marker between two independently drawn turbidite contacts. The outward 313\u2013372 pixel interval at x=520 converts to 62.60 cm then \u226463 cm using the 0\u2013800 cm scale y=190\u2013944 (920\u00d71300 rendering). Table S2 independently encloses it at 132.25\u2013204 cm. The tephra symbol is conventionally enlarged.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "L2024-JEN16-1A",
+      "interpreted_upper_cm": 48,
+      "derivation": "Table S3 reports the base of the younger 5.3 ka turbidite at 184 cm and the top of the older 7.7 ka turbidite at 232 cm in this drive. Table S2 places Mazama at 230.5 cm. The host between them spans 48 cm. Overlapping B and 2021 cores repeat the horizon.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
+      "evidence_id": "L2024-JEN16-2",
+      "interpreted_upper_cm": 54,
+      "derivation": "The intervening unit lies between a separate sand horizon and the top of an older turbidite. Outward contacts y=475\u2013525, x=234, on the 920\u00d71300 Fig. 3 rendering give 53.05 cm and round upward to \u226454 cm (0\u2013800 cm at y=190\u2013944). Table S2 places the marker at 350 cm. Inflow and bottom transport are especially important at this site.",
+      "qualifications": "Conditional on complete local retention within this package and sufficient thickness after compaction. Extra catchment or lake sediment can enlarge the package. Erosion, compaction, or noncapture can invalidate the ceiling."
+    },
+    {
       "evidence_id": "M2012-ONOFF02",
       "interpreted_upper_cm": 82,
       "derivation": "Fig. 5, PDF p. 6 (printed p. 76), core 02. Continuous Unit 2 encloses the 141 cm glass signal. Axis ticks 0/150 cm at y=202/563; outward contact picks 405/601 pixels at 1042\u00d71389 yield 81.44 cm rounded outward to 82. The whole host unit is deliberately broad.",
@@ -422,10 +488,10 @@
     "sha256": "b426c4a6d4175a482ed17e373edac0710318eed6307513b340c92480192b78e9"
   },
   "audit_artifacts": {
-    "model-selection.json": "c1baa62a1855afa9409b45bf40d4a9fc273fcf1f0760fe661d86a0e9e4decd0c",
-    "model-selection.csv": "7236fd6f4565f9c330939c7e35e2e54629ffe3497874be1309eab897cd75bba8",
-    "site-evidence-decisions.csv": "a32f062aa97de126ba874a045a2cc16d1e7a5e027278dfbeea970453b79fbe8b",
-    "revised-locality-ledger.csv": "a7aa397e7b189e5ae3e65da5eb1d338cc9b9e542703b4f9966bfe321c86494d8",
-    "supplied-row-crosswalk.csv": "30db8c7e876634eb528fc198a49a0e2911d97b03128d4a7903c14b4931f8fde6"
+    "model-selection.json": "acc4821c883841dbc39992636e1e6dc475cd45b43b4e0d81dffe779db36755b4",
+    "model-selection.csv": "40061a136d21dfc4efa07a9cda0958a781d64f000e736bf46249ba8a0f9f57ff",
+    "site-evidence-decisions.csv": "352f878d84d91548d3e72352b87c49904e744fb89751a0a2d5e9774738deedec",
+    "revised-locality-ledger.csv": "58e6978f410a230f9a070ee2bdf504cbd19b0e57ab572b3fe0ca545be6053daf",
+    "supplied-row-crosswalk.csv": "a33fbc3165a66552ff58cbb5aeab308f6517bd045b5ae3060b1f387cf3b173db"
   }
 }

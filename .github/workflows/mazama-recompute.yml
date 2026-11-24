@@ -187,7 +187,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
+        with: {fetch-depth: 0, ref: '${{ github.ref_name }}'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.11', cache: pip}
       - run: python -m pip install '.[test]' openpyxl
@@ -199,6 +199,9 @@ jobs:
           mkdir -p results/mazama-recompute
           for archive in results/packets/*.tar.gz; do tar -xzf "$archive" -C results/mazama-recompute; done
           python -m benchmarks.mazama_publish_run
+      - name: Verify the numerical inputs used by the archived jobs
+        run: |
+          git diff --exit-code "$GITHUB_SHA" -- data/eruptions/Mazama_reviewed.csv data/audits/Mazama/model-probes.csv benchmarks/mazama_sensitivity.py src
       - name: Check the complete publication
         run: |
           python -m benchmarks.mazama_release_check
@@ -215,4 +218,5 @@ jobs:
           git add -- benchmarks/published-evidence.sha256 eruptions/mazama eruptions/README.md comparisons data/audits/Mazama/validation.json
           git diff --cached --stat
           git commit -m "Publish five-family Mazama comparison and conditional source studies"
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
