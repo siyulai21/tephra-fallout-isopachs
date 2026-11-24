@@ -21,7 +21,7 @@ tephra-isopachs global Minoan --geometry nested-isopachs --output results/minoan
 
 On Windows, activate with `.venv\Scripts\activate`. Named eruptions are case-insensitive. `python -m src.empirical_isopach.cli` is an equivalent entry point. A nonempty output directory is refused.
 
-The GP ensemble and cubic spline tune inside geographic training folds and integrate the same observation hull. Each of the three global methods reports its median-thickness map and the volume obtained by integrating that surface, alongside geographic predictions and a conditional volume interval. Use `--geometry nested-whole-area` for the broad nested sensitivity. [Methods and volume definitions](methods/README.md)
+The GP ensemble and cubic spline tune inside geographic training folds and integrate the same observation hull. Each of the three global methods reports its median-thickness map and the volume obtained by integrating that surface, alongside geographic predictions and the integrated Q25–Q75 thickness maps. Use `--geometry nested-whole-area` for the broad nested sensitivity. [Methods and volume definitions](methods/README.md)
 
 Use `compare --regional-only` for the regional pair. The separate `global` command supports `--resume` with verified posterior caches.
 

@@ -148,19 +148,25 @@ class PolarField:
         annulus += np.where(split, np.where(above_a, cut**2-r[:-1]**2, r[1:]**2-cut**2), 0.)
         return float(np.pi * annulus.sum() / z.shape[1])
 
-    def on_grid(self, x, y):
-        xx, yy = np.meshgrid(x/self.axis, y*self.axis)
+    def at_xy(self, x, y):
+        """Evaluate the periodic log-thickness interpolant at paired chart coordinates."""
+        xx, yy = np.asarray(x)/self.axis, np.asarray(y)*self.axis
         ang = np.append(self.angles, 2*np.pi)
         z = np.column_stack((self.log10_cm, self.log10_cm[:, 0]))
         interpolator = RegularGridInterpolator((self.radii, ang), z, bounds_error=False, fill_value=np.nan)
         return interpolator((np.hypot(xx, yy), np.arctan2(xx, yy) % (2*np.pi)))
 
 
-def sample_field(view, data, latitude, n_radii=193, n_angles=240):
+    def on_grid(self, x, y):
+        return self.at_xy(*np.meshgrid(x, y))
+
+
+def polar_nodes(data, latitude, n_radii, n_angles):
     """Log-spaced radial profiles cover the centre through the antipode and resolve the near vent."""
     domain = EarthDomain.wgs84(latitude)
     positive = domain.rho(data.xy)
-    first = np.clip(positive[positive > 0].min()/16, .01, 1.)
+    off_vent = positive[positive>0]
+    first = np.clip(off_vent.min()/16,.01,1.) if len(off_vent) else .01
     radii = np.r_[0., np.geomspace(first, domain.rho_max, n_radii-1)]
     # The antipode is a coordinate singularity. Sample its interior limit and assign it to the rim.
     rr = radii[1:].copy()
@@ -168,11 +174,15 @@ def sample_field(view, data, latitude, n_radii=193, n_angles=240):
     theta = np.arange(n_angles) * (2*np.pi/n_angles)
     xy = np.stack((np.outer(rr, np.sin(theta))*domain.axis_scale,
                    np.outer(rr, np.cos(theta))/domain.axis_scale), axis=-1)
-    points = xy.reshape(-1,2)
+    return radii, xy.reshape(-1,2), domain.axis_scale
+
+
+def sample_field(view, data, latitude, n_radii=193, n_angles=240):
+    radii, points, axis = polar_nodes(data, latitude, n_radii, n_angles)
     z = np.r_[np.repeat(view.central(np.zeros((1,2))), n_angles), view.central(points)]
     if not np.isfinite(z).all():
         raise ValueError("The physical Earth contains nonfinite median thicknesses")
-    return PolarField(radii, z.reshape(n_radii,n_angles), domain.axis_scale)
+    return PolarField(radii, z.reshape(n_radii,n_angles), axis)
 
 
 def doubling_levels(max_cm):

@@ -73,15 +73,18 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
 def case_overview(output, name, regional, directional, spherical, nested=None, *, map_home=None):
     with plt.rc_context(STYLE):
         fig, axs = plt.subplots(2, 2, figsize=(12.6, 8.5), layout="constrained")
+        folder = Path(map_home or output)
+        bands_file = folder/"thickness-bands.json"
+        bands = json.loads(bands_file.read_text())["methods"] if bands_file.exists() else {}
         for i, (key, label) in enumerate((("stacked", "GP ensemble"), ("spline", "Cubic spline"))):
             item = regional["methods"][key]
-            q = item["joint_volume"]["conditional_quantiles_km3"]
             mapped = item["regional_volume"]["median_surface_km3"]
-            axs[0, 0].hlines(i, q["0.025"], q["0.975"], color=COLORS[label], linewidth=2)
+            if key in bands:
+                lo,_,hi = bands[key]["volumes_km3"]
+                axs[0, 0].hlines(i, lo, hi, color=COLORS[label], linewidth=2)
             axs[0, 0].scatter(mapped, i, color=COLORS[label], marker="D", zorder=4)
         axs[0, 0].set(yticks=[0, 1], yticklabels=["GP ensemble", "Cubic spline"], ylim=(1.6, -.6),
                       xscale="log", xlabel="Hull bulk volume (km³)", title="Inside the observation hull")
-        folder = Path(map_home or output)
         families = [("Directional", "directional"), ("Spherical mixture", "spherical-mixture")]
         if nested is not None:
             families.append(("Nested footprints" if nested.get("protocol")=="nested-dispersal-footprints-v2" else "Nested corridor", "nested-isopachs"))
@@ -89,10 +92,11 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
             receipt = folder/family/"deposit.json"
             if receipt.is_file():
                 record = json.loads(receipt.read_text())
-                lo, hi = record["conditional_volume_interval95_km3"]
                 ax = axs[0, 1]
-                ax.hlines(i, lo, hi, color=COLORS[label], linewidth=2,
-                          linestyle="-" if record["complete_field_checks_passed"] else "--")
+                if "thickness_band" in record:
+                    lo,_,hi = record["thickness_band"]["volumes_km3"]
+                    ax.hlines(i, lo, hi, color=COLORS[label], linewidth=2,
+                              linestyle="-" if record["posterior_checks_passed"] and record["thickness_band"]["passed"] else "--")
                 ax.scatter(record["median_map_volume_km3"], i, marker="D", color=COLORS[label], zorder=4)
         axs[0, 1].set(yticks=range(len(families)), yticklabels=[r[0] for r in families],
                       ylim=(len(families)-.4, -.6), xscale="log", xlabel="Whole-Earth bulk volume (km³)",
@@ -127,12 +131,12 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
             ax.set_axisbelow(True)
             ax.title.set_fontsize(10.5)
         fig.suptitle(f"{name} · regional and whole-deposit fallout estimates", fontsize=16)
-        fig.supxlabel("Diamonds give median-thickness map integrals. Lines span the conditional 95% volume interval. Dashed intervals have numerical warnings.", fontsize=9)
+        fig.supxlabel("Diamonds give median-thickness map integrals. Lines join the integrals of the Q25 and Q75 thickness maps. Dashed intervals have numerical warnings.", fontsize=9)
         fig.savefig(Path(output)/"overview.png", dpi=190, bbox_inches="tight", pad_inches=.16)
         plt.close(fig)
 
 
-def all_case_scores(output, cases, *, homes=None):
+def all_case_scores(output, cases, *, homes=None, scores_by_case=None):
     from matplotlib.lines import Line2D
     with plt.rc_context(STYLE):
         rows_needed = (len(cases) + 2) // 3
@@ -140,8 +144,10 @@ def all_case_scores(output, cases, *, homes=None):
                                  squeeze=False, layout="constrained")
         for ax in axes.flat[len(cases):]:
             ax.set_visible(False)
+        labels = {}
         for ax, (name, *reports) in zip(axes.flat, cases):
-            rows = metrics(*reports,home=homes.get(name) if homes else None)
+            rows = scores_by_case[name] if scores_by_case is not None else metrics(*reports,home=homes.get(name) if homes else None)
+            labels[name] = [r[0] for r in rows]
             for i, (label, score, coverage, passed) in enumerate(rows):
                 if score is None:
                     ax.text(.02,i,"Unscored",transform=ax.get_yaxis_transform())
@@ -163,5 +169,5 @@ def all_case_scores(output, cases, *, homes=None):
                    loc="outside lower center", ncols=2, frameon=False, fontsize=9)
         panels = [ax.get_title() for ax in axes.flat if ax.get_visible()]
         fig.savefig(Path(output)/"method-scores.png", dpi=190, bbox_inches="tight", pad_inches=.16,
-                    metadata={"Description": json.dumps({"eruption_panels": panels, "methods_by_case": {case[0]: [r[0] for r in metrics(*case[1:])] for case in cases}})})
+                    metadata={"Description": json.dumps({"eruption_panels": panels, "methods_by_case": labels})})
         plt.close(fig)

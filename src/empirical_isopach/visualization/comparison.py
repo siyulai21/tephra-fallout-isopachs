@@ -205,6 +205,7 @@ def comparison_section(home, *, prefix=""):
     if (Path(home)/"nested-isopachs/deposit.json").is_file():
         from .principal import case_section
         return case_section(home,prefix,reports=(regional,ensemble,spherical))
+    # Four-family snapshots predate the pointwise thickness-band publication.
     rows = []
     performance = metrics(regional, ensemble, spherical)
     for key, label in REGIONAL.items():
@@ -221,7 +222,7 @@ def comparison_section(home, *, prefix=""):
     point = f"Whole-Earth median map **{read_report(receipt)['median_map_volume_km3']:,.1f}**" if receipt.is_file() else "Map integral pending"
     rows.append(("Spherical mixture",point,sphere["lower95"],sphere["upper95"]))
     lines = ["## Isopach fits", "", f"![Matched isopach maps]({prefix}{FIGURE})", "",
-             "| Method | Median-thickness integral (km³) | Conditional 95% (km³) | Held-out score ↓ | Coverage |",
+             "| Method | Median-thickness integral (km³) | Historical whole-draw 95% (km³) | Held-out score ↓ | Coverage |",
              "|---|---:|---:|---:|---:|"]
     for (name, point, lo, hi), (_, score, coverage, ok) in zip(rows, performance, strict=True):
         score_text = "—" if score is None else f"{score:.3f}"

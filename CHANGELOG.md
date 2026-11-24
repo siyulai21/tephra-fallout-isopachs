@@ -1,5 +1,9 @@
 # Release history
 
+## 24 November 2026 · Thickness bands and eruption-specific maps
+
+Each principal range integrates the pointwise 25th and 75th thickness percentiles on the median map’s domain. The full global figures report the outer contour and its actual observation coverage. Close-ups use the local distribution of accepted sites. The catalogue includes only fits matched to the current input. Mazama’s 300-locality dispersal-footprint fit and its historical 271-locality comparison have separate pages. [Current volumes](comparisons/principal-volumes.csv) · [Map definitions](docs/OUTPUTS.md) · [Mazama](eruptions/mazama/README.md)
+
 ## Geographic extent and angular resolution
 
 The 22 November 2026 comparison updates all nine eruptions. The three global families preserve the observation likelihood and publish paired predictions for the earlier and revised deposits, complete-draw intervals and a fresh support screen. [Paired results and failures](comparisons/global-extent/README.md) · [Earlier release](archive/2026-11-22-global-extent/README.md)

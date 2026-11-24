@@ -16,7 +16,7 @@ Start at the [eruption catalogue](../eruptions/README.md) for a published result
 
 | Location | What belongs there |
 |---|---|
-| `eruptions/<slug>/` | One case home with all five isopach maps, volumes and predictive scores. Its `results/README.md` contains the matched regional fits. `results/directional/README.md` contains the full directional ensemble report. `results/spherical-mixture/` and `results/support/` contain the independent global posterior and local audit. |
+| `eruptions/<slug>/` | One case home for maps, volumes, geographic prediction and the accepted input. A revised case lists the fits available on its current input and links the historical comparison separately. |
 | `data/` | Original sources and hashes, row-level audit decisions and accepted CSVs. [Dataset catalogue](../data/datasets.json) |
 | `docs/methods/` | [Five model descriptions, evidence rules and statistical protocols](methods/README.md). |
 | `comparisons/` | Cross-eruption validation and simulations. The directional comparison groups the principal fit, its paired control and earlier alternatives. [Directional studies](../comparisons/directional/README.md) |

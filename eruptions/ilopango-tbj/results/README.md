@@ -1,5 +1,7 @@
 # Ilopango TBJ (Unit G) · regional fits inside the observation hull
 
+[All available methods on the eruption page](../README.md)
+
 The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **52 exact measurements, 4 lower bounds, 0 upper limits.** The observation hull covers 166,961 km². The automatic validation buffer is 8.11 km.
@@ -11,7 +13,7 @@ The full observation hull and every accepted location are in view. The coloured 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Principal median-map volume inside hull (km³) | 23.31 | 25.67 |
-| Complete-draw conditional 95% volume interval (km³) | 17.93–33.81 | 22.61–31.55 |
+| Integrated Q25–Q75 thickness (km³) | 18.39–29.70 | 21.29–31.01 |
 | Outer equal-region negative log score ↓ | 1.343 | 1.462 |
 | Outer log-thickness RMSE ↓ | 0.964 | 1.053 |
 | Outer 95% observation-interval coverage | 98.1% | 92.3% |
@@ -24,7 +26,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise 25th and 75th percentiles of latent thickness on the same hull. [Band integrals and refinements](thickness-bands.json)
 
 ## Fitted methods
 

@@ -19,7 +19,8 @@ from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.models.extent_review import ExtentFields, ExtentView
 from src.empirical_isopach.region import SurveyRegion, integrate_region, regional_draws
 from src.empirical_isopach.visualization.deposit_field import open_field, FAMILIES
-from src.empirical_isopach.visualization.principal import case_section, volume_rows
+from src.empirical_isopach.visualization.principal import case_section
+from benchmarks.publication import historical_volume_rows as volume_rows
 
 
 def read(path):

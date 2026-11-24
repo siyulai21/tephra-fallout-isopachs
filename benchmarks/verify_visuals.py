@@ -100,6 +100,12 @@ def verify_comparison_tables(root):
         assert source["global_report_sha256"] == digest(home/"spherical-mixture/report.json")
         reg = read(home/"report.json")
         for method, fit in reg["methods"].items():
+            if (slug,method) not in regional.index:
+                from .principal_volumes import principal_home
+                from src.empirical_isopach.core.catalog import datasets as current_datasets
+                registered_home = principal_home(next(r for r in current_datasets() if r["slug"]==slug))
+                assert not (registered_home/"report.json").exists()
+                continue
             expected_rows.add((slug, method))
             row = regional.loc[(slug, method)]
             metric = reg["validation"]["methods"][method]["metrics"]
@@ -127,7 +133,7 @@ def verify_comparison_tables(root):
         np.testing.assert_allclose(
             [row.median_map_volume_km3, row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
              row.global_equal_region_negative_log_score, row.global_observation_coverage95],
-            [receipt["median_map_volume_km3"],*receipt["conditional_volume_interval95_km3"],*envelope,score,coverage],
+            [receipt["median_map_volume_km3"],*(read(current/"report.json")["conditional_interval95_km3"] if current.is_dir() else [sphere["fits"]["baseline"]["volume"][k] for k in ("lower95","upper95")]),*envelope,score,coverage],
             rtol=1e-12)
     assert regional.index.is_unique and set(regional.index) == expected_rows
 
@@ -139,8 +145,9 @@ def main():
         score_info = json.loads(figure.info["Description"])
         panels = score_info["eruption_panels"]
         assert set(score_info["methods_by_case"]) == set(panels)
-        assert all(names == ["GP ensemble", "Cubic spline", "Directional", "Spherical mixture", "Nested footprints"]
-                   for names in score_info["methods_by_case"].values())
+        from .principal_volumes import catalogue_rows, LABELS
+        current = catalogue_rows()
+        assert score_info["methods_by_case"] == {name:[LABELS[r["method"]] for r in current if r["eruption"]==name] for name in panels}
     assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()
     verify_files(hashes)

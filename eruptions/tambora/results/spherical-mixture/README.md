@@ -1,10 +1,10 @@
 # Tambora · Spherical mixture
 
-The principal bulk volume is **117 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **93.2–589 km³** across complete posterior draws.
+The principal bulk volume is **117 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **82.3–176 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.
 
 ![Tambora, Spherical mixture. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 21 of 26 modeled locations. The full volume also includes fallout thinner than the displayed footprint. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
 The principal map uses the geographic continuation evaluated on all registered eruptions. [Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · [Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)
 

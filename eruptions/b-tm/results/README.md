@@ -1,5 +1,7 @@
 # B-Tm · regional fits inside the observation hull
 
+[All available methods on the eruption page](../README.md)
+
 The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **64 exact measurements, 3 lower bounds, 4 upper limits.** The observation hull covers 796,162 km². The automatic validation buffer is 23.22 km.
@@ -11,7 +13,7 @@ The full observation hull and every accepted location are in view. The coloured 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Principal median-map volume inside hull (km³) | 27.64 | 50.75 |
-| Complete-draw conditional 95% volume interval (km³) | 18.88–46.13 | 33.03–664.44 |
+| Integrated Q25–Q75 thickness (km³) | 21.63–35.37 | 32.15–88.40 |
 | Outer equal-region negative log score ↓ | 1.459 | 4.295 |
 | Outer log-thickness RMSE ↓ | 1.085 | 2.202 |
 | Outer 95% observation-interval coverage | 89.1% | 75.0% |
@@ -24,7 +26,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise 25th and 75th percentiles of latent thickness on the same hull. [Band integrals and refinements](thickness-bands.json)
 
 ## Fitted methods
 

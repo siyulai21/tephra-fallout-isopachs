@@ -12,7 +12,7 @@ from .refresh_figures import recorded_observations, regional_models
 from src.Laea import make_laea_transform
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.visualization.deposit_field import FAMILIES, open_field
-from src.empirical_isopach.visualization.principal import volume_rows
+from .publication import historical_volume_rows as volume_rows
 
 
 ARCHIVE = ROOT / "archive/2026-11-22-pinatubo-intake/pre-visual-review"

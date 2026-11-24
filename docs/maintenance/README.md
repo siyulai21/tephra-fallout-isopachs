@@ -9,9 +9,11 @@ The case home is the reading copy. It shows the five principal maps, volumes, va
 3. Store each result once. Check SHA-256 equality before retiring a duplicate and update its readers and manifests to use the canonical file. For a spherical revision, check whether a source audit still reads the old broad control before replacing `bearing/parent-report.json`. The dated archive can hold that original under `audit-inputs/<slug>/results/spherical-mixture/report.json`. Record the reviewed fingerprints for new or replaced evidence in the [publication inventory](../../benchmarks/published-evidence.sha256).
 4. Run the numerical checks for the affected families, the case verifier and the Markdown navigation check. For an editorial change, compare the scientific files with the preceding release. For a figure change, replay the fitted values and inspect the maps.
 
+The preceding map edition and its original complete-draw intervals remain available by Git revision. The current numerical catalogues use integrated thickness quartiles. [Preceding publication](https://github.com/siyulai21/tephra-fallout-isopachs/tree/181cde76de8036541118ffb01e31657fb974854b)
+
 ## Checking a map
 
-The case home shows the three global median-thickness maps and the complete regional hull. Confirm the 0.5 cm footprint fits the chart, the near-vent frame matches across families and each principal number integrates the surface shown. Inspect islands, limits, contour labels and detached deposits. Review the thickness–area table and independent volume checks. A closed contour still needs its support audit. [Output definitions](../OUTPUTS.md#read-the-map-and-its-volume)
+Inspect the actual rendered full and near-vent panels. Check the complete outer contour, its enclosed row count and any shortfall at the 1 cm floor. The local frame must resolve the vent and use the same limits for all methods on one input. Verify the median integral and the two quartile integrals on the same domain. Retain the full regional hull and all numerical flags. [Map and volume definitions](../OUTPUTS.md#read-the-map-and-its-volume)
 
 ### Replay a figure
 

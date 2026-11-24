@@ -1,36 +1,36 @@
-# Mazama fallout reconstruction
+# Mazama · historical five-method comparison on 271 localities
+
+This matched comparison uses the preceding audit with 31 measurements, 137 lower bounds and 103 upper bounds. [Current 300-locality reconstruction](../README.md) · [Historical input](../../../data/eruptions/Mazama_reviewed.csv) · [Matched numerical results](principal-volumes.csv)
 
 ## Volumes and geographic prediction
 
-Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
 
-| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+| Method | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---:|---:|---:|---:|
-| GP ensemble | **282** | 199–593 | 0.719 | 77.4% |
-| Cubic spline | **1,107** | 756–3.68e+04 | 1.738 | 77.4% |
-| [Directional ensemble](directional/README.md) | **214** | 154–642 (provisional) | 0.530 † | 96.8% |
-| [Spherical mixture](spherical-mixture/README.md) | **241** | 154–1.58e+03 | 0.532 | 74.2% |
-| [Bayesian nested corridors](nested-isopachs/README.md) | **175** | 106–605 | 0.430 † | 87.1% |
+| GP ensemble | **282** | 182–427 | 0.719 | 77.4% |
+| Cubic spline | **1,107** | 541–2,597 | 1.738 | 77.4% |
+| [Directional ensemble](directional/README.md) | **214** | 145–326 † | 0.530 † | 96.8% |
+| [Spherical mixture](spherical-mixture/README.md) | **241** | 165–403 | 0.532 | 74.2% |
+| [Bayesian nested footprints](nested-isopachs/README.md) | **510** | 320–811 | 0.327 † | 93.5% |
 
-Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
+Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
-The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The near-vent window depends on the eruption’s proximal sites. The curve sums all patches at each thickness.
 
 ![Mazama · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](directional/deposit.png)
 
 ![Mazama · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](spherical-mixture/deposit.png)
 
-![Mazama · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](nested-isopachs/deposit.png)
+![Mazama · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
 ![Mazama · GP ensemble and cubic spline on a common scale and the full observation hull](isopachs.png)
 
-The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained.
-
-[Volume and geographic prediction plot](overview.png)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained.
 
 ## Regional fit details
 
@@ -45,7 +45,7 @@ The full observation hull and every accepted location are in view. The coloured 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Principal median-map volume inside hull (km³) | 281.79 | 1107.29 |
-| Conditional 95% volume interval (km³) | 199.09–592.71 | 755.95–36824.90 |
+| Integrated Q25–Q75 thickness (km³) | 181.51–426.78 | 541.43–2,596.78 |
 | Outer equal-region negative log score ↓ | 0.719 | 1.738 |
 | Outer log-thickness RMSE ↓ | 2.661 | 3.202 |
 | Outer 95% observation-interval coverage | 77.4% | 77.4% |
@@ -58,7 +58,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise Q25 and Q75 thickness surfaces over the same hull. [Band integrals and refinements](thickness-bands.json)
 
 ## Fitted methods
 

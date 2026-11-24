@@ -147,3 +147,30 @@ def signed_file(name, expected, current):
     if sha256(source).hexdigest() != expected:
         raise ValueError(f"Signed source differs at {name}")
     return True
+
+
+def historical_volume_rows(home):
+    """Replay the whole-draw intervals used by the dated source-sensitivity studies."""
+    from src.empirical_isopach.visualization.deposit import FAMILIES, read_json, volume_interval
+    from src.empirical_isopach.visualization.summary import metrics, principal_report
+    home = Path(home)
+    regional = read_json(home/"report.json")
+    directional = read_json(home/"directional/azimuth/report.json")
+    spherical = read_json(home/"spherical-mixture/report.json")
+    nested = principal_report(home)
+    values = []
+    for key,record in regional["methods"].items():
+        vol = record["regional_volume"]
+        q = record["joint_volume"]["conditional_quantiles_km3"]
+        hist = [v["median_surface_km3"] for v in vol["refinement"]]
+        ok = len(hist)>=3 and all(abs(a/b-1)<vol["tolerance"] for a,b in zip(hist[-3:-1],hist[-2:]))
+        values.append((key,vol["median_surface_km3"],(q["0.025"],q["0.975"]),ok,record["joint_volume"]["expected_grid_converged"]))
+    for key,source in zip(FAMILIES,(directional,spherical,nested),strict=True):
+        r = read_json(home/key/"deposit.json")
+        ext = home/key/"extent/report.json"
+        q,ok = volume_interval(key,source,read_json(ext) if ext.is_file() else None)
+        values.append((key,r["median_map_volume_km3"],q,r["integration_passed"],ok))
+    return [dict(method=k, median_map_volume_km3=v,conditional_volume_lower95_km3=q[0],conditional_volume_upper95_km3=q[1],
+                 map_integration_passed=m,complete_draw_checks_passed=passed,heldout_log_score=score,
+                 heldout_coverage95=cov,heldout_checks_passed=valid,input_sha256=regional["input"]["input_sha256"])
+            for (k,v,q,m,passed),(_,score,cov,valid) in zip(values,metrics(regional,directional,spherical,nested,home=home),strict=True)]

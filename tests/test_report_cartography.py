@@ -141,10 +141,16 @@ def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch, tm
         (tmp_path/name).mkdir()
         shutil.copy2(home/name/"deposit.json",tmp_path/name/"deposit.json")
     shutil.copy2(home/"nested-isopachs/report.json",tmp_path/"nested-isopachs/report.json")
+    for name in ("report.json","thickness-bands.json","directional/extent/report.json","nested-isopachs/footprints/report.json"):
+        (tmp_path/name).parent.mkdir(exist_ok=True)
+        shutil.copy2(home/name,tmp_path/name)
     reports = comparison.comparison_reports(home)
     spherical = reports[2]
     monkeypatch.setattr(comparison, "comparison_reports", lambda _: reports)
     for volume_ok, prediction_ok in ((False, True), (True, False)):
+        receipt = json.loads((home/"spherical-mixture/deposit.json").read_text())
+        receipt["posterior_checks_passed"] = volume_ok
+        (tmp_path/"spherical-mixture/deposit.json").write_text(json.dumps(receipt))
         spherical["fits"]["baseline"]["diagnostics"]["passed"] = volume_ok
         spherical["validation"]["all_fits_passed_diagnostics"] = prediction_ok
         path = home/"spherical-mixture/extent/report.json"
@@ -158,7 +164,7 @@ def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch, tm
         section = comparison.comparison_section(tmp_path)
         row = next(line for line in section.splitlines() if line.startswith("| [Spherical mixture]"))
         _, _, _, interval, score, _, _ = row.split("|")
-        assert ("provisional" in interval) == (not volume_ok)
+        assert ("†" in interval) == (not volume_ok)
         assert ("†" in score) == (not prediction_ok)
 
 

@@ -24,7 +24,7 @@ UNDER = "#9cabb1"
 # Fixed lower-edge colours, shared across all eruptions and families.
 PALETTE = ("#137889", "#168f8c", "#40a488", "#77b477", "#b2b85f", "#d4ad46",
            "#e39541", "#dd7443", "#c8584a", "#ad4356", "#8b365c", "#70365f",
-           "#563256", "#452945")
+           "#563256", "#452945", "#38395c", "#2c4970", "#20577d", "#0c6681", "#08748b")
 FMT = FuncFormatter(lambda v, _: f"{v:,.0f}")
 
 
@@ -47,8 +47,36 @@ def geography_mask(x, y, vent):
     return mask
 
 
-def frames(field, data):
-    outer = field.outer_crossings(FIRST_CM)
+def outer_contour(field, data):
+    """Select the thickest doubling level enclosing at least 95% of accepted rows."""
+    predicted = field.at_xy(*data.xy.T)
+    if not len(predicted) or not np.isfinite(predicted).all():
+        raise ValueError("Every modeled observation must have a finite median on the map")
+    required = (95*len(predicted)+99)//100
+    cutoff = np.sort(predicted)[-required]
+    exponent = int(np.floor(cutoff/np.log10(2.) + 1e-12))
+    chosen = 2.**max(0, exponent)
+    inside = predicted >= np.log10(chosen)-1e-12
+    return dict(level_cm=chosen, target_fraction=.95, minimum_enclosed=required,
+                accepted_rows=len(inside), inside=int(inside.sum()), target_met=bool(inside.sum()>=required),
+                next_level_inside=int((predicted >= np.log10(2*chosen)-1e-12).sum()),
+                row_ids=data.row_ids.tolist(), mapped_log10_cm=predicted.tolist())
+
+
+def local_half_width(data):
+    """Use the proximal cluster, with a 100 km ceiling when all sampling is distal."""
+    distances = np.sort(np.linalg.norm(np.unique(data.xy, axis=0), axis=1))
+    positive = distances[distances>1e-6]
+    if not len(positive):
+        return 1.
+    reach = min(positive[:8][-1], 3*np.median(positive[:3]))
+    width = np.clip(1.25*reach, 1., 100.)
+    tick = 10.**np.floor(np.log10(width))
+    return float(tick*np.ceil(width/tick))
+
+
+def frames(field, data, outer_cm=FIRST_CM):
+    outer = field.outer_crossings(outer_cm)
     ok = np.isfinite(outer)
     reach = outer[ok]
     angle = field.angles[ok]
@@ -69,9 +97,7 @@ def frames(field, data):
     span = bounds[2:]-bounds[:2]
     span = np.maximum(span,[span[1]*.91,span[0]/2.12])
     bounds = np.r_[centre-span/2,centre+span/2]
-    xy = np.unique(data.xy[~data.censored], axis=0)
-    distances = np.linalg.norm(xy,axis=1)
-    local = max(.25,float(np.quantile(distances[distances>0],.25))) if np.any(distances>0) else 1.
+    local = local_half_width(data)
     return bounds, np.array([-local,-local,local,local]), rim
 
 
@@ -83,7 +109,7 @@ def regular_axes(bounds, longest):
 
 def colours(count):
     # The same colour always denotes the same thickness bracket, also below 0.5 cm.
-    extra = [colors.to_hex(plt.get_cmap("twilight")(i/(count+1))) for i in range(len(PALETTE),count)]
+    extra = [colors.to_hex(plt.get_cmap("cividis")(min(.9,.22+.07*i))) for i in range(max(0,count-len(PALETTE)))]
     return list(PALETTE[:count])+extra
 
 
@@ -134,16 +160,17 @@ def draw_land(ax,bounds,vent,resolution):
         ax.contour(bx,by,np.ma.masked_less(mask,0),levels=[.5],colors="#829798",linewidths=.40,zorder=2)
 
 
-def panel(ax, field, data, meta, family, model, bounds, levels, palette, large):
+def panel(ax, field, data, meta, family, model, bounds, levels, palette, large, outer_cm=FIRST_CM):
     x,y = regular_axes(bounds,470 if large else 301)
     z = field.on_grid(x,y)
     draw_land(ax,bounds,meta["vent_lonlat"],890 if large else 510)
-    tiers = np.log10(levels)
+    show = levels >= outer_cm
+    tiers = np.log10(levels[show])
     finite = z[np.isfinite(z)]
     visible = tiers[(tiers>finite.min()) & (tiers<finite.max())] if len(finite) else []
-    if len(finite) and finite.max()>=tiers[0]:
+    if len(tiers) and len(finite) and finite.max()>=tiers[0]:
         ax.contourf(x,y,z,levels=np.r_[tiers,max(tiers[-1]+.31,finite.max()+.01)],
-                    colors=palette,alpha=.30,antialiased=True,zorder=1)
+                    colors=np.asarray(palette)[show],alpha=.30,antialiased=True,zorder=1)
     if len(visible):
         lines = ax.contour(x,y,z,levels=visible,colors=INK,linewidths=[1.05 if v==tiers[0] else .57 for v in visible],
                            linestyles="dashed",zorder=3)
@@ -170,21 +197,27 @@ def panel(ax, field, data, meta, family, model, bounds, levels, palette, large):
 
 def plate(path, name, family, field, data, meta, model, levels, rows, receipt):
     from .deposit_field import display_name
-    bounds,near,rim=frames(field,data)
+    selection = receipt["outer_contour"]
+    outer_cm = selection["level_cm"]
+    bounds,near,rim=frames(field,data,outer_cm)
     height=np.clip(7.1*(bounds[3]-bounds[1])/(bounds[2]-bounds[0]),3.6,7.1)
     palette=colours(len(levels))
-    fig=plt.figure(figsize=(8.25,height+4.85),layout="constrained")
-    grid=fig.add_gridspec(4,2,height_ratios=[height,.48,2.38,.38],width_ratios=[1.03,1.])
+    fig=plt.figure(figsize=(8.25,height+5.65),layout="constrained")
+    grid=fig.add_gridspec(4,2,height_ratios=[height,.55,3.12,.44],width_ratios=[1.03,1.])
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
-    fig.suptitle(f"{name}  ·  {display_name(family, receipt['sources_sha256'])}\nMedian thickness   |   {volume_label} km³ over Earth",
+    edition = f"   |   historical {len(data.xy)} sites" if receipt.get("historical_input") else ""
+    fig.suptitle(f"{name}  ·  {display_name(family, receipt['sources_sha256'])}\nMedian thickness   |   {volume_label} km³ over Earth{edition}",
                  fontsize=15,color=INK,fontweight="bold")
     ax=fig.add_subplot(grid[0,:])
-    handles,count=panel(ax,field,data,meta,family,model,bounds,levels,palette,True)
-    ax.set_title(f"Full deposit to 0.5 cm   ·   {count}/{len(data.xy)} observations in view",fontsize=10,loc="left")
+    handles,count=panel(ax,field,data,meta,family,model,bounds,levels,palette,True,outer_cm)
+    covered = selection["inside"]
+    floor_note = "  ·  1 cm floor" if not selection["target_met"] else ""
+    ax.set_title(f"Full deposit to {outer_cm:g} cm  ·  {covered}/{len(data.xy)} sites inside "
+                 f"({covered/len(data.xy):.0%}){floor_note}",fontsize=10,loc="left")
     local=fig.add_subplot(grid[2,0])
     _,near_count=panel(local,field,data,meta,family,model,near,levels,palette,False)
-    local.set_title(f"Near the vent   ·   {near_count}/{len(data.xy)} observations",fontsize=10,loc="left")
+    local.set_title(f"Near vent  ·  ±{near[2]:g} km  ·  {near_count} sites in view",fontsize=10,loc="left")
     key=fig.add_subplot(grid[1,:]);key.set_axis_off()
     n=len(palette)+1
     for i,(colour,label) in enumerate(zip([UNDER,*palette],["<0.5",*[f"{v:g}" for v in levels]],strict=True)):
@@ -214,12 +247,13 @@ def plate(path, name, family, field, data, meta, model, levels, rows, receipt):
     curve.spines[["top","right"]].set_visible(False)
     curve.grid(color="#b1bfbd",alpha=.5,linewidth=.5)
     leg=fig.add_subplot(grid[3,:]);leg.set_axis_off()
-    leg.legend(handles=handles,loc="upper center",ncol=len(handles),frameon=False,fontsize=9)
+    leg.legend(handles=handles,loc="upper center",ncol=len(handles),frameon=False,fontsize=8,handletextpad=.3,columnspacing=1.1)
     note="Dashed isopachs are conditional."
     if family!="spherical-mixture":note+=" Solid fragments have local measurement brackets."
     leg.text(.5,-.03,note,
              ha="center",va="top",fontsize=8.5,color=INK)
     receipt.update(full_bounds_km=bounds.tolist(),near_bounds_km=near.tolist(),full_sites=count,near_sites=near_count,
+                   near_half_width_km=near[2], full_levels_cm=levels[levels>=outer_cm].tolist(),
                    reached_antipodal_rim=rim,levels_cm=levels.tolist())
     fig.savefig(path,dpi=143,metadata={"Description":json.dumps(receipt,allow_nan=False)})
     plt.close(fig)

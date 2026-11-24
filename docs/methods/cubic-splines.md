@@ -58,7 +58,7 @@ The [regional protocol](regional-comparison.md) uses four outer and three inner 
 
 The inverse coefficient Hessian gives a conditional Gaussian coefficient distribution for exact data and a Laplace approximation for bounds. With fixed estimated trend, noise, knots and penalties, the exact-data covariance is the Gaussian penalized-model covariance. It is **not** an unconditional frequentist confidence matrix.
 
-One coefficient draw determines a complete correlated surface. Exponentiating and integrating those draws produces conditional regional volume intervals. Observation noise enters predictions for a new measured thickness, but not latent fields or volumes. Expected volume and the integral of pointwise medians are reported separately.
+One coefficient draw determines a complete correlated surface. The conditional regional range integrates the pointwise 25th and 75th thickness percentiles of that fitted coefficient distribution on the common hull. Observation noise enters predictions for a new measured thickness, but not latent fields or volumes. Expected volume and the integral of pointwise medians are reported separately.
 
 Intervals omit fitted-trend, noise, hyperparameter/selection, preservation, sampling-process and vent-location uncertainty. Strong trend shrinkage can produce extremely narrow conditional intervals without establishing precise volume. Reports flag this case, display fully retuned geographic-deletion ranges separately and assess empirical coverage. Deletion ranges are sensitivity diagnostics, not confidence intervals. Unfavorable validation outcomes remain visible.
 

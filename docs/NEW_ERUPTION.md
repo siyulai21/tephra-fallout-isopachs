@@ -8,7 +8,7 @@ Site-derived principal bounds belong in the accepted CSV. A separate archive inv
 
 The [optional intake template](../templates/README.md) gives the observation schema. Leave unknown values explicit. Decisions about sources and deposit interpretation belong in the audit.
 
-The default full run writes the principal footprint fit and geographic holdouts to `nested-isopachs/footprints/` and the original whole-area sensitivity to `nested-whole-area/`. Publish the integral of the median map, the interval across complete deposits and geographic scores. [Footprint model and assumptions](methods/nested-footprints.md)
+The default full run writes the principal footprint fit and geographic holdouts to `nested-isopachs/footprints/` and the original whole-area sensitivity to `nested-whole-area/`. Publish the integral of the median map, the integrals of the pointwise 25th and 75th thickness percentiles on that domain and geographic scores. [Footprint model and assumptions](methods/nested-footprints.md)
 
 The directional and spherical models save continuation and support results under `extent/`. The nested family saves its matching results under `footprints/`. Each principal map and volume are in `deposit.png` and `deposit.json`. [Directional and spherical continuation](methods/finite-spread.md)
 

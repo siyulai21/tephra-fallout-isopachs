@@ -94,6 +94,9 @@ def update_inventory():
 
 
 def main():
+    current = next(r for r in datasets() if r["slug"]=="mazama")
+    if sha(INPUT)!=sha(current["path"]):
+        raise ValueError("This historical Mazama release uses a superseded input. Reproduce it at its recorded revision. The current input and its verified fits are listed on the Mazama case page.")
     parent = PRINCIPAL / 'nested-whole-area'
     nested_edge_deletion((INPUT, parent, parent / 'edge-deletion'))
     saved_case_overview(PRINCIPAL)

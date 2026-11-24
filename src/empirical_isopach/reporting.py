@@ -55,7 +55,7 @@ def save_selection(output, relative, selection):
     selection["candidate_table_sha256"] = sha256(target.read_bytes()).hexdigest()
 
 
-def save_figures(output, name, data, metadata, region, models, report):
+def save_figures(output, name, data, metadata, region, models, report, *, maps=True):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -63,7 +63,9 @@ def save_figures(output, name, data, metadata, region, models, report):
     methods = tuple(report["methods"])
     labels = {m: report_label(report, m) for m in methods}
     from .visualization.regional import regional_maps
-    regional_maps(output, name, data, metadata, region, models, report)
+    if maps:
+        regional_maps(output, name, data, metadata, region, models, report)
+    bands = json.loads((output/"thickness-bands.json").read_text())["methods"]
     with plt.rc_context(STYLE):
         panels = len(methods)+1
         ncols = min(3, panels)
@@ -93,18 +95,18 @@ def save_figures(output, name, data, metadata, region, models, report):
             ax.set(xlim=limits, ylim=prediction_limits)
         for index, (method, color) in enumerate(zip(methods, colors)):
             result = report["methods"][method]
-            q = result["joint_volume"]["conditional_quantiles_km3"]
-            volume_ax.hlines(index, q["0.025"], q["0.975"], color=color, linewidth=2)
+            lo,_,hi = bands[method]["volumes_km3"]
+            volume_ax.hlines(index, lo, hi, color=color, linewidth=2)
             volume_ax.scatter(result["regional_volume"]["median_surface_km3"], index, marker="D", color=color, s=36, zorder=3)
             deletion = [v["regional_deletion_volume"]["median_surface_km3"]
                         for v in report["validation"]["methods"][method]["selections"]]
             volume_ax.plot([min(deletion), max(deletion)], [index+.12, index+.12], ":", color=color, lw=2)
         volume_ax.set(yticks=range(len(methods)), yticklabels=[labels[m] for m in methods], ylim=(-.6, len(methods)-.4),
                       xscale="log", xlabel="Bulk fallout within observation hull (km³)",
-                      title="Diamond · map integral   Line · 95% interval\nDotted line · geographic-deletion range")
+                      title="Diamond · median map   Line · Q25–Q75 maps\nDotted line · geographic-deletion range")
         volume_ax.grid(axis="x", alpha=.15)
-        fig.suptitle(f"{name} · geographic holdouts and conditional 95% intervals\n"
-                     "Intervals omit parameter/selection uncertainty; bounds contribute scores, not RMSE.", fontsize=13)
+        fig.suptitle(f"{name} · geographic holdouts and regional fallout volumes\n"
+                     "Predictive bars show 95% intervals at withheld measurements. Bounds contribute to predictive scores.", fontsize=13)
         for suffix in ("png", "svg"):
             fig.savefig(output/f"diagnostics.{suffix}", dpi=170)
         plt.close(fig)
@@ -127,15 +129,16 @@ def write_readme(output, name, report):
     rows = [report["methods"][m] for m in methods]
     metrics = [report["validation"]["methods"][m]["metrics"] for m in methods]
     pair("Principal median-map volume inside hull (km³)", [r["regional_volume"]["median_surface_km3"] for r in rows])
-    interval = [r["joint_volume"]["conditional_quantiles_km3"] for r in rows]
-    lines.append("| Conditional 95% volume interval (km³) | "+" | ".join(f"{q['0.025']:.2f}–{q['0.975']:.2f}" for q in interval)+" |")
+    bands = json.loads((output/"thickness-bands.json").read_text())["methods"]
+    ranges = [bands[m]["volumes_km3"] for m in methods]
+    lines.append("| Integrated Q25–Q75 thickness (km³) | "+" | ".join(f"{lo:.2f}–{hi:.2f}" for lo,_,hi in ranges)+" |")
     pair("Outer equal-region negative log score ↓", [r["equal_region_log_score"] for r in metrics], ".3f")
     pair("Outer log-thickness RMSE ↓", [r["rmse_log"] for r in metrics], ".3f")
     pair("Outer 95% observation-interval coverage", [r["coverage95_observations"] for r in metrics], ".1%")
     lines += ["", "Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.", "",
               "![Withheld predictions and regional volumes](diagnostics.png)", "", "## Scope", "",
               "The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.", "",
-              "Volume integrates pointwise median thickness over the observation hull. The interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.", "",
+              "Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over that same area. [Band integrals and refinements](thickness-bands.json)", "",
               "## Fitted methods", ""]
     for method in methods:
         lines += [f"### {labels[method]}", "", "```json",
@@ -217,6 +220,8 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     from .volume_reporting import regional_estimates
     regional_estimates(report)
     (output/"report.json").write_text(json.dumps(report, indent=2, allow_nan=False)+"\n")
+    from .visualization.thickness_band import write_regional_bands
+    write_regional_bands(output, models, region, report)
     save_figures(output, name, data, meta, region, models, report)
     write_readme(output, name, report)
     from .support_reporting import write_support_analysis

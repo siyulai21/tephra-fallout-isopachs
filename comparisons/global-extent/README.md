@@ -1,6 +1,6 @@
 # Global fallout models and geographic validation
 
-## Mazama after the source audit
+## Historical Mazama comparison on 271 localities
 
 The fits use 271 distinct locations. Each pair shares the same observations, geography and training folds. The two map integrals measure the effect of the assumed continuation into unsampled areas. Volumes are in km³. [Current case](../../eruptions/mazama/README.md) · [Matched outcomes](paired-results.csv) · [Parent map calculations](../../eruptions/mazama/results/source-audit/paired-continuation-checks.json)
 

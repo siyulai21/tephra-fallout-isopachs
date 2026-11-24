@@ -7,12 +7,13 @@ import numpy as np
 
 from .deposit_field import FAMILIES, PolarField, digest, display_name, doubling_levels, open_field, review_path, sample_field
 from .deposit_integrals import independent_integral, within_cells
-from .deposit_maps import LAND, frames, plate
+from .deposit_maps import LAND, frames, outer_contour, plate
 from .maps import boundary_points
+from .thickness_band import checked_band, median_trials
 
 
 def volume_interval(family, report, extent=None):
-    """Return only the two conditional volume uncertainty endpoints."""
+    """Recover whole-draw endpoints for historical comparisons and fit diagnostics."""
     if "independent_draw_integration" in report:
         return tuple(report["conditional_interval95_km3"]), report["draw_checks_passed"]
     if extent is not None:
@@ -40,19 +41,23 @@ def write_json(path, value):
 
 
 def deposit_page(old, family, name, receipt, report):
-    lo,hi = receipt["conditional_volume_interval95_km3"]
-    warning = "" if receipt["complete_field_checks_passed"] else " **Numerical warning on the fitted deposit distribution.**"
+    lo,_,hi = receipt["thickness_band"]["volumes_km3"]
+    border = receipt["outer_contour"]
+    warning = "" if receipt["posterior_checks_passed"] else " **Numerical warning on the fitted deposit distribution.**"
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
     label = display_name(family, receipt["sources_sha256"])
     first = [f"# {name} · {label}", "",
              f"The principal bulk volume is **{volume_label} km³**, the whole-Earth integral of the median-thickness map. "
-             f"The conditional 95% interval for total fallout volume is **{lo:,.3g}–{hi:,.3g} km³** across complete posterior draws.{warning}", "",
+             f"The conditional thickness-band range is **{lo:,.3g}–{hi:,.3g} km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.{warning}", "",
              f"![{name}, {label}. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)", "",
              "Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
-             "The volume also includes thinner fallout beyond the 0.5 cm line. "
+             f"The {border['level_cm']:g} cm footprint includes {border['inside']} of {border['accepted_rows']} modeled locations. "
+             "The full volume also includes fallout thinner than the displayed footprint. "
              "[Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)", ""]
-    if not receipt["integration_passed"]:
+    if receipt.get("historical_input"):
+        first[2:2] = [f"**Historical comparison on {border['accepted_rows']} localities.** The eruption catalogue uses the latest audited input.", ""]
+    if not receipt["integration_passed"] or not receipt["thickness_band"]["passed"]:
         first.extend(["**Map integration warning.** The independent or refinement check exceeded its tolerance. See the numerical record.", ""])
     if "footprints/report.json" in receipt["sources_sha256"]:
         v = report["validation"]
@@ -100,20 +105,16 @@ def deposit_page(old, family, name, receipt, report):
     return "\n".join(first) + "\n" + pivot + tail
 
 
-def describe_surface(field, levels, checks, bounds):
+def describe_surface(field, levels, checks, bounds, outer_cm=.5):
     volume,area=within_cells(field,levels)
     lower_order,_=within_cells(field,order=2,angles=2)
     coarse=PolarField(field.radii[::2],field.log10_cm[::2,::2],field.axis)
     coarse_volume,coarse_area=within_cells(coarse,levels)
-    from scipy.interpolate import RegularGridInterpolator
     edge=boundary_points(bounds)
-    ex,ey=edge[:,0]/field.axis,edge[:,1]*field.axis
-    interp=RegularGridInterpolator((field.radii,np.r_[field.angles,2*np.pi]),
-                                  np.column_stack((field.log10_cm,field.log10_cm[:,0])),bounds_error=False,fill_value=np.nan)
-    edge_cm=10.**interp((np.hypot(ex,ey),np.arctan2(ex,ey)%(2*np.pi)))
+    edge_cm=10.**field.at_xy(*edge.T)
     edge_max=float(np.nanmax(edge_cm)) if np.isfinite(edge_cm).any() else None
-    if edge_max is not None and edge_max>=.5:
-        raise ArithmeticError("The full-deposit map clips a 0.5 cm contour")
+    if edge_max is not None and edge_max>=outer_cm:
+        raise ArithmeticError(f"The full-deposit map clips the {outer_cm:g} cm contour")
     probe=zip(np.linspace(0,len(field.radii)-2,13).astype(int),np.linspace(0,len(field.angles)-1,13).astype(int),strict=True)
     points=[[field.radii[i]*np.sin(field.angles[j])*field.axis,field.radii[i]*np.cos(field.angles[j])/field.axis,
              float(field.log10_cm[i,j])] for i,j in probe]
@@ -151,21 +152,26 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     view,model,sources=open_field(folder,family,data,meta,review=review)
     latitude=meta["vent_lonlat"][1]
     if sampled is None:
-        field,checks=checked_field(view,data,latitude)
+        field,band=checked_band(view,data,latitude)
     else:
-        field,checks,identity=sampled
+        field,band,identity=sampled
         if identity!=sources:
             raise ValueError("Scratch field belongs to different saved fits")
     report=read_json(folder/next(iter(sources)))
-    interval,fit_ok=volume_interval(family,report,read_json(review) if review.exists() else None)
+    _,fit_ok=volume_interval(family,report,read_json(review) if review.exists() else None)
     maximum=max(field.log10_cm.max(),data.log_value.max()/np.log(10.))
     levels=doubling_levels(10.**maximum)
-    bounds,_,_=frames(field,data)
-    volume,area,coarse_area,checks_record=describe_surface(field,levels,checks,bounds)
-    receipt=dict(protocol="median-thickness-deposit-v1",family=family,eruption=name,domain="WGS84 whole Earth",
+    border=outer_contour(field,data)
+    bounds,_,_=frames(field,data,border["level_cm"])
+    volume,area,coarse_area,checks_record=describe_surface(field,levels,median_trials(band),bounds,border["level_cm"])
+    np.testing.assert_allclose(volume,band["volumes_km3"][1],rtol=1e-12)
+    receipt=dict(protocol="median-thickness-deposit-v2",family=family,eruption=name,domain="WGS84 whole Earth",
                  input_sha256=meta["input_sha256"],sources_sha256=sources,land_sha256=digest(LAND),
-                 median_map_volume_km3=volume,conditional_volume_interval95_km3=list(interval),
-                 complete_field_checks_passed=bool(fit_ok),**checks_record)
+                 median_map_volume_km3=volume,thickness_band=band,outer_contour=border,
+                 posterior_checks_passed=bool(fit_ok),**checks_record)
+    from ..core.catalog import datasets
+    if any(meta.get("source")=="data/"+old["file"] for rec in datasets() for old in rec.get("previous_inputs",[])):
+        receipt["historical_input"] = True
     rows=[dict(thickness_cm=cm,area_km2=a,sqrt_area_km=np.sqrt(a),coarse_area_km2=b,
                resolution_status=("no sampled exceedance" if a==0 else "grid sensitive" if abs(a-b)>max(1.,.05*a) else "resolved"))
           for cm,a,b in zip(levels,area,coarse_area,strict=True)]
@@ -179,7 +185,15 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     write_json(dest/"deposit.json",receipt)
     page=folder/"README.md"
     old_hash=digest(page)
-    (dest/"README.md").write_text(deposit_page(page.read_text(),family,name,receipt,report))
+    old = page.read_text()
+    body = deposit_page(old,family,name,receipt,report)
+    if "footprints/report.json" in sources:
+        split = old.find("\n[Footprint model and assumptions]")
+        if split < 0:
+            split = old.find("\n## Geographic support and extrapolation")
+        if split >= 0:
+            body = body.rstrip()+"\n"+old[split:]
+    (dest/"README.md").write_text(body)
     manifest={"directional":"azimuth/artifacts.json","spherical-mixture":"artifacts.json"}.get(family)
     if manifest:
         hashes=read_json(folder/manifest)
