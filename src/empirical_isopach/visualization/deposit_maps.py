@@ -169,7 +169,7 @@ def panel(ax, field, data, meta, family, model, bounds, levels, palette, large):
 
 
 def plate(path, name, family, field, data, meta, model, levels, rows, receipt):
-    from .deposit_field import FAMILIES
+    from .deposit_field import display_name
     bounds,near,rim=frames(field,data)
     height=np.clip(7.1*(bounds[3]-bounds[1])/(bounds[2]-bounds[0]),3.6,7.1)
     palette=colours(len(levels))
@@ -177,7 +177,7 @@ def plate(path, name, family, field, data, meta, model, levels, rows, receipt):
     grid=fig.add_gridspec(4,2,height_ratios=[height,.48,2.38,.38],width_ratios=[1.03,1.])
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
-    fig.suptitle(f"{name}  ·  {FAMILIES[family]}\nMedian thickness   |   {volume_label} km³ over Earth",
+    fig.suptitle(f"{name}  ·  {display_name(family, receipt['sources_sha256'])}\nMedian thickness   |   {volume_label} km³ over Earth",
                  fontsize=15,color=INK,fontweight="bold")
     ax=fig.add_subplot(grid[0,:])
     handles,count=panel(ax,field,data,meta,family,model,bounds,levels,palette,True)

@@ -63,9 +63,9 @@ class Deposit:
         return integrated(self.z, self.power_tail)
 
 
-def population(data, latitude, radius, n, seed, power_tail, budget):
+def population(data, latitude, radius, n, seed, power_tail, budget, *, geometry_prior=None):
     rng = np.random.default_rng(seed)
-    geom_prior = geometry_probabilities()
+    geom_prior = geometry_probabilities() if geometry_prior is None else geometry_prior
     dim = 6 if budget else 5
     z = rng.normal(size=(n,dim))
     if budget:
@@ -129,16 +129,17 @@ def population(data, latitude, radius, n, seed, power_tail, budget):
     return Deposit(z[idx],geometry[idx],tail[idx],latitude), history, log_evidence
 
 
-def fit(data, latitude, *, initial=768, ceiling=6144, populations=4, seed=213091, budget=True):
-    geom = np.arange(ANGLES*len(SHAPES))
-    radius = ranks(*positions(data.xy,latitude),geom)
+def fit(data, latitude, *, initial=768, ceiling=6144, populations=4, seed=213091, budget=True,
+        ranker=ranks, geometry_prior=None):
+    geom = np.arange(ANGLES*len(SHAPES) if geometry_prior is None else len(geometry_prior))
+    radius = ranker(*positions(data.xy,latitude),geom)
     n = initial
     attempts = []
     while True:
         draws, histories, evidence = [], [], []
         for i in range(populations):
             branches = [population(data,latitude,radius,n//2,
-                        np.random.SeedSequence([seed,n,i,b]),bool(b),budget) for b in (0,1)]
+                        np.random.SeedSequence([seed,n,i,b]),bool(b),budget,geometry_prior=geometry_prior) for b in (0,1)]
             log_z = np.array([b[2] for b in branches])
             branch_p = probabilities(log_z)
             if not np.isfinite(branch_p).all():

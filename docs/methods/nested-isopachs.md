@@ -1,6 +1,6 @@
 # Nested thinning profile and whole-area sensitivity
 
-The principal nested result applies dispersal corridors to the field described below. This page documents the shared underlying profile, the unattenuated whole-area sensitivity and the tests performed on that sensitivity. The corridor uses its own whole-Earth integral, maps, geographic scores and uncertainty. [Principal corridor equations and reproduction](nested-reach.md) · [Global estimates](../../comparisons/nested-isopachs/README.md) · [Whole-area experiments](../../comparisons/nested-isopachs/whole-area-study.md)
+The principal nested result fits intrinsic dispersal footprints jointly with the area–thickness profile. This page documents that profile, the original whole-area geography and its tests. [Principal footprint equations](nested-footprints.md) · [Current global estimates](../../comparisons/nested-isopachs/README.md) · [Original whole-area experiments](../../comparisons/nested-isopachs/whole-area-study.md)
 
 The observations constrain a decreasing area–thickness profile and a geographic ordering in one likelihood. The profile gives the area above every thickness. The ordering allocates that area geographically. Changing an ordering while holding the profile fixed leaves the global volume exactly the same. Measurements can update both quantities together. Each draw represents the combined deposit across all fallout fans.
 

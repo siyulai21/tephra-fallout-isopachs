@@ -12,7 +12,7 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 | Cubic spline | **9.12** | 4.18–41.5 | 1.371 | 90.0% |
 | [Directional ensemble](results/directional/README.md) | **7.21** | 3.73–70.3 | 1.156 † | 96.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | **6.94** | 4.89–305 | 1.351 | 88.0% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **5.79** | 2.51–33.1 (provisional) | 1.054 † | 98.0% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | **12.7** | 6.61–115 | 1.063 † | 94.0% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -24,7 +24,7 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 ![Sakurajima Satsuma (P14) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Sakurajima Satsuma (P14) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Sakurajima Satsuma (P14) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 

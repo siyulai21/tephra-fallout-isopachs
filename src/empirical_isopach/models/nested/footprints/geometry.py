@@ -1,0 +1,151 @@
+"""Area ranks of growing, translating ellipses on the source-centred authalic disk.
+
+Each scale allocates a common circular area and one or two directional areas.
+The area assigned in every azimuth increases with scale. Each complete draw
+therefore defines nested contours independently of any station coordinates.
+"""
+from dataclasses import dataclass
+from functools import lru_cache
+
+import numpy as np
+
+from ..geometry import ANGLES, DIAMETER
+
+
+@dataclass(frozen=True)
+class Footprint:
+    family: str
+    eccentricity: float = 0.
+    core_km: float = 40.
+    turn: float = 0.
+    second: float = 0.
+    satellite: float = 0.
+    satellite_first: bool = False
+    distal_ratio: float = 0.
+
+
+CORES = (8., 40., 200.)
+SHAPES = (
+    Footprint("round"),
+    *(Footprint("single", e, core) for e in (.55, .82, .96) for core in CORES),
+    *(Footprint("turning", .91, core, turn=turn) for turn in (-70., 70.) for core in CORES),
+    *(Footprint("two phases", .92, core, second=a, distal_ratio=f)
+      for a in (-145., -75., 75., 145.) for core in CORES for f in (0., .3, .8)),
+    *(Footprint("detached", .82, 40., second=a, satellite=d, satellite_first=(a == 135.))
+      for a in (-90., 45., 135.) for d in (50., 250., 1250.)),
+)
+FAMILY_PRIOR = {"round": .2, "single": .4, "turning": .15, "two phases": .2, "detached": .05}
+N_ANGLE = 384
+N_LEVEL = 769
+
+
+def prior():
+    names = np.array([s.family for s in SHAPES])
+    return np.repeat([FAMILY_PRIOR[s] / (np.sum(names == s) * ANGLES) for s in names], ANGLES)
+
+
+def boundary(t, bearing, e, core, turn=0.):
+    """Positive intersection of a ray with a growing ellipse of area pi*t**2."""
+    # Work in ellipse coordinates. Velocity is a convex combination of the
+    # initial direction, final direction and zero, with norm bounded by e < 1.
+    a = (1. - e*e)**-.25
+    b = 1./a
+    t = np.asarray(t)
+    initial = t / (t + core)
+    final = t / (t + 4.*core)
+    phi = np.deg2rad(turn)
+    cx = e*(initial + final*(np.cos(phi)-1.))
+    cy = e*final*np.sin(phi)
+    u, v = np.cos(bearing)/a, np.sin(bearing)/b
+    k = u*u + v*v
+    along = cx*u + cy*v
+    inside = 1.-cx*cx-cy*cy
+    root = np.sqrt(along*along + k*inside)
+    return t*np.where(along >= 0., (along+root)/k, inside/(root-along))
+
+
+def main_front(shape, level, bearing):
+    delay = .12*shape.satellite if shape.satellite_first else 0.
+    t = np.maximum(level-delay, 0.)
+    s = shape.core_km
+    g = t*(t/(t+s))
+    # A disk supplies the common proximal fallout. Each angular slice receives
+    # its share of that area and of the dispersing phases. Its radial boundary
+    # is the square root of twice its allocated area per radian.
+    circular = t**2 * s*(2.*t+s)/(t+s)**2
+    main = boundary(g, bearing, shape.eccentricity, s, shape.turn)
+    area = circular + main**2
+    if shape.family == "two phases":
+        f = shape.distal_ratio
+        h = 4.*s
+        second = f*g + (.8-f)*h*g/(h+g)
+        other = boundary(second,bearing-np.deg2rad(shape.second),shape.eccentricity,s)
+        area = area + other**2
+    return np.sqrt(area)
+
+
+def equivalent_radius(shape, level, angles=N_ANGLE):
+    """Area of the entire clipped union, including a possibly disjoint secondary disk."""
+    level = np.asarray(level)[:, None]
+    theta = (np.arange(angles)+.5) * (2.*np.pi/angles)
+    radius = np.minimum(main_front(shape, level, theta), DIAMETER)
+    square = np.mean(radius**2, axis=1)
+    if shape.satellite:
+        d = shape.satellite
+        delay = 0. if shape.satellite_first else .12*d
+        satellite_radius = .42*np.maximum(level-delay, 0.)
+        arc = np.where(satellite_radius < d, np.arcsin(np.minimum(1., satellite_radius/d)), np.pi)
+        offset = arc*(2.*(np.arange(angles)+.5)/angles - 1.)
+        main = np.minimum(main_front(shape, level, offset+np.deg2rad(shape.second)), DIAMETER)
+        half = np.sqrt(np.maximum(0., satellite_radius**2-(d*np.sin(offset))**2))
+        start = np.maximum(main, np.clip(d*np.cos(offset)-half, 0., DIAMETER))
+        end = np.clip(d*np.cos(offset)+half, 0., DIAMETER)
+        square += arc[:,0]/np.pi*np.mean(np.maximum(end-start, 0.)*(end+start), axis=1)
+    return np.sqrt(square)
+
+
+@lru_cache(maxsize=None)
+def lookup(shape):
+    levels = np.r_[0., np.geomspace(.0005, 64.*DIAMETER, N_LEVEL-1)]
+    if shape.satellite:
+        levels = np.unique(np.r_[levels, .12*shape.satellite])
+    q = equivalent_radius(shape, levels)
+    bearing = np.arange(N_ANGLE)*(2*np.pi/N_ANGLE)
+    front = main_front(shape, levels[:,None], bearing)
+    radius = np.r_[0., np.geomspace(.001, DIAMETER, N_LEVEL-1)]
+    values = np.column_stack([np.interp(radius, front[:,i], q) for i in range(N_ANGLE)])
+    return levels, q, radius, values
+
+
+def ranks(radius, bearing, geometry):
+    """Equivalent area radii for each intrinsic geometry and prediction location."""
+    radius, bearing = np.asarray(radius), np.asarray(bearing)
+    geometry = np.asarray(geometry, dtype=int)
+    out = np.empty((len(geometry), len(radius)))
+    for i in np.unique(geometry // ANGLES):
+        mask = geometry // ANGLES == i
+        shape = SHAPES[i]
+        if shape.family == "round":
+            out[mask] = radius
+            continue
+        levels, q, grid, values = lookup(shape)
+        theta = bearing - (geometry[mask, None] % ANGLES)*(2*np.pi/ANGLES)
+        angular = (theta * (N_ANGLE/(2*np.pi))) % N_ANGLE
+        low = np.floor(angular).astype(int) % N_ANGLE
+        fraction = angular - np.floor(angular)
+        high = (low+1) % N_ANGLE
+        idx = np.clip(np.searchsorted(grid, radius, side="right")-1, 0, len(grid)-2)
+        wr = (radius-grid[idx])/(grid[idx+1]-grid[idx])
+        left = values[idx,low] + wr*(values[idx+1,low]-values[idx,low])
+        right = values[idx,high] + wr*(values[idx+1,high]-values[idx,high])
+        result = left + fraction*(right-left)
+        if shape.satellite:
+            d = shape.satellite
+            # The explicit satellite distance resolves its summit even if its
+            # angular footprint is smaller than the lookup grid.
+            relative = theta-np.deg2rad(shape.second)
+            distance = np.hypot(radius-d*np.cos(relative), d*np.sin(relative))
+            delay = 0. if shape.satellite_first else .12*d
+            result = np.minimum(result, np.interp(delay+distance/.42, levels, q))
+        out[mask] = result
+    return out

@@ -38,7 +38,10 @@ def summary(output):
         "spherical-mixture":"[Prior and geometry comparison](comparison.csv) · [Earlier bearing tests on known deposits](bearings/known-volumes.csv) · [Underlying spherical likelihood](../../docs/methods/probabilistic-global.md)",
         "directional":"[Geographic and quadrant predictions](case-comparison.csv) · [Fixed-direction ensemble](fixed-ensemble/README.md) · [Measured fan study](measured-fans/README.md)",
         "nested-isopachs":"[Three-family volume table](cases.csv) · [Original geographic reach experiment](../nested-reach/README.md) · [Independent field surveys](../nested-reach/field-surveys/README.md)"}
+    footprints = all((Path("eruptions")/rec["slug"]/"results/nested-isopachs/footprints/report.json").exists() for rec in datasets())
     for fam,title in FAMILIES.items():
+        if footprints and fam=="nested-isopachs":
+            continue
         lines=[f"# {title} across the eruption catalogue","",intro[fam],"",
                "[Model and uncertainty](../../docs/methods/finite-spread.md) · [Paired maps and withheld-site tests](../global-extent/README.md)","",
                "| Eruption | Median-map bulk volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | Exact coverage |",
@@ -69,8 +72,9 @@ def summary(output):
             lines+=["![Three global families with conditional intervals](volumes.png)",""]
         target("comparisons/"+fam+"/README.md").write_text("\n".join(lines))
     nd.sort(key=lambda r:(r["slug"],r["method"]))
-    write_rows(target("comparisons/nested-isopachs/cases.csv"),nd)
-    comparison_plot(nd,target("comparisons/nested-isopachs/volumes.png"),nested_family="Nested corridor")
+    if not footprints:
+        write_rows(target("comparisons/nested-isopachs/cases.csv"),nd)
+        comparison_plot(nd,target("comparisons/nested-isopachs/volumes.png"),nested_family="Nested corridor")
     sph.reset_index().to_csv(target("comparisons/spherical-mixture/comparison.csv"),index=False)
     src["estimates"]=sph.reset_index().to_dict(orient="records")
     src["summary_source_sha256"]=digest(Path(__file__))
@@ -94,6 +98,9 @@ def summary(output):
         home,n=re.subn(pattern,lambda m:m[1]+" "+" | ".join(v)+" |",home)
         if n!=1:raise ValueError(f"Expected one catalogue row for {slug}")
     target("eruptions/README.md").write_text(home)
+    if footprints:
+        from .footprint_catalogue import summaries
+        summaries(output)
 
 
 if __name__=="__main__":

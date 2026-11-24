@@ -1,53 +1,27 @@
-# Minoan · Bayesian nested corridors
+# Minoan · Bayesian nested footprints
 
-The principal bulk volume is **22.6 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **14.9–62.5 km³** across complete posterior draws.
+The principal bulk volume is **38.5 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **26.4–150 km³** across complete posterior draws.
 
-![Minoan, Bayesian nested corridors. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
+![Minoan, Bayesian nested footprints. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
 Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The volume also includes thinner fallout beyond the 0.5 cm line. [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-The principal map uses the geographic continuation evaluated on all registered eruptions. [Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · [Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)
+The fitted model predicts the four buffered geographic groups with an equal-group negative log score of 1.578. 4 of four independent deletion fits passed their numerical checks.
 
-## Earlier continuation and its diagnostics
+Each deposit draw expands one or more dispersal footprints. Stations enter through their thickness evidence. The direction and extent of each phase are inferred jointly with the area–thickness curve.
 
-The following figures and statistics describe the fitted parent and its broader continuation. The principal estimate and its interval appear above.
+[Joint fit, structural sensitivities and numerical checks](footprints/report.json) · [Held-out predictions](footprints/heldout.csv.gz) · [Contour support and all rejection reasons](footprints/support.json.gz)
 
-The buffered geographic score is 1.621 for the corridor and 1.536 for the whole-area sensitivity. Lower scores indicate better predictions at withheld sites. The corridor’s 95% predictive intervals cover 86 of 92 exact withheld readings. 4 of 4 geographic fits passed their sampling checks. The full-data proposal and importance check passed, the final volume populations passed, and the integration check passed. The shared screen accepted a complete contour band under 0 policies. [Prediction scores and row identities](report.json) · [Full fit diagnostics](full.json)
+[Predicted thickness at audited archive sites](footprints/archive-probes.json)
 
-## Where the volume lies
+[Footprint model and assumptions](../../../../docs/methods/nested-footprints.md) · [Matched geography and volume tests](../../../../comparisons/nested-isopachs/geography/README.md) · [Previous corridor maps and original whole-area controls](../../../../archive/2026-11-23-nested-geography/README.md)
 
-![Full compass, measured values, median contours and conditional uncertainty](compass.png)
+[Bulk volume and available thickness evidence in eight compass sectors](footprints/sector-volumes.csv) · [Independent sector integration checks](footprints/sector-checks.json)
 
-The full-compass view includes all bearings through the antipode. Its logarithmic distance scale makes the proximal flanks visible. Areas in the table use the physical equal-area integral.
+## Geographic support and extrapolation
 
-| Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor conditional 95% volume interval (km³) |
-|---|---:|---:|---:|---:|---:|
-| N | 1 | 0 | 43,914 | 51,137 | 0.9–8.2 |
-| NE | 18 | 0 | 89,960 | 95,816 | 3.1–9.2 |
-| E | 34 | 4 | 126,127 | 151,459 | 4.6–14.9 |
-| SE | 25 | 0 | 110,240 | 120,070 | 3.8–13.7 |
-| S | 8 | 0 | 31,113 | 49,690 | 0.8–7.5 |
-| SW | 3 | 1 | 16,681 | 24,560 | 0.4–4.6 |
-| W | 2 | 2 | 16,589 | 27,432 | 0.3–6.8 |
-| NW | 1 | 2 | 21,802 | 34,561 | 0.3–9.0 |
+Across draws, the median volume share inside the first measured area rank is 1.7%. The median share outside the last positive rank is 5.9%, with a conditional 95% range of 0.0%–52.9%. A measured site can constrain one part of a perimeter while its opposite side remains unsampled.
 
-At 1 cm, the corridor median map encloses 456,426 km² and the whole-area sensitivity encloses 554,726 km². Of these, 426,198 and 524,498 km² fall outside the retained exact-site triangles. An unsampled sector can contain ash. Its allocation depends on the assumed continuation.
+The shared geographic screen accepts a complete contour band under 0 of 3 policies.
 
-The prior assigns 25% to continuation across all bearings. The remaining probability spans three fan widths and three down-range extensions. The fitted probability of whole-bearing continuation is 25.0%. The widths and extensions are shared structural assumptions. A bound supplies a likelihood event. Only positive evidence supplies a potential dispersal corridor.
-
-[Volume and sector draws](volume-budget.npz) · [Complete field draws](full.npz) · [Areas, assumptions, bounds and diagnostics](report.json)
-
-## Structural uncertainty
-
-[Corridor and whole-area maps on a common scale](paired-isopachs.png)
-
-| Prior probability of broad continuation | Conditional 95% volume interval (km³) |
-|---:|---:|
-| 10% | 17.3–51.6 |
-| 25% | 17.4–67.6 |
-| 50% | 17.9–76.0 |
-| 75% | 19.1–83.5 |
-
-The prior odds vary under the same observed likelihood. The numerical report also gives the volume by individual corridor law where the saved draws resolve it.
-
-[Whole-area sensitivity report, posterior and diagnostics](../nested-whole-area/README.md)
+[Sector-by-sector evidence and volume](footprints/sector-volumes.csv) · [Volume sensitivity to the priors](footprints/report.json) · [Complete contour decisions](footprints/support.json.gz)
