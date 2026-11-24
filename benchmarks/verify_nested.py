@@ -197,7 +197,15 @@ def main():
     assert original <= registered.keys()
     for slug in sorted(original):
         path = registered[slug]["path"]
-        verify_case(ROOT/"archive/2026-11-21-nested-initial"/slug, path)
+        historical = ROOT/"archive/2026-11-21-nested-initial"/slug
+        expected = read(historical/"report.json")["input"]["input_sha256"]
+        if digest(path) != expected:
+            previous = [ROOT/"data"/r["file"] for r in registered[slug].get("previous_inputs", [])]
+            matching = [p for p in previous if p.is_file() and digest(p) == expected]
+            if len(matching) != 1:
+                raise ValueError(f"Expected one preserved input for the historical {slug} study")
+            path = matching[0]
+        verify_case(historical, path)
         verify_distal_holdout(receipts["outer"][slug], path)
     for record in sorted(registered.values(), key=lambda r:r["slug"]):
         home = ROOT/"eruptions"/record["slug"]/"results"

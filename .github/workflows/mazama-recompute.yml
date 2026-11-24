@@ -1,0 +1,222 @@
+name: Recompute audited Mazama
+on:
+  push:
+    branches: [codex/mazama-distal-facies-20261123]
+    paths: [data/audits/Mazama/recompute-request.json]
+  workflow_dispatch:
+
+concurrency:
+  group: mazama-recompute-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PYTHONPATH: .
+  MPLBACKEND: Agg
+  OMP_NUM_THREADS: 1
+  OPENBLAS_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1
+  PYTHONUNBUFFERED: 1
+
+jobs:
+  plan:
+    permissions:
+      contents: read
+      actions: write
+    runs-on: ubuntu-latest
+    outputs:
+      sources: ${{ steps.plan.outputs.sources }}
+      caches: ${{ steps.plan.outputs.caches }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]' openpyxl
+      - name: Confirm the registered input and enumerate independent fits
+        id: plan
+        run: |
+          python -c "import hashlib,json,pathlib; p=pathlib.Path('data'); r=json.loads((p/'audits/Mazama/recompute-request.json').read_text()); assert hashlib.sha256((p/'eruptions/Mazama_reviewed.csv').read_bytes()).hexdigest()==r['input_sha256']"
+          python -m benchmarks.mazama_recompute list >> "$GITHUB_OUTPUT"
+      - name: Retire superseded fits for the same Mazama branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          ref=os.environ['GITHUB_REF_NAME']
+          repo=os.environ['GITHUB_REPOSITORY']
+          request=json.loads(pathlib.Path('data/audits/Mazama/recompute-request.json').read_text())
+          for previous in request.get('superseded_runs', []):
+              url=f"repos/{repo}/actions/runs/{int(previous['run_id'])}"
+              old=json.loads(subprocess.check_output(['gh','api',url]))
+              same=old['head_branch']==ref and old['head_sha']==previous['head_sha'] and old['name']=='Recompute audited Mazama'
+              if same and old['status'] in {'in_progress','queued','waiting','pending','requested'}:
+                  cancel=subprocess.run(['gh','api','--method','POST',url+'/cancel'])
+                  if cancel.returncode:
+                      current=json.loads(subprocess.check_output(['gh','api',url]))
+                      if current['status']!='completed':
+                          print('Earlier run is still finishing. Its immutable input differs from this run.')
+          PY
+
+  regional:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - run: python -m benchmarks.mazama_recompute principal "regional"
+      - run: python -m benchmarks.mazama_recompute pack principal "regional"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: principal-regional
+          path: results/mazama-packages/*.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  core:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix: {family: [directional, nested-isopachs]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - run: python -m benchmarks.mazama_recompute principal "${{ matrix.family }}"
+      - run: python -m benchmarks.mazama_recompute pack principal "${{ matrix.family }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: principal-${{ matrix.family }}
+          path: results/mazama-packages/*.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  priors:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        cache: ${{ fromJSON(needs.plan.outputs.caches) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - run: python -m benchmarks.mazama_recompute cache "${{ matrix.cache }}"
+      - run: python -m benchmarks.mazama_recompute pack cache "${{ matrix.cache }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cache-${{ matrix.cache }}
+          path: results/mazama-packages/*.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+  sphere:
+    needs: priors
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'cache-*', path: results/cache-packages, merge-multiple: true}
+      - run: |
+          mkdir -p results/mazama-recompute
+          for archive in results/cache-packages/*.tar.gz; do tar -xzf "$archive" -C results/mazama-recompute; done
+          python -m benchmarks.mazama_recompute principal spherical-mixture
+          python -m benchmarks.mazama_recompute pack principal spherical-mixture
+      - uses: actions/upload-artifact@v4
+        with:
+          name: principal-spherical-mixture
+          path: results/mazama-packages/*.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  sources:
+    needs: [plan, regional]
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        case: ${{ fromJSON(needs.plan.outputs.sources) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]'
+      - uses: actions/download-artifact@v4
+        with: {name: principal-regional, path: results/regional-packet}
+      - name: Restore this run's geographically selected regional settings
+        run: |
+          mkdir -p results/mazama-recompute
+          tar -xzf results/regional-packet/principal-regional.tar.gz -C results/mazama-recompute
+      - run: python -m benchmarks.mazama_recompute source "${{ matrix.case }}"
+      - run: python -m benchmarks.mazama_recompute pack source "${{ matrix.case }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-${{ matrix.case }}
+          path: results/mazama-packages/*.tar.gz
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  release:
+    needs: [regional, core, sphere, sources]
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0, ref: '${{ github.ref_name }}'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: pip}
+      - run: python -m pip install '.[test]' openpyxl
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'principal-*', path: results/packets, merge-multiple: true}
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'source-*', path: results/packets, merge-multiple: true}
+      - run: |
+          mkdir -p results/mazama-recompute
+          for archive in results/packets/*.tar.gz; do tar -xzf "$archive" -C results/mazama-recompute; done
+          python -m benchmarks.mazama_publish_run
+      - name: Verify the numerical inputs used by the archived jobs
+        run: |
+          git diff --exit-code "$GITHUB_SHA" -- data/eruptions/Mazama_reviewed.csv data/audits/Mazama/model-probes.csv benchmarks/mazama_sensitivity.py src
+      - name: Check the complete publication
+        run: |
+          python -m benchmarks.mazama_release_check
+          python data/audits/Mazama/validate_audit.py --published
+          python -m benchmarks.verify_nested
+          python -m benchmarks.verify_nested_reach
+          python scripts/check_repository_navigation.py
+          python -m pytest -q
+      - name: Commit verified results on the audit branch
+        if: github.ref == 'refs/heads/codex/mazama-distal-facies-20261123'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- benchmarks/published-evidence.sha256 eruptions/mazama eruptions/README.md comparisons data/audits/Mazama/validation.json
+          git diff --cached --stat
+          git commit -m "Publish five-family Mazama comparison and conditional source studies"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"

@@ -1,20 +1,54 @@
-# Mazama · regional fits inside the observation hull
+# Mazama fallout reconstruction
 
-The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
+## Volumes and geographic prediction
 
-**45 exact measurements, 0 lower bounds, 0 upper limits.** The observation hull covers 930,447 km². The automatic validation buffer is 66.22 km.
+Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
+
+| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
+|---|---:|---:|---:|---:|
+| GP ensemble | **282** | 199–593 | 0.719 | 77.4% |
+| Cubic spline | **1,107** | 756–3.68e+04 | 1.738 | 77.4% |
+| [Directional ensemble](directional/README.md) | **214** | 154–642 (provisional) | 0.530 † | 96.8% |
+| [Spherical mixture](spherical-mixture/README.md) | **241** | 154–1.58e+03 | 0.532 | 74.2% |
+| [Bayesian nested corridors](nested-isopachs/README.md) | **175** | 106–605 | 0.430 † | 87.1% |
+
+Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
+
+## Full deposits and near-vent detail
+
+The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
+
+![Mazama · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](directional/deposit.png)
+
+![Mazama · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](spherical-mixture/deposit.png)
+
+![Mazama · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](nested-isopachs/deposit.png)
+
+## Inside the observation hull
+
+![Mazama · GP ensemble and cubic spline on a common scale and the full observation hull](isopachs.png)
+
+The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained.
+
+[Volume and geographic prediction plot](overview.png)
+
+## Regional fit details
+
+All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
+
+**31 exact measurements, 137 lower bounds, 103 upper limits.** The observation hull covers 1,548,745 km². The automatic validation buffer is 6.40 km.
 
 ![Matched median isopachs](isopachs.png)
 
-The colours follow the same doubling thickness brackets as the global maps. The dashed boundary marks the full observation hull. [Map frame and numerical checks](map-display.json).
+The full observation hull and every accepted location are in view. The coloured field is clipped to the exact hull; fine coastlines are context only. [Map frame and rendering provenance](map-display.json).
 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
-| Principal median-map volume inside hull (km³) | 129.65 | 128.90 |
-| Complete-draw conditional 95% volume interval (km³) | 109.26–179.21 | 120.25–151.97 |
-| Outer equal-region negative log score ↓ | 1.272 | 1.971 |
-| Outer log-thickness RMSE ↓ | 0.884 | 1.700 |
-| Outer 95% observation-interval coverage | 95.6% | 82.2% |
+| Principal median-map volume inside hull (km³) | 281.79 | 1107.29 |
+| Conditional 95% volume interval (km³) | 199.09–592.71 | 755.95–36824.90 |
+| Outer equal-region negative log score ↓ | 0.719 | 1.738 |
+| Outer log-thickness RMSE ↓ | 2.661 | 3.202 |
+| Outer 95% observation-interval coverage | 77.4% | 77.4% |
 
 Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.
 
@@ -24,7 +58,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
 
 ## Fitted methods
 
@@ -37,77 +71,54 @@ Volume integrates pointwise median thickness over the observation hull. The unce
   },
   "components": [
     {
-      "weight": 0.31005095800345295,
-      "model": {
-        "candidate": {
-          "tail": "exponential",
-          "length_factor": 0.75,
-          "noise_ratio": 0.75
-        },
-        "beta": [
-          4.717198847480004,
-          8.65193980723798,
-          4.753527897128573,
-          5.376543933599053
-        ],
-        "radius_scale_km": 553.2198097244386,
-        "length_km": 346.8586337276871,
-        "amplitude_log": 0.7986654127669229,
-        "noise_log": 0.5989990595751922,
-        "jitter": 6.378664415501594e-10,
-        "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
-      }
-    },
-    {
-      "weight": 0.5715383943378977,
+      "weight": 0.8360412285554798,
       "model": {
         "candidate": {
           "tail": "power",
           "length_factor": 0.25,
-          "noise_ratio": 0.25
+          "noise_ratio": 1.5
         },
         "beta": [
-          5.217819491801614,
-          13.610660721558487,
-          6.948797735450461,
-          7.899979774941364
+          3.7698958174991946,
+          5.895090057552291,
+          1.3577586297570094,
+          1.121962121157135
         ],
-        "radius_scale_km": 553.2198097244386,
-        "length_km": 115.6195445758957,
-        "amplitude_log": 0.790949875206687,
-        "noise_log": 0.19773746880167176,
-        "jitter": 6.256017050894738e-10,
+        "radius_scale_km": 654.6816725908722,
+        "length_km": 178.0996124849799,
+        "amplitude_log": 1.1591962625572947,
+        "noise_log": 1.738794393835942,
+        "jitter": 1.3437359751268007e-09,
         "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
+        "uncertainty": "conditional Laplace"
       }
     },
     {
-      "weight": 0.11841064765864946,
+      "weight": 0.16395877144452026,
       "model": {
         "candidate": {
           "tail": "power",
           "length_factor": 1.5,
-          "noise_ratio": 0.75
+          "noise_ratio": 1.5
         },
         "beta": [
-          5.217819491801614,
-          13.610660721558487,
-          6.948797735450461,
-          7.899979774941364
+          3.7698958174991946,
+          5.895090057552291,
+          1.3577586297570094,
+          1.121962121157135
         ],
-        "radius_scale_km": 553.2198097244386,
-        "length_km": 693.7172674553742,
-        "amplitude_log": 0.790949875206687,
-        "noise_log": 0.5932124064050153,
-        "jitter": 6.256017050894738e-10,
+        "radius_scale_km": 654.6816725908722,
+        "length_km": 1068.5976749098795,
+        "amplitude_log": 1.1591962625572947,
+        "noise_log": 1.738794393835942,
+        "jitter": 1.3437359751268007e-09,
         "trend_on_constraint_boundary": false,
-        "uncertainty": "conditional Gaussian"
+        "uncertainty": "conditional Laplace"
       }
     }
   ],
   "dominant_tail": "power",
-  "observation_discrepancy_variance_log": 0.0,
+  "observation_discrepancy_variance_log": 2.1094843322401102,
   "trend_on_constraint_boundary": false,
   "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
 }
@@ -119,39 +130,39 @@ Volume integrates pointwise median thickness over the observation hull. The unce
 {
   "method": "spline",
   "candidate": {
-    "tail": "power",
-    "knot_intervals": 2,
-    "tension": 0.0,
-    "smoothing": 0.0001,
+    "tail": "exponential",
+    "knot_intervals": 12,
+    "tension": 1.0,
+    "smoothing": 0.01,
     "trend_strength": 1.0,
-    "noise_ratio": 0.25
+    "noise_ratio": 1.5
   },
   "bounds_km": [
-    -171.54997973245918,
-    -85.79501947513727,
-    962.5499786089027,
-    1407.8949640790706
+    -281.69991384821134,
+    -687.459353964966,
+    992.0294465156619,
+    1442.1579015925247
   ],
   "knot_intervals_xy": [
-    2,
-    2
+    7,
+    12
   ],
-  "n_coefficients": 25,
-  "noise_log": 0.19773746880169063,
-  "amplitude_log": 0.7909498752067625,
+  "n_coefficients": 150,
+  "noise_log": 1.7393141610312586,
+  "amplitude_log": 1.159542774020839,
   "trend_beta": [
-    5.217819735996884,
-    13.610663104407939,
-    6.948799630064574,
-    7.8999817745899215
+    3.4002044931325512,
+    3.727225055188904,
+    1.0728190885519286,
+    0.8755768102428194
   ],
-  "trend_radius_scale_km": 553.2198097244386,
+  "trend_radius_scale_km": 654.6816725908722,
   "trend_on_constraint_boundary": false,
-  "effective_df_exact": 16.196320280224153,
-  "newton_decrement": 2.920018852230996e-25,
-  "newton_iterations": 0,
+  "effective_df_exact": 11.429994912484126,
+  "newton_decrement": 3.8658528816012886e-22,
+  "newton_iterations": 6,
   "quadrature_order": 6,
-  "uncertainty": "Conditional Gaussian",
+  "uncertainty": "Conditional Laplace",
   "uncertainty_omits": [
     "fitted trend",
     "noise and smoothing estimation",
@@ -170,7 +181,9 @@ Every explored candidate is retained in the selection tables. All response-depen
 - All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.
 - Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.
 - Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals.
-- Trend-regularized cubic spline: held-out 95% observation coverage is only 82.2%; uncertainty is undercovered.
+- GP ensemble: held-out 95% observation coverage is only 77.4%; uncertainty is undercovered.
+- Trend-regularized cubic spline: held-out 95% observation coverage is only 77.4%; uncertainty is undercovered.
+- Spline selection reaches an explored search boundary: knot_intervals. This is a bounded-grid result, not proof of a continuous optimum.
 
 ## Reproduce and inspect
 
@@ -185,9 +198,3 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
-
-## Five-family volume and prediction comparison
-
-![Separate regional and global volume domains with matched predictive evidence](overview.png)
-
-The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md) · [Nested corridor report](nested-isopachs/README.md).

@@ -1,0 +1,45 @@
+{
+  "audit_date": "2026-11-22",
+  "scope": "Complete293-entry compilation reconciliation plus60 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.",
+  "original_input": {
+    "file": "data/eruptions/Mazama_tephra.csv",
+    "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
+  },
+  "source": {
+    "file": "data/sources/mazama/buckland2020-esm1.xlsx",
+    "sha256": "9621d02d5a081df03c2b468eabb366e5507a9032b078cf1b19c4027c278914a3",
+    "doi": "https://doi.org/10.1007/s00445-020-1362-1"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Mazama_reviewed.csv",
+      "sha256": "bebf5132d4fb5a743cf0aaa418de53dfe358adc8da3fd8bbb90d5d170766284d",
+      "n_measurements": 26,
+      "n_lower_limits": 14,
+      "n_upper_limits": 0,
+      "definition": "Source-qualified climactic Mazama airborne fallout reference: 26 reported point values and14 conditional lower bounds. Compilation-supported values are not claimed independently primary-verified. The expanded bound review recovers primary components, preserved bed ranges and three georeferenced Camp Creek section groups; see BOUND_REVIEW.md. One endpoint is used per physical reading, with separate range-endpoint, coherent weaker-transfer and omission refits. Known precursor totals, reworked totals and unquantified traces/proxies are omitted. No invented uncertainties, zeros or trace thresholds."
+    }
+  },
+  "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
+  "thickness_convention": "Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.",
+  "coordinate_datum": "Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.",
+  "primary_audit_complete": false,
+  "prior_release": {
+    "commit": "0a53d02",
+    "url": "https://github.com/siyulai21/tephra-fallout-isopachs/tree/0a53d02",
+    "input": "data/eruptions/Mazama_tephra.csv",
+    "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+    "scope": "Current GitHub release preceding the Mazama source revision; the earlier local audit was performed on41b8f2f. Latest five-family results remain accessible at this immutable revision."
+  },
+  "preparation_script": {
+    "file": "benchmarks/mazama.py",
+    "sha256": "390448d22d5c46079751e8c40b0433b8c93d4a3385793991876bf57d1dfc22de"
+  },
+  "audit_artifacts": {
+    "model-selection.json": "d61327dbc688ea415432a7ca08dbd70a4dd56cc16d25c39e7a2f9d58fa35869e",
+    "model-selection.csv": "9b06f5c6957b15cf3c110b06df6ab14793391898a4fb77d808d5b9aa88ce5c42",
+    "site-evidence-decisions.csv": "1828d8c786cc8aa4050fa1ea34356dabb11125c358b3154c5f2d23454728165b",
+    "revised-locality-ledger.csv": "b1329bbbfccbde4c6b4af369c3c2788902160a2a734396e69722a76f20590a44",
+    "supplied-row-crosswalk.csv": "cc697169e400ab866fb20da34daad18b06b71ac20865f8c7aabf23104a1b9cbb"
+  }
+}

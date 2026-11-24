@@ -10,12 +10,12 @@ The common footprint keeps well-connected triangles between exact measurement si
 
 | Policy | Area (km²) | Method | Median-thickness integral (km³) | Median-map deletion range (km³) |
 |---|---:|---|---:|---:|
-| strict | 95,526 | GP ensemble | 20.58 | unavailable for this fit |
-| strict | 95,526 | Trend-regularized cubic spline | 18.46 | unavailable for this fit |
-| standard | 172,792 | GP ensemble | 31.91 | unavailable for this fit |
-| standard | 172,792 | Trend-regularized cubic spline | 29.78 | unavailable for this fit |
-| permissive | 485,671 | GP ensemble | 66.29 | unavailable for this fit |
-| permissive | 485,671 | Trend-regularized cubic spline | 63.28 | unavailable for this fit |
+| strict | 28,324 | GP ensemble | 36.51 | 9.71–57.92 |
+| strict | 28,324 | Trend-regularized cubic spline | 145.21 | 9.78–155.00 |
+| standard | 93,636 | GP ensemble | 70.25 | 22.16–125.70 |
+| standard | 93,636 | Trend-regularized cubic spline | 217.89 | 21.09–232.00 |
+| permissive | 179,822 | GP ensemble | 73.41 | 24.72–158.72 |
+| permissive | 179,822 | Trend-regularized cubic spline | 218.83 | 22.47–233.09 |
 
 These are **partial bulk fallout volumes**, not complete eruption volumes, dense-rock equivalents or certified lower bounds. The footprint depends on the sampling design and an explicit spacing rule. The three policies are sensitivity analyses; their range and the four geographic-deletion values are **not confidence intervals**.
 
@@ -42,8 +42,8 @@ The existing spline trend/derivative penalties regularize unsampled space; their
 
 ## Withheld checks and numerical limitations
 
-- GP ensemble: 0 exact outer-test sites inside training-only support; 45 outside. See the JSON for separate errors/coverage and row identities; sparse strata do not establish calibration.
-- Trend-regularized cubic spline: 0 exact outer-test sites inside training-only support; 45 outside. See the JSON for separate errors/coverage and row identities; sparse strata do not establish calibration.
+- GP ensemble: 0 exact outer-test sites inside training-only support; 31 outside. See the JSON for separate errors/coverage and row identities; sparse strata do not establish calibration.
+- Trend-regularized cubic spline: 0 exact outer-test sites inside training-only support; 31 outside. See the JSON for separate errors/coverage and row identities; sparse strata do not establish calibration.
 
 The contour gate uses fitted responses and model deletion stability. Its selected band has no selection-adjusted confidence interval. Geographic holdouts test prediction at observed sites, not an unobserved distal tail. Even smooth positive finite-mass fields can agree at every sampled site yet have arbitrarily different missing volume.
 

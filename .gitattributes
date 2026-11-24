@@ -1,2 +1,7 @@
 # Bundled offline cartography.
 src/empirical_isopach/assets/ne_10m_coastline.geojson.gz linguist-vendored=true
+
+# Preserve downloaded source and frozen audit bytes, including native line endings.
+data/sources/mazama/** -text -diff
+data/audits/Mazama/**/*.csv -text -whitespace
+data/audits/Mazama/*.csv -text -whitespace

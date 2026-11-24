@@ -1,0 +1,20 @@
+# Jenny Lake core stations
+
+Larsen and colleagues explicitly identify airfall tephra across five core stations and distinguish it from turbidites. Their 2024 supplement locates every drive and gives the Mazama sample depth. The original JEN13-2E analysis includes 17 glass analyses. The five stations describe the same eruption in one lake, with increasing sediment accumulation toward the deep basin and inflow delta. Replicate drives at an east-shelf station and at the central station enter only once. [2016 primary study](https://doi.org/10.1016/j.quascirev.2016.02.024) · [2024 primary study](https://doi.org/10.3389/feart.2024.1391441) · [Original line scans and Tables S1–S3](https://doi.org/10.3389/feart.2024.1391441.s001)
+
+| Station | Mazama position | Local observation and principal interpretation |
+|---|---:|---|
+| JEN13-1C, 43.75054°, −110.73428° | 102 cm | Buckland lists 1 cm. The 2024 core table brackets the ash between wood at 75.5 and 130 cm. The latter wood was reworked, which affects its age. Its position still gives a physical bracket. The gross conditional ceiling is **54.5 cm**. |
+| JEN13-2E, 43.77172°, −110.72578° | 93.5 cm | The scaled 2016 photo matches this core. Diffuse edges give a conservative **≤4 cm**. The paired JEN15-4A core has an independently reported depth of 96.5 cm and a looser 81 cm host bracket. |
+| JEN15-3A, 43.75893°, −110.73382° | 188.5 cm | The adjoining turbidite boundaries in Fig. 3 enclose the ash-bearing sediment. Conservative outward picks give **≤63 cm**. The sampled needles at 132.25 and 204 cm independently define a larger envelope. |
+| JEN16-1A, 43.76351°, −110.73082° | 230.5 cm | The base of the 5.3 ka turbidite at 184 cm and top of the 7.7 ka turbidite at 232 cm enclose **48 cm** of sediment. The ash itself is thinner. JEN16-1B and JEN21-1B verify this horizon near the same position. The 1.9 m JEN21-1A ends too early. |
+| JEN16-2, 43.76678°, −110.73705° | 350 cm | A separate, shallower sand bed and the older underlying turbidite bound the package. Outward graphic picks give **≤54 cm**. This core is closest to the inflow. |
+
+The 2024 schematic uses the same symbol for mapped tephra horizons. It does not measure the bed widths. The enclosing-contact calculations use its depth scale, with 0 and 800 cm at y=190 and 944 pixels in a 920 × 1300 rendering of p. 7. The JEN15-3 picks at x=520 span y=313–372. The JEN16-2 picks at x=234 span y=475–525. These entire-host ceilings require retention of the local fall within the interval, including sufficient thickness after compaction. The thickness of ash carried in a turbidite is unavailable. [Fig. 3 and original sediment descriptions](https://doi.org/10.3389/feart.2024.1391441)
+
+## Identifying the photographed section
+
+The 2016 Fig. 3a caption locates Mazama near the 7 cm ruler mark within a photograph but leaves its core unnamed. The 2024 supplement republishes labelled continuous core scans. Two disjoint patches outside the ash layer align independently with **JEN13-2, section 1N-1**, at the expected scale and orientation. The upper texture window gives normalized high-pass correlation 0.778 against that section and at most 0.336 in the seven comparison strips. The lower texture window gives 0.698 versus at most 0.198. Their locations move by 66 scan pixels for 685 photo pixels, consistent with the independent ruler scale ratio. A larger window including the upper ash contact gives 0.784 at the same registration. JEN13-1C is a separate field observation.
+
+The embedded 2016 plate is 1028 × 1298 pixels. Its 0 and 10 cm ruler lines are at y=15 and 831. The outward extent from y=402 to 709 includes both diffuse margins. Its width is 307 × 10 / 816 = 3.76 cm, rounded outward to 4 cm. This is a conditional ceiling on local fallout, under the full-retention assumption. [Registration scores and competitors](jenny-registration.csv) · [Reproduce the image comparison](jenny-registration.py) [Original photo, 2016 Fig. 3a](https://doi.org/10.1016/j.quascirev.2016.02.024) · [Matched 2024 line scan, Fig. S3](https://doi.org/10.3389/feart.2024.1391441.s001)
+

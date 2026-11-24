@@ -1,0 +1,91 @@
+Mazama: GP ensemble: geographic holdout 1/4
+Mazama: GP ensemble: geographic holdout 2/4
+Mazama: GP ensemble: geographic holdout 3/4
+Mazama: GP ensemble: geographic holdout 4/4
+Mazama: Trend-regularized cubic spline: geographic holdout 1/4
+Mazama: Trend-regularized cubic spline: geographic holdout 2/4
+Mazama: Trend-regularized cubic spline: geographic holdout 3/4
+Mazama: Trend-regularized cubic spline: geographic holdout 4/4
+Mazama: completed GP ensemble regional fit and joint draws
+Mazama: completed Trend-regularized cubic spline regional fit and joint draws
+Mazama: GP ensemble support, contour and extrapolation audit complete
+Mazama: Trend-regularized cubic spline support, contour and extrapolation audit complete
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/baseline: posterior attempt 1
+baseline: volume median 503.93 km³; R-hat 1.003; divergences 0; 146.2 s
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/diffuse_tail: posterior attempt 1
+diffuse_tail: volume median 495.44 km³; R-hat 1.003; divergences 0; 117.1 s
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/wide_geography: posterior attempt 1
+wide_geography: volume median 1107.04 km³; R-hat 1.004; divergences 0; 172.7 s
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/volume_prior_shift: posterior attempt 1
+volume_prior_shift: volume median 615.02 km³; R-hat 1.004; divergences 0; 125.0 s
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/one_fan: posterior attempt 1
+one_fan: volume median 1641.21 km³; R-hat 1.002; divergences 0; 37.0 s
+results/mazama-reviewed-release-20261122/spherical-mixture/posteriors/five_fans: posterior attempt 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 100, in <module>
+    main()
+    ~~~~^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 75, in main
+    return compare(argv[1:])
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 29, in compare
+    global_dataset(resolve_dataset(args.csv), args.output/"spherical-mixture", name=args.name,
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   geometry=args.global_geometry, archives=args.archives,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   progress=lambda message: print(message, flush=True))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/global_reporting.py", line 112, in global_dataset
+    data, meta, samples, report = fit_study(path, output, settings, progress=progress,
+                                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        baseline_prior=prior, sensitivity_priors=alternatives)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 193, in fit_study
+    samples, fit = fit_checked(data, latitude, prior, output/"posteriors"/prior.name, settings, progress=progress)
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 160, in fit_checked
+    samples, fit = fit_cached(data, latitude, chosen, folder, settings, attempts, progress)
+                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 128, in fit_cached
+    samples, diagnostics = sample(data, latitude, prior, setting, progress)
+                           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/inference.py", line 230, in sample
+    mcmc.run(jax.random.PRNGKey(settings.seed), *packed_data(data, latitude), **design, extra_fields=("diverging", "num_steps", "accept_prob", "energy"))
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 784, in run
+    states, last_state = _laxmap(partial_map_fn, map_args)
+                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 243, in _laxmap
+    return jax.tree.map(lambda *args: jnp.stack(args), *ys)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/tree.py", line 156, in map
+    return tree_util.tree_map(f, tree, *rest, is_leaf=is_leaf)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/tree_util.py", line 422, in tree_map
+    return treedef.unflatten(f(*xs) for xs in zip(*all_leaves))
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/tree_util.py", line 422, in <genexpr>
+    return treedef.unflatten(f(*xs) for xs in zip(*all_leaves))
+                             ~^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 243, in <lambda>
+    return jax.tree.map(lambda *args: jnp.stack(args), *ys)
+                                      ~~~~~~~~~^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/numpy/lax_numpy.py", line 4449, in stack
+    return lax.stack(arrays, axis=axis)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/lax/lax.py", line 2179, in stack
+    return stack_p.bind(*arrays, axis=axis)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/core.py", line 732, in bind
+    return self.bind_with_trace(prev_trace, args, avals, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/core.py", line 740, in bind_with_trace
+    return trace.process_primitive(self, args, params)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/core.py", line 1321, in process_primitive
+    return primitive.impl(*args, **params)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/dispatch.py", line 89, in apply_primitive
+    outs = fun(*args)
+KeyboardInterrupt

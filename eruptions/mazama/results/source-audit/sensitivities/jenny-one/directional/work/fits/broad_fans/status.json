@@ -1,0 +1,42 @@
+{
+  "status": "estimated",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 20261123,
+      "diagnostics": {
+        "rhat_max": 1.003128612010111,
+        "bulk_ess_min": 1409.5563681544081,
+        "tail_ess_min": 1419.6769867952423,
+        "divergences": 3,
+        "bfmi_min": 0.9119946438955815,
+        "max_depth_fraction": 0.0,
+        "passed": false
+      },
+      "chains": 4,
+      "warmup": 600,
+      "draws_per_chain": 1000,
+      "posterior_sha256": "7be41584e1c058d84ec3f925d17507cdc5f8e9a597ed34a9fc2afc0dd718af6e",
+      "file": "attempt-1.npz"
+    },
+    {
+      "attempt": 2,
+      "seed": 20262132,
+      "diagnostics": {
+        "rhat_max": 1.0017792685089502,
+        "bulk_ess_min": 4937.90546019819,
+        "tail_ess_min": 3987.0952837752134,
+        "divergences": 0,
+        "bfmi_min": 0.9209761708228452,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      },
+      "chains": 4,
+      "warmup": 1200,
+      "draws_per_chain": 2000,
+      "posterior_sha256": "61cf5021e436a2e3ce3f7594d39af2d1f16706743912bab107515dbba6980ce2",
+      "file": "attempt-2.npz"
+    }
+  ],
+  "passed": true
+}

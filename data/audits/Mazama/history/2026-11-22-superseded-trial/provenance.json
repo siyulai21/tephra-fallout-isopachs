@@ -1,0 +1,45 @@
+{
+  "audit_date": "2026-11-22",
+  "scope": "Complete293-entry compilation reconciliation plus59 additional records/leads. Independent primary verification remains incomplete. This is a conditional reference selection, not certification of original deposition at every included site.",
+  "original_input": {
+    "file": "data/eruptions/Mazama_tephra.csv",
+    "sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39"
+  },
+  "source": {
+    "file": "data/sources/mazama/buckland2020-esm1.xlsx",
+    "sha256": "9621d02d5a081df03c2b468eabb366e5507a9032b078cf1b19c4027c278914a3",
+    "doi": "https://doi.org/10.1007/s00445-020-1362-1"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Mazama_reviewed.csv",
+      "sha256": "9bc282a1e34cdfb6a0ac7771808a58c48aebcc0c7528c4df89d59d24285fa50a",
+      "n_measurements": 26,
+      "n_lower_limits": 2,
+      "n_upper_limits": 0,
+      "definition": "Source-qualified climactic Mazama airborne fallout reference: 26 reported point values and two primary-component lower bounds. Compilation-supported values are not claimed independently primary-verified. Known corrections, unresolved thickness/position conflicts, explicit precursor totals, reworked totals and unquantified traces/proxies are omitted. Moss central core uses4 cm; Mount Bachelor UPU>=44 cm and Upper Kirk Road UPU>=35 cm. No invented uncertainties, zeros or trace thresholds."
+    }
+  },
+  "target": "Climactic Mazama primary airborne bulk deposit, including co-ignimbrite ash; exclude identified older precursor units and flow/reworked material. Legacy phase correlations remain conditional where primary logs are unavailable.",
+  "thickness_convention": "Preserved bulk centimetres as a proxy for original local deposition. No universal decompaction correction. Component lower bounds assume in-place primary pumice without depositional thickening.",
+  "coordinate_datum": "Published decimal or DMS positions used without an undocumented datum conversion; precision does not establish survey accuracy.",
+  "primary_audit_complete": false,
+  "prior_release": {
+    "commit": "0a53d02",
+    "url": "https://github.com/siyulai21/tephra-fallout-isopachs/tree/0a53d02",
+    "input": "data/eruptions/Mazama_tephra.csv",
+    "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+    "scope": "Current GitHub release preceding the Mazama source revision; the earlier local audit was performed on41b8f2f. Latest five-family results remain accessible at this immutable revision."
+  },
+  "preparation_script": {
+    "file": "benchmarks/mazama.py",
+    "sha256": "23bef41a75ec10dfad434681b351c43d1aa9c8a69a40e2ee2555e403adb77db8"
+  },
+  "audit_artifacts": {
+    "model-selection.json": "b22d3495d78f922e5690e7acad348c118025e4fb1910b971070c90ba3a3943ba",
+    "model-selection.csv": "29bc6a448d138710a69dd1c97eb1260a48d92d30f8fed32f14769edfffdb0398",
+    "site-evidence-decisions.csv": "e74f4921334405054990870e7f00eb5040cdc764ac2f3f15cbedcdde807a4632",
+    "revised-locality-ledger.csv": "8d01df9f2183400a8d602539418f6001fa76062baac677a448686957d897b75c",
+    "supplied-row-crosswalk.csv": "4b46e27b6ea584112c048dd09cca2e3af64470a0eb12ab6e219bce38f74045f1"
+  }
+}

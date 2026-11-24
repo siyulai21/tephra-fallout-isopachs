@@ -1,0 +1,41 @@
+{
+  "input_sha256": "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29",
+  "script_sha256": "11f448632d52d6a1d221d20330e9626449ff73499f351e0032febfbdf1cae254",
+  "source_sha256": {
+    "eruptions/mazama/results/heldout_predictions.csv": "9561e795ddb92de77d8470cb4904f5b47f5972fbb052aa4254b887470157f535",
+    "/home/runner/work/tephra-fallout-isopachs/tephra-fallout-isopachs/data/eruptions/Mazama_reviewed.csv": "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29",
+    "eruptions/mazama/results/directional/extent/heldout.csv.gz": "7f93a5e9d5a5fadab14bb13dda3edb09b7af3e3243566bbfad4b034a135363b1",
+    "eruptions/mazama/results/spherical-mixture/extent/heldout.csv.gz": "2a12fb036c6d696fd26d6ef54418133b34697be13035b47c17a10eda294d9a3b",
+    "eruptions/mazama/results/nested-isopachs/extent/heldout.csv.gz": "eec9c5214703016da9e17ede838f5928600a50b1d3487d9039ec8f199b4a1fc9"
+  },
+  "observations_per_family": 271,
+  "bound_readings_per_family": 240,
+  "methods": {
+    "stacked": {
+      "scored": 271,
+      "covered_points": 24,
+      "point_count": 31
+    },
+    "spline": {
+      "scored": 271,
+      "covered_points": 24,
+      "point_count": 31
+    },
+    "directional": {
+      "scored": 271,
+      "covered_points": 30,
+      "point_count": 31
+    },
+    "spherical-mixture": {
+      "scored": 271,
+      "covered_points": 23,
+      "point_count": 31
+    },
+    "nested-isopachs": {
+      "scored": 271,
+      "covered_points": 27,
+      "point_count": 31
+    }
+  },
+  "meaning": "Each site is predicted with its buffered geographic fold withheld. Bound probabilities use the observation likelihood, including its fitted discrepancy; latent isopach intervals are separate. A point log score is a density in natural-log thickness, not an event probability. No probability for the geological correctness of a bound is inferred. Unscored or numerically warned folds remain explicit."
+}

@@ -6,6 +6,8 @@ This repository reconstructs ash thickness and bulk airborne fallout volume from
 
 The latest model comparison traces the Pinatubo, Ilopango, Aso-4, Mazama and Tambora anomalies and tests the changes across all nine eruptions. [Maps, held-out predictions and uncertainty](comparisons/global-extent/README.md)
 
+The Mazama audit traces thick distal lake and field deposits to their original records. Its revised selection uses 271 locations. [Field observations and source decisions](data/audits/Mazama/distal-review/README.md) · [Mazama maps and results](eruptions/mazama/README.md)
+
 ## Read a result
 
 The **GP ensemble** and **trend-regularized cubic spline** map the same observation hull. The **directional ensemble**, **spherical mixture** and **Bayesian nested corridors** extend thickness across Earth under different assumptions about unsampled ground. Each global method reports one median-thickness map and the integral of that same field over Earth. Conditional 95% intervals describe uncertainty in total fallout volume. The regional maps integrate median thickness within the observation hull. [All five methods](docs/methods/README.md) · [Numerical results across eruptions](comparisons/principal-volumes.csv)

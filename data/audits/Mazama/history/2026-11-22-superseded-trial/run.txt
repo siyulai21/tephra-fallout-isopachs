@@ -1,0 +1,131 @@
+/Users/siyulai/.matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /var/folders/qz/mftjyd1s3qxbb5wztn2td74w0000gn/T/matplotlib-cjlnhqbb because there was an issue with the default path (/Users/siyulai/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Matplotlib is building the font cache; this may take a moment.
+Mazama: GP ensemble: geographic holdout 1/4
+Mazama: GP ensemble: geographic holdout 2/4
+Mazama: GP ensemble: geographic holdout 3/4
+Mazama: GP ensemble: geographic holdout 4/4
+Mazama: Trend-regularized cubic spline: geographic holdout 1/4
+Mazama: Trend-regularized cubic spline: geographic holdout 2/4
+Mazama: Trend-regularized cubic spline: geographic holdout 3/4
+Mazama: Trend-regularized cubic spline: geographic holdout 4/4
+Mazama: completed GP ensemble regional fit and joint draws
+Mazama: completed Trend-regularized cubic spline regional fit and joint draws
+Mazama: GP ensemble support, contour and extrapolation audit complete
+Mazama: Trend-regularized cubic spline support, contour and extrapolation audit complete
+results/mazama-reviewed-20261122/spherical-mixture/posteriors/baseline: posterior attempt 1
+baseline: volume median 513.81 km³; R-hat 1.002; divergences 0; 138.3 s
+results/mazama-reviewed-20261122/spherical-mixture/posteriors/diffuse_tail: posterior attempt 1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 100, in <module>
+    main()
+    ~~~~^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 75, in main
+    return compare(argv[1:])
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/cli.py", line 29, in compare
+    global_dataset(resolve_dataset(args.csv), args.output/"spherical-mixture", name=args.name,
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   geometry=args.global_geometry, archives=args.archives,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   progress=lambda message: print(message, flush=True))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/global_reporting.py", line 112, in global_dataset
+    data, meta, samples, report = fit_study(path, output, settings, progress=progress,
+                                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        baseline_prior=prior, sensitivity_priors=alternatives)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 193, in fit_study
+    samples, fit = fit_checked(data, latitude, prior, output/"posteriors"/prior.name, settings, progress=progress)
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 160, in fit_checked
+    samples, fit = fit_cached(data, latitude, chosen, folder, settings, attempts, progress)
+                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/study.py", line 128, in fit_cached
+    samples, diagnostics = sample(data, latitude, prior, setting, progress)
+                           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/inference.py", line 230, in sample
+    mcmc.run(jax.random.PRNGKey(settings.seed), *packed_data(data, latitude), **design, extra_fields=("diverging", "num_steps", "accept_prob", "energy"))
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 784, in run
+    states, last_state = _laxmap(partial_map_fn, map_args)
+                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 241, in _laxmap
+    ys.append(f(x))
+              ~^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/mcmc.py", line 539, in _single_chain_mcmc
+    new_init_state = self.sampler.init(
+        rng_key,
+    ...<3 lines>...
+        model_kwargs=kwargs,
+    )
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/hmc.py", line 869, in init
+    init_params = self._init_state(
+        rng_key_init_model, model_args, model_kwargs, init_params
+    )
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/hmc.py", line 714, in _init_state
+    ) = initialize_model(
+        ~~~~~~~~~~~~~~~~^
+        rng_key,
+        ^^^^^^^^
+    ...<5 lines>...
+        forward_mode_differentiation=self._forward_mode_differentiation,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/util.py", line 800, in initialize_model
+    ) = _get_model_transforms(substituted_model, model_args, model_kwargs)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/infer/util.py", line 601, in _get_model_transforms
+    model_trace = trace(model).get_trace(*model_args, **model_kwargs)
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/handlers.py", line 196, in get_trace
+    self(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/primitives.py", line 119, in __call__
+    return self.fn(*args, **kwargs)
+           ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/primitives.py", line 119, in __call__
+    return self.fn(*args, **kwargs)
+           ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/handlers.py", line 905, in __call__
+    return cloned_seeded_fn.__call__(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/handlers.py", line 906, in __call__
+    return super().__call__(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/primitives.py", line 119, in __call__
+    return self.fn(*args, **kwargs)
+           ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/results/mazama-publish-20261122/src/empirical_isopach/models/mass_mixture/inference.py", line 67, in model
+    weights = numpyro.sample("weights", dist.Dirichlet(jnp.ones(k)*prior.fan_concentration/k)) if k > 1 else numpyro.deterministic("weights", jnp.ones(1))
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/distributions/distribution.py", line 124, in __call__
+    return super().__call__(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/distributions/continuous.py", line 523, in __init__
+    super(Dirichlet, self).__init__(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        batch_shape=batch_shape,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        event_shape=event_shape,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        validate_args=validate_args,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/distributions/distribution.py", line 278, in __init__
+    self.validate_args(strict=False)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/numpyro/distributions/distribution.py", line 306, in validate_args
+    if not np.all(is_valid):
+           ~~~~~~^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/array.py", line 336, in __bool__
+    return bool(self._value)
+                ^^^^^^^^^^^
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/profiler.py", line 588, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/siyulai/Documents/ChatGPT/Tephra Isopach Modeling/.venv/lib/python3.13/site-packages/jax/_src/array.py", line 696, in _value
+    npy_value, did_copy = self._to_np_array_did_copy()
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+KeyboardInterrupt
