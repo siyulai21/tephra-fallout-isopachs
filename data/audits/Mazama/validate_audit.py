@@ -200,6 +200,13 @@ def main(published=False):
     assert float(by_id['B2020-099']['Limit_cm']) == 727 - 721 == 6
     assert float(lookup['G1984-LOFTY79']['observed_point_cm']) == .5 / 10
     assert 'G1984-LOFTY79' not in by_id
+    with (HERE / 'distal-review/locality-facies-crosswalk.csv').open() as f:
+        facies = list(csv.DictReader(f))
+    assert len(facies) == len(rows)
+    for km, kind_counts in [(100, (29, 23, 103)), (750, (11, 1, 40)), (1000, (0, 0, 20))]:
+        selected = [r for r in facies if r['distance_from_vent_km'] and float(r['distance_from_vent_km']) > km]
+        assert tuple(sum(r['revised_use'] == k for r in selected) for k in ('measurement','lower_limit','upper_limit')) == kind_counts
+    assert {r['record_id'] for r in facies if r['original_S1_deposit_code'] == 'S' and r['revised_use'] != 'omitted'} == {'B2020-106'}
     models = []
     if published:
         for family in ('', 'directional/azimuth/', 'spherical-mixture/', 'nested-isopachs/', 'nested-whole-area/'):

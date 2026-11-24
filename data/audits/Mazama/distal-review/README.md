@@ -18,6 +18,21 @@ The re-examination found both genuinely thick surviving beds and thick accumulat
 
 The spreadsheet’s row ID and site name are both needed. For example, Rockslide Lake is workbook ID 176 and was called site 174 in the text. Workbook 174 is **Squeah Lake**. South Saskatchewan River is workbook 232 and was called 230 in the text. Marys Pond, Foy and Swiftcurrent show why a single drainage-area correction would be unjustified. Even visibly clean ash can have been redeposited rapidly. Glass chemistry identifies a volcanic source and cannot by itself give the initial bulk thickness. [Buckland et al., pp. 7 and 12–13 and supplement S2](https://doi.org/10.1007/s00445-020-1362-1)
 
+## How Buckland’s original deposit classes enter the fit
+
+The table follows each of the 293 original row IDs. A later core or a better documented section in the same basin can enter under its own ID. The 574 additional evidence records preserve those links and shared positions. A secondary deposit can bound the material in a retained package only under the stated capture assumptions.
+
+| Original S1 code | Source rows | Point thickness | Lower bound | Conditional upper bound | Original row omitted |
+|---|---:|---:|---:|---:|---:|
+| P (primary) | 71 | 7 | 4 | 15 | 45 |
+| S (secondary) | 28 | 0 | 0 | 1 | 27 |
+| B (mixed) | 21 | 0 | 2 | 6 | 13 |
+| unk (unclassified) | 173 | 1 | 0 | 14 | 158 |
+
+Sheep Mountain Bog is the single S-coded row with a fitted bound. The original profile and pollen archive document the preserved package in a wash-prone fen. The 42 cm cap permits much thinner local fallout. [Measured section and its transfer assumptions](FIELD_EVIDENCE.md) · [Original and revised use for every record](locality-facies-crosswalk.csv)
+
+Among the 29 point thicknesses beyond 100 km, the thickest is the approximately 20 cm Flodelle Creek lower-mine bed. Beyond 750 km there are 11 measurements, one lower bound and 40 conditional ceilings. The largest point thickness in this group is 1 cm, recorded at Lower Joffre, Green, Great Salt Lake and Yellowstone’s Goose Lake. All 20 fitted positions beyond 1,000 km are conditional upper bounds. The 30 cm Andies Prairie observation is a field minimum. [Fitting input](../../../eruptions/Mazama_reviewed.csv) · [Distances, original readings and decisions](locality-facies-crosswalk.csv)
+
 ## Revised dataset
 
 The principal input has **271 locations**. Beyond 100 km, 29 are point measurements, 23 are conditional minima and 103 are conditional ceilings. Another 435 distal records have known positions and carry no fitting likelihood. Across the full inventory, 77 records have no defensible numerical position. Relative to the 244-position edition, 18 locations leave the fit, 45 enter and 28 continuing locations change the direction or type of their constraint. Source descriptions determined these decisions before model fitting. [Every locality, its facies, reported quantity and both inclusion decisions](locality-facies-crosswalk.csv) · [Principal input](../../../eruptions/Mazama_reviewed.csv) · [Frozen earlier selection](../history/2026-11-23-before-distal-review/)
