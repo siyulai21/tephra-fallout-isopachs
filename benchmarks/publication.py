@@ -33,11 +33,19 @@ def published_reach_engine():
 
 def published_datasets():
     """Resolve the exact registered revision used by each published case report."""
-    from src.empirical_isopach.core.catalog import datasets
+    from src.empirical_isopach.core.catalog import datasets, data_directory
     records = datasets()
     for rec in records:
         report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
-        if report["input"]["input_sha256"] != sha256(rec["path"].read_bytes()).hexdigest():
+        expected = report["input"]["input_sha256"]
+        if expected == sha256(rec["path"].read_bytes()).hexdigest():
+            continue
+        for previous in rec.get("previous_inputs", []):
+            path = data_directory() / previous["file"]
+            if sha256(path.read_bytes()).hexdigest() == expected:
+                rec.update(previous, path=path)
+                break
+        else:
             raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
     return records
 

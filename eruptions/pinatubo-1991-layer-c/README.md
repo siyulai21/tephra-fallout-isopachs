@@ -2,7 +2,19 @@
 
 The 15 June 1991 climactic eruption deposited pumice and ash across Luzon and the South China Sea. This case combines the C1 and C2 fall layers on land with their marine equivalents, including co-ignimbrite fallout. Volumes refer to accumulated bulk deposit. The archive also identifies the separate layers A, B and D. [Field stratigraphy](https://pubs.usgs.gov/pinatubo/paladio/index.html) · [Offshore stratigraphy](https://doi.org/10.1007/s00445-003-0306-x)
 
-**The reviewed Layer C input has 208 sites, comprising 150 measurements, 28 lower bounds and 30 upper bounds.** Two readers compared Koyaguchi C1 and C2 and checked 32 entries in Paladio-Melosantos Figure 7. The inventory contains 464 source records. The exact sites beyond 100 km leave a 294° gap in direction. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Koyaguchi review](../../data/audits/Pinatubo-1991/koyaguchi-c1-review.md) · [Figure 7 review and original crops](../../data/audits/Pinatubo-1991/paladio-figure-7-review.md)
+## November 24 field audit and principal nested fit
+
+The current input has **235 localities** comprising 147 point values, 18 thickness ranges, 31 lower bounds and 39 upper bounds. It preserves the curator-confirmed Koyaguchi and Paladio-Melosantos readings. New evidence includes stratified pumice on Luzon, an offshore sediment trap, mixed ash identified by X-ray and intact core sections with conditional inventory ceilings. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C_reviewed.csv) · [Source decisions for every locality](../../data/audits/Pinatubo-1991/reaudit/localities.csv) · [Field and source audit](../../data/audits/Pinatubo-1991/reaudit/README.md)
+
+**The principal nested median-thickness map integrates to 7.37 km³.** Integrating the pointwise Q25 and Q75 thickness fields gives 4.83–13.74 km³. Across complete posterior deposits, the conditional 95% interval for bulk volume is 5.03–28.42 km³. The full-fit posterior passed. The map integrations passed. 3 of four buffered geographic holdouts passed. The support screen accepted no complete contour band. [Fit report, source checks and reproduction commands](results/nested-isopachs/2026-11-24/README.md) · [Offshore survey map](results/nested-isopachs/2026-11-24/marine-survey.png)
+
+![Principal nested map on 235 audited sites](results/nested-isopachs/2026-11-24/deposit.png)
+
+## Earlier 208-site edition and matched five-method comparison
+
+The remainder of this page records the previous input, its fits and the development studies that preceded them.
+
+**The preceding Layer C input has 208 sites, comprising 150 measurements, 28 lower bounds and 30 upper bounds.** Two readers compared Koyaguchi C1 and C2 and checked 32 entries in Paladio-Melosantos Figure 7. The inventory contains 464 source records. The exact sites beyond 100 km leave a 294° gap in direction. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C.csv) · [Koyaguchi review](../../data/audits/Pinatubo-1991/koyaguchi-c1-review.md) · [Figure 7 review and original crops](../../data/audits/Pinatubo-1991/paladio-figure-7-review.md)
 
 The shared model input draws on 172 land-survey records, 34 marine cores or station groups and two airfield bounds. A further 366 entries document layers A, B and D. Wang’s 1999 dissertation and the original SO-132 station ledger were unavailable to this audit. Marine occurrences without a measured thickness or calibrated limit remain in the evidence inventory. [Offshore source coverage](../../data/audits/Pinatubo-1991/marine-check.md) · [Other fall layers](../../data/audits/Pinatubo-1991/other-phases/README.md)
 
@@ -38,7 +50,7 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
-The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+These historical global fits use the same 208 audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 
 ## What changed after the two map reviews
 
@@ -73,7 +85,7 @@ Run these commands from the repository root. The comparison runs the two regiona
 
 ```sh
 python -m benchmarks.pinatubo
-python -m src.empirical_isopach.cli compare pinatubo-1991-layer-c --output results/pinatubo-1991-replay
+python -m src.empirical_isopach.cli compare data/eruptions/Pinatubo_1991_layer_C.csv --output results/pinatubo-1991-replay
 python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests
 python -m benchmarks.nested_edge_deletion --case data/eruptions/Pinatubo_1991_layer_C.csv --fitted results/pinatubo-1991-replay/nested-whole-area --output results/pinatubo-edge-deletion
 python -m benchmarks.pinatubo_field_review --output results/pinatubo-new-sites.csv --volume-output results/pinatubo-review-volumes.csv

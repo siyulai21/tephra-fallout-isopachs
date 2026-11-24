@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from .nested_reach import case_home
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.registry import active_methods
 from src.empirical_isopach.visualization.principal import FAMILIES, number, volume_rows, write_rows

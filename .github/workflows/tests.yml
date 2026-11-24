@@ -16,7 +16,12 @@ jobs:
       - name: Replay the Ilopango thickness audit from the original workbook
         run: python -m benchmarks.ilopango
       - name: Replay the Pinatubo Layer C source audit
-        run: python -m benchmarks.pinatubo
+        run: |
+          python -m benchmarks.pinatubo
+          python -m benchmarks.pinatubo_offshore
+          python -m benchmarks.pinatubo_archive_review
+          python -m benchmarks.pinatubo_nested_review --verify
+          git diff --exit-code -- data/eruptions/Pinatubo_1991_layer_C_reviewed.csv data/audits/Pinatubo-1991/reaudit
       - name: Reproduce the Mazama source audit and the 300-locality input
         run: |
           python -m benchmarks.mazama
@@ -49,11 +54,11 @@ jobs:
           root = data_directory()
           pinatubo = next(r for r in datasets() if r["slug"] == "pinatubo-1991-layer-c")
           data, meta = audited_data(pinatubo["path"])
-          assert (len(data.xy), int((~data.censored).sum()), int(data.lower_censored.sum())) == (208, 150, 28)
+          assert (len(data.xy), int((~data.censored).sum())) == (235, 147)
           principal = json.loads((root / pinatubo["audit"]).read_text())["cases"]["principal"]
           assert meta["input_sha256"] == principal["sha256"]
           archive, _ = load_inventory(pinatubo["path"])
-          assert len(archive["sites"]) == 102 and not archive["scenarios"]
+          assert len(archive["sites"]) == 151 and not archive["scenarios"]
           for case in (r for r in datasets() if r["slug"] in {"ilopango-tbj", "sakurajima-satsuma"}):
               audit = json.loads((root / case["audit"]).read_text())
               for source in audit["sources"]:
