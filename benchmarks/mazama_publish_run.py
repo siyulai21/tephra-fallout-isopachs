@@ -132,7 +132,9 @@ def main():
              '[Thick distal deposits and original field evidence](../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md) · '
              '[Archived numerical editions](../../archive/2026-11-24-mazama-distal-facies/README.md)')
     first, rest = case_page.read_text().split('\n\n', 1)
-    case_page.write_text(first + '\n\n' + links + '\n\n' + rest)
+    legend = ('On the model maps, circles mark measured beds, triangles mark minima and diamonds mark conditional ceilings. '
+              'The symbol colour at Johnson Lake encodes its 156 cm enclosing package. The background contours show the model’s inferred thickness there.')
+    case_page.write_text(first + '\n\n' + links + '\n\n' + legend + '\n\n' + rest)
     source_page = extra / 'README.md'
     first, rest = source_page.read_text().split('\n\n', 1)
     source_page.write_text(first + '\n\n[Distal field review, matched volumes and local thicknesses](distal-facies-results.md)\n\n' + rest)

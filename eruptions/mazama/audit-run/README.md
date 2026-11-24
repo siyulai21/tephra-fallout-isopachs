@@ -1,17 +1,25 @@
-# Mazama model results on 236 observations
+# Mazama principal models on 271 fitting positions
 
-The two regional fits and the global nested-isopach fit use 57 measured beds, 152 lower bounds and 27 upper bounds. These results include the six observations recovered through the dating and field-log audit. The nested result integrates the finite-spread continuation. The geographic scores use independent held-out regions. [Input and original evidence](../../../data/audits/Mazama/README.md) · [Full five-family calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45255144401)
+The reports below are completed model packets from the registered 271-position GitHub run. Every packet matches its published SHA-256 and every map uses the same numerical input. The full release also assembles the fifteen geological source comparisons. [Model calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45300131932) · [Artifact identities and hashes](github-artifact-hashes.json) · [Field evidence and unresolved sources](../../../data/audits/Mazama/distal-review/README.md)
 
-| Method | Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) | Held-out score ↓ | 95% coverage of withheld measured beds |
-|---|---|---:|---:|---:|---:|
-| GP ensemble | 1,476,452 km² observation hull | 471.43 | 367.77–1,006.00 | 1.145 | 68.4% |
-| Cubic spline | 1,476,452 km² observation hull | 1,130.37 | 1,665.21–6,420,775.27 | 1.066 | 78.9% |
-| Bayesian nested isopachs | Earth, conditional continuation | 262.71 | 181.80–823.50 | 1.064 | 70.2% |
+The 31 measured beds, 137 lower limits and 103 upper limits enter each fit. The regional hull covers 1,548,745 km². The whole-Earth integrations include extrapolation over unsampled areas. Conditional intervals give whole-deposit draw uncertainty under each model and its evidence assumptions. [Input](../../../data/eruptions/Mazama_reviewed.csv) · [Unrounded results](principal-volumes.csv)
 
-The spline volume and its draw interval failed their numerical refinement checks. Integrating a pointwise median surface and taking quantiles of whole-deposit draws give different statistics. Held-out coverage is below 95% for all three methods. The support screen admits no observed regional contour band. [Regional fit and folds](regional-report.json) · [Nested uncertainty and validation](nested-extent.json) · [Independent integration checks](nested-map.json)
+| Family | Domain | Median-map km³ | Conditional 95%, km³ | Held-out score ↓ | Coverage of measured beds | Numerical qualifications |
+|---|---|---:|---:|---:|---:|---|
+| GP ensemble | observation hull | 281.79 | 199.09–592.71 | 0.719 | 77.4% | Passed |
+| Cubic spline | observation hull | 1,107.29 | 755.95–36,824.90 | 1.738 | 77.4% | Passed |
+| Bayesian nested isopachs | whole Earth | 175.29 | 106.13–604.87 | 0.430 | 87.1% | geographic fits provisional |
 
-![Regional isopachs](regional-isopachs.png)
+Circles on these model maps identify measurements, triangles minima and diamonds conditional ceilings. A diamond’s colour can encode a thick enclosing package. The underlying coloured field gives the inferred local thickness.
 
-![Conditional nested-isopach deposit](nested-deposit.png)
+The earlier 244-position calculations use different source treatments and a different regional observation hull. The fixed-footprint refits compare the effect of the evidence choices directly. [Earlier maps and numerical reports](../../../archive/2026-11-24-mazama-distal-facies/README.md)
 
-[Yellowstone core detail](../../../data/audits/Mazama/YELLOWSTONE.md) · [Current evidence map](../../../data/audits/Mazama/evidence-map.png) · [Young field sections](../../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Preceding 230-observation results](https://github.com/siyulai21/tephra-fallout-isopachs/tree/5fa6cae5a4e17636dd878b2776b9f71a837601e4/eruptions/mazama/audit-run)
+![GP ensemble and cubic spline](regional-isopachs.png)
+
+[Regional reports and fold membership](regional-report.json) · [Regional support, holes and rejected contours](regional-support.json.gz)
+
+### Bayesian nested isopachs
+
+No complete contour band qualified. Numerical fold checks passed in 3 of 4 geographic regions. [Integration](nested-map.json) · [Held-out comparisons](nested-extent.json) · [Support decisions](nested-support.json.gz)
+
+![Bayesian nested isopachs conditional fallout map and area curve](nested-deposit.png)
