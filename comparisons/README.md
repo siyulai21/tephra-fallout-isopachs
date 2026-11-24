@@ -1,12 +1,14 @@
 # How well do the methods predict fallout?
 
-The principal table lists results fitted to each eruption’s current accepted data. Each method reports the integral of its median map and the integrals of its pointwise Q25 and Q75 thickness maps. Scores and 95% observation coverage describe prediction in withheld regions. [Volumes, validation and source hashes](principal-volumes.csv)
+The principal table lists results fitted to the accepted edition shared across all five methods for each eruption. Each method reports the integral of its median map and the integrals of its pointwise Q25 and Q75 thickness maps. Scores and 95% observation coverage describe prediction in withheld regions. [Volumes, validation and source hashes](principal-volumes.csv)
 
 The nested family fits its footprint and area–thickness law jointly. Matched comparisons with the original whole-area and station-corridor models include real withheld surveys, known deposits and measurements of the actual unsmoothed contours. [Catalogue estimates](nested-isopachs/README.md) · [Map comparisons and validation](nested-isopachs/geography/README.md)
 
+The Ilopango comparison uses the previous 56-site edition. The November 24 field audit and standalone nested fit use 116 sites. [Current Ilopango result](../eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24/README.md)
+
 The November 24 [standalone Pinatubo nested fit](../eruptions/pinatubo-1991-layer-c/results/nested-isopachs/2026-11-24/README.md) uses 235 sites. The matched five-method Pinatubo comparison uses 208 observations, including 34 offshore records. Its land measurements incorporate both the Koyaguchi and Paladio-Melosantos figure reviews. The earlier field-survey experiments keep their own fitted inputs and held-out predictions. [Audited Pinatubo case](../eruptions/pinatubo-1991-layer-c/README.md) · [Effect of the two land-map reviews](../eruptions/pinatubo-1991-layer-c/results/source-checks/figure7-review/README.md) · [Earlier survey tests](nested-isopachs/pinatubo-preview/README.md)
 
-The figure compares geographic predictions on the current inputs. All five Mazama fits use the same 300 localities and the same buffered geographic holdouts. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
+The figure compares geographic predictions on the matched five-method inputs. All five Mazama fits use the same 300 localities and the same buffered geographic holdouts. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
 
 ![Geographic prediction scores and exact-site coverage for the five methods](method-scores.png)
 

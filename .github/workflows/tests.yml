@@ -14,7 +14,10 @@ jobs:
           python -m benchmarks.sakurajima_satsuma
           python -m benchmarks.satsuma_core_sensitivity --verify
       - name: Replay the Ilopango thickness audit from the original workbook
-        run: python -m benchmarks.ilopango
+        run: |
+          python -m benchmarks.ilopango
+          python -m benchmarks.ilopango_field_review --verify-workbook
+          python -m benchmarks.ilopango_nested_review --verify
       - name: Replay the Pinatubo Layer C source audit
         run: |
           python -m benchmarks.pinatubo

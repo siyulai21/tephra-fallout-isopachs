@@ -1,5 +1,7 @@
 # Ilopango TBJ Unit G thickness audit
 
+This page preserves the source and coverage audit for the 56-locality matched comparison. The November 24 review registers 116 localities and preserves the reconciliation with this edition. [Current site audit, bounds and original field reports](reaudit/README.md)
+
 **52 measured thicknesses and four reported lower bounds** enter each fit. Each accepted row has a distinct published coordinate pair and an evidence ID. The primary observation is the widespread upper co-ignimbrite ash, Unit G. Earlier fallout units A and B have different dispersal axes. Other horizons include flow deposits. Keeping the unit identity fixed makes the thickness at different sites comparable. [Accepted observations](../../eruptions/Ilopango_TBJ_Unit_G.csv) · [Source material](../../sources/ilopango-tbj/README.md)
 
 ## How an observation enters the fit

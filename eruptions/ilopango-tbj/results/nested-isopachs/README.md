@@ -1,5 +1,7 @@
 # Ilopango TBJ (Unit G) · Bayesian nested footprints
 
+This packet preserves the 56-locality edition used in the matched five-method comparison. The November 24 field review and principal nested rerun use 116 localities. [Current result and map](2026-11-24/README.md)
+
 The principal bulk volume is **49.3 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **36.7–73.9 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth. **Numerical warning on the fitted deposit distribution.**
 
 ![Ilopango TBJ (Unit G), Bayesian nested footprints. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)

@@ -8,7 +8,7 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 |---|---|---|
 | Aso-4 | [Aso-4_reviewed.csv](Aso-4_reviewed.csv) | [Cruise coordinates and thickness bounds](../audits/Aso-4/README.md) |
 | B-Tm | [B-Tm_cryptotephra.csv](B-Tm_cryptotephra.csv) | [Combined airborne fallout from both phases, including three interpreted archive bounds](../audits/B-Tm/README.md) |
-| Ilopango TBJ, Unit G | [Ilopango_TBJ_Unit_G.csv](Ilopango_TBJ_Unit_G.csv) | [Unit-by-unit field sections, distal core assignments and directional coverage](../audits/Ilopango-TBJ/README.md) |
+| Ilopango TBJ, Unit G | [116-site Unit G input](Ilopango_TBJ_Unit_G_reviewed.csv) | [Unit-by-unit sections, field surveys, archive transfers and positional quality](../audits/Ilopango-TBJ/reaudit/README.md) |
 | Sakurajima Satsuma (P14) | [Sakurajima_Satsuma.csv](Sakurajima_Satsuma.csv) | [Field and excavation thicknesses, core measurements, bounds and exclusions](../audits/Sakurajima-Satsuma/README.md) |
 | Mazama | [Mazama_primary_ranges.csv](Mazama_primary_ranges.csv) | [Climactic fallout, source conflicts, phase separation and conditional bounds](../audits/Mazama/README.md) |
 | Minoan | [Minoan_tephra.csv](Minoan_tephra.csv) | [Combined fallout and incomplete-core bounds](../audits/Minoan/README.md) |
