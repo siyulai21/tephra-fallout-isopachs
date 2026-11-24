@@ -63,9 +63,14 @@ def draw(folder, verify=False):
                     expected["median_at_reviewed_sites_cm"][f][k],
                     rtol=1e-9,
                 )
-        assert {k: v for k, v in expected.items() if k != "median_at_reviewed_sites_cm"} == {
-            k: v for k, v in receipt.items() if k != "median_at_reviewed_sites_cm"
-        }
+        # Trigonometric projection can differ in the last bits across math libraries.
+        np.testing.assert_allclose(
+            scope, expected["overview_bounds_km"], rtol=0, atol=1e-9
+        )
+        numerical = {"median_at_reviewed_sites_cm", "overview_bounds_km"}
+        assert expected.keys() == receipt.keys()
+        for key in expected.keys() - numerical:
+            assert expected[key] == receipt[key], key
         with Image.open(png) as im:
             assert json.loads(im.info["Description"])["input_sha256"] == digest(INPUT)
         return
