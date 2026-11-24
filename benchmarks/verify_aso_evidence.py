@@ -1,5 +1,6 @@
 """Verify the frozen November 2026 Aso-4 publication; run from repository root."""
 from pathlib import Path
+from zipfile import ZipFile
 from hashlib import sha256
 import argparse
 import json, re
@@ -21,16 +22,30 @@ for row in ledger.iloc[:52].itertuples():
  numbers=re.findall(r'\d+(?:\.\d+)?',str(row.s2_thickness_text))
  assert len(numbers)==1 and float(numbers[0])==row.thickness_cm
 others=read(OUT/'other-eruptions-hashes.json')
-from .publication import read_hashes, verify_files, preceding_spherical_bytes, SPHERICAL_REFERENCE
+from .publication import read_hashes, verify_files, preceding_spherical_bytes, SPHERICAL_REFERENCE, MAZAMA_ARCHIVE
 published = read_hashes()
 preceding_spherical = read_hashes(SPHERICAL_REFERENCE/"previous-files.sha256")
 visual_revisions = 0
 updated_btm = 0
+updated_mazama = 0
+# The Aso-4 audit froze these Mazama files before subsequent source and map revisions.
+mazama_originals = {name: expected for name, expected in others.items() if name.startswith("eruptions/mazama/")}
+with ZipFile(MAZAMA_ARCHIVE / "aso-study-mazama-reference.zip") as archived:
+ assert sorted(archived.namelist()) == sorted(mazama_originals)
+ for name, expected in mazama_originals.items():
+  assert sha256(archived.read(name)).hexdigest() == expected, name
 # This study checked neighboring releases before the B-Tm source revision.
 for old_path, expected in others.items():
  current = re.sub(r'^(eruptions/[^/]+/results)/global/', r'\1/spherical-mixture/', old_path)
  path = Path(current)
  if path.is_file() and hashfile(path) == expected:
+  continue
+ if old_path in mazama_originals:
+  if not path.is_file():
+   assert current == "eruptions/mazama/results/isopachs.svg" and current not in published
+   current = path.with_suffix(".png").as_posix()
+  verify_files({current: published[current]})
+  updated_mazama += 1
   continue
  if not path.is_file():
   assert path.name == "isopachs.svg" and current not in published, current
@@ -93,8 +108,9 @@ checks={
  'source_workbook_and_audit_artifact_hashes_verified':True,
  'all_52_compiled_thickness_magnitudes_match_original_csv':True,
  'source_inequalities_and_primary_conflicts_preserved_in_audit':True,
- 'other_eruption_files_unchanged_count':len(others)-visual_revisions-updated_btm,
+ 'other_eruption_files_unchanged_count':len(others)-visual_revisions-updated_btm-updated_mazama,
  'other_eruption_files_replaced_by_reviewed_btm_release':updated_btm,
+ 'other_eruption_files_replaced_by_reviewed_mazama_release':updated_mazama,
  'other_eruption_presentation_revisions_verified_count':visual_revisions,
  'pre_audit_influence_reference_sha256':reference_hashes,
  'same_current_input_row_ids_geographic_folds_buffers_training_and_withheld_rows':True,
@@ -118,4 +134,4 @@ args=parser.parse_args()
 if args.output is not None:
  args.output.parent.mkdir(parents=True,exist_ok=True)
  args.output.write_text(json.dumps(checks,indent=2,allow_nan=False)+'\n')
-print('Verified',len(posterior_checks),'posterior attempts,',len(others)-visual_revisions-updated_btm,'unchanged other-eruption files,',visual_revisions,'presentation revisions,',updated_btm,'reviewed B-Tm replacements, and matched current validation.')
+print('Verified',len(posterior_checks),'posterior attempts,',len(others)-visual_revisions-updated_btm-updated_mazama,'unchanged other-eruption files,',visual_revisions,'presentation revisions,',updated_btm,'reviewed B-Tm replacements,',updated_mazama,'reviewed Mazama replacements, and matched current validation.')
