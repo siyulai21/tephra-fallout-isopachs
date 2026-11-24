@@ -1,5 +1,9 @@
 # Ilopango Tierra Blanca Joven, Unit G
 
+The November 24 field review brings the principal Unit G input to **116 localities**. The nested median-thickness map integrates to **51.0 km³**. All four geographic holdouts passed their numerical checks. The full posterior retained a sampling warning, and the northeast prediction misses the thin Lake Yojoa ash. The 95% conditional interval across complete deposits is **34–684 km³**. [Revised principal result and map](results/nested-isopachs/2026-11-24/README.md) · [Current input](../../data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Site audit and primary sources](../../data/audits/Ilopango-TBJ/reaudit/README.md)
+
+## Earlier matched five-method comparison on 56 sites
+
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All five models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
 The revised nested map integrates to 49.3 km³. Its 39.0–226 km³ interval and all four geographic refits retain population-sampling warnings. [Independent attempts and full diagnostics](results/nested-isopachs/footprints/report.json)

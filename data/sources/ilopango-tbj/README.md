@@ -1,5 +1,7 @@
 # Sources for the Ilopango Tierra Blanca Joven fallout
 
+The November 24 review traces the expanded land, lake, marine and archaeological evidence to the original field reports and figures. [Sources and hashes](../../audits/Ilopango-TBJ/reaudit/source-manifest.csv) · [Revised field audit](../../audits/Ilopango-TBJ/reaudit/README.md)
+
 ## Pedrazzi et al. (2019)
 
 *The Ilopango Tierra Blanca Joven (TBJ) eruption, El Salvador: Volcano-stratigraphy and physical characterization of the major Holocene event of Central America.* The preserved file is the publisher's original Supplementary Material 1. Sheet `Hoja1` lists site IDs, locations and the thickness of each mapped unit in centimetres. Keep the workbook with its original attribution. [Paper](https://doi.org/10.1016/j.jvolgeores.2019.03.006) · [Publisher's workbook](https://ars.els-cdn.com/content/image/1-s2.0-S0377027318303706-mmc1.xls) · [Preserved workbook](pedrazzi-supplement-1.xls)
