@@ -1,5 +1,8 @@
 # Bundled offline cartography.
 src/empirical_isopach/assets/ne_10m_coastline.geojson.gz linguist-vendored=true
+# Keep the GSHHG distribution licenses byte-identical to the signed source.
+src/empirical_isopach/assets/shorelines/COPYING.LESSERv3 -text
+src/empirical_isopach/assets/shorelines/LICENSE.TXT -text
 
 # Preserve downloaded source and frozen audit bytes, including native line endings.
 data/sources/mazama/** -text -diff
