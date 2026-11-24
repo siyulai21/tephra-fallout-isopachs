@@ -4,7 +4,9 @@ from functools import lru_cache
 import time
 
 import numpy as np
-from scipy.special import logsumexp, log_ndtr
+from scipy.special import logsumexp
+
+from ...core.likelihood import normal_log_event, observation_log_event
 
 from .geometry import RADIUS, to_sphere, log_field
 from .prior import BASELINE
@@ -43,7 +45,7 @@ def model_function(prior):
         large = s+jnp.log1p(-jnp.exp(-jnp.maximum(s, 50)))-jnp.log(abs(s))
         return jnp.where(small, t/2+t*t/24-t**4/2880, jnp.where(s > 50, large, value))
 
-    def model(unit, y, known_sd, kinds, mask, basis_centers=None, basis_scales=None):
+    def model(unit, y, known_sd, kinds, mask, interval_upper=None, basis_centers=None, basis_scales=None):
         k = basis_centers.shape[0] if prior.supported_basis else prior.components
         # This is an exact change of coordinates, not a thickness-derived prior.
         # The factor below cancels this auxiliary normal and restores p(log V).
@@ -131,10 +133,8 @@ def model_function(prior):
 
         def likelihood(multiplier):
             sd = jnp.sqrt((multiplier*sigma)**2+known_sd**2)
-            z = (y-mean)/sd
-            exact = -.5*(z*z+jnp.log(2*jnp.pi))-jnp.log(sd)
-            return jnp.where(kinds == 1, jsp.special.log_ndtr(z),
-                             jnp.where(kinds == 2, jsp.special.log_ndtr(-z), exact))
+            return normal_log_event(y, mean, sd, kinds != 0, kinds == 2, interval_upper,
+                                    xp=jnp, logcdf=jsp.special.log_ndtr)
         value = likelihood(1.)
         if prior.contamination:
             value = jnp.logaddexp(jnp.log1p(-epsilon)+value, jnp.log(epsilon)+likelihood(4.))
@@ -149,7 +149,9 @@ def packed_data(data, latitude):
     y = np.zeros(size); y[:n] = data.log_value
     sd = np.zeros(size); sd[:n] = data.log_sd
     kind = np.zeros(size, int); kind[:n] = np.where(data.lower_censored, 2, np.where(data.censored, 1, 0))
-    return unit, y, sd, kind, np.arange(size) < n
+    upper = np.full(size, np.nan)
+    upper[:n] = data.interval_log_upper
+    return unit, y, sd, kind, np.arange(size) < n, upper
 
 
 def flatten(samples):
@@ -244,11 +246,7 @@ def observation_log_likelihood(samples, data, latitude):
     parts = []
     for mult in (1., 4.):
         sd = np.sqrt((mult*samples["noise"][:, None])**2+data.log_sd[None, :]**2)
-        z = (data.log_value-field)/sd
-        value = -.5*(z*z+np.log(2*np.pi))-np.log(sd)
-        value[:, data.censored] = log_ndtr(z[:, data.censored])
-        value[:, data.lower_censored] = log_ndtr(-z[:, data.lower_censored])
-        parts.append(value)
+        parts.append(observation_log_event(data, field, sd))
     eps = samples["contamination"][:, None]
     with np.errstate(divide="ignore"):
         return np.logaddexp(np.log1p(-eps)+parts[0], np.log(eps)+parts[1])

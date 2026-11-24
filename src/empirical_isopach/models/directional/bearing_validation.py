@@ -124,7 +124,7 @@ def validate(data, meta, work, weights, archive, scenario, output, kinds=("geogr
                     row["archive_holdout"]=independent_archive_prediction(train,model,archive["sites"],vent,scenario,held,
                         sub["effective_limit_cm"],Path(output)/kind/f"archive-cross-{fold}",buffer,weights,True)
             dist = model.distribution(test.xy,observation=True,log_sd=test.log_sd)
-            lp = dist.log_score(test.log_value,test.censored,test.lower_censored)
+            lp = dist.score(test)
             scores.append(-float(lp.mean()))
             row.update(negative_log_score=scores[-1],individual_log_scores=lp.tolist(),
                        median_log_cm=dist.quantile(.5).tolist(),weights=model.model_weights.tolist())

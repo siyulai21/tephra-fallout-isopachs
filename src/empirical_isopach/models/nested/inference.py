@@ -2,7 +2,9 @@
 from dataclasses import dataclass
 
 import numpy as np
-from scipy.special import log_ndtr, logsumexp
+from scipy.special import logsumexp
+
+from ...core.likelihood import observation_log_event
 
 from ...core.distributions import EmpiricalMarginals
 from .geometry import ANGLES, SHAPES, geometry_probabilities, positions, ranks
@@ -14,26 +16,11 @@ def probabilities(log_w):
 
 
 def log_events(mu, noise, data):
-    """One exact log-density or documented one-sided event per accepted row."""
+    """One log-density or documented bound or interval event per accepted row."""
     scores = []
     for multiplier, proportion in ((1., .95), (3., .05)):
         sd = np.hypot(multiplier*noise[:, None], data.log_sd)
-        residual = (data.log_value-mu)/sd
-        event = -.5*residual**2-np.log(sd)-.5*np.log(2*np.pi)
-        upper = data.censored & ~data.lower_censored
-        event[:,upper] = log_ndtr(residual[:,upper])
-        event[:,data.lower_censored] = log_ndtr(-residual[:,data.lower_censored])
-        upper_values = getattr(data,"interval_log_upper",None)
-        if upper_values is not None:
-            mask = np.isfinite(upper_values)
-            lo = residual[:,mask]
-            hi = (upper_values[mask]-mu[:,mask])/sd[:,mask]
-            # Subtract in the lower tail, reflecting positive intervals by symmetry.
-            left = np.where(lo>0,-hi,lo)
-            right = np.where(lo>0,-lo,hi)
-            log_right = log_ndtr(right)
-            with np.errstate(divide="ignore"):
-                event[:,mask] = log_right+np.log(-np.expm1(log_ndtr(left)-log_right))
+        event = observation_log_event(data, mu, sd)
         scores.append(np.log(proportion)+event)
     return np.logaddexp(*scores)
 

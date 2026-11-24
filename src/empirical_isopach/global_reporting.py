@@ -152,6 +152,7 @@ def global_dataset(path, output, name=None, settings=Sampling(), resume=False, p
         validation = report["validation"]
         pd.DataFrame({"row_id": data.row_ids, "fold": validation["folds"],
             "observed_log_value": data.log_value, "censored": data.censored, "lower_censored": data.lower_censored,
+            **({"interval_upper_log_cm": data.interval_log_upper} if data.interval.any() else {}),
             **validation["predictions"]}).to_csv(output/"heldout_predictions.csv", index=False)
     report["published_artifact_sha256"] = {file: sha256((output/file).read_bytes()).hexdigest()
         for file in ("posterior.npz", "volume_draws.csv.gz", "estimates.csv", "heldout_predictions.csv")}

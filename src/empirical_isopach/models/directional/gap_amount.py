@@ -59,7 +59,7 @@ def holdouts(data,latitude,work,weights,reference):
         dist = model.distribution(test.xy,True,test.log_sd)
         exposure,_ = model.support.evaluate(test.xy)
         scores = np.stack([dist.log_score(test.log_value-np.log(f)*exposure,test.censored,
-                                         test.lower_censored) for f in FACTORS])
+                                         test.lower_censored, test.interval_log_upper-np.log(f)*exposure) for f in FACTORS])
         mixed = logsumexp(scores,axis=0,b=PRIOR[:,None])
         rows.append({"fold":i,"status":"estimated","parent_passed":record["passed"],
                      "training_rows":train.row_ids.tolist(),"test_rows":test.row_ids.tolist(),

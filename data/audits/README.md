@@ -4,7 +4,7 @@
 
 When a survey appears to publish its site data only on a map, document the search for the original tables before extracting values or coordinates. The audit protocol covers registration, bounds, duplicate surveys, numbered maps, visual review and reproducible fitting decisions. [Map digitization audit](../../docs/methods/map-digitization.md)
 
-- The Mazama audit reconciles all 293 Buckland catalogue entries and 574 additional records and controls. Its 271-location fit uses 31 measurements, 137 lower bounds and 103 conditional upper bounds. Each locality records the source checked and the remaining qualifications. [Mazama audit](Mazama/README.md)
+- The Mazama principal input includes 300 localities and 29 fitted intervals. The audit identifies the disposition of all 71 Buckland primary records and links each reported range to its field evidence. [Mazama principal audit](Mazama/principal-ranges/README.md)
 - [Pinatubo 1991, Layer C](Pinatubo-1991/README.md) links 208 accepted field and marine observations to original maps, numbered reading sheets and station tables.
 - [Sakurajima Satsuma (P14)](Sakurajima-Satsuma/README.md) traces 57 accepted observations to field descriptions, native workbooks and a marine core, with measurement coverage by distance and bearing.
 - [Ilopango TBJ Unit G](Ilopango-TBJ/README.md) links every thickness and geographic position to a published spreadsheet cell or core reading and quantifies coverage by bearing and distance.

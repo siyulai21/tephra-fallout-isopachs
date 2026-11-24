@@ -1,0 +1,3 @@
+# Source used for the published numerical checks
+
+The B-Tm regional benchmark, spherical bearing studies and published nested reconstructions identify their numerical implementations by SHA-256. These files preserve the source bytes that their original receipts identify. The verification routines reconstruct and check the recorded digests. The active implementations accept two-sided intervals in the shared observation model. [Original repository revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/6ba3b2333415e2ce5ad2fa32fac329a165aab46e/src/empirical_isopach/models) · [Published Mazama results](../../eruptions/mazama/results/README.md)

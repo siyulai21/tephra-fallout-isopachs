@@ -66,7 +66,8 @@ def peak_candidates(data, g, draws, nearest, amplitude, grid_maximum):
 
 
 def heldout(data, g, work, latitude, validation):
-    from scipy.special import log_ndtr, logsumexp
+    from scipy.special import logsumexp
+    from ...core.likelihood import observation_log_event
 
     output = {}
     for kind, record in validation.items():
@@ -99,9 +100,7 @@ def heldout(data, g, work, latitude, validation):
             _, _, weights = geometry.locate(test_data.xy)
             site_var = 1+geometry.policy.local_sd_ratio**2*np.maximum(0.,1-(weights**2).sum(1))
             sd = np.hypot(np.exp(params["log_noise"])[:,None]*np.sqrt(site_var),test_data.log_sd)
-            z = (test_data.log_value-mu)/sd
-            lp = np.where(test_data.censored,log_ndtr(np.where(test_data.lower_censored,-z,z)),
-                          -.5*z*z-.5*np.log(2*np.pi)-np.log(sd))
+            lp = observation_log_event(test_data, mu, sd)
             new_scores = logsumexp(lp,axis=0)-np.log(len(mu))
             for index, score in zip(selected,new_scores):
                 changes.append({"fold":fold["fold"],"row_id":int(data.row_ids[index]),

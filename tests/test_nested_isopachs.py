@@ -58,8 +58,8 @@ def test_two_sided_interval_is_one_event_and_survives_splitting(tmp_path):
     p=tmp_path/"bounds.csv"
     p.write_text("Lon,Lat,Vent Lon,Vent Lat,Thickness,Kind,Lower_cm,Upper_cm\n1,1,0,0,,interval,2,4\n0,0,0,0,1,measurement,,\n")
     with pytest.raises(ValueError,match="Two-sided"):
-        read_observations(p)
-    rows,info=read_observations(p,allow_intervals=True)
+        read_observations(p,allow_intervals=False)
+    rows,info=read_observations(p)
     sub=rows.subset(np.isfinite(rows.interval_log_upper))
     sd=.6
     expected=.95*(ndtr(np.log(4)/sd)-ndtr(np.log(2)/sd))+.05*(ndtr(np.log(4)/(3*sd))-ndtr(np.log(2)/(3*sd)))

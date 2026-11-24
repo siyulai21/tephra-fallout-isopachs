@@ -8,9 +8,9 @@ from scipy.spatial import cKDTree
 
 from .nested_summary import ROOT, case_results, csv_rows, matched_challenges, read, sector_evidence
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets, published_nested_engine
 from src.empirical_isopach.models.nested.profile import ASSET
-from src.empirical_isopach.models.nested.continuation import PROTOCOL, continuation_digest, radius_for, load_packet as load_draws
+from src.empirical_isopach.models.nested.continuation import PROTOCOL, radius_for, load_packet as load_draws
 from src.empirical_isopach.models.nested.study import digest
 from src.empirical_isopach.models.nested.geometry import positions
 from src.empirical_isopach.models.nested.diagnostics import edge_sites
@@ -38,7 +38,7 @@ def verify_case(home, data_path):
             assert all(receipt[k] == fold[k] for k in receipt)
         file = home/(name+".npz")
         assert digest(file) == receipt["posterior_sha256"]
-        expected_engine = (continuation_digest() if report["protocol"]==PROTOCOL else
+        expected_engine = (published_nested_engine() if report["protocol"]==PROTOCOL else
                            "58ef3d3182fd152595d225df9faba0618f5190b1e06f4f0c87e52deb208344a6")
         assert receipt["identity"]["engine_sha256"] == expected_engine
         assert receipt["identity"]["input_sha256"] == meta["input_sha256"]
@@ -127,7 +127,7 @@ def verify_edge_study(home, path, data, model):
     out = home/"edge-deletion"
     trial = json.loads((out/"report.json").read_text())
     assert trial["input_sha256"]==digest(path) and trial["edge_table_sha256"]==digest(home/"edge-sites.csv")
-    assert trial["full_posterior_sha256"]==digest(home/"full.npz") and trial["engine_sha256"]==continuation_digest()
+    assert trial["full_posterior_sha256"]==digest(home/"full.npz") and trial["engine_sha256"]==published_nested_engine()
     assert trial["dominant_row"]==rows.row_id.iloc[0]
     single = data.row_ids==trial["dominant_row"]
     radius = automatic_buffer(data)[0]

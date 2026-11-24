@@ -6,9 +6,9 @@
     {
       "name": "Mazama",
       "slug": "mazama",
-      "file": "eruptions/Mazama_reviewed.csv",
-      "audit": "audits/Mazama/provenance.json",
-      "archive_evidence": "audits/Mazama/archive-sites.json",
+      "file": "eruptions/Mazama_primary_ranges.csv",
+      "audit": "audits/Mazama/principal-ranges/provenance.json",
+      "archive_evidence": "audits/Mazama/principal-ranges/archive-sites.json",
       "audit_case": "principal",
       "previous_inputs": [
         {
@@ -34,8 +34,17 @@
           "audit": "audits/Mazama/history/2026-11-24-before-gsc-return/provenance.json",
           "audit_case": "principal",
           "revision": "2e443d339108e6f324e69fd75ef2f8c5b45ffb8d"
+        },
+        {
+          "file": "eruptions/Mazama_reviewed.csv",
+          "audit": "audits/Mazama/provenance.json",
+          "archive_evidence": "audits/Mazama/archive-sites.json",
+          "audit_case": "principal",
+          "revision": "6ba3b2333415e2ce5ad2fa32fac329a165aab46e",
+          "sha256": "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29"
         }
-      ]
+      ],
+      "published_input": "eruptions/Mazama_reviewed.csv"
     },
     {
       "name": "Tambora",

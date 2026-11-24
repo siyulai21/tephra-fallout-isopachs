@@ -37,6 +37,7 @@ def recorded_observations(record, home):
     data = saved_observations(home/"accepted_observations.csv")
     by_id = {v:i for i,v in enumerate(current.row_ids)}
     current = current.subset([by_id[i] for i in data.row_ids])
+    np.testing.assert_allclose(current.interval_log_upper, data.interval_log_upper, equal_nan=True)
     np.testing.assert_allclose(current.xy, data.xy, rtol=1e-12, atol=1e-7)
     for key in ("censored", "lower_censored", "row_ids"):
         np.testing.assert_array_equal(getattr(current, key), getattr(data, key))

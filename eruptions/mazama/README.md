@@ -1,5 +1,7 @@
 # Mazama climactic fallout
 
+**The current input contains 300 localities. The published results use 271.** The new principal input has 46 point thicknesses, 29 two-sided intervals, 129 lower limits and 96 upper limits. The maps, scores and volumes below come from the preceding input. [Current principal CSV](../../data/eruptions/Mazama_primary_ranges.csv) · [Primary classifications and ranges](../../data/audits/Mazama/principal-ranges/README.md) · [Input used by the published figures](../../data/eruptions/Mazama_reviewed.csv)
+
 [Distal sources and their effect on the estimates](results/source-audit/distal-facies-results.md) · [Thick distal deposits and original field evidence](../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md) · [Archived numerical editions](../../archive/2026-11-24-mazama-distal-facies/README.md)
 
 On the model maps, circles mark measured beds, triangles mark minima and diamonds mark conditional ceilings. The symbol colour at Johnson Lake encodes its 156 cm enclosing package. The background contours show the model’s inferred thickness there.

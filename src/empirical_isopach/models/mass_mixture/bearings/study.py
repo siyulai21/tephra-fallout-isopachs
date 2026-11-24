@@ -68,7 +68,7 @@ def predictive(samples,train,test,latitude,*,with_components=False):
         mean = mu if p==0 else mu+np.log(multiplier(h,theta,phi,p))
         means = np.vstack((mean,mean))[mask]
         dist = LogMixture(ws[mask],means,var)
-        by_power.append(dist.log_score(test.log_value,test.censored,test.lower_censored))
+        by_power.append(dist.score(test))
         vals.append(means)
     dist = LogMixture(np.tile(ws[mask],len(vals))/len(vals),np.concatenate(vals),np.tile(var,(len(vals),1)))
     # Slice sites to limit transient CDF memory for long chains.
@@ -109,6 +109,8 @@ def validation(data,latitude,parent,cache):
     out = {**val,"predictions":{k:v.tolist() for k,v in result.items()},"metrics":metrics,
            "interpretation":"Full matched training-fold posterior, fixed bearing prior and training-only support. Scores include exact readings and limit events."}
     table = pd.DataFrame({"row_id":data.row_ids,"fold":labels,"observed_log_value":data.log_value,"censored":data.censored,
-        "lower_censored":data.lower_censored,**result,"gap_exposure":exposures,
+        "lower_censored":data.lower_censored,
+        **({"interval_upper_log_cm":data.interval_log_upper} if data.interval.any() else {}),
+        **result,"gap_exposure":exposures,
         **{f"log_score_power_{p}":v for p,v in zip(POWERS,columns,strict=True)}})
     return out,table

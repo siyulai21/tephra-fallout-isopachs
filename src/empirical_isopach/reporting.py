@@ -114,9 +114,10 @@ def write_readme(output, name, report):
     region, meta = report["region"], report["input"]
     methods = tuple(report["methods"])
     labels = {m: report_label(report, m) for m in methods}
+    interval_count = f", {meta['n_intervals']} two-sided intervals" if meta.get("n_intervals") else ""
     lines = [f"# {name}: empirical methods on one regional footprint", "",
              "All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.", "",
-             f"**{meta['n_measurements']} exact measurements, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper limits.** "
+             f"**{meta['n_measurements']} exact measurements, {meta['n_lower_limits']} lower bounds, {meta['n_upper_limits']} upper limits{interval_count}.** "
              f"The observation hull covers {region['area_km2']:,.0f} km². The automatic validation buffer is {report['validation']['buffer_km']:.2f} km.", "",
              "![Matched median isopachs](isopachs.png)", "",
              "The full observation hull and every accepted location are in view. The coloured field is clipped to the exact hull; fine coastlines are context only. [Map frame and rendering provenance](map-display.json).", "",
@@ -206,6 +207,8 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
     observations = {"row_id": data.row_ids, "x_km": data.xy[:, 0], "y_km": data.xy[:, 1],
                     "log_value": data.log_value, "censored": data.censored,
                     "lower_bound": data.lower_censored, "known_log_sd": data.log_sd}
+    if data.interval.any():
+        observations["interval_upper_log_cm"] = data.interval_log_upper
     pd.DataFrame(observations).to_csv(output/"accepted_observations.csv", index=False)
     withheld = {**observations, "fold": validation["folds"]}
     for method in active_methods():

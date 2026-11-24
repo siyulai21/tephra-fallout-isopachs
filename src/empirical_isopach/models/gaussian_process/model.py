@@ -9,7 +9,6 @@ import numpy as np
 from scipy.linalg import cho_factor, cho_solve, cholesky, solve_triangular
 from scipy.optimize import minimize
 from scipy.spatial.distance import cdist, pdist
-from scipy.special import log_ndtr
 
 from ...core.observations import Observations
 from ...core.likelihood import censored_terms
@@ -99,7 +98,7 @@ class SpatialModel:
                 delta = (f[det]-data.log_value[det])/self.sd[det]
                 loss = .5*(v@v + delta@delta)
                 grad[det] = delta/self.sd[det]
-                terms, g, _ = censored_terms(f[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det])
+                terms, g, _ = censored_terms(f[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det], data.interval_log_upper[~det])
                 grad[~det] = g
                 return loss+terms.sum(), v+L.T@grad
             opt = minimize(objective, np.zeros(len(K)), jac=True, method="BFGS",
@@ -108,7 +107,7 @@ class SpatialModel:
                 raise RuntimeError(f"Censored posterior fit did not converge: {opt.message}")
             mode = self.mean_train + L@opt.x
             w = 1/self.sd**2
-            w[~det] = censored_terms(mode[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det])[2]
+            w[~det] = censored_terms(mode[~det], data.log_value[~det], self.sd[~det], data.lower_censored[~det], data.interval_log_upper[~det])[2]
             sw = np.sqrt(w)
             B = np.eye(len(K)) + sw[:, None]*K*sw[None, :]
             self.factor = cho_factor(B, lower=True)

@@ -83,11 +83,11 @@ def verify_case(record):
 
 
 def main():
-    for r in records():
+    for r in records(published=True):
         verify_case(r)
     expected=pd.DataFrame(catalogue_rows())
     pd.testing.assert_frame_equal(pd.read_csv("comparisons/principal-volumes.csv").convert_dtypes(),expected.convert_dtypes(),check_dtype=False)
-    print(f"Replayed the median global field for every family and the two regional fits across {len(records())} case records.")
+    print(f"Replayed the median global field for every family and the two regional fits across {len(records(published=True))} case records.")
 
 
 if __name__=="__main__":

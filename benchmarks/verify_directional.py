@@ -8,7 +8,7 @@ from hashlib import sha256
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from src.empirical_isopach.models.directional.estimate import interval
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.models.directional.geometry import COMPASS, POLICIES, polar

@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import pandas as pd
 
+from .publication import published_datasets
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.study import digest, write_json
 
@@ -16,7 +17,7 @@ PUBLISHED = Path("comparisons/directional")
 def case_table(cases=None, published_root=Path("eruptions")):
     """Read the paired controls and both holdout designs from the same fitted report."""
     records = []
-    for rec in datasets():
+    for rec in (published_datasets() if cases is None else datasets()):
         slug = rec["slug"]
         path = (cases/slug/"report.json" if cases is not None else
                 published_root/slug/"results/directional/azimuth/report.json")

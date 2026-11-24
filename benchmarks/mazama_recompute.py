@@ -47,17 +47,16 @@ def spherical_cache(key):
 
 
 def principal(family):
-    from src.empirical_isopach.core.catalog import resolve_dataset
     from src.empirical_isopach.models.continuation_review import directional_review, spherical_review
-    path=resolve_dataset('Mazama')
+    path=INPUT  # Frozen 271-row recompute request and source-case plan.
     folder=PRINCIPAL/family
     if family=='regional':
-        execute('src.empirical_isopach.cli','compare','Mazama','--regional-only','--output',PRINCIPAL)
+        execute('src.empirical_isopach.cli','compare',str(path),'--regional-only','--output',PRINCIPAL)
     elif family=='spherical-mixture':
-        execute('src.empirical_isopach.cli','global','Mazama','--resume','--output',folder)
+        execute('src.empirical_isopach.cli','global',str(path),'--resume','--output',folder)
         spherical_review(path,folder,folder/'sensitivity-study')
     elif family=='directional':
-        execute('src.empirical_isopach.cli','global','Mazama','--geometry','directional','--output',folder)
+        execute('src.empirical_isopach.cli','global',str(path),'--geometry','directional','--output',folder)
         directional_review(path,folder,folder/'sensitivity-study',folder/'work/ensemble')
     elif family=='nested-isopachs':
         from src.empirical_isopach.models.nested.report import nested_dataset,whole_area_dataset
