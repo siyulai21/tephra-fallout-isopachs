@@ -119,8 +119,23 @@ def verify_maps(folder):
 
     data, meta = audited_data(INPUT)
     frame = read(INPUT)
+    boxes = []
+    totals = pd.read_csv(folder / "model-comparison.csv").set_index("family")
     for family in ("directional", "spherical-mixture", "nested-isopachs"):
-        verify_global(folder / family, family, data, meta)
+        boxes.append(verify_global(folder / family, family, data, meta))
+        packet_name = "footprints" if family == "nested-isopachs" else "extent"
+        fit = json.loads((folder / family / packet_name / "report.json").read_text())
+        mapped = json.loads((folder / family / "deposit.json").read_text())
+        summary = totals.loc[family]
+        np.testing.assert_allclose(
+            [summary.q25_map_km3, summary.median_map_km3, summary.q75_map_km3],
+            mapped["thickness_band"]["volumes_km3"],
+        )
+        np.testing.assert_allclose(
+            [summary.p025_complete_km3, summary.p975_complete_km3], fit["conditional_interval95_km3"]
+        )
+    for bounds in boxes[1:]:
+        np.testing.assert_allclose(bounds, boxes[0])
     packet = folder / "nested-isopachs/footprints"
     report = json.loads((packet / "report.json").read_text())
     assert report["accepted_rows"] == len(frame)

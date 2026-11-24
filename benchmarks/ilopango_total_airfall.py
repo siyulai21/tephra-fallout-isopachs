@@ -379,6 +379,42 @@ def build():
     }
 
 
+def check_source_tables():
+    """Verify the transcribed component sums and the independently annotated Dull readings."""
+    import re
+
+    stops = read(FIELD / "hart-steen-mcintyre-stops.csv")
+    table = read(FIELD / "table-2-1.csv")
+    expected = list(range(1, 51))
+    assert [int(row["stop"]) for row in stops] == expected
+    assert [int(row["stop"]) for row in table] == expected
+    for row in stops:
+        if row["sum_cm"]:
+            components = [
+                float(row[k])
+                for k in ("basal_fine_used_cm", "basal_coarse_used_cm", "T2_used_cm", "other_fall_used_cm")
+            ]
+            assert sum(components) == float(row["sum_cm"]), row["id"]
+    src = {r["symbol"]: r for r in read(REV / "dull-figure9.csv")}
+    accepted = {r["EvidenceID"]: r for r in read(INPUT)}
+    corrections = read(FIELD / "dull-four-readings.csv")
+    assert {r["symbol"] for r in corrections} == {"M12", "L08", "L10", "L12"}
+    for marker in corrections:
+        earlier = src[marker["symbol"]]
+        row = accepted[marker["id"]]
+        assert (marker["x_px"], marker["y_px"]) == (earlier["x_750px"], earlier["y_750px"])
+        assert (float(marker["longitude"]), float(marker["latitude"])) == (
+            float(row["Lon"]),
+            float(row["Lat"]),
+        )
+        numbers = [float(v) for v in re.findall(r"[0-9]+(?:\.[0-9]+)?", marker["source_reading"])]
+        if row["Kind"] == "interval":
+            assert numbers == [float(row["Lower_cm"]), float(row["Upper_cm"])]
+        else:
+            assert row["Kind"] == "lower_limit" and marker["source_reading"].startswith(">")
+            assert numbers == [float(row["Limit_cm"])]
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--prepare", action="store_true")
@@ -388,3 +424,4 @@ if __name__ == "__main__":
             path.write_bytes(content)
         else:
             assert path.read_bytes() == content, path
+    check_source_tables()

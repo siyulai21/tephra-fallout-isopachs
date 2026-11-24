@@ -2,6 +2,10 @@
 
 The November 24 review traces the expanded land, lake, marine and archaeological evidence to the original field reports and figures. [Sources and hashes](../../audits/Ilopango-TBJ/reaudit/source-manifest.csv) · [Revised field audit](../../audits/Ilopango-TBJ/reaudit/README.md)
 
+## Hart and Steen-McIntyre field records
+
+The 1983 book includes Table 2-1 and 50 numbered exposures in Appendix 2-A. The preliminary field-season report includes the 1976 petrographic appendix and the original sample maps. The current all-phase edition reconciles these sources with the measured modern sections and Dull Figure 9. [Original scans, page locators and SHA-256 hashes](../../audits/Ilopango-TBJ/field-logs/primary-scans.csv) · [50-stop ledger](../../audits/Ilopango-TBJ/field-logs/hart-steen-mcintyre-stops.csv) · [All-phase source decisions](../../audits/Ilopango-TBJ/field-logs/README.md)
+
 ## Pedrazzi et al. (2019)
 
 *The Ilopango Tierra Blanca Joven (TBJ) eruption, El Salvador: Volcano-stratigraphy and physical characterization of the major Holocene event of Central America.* The preserved file is the publisher's original Supplementary Material 1. Sheet `Hoja1` lists site IDs, locations and the thickness of each mapped unit in centimetres. Keep the workbook with its original attribution. [Paper](https://doi.org/10.1016/j.jvolgeores.2019.03.006) · [Publisher's workbook](https://ars.els-cdn.com/content/image/1-s2.0-S0377027318303706-mmc1.xls) · [Preserved workbook](pedrazzi-supplement-1.xls)

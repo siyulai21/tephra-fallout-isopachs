@@ -79,9 +79,7 @@ def draw(folder, verify=False):
         ha="center",
         fontsize=11,
     )
-    for ax, (family, title) in zip(
-        axes.flat, [(None, "Dull terrestrial readings near the vent"), *FAMILIES.items()]
-    ):
+    for ax, (family, title) in zip(axes.flat, [(None, "Dull terrestrial readings (cm)"), *FAMILIES.items()]):
         x0, y0, x1, y1 = scope if family else [-106, -52, 66, 72]
         ax.set(xlim=(x0, x1), ylim=(y0, y1), aspect="equal", facecolor="#f7f8f5")
         coastlines(ax, VENT, (x0, y0, x1, y1))
@@ -99,7 +97,19 @@ def draw(folder, verify=False):
                 linewidths=[0.9, 1.25, 1.25, 1.3],
                 zorder=2,
             )
-            ax.clabel(c, fmt={-1: "0.1 cm", 0: "1 cm", 1: "10 cm", 2: "100 cm"}, fontsize=7)
+            labels = ax.clabel(c, fmt={-1: "0.1 cm", 0: "1 cm", 1: "10 cm", 2: "100 cm"}, fontsize=7)
+            for entry in labels:
+                label_x, label_y = entry.get_position()
+                if (
+                    min(
+                        (label_x - x0) / (x1 - x0),
+                        (x1 - label_x) / (x1 - x0),
+                        (label_y - y0) / (y1 - y0),
+                        (y1 - label_y) / (y1 - y0),
+                    )
+                    < 0.035
+                ):
+                    entry.set_visible(False)
         for kind, marker in MARKERS.items():
             selection = np.array([r["Kind"] == kind for r in rows])
             ax.scatter(
@@ -151,8 +161,20 @@ def draw(folder, verify=False):
         )
         for k, m in MARKERS.items()
     ]
+    legend.append(
+        Line2D(
+            [],
+            [],
+            marker="*",
+            color="none",
+            markerfacecolor="#fbcb67",
+            markeredgecolor="#432f20",
+            markersize=9,
+            label="Ilopango vent",
+        )
+    )
     fig.legend(
-        handles=legend, loc="lower center", ncol=4, frameon=False, bbox_to_anchor=(0.5, 0.034), fontsize=9
+        handles=legend, loc="lower center", ncol=5, frameon=False, bbox_to_anchor=(0.5, 0.034), fontsize=9
     )
     fig.text(
         0.5,
