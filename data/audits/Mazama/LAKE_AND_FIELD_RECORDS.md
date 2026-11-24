@@ -1,6 +1,6 @@
 # Lake cores and field sections added after the Young review
 
-Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+Historical stage. The [current source decisions](principal-ranges/locality-decisions.csv) give the fitted reading and field qualification for each record in the 300-locality release.
 
 The 230-row input at this stage included 27 additional site observations from this pass. Three previously listed Buckland localities were reopened. Pettit now supplies one conditional upper bound. Cooley and Rockslide retain both their published core-depth information and the compiler's bed estimates. The original data behind the 203-row checkpoint and its completed regional and nested trials remain identifiable in the [GitHub revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/734a8f2852331a585972a222699ed82e1c84064f).
 

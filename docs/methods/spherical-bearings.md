@@ -45,7 +45,7 @@ All accepted thicknesses and bound events see exactly the parent likelihood sinc
 
 ## Integration, validation and reproducibility
 
-The primary volume integrates the mapped pointwise median thickness over the entire Earth. Positive quadrature weights integrate each spatially correlated draw. The 2.5th and 97.5th percentiles give the conditional 95% volume interval. The saved posterior and bearing orientations support both summaries. [Map integral and replay checks](../OUTPUTS.md#read-the-map-and-its-volume)
+The primary volume integrates the mapped pointwise median thickness over the entire Earth. The conditional range integrates the pointwise 25th and 75th thickness percentiles over the same Earth. Positive-weight integrations of coherent deposits separately check the posterior sampling and prior sensitivities. [Map integral and replay checks](../OUTPUTS.md#read-the-map-and-its-volume)
 
 All seven prior alternatives reuse their own checked posterior fits. Each of four buffered geographic folds uses only its training locations and its verified training posterior. Site scores integrate the narrow and contaminated observation distributions, with one-sided probabilities for bounds. The study reports both false extension and missed fallout on 24 existing known-volume fits, including cases with entire sectors missing, invisible proximal caps and diffuse global tails. Some experiments retain unresolved contour areas or failed numerical checks. The real geographic tests do not observe fallout in an entirely unvisited sector.
 

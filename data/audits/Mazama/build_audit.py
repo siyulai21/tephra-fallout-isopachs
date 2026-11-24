@@ -62,35 +62,6 @@ def distance(lat1, lon1, lat2, lon2):
     return 6371.0088 * 2 * math.asin(min(1, math.sqrt(a)))
 
 
-def write_register(records):
-    def cell(value):
-        return str(value or '').replace('|', '\\|').replace('\n', ' ').replace('<', '&lt;')
-
-    lines = ['# Mazama locality register', '',
-             '[Assessment](README.md) · [Full evidence ledger](revised-locality-ledger.csv) · [Field definitions](DATA_DICTIONARY.md)', '',
-             'This index includes every ledger record. Values describe the stated quantity, not automatically original fallout. The [principal selection](model-selection.csv) identifies the conditional fitting observations; all other records remain in the evidence inventory. The CSV retains ages, identity, native locations, full caveats and original compilation notes. Unknown thickness is not zero. Coordinates are inherited or source-qualified, not uniformly surveyed.', '']
-    for start in range(0, len(records), 50):
-        group = records[start:start+50]
-        lines += [f'## Records {start+1}–{start+len(group)}', '',
-                  '| ID / locality | Latitude, longitude | Quantity (cm) | Verification / decision | Reference / evidence locator |',
-                  '|---|---|---|---|---|']
-        for r in group:
-            quantities = []
-            if r.get('observed_point_cm', '') != '': quantities.append(str(r['observed_point_cm']))
-            if r.get('observed_min_cm', '') != '' or r.get('observed_max_cm', '') != '':
-                quantities.append(f"{r.get('observed_min_cm', '')}–{r.get('observed_max_cm', '')}")
-            if r.get('bound_cm', '') != '': quantities.append(f"{r['bound_relation']}{r['bound_cm']}")
-            q = '; '.join(quantities) or 'not quantified'
-            xy = f"{r['latitude']}, {r['longitude']}" if r.get('latitude', '') != '' else 'not recovered; see native location in CSV'
-            values = [f"{r['record_id']} — {r['locality']}", xy,
-                      f"{q}; {r['quantity_kind'].replace('_', ' ')}",
-                      r['verification'].replace('_', ' ') + '; ' + r['fallout_model_status'].replace('_', ' ') + ('; PRINCIPAL '+r['principal_kind'].replace('_',' ') if r['accepted_for_model'] else '; omitted'),
-                      str(r.get('primary_reference', '')) + '; ' + str(r.get('evidence_locator', ''))]
-            lines.append('| ' + ' | '.join(cell(v) for v in values) + ' |')
-        lines.append('')
-    (HERE/'LOCALITIES.md').write_text('\n'.join(lines).rstrip()+'\n')
-
-
 def main():
     cols = ['buckland_id','locality','references_raw','latitude_raw','longitude_raw','state_raw','thickness_cm_raw','thickness_metadata_raw','grain_size_um_raw','grain_statistic_raw','grain_notes_raw','sampling_raw','discipline_raw','remobilisation_raw','comments_raw']
     cells = workbook_rows(SOURCES/'buckland2020-esm1.xlsx')
@@ -168,7 +139,6 @@ def main():
         r['principal_decision'] = item.get('decision_basis', '')
         r['principal_assumption'] = item.get('preservation_assumption', '')
     write_csv('revised-locality-ledger.csv', records)
-    write_register(records)
     write_csv('additional-localities.csv', records[293:])
     write_csv('bounds-and-ranges.csv', [r for r in records if r.get('observed_min_cm','') != '' or r.get('bound_cm','') != ''])
     write_csv('occurrences-and-traces.csv', [r for r in records if r.get('quantity_kind') in ('unquantified','cryptotephra','trace_no_numeric_limit','tentative_signal')])

@@ -17,11 +17,11 @@ jobs:
         run: python -m benchmarks.ilopango
       - name: Replay the Pinatubo Layer C source audit
         run: python -m benchmarks.pinatubo
-      - name: Replay the Mazama accepted source decisions
+      - name: Reproduce the Mazama source audit and the 300-locality input
         run: |
           python -m benchmarks.mazama
           python -m benchmarks.mazama_primary_ranges
-          git diff --exit-code -- data/eruptions/Mazama_primary_ranges.csv data/audits/Mazama/principal-ranges
+          git diff --exit-code -- data/eruptions/Mazama_primary_ranges.csv data/audits/Mazama/principal-ranges data/audits/Mazama/LOCALITIES.md
           git diff --exit-code -- data/eruptions/Mazama_reviewed.csv data/audits/Mazama/model-selection.csv data/audits/Mazama/site-evidence-decisions.csv data/audits/Mazama/provenance.json
       - name: Check repository navigation
         run: python scripts/check_repository_navigation.py
@@ -83,7 +83,7 @@ jobs:
         run: python -m benchmarks.verify_footprints
       - name: Replay finite-spread volume intervals and matched geographic predictions
         run: python -m benchmarks.verify_extent
-      - name: Verify Mazama source refits, local comparisons and artifact identities
+      - name: Verify all five Mazama fits and the matched 300-locality holdouts
         run: python -m benchmarks.mazama_release_check
       - run: python -m pytest -q
         env:

@@ -1,6 +1,6 @@
 # GP and cubic spline inside the observation hull
 
-Each pair uses the same accepted sites, geographic holdouts and integration area. The volume column integrates each model’s pointwise median thickness. Each case also reports its expected volume and the conditional interval from whole-surface draws.
+Each pair uses the same accepted sites, geographic holdouts and integration area. The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps.
 
 | Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |
 |---|---|---:|---:|---:|
@@ -10,8 +10,8 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 50.75 | 4.295 | 75.0% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | GP ensemble | 23.31 | 1.343 | 98.1% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | Trend-regularized cubic spline | 25.67 | 1.462 | 92.3% |
-| [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 281.79 | 0.719 | 77.4% |
-| [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 1107.29 | 1.738 | 77.4% |
+| [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 299.29 | 1.399 | 71.7% |
+| [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 1536.55 | 1.231 | 89.1% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |
 | [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.78 | 1.601 | 96.7% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | GP ensemble | 3.45 | 3.023 | 87.3% |
@@ -23,7 +23,7 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [YTT](../../eruptions/ytt/results/README.md) | GP ensemble | 1079.21 | 1.934 | 91.3% |
 | [YTT](../../eruptions/ytt/results/README.md) | Trend-regularized cubic spline | 943.74 | 2.153 | 82.6% |
 
-Lower negative log predictive scores indicate better predictions in withheld regions. Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical volume integration warning. [Full benchmark table, including expected volumes](comparison.csv)
+Lower negative log predictive scores indicate better predictions in withheld regions. Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical volume integration warning. [Regional volumes, thickness bands and held-out scores](comparison.csv)
 
 ![Regional median-map volumes and geographic prediction scores](comparison.png)
 

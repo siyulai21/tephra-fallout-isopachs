@@ -42,4 +42,4 @@ For a method that extrapolates across a sampling gap, test archived no-bed readi
 
 Bayesian nested isopachs use joint geographic draws, matched withholding and direct map integration on the physical Earth. The model's analytic total for each complete draw supplies an independent check. [Principal implementation and scientific limits](methods/nested-footprints.md)
 
-Report one point estimate of bulk fallout for each fitted surface. Integrate its pointwise median thickness on the stated domain. Report conditional 95% volume endpoints separately. If a sensitivity lacks an integrated median field, report its uncertainty and predictions only.
+Report one point estimate of bulk fallout for each fitted surface. Integrate its pointwise median thickness on the stated domain. Integrate the pointwise 25th and 75th percentiles of latent thickness over that same domain and verify both endpoints. If a sensitivity lacks an integrated median field, report its uncertainty and predictions only.

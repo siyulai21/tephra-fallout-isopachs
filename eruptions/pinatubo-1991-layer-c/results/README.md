@@ -1,38 +1,6 @@
-# Pinatubo 1991 (Layer C) fallout reconstruction
+# Pinatubo 1991 (Layer C) · regional fits inside the observation hull
 
-## Volumes and geographic prediction
-
-Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
-
-| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---:|---:|---:|---:|
-| GP ensemble | **3.45** | 2.97–4.95 | 3.023 | 87.3% |
-| Cubic spline | **14.8** | 10.4–1.69e+11 (provisional) | 1.590 | 85.3% |
-| [Directional ensemble](directional/README.md) | **6.42** | 4.96–11.8 (provisional) | 1.549 † | 89.3% |
-| [Spherical mixture](spherical-mixture/README.md) | **13.9** | 9.22–26.1 | 0.910 † | 97.3% |
-| [Bayesian nested corridors](nested-isopachs/README.md) | **8.36** | 7.42–9.6 | 3.142 † | 62.0% |
-
-Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
-
-## Full deposits and near-vent detail
-
-The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
-
-![Pinatubo 1991 (Layer C) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](directional/deposit.png)
-
-![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](spherical-mixture/deposit.png)
-
-![Pinatubo 1991 (Layer C) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](nested-isopachs/deposit.png)
-
-## Inside the observation hull
-
-![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](isopachs.png)
-
-The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained.
-
-[Volume and geographic prediction plot](overview.png)
-
-## Regional fit details
+[All available methods on the eruption page](../README.md)
 
 All methods use the same accepted observations, geographic holdouts and integration area. No method is designated preferred.
 
@@ -45,7 +13,7 @@ The full observation hull and every accepted location are in view. The coloured 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Principal median-map volume inside hull (km³) | 3.45 | 14.82 |
-| Conditional 95% volume interval (km³) | 2.97–4.95 | 10.40–168688762652.92 |
+| Integrated Q25–Q75 thickness (km³) | 2.56–4.71 | 3.31–2,108.51 |
 | Outer equal-region negative log score ↓ | 3.023 | 1.590 |
 | Outer log-thickness RMSE ↓ | 7.106 | 7.233 |
 | Outer 95% observation-interval coverage | 87.3% | 85.3% |
@@ -58,7 +26,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise Q25 and Q75 thickness surfaces over the same hull. [Band integrals and refinements](thickness-bands.json)
 
 ## Fitted methods
 

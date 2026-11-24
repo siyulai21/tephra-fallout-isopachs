@@ -40,8 +40,10 @@ def three(volume):
 def case_results(record):
     slug = record["slug"]
     home = ROOT/"eruptions"/slug/"results"
-    nested = read(home/"nested-whole-area/report.json")
-    folds = read(home/"nested-whole-area/geographic.json")["folds"]
+    from .footprint_study import controls
+    whole = ROOT/controls(slug,record)[2]
+    nested = read(whole/"report.json")
+    folds = read(whole/"geographic.json")["folds"]
     directional = read(home/"directional/azimuth/report.json")
     spherical = read(home/"spherical-mixture/report.json")
     key = digest(record["path"])
@@ -58,14 +60,21 @@ def case_results(record):
              three(spherical["fits"]["baseline"]["volume"]), nested["conditional_volume_interval95_km3"]]
     scores = [dg["all_estimated"]["revised_score"], sv["metrics"]["equal_region_log_score"],
               nested["geographic_score"]]
-    maps = [read(home/family/file)["median_map_volume_km3"] for family,file in (
-        ("directional","deposit.json"), ("spherical-mixture","deposit.json"), ("nested-whole-area","median-field.json"))]
+    maps = [read(home/family/"deposit.json")["median_map_volume_km3"] for family in ("directional","spherical-mixture")]
+    maps.append(read(whole/"median-field.json")["median_map_volume_km3"])
     if (home/"directional/extent/report.json").is_file():
         # This study compares the original whole-area ranks with the contemporaneous peers.
         prior = {r["method"]:r for r in csv_rows(ROOT/"archive/2026-11-22-global-extent/principal-volumes.csv")
                  if r["slug"]==slug and r["input_sha256"]==key}
         if prior:
             maps[:2] = [float(prior[f]["median_map_volume_km3"]) for f in ("directional","spherical-mixture")]
+        else:
+            paired = {r["method"]:r for r in csv_rows(ROOT/"comparisons/global-extent/paired-results.csv")
+                      if r["slug"]==slug and r["input_sha256"]==key}
+            families = ("directional","spherical-mixture")
+            maps[:2] = [float(paired[f]["earlier_km3"]) for f in families]
+            draws[:2] = [[float(paired[f][k]) for k in ("earlier_lower95","earlier_upper95")] for f in families]
+            scores[:2] = [float(paired[f]["parent_matched_negative_log_score"]) for f in families]
     results = [dict(eruption=record["name"], slug=slug, method=name, lower95_km3=q[0],
                     median_map_km3=volume, upper95_km3=q[-1], equal_region_log_score=score, input_sha256=key)
                for name, q, volume, score in zip(FAMILIES, draws, maps, scores, strict=True)]
@@ -80,11 +89,10 @@ def case_results(record):
                                 candidate_score=paired["sensitivity_score"], control_lower95_km3=study["reference_volume_km3"][0],
                                 control_upper95_km3=study["reference_volume_km3"][-1], candidate_lower95_km3=lo, candidate_upper95_km3=hi,
                                 numerical_checks_passed=study["passed"]))
-    nested["distal_rolloff"] = read(home/"nested-whole-area/distal-taper.json")["scenarios"]
-    nested["bearing_study"] = read(home/"nested-whole-area/bearing-study/report.json")
-    if nested["bearing_study"]["input_sha256"] != key:
+    bearing = whole/"bearing-study/report.json"
+    if bearing.is_file() and read(bearing)["input_sha256"] != key:
         raise ValueError(f"Nested bearing sensitivity input differs for {slug}")
-    edge = home/"nested-whole-area/edge-deletion/report.json"
+    edge = whole/"edge-deletion/report.json"
     if edge.is_file():
         nested["edge_deletion"] = read(edge)
         if nested["edge_deletion"]["input_sha256"] != key:
@@ -247,8 +255,6 @@ def main():
     comparison_plot(rows, a.output/"whole-area-volumes.png")
     from .nested_summary_report import write_report
     write_report(a.output, rows, experiments, reports, volumes, areas,raw["recovery"])
-    from .nested_principal_summary import build
-    build(a.output, rows)
 
 
 if __name__ == "__main__":

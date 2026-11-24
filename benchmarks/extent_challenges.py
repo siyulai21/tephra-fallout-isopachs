@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import qmc
 
+from .footprint_study import controls
 from .nested_reach_challenge import known_design, matched_models
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
@@ -90,7 +91,8 @@ def run(args):
         rec=next(r for r in datasets() if r["slug"]==slug)
         data,meta=audited_data(rec["path"],allow_intervals=True)
         lat,key,truths=meta["vent_lonlat"][1],meta["input_sha256"],None
-        fields=parent_fields(Path("eruptions")/slug/"results"/family,family,data,lat,count=128 if family=="spherical-mixture" else 768)
+        folder = controls(slug,rec)[0] if family=="nested-isopachs" else Path("eruptions")/slug/"results"/family
+        fields=parent_fields(folder,family,data,lat,count=128 if family=="spherical-mixture" else 768)
         ok=None
     cal=calibration(family,key,exclude_slug=slug)
     totals,errors=compare(fields,lat,cal,truths)

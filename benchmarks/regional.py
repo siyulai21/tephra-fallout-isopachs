@@ -117,29 +117,32 @@ def summarize(output, published=False):
     rows = []
     if published:
         accepted = {r["slug"]: r["path"] for r in datasets()}
-        sources = [(slug, Path("eruptions")/slug/"results/report.json") for slug in accepted]
+        from .principal_volumes import principal_home
+        sources = [(r["slug"],principal_home(r)/"report.json") for r in datasets()]
     else:
         sources = [(p.parent.name, p) for p in output.glob("*/report.json")]
     for slug, path in sorted(sources):
         report = json.loads(path.read_text())
         if published and report["input"]["input_sha256"] != sha256(accepted[slug].read_bytes()).hexdigest():
             raise ValueError(f"{slug}: published regional fit and accepted input differ")
+        bands = json.loads((path.parent/"thickness-bands.json").read_text())["methods"]
         for method, result in report["methods"].items():
             rows.append({"dataset": report["dataset"], "slug": slug, "method": method, "label": report_label(report, method),
-                "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
+                "n_exact": report["input"]["n_measurements"], "n_intervals":report["input"].get("n_intervals",0),
+                "n_lower": report["input"]["n_lower_limits"],
                 "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
                 "median_surface_km3": result["regional_volume"]["median_surface_km3"],
-                "conditional_volume_lower95_km3": result["joint_volume"]["conditional_quantiles_km3"]["0.025"],
-                "conditional_volume_upper95_km3": result["joint_volume"]["conditional_quantiles_km3"]["0.975"],
+                "thickness_q25_volume_km3": bands[method]["volumes_km3"][0],
+                "thickness_q75_volume_km3": bands[method]["volumes_km3"][2],
+                "input_sha256": report["input"]["input_sha256"],
                 "volume_converged": result["regional_volume"]["converged"],
                 **{k: v for k, v in report["validation"]["methods"][method]["metrics"].items() if k != "fold_log_scores"}})
     table = pd.DataFrame(rows)
     table.to_csv(output/"comparison.csv", index=False)
     lines = ["# GP and cubic spline inside the observation hull", "",
         "Each pair uses the same accepted sites, geographic holdouts and integration area. "
-        "The volume column integrates each model’s pointwise median thickness. Each case also reports its "
-        "expected volume and the conditional interval from whole-surface draws.", "",
+        "The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps.", "",
         "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |",
         "|---|---|---:|---:|---:|"]
     for row in table.itertuples():
@@ -149,7 +152,7 @@ def summarize(output, published=False):
                      f"{row.equal_region_log_score:.3f} | {row.coverage95_observations:.1%} |")
     lines += ["", "Lower negative log predictive scores indicate better predictions in withheld regions. "
               "Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical "
-              "volume integration warning. [Full benchmark table, including expected volumes](comparison.csv)", "",
+              "volume integration warning. [Regional volumes, thickness bands and held-out scores](comparison.csv)", "",
               "![Regional median-map volumes and geographic prediction scores](comparison.png)"]
     if published:
         lines += ["", "At B-Tm, three interpreted upper bounds expand the hull. The spline’s arithmetic mean "

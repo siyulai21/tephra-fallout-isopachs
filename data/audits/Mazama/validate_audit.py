@@ -1,6 +1,7 @@
 """Independently check Mazama source cells, decisions, inputs and retained identities."""
 import argparse
 import csv
+from collections import Counter
 import hashlib
 import json
 import math
@@ -133,8 +134,25 @@ def main(published=False):
         assert by_id[sid]['Kind']=='upper_limit' and float(by_id[sid]['Limit_cm'])==limit
     assert not {'L2024-JEN16-1B','L2024-JEN15-4A','L2024-JEN21-1A','L2024-JEN21-1B'} & by_id.keys()
     mapped = json.loads((HERE/'evidence-map.json').read_text())
-    assert mapped['ledger_sha256'] == digest(HERE/'revised-locality-ledger.csv')
-    assert mapped['input_sha256'] == digest(ROOT/'data/eruptions/Mazama_reviewed.csv')
+    current_path = ROOT/'data/eruptions/Mazama_primary_ranges.csv'
+    decisions_path = HERE/'principal-ranges/locality-decisions.csv'
+    with current_path.open(newline='') as stream:
+        current = list(csv.DictReader(stream))
+    with decisions_path.open(newline='') as stream:
+        current_decisions = {r['record_id']:r for r in csv.DictReader(stream)}
+    counts = Counter(r['Kind'] for r in current)
+    assert len(current_decisions) == 872 and len(current) == 300
+    assert counts == {'measurement':46, 'interval':29, 'lower_limit':129, 'upper_limit':96}
+    assert {r['EvidenceID'] for r in current} == {k for k,v in current_decisions.items() if v['principal_kind'] != 'omitted'}
+    for r in current:
+        decision = current_decisions[r['EvidenceID']]
+        assert r['Kind'] == decision['principal_kind']
+        assert all(r[k] == decision[v] for k,v in [('Thickness','point_cm'),('Limit_cm','limit_cm'),
+                                                    ('Lower_cm','lower_cm'),('Upper_cm','upper_cm')])
+    current_audit = json.loads((HERE/'principal-ranges/provenance.json').read_text())
+    assert current_audit['cases']['principal']['sha256'] == digest(current_path)
+    assert mapped['ledger_sha256'] == digest(decisions_path) and mapped['inventory_sha256'] == digest(HERE/'revised-locality-ledger.csv')
+    assert mapped['input_sha256'] == digest(current_path) and mapped['site_types'] == counts
 
     for sid, contacts in {'CH2008-THU':(170,202),'CH2008-WIN':(287,373),'HER2014-DIS':(593,734),
             'HER2014-HOR':(178,389),'HER2014-RRL':(278,439),'ROS2004-FRO':(155,163),
@@ -186,11 +204,15 @@ def main(published=False):
     for f, sha in provenance['audit_artifacts'].items():
         assert digest(HERE / f) == sha, f
     registry = json.loads((ROOT / 'data/datasets.json').read_text())['datasets']
-    assert next(r for r in registry if r['slug'] == 'mazama')['file'] == 'eruptions/Mazama_reviewed.csv'
+    registered = next(r for r in registry if r['slug'] == 'mazama')
+    assert ROOT/'data'/registered['file'] == current_path
+    assert ROOT/'data'/registered['audit'] == HERE/'principal-ranges/provenance.json'
     outputs = ['revised-locality-ledger.csv', 'buckland2020-cells.json', 'buckland2020-293-localities.csv', 'additional-localities.csv', 'bounds-and-ranges.csv', 'occurrences-and-traces.csv', 'supplied-row-crosswalk.csv', 'buckland2022-input-comparison.csv', 'compilation-bibliography.csv', 'audit-summary.json', 'LOCALITIES.md', 'primary-source-work-queue.csv']
     before = {name: digest(HERE / name) for name in outputs}
     subprocess.run([sys.executable, str(HERE / 'build_audit.py')], cwd=ROOT, check=True, capture_output=True)
+    subprocess.run([sys.executable,'-m','benchmarks.mazama_primary_ranges'], cwd=ROOT, check=True, capture_output=True)
     assert before == {name: digest(HERE / name) for name in outputs}
+    assert digest(current_path) == mapped['input_sha256'] and digest(decisions_path) == mapped['ledger_sha256']
     queue = list(csv.DictReader((HERE / 'primary-source-work-queue.csv').open()))
     queued = {i for r in queue for i in r['record_ids'].split(';')}
     assert queued == {r['record_id'] for r in rows[:293] if r['verification'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending')}
@@ -209,26 +231,29 @@ def main(published=False):
     assert {r['record_id'] for r in facies if r['original_S1_deposit_code'] == 'S' and r['revised_use'] != 'omitted'} == {'B2020-106'}
     models = []
     if published:
-        for family in ('', 'directional/azimuth/', 'spherical-mixture/', 'nested-isopachs/', 'nested-whole-area/'):
-            p = ROOT / 'eruptions/mazama/results' / family / 'report.json'
-            report = json.loads(p.read_text())
-            assert report.get('input', report)['input_sha256'] == expected, family
-            models.append(str(p.relative_to(ROOT)))
-    result = dict(audit_date='2026-11-23', source_payloads_hash_verified=len(checked_payloads),
+        case = ROOT/'eruptions/mazama/results'
+        for name in ('report.json','directional/extent/report.json','spherical-mixture/extent/report.json','nested-isopachs/footprints/report.json'):
+            report = json.loads((case/name).read_text())
+            assert report.get('input', report)['input_sha256'] == digest(current_path), name
+            models.append(str((case/name).relative_to(ROOT)))
+    result = dict(audit_date='2026-11-24', source_payloads_hash_verified=len(checked_payloads),
                   source_payloads_bundled=sum(s.get('bundled',True) for s in manifest),
                   original_payloads_in_verified_acquisition_record=len(originals['sources_verified']),
                   linked_only_sources_not_locally_reverified=linked_only_missing,
                   historical_revision='41b8f2f', historical_files_hash_verified=historic,
                   previous_github_revision='0a53d02', previous_release_files_hash_verified=previous,
                   independently_compared_source_cells=count, unique_source_records=293,
-                  unique_revised_records=len(rows), additional_records=len(rows)-293, supplied_rows=52,
-                  candidate_matches=45, excluded_pseudo_rows=7, principal_observations=len(accepted),
-                  principal_point_values=sum(r["Kind"]=="measurement" for r in accepted), principal_lower_bounds=sum(r["Kind"]=="lower_limit" for r in accepted), principal_upper_bounds=sum(r["Kind"]=="upper_limit" for r in accepted), input_sha256=expected,
-                  missing_decimal_coordinates=sum(not r['latitude'] for r in rows),
+                  unique_revised_records=len(current_decisions), additional_records=len(current_decisions)-293, supplied_rows=52,
+                  candidate_matches=45, excluded_pseudo_rows=7, principal_observations=len(current),
+                  principal_point_values=counts['measurement'], principal_intervals=counts['interval'],
+                  principal_lower_bounds=counts['lower_limit'], principal_upper_bounds=counts['upper_limit'],
+                  input_sha256=digest(current_path),
+                  preceding_facies_audit=dict(records=len(rows),observations=len(accepted),input_sha256=expected),
+                  missing_decimal_coordinates=sum(not r['latitude'] for r in current_decisions.values()),
                   original_observer_pending_in_queue=len(queued), compilation_only_original_records=sum(r['verification']=='compilation_checked_primary_pending' for r in rows[:293]), deterministic_rebuild=True,
                   derived_output_sha256=before, published_model_input_checks=models,
                   primary_audit_complete=False,
-                  test_and_navigation_results='See case results/source-audit/publication-checks.json; this checker does not invent test results.',
+                  test_and_navigation_results='The current case results/release.json records the independent checks on all five fits.',
                   visual_source_checks=['Lemke1975 Table4 scan', 'Crandell1967 Table1 p.8', 'Buckley1970 p.101 fractions', 'Yu2006 Fig.2 qualitative only', 'Morgan2023 Tables S1-S2 core identities and coordinates', 'Munroe2018 Table1 lake positions', 'LacCore GLAD GSL00 hole4A position sheet', 'Walsh2017 Table1 Rainier lake coordinates', 'Wan1995 printed p.60 core TT063-13', 'Dallimore2008 p.1348 core MD02-2494 coordinates', 'Saban2023 pp.37,66,76,95,99,103: bed boundaries, site positions and conflicting summaries',
                       'Young 1990 Table 1.1, Appendix 1a–d and four numbered section maps',
                       'Ruby Mountains primary basal ash and overlying reworked ash in the Overland and Soldier cores',

@@ -1,6 +1,6 @@
 # Ambiguous thicknesses and interpreted bounds
 
-Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+Historical stage. The [current source decisions](principal-ranges/locality-decisions.csv) give the fitted reading and field qualification for each record in the 300-locality release.
 
 [Assessment](README.md) · [All site decisions](site-evidence-decisions.csv) · [Selected input](model-selection.csv) · [Protocol](../../../docs/methods/sites-without-measured-thickness.md)
 

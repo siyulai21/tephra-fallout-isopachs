@@ -1,6 +1,6 @@
 # Mazama audit data dictionary
 
-Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+Historical stage. The [current source decisions](principal-ranges/locality-decisions.csv) give the fitted reading and field qualification for each record in the 300-locality release.
 
 [Assessment](README.md) · [Revised ledger](revised-locality-ledger.csv)
 

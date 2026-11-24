@@ -1,9 +1,7 @@
 """Read and verify the SHA-256 identities of the published evidence."""
 from functools import lru_cache
 from hashlib import sha256
-from io import BytesIO
 import json
-import tarfile
 import subprocess
 from pathlib import Path
 from zipfile import ZipFile
@@ -35,18 +33,12 @@ def published_reach_engine():
 
 def published_datasets():
     """Resolve the exact registered revision used by each published case report."""
-    from src.empirical_isopach.core.catalog import datasets, dataset_record
+    from src.empirical_isopach.core.catalog import datasets
     records = datasets()
-    for index, rec in enumerate(records):
-        if "published_input" in rec:
-            path = ROOT / "data" / rec["published_input"]
-            pinned = dataset_record(path)
-            report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
-            if (not pinned or pinned["slug"] != rec["slug"] or
-                    sha256(path.read_bytes()).hexdigest() != pinned["sha256"] or
-                    report["input"]["input_sha256"] != pinned["sha256"]):
-                raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
-            records[index] = pinned
+    for rec in records:
+        report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
+        if report["input"]["input_sha256"] != sha256(rec["path"].read_bytes()).hexdigest():
+            raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
     return records
 
 
@@ -70,18 +62,8 @@ def previous_mazama_bytes(name, root=ROOT):
     name = Path(name).as_posix()
     fingerprints = json.loads((folder / "files.json").read_text())
     expected = fingerprints[name]
-    manifest = json.loads((folder / "previous-release.tar.gz.parts.json").read_text())
-    archive = BytesIO()
-    for part in manifest["parts"]:
-        content = (folder / part["file"]).read_bytes()
-        if len(content) != part["bytes"] or sha256(content).hexdigest() != part["sha256"]:
-            raise ValueError(f"Changed Mazama archive part {part['file']}")
-        archive.write(content)
-    if sha256(archive.getbuffer()).hexdigest() != manifest["original_sha256"]:
-        raise ValueError("Changed Mazama release archive")
-    archive.seek(0)
-    with tarfile.open(fileobj=archive, mode="r:gz") as source:
-        content = source.extractfile(name).read()
+    relative = Path(name).relative_to("eruptions/mazama/results")
+    content = (folder / "controls" / relative).read_bytes()
     if sha256(content).hexdigest() != expected:
         raise ValueError(f"Archived Mazama evidence differs at {name}")
     return content
@@ -147,3 +129,30 @@ def signed_file(name, expected, current):
     if sha256(source).hexdigest() != expected:
         raise ValueError(f"Signed source differs at {name}")
     return True
+
+
+def historical_volume_rows(home):
+    """Replay the whole-draw intervals used by the dated source-sensitivity studies."""
+    from src.empirical_isopach.visualization.deposit import FAMILIES, read_json, volume_interval
+    from src.empirical_isopach.visualization.summary import metrics, principal_report
+    home = Path(home)
+    regional = read_json(home/"report.json")
+    directional = read_json(home/"directional/azimuth/report.json")
+    spherical = read_json(home/"spherical-mixture/report.json")
+    nested = principal_report(home)
+    values = []
+    for key,record in regional["methods"].items():
+        vol = record["regional_volume"]
+        q = record["joint_volume"]["conditional_quantiles_km3"]
+        hist = [v["median_surface_km3"] for v in vol["refinement"]]
+        ok = len(hist)>=3 and all(abs(a/b-1)<vol["tolerance"] for a,b in zip(hist[-3:-1],hist[-2:]))
+        values.append((key,vol["median_surface_km3"],(q["0.025"],q["0.975"]),ok,record["joint_volume"]["expected_grid_converged"]))
+    for key,source in zip(FAMILIES,(directional,spherical,nested),strict=True):
+        r = read_json(home/key/"deposit.json")
+        ext = home/key/"extent/report.json"
+        q,ok = volume_interval(key,source,read_json(ext) if ext.is_file() else None)
+        values.append((key,r["median_map_volume_km3"],q,r["integration_passed"],ok))
+    return [dict(method=k, median_map_volume_km3=v,conditional_volume_lower95_km3=q[0],conditional_volume_upper95_km3=q[1],
+                 map_integration_passed=m,complete_draw_checks_passed=passed,heldout_log_score=score,
+                 heldout_coverage95=cov,heldout_checks_passed=valid,input_sha256=regional["input"]["input_sha256"])
+            for (k,v,q,m,passed),(_,score,cov,valid) in zip(values,metrics(regional,directional,spherical,nested,home=home),strict=True)]

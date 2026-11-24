@@ -1,5 +1,7 @@
 # YTT · regional fits inside the observation hull
 
+[All available methods on the eruption page](../README.md)
+
 The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
 
 **46 exact measurements, 0 lower bounds, 0 upper limits.** The observation hull covers 17,719,965 km². The automatic validation buffer is 99.78 km.
@@ -11,7 +13,7 @@ The colours follow the same doubling thickness brackets as the global maps. The 
 | Quantity | GP ensemble | Trend-regularized cubic spline |
 |---|---:|---:|
 | Principal median-map volume inside hull (km³) | 1079.21 | 943.74 |
-| Complete-draw conditional 95% volume interval (km³) | 759.73–1861.41 | 797.96–1998.78 |
+| Integrated Q25–Q75 thickness (km³) | 799.31–1,460.42 | 686.28–1,357.32 |
 | Outer equal-region negative log score ↓ | 1.934 | 2.153 |
 | Outer log-thickness RMSE ↓ | 1.229 | 1.634 |
 | Outer 95% observation-interval coverage | 91.3% | 82.6% |
@@ -24,7 +26,7 @@ Lower predictive score and RMSE are better. Coverage must be read with interval 
 
 The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
 
-Volume integrates pointwise median thickness over the observation hull. The uncertainty interval uses the 2.5th and 97.5th percentiles of spatially correlated volume draws.
+Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise 25th and 75th percentiles of latent thickness on the same hull. [Band integrals and refinements](thickness-bands.json)
 
 ## Fitted methods
 
@@ -139,9 +141,3 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
-
-## Five-family volume and prediction comparison
-
-![Separate regional and global volume domains with matched predictive evidence](overview.png)
-
-The global intervals concern the whole Earth; the regional intervals concern this observation hull. Neither is a preferred or pooled estimate. [Directional report](directional/README.md) · [Spherical-mixture report](spherical-mixture/README.md) · [Nested corridor report](nested-isopachs/README.md).

@@ -1,5 +1,9 @@
 # Release history
 
+## 24 November 2026 · Thickness bands and eruption-specific maps
+
+Each principal range integrates the pointwise 25th and 75th thickness percentiles on the median map’s domain. The full global figures report the outer contour and its actual observation coverage. The innermost line encloses at least one fitted site. Close-ups expand until eligible contours are visible and use scale-dependent GSHHG shorelines. All five Mazama fits use the same 300 audited localities. [Current volumes](comparisons/principal-volumes.csv) · [Map definitions](docs/OUTPUTS.md) · [Mazama](eruptions/mazama/README.md)
+
 ## Geographic extent and angular resolution
 
 The 22 November 2026 comparison updates all nine eruptions. The three global families preserve the observation likelihood and publish paired predictions for the earlier and revised deposits, complete-draw intervals and a fresh support screen. [Paired results and failures](comparisons/global-extent/README.md) · [Earlier release](archive/2026-11-22-global-extent/README.md)
@@ -11,9 +15,9 @@ All eight catalogue cases and the separate Pinatubo study now show the full medi
 
 The [eruption catalogue](eruptions/README.md) contains the current reports. For an earlier calculation, open the linked commit to obtain its input, fitting code and evidence together.
 
-## Current release
+## Earlier station-corridor release
 
-Dispersal corridors now supply the principal Bayesian nested isopachs, bulk volume and geographic predictions for each eruption. The former whole-area estimate has its own sensitivity report. The saved posterior packets retain their original hashes. [Principal estimates](comparisons/nested-isopachs/README.md) · [Previous release](archive/2026-11-21-corridor-principal/README.md)
+Dispersal corridors supplied the principal Bayesian nested isopachs, bulk volume and geographic predictions for each eruption. The former whole-area estimate has its own sensitivity report. The saved posterior packets retain their original hashes. [Principal estimates](comparisons/nested-isopachs/README.md) · [Previous release](archive/2026-11-21-corridor-principal/README.md)
 
 The 12.8 ka Satsuma eruption adds 50 measured thicknesses and seven bounds. Its audit checks written field values and a lenticular marine bed 163 km west of Sakurajima. Both global families were refitted after omitting that bed. [Satsuma results](eruptions/sakurajima-satsuma/README.md)
 

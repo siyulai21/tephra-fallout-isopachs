@@ -13,7 +13,7 @@ from .footprint_catalogue import published_folder
 from .nested_footprints import cases
 from src.empirical_isopach.models.nested.continuation import load_packet
 from src.empirical_isopach.models.nested.footprints.posterior import FootprintField
-from src.empirical_isopach.visualization.deposit import read_json
+from src.empirical_isopach.visualization.deposit import digest, read_json
 
 ARCHIVE = Path("archive/2026-11-23-nested-geography")
 STUDY = Path("comparisons/nested-isopachs/geography")
@@ -21,8 +21,10 @@ STUDY = Path("comparisons/nested-isopachs/geography")
 
 def controls(slug, rec):
     base = Path("eruptions")/rec["slug"]/"results"
-    if slug==rec["slug"] and rec.get("published_input"):
-        root = ARCHIVE/"mazama-300-controls"
+    root = ARCHIVE/f"{slug}-300-controls"
+    if (root/"whole/full.npz").is_file():
+        if read_json(root/"corridor/extent/report.json")["input_sha256"] != digest(rec["path"]):
+            raise ValueError(f"Archived controls have a different input from {slug}")
         return root/"corridor", root/"corridor", root/"whole"
     return base/"nested-isopachs", ARCHIVE/rec["slug"], base/"nested-whole-area"
 

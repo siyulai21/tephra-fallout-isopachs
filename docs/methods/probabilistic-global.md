@@ -51,7 +51,7 @@ T(s) [cm] = 10^5 V [km³] × Σ_k w_k [ω_G G_k(s) + ω_E E_k(s) + ω_P P_k(s)],
 w_k ≥ 0,   Σ_k w_k = 1,   ω_j ≥ 0,   Σ_j ω_j = 1.
 ```
 
-Consequently `10^-5 ∫_Earth T(s) dA = V` **for every posterior draw**. The published point estimate integrates the pointwise median thickness over Earth. The 2.5th and 97.5th percentiles of integrated draws give the conditional volume interval. There is no cell-size correction, contour cutoff, map-edge closure, fitted calculation radius or arbitrary finite rectangle in this identity.
+Consequently `10^-5 ∫_Earth T(s) dA = V` **for every posterior draw**. The published point estimate integrates the pointwise median thickness over Earth. The conditional map-based range integrates the pointwise 25th and 75th thickness percentiles across the same Earth. Coherent integrated draws provide a separate diagnostic of the sampled mass budgets. There is no cell-size correction, contour cutoff, map-edge closure, fitted calculation radius or arbitrary finite rectangle in this identity.
 
 Each component decreases away from its own centre. The *sum* need not decrease in every direction from the vent: displaced and overlapping components permit multiple fans, elongated deposits and secondary maxima. Baseline components are circular on the authalic sphere; a few overlapping components approximate anisotropy but cannot represent every real deposit. Mathematical components must not be relabelled as separately identified Plinian/co-ignimbrite phases. Minoan is fitted once to all its accepted fallout observations and lower bounds.
 
@@ -94,7 +94,7 @@ This distinction is substantive: if the residual scatter represents real unresol
 
 Four independent adaptive Hamiltonian chains sample the joint posterior with [NumPyro NUTS](https://num.pyro.ai/en/stable/mcmc.html). Internally define `g(θ)` as the mean log thickness for unit volume at the *training locations*, and sample `a = log V + g(θ)`. Then `log V = a-g(θ)` and the log field is `a+log shape-g(θ)`. The transformation has Jacobian determinant one. An explicit density-ratio factor cancels the auxiliary normal on `a` and restores the declared prior on `log V` exactly. This reduces amplitude/shape coupling without changing the scientific posterior or using heldout values. Unit tests compare the complete joint density, including bounded observations and the shifted-volume prior.
 
-The fitted median-thickness field and conditional 95% volume endpoints are posterior summaries **conditional on the stated family, likelihood and priors**. Full parameter uncertainty and the uncertain mass weights among fans are included. Finite mixtures can be multimodal; passing numerical checks does not prove all modes were explored.
+The fitted median-thickness field and integrated quartile surfaces are posterior summaries **conditional on the stated family, likelihood and priors**. Full parameter uncertainty and the uncertain mass weights among fans are included. Finite mixtures can be multimodal; passing numerical checks does not prove all modes were explored.
 
 All seven alternatives are full posterior refits to the same accepted data:
 

@@ -13,7 +13,7 @@ from .spherical_bearing_summary import build_validation
 
 def summarize(output, regional_root=Path('eruptions'), published=False, trials=None):
     output, regional_root = Path(output), Path(regional_root)
-    rows, cases, validation_rows, sensitivity_warnings = [], [], [], []
+    rows, cases, validation_rows = [], [], []
     case_dirs = {}
     for record in sorted(datasets(), key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
@@ -38,14 +38,16 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             for a, b in zip(val['fits'], model['selections']):
                 assert a['training_row_ids'] == b['training_row_ids']
                 assert a['withheld_row_ids'] == b['withheld_row_ids']
+        deposit_path = folder/'deposit.json'
+        deposit = json.loads(deposit_path.read_text())
+        if deposit['input_sha256'] != report['input']['input_sha256']:
+            raise ValueError(f'{slug}: median map and spherical fit differ')
+        band = deposit['thickness_band']['volumes_km3']
         base = report['fits']['baseline']
-        failed = [key.replace('_', ' ') for key, fit in report['fits'].items() if not fit['diagnostics']['passed']]
-        if failed:
-            sensitivity_warnings.append(f"{name} ({', '.join(failed)})")
         row = {'eruption': name, 'slug': slug, 'geometry':report.get('geometry','displaced'),
             'review_status':record.get('global_review_status','conditional'),
-            'median_map_volume_km3': json.loads((folder/'deposit.json').read_text())['median_map_volume_km3'],
-            **{k: base['volume'][k] for k in ('lower95', 'upper95')},
+            'median_map_volume_km3': deposit['median_map_volume_km3'],
+            'thickness_q25_volume_km3': band[0], 'thickness_q75_volume_km3': band[2],
             'sensitivity_lower': report['sensitivity_envelope_km3'][0],
             'sensitivity_upper': report['sensitivity_envelope_km3'][1],
             'baseline_sampling_passed': base['diagnostics']['passed'],
@@ -56,75 +58,51 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             'global_observation_coverage95': val['metrics']['coverage95_observations']}
         for model in ('stacked', 'spline'):
             row[model+'_equal_region_negative_log_score'] = other['methods'][model]['metrics']['equal_region_log_score']
+        metrics = dict(val['metrics'])
+        extent_path = folder/'extent/report.json'
+        sources = {'deposit_sha256': sha256(deposit_path.read_bytes()).hexdigest()}
+        if extent_path.is_file():
+            extent = json.loads(extent_path.read_text())
+            assert extent['input_sha256'] == deposit['input_sha256']
+            geo = extent['validation']['geographic']
+            alternatives = json.loads(extent_path.with_name('prior-sensitivity.json').read_text())
+            assert set(alternatives)==set(report['fits'])
+            row.update(sensitivity_lower=min(v['conditional_interval'][0] for v in alternatives.values()),
+                       sensitivity_upper=max(v['conditional_interval'][-1] for v in alternatives.values()),
+                       all_outer_sampling_passed=geo['all_folds_passed'],
+                       global_equal_region_negative_log_score=geo['negative_log_score'],
+                       global_observation_coverage95=geo['coverage95_exact'])
+            metrics = dict(equal_region_log_score=geo['negative_log_score'],coverage95_observations=geo['coverage95_exact'],
+                           fold_log_scores=geo['fold_scores'])
+            sources['extent_report_sha256'] = sha256(extent_path.read_bytes()).hexdigest()
         rows.append(row)
-        validation_rows.append({'eruption': name, 'global': val['metrics'],
-            **{key: model['metrics'] for key, model in other['methods'].items()},
-            'matched_input_folds_buffer_and_training_rows': True,
-            'global_outer_sampling_passed': val['all_fits_passed_diagnostics']})
-        cases.append({'name': name, 'slug': slug, 'input_sha256': report['input']['input_sha256'],
-            'global_report_sha256': sha256(path.read_bytes()).hexdigest(),
-            'regional_report_sha256': sha256(regional_path.read_bytes()).hexdigest()})
+        validation_rows.append({'eruption':name,'global':metrics,
+            **{key:model['metrics'] for key,model in other['methods'].items()},
+            'matched_input_folds_buffer_and_training_rows':True,'global_outer_sampling_passed':row['all_outer_sampling_passed']})
+        cases.append({'name':name,'slug':slug,'input_sha256':report['input']['input_sha256'],
+            'global_report_sha256':sha256(path.read_bytes()).hexdigest(),
+            'regional_report_sha256':sha256(regional_path.read_bytes()).hexdigest(),**sources})
     output.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output/'comparison.csv', index=False)
-    (output/'report.json').write_text(json.dumps({'protocol': 'reviewed-spherical-bearing-mixtures-v1',
+    (output/'report.json').write_text(json.dumps({'protocol': 'spherical-median-thickness-and-finite-spread-v2',
         'summary_source_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
         'cases': cases, 'estimates': rows, 'matched_validation': validation_rows,
-        'scope': 'Conditional global bulk fallout, not ignimbrite or DRE. Each geometry uses fixed generic assumptions; the reviewed geometry is recorded per case. This is not a uniform-model experiment. Prior/model envelopes are not probability intervals. Heldout prediction does not validate unobserved volume.'}, indent=2, allow_nan=False)+'\n')
+        'scope': 'Conditional whole-Earth bulk fallout. The principal estimate and band integrate pointwise Q50, Q25 and Q75 thickness. The prior envelope spans total-volume draw endpoints across eight named priors. Geographic scores measure prediction at withheld sites.'}, indent=2, allow_nan=False)+'\n')
     figures(output, rows)
-    paired, gap_scores, maps, known_deposits = build_validation(trials, output / "bearings", case_dirs, link_prefix="bearings/")
-    volumes, forecasts = [], []
+    build_validation(trials, output / "bearings", case_dirs, link_prefix="bearings/")
+    lines = ['# Spherical-mixture maps and validation','',
+        'Each estimate integrates the pointwise median thickness over Earth. The range integrates the pointwise Q25 and Q75 thickness maps. '
+        'The separate prior sensitivity envelope summarizes total-volume draws under eight alternative assumptions. '
+        '[Model and assumptions](../../docs/methods/spherical-bearings.md)','',
+        '| Eruption | Median map (km³) | Q25–Q75 thickness maps (km³) | Geographic score ↓ | Exact coverage |',
+        '|---|---:|---:|---:|---:|']
     for row in rows:
-        slug = row["slug"]
-        earlier = paired.loc[slug]
-        label = row["geometry"] + (" · **questioned**" if row["review_status"] == "questioned" else "")
-        case = f"[{row['eruption']}](../../eruptions/{slug}/README.md)"
-        baseline_warning = "" if row["baseline_sampling_passed"] else " · **provisional**"
-        mapped = json.loads((case_dirs[slug]/"deposit.json").read_text())
-        volumes.append(
-            f"| {case} | {label} | **{mapped['median_map_volume_km3']:,.3g}**{baseline_warning} "
-            f"| {row['lower95']:,.1f}–{row['upper95']:,.1f} | {row['sensitivity_lower']:.3g}–{row['sensitivity_upper']:.3g} |"
-        )
-        status = "pass" if row["all_outer_sampling_passed"] else "**provisional**"
-        forecasts.append(
-            f"| {row['eruption']} | {earlier.parent_score:.3f} → {row['global_equal_region_negative_log_score']:.3f} "
-            f"| {row['stacked_equal_region_negative_log_score']:.3f} | {row['spline_equal_region_negative_log_score']:.3f} "
-            f"| {row['global_observation_coverage95']:.1%} | {status} |"
-        )
-    table = "\n".join(volumes)
-    predictions = "\n".join(forecasts)
-    n_pass = sum(r['baseline_sampling_passed'] for r in rows)
-    warnings = ("Numerical warnings occurred in " + ", ".join(sensitivity_warnings) +
-                ". Their results contribute to the envelope." if sensitivity_warnings
-                else "All alternative refits passed their numerical checks.")
-    (output/'README.md').write_text(f"""# Spherical-mixture maps and volumes
-
-Each eruption uses the same observations for the broad control and the principal spherical fit. In one third of simulated deposits the kernels extend broadly into unsampled directions. In the others, the thickness depends on the orientation of an unseen fan. Each simulated deposit gives one whole-Earth bulk fallout volume. The principal volume integrates the median-thickness map. The interval describes uncertainty in total fallout across complete posterior draws. The last column gives the envelope across all eight prior fits. [Model and assumptions](../../docs/methods/spherical-bearings.md)
-
-| Eruption | Kernel geometry | Median-thickness map (km³) | Conditional 95% interval (km³) | Prior-sensitivity envelope (km³) |
-|---|---|---:|---:|---:|
-{table}
-
-{n_pass} of {len(rows)} baseline fits passed the sampling and integration checks. {warnings} Aso-4’s source audit questions the displaced peak and its large upper tail. B-Tm’s source-focused fit includes three interpreted upper bounds. [Aso-4 source audit](../aso-4-audit/README.md) · [B-Tm evidence](../../data/audits/B-Tm/README.md)
-
-{maps}
-## Predictions in withheld regions
-
-All methods faced the same held-out observations, bounds, regions and buffers for each eruption. Lower scores indicate better prediction. Coverage is the fraction of exact thickness readings inside the principal spherical 95% predictive interval.
-
-| Eruption | Spherical score, broad → principal | GP score | Spline score | Spherical coverage | Spherical holdout checks |
-|---|---:|---:|---:|---:|---|
-{predictions}
-
-{gap_scores}
-
-![Conditional spherical volumes, prior envelopes and withheld-region scores](comparison.png)
-
-{known_deposits}
-## Data and reproduction
-
-[Case estimates and prior diagnostics](comparison.csv) · [Input identities and matched validation](report.json) · [Kernel-geometry experiment](../source-revision/README.md) · [Displaced-kernel trials](stress-tests.md) · [Source-focused trials](../source-revision/stress-tests.md) · [Reproduction commands](../../docs/methods/spherical-bearings.md#integration-validation-and-reproducibility) · [Preceding release](../../archive/2026-11-20-spherical-continuation/README.md)
-""")
-    return rows
+        case = f"[{row['eruption']}](../../eruptions/{row['slug']}/README.md)"
+        flag = '' if row['baseline_sampling_passed'] and row['all_outer_sampling_passed'] else ' †'
+        lines.append(f"| {case} | {row['median_map_volume_km3']:,.3g}{flag} | {row['thickness_q25_volume_km3']:,.3g}–{row['thickness_q75_volume_km3']:,.3g} | {row['global_equal_region_negative_log_score']:.3f} | {row['global_observation_coverage95']:.1%} |")
+    lines += ['', 'A dagger marks a sampling or geographic validation warning. [Full diagnostics](comparison.csv) · '
+              '[Inputs, source hashes and matched folds](report.json) · [Known-deposit experiments](bearings/known-volumes.csv)', '']
+    (output/'README.md').write_text('\n'.join(lines))
 
 
 def figures(output, rows):
@@ -136,7 +114,7 @@ def figures(output, rows):
         fig, axes = plt.subplots(1, 2, figsize=(13, 6.5), layout='constrained')
         for i, row in enumerate(rows):
             axes[0].plot([row['sensitivity_lower'], row['sensitivity_upper']], [i, i], ':', color='#8F9698', lw=1.5)
-            axes[0].plot([row['lower95'], row['upper95']], [i, i], color='#157F88', lw=3)
+            axes[0].plot([row['thickness_q25_volume_km3'], row['thickness_q75_volume_km3']], [i, i], color='#157F88', lw=3)
             axes[0].scatter(row['median_map_volume_km3'], i, color='#157F88', marker='o' if row['baseline_sampling_passed'] else 'x', s=40)
             for offset, key, color, label in ((-.15, 'global', '#157F88', 'Global mixture'),
                     (0, 'stacked', '#C57B3D', 'GP ensemble'), (.15, 'spline', '#78639F', 'Cubic spline')):
@@ -147,7 +125,7 @@ def figures(output, rows):
             ax.set(yticks=range(len(rows)), yticklabels=[r['eruption']+(' (questioned)' if r.get('review_status') == 'questioned' else '') for r in rows])
             ax.invert_yaxis(); ax.grid(axis='x', alpha=.2)
         axes[0].set(xscale='log', xlabel='Whole-deposit volume (km³, log scale)',
-            title='Whole-deposit volumes\nConditional 95% (solid) and prior envelope (dotted)')
+            title='Whole-deposit volumes\nQ25–Q75 thickness (solid) and prior envelope (dotted)')
         axes[1].set(xlabel='Equal-region negative log score (lower is better)',
             title='Matched geographic holdouts\n× marks provisional sampling')
         axes[1].legend(fontsize=9)

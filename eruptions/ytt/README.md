@@ -6,21 +6,21 @@ The northern sector has no accepted locality and accounts for **44%** of the nes
 
 ## Volumes and geographic prediction
 
-Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
 
-| Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
-|---|---:|---:|---:|---:|
-| GP ensemble | **1,079** | 760–1.86e+03 | 1.934 | 91.3% |
-| Cubic spline | **944** | 798–2e+03 | 2.153 | 82.6% |
-| [Directional ensemble](results/directional/README.md) | **900** | 683–2.97e+03 | 1.534 † | 100.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **1,227** | 997–2.2e+04 | 1.737 | 84.8% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | **1,994** | 1.37e+03–3.7e+03 | 1.707 † | 93.5% |
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| GP ensemble | observation hull | **1,079** | 799–1,460 | 1.934 | 91.3% |
+| Cubic spline | observation hull | **944** | 686–1,357 | 2.153 | 82.6% |
+| [Directional ensemble](results/directional/README.md) | whole Earth | **900** | 605–1,481 | 1.534 † | 100.0% |
+| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **1,227** | 980–1,524 | 1.737 | 84.8% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **1,994** | 1,094–3,296 | 1.707 † | 93.5% |
 
-Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
+Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
-The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. Each curve counts the combined area of all patches at or above a thickness.
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
 ![YTT · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
@@ -32,7 +32,7 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 ![YTT · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
-The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
 The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 

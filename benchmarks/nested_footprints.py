@@ -3,7 +3,6 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
-from .publication import published_datasets
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.ensemble.members import splits
@@ -13,14 +12,7 @@ from src.empirical_isopach.models.nested.study import write_json
 
 
 def cases():
-    current = datasets()
-    previous = {rec["slug"]:rec for rec in published_datasets()}
-    out = {rec["slug"]:rec for rec in current}
-    for rec in current:
-        old = previous[rec["slug"]]
-        if old["path"] != rec["path"]:
-            out[rec["slug"]+"-published"] = old
-    return out
+    return {rec["slug"]:rec for rec in datasets()}
 
 
 def job(args):

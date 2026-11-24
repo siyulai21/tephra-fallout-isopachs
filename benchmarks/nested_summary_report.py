@@ -6,7 +6,7 @@ from src.empirical_isopach.models.nested.geometry import DIAMETER
 def write_report(folder, rows, experiments, reports, challenges, areas, recovery):
     families = ("Directional", "Spherical", "Nested")
     out = ["# Whole-area sensitivity for Bayesian nested isopachs", "",
-           "This study uses the broad whole-area continuation throughout. [Principal corridor estimates and maps](README.md)", "",
+           "This study uses the broad whole-area continuation throughout. [Current nested footprint estimates and maps](README.md)", "",
            "Each row compares the same accepted thickness measurements and bounds. All three point estimates integrate median thickness over Earth. Separate conditional intervals use the 2.5th and 97.5th percentiles of the volume draws.", "",
            "![Median-thickness integrals and conditional intervals](whole-area-volumes.png)", "",
            "| Eruption | Directional map | Spherical map | Nested map [conditional 95%], km³ | Nested site coverage | Full fit · geographic fits passing |",
@@ -16,7 +16,11 @@ def write_report(folder, rows, experiments, reports, challenges, areas, recovery
         lo, hi = report["conditional_volume_interval95_km3"]
         cov = report["exact_site_coverage95"]
         status = "passed" if report["population_check_passed"] else "**warning**"
-        path = f"../../eruptions/{slug}/results/nested-whole-area/README.md"
+        from .footprint_study import controls
+        from src.empirical_isopach.core.catalog import datasets
+        rec = next(r for r in datasets() if r["slug"]==slug)
+        whole = controls(slug,rec)[2]
+        path = "../../"+(whole/("README.md" if (whole/"README.md").is_file() else "report.json")).as_posix()
         out.append(f"| [{report['name']}]({path}) | {group[0]['median_map_km3']:,.1f} | {group[1]['median_map_km3']:,.1f} | "
                    f"**{group[2]['median_map_km3']:,.1f}** [{lo:,.1f}–{hi:,.1f}] | {cov['covered']}/{cov['exact_sites']} | {status} · {report['geographic_folds_passed']}/4 |")
     scores = [np.mean([r["equal_region_log_score"] for r in rows if r["method"] == f]) for f in families]

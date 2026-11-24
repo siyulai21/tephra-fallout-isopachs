@@ -14,6 +14,60 @@ from src.empirical_isopach.models.directional.study import digest, write_json
 PUBLISHED = Path("comparisons/directional")
 
 
+def current_control_summary(output, records):
+    """Summarize the directional controls on the same registered inputs as the case pages."""
+    import matplotlib.pyplot as plt
+
+    output.mkdir(exist_ok=True,parents=True)
+    rows = []
+    for rec in sorted(records,key=lambda r:r["name"]):
+        home = Path("eruptions")/rec["slug"]/"results/directional"
+        ensemble = json.loads((home/"ensemble/report.json").read_text())
+        single = json.loads((home/"single-structure/report.json").read_text())
+        identity = digest(rec["path"])
+        assert single["input"]["input_sha256"] == ensemble["input"]["input_sha256"] == identity
+        geo = ensemble["validation"]["geographic"]
+        assert geo["row_ids"] == single["validation"]["geographic"]["row_ids"]
+        measured = home/"bearing/quantitative/validation.json"
+        score = None
+        if measured.exists():
+            validation = json.loads(measured.read_text())["geographic"]
+            for observed,base in zip(validation["folds"],geo["fits"],strict=True):
+                assert observed["withheld_row_ids"] == base["withheld_row_ids"]
+                assert observed["training_row_ids"] == base["training_row_ids"]
+            score = validation["equal_region_negative_log_score"]
+        rows.append(dict(name=rec["name"],slug=rec["slug"],n=len(geo["row_ids"]),
+                         single=single["validation"]["geographic"]["equal_region_log_score"],
+                         fixed=geo["equal_region_log_score"],measured=score,passed=geo["all_estimable_passed"],
+                         median=ensemble["median_surface"]["volume_km3"],median_passed=ensemble["median_surface"]["passed"]))
+    lines = ["# Directional controls on the current eruption data","",
+             "Each row uses the same input and buffered geographic holdouts as its eruption page. The single-structure fit uses the reference fan geometry. The fixed-direction ensemble averages six structures. The measured-fan column gives the quantitative-only bearing fit where that diagnostic was published. Lower scores indicate better predictions. [Principal uncertain-direction fits](../README.md) · [Model definitions](../../../docs/methods/directional-ensemble.md)","",
+             "| Eruption | Sites | Single-structure score | Fixed-direction score | Measured-fan score | Fixed median map (km³) |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for r in rows:
+        link=f"../../../eruptions/{r['slug']}/results/directional/ensemble/README.md"
+        score="—" if r["measured"] is None else f"{r['measured']:.3f}"
+        lines.append(f"| [{r['name']}]({link}) | {r['n']} | {r['single']:.3f} | {r['fixed']:.3f}{'' if r['passed'] else ' †'} | {score} | {r['median']:,.2f}{'' if r['median_passed'] else ' †'} |")
+    lines += ["","A dagger marks a numerical warning on the fixed ensemble’s geographic fits or its median-map integral. Each case links the individual policies, holdouts and sampling diagnostics.","",
+              "![Whole-Earth volumes of the fixed-direction median maps](volumes.png)","",
+              "## Known deposits and calibration","",
+              "The 14 fixed-design trials compare fitted isopach area with known deposits at 1, 10 and 100 cm. Two trials have identical observed thicknesses under two different hidden deposits. Their fitted intervals covered the larger hidden deposit in neither trial. [Known volumes](known-volumes.csv) · [Contour overlap](contour-accuracy.csv) · [Simulation details](simulation-records.json.gz)","",
+              "The original six-eruption training packet fixes the structure weights for these experiments. A target eruption contributes no scores to its own calibration. [Training inputs and weights](../../../src/empirical_isopach/assets/directional-calibration.json) · [Independent numerical checks](verification.json)",""]
+    (output/"README.md").write_text("\n".join(lines))
+    fig,ax=plt.subplots(figsize=(8.4,4.8),layout="constrained")
+    for i,r in enumerate(rows):
+        ax.scatter(r["median"],i,s=35,color="#176c76" if r["median_passed"] else "#b7612a")
+        ax.annotate(f"{r['median']:,.2f}",(r["median"],i),xytext=(6,0),textcoords="offset points",va="center",fontsize=8)
+    ax.set(xscale="log",yticks=range(len(rows)),yticklabels=[r["name"] for r in rows],
+           xlabel="Integral of median thickness over Earth (km³)",title="Fixed-direction ensemble")
+    ax.set_xlim(min(r["median"] for r in rows)/1.5,max(r["median"] for r in rows)*2)
+    ax.grid(axis="x",alpha=.2)
+    ax.invert_yaxis()
+    fig.savefig(output/"volumes.png",dpi=155)
+    plt.close(fig)
+
+
+
 def case_table(cases=None, published_root=Path("eruptions")):
     """Read the paired controls and both holdout designs from the same fitted report."""
     records = []
@@ -36,7 +90,10 @@ def case_table(cases=None, published_root=Path("eruptions")):
         if cases is None and (path.parent.parent/"extent/report.json").is_file():
             home=path.parent.parent
             current=json.loads((home/"extent/report.json").read_text())
-            row["uncertain_map_km3"]=json.loads((home/"deposit.json").read_text())["median_map_volume_km3"]
+            deposit=json.loads((home/"deposit.json").read_text())
+            row["uncertain_map_km3"]=deposit["median_map_volume_km3"]
+            band=deposit["thickness_band"]["volumes_km3"]
+            row["thickness_q25_volume_km3"],row["thickness_q75_volume_km3"]=band[0],band[2]
             row["joint_lower95"],row["joint_upper95"]=current["conditional_interval95_km3"]
             for kind,detail in current["validation"].items():
                 row[kind+"_all_estimated_revised_score"]=detail["negative_log_score"]

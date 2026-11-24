@@ -12,6 +12,5 @@ Original source payloads and catalogue cells are retained; revised fitting obser
 - [Expansion from the 29-observation selection](2026-11-23-expanded-bounds/README.md).
 - [Frozen 40-observation selection before Yellowstone and further lake records](2026-11-23-before-yellowstone/README.md).
 - [Frozen 62-observation selection before the final citation pass](2026-11-23-before-final-citation-pass/README.md).
-- [Retained 62-observation trials and numerical warnings](../../../../archive/2026-11-23-mazama-62-observations/README.md).
 - [67 observations before the thicknessless-site review](2026-11-23-before-thicknessless-review/README.md).
 - [76 observations before Young’s primary field tables](2026-11-23-before-young/README.md).

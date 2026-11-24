@@ -49,6 +49,9 @@ def parent_view(folder, family, data, meta):
         if report["protocol"] != "uncertain-azimuth-v1":
             raise ValueError("Expected the quantitative uncertain-azimuth field")
         model = read_field(folder/"azimuth", data, report)
+        packet = folder/"median-grid.npz"
+        if packet.is_file():
+            restore_directional_mesh(packet,model,meta["input_sha256"],identity["azimuth/fields.npz"])
         view = MapView(model, lat)
     elif family == "spherical-mixture":
         if report["protocol"] != PROTOCOL or identity[paths[1]] != report["fits"]["baseline"]["posterior_sha256"]:
@@ -148,19 +151,59 @@ class PolarField:
         annulus += np.where(split, np.where(above_a, cut**2-r[:-1]**2, r[1:]**2-cut**2), 0.)
         return float(np.pi * annulus.sum() / z.shape[1])
 
-    def on_grid(self, x, y):
-        xx, yy = np.meshgrid(x/self.axis, y*self.axis)
+    def at_xy(self, x, y):
+        """Evaluate the periodic log-thickness interpolant at paired chart coordinates."""
+        xx, yy = np.asarray(x)/self.axis, np.asarray(y)*self.axis
         ang = np.append(self.angles, 2*np.pi)
         z = np.column_stack((self.log10_cm, self.log10_cm[:, 0]))
         interpolator = RegularGridInterpolator((self.radii, ang), z, bounds_error=False, fill_value=np.nan)
         return interpolator((np.hypot(xx, yy), np.arctan2(xx, yy) % (2*np.pi)))
 
 
-def sample_field(view, data, latitude, n_radii=193, n_angles=240):
+    def on_grid(self, x, y):
+        return self.at_xy(*np.meshgrid(x, y))
+
+
+def write_map_grid(path,field,model,family,meta,sources):
+    """Preserve the actual chart and the directional mesh used to interpolate posterior nodes."""
+    arrays = dict(radii_km=field.radii, log10_cm=field.log10_cm, axis=field.axis,
+                  input_sha256=meta["input_sha256"], sources_json=json.dumps(sources,sort_keys=True))
+    if family=="directional":
+        g = model.members[0].geometry
+        arrays.update(triangles_km=g.triangles, local_vertex_ids=g.node_ids, vertices_km=g.vertices,
+                      inside_observation_mesh=g.inside)
+    np.savez_compressed(path,**arrays)
+
+
+def restore_directional_mesh(path,model,input_hash,posterior_hash):
+    """Reuse the published triangle connectivity across GEOS and coordinate-library builds."""
+    import shapely
+    g = model.members[0].geometry
+    with np.load(path,allow_pickle=False) as packet:
+        if (str(packet["input_sha256"])!=input_hash or
+                json.loads(str(packet["sources_json"]))["azimuth/fields.npz"]!=posterior_hash):
+            raise ValueError("The saved interpolation mesh belongs to a different directional fit")
+        vertices = packet["vertices_km"]
+        np.testing.assert_allclose(vertices,g.vertices,rtol=0,atol=1e-7)
+        triangles = packet["triangles_km"]
+        ids = packet["local_vertex_ids"]
+        if ids.shape!=triangles.shape[:2] or np.any((ids < -1)|(ids>=len(vertices))):
+            raise ValueError("Invalid vertex index in the directional interpolation mesh")
+        np.testing.assert_allclose(triangles[ids>=0],vertices[ids[ids>=0]],rtol=0,atol=1e-9)
+        g.inside = packet["inside_observation_mesh"]
+    g.triangles,g.node_ids = triangles,ids
+    g.polygons = shapely.polygons(triangles)
+    g.tree = shapely.STRtree(g.polygons)
+    g.area = shapely.area(g.polygons)
+    g.inverse = np.linalg.inv(np.swapaxes(triangles[:,1:]-triangles[:,:1],1,2))
+
+
+def polar_nodes(data, latitude, n_radii, n_angles):
     """Log-spaced radial profiles cover the centre through the antipode and resolve the near vent."""
     domain = EarthDomain.wgs84(latitude)
     positive = domain.rho(data.xy)
-    first = np.clip(positive[positive > 0].min()/16, .01, 1.)
+    off_vent = positive[positive>0]
+    first = np.clip(off_vent.min()/16,.01,1.) if len(off_vent) else .01
     radii = np.r_[0., np.geomspace(first, domain.rho_max, n_radii-1)]
     # The antipode is a coordinate singularity. Sample its interior limit and assign it to the rim.
     rr = radii[1:].copy()
@@ -168,11 +211,15 @@ def sample_field(view, data, latitude, n_radii=193, n_angles=240):
     theta = np.arange(n_angles) * (2*np.pi/n_angles)
     xy = np.stack((np.outer(rr, np.sin(theta))*domain.axis_scale,
                    np.outer(rr, np.cos(theta))/domain.axis_scale), axis=-1)
-    points = xy.reshape(-1,2)
+    return radii, xy.reshape(-1,2), domain.axis_scale
+
+
+def sample_field(view, data, latitude, n_radii=193, n_angles=240):
+    radii, points, axis = polar_nodes(data, latitude, n_radii, n_angles)
     z = np.r_[np.repeat(view.central(np.zeros((1,2))), n_angles), view.central(points)]
     if not np.isfinite(z).all():
         raise ValueError("The physical Earth contains nonfinite median thicknesses")
-    return PolarField(radii, z.reshape(n_radii,n_angles), domain.axis_scale)
+    return PolarField(radii, z.reshape(n_radii,n_angles), axis)
 
 
 def doubling_levels(max_cm):

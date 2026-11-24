@@ -1,28 +1,17 @@
-# Mazama source audit — 23 November 2026
+# Mazama field evidence
 
-The current principal input has **300 localities**, including 23 newly admitted Buckland primary-coded rows and 29 two-sided intervals. The field-source and model-result narrative below documents the published 271-location edition. [Current input and audit](principal-ranges/README.md) · [All S1 primary decisions](principal-ranges/buckland-primary.csv)
+All five models use **300 distinct localities** from the climactic airborne deposit, including co-ignimbrite ash. The audit retains 46 point thicknesses, 29 two-sided ranges, 129 lower limits and 96 upper limits. The locality register explains which of the 872 evidence records contributed a likelihood and why. [Locality register](LOCALITIES.md) · [Model input](../../eruptions/Mazama_primary_ranges.csv) · [Five-method comparison](../../../eruptions/mazama/README.md)
 
-[Lake and field section review](LAKE_AND_FIELD_RECORDS.md) · [Numbered field-section locations](marcott-map.png) · [Geographic registration](marcott-registration.json)
+The 293 original Buckland supplement entries retain their workbook row identities. The current audit reviews all 71 primary-coded entries and traces the source readings behind the two-sided intervals. The starting project table supplied 45 candidate field matches and seven contour-construction points. The original source descriptions and earlier decisions remain traceable by evidence ID. [Current field decisions](principal-ranges/README.md) · [Source readings and figures](principal-ranges/source-notes.md) · [Original source manifest](../../sources/mazama/README.md)
 
-[Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)
-
-All 293 Buckland supplement localities and 574 additional records, core samples and controls appear in the ledger. The 52-row supplied table comprises 45 candidate field matches and seven contour-construction points. The 271-location principal input has 31 point values, 137 lower limits and 103 upper limits. Of the 155 fitted positions beyond 100 km, 29 carry point values, 23 minima and 103 ceilings. The facies review documents every change from the 244-position edition and links to the field descriptions. [Deposit-nature review](distal-review/README.md) · [867-record ledger](revised-locality-ledger.csv) · [Accepted input](../../eruptions/Mazama_reviewed.csv) · [Provenance](provenance.json)
-
-Young’s complete thesis contributed 103 mapped upper-pumice sections to the principal fit. The 25 separately numbered distal entries retain his field-check flags and 700 kg/m³ density convention. The follow-up also distinguishes primary pumice from floated pumice in Oregon borings, revisits borehole locations, and records the possible offshore Willapa bed. [Young and the additional field studies](YOUNG_AND_FIELD_SECTIONS.md) · [Thicknessless-site derivations](THICKNESSLESS_SITES.md) · [Input before Young](history/2026-11-23-before-young/README.md)
-
-Original observer verification remains open for 193 of the 293 compilation entries in the source queue. Nine of these are conditionally used in the principal fit. Some other sources confirm only identity, location or the preserved bed. The locality decisions state which link has been checked. [137-reference bibliography screen](bibliography-screen.csv) · [Outstanding observer records](primary-source-work-queue.csv) · [Search coverage](SEARCH_AND_GAPS.md)
-
-The radiocarbon citation crosswalk covers all 81 laboratory entries and both ice-core estimates in Egan’s two tables. Checking the original logs recovered two measured British Columbia beds and four additional conditional field or archive bounds. [Dated sections and their locations](DATED_SECTIONS.md) · [Laboratory age crosswalk](egan-age-crosswalk.csv)
-
-The Great Basin and Carp Lake review adds eight quantitative observations. It checks the 5 cm Oregon Fish Lake bed, distinguishes the two Nevada Fish Lake Valley cores from it and documents redistributed Paisley Cave ash. [Great Basin field and core records](GREAT_BASIN.md)
-
-The [thick distal field assessment](distal-review/FIELD_EVIDENCE.md) follows each of the 29 large numeric S1 entries beyond 300 km and identifies additional independent and conflicting field evidence.
+The earlier facies review distinguishes primary beds from redistributed ash and enclosing sediment packages. Young’s measured upper-pumice sections, the radiocarbon crosswalk, lake cores and registered field maps document the physical basis of individual constraints. The source queue identifies original observer records still outstanding. [Distal field evidence](distal-review/FIELD_EVIDENCE.md) · [Young’s sections](YOUNG_AND_FIELD_SECTIONS.md) · [Dated cores](DATED_SECTIONS.md) · [Great Basin records](GREAT_BASIN.md) · [Source search and gaps](SEARCH_AND_GAPS.md)
 
 ## Deliverables
 
 | Artifact | Contents |
 |---|---|
-| [Revised locality ledger](revised-locality-ledger.csv) | All 867 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
+| [Current locality and evidence decisions](principal-ranges/locality-decisions.csv) | All 872 records, with positions, original readings, fitted bounds, inclusion decisions and qualifications |
+| [Underlying field inventory](revised-locality-ledger.csv) | Original identities, recorded quantities and source qualifications from the 867-record facies review |
 | [Readable locality register](LOCALITIES.md) | Compact GitHub-readable index of every record |
 | [Original published catalogue](buckland2020-293-localities.csv) | All 293 entries and all 15 original data columns, with Excel row identities |
 | [Original cells](buckland2020-cells.json) | Scalar values including nulls; preserves source spelling and numeric precision |
@@ -103,11 +92,11 @@ The Goldfinger NEHRP report adds eight records: Beaver, Sawyer, Tarboo and Bull 
 
 ## Later primary-source context
 
-At Williams Lake Fen two tephra horizons are separated by 9 cm of lake sediment. The 46 cm compilation value is outside the principal likelihood. A historical alternative restores it to test sensitivity. [Original observations and decision](WILLIAMS_FEN.md)
+At Williams Lake Fen two tephra horizons are separated by 9 cm of lake sediment. The 46 cm compilation value is outside the principal likelihood. The source audit keeps both horizons identifiable. [Original observations and decision](WILLIAMS_FEN.md)
 
 ## Bounds, chronology and suitability for modeling
 
-The [range/bound table](bounds-and-ranges.csv) separates **bounds on the preserved bed** from bounds on original fallout. Explicit “up to” or “less than” descriptions yield qualified preserved-bed bounds, for example Cypress Hills<10 cm, Mica Creek≤5.08/10.16 cm, Calgary≤10 cm and Brule approximately≤2 cm. These do not become atmospheric-deposition likelihoods merely because an inequality can be written down. Redistribution can add material, erosion can remove it, and weathering/compaction can alter thickness. The [initial expanded review](BOUND_REVIEW.md) admitted14 conditional lower bounds, including primary components, range minima and three Camp Creek section groups. Each requires an explicit preservation transfer. The original four source tests cover omission, coherent half-transfer, the Portage upper endpoint and alternate Independence/Cleveland/Newman upper endpoints. The35–40 cm Upper Kirk UPU range does not cap the total climactic package.
+The [range/bound table](bounds-and-ranges.csv) separates **bounds on the preserved bed** from bounds on original fallout. Explicit “up to” or “less than” descriptions yield qualified preserved-bed bounds, for example Cypress Hills<10 cm, Mica Creek≤5.08/10.16 cm, Calgary≤10 cm and Brule approximately≤2 cm. These do not become atmospheric-deposition likelihoods merely because an inequality can be written down. Redistribution can add material, erosion can remove it, and weathering/compaction can alter thickness. The [initial expanded review](BOUND_REVIEW.md) admitted 14 conditional lower bounds, including primary components, range minima and three Camp Creek section groups. Each requires an explicit preservation transfer. The original four source tests cover omission, coherent half-transfer, the Portage upper endpoint and alternate Independence/Cleveland/Newman upper endpoints. The 35–40 cm Upper Kirk UPU range does not cap the total climactic package.
 
 A trace, isolated patch, absence of visible ash, ash-rich soil, shard count, shard diameter, core sampling interval or chemical anomaly alone cannot determine a numerical bulk-thickness limit. Detection depends on sampling volume, preparation, grain-size recovery, concentration and preservation. No missing observation becomes zero. The detailed profiles include inventories, counting intervals and conditional mass or particle-volume calculations. Bulk field thickness requires enough information on mass, area, recovery and density. [Cryptotephra calculations and calibration limits](THICKNESSLESS_SITES.md)
 
@@ -115,14 +104,17 @@ Chronologies retain their original meanings. Conventional radiocarbon years are 
 
 The five-family comparison uses the same principal input, regional hull and outer geographic folds. Regional performance remains separate from extrapolated whole-Earth volume. Every global family retains conditional intervals, fixed-prior sensitivities, numerical failures and the common support audit; a smooth or closed isopach does not establish observational support. [Current results](../../../eruptions/mazama/README.md).
 
-Felker Lake is now an occurrence record: the2011 primary text reports microprobe-identified Mazama at946 cm **core depth**, with no recovered bed thickness. Its8 cm LOI and other sample spacings are not ash-thickness bounds.
+Felker Lake is now an occurrence record: the 2011 primary text reports microprobe-identified Mazama at 946 cm **core depth**, with no recovered bed thickness. Its 8 cm LOI and other sample spacings are not ash-thickness bounds.
 
 ## Reproduction and checks
 
-Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
+From the repository root, rebuild the underlying field inventory, reproduce its facies selection, and derive the current 300 observations and locality register in that order.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 867 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 271 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 222 original payloads verified locally](original-payload-verification.json)
+```sh
+python data/audits/Mazama/build_audit.py
+python -m benchmarks.mazama
+python -m benchmarks.mazama_primary_ranges
+python -m benchmarks.mazama_release_check
+```
 
-Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
-
-The independent workbook checker uses `openpyxl` (3.1.5 in this audit environment). The normal accepted-input builder uses the project dependencies. The CI replay checks the accepted CSV and frozen selection/provenance without downloading publisher copies.
+The independent workbook checker reads 4,395 cells, replays the source decisions, and verifies the current input and map against their hashes. With a full Git history and `openpyxl` installed, run `python data/audits/Mazama/validate_audit.py --published`. It checks the preserved acquisition receipts for 222 payloads and rehashes the originals available in the checkout. [Field validation](validation.json) · [Source acquisition hashes](original-payload-verification.json) · [Current model checks](../../../eruptions/mazama/results/release.json)

@@ -105,6 +105,7 @@ def verify_comparison_tables(root):
             metric = reg["validation"]["methods"][method]["metrics"]
             assert (row.n_exact, row.n_lower, row.n_upper) == tuple(
                 reg["input"][key] for key in ("n_measurements", "n_lower_limits", "n_upper_limits"))
+            assert row.n_intervals == reg["input"].get("n_intervals",0)
             vol = fit["regional_volume"]
             np.testing.assert_allclose(
                 [row.median_surface_km3, row.equal_region_log_score, row.coverage95_observations],
@@ -125,9 +126,9 @@ def verify_comparison_tables(root):
             val = sphere["validation"]["metrics"]
             score,coverage=val["equal_region_log_score"],val["coverage95_observations"]
         np.testing.assert_allclose(
-            [row.median_map_volume_km3, row.lower95, row.upper95, row.sensitivity_lower, row.sensitivity_upper,
+            [row.median_map_volume_km3, row.thickness_q25_volume_km3, row.thickness_q75_volume_km3, row.sensitivity_lower, row.sensitivity_upper,
              row.global_equal_region_negative_log_score, row.global_observation_coverage95],
-            [receipt["median_map_volume_km3"],*receipt["conditional_volume_interval95_km3"],*envelope,score,coverage],
+            [receipt["median_map_volume_km3"],*np.asarray(receipt["thickness_band"]["volumes_km3"])[[0,2]],*envelope,score,coverage],
             rtol=1e-12)
     assert regional.index.is_unique and set(regional.index) == expected_rows
 
@@ -139,8 +140,9 @@ def main():
         score_info = json.loads(figure.info["Description"])
         panels = score_info["eruption_panels"]
         assert set(score_info["methods_by_case"]) == set(panels)
-        assert all(names == ["GP ensemble", "Cubic spline", "Directional", "Spherical mixture", "Nested footprints"]
-                   for names in score_info["methods_by_case"].values())
+        from .principal_volumes import catalogue_rows, LABELS
+        current = catalogue_rows()
+        assert score_info["methods_by_case"] == {name:[LABELS[r["method"]] for r in current if r["eruption"]==name] for name in panels}
     assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()
     verify_files(hashes)
@@ -158,6 +160,15 @@ def main():
         assert regional["entire_observation_hull_in_frame"] and regional["all_accepted_locations_in_frame"]
         assert regional["unchanged_fit_bounds_km"] == report["fit_bounds_km"]
         assert not regional["volume_calculation_changed"]
+        ids=regional["accepted_row_ids"]
+        assert len(ids)==len(set(ids)) and set(ids)==set(report["validation"]["row_ids"])
+        assert set(regional["inner_contours"])==set(report["methods"])
+        from src.empirical_isopach.visualization.contour_limits import inner_contour
+        for item in regional["inner_contours"].values():
+            check=inner_contour({"mapped_log10_cm":item["mapped_site_log10_cm"],"row_ids":ids})
+            assert all(check[key]==item[key] for key in check)
+            assert item["inside"]>=1 and item["next_level_inside"]==0
+            assert all(v<=item["level_cm"] for v in item["drawn_levels_cm"])
         for family in ("directional/single-structure", "spherical-mixture"):
             folder = home/family
             for path, expected in read(folder/"artifacts.json").items():

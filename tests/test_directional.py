@@ -150,3 +150,27 @@ def test_unsampled_proximal_addition_has_zero_likelihood_effect_and_exact_mass()
     d.xy[-1] = 0.
     nearest,_,amplitude,extra = cap_volumes(d,Geometry(d,0),draws)
     assert nearest == 0 and amplitude[0] == 0 and extra[0,0] == 0
+
+
+def test_directional_fit_reinitializes_a_vectorized_kernel_with_the_same_seed(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    from src.empirical_isopach.core.audit import audited_data
+    from src.empirical_isopach.core.catalog import resolve_dataset
+    from src.empirical_isopach.models.directional import study
+    from src.empirical_isopach.models.directional.geometry import Geometry
+
+    data, meta = audited_data(resolve_dataset("Mazama"))
+    calls = []
+    clears = []
+
+    def runner(training, geometry, seed, attempt):
+        calls.append((seed, attempt))
+        if len(calls) == 1:
+            raise ValueError("vmap was requested to map its argument along axis 0")
+        return {"source":np.ones((4,2))}, {"passed":True}
+
+    monkeypatch.setattr(study, "sample", runner)
+    monkeypatch.setattr(study, "_sampler", SimpleNamespace(cache_clear=lambda:clears.append(True)))
+    _, result = study.fit(data,Geometry(data,meta["vent_lonlat"][1]),73,tmp_path)
+    assert calls == [(73,0),(73,0)] and clears == [True]
+    assert result["passed"] and len(result["attempts"]) == 1

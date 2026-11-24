@@ -1,5 +1,3 @@
-# Superseded Tepee-location trial
+# Correcting the Tepee Lake location
 
-The input located Tepee Lake at the wrong same-named lake. Kuehn2008 Table S1 site61 and Chadde1998 p.69 identify the Mack1983 study locality south of Libby. The archived main run and completed source-sensitivity runs are not accepted results.
-
-[Input](input.csv) · [Provenance](provenance.json) · [Run record](run.txt) · [Archive hashes](artifacts.json) · [Complete trial packets](../../../../../archive/2026-11-23-mazama-pre-tepee/trials.tar.gz.parts.json)
+Kuehn (2008), Table S1, site 61, and Chadde (1998), p. 69, place the Mack (1983) study at the lake south of Libby. The earlier input used a different lake of the same name. [Input](input.csv) · [Provenance](provenance.json) · [Run record](run.txt) · [Trial hashes](artifacts.json)

@@ -50,14 +50,16 @@ def verify(folder, record, expected_input, expected_report, extremes):
               "row_ids":np.array(ids,dtype="<i8"),
               "censored":np.array([boolean[r["censored"]] for r in rows]),
               "lower_censored":np.array([boolean[r["lower_bound"]] for r in rows])}
+    if observations.interval.any():
+        frozen["interval_log_upper"] = np.array([float(r["interval_upper_log_cm"] or "nan") for r in rows],dtype="<f8")
     for name, values in frozen.items():
         signed = report["designs"]["reference"]["signature"]["arrays_sha256"][name]
         assert sha256(np.ascontiguousarray(values).tobytes()).hexdigest() == signed, name
         actual = getattr(observations,name)
         if name == "xy":
             np.testing.assert_allclose(actual,values,rtol=1e-12,atol=1e-7)
-        elif name in ("log_value","log_sd"):
-            np.testing.assert_allclose(actual,values,rtol=1e-13,atol=1e-14)
+        elif name in ("log_value","log_sd","interval_log_upper"):
+            np.testing.assert_allclose(actual,values,rtol=1e-13,atol=1e-14,equal_nan=True)
         else:
             np.testing.assert_array_equal(actual,values)
     axis = report["designs"]["reference"]["geometry"]["authalic_axis_scale"]
@@ -142,7 +144,8 @@ def main():
             release = read(release_path)
             expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
             expected_report = release["files"][str(home/"directional/single-structure/report.json")]
-            case_extremes = pd.read_csv(release_path.with_name("octant-extremes.csv"))
+            case_extremes = (pd.DataFrame(release["octant_extremes"]) if "octant_extremes" in release
+                             else pd.read_csv(release_path.with_name("octant-extremes.csv")))
         verify(home/"directional/single-structure", record, expected_input, expected_report, case_extremes)
         spherical = home/"spherical-mixture"
         packet = spherical/"support"
