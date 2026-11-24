@@ -14,7 +14,7 @@ All entries are in km³. Each row uses one method and one integration domain. A 
 | Spherical mixture | 241 (154–1.58e+03) | 352 † | 242 | 371 | 258 | 239 | 329 |
 | Bayesian nested corridors | 175 (106–605) | 275 | 177 | 208 | 183 | 180 | 223 |
 
-Restoring the thick readings reinstates the previous interpretations at nine archives, including Windy, Thunder and Round Lake in Washington. The field alternative varies Johnson, Kilpoola, Foy and three Greater Victoria core brackets together. Half capture doubles the revised package ceilings as a stress test. Each scenario changes a group of evidence decisions, so the differences cannot apportion causality to one site. [All unrounded volumes, conditional intervals and flags](source-sensitivity-volumes.csv) · [Scenario definitions and input hashes](sensitivities/scenarios.json)
+Restoring the thick readings reinstates the previous interpretations at nine archives, including Windy and Thunder lakes in British Columbia and Round Lake in Washington. The field alternative varies Johnson, Kilpoola, Foy and three Greater Victoria core brackets together. Half capture doubles the revised package ceilings as a stress test. Each scenario changes a group of evidence decisions, so the differences cannot apportion causality to one site. [All unrounded volumes, conditional intervals and flags](source-sensitivity-volumes.csv) · [Scenario definitions and input hashes](sensitivities/scenarios.json)
 
 ## Modelled thickness at the reviewed locations
 

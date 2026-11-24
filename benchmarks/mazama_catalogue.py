@@ -186,7 +186,8 @@ def distal_facies_assessment(folder):
         lines.append('| ' + label + ' | ' + ' | '.join(items) + ' |')
     lines += [
         '', 'Restoring the thick readings reinstates the previous interpretations at nine archives, including '
-        'Windy, Thunder and Round Lake in Washington. The field alternative varies Johnson, Kilpoola, Foy and '
+        'Windy and Thunder lakes in British Columbia and Round Lake in Washington. '
+        'The field alternative varies Johnson, Kilpoola, Foy and '
         'three Greater Victoria core brackets together. Half capture doubles the revised package ceilings as a '
         'stress test. Each scenario changes a group of evidence decisions, so the differences cannot apportion '
         'causality to one site. [All unrounded volumes, conditional intervals and flags](source-sensitivity-volumes.csv) · '
