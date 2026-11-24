@@ -22,7 +22,8 @@ def digest(path):
 
 def engine_digest():
     root = Path(__file__).parent
-    return sha256(b"".join((root/k).read_bytes() for k in
+    likelihood = (root.parents[1]/"core/likelihood.py").read_bytes()
+    return sha256(likelihood + b"".join((root/k).read_bytes() for k in
                   ("geometry.py","profile.py","budget_profile.py","inference.py","study.py"))+ASSET.read_bytes()).hexdigest()
 
 

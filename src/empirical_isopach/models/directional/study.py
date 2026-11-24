@@ -31,7 +31,7 @@ def digest(path):
 
 def _source_hashes():
     root = Path(__file__).parent
-    files = [root/"inference.py", root/"geometry.py", root/"study.py", root.parents[1]/"support.py",
+    files = [root.parents[1]/"core"/"likelihood.py", root/"inference.py", root/"geometry.py", root/"study.py", root.parents[1]/"support.py",
              root.parent/"mass_mixture"/"geometry.py", root.parents[2]/"probabilistic_isopach"/"global_volume.py"]
     return {str(p.relative_to(root.parents[2])): digest(p) for p in files}
 
@@ -47,6 +47,8 @@ def fit(data, g, seed, folder):
            "source_sha256": _SOURCE_HASHES,
            "arrays_sha256": {k: sha256(np.ascontiguousarray(getattr(data, k)).tobytes()).hexdigest()
                     for k in ("xy", "log_value", "log_sd", "censored", "lower_censored", "row_ids")}}
+    if data.interval.any():
+        key["arrays_sha256"]["interval_log_upper"] = sha256(data.interval_log_upper.tobytes()).hexdigest()
     manifest = folder/"design.json"
     design = {"signature": key, "geometry": g.describe()}
     if manifest.exists() and json.loads(manifest.read_text()) != design:

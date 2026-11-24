@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from src.empirical_isopach.models.extent_release import draw_check,predictive_summary
 from src.empirical_isopach.models.extent_review import FAMILY_NAMES
 from src.empirical_isopach.models.extent_weights import ASSET,calibration

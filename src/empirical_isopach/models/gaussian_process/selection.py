@@ -77,7 +77,7 @@ def nested_validate(data, candidates=DEFAULT_CANDIDATES, outer_folds=4, inner_fo
             distribution = predictive_distribution(model, data.xy[test], True, data.log_sd[test], calibrated)
             for key, probability in (("median", .5), ("lower", .025), ("upper", .975)):
                 summaries[name][key][test] = distribution.quantile(probability)
-            summaries[name]["score"][test] = distribution.log_score(data.log_value[test], data.censored[test], data.lower_censored[test])
+            summaries[name]["score"][test] = distribution.log_score(data.log_value[test], data.censored[test], data.lower_censored[test], data.interval_log_upper[test])
         selections.append({"fold": fold, "n_train": int(train.sum()), "n_test": int(test.sum()),
                            "selected": asdict(model.candidate), "inner_selection": selection})
     def metrics_for(summary):

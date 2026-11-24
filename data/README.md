@@ -2,7 +2,7 @@
 
 The dataset catalogue pairs each accepted CSV with its source audit and model settings. Use the case home for observation counts and results. [Dataset catalogue](datasets.json) · [Accepted CSVs](eruptions/README.md) · [Eruption results](../eruptions/README.md)
 
-The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. The Mazama ledger covers 867 source records and documents how 271 localities enter the model. Tambora uses the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
+The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. The Mazama audit covers 872 locality and evidence records and documents 300 accepted localities. Tambora uses the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
 
 ## CSV schema
 
@@ -11,11 +11,11 @@ The required columns are `Lon`, `Lat`, `Thickness`, `Vent Lon` and `Vent Lat`.
 - Coordinates: WGS84 decimal degrees. Thickness: centimetres.
 - Supply a consistent complete vent pair on at least one row.
 - Optional `Pseudo`: blank/No/False/0 = observation; Yes/True/1 = excluded invented value.
-- Optional `Kind`: `measurement` (default), `upper_limit` or `lower_limit`.
+- Set `Kind` to `measurement` (default), `upper_limit`, `lower_limit` or `interval`.
 - Upper limits and lower bounds require documented, positive `Limit_cm`. A lower bound describes minimum recovered thickness in an incomplete deposit, not an exact measurement.
 - Optional `LogSD`: known additional standard deviation of natural-log thickness. The fitted residual nugget is separate.
 
-For a real site with a defensible interpreted bound, leave `Thickness` blank, set the appropriate `Kind` and enter the positive `Limit_cm`. Preserve its evidence ID, the source observation and the conversion in the audit. Keep unquantified occurrences in the site ledger. The accepted CSV supports a single one-sided bound per observation. The protocol describes how to preserve both endpoints of a range and compare them in separate fits. [Sites without measured thickness](../docs/methods/sites-without-measured-thickness.md)
+For a one-sided bound, leave `Thickness` blank and put the positive limit in `Limit_cm`. For a two-sided interval, leave both of those fields blank and enter positive, ordered `Lower_cm` and `Upper_cm` on one row. All five families fit and score the probability between its endpoints. Preserve the source range, units and transfer assumptions in the ledger, including for partial or mixed packages. [Sites without measured thickness](../docs/methods/sites-without-measured-thickness.md)
 
 Illustrative schema only:
 

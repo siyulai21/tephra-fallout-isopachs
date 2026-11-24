@@ -156,13 +156,14 @@ def heldout_rows(data,latitude,work,r):
                     rows.append({"design":kind,"fold":i,"row_id":int(row),"method":label,
                         "fit_passed":fold["passed"],"phase_passed":fold["phase_passed"],
                         "observed_or_limit_cm":float(np.exp(test.log_value[j])),
-                        "reading":"exact" if not test.censored[j] else ("lower" if test.lower_censored[j] else "upper"),
+                        "interval_upper_cm":float(np.exp(test.interval_log_upper[j])),
+                        "reading":"interval" if test.interval[j] else "exact" if not test.censored[j] else ("lower" if test.lower_censored[j] else "upper"),
                         "exposure":fold["exposure"][j],"predicted_site_median_cm":float(med[j]),
                         "predictive_probability_ge_10cm":float(chance[j]),
                         "integrated_log_score":fold[label+"_row_log_density"][j],
                         "predictive_lower95_cm":float(lower[j]),"predictive_upper95_cm":float(upper[j])})
     return pd.DataFrame(rows, columns=("design","fold","row_id","method","fit_passed","phase_passed",
-        "observed_or_limit_cm","reading","exposure","predicted_site_median_cm",
+        "observed_or_limit_cm", *(("interval_upper_cm",) if data.interval.any() else ()), "reading","exposure","predicted_site_median_cm",
         "predictive_probability_ge_10cm","integrated_log_score","predictive_lower95_cm","predictive_upper95_cm"))
 
 

@@ -7,7 +7,9 @@ drawn from their exact Gaussian conditional distribution.
 from functools import lru_cache
 
 import numpy as np
-from scipy.special import log_ndtr, logsumexp, ndtr
+from scipy.special import logsumexp, ndtr
+
+from ...core.likelihood import normal_log_event, observation_log_event
 
 
 def log_profile(radius, scale, shape):
@@ -42,9 +44,7 @@ def predict(draws, geometry, data):
     _, _, weights = geometry.locate(data.xy)
     unresolved = 1+geometry.policy.local_sd_ratio**2*np.maximum(0., 1-(weights**2).sum(1))
     sd = np.hypot(np.exp(samples["log_noise"])[:, None]*np.sqrt(unresolved), data.log_sd)
-    z = (data.log_value-mu)/sd
-    lp = np.where(data.censored, log_ndtr(np.where(data.lower_censored, -z, z)),
-                  -.5*z*z-.5*np.log(2*np.pi)-np.log(sd))
+    lp = observation_log_event(data, mu, sd)
     result = {"log_score": logsumexp(lp, axis=0)-np.log(len(mu))}
     for name, p in (("lower", .025), ("median", .5), ("upper", .975)):
         lo, hi = (mu-12*sd).min(0), (mu+12*sd).max(0)
@@ -82,13 +82,14 @@ def training_arrays(g, data):
         va=_pad(va, (V, K)), at=_pad(np.maximum(at, 0), (N,)), y=_pad(data.log_value, (N,)),
         error=_pad(data.log_sd, (N,)), measured=_pad(measured, (N,)),
         other=_pad(~measured, (N,)), cens=_pad(data.censored, (N,)),
-        lower=_pad(data.lower_censored, (N,)), ids=_pad(np.maximum(ids, 0), (N, 3)),
+        lower=_pad(data.lower_censored, (N,)), upper=_pad(data.interval_log_upper, (N,), np.nan),
+        ids=_pad(np.maximum(ids, 0), (N, 3)),
         weights=_pad(w, (N, 3)), relevant=_pad(relevant, (J,), fill=V),
         fixed_shape=float(-1. if g.policy.fixed_tail_shape is None else g.policy.fixed_tail_shape), ratio=float(g.policy.local_sd_ratio),
         h0=float(g.policy.background_scale_km), reach=_pad(g.reaches, (K,))), relevant
 
 
-def _model(r, ang, vr, va, at, y, error, measured, other, cens, lower, ids,
+def _model(r, ang, vr, va, at, y, error, measured, other, cens, lower, upper, ids,
            weights, relevant, fixed_shape, ratio, h0, reach):
     import jax.numpy as jnp
     from jax.scipy.special import log_ndtr as jlogcdf
@@ -129,8 +130,7 @@ def _model(r, ang, vr, va, at, y, error, measured, other, cens, lower, ids,
     # Missing local variance is unresolved site scatter. At a measured node
     # its variance is already carried by that node.
     obs_var = obs_var + tau2*jnp.maximum(0., 1-(weights**2).sum(1))
-    z = (y-mu)/jnp.sqrt(obs_var)
-    log_prob = jnp.where(cens, jlogcdf(jnp.where(lower, -z, z)), -.5*(z*z+jnp.log(2*np.pi*obs_var)))
+    log_prob = normal_log_event(y, mu, jnp.sqrt(obs_var), cens, lower, upper, xp=jnp, logcdf=jlogcdf)
     numpyro.factor("other_observations", jnp.sum(jnp.where(other, log_prob, 0.)))
 
 

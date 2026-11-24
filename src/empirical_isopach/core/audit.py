@@ -8,7 +8,7 @@ from .catalog import data_directory, dataset_record
 from .observations import read_observations
 
 
-def audited_data(path, *, allow_intervals=False):
+def audited_data(path, *, allow_intervals=True):
     data, meta = read_observations(path,allow_intervals=allow_intervals)
     record = dataset_record(path)
     meta["source"] = "data/"+record["file"] if record else Path(path).name

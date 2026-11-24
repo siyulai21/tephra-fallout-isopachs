@@ -19,6 +19,7 @@ def _model_hashes():
     root = Path(__file__).parent
     hashes = {name: sha256((root/name).read_bytes()).hexdigest()
               for name in ("geometry.py", "prior.py", "inference.py", "source_geometry.py", "vent_envelope.py", "supported_basis.py")}
+    hashes["observation_likelihood"] = sha256((root.parents[1]/"core"/"likelihood.py").read_bytes()).hexdigest()
     hashes["WGS84_EarthDomain"] = sha256((root.parents[2]/"probabilistic_isopach/global_volume.py").read_bytes()).hexdigest()
     return hashes
 
@@ -104,6 +105,8 @@ def fit_cached(data, latitude, prior, directory, settings=Sampling(), attempts=3
     digest = sha256()
     for field in (data.xy, data.log_value, data.log_sd, data.censored, data.lower_censored, data.row_ids):
         digest.update(np.asarray(field).tobytes())
+    if data.interval.any():
+        digest.update(data.interval_log_upper.tobytes())
     signature = {"input_array_sha256": digest.hexdigest(), "latitude": float(latitude),
                  "prior": asdict(prior), "model_source_sha256": model_hashes(), "runtime": _RUNTIME}
     records = []

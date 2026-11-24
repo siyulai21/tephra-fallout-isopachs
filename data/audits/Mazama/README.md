@@ -1,5 +1,7 @@
 # Mazama source audit — 23 November 2026
 
+The current principal input has **300 localities**, including 23 newly admitted Buckland primary-coded rows and 29 two-sided intervals. The field-source and model-result narrative below documents the published 271-location edition. [Current input and audit](principal-ranges/README.md) · [All S1 primary decisions](principal-ranges/buckland-primary.csv)
+
 [Lake and field section review](LAKE_AND_FIELD_RECORDS.md) · [Numbered field-section locations](marcott-map.png) · [Geographic registration](marcott-registration.json)
 
 [Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)

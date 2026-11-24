@@ -8,7 +8,7 @@ from dataclasses import dataclass, asdict
 import numpy as np
 from scipy.linalg import cholesky
 from scipy.optimize import minimize, minimize_scalar
-from scipy.special import log_ndtr
+from ...core.likelihood import observation_log_event
 
 from .model import SpatialModel
 from ...core.distributions import LogMixture
@@ -16,11 +16,7 @@ from ...core.distributions import LogMixture
 
 def point_log_scores(data, means, variances):
     variance = np.maximum(variances, 1e-16)
-    z = (data.log_value[:, None]-means)/np.sqrt(variance)
-    scores = -.5*(np.log(2*np.pi*variance)+z*z)
-    scores[data.censored] = log_ndtr(z[data.censored])
-    scores[data.lower_censored] = log_ndtr(-z[data.lower_censored])
-    return scores
+    return observation_log_event(data, means.T, np.sqrt(variance.T)).T
 
 
 def stack_weights(log_scores, row_weights):
@@ -59,7 +55,7 @@ def observation_discrepancy(data, weights, means, variances, row_weights):
     cap = max(4*error_scale, 1.)
     def loss(extra):
         distribution = LogMixture(weights, means.T, variances.T+extra)
-        return -float(row_weights@distribution.log_score(data.log_value, data.censored, data.lower_censored))
+        return -float(row_weights@distribution.score(data))
     # Mixture scores need not be unimodal in variance: screen a fixed log grid
     # before refining its best bracket. Include both endpoints explicitly.
     grid = np.r_[0., np.geomspace(cap*1e-8, cap, 81)]
@@ -94,8 +90,8 @@ class StackedModel:
                 or discrepancy_variance < 0):
             raise ValueError("Invalid stacked model weights or discrepancy variance.")
         self.data = self.models[0].data
-        if any(not np.array_equal(getattr(m.data, field), getattr(self.data, field))
-               for m in self.models for field in ("xy", "log_value", "censored", "log_sd", "row_ids", "lower_censored")):
+        if any(not np.array_equal(getattr(m.data, field), getattr(self.data, field), equal_nan=(field == "interval_log_upper"))
+               for m in self.models for field in ("xy", "log_value", "censored", "log_sd", "row_ids", "lower_censored", "interval_log_upper")):
             raise ValueError("Stacked models must use the same observations in the same order.")
         self.discrepancy_variance = discrepancy_variance
         self.amplitude = max(m.amplitude for m in self.models)

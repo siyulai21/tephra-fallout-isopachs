@@ -204,7 +204,7 @@ class TrendRegularizedSpline:
             H = base_hessian.copy() if hessian else None
             if (~det).any():
                 terms, grad, curvature = censored_terms(B[~det]@beta,
-                    data.log_value[~det], self.sd[~det], data.lower_censored[~det])
+                    data.log_value[~det], self.sd[~det], data.lower_censored[~det], data.interval_log_upper[~det])
                 loss += terms.sum()
                 gradient += B[~det].T@grad
                 if hessian:

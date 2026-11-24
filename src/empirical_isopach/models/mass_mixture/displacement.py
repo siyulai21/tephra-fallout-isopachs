@@ -27,7 +27,7 @@ def heldout(draws, train, test, latitude, chains):
         logs = []
         for mu in components:
             dist = LogMixture(w[keep],np.vstack((mu,mu))[keep],variance[keep])
-            logs.append(dist.log_score(test.log_value,test.censored,test.lower_censored))
+            logs.append(dist.score(test))
         return logsumexp(logs,axis=0)-np.log(len(components))
     ratio = prior_ratio(draws)
     return score(np.ones(n)),score(ratio),float(ratio.sum()**2/(ratio@ratio))

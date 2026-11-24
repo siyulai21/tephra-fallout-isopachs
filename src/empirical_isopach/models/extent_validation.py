@@ -4,7 +4,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.special import log_ndtr, logsumexp, ndtr
+from scipy.special import logsumexp, ndtr
+
+from ..core.likelihood import observation_log_event
 
 from .extent_review import ExtentFields, STATES
 from .directional.azimuth.report import model_for
@@ -90,27 +92,20 @@ def scores(fields, test):
     components = observation_components(fields.family,fields.parent,test)
     out = {}
     for state, mu in zip(fields.states, fields.variants(test.xy), strict=True):
-        logs, probabilities = [], []
+        logs, probabilities, upper_probabilities = [], [], []
         for w,sd in components:
             weight = fields.weights[:,None]*w
             z = (test.log_value-mu)/sd
-            event = -.5*z*z - np.log(sd)-.5*np.log(2*np.pi)
-            upper = test.censored & ~test.lower_censored
-            event[:,upper] = log_ndtr(z[:,upper])
-            event[:,test.lower_censored] = log_ndtr(-z[:,test.lower_censored])
-            bounds = getattr(test,"interval_log_upper",None)
-            if bounds is not None and np.isfinite(bounds).any():
-                interval = np.isfinite(bounds)
-                lo,hi = z[:,interval],(bounds[interval]-mu[:,interval])/sd[:,interval]
-                left,right = np.where(lo>0,-hi,lo),np.where(lo>0,-lo,hi)
-                log_right = log_ndtr(right)
-                with np.errstate(divide="ignore"):
-                    event[:,interval] = log_right+np.log(-np.expm1(log_ndtr(left)-log_right))
+            event = observation_log_event(test, mu, sd)
             with np.errstate(divide="ignore"):
                 logs.append(logsumexp(np.log(weight)+event,axis=0))
             probabilities.append(np.sum(weight*ndtr(z),axis=0))
+            if test.interval.any():
+                upper_probabilities.append(np.sum(weight*ndtr((test.interval_log_upper-mu)/sd),axis=0))
         out[state+"_log_score"] = logsumexp(logs,axis=0)
         out[state+"_cdf"] = np.sum(probabilities,axis=0)
+        if upper_probabilities:
+            out[state+"_upper_endpoint_cdf"] = np.sum(upper_probabilities,axis=0)
     return out
 
 

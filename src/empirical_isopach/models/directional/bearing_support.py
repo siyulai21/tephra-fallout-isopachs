@@ -100,4 +100,5 @@ def include_visibility_readings(data, xy, effective_limits_cm):
         raise ValueError("Archive likelihood IDs overlap quantitative row IDs")
     return Observations(np.vstack((data.xy,xy)), np.r_[data.log_value,np.log(limits)],
                         np.r_[data.censored,np.ones(len(xy),bool)], np.r_[data.log_sd,np.zeros(len(xy))],
-                        np.r_[data.row_ids,ids], np.r_[data.lower_censored,np.zeros(len(xy),bool)])
+                        np.r_[data.row_ids,ids], np.r_[data.lower_censored,np.zeros(len(xy),bool)],
+                        np.r_[data.interval_log_upper, np.full(len(xy), np.nan)])

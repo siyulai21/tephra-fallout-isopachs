@@ -3,7 +3,9 @@ import json
 from pathlib import Path
 
 import numpy as np
-from scipy.special import log_ndtr, logsumexp
+from scipy.special import logsumexp
+
+from ....core.likelihood import observation_log_event
 
 from ..ensemble.fields import Ensemble, load_members
 from ..ensemble.members import NAMES, splits
@@ -19,18 +21,14 @@ PACKET = Path(__file__).resolve().parents[3]/"assets"/"azimuth-calibration.json"
 def scores_for_member(mu, variance, test, h, phases):
     """Integrate the unknown phase at a single withheld location (Chebyshev rule)."""
     sd = np.sqrt(variance)
-    constants = -.5*np.log(2*np.pi)-np.log(sd)
     scores = []
     cosine = np.cos((np.arange(phases)+.5)*np.pi/phases)
     for k in CONCENTRATIONS:
         a = k*h
-        base = test.log_value-mu+log_normalizer(a)
+        base = mu-log_normalizer(a)
         logs = []
         for cos in (cosine if k else [0.]):
-            z = (base-a*cos)/sd
-            dense = constants-.5*z*z
-            if test.censored.any():
-                dense[:,test.censored] = log_ndtr(np.where(test.lower_censored,-z,z)[:,test.censored])
+            dense = observation_log_event(test, base+a*cos, sd)
             logs.append(logsumexp(dense,axis=0)-np.log(len(mu)))
         scores.append(logsumexp(logs,axis=0)-np.log(len(logs)))
     return np.stack(scores,axis=-1)

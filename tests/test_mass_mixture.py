@@ -133,7 +133,8 @@ def example_data():
 
 
 @pytest.mark.parametrize("prior", [BASELINE, SENSITIVITIES[0], SENSITIVITIES[-2], Prior(exponential_core=False)])
-def test_jax_numpy_likelihood_parity_and_padding(prior):
+@pytest.mark.parametrize("two_sided", [False, True])
+def test_jax_numpy_likelihood_parity_and_padding(prior, two_sided):
     from numpyro import handlers
     values = {k: v[0] for k, v in example_samples().items()}
     values["exponential_fraction"] = .35 if prior.exponential_core else 0.
@@ -145,6 +146,8 @@ def test_jax_numpy_likelihood_parity_and_padding(prior):
     if not prior.contamination:
         values["contamination"] = 0.
     data = example_data()
+    if two_sided:
+        data.interval_log_upper[-1] = np.log(6.)
     actual = observation_log_likelihood({k: np.asarray(v)[None] for k, v in values.items()}, data, 0).sum()
     unit_volume = {k: np.asarray(v)[None] for k, v in values.items()}
     unit_volume["log_volume"] = np.zeros(1)

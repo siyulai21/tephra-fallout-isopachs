@@ -43,7 +43,7 @@ def saved_observations(path):
     numeric = ("x_km", "y_km", "log_value", "known_log_sd")
     rows = pd.read_csv(path, converters=dict.fromkeys(numeric, float), dtype={"censored": bool, "lower_bound": bool})
     return Observations(rows[["x_km", "y_km"]].to_numpy(), rows.log_value, rows.censored,
-                        rows.known_log_sd, rows.row_id, rows.lower_bound)
+                        rows.known_log_sd, rows.row_id, rows.lower_bound, rows.get("interval_upper_log_cm"))
 
 
 def saved_regional_grid(path):

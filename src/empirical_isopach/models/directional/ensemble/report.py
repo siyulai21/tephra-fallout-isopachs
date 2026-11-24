@@ -156,6 +156,8 @@ def render(path, work, output, name=None, *, family_page=False):
     maps = render_maps(output,name,data,meta,model)
     table = pd.DataFrame({"row_id":data.row_ids,"log_observation_or_limit":data.log_value,
                           "upper_bound":data.censored&~data.lower_censored,"lower_bound":data.lower_censored})
+    if data.interval.any():
+        table["interval_upper_log_cm"] = data.interval_log_upper
     for k,v in validation.items():
         table[k+"_fold"] = v["folds"]
         for label,values in v["predictions"].items():

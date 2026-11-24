@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 
 from benchmarks.publication import BTM_THICKNESS_ONLY, previous_btm_file
+from .publication import INTERVAL_PREDECESSOR
 from benchmarks.btm_source_sensitivities import SOURCE_CASES
 from benchmarks.btm_thinning_report import verify as verify_thinning
 from benchmarks.btm_thinning_volume_report import verify as verify_thinning_volumes
@@ -155,7 +156,7 @@ def verify_results(manifest):
     if trials.completed.eq(0).any():
         assert trials.loc[trials.completed.eq(0), "failure"].notna().all()
     assert read(STUDY/"regional-benchmark-design.json")["spline_model_sha256"] == digest(
-        Path("src/empirical_isopach/models/cubic_spline/model.py"))
+        INTERVAL_PREDECESSOR/"models/cubic_spline/model.py")
     principal = manifest["cases"]["principal"]
     rec = {**next(r for r in datasets() if r["slug"] == "b-tm"), "path":Path(principal["file"])}
     reference = read(HOME/"directional/single-structure/report.json")

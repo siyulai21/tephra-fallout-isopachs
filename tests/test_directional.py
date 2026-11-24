@@ -65,7 +65,8 @@ def test_training_geometry_ignores_thickness_order_and_repeated_records():
     assert no_mesh.describe()["support"]["n_retained_triangles"] == 0
 
 
-def test_repeated_node_and_limit_share_one_latent_thickness():
+@pytest.mark.parametrize("two_sided", [False, True])
+def test_repeated_node_and_limit_share_one_latent_thickness(two_sided):
     import jax
     jax.config.update("jax_enable_x64",True)
     from numpyro.infer.util import log_density
@@ -76,6 +77,8 @@ def test_repeated_node_and_limit_share_one_latent_thickness():
     d = base.subset(ix)
     d.censored[-1] = True; d.lower_censored[-1] = True
     d.log_sd[-2:] = [.2,.35]
+    if two_sided:
+        d.interval_log_upper[-1] = d.log_value[-1]+.35
     g = Geometry(d, 0)
     a, relevant = training_arrays(g,d)
     noise, ratio = .6, g.policy.local_sd_ratio
@@ -91,7 +94,11 @@ def test_repeated_node_and_limit_share_one_latent_thickness():
         err = noise**2+np.array([0.,.2**2]); prior = (noise*ratio)**2
         node_var = 1/(1/prior+np.sum(1/err))
         m = mu+node_var*np.sum((vals-mu)/err)
-        return multivariate_normal.logpdf(vals,[mu,mu],np.diag(err)+prior)+norm.logsf((y[len(d.xy)-1]-m)/np.hypot(noise,.35))
+        scale = np.hypot(noise,.35)
+        lo = (y[len(d.xy)-1]-m)/scale
+        event = (np.log(norm.cdf((d.interval_log_upper[-1]-m)/scale)-norm.cdf(lo))
+                 if two_sided else norm.logsf(lo))
+        return multivariate_normal.logpdf(vals,[mu,mu],np.diag(err)+prior)+event
     first = float(log_density(_model,(),a,z)[0]); old = expected(a["y"])
     a["y"][len(d.xy)-2] += .8
     second = float(log_density(_model,(),a,z)[0])

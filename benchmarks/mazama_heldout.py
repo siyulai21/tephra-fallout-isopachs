@@ -6,7 +6,8 @@ import json
 import math
 from pathlib import Path
 
-from benchmarks.mazama import INPUT, sha, write_csv
+from benchmarks.mazama import sha, write_csv
+from src.empirical_isopach.core.catalog import data_directory, dataset_record, resolve_dataset
 
 
 def read_csv(path):
@@ -15,10 +16,18 @@ def read_csv(path):
 
 
 def summarize(home, output):
-    accepted = read_csv(INPUT)
+    record = dataset_record(resolve_dataset("Mazama"))
+    expected = json.loads((home/"report.json").read_text())["input"]["input_sha256"]
+    candidates = [data_directory()/r["file"] for r in (record, *record["previous_inputs"])]
+    matches = [p for p in candidates if p.is_file() and sha(p) == expected]
+    if len(matches) != 1:
+        raise ValueError("The published report must identify one registered Mazama input.")
+    input_file = matches[0]
+    accepted = read_csv(input_file)
+    has_intervals = any(r["Kind"] == "interval" for r in accepted)
     regional_path = home/'heldout_predictions.csv'
     regional = {int(r['row_id']): r for r in read_csv(regional_path)}
-    sources = {str(regional_path): sha(regional_path), str(INPUT): sha(INPUT)}
+    sources = {str(regional_path): sha(regional_path), str(input_file): sha(input_file)}
     results = []
     for family in ('stacked', 'spline', 'directional', 'spherical-mixture', 'nested-isopachs'):
         if family in ('stacked', 'spline'):
@@ -38,6 +47,9 @@ def summarize(home, output):
                 fit_passed='', log_score='', bound_probability='', predictive_cdf='',
                 predictive_lower95_cm='', predictive_median_cm='', predictive_upper95_cm='',
                 point_covered95='')
+            if has_intervals:
+                result["reported_lower_cm"] = observation.get("Lower_cm", "")
+                result["reported_upper_cm"] = observation.get("Upper_cm", "")
             if pred:
                 assert int(pred['fold']) == int(result['fold'])
                 log_score = float(pred[family+'_log_score'] if family in ('stacked', 'spline') else pred['principal_log_score'])
@@ -56,7 +68,9 @@ def summarize(home, output):
                     result['predictive_cdf'] = float(pred['principal_cdf'])
                     if bound:
                         p = result['predictive_cdf']
-                        if observation['Kind'] == 'lower_limit':
+                        if observation['Kind'] == 'interval':
+                            p = float(pred['principal_upper_endpoint_cdf'])-p
+                        elif observation['Kind'] == 'lower_limit':
                             p = 1-p
                         assert abs(result['bound_probability']-p) < 1e-10
                     else:
@@ -69,7 +83,7 @@ def summarize(home, output):
     bound_count = sum(r['Kind'] != 'measurement' for r in accepted)
     assert len(bounds) == 5 * bound_count
     write_csv(output/'heldout-bound-probabilities.csv', bounds)
-    report = dict(input_sha256=sha(INPUT), script_sha256=sha(Path(__file__)),
+    report = dict(input_sha256=sha(input_file), script_sha256=sha(Path(__file__)),
         source_sha256=sources, observations_per_family=len(accepted), bound_readings_per_family=bound_count,
         methods={family:dict(scored=sum(r['status']=='estimated' for r in results if r['method']==family),
             covered_points=sum(r['point_covered95'] is True for r in results if r['method']==family),

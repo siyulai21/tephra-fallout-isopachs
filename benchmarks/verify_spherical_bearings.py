@@ -12,7 +12,7 @@ from scipy.stats import qmc
 
 from .publication import ROOT, SPHERICAL_REFERENCE, preceding_spherical_bytes, read_hashes, verify_files
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
+from .publication import INTERVAL_PREDECESSOR, published_datasets as datasets
 from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL,BearingSupport,phases
 from src.empirical_isopach.models.mass_mixture.bearings.maps import extent_diagnostics
 from src.empirical_isopach.models.mass_mixture.bearings.report import design
@@ -29,6 +29,8 @@ def verify_case(rec):
     assert meta["input_sha256"]==r["input"]["input_sha256"]==parent["input"]["input_sha256"]
     assert r["bearing"]["parent_report_sha256"]==digest(home/"bearing/parent-report.json")
     for module, checksum in design()["model_sha256"].items():
+        if module == "study.py":
+            checksum = digest(INTERVAL_PREDECESSOR/"models/mass_mixture/bearings/study.py")
         assert r["bearing"]["model_sha256"][module] == checksum, module
     for file,identity in read(home/"artifacts.json").items():
         assert digest(home/file)==identity,(rec["slug"],file)

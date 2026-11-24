@@ -6,7 +6,7 @@ This repository reconstructs ash thickness and bulk airborne fallout volume from
 
 The latest model comparison traces the Pinatubo, Ilopango, Aso-4, Mazama and Tambora anomalies and tests the changes across all nine eruptions. [Maps, held-out predictions and uncertainty](comparisons/global-extent/README.md)
 
-The Mazama audit traces thick distal lake and field deposits to their original records. Its revised selection uses 271 locations. [Field observations and source decisions](data/audits/Mazama/distal-review/README.md) · [Mazama maps and results](eruptions/mazama/README.md)
+The accepted Mazama dataset contains 300 localities, including 29 two-sided thickness intervals. The published maps and volumes use the preceding 271-location edition. [Current field audit and principal CSV](data/audits/Mazama/principal-ranges/README.md) · [Published Mazama results](eruptions/mazama/README.md)
 
 ## Read a result
 

@@ -16,7 +16,7 @@ from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.directional.ensemble.members import splits
 from src.empirical_isopach.models.nested.continuation import load_packet
 from src.empirical_isopach.models.nested.reach import Corridors, PROBS, PROTOCOL, ReachDraws
-from src.empirical_isopach.models.nested.reach_fit import signature
+from .publication import published_reach_engine
 from src.empirical_isopach.models.nested.reach_report import prior_sensitivity
 from src.empirical_isopach.models.nested.study import digest
 
@@ -31,7 +31,7 @@ def verify_case(rec):
     old = case_home(slug) / "nested-whole-area"
     j = read(home / "report.json")
     data, meta = audited_data(rec["path"], allow_intervals=True)
-    assert j["input_sha256"] == meta["input_sha256"] and j["engine_sha256"] == signature()
+    assert j["input_sha256"] == meta["input_sha256"] and j["engine_sha256"] == published_reach_engine()
     assert j["protocol"] == PROTOCOL and j["model_role"] == "principal"
     assert set(j).isdisjoint({"volume_km3","conditional_volume_km3"})
     assert j["estimate_source"] == "deposit.json#median_map_volume_km3"
@@ -43,7 +43,7 @@ def verify_case(rec):
         file = home / (key + ".npz")
         assert fit["posterior_sha256"] == digest(file)
         assert fit["identity"]["parent_posterior_sha256"] == digest(old / (key + ".npz"))
-        assert fit["identity"]["engine_sha256"] == signature()
+        assert fit["identity"]["engine_sha256"] == published_reach_engine()
         assert fit["identity"]["training_rows"] == train.row_ids.tolist()
         model = ReachDraws.load(file)
         original = Corridors.from_training(train, lat)
@@ -96,7 +96,7 @@ def main():
     comp=Path("comparisons/nested-reach")
     with Path("comparisons/nested-isopachs/cases.csv").open(newline="") as stream:
         rows = {r["slug"]:r for r in csv.DictReader(stream) if r["method"] == "Nested corridor"}
-    for rec in records():
+    for rec in records(published=True):
         j = verify_case(rec)
         if rec["slug"] == "pinatubo-1991":
             continue
@@ -116,7 +116,7 @@ def main():
     assert sum(len(r["truths"]) for r in known["known"])==20
     quadrant_receipts = list(known["quadrants"])
     represented = {r["slug"] for r in quadrant_receipts}
-    for rec in records():
+    for rec in records(published=True):
         if rec["slug"] in represented:
             continue
         data, meta = audited_data(rec["path"], allow_intervals=True)
@@ -153,7 +153,7 @@ def main():
             assert val["identity"]["training_rows"]==train.row_ids.tolist()
             assert val["identity"]["test_rows"]==test.row_ids.tolist()
             assert val["identity"]["input_sha256"]==meta["input_sha256"]
-            assert val["identity"]["engine"]==signature()
+            assert val["identity"]["engine"]==published_reach_engine()
             assert digest(home/"training-parent.npz")==read(home/"training-parent.json")["sha256"]
             assert digest(home/"corridor.npz")==val["corridor_packet_sha256"]
             for key,m in (("whole_area",load_packet(home/"training-parent.npz")),("corridor",ReachDraws.load(home/"corridor.npz"))):
@@ -174,7 +174,7 @@ def main():
         for expected,printed in zip(references,csv.DictReader(stream),strict=True):
             for k in expected:
                 np.testing.assert_allclose(expected[k],float(printed[k]))
-    print(f"Verified {len(records())} geographic comparisons including the earlier Pinatubo snapshot, "
+    print(f"Verified {len(records(published=True))} geographic comparisons including the earlier Pinatubo snapshot, "
           f"{len(quadrant_receipts)} compass deletions, 20 known truths and {len(FIELD_CASES)} withheld field surveys.")
 
 

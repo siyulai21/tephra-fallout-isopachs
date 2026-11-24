@@ -34,7 +34,7 @@ def component_scores(mixture, sizes, test):
     for n in sizes:
         part = slice(start, start+n)
         d = LogMixture(np.full(n, 1/n), mixture.means[part], mixture.variances[part])
-        scores.append(d.log_score(test.log_value, test.censored, test.lower_censored))
+        scores.append(d.score(test))
         start += n
     return np.column_stack(scores)
 

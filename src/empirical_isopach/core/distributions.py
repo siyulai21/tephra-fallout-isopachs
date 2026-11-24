@@ -5,7 +5,9 @@ mixture quantiles, mean thickness, predictive scores or joint volume samples.
 """
 from dataclasses import dataclass
 import numpy as np
-from scipy.special import log_ndtr, logsumexp, ndtr, ndtri
+from scipy.special import logsumexp, ndtr, ndtri
+
+from .likelihood import normal_log_event
 
 
 @dataclass
@@ -51,18 +53,19 @@ class LogMixture:
             hi = np.where(below, hi, mid)
         return (lo+hi)/2
 
-    def log_score(self, values, censored=None, lower_censored=None):
-        variance = np.maximum(self.variances, 1e-16)
-        z = (np.asarray(values)-self.means)/np.sqrt(variance)
-        scores = -.5*(np.log(2*np.pi*variance)+z*z)
-        if censored is not None:
-            mask = np.asarray(censored, bool)
-            scores[:, mask] = log_ndtr(z[:, mask])
-        if lower_censored is not None:
-            mask = np.asarray(lower_censored, bool)
-            if censored is None or np.any(mask & ~np.asarray(censored, bool)):
-                raise ValueError("Lower bounds must also be marked censored.")
-            scores[:, mask] = log_ndtr(-z[:, mask])
+    def score(self, data):
+        return self.log_score(data.log_value, data.censored, data.lower_censored, data.interval_log_upper)
+
+    def log_score(self, values, censored=None, lower_censored=None, interval_log_upper=None):
+        censored = False if censored is None else np.asarray(censored, bool)
+        lower = False if lower_censored is None else np.asarray(lower_censored, bool)
+        if np.any(lower & ~np.asarray(censored)):
+            raise ValueError("Lower bounds must also be marked censored.")
+        if interval_log_upper is not None and np.any(np.isfinite(interval_log_upper) &
+                (~np.asarray(lower) | (interval_log_upper <= np.asarray(values)))):
+            raise ValueError("Intervals require ordered endpoints and a lower-bound flag.")
+        sd = np.sqrt(np.maximum(self.variances, 1e-16))
+        scores = normal_log_event(np.asarray(values), self.means, sd, censored, lower, interval_log_upper)
         return logsumexp(np.log(self.weights)[:, None]+scores, axis=0)
 
 

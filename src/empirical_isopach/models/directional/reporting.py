@@ -118,6 +118,8 @@ def render(path, work, output, name=None):
     write_json(output/"complete-contour-audit.json", screen)
     pred = pd.DataFrame({"row_id": data.row_ids, "log_observation_or_limit": data.log_value,
                          "upper": data.censored & ~data.lower_censored, "lower": data.lower_censored})
+    if data.interval.any():
+        pred["interval_upper_log_cm"] = data.interval_log_upper
     for kind, v in validation.items():
         pred[kind+"_fold"] = v["folds"]
         for key, values in v["predictions"].items():

@@ -8,7 +8,7 @@ from benchmarks.publication import previous_btm_file, previous_mazama_bytes
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from src.empirical_isopach.models.directional.azimuth.archive import assess, phase_medians
 from src.empirical_isopach.models.directional.azimuth.calibration import calibrate, PACKET
 from src.empirical_isopach.models.directional.azimuth.primary import read_field

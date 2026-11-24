@@ -24,8 +24,10 @@ EXTRA = Path("comparisons/nested-isopachs/pinatubo-preview/data/Pinatubo_1991_la
 ONE_SIDE = ("narrow_eastern_fan", "broad_umbrella")
 
 
-def records():
-    return [*datasets(), {"slug":"pinatubo-1991","name":"Pinatubo 1991 Layer C","path":EXTRA}]
+def records(*, published=False):
+    from .publication import published_datasets
+    catalog = published_datasets() if published else datasets()
+    return [*catalog, {"slug":"pinatubo-1991","name":"Pinatubo 1991 Layer C","path":EXTRA}]
 
 
 def half_survey(name, seed):

@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from .azimuth_summary import case_table
 from .publication import read_hashes, verify_files
 

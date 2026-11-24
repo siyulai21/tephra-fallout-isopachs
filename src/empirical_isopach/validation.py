@@ -84,7 +84,7 @@ def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, 
             dist = predictive_distribution(model, heldout.xy, observation=True, log_sd=heldout.log_sd)
             for key, p in (("median", .5), ("lower", .025), ("upper", .975)):
                 arrays[key][test] = dist.quantile(p)
-            arrays["log_score"][test] = dist.log_score(heldout.log_value, heldout.censored, heldout.lower_censored)
+            arrays["log_score"][test] = dist.score(heldout)
             selections.append({"fold": fold, "n_train": int(train.sum()), "n_test": int(test.sum()),
                                "training_row_ids": data.row_ids[train].tolist(),
                                "withheld_row_ids": data.row_ids[test].tolist(),

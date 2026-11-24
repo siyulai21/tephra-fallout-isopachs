@@ -78,7 +78,7 @@ def predictions(output,data,folds):
                          "latent_median_log_cm":f["median_log_cm"][j],"predictive_lower_log_cm":lower[j],
                          "predictive_upper_log_cm":upper[j],"log_score":f["row_log_scores"][j],
                          "fit_passed":f["numerics"]["passed"]})
-            if endpoints is not None:
+            if test.interval.any():
                 rows[-1]["interval_upper_log_cm"] = endpoints[j]
     t = pd.DataFrame(rows)
     t.to_csv(Path(output)/"heldout.csv",index=False)

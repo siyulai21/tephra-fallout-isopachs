@@ -1,7 +1,7 @@
 """Shared geographic partitions and predictive scoring; no model preference."""
 import numpy as np
 from scipy.spatial.distance import cdist
-from scipy.special import log_ndtr
+from .likelihood import observation_log_event
 
 def spatial_folds(xy, n_folds=4):
     """Recursive spatial median partitions on unique locations, no random state.
@@ -42,9 +42,7 @@ def training_mask(data, folds, fold, buffer_km):
 def score_predictions(data, mean, variance):
     variance = np.maximum(variance, 1e-12)
     z = (data.log_value-mean)/np.sqrt(variance)
-    nll = .5*(np.log(2*np.pi*variance)+z*z)
-    nll[data.censored] = -log_ndtr(z[data.censored])
-    nll[data.lower_censored] = -log_ndtr(-z[data.lower_censored])
+    nll = -observation_log_event(data, mean, np.sqrt(variance))
     det = ~data.censored
     return {"mean_log_score": float(np.mean(nll)),
             "rmse_log": float(np.sqrt(np.mean((data.log_value[det]-mean[det])**2))) if det.any() else None,

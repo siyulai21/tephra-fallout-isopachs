@@ -10,7 +10,7 @@ import pandas as pd
 from .publication import read_hashes, verify_files
 from scipy.special import logsumexp
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets
 from src.empirical_isopach.models.mass_mixture.study import audited_data
 from src.empirical_isopach.models.directional.study import digest
 from src.empirical_isopach.models.directional.ensemble.fields import draw_weights, load_packet

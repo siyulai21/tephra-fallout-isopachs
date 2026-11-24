@@ -50,7 +50,7 @@ the normal interface. Coordinates define the survey design; responses are refit.
             try:
                 model = TrendRegularizedSpline(candidate).fit(workspace.data, workspace=workspace)
                 distribution = predictive_distribution(model, test.xy, observation=True, log_sd=test.log_sd)
-                score = float(-np.mean(distribution.log_score(test.log_value, test.censored, test.lower_censored)))
+                score = float(-np.mean(distribution.score(test)))
                 if not np.isfinite(score):
                     raise RuntimeError("Nonfinite predictive score.")
                 scores.append(score)
