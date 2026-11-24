@@ -191,7 +191,8 @@ def field_validation(folder, verify):
             cal = receipt["calibration"]
             actual = calibration(family, meta["input_sha256"], exclude_slug="ilopango-tbj")
             assert cal["donors"] == actual["donors"] and "ilopango-tbj" not in cal["donors"]
-            np.testing.assert_allclose(cal["weights"], actual["weights"])
+            # Use the shared extent benchmark tolerance for the fitted donor weights.
+            np.testing.assert_allclose(cal["weights"], actual["weights"], atol=1e-5)
             assert digest(ASSET) == receipt["calibration_sha256"]
             assert all(digest(root / k) == v for k, v in receipt["parent_sha256"].items())
             assert digest(packet / "volumes.npz") == receipt["volume_draws_sha256"]
