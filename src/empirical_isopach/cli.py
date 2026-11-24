@@ -34,6 +34,10 @@ def compare(argv=None):
         whole_area_dataset(resolve_dataset(args.csv), args.output/"nested-whole-area", name=args.name, archives=args.archives)
         nested_dataset(resolve_dataset(args.csv), args.output/"nested-isopachs", name=args.name, archives=args.archives)
         review_continuations(resolve_dataset(args.csv), args.output)
+        from .core.audit import audited_data
+        from .visualization.deposit import align_near_views
+        if any(args.output.glob("*/median-grid.npz")):
+            align_near_views(args.output,*audited_data(resolve_dataset(args.csv)))
         saved_case_overview(args.output, args.name)
         add_comparison_to_run(args.output)
 

@@ -188,3 +188,46 @@ def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, mon
     assert "(directional/azimuth/world.png)" in first and "(spherical-mixture/world.png)" in first
     comparison.add_comparison_to_run(tmp_path)
     assert page.read_text() == first
+
+
+def test_heaviest_displayed_line_encloses_a_fitted_location():
+    from types import SimpleNamespace
+    from src.empirical_isopach.visualization.contour_limits import inner_contour, outer_contour
+    from src.empirical_isopach.visualization.deposit_field import PolarField
+
+    # The vent reaches 256 cm. The three modeled sites enclose only the 8, 4 and 1 cm levels.
+    radii = np.array([0., 4., 12., 20.])
+    logs = np.log10([256., 8., 4., 1.])
+    field = PolarField(radii, np.repeat(logs[:, None], 8, axis=1), 1.)
+    sample = SimpleNamespace(xy=np.c_[np.zeros(3), radii[1:]], row_ids=np.array([41, 88, 7]))
+    outer = outer_contour(field, sample)
+    assert outer['level_cm'] == 1. and outer['inside'] == 3
+    assert inner_contour(outer) == dict(level_cm=8., inside=1, row_ids=[41], next_level_inside=0)
+
+
+def test_local_window_expands_until_both_families_show_two_contours():
+    from types import SimpleNamespace
+    from src.empirical_isopach.visualization.contour_limits import (
+        inner_contour, local_half_width, near_frame, near_levels, outer_contour, visible_levels)
+    from src.empirical_isopach.visualization.deposit_field import PolarField
+
+    r = np.array([0., 1., 5., 20., 60., 200., 1000.])
+    fields = [PolarField(r, np.repeat(np.log10(t)[:, None], 12, axis=1), 1.)
+              for t in ([19., 18., 15., 9., 5., 2., .1], [19., 19., 19., 19., 18., 4., .1])]
+    sample = SimpleNamespace(xy=np.array([[1.,0.],[2.,1.],[4.,0.]]), row_ids=np.arange(3))
+    half = near_frame(fields, sample)
+    assert half > local_half_width(sample)
+    for field in fields:
+        limit = inner_contour(outer_contour(field,sample))['level_cm']
+        assert len(visible_levels(field, half, near_levels(field,limit))) >= 2
+
+
+def test_zoom_dependent_shorelines_and_caldera_lake():
+    from src.empirical_isopach.visualization.shorelines import detail, index, local_mask, pack
+
+    for half, scale in [(20.,'full'),(75.,'full'),(80.,'high'),(375.,'high'),(800.,'intermediate')]:
+        assert detail(np.array([-half,-half,half,half]))['resolution'] == scale
+    assert int(local_mask([0.],[0.],[-122.102,42.943],'f')[0,0]) == 0  # Crater Lake
+    assert int(local_mask([0.],[0.],[-122.149,42.866],'f')[0,0]) == 1  # south of the rim
+    for name in index()['packs_sha256']:
+        assert pack(int(name[6:8])).namelist()

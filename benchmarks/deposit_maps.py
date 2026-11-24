@@ -10,11 +10,16 @@ from src.empirical_isopach.visualization.deposit import FAMILIES, render_deposit
 
 
 def render(job):
-    rec, family, output = job
-    data,meta = audited_data(rec["path"],allow_intervals=True)
-    target = output/rec["slug"]/family
-    receipt = render_deposit(principal_home(rec)/family,family,data,meta,rec["name"],output=target)
-    print(rec["slug"],family,receipt["median_map_volume_km3"],flush=True)
+    from src.empirical_isopach.visualization.deposit import align_near_views
+    rec,output = job
+    data,meta = audited_data(rec["path"])
+    home = principal_home(rec)
+    target = output/rec["slug"]
+    for family in FAMILIES:
+        if (home/family/"deposit.json").is_file():
+            receipt=render_deposit(home/family,family,data,meta,rec["name"],output=target/family)
+            print(rec["slug"],family,receipt["median_map_volume_km3"],flush=True)
+    align_near_views(target,data,meta,source_home=home)
 
 
 def main():
@@ -25,8 +30,7 @@ def main():
     args = parser.parse_args()
     if args.output.exists() and any(args.output.iterdir()):
         parser.error("Choose an empty output directory")
-    jobs = [(r,f,args.output) for r in datasets() if args.case in (None,r["slug"])
-            for f in FAMILIES if (principal_home(r)/f/"deposit.json").is_file()]
+    jobs = [(r,args.output) for r in datasets() if args.case in (None,r["slug"])]
     with ProcessPoolExecutor(args.workers) as pool:
         list(pool.map(render,jobs))
 

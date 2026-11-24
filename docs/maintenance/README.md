@@ -13,7 +13,7 @@ The preceding map edition and its original complete-draw intervals remain availa
 
 ## Checking a map
 
-Inspect the actual rendered full and near-vent panels. Check the complete outer contour, its enclosed row count and any shortfall at the 1 cm floor. The local frame must resolve the vent and use the same limits for all methods on one input. Verify the median integral and the two quartile integrals on the same domain. Retain the full regional hull and all numerical flags. [Map and volume definitions](../OUTPUTS.md#read-the-map-and-its-volume)
+Inspect the actual rendered full and near-vent panels. Check the outer contour, its enclosed row count and any shortfall at the 1 cm floor. Confirm that the innermost line encloses a modeled site, that qualifying contours cross the near panel, and that shoreline detail matches the scale. The local frame must resolve the vent and use the same limits for all methods on one input. Verify the median integral and the two quartile integrals on the same domain. Retain the full regional hull and all numerical flags. [Map and volume definitions](../OUTPUTS.md#read-the-map-and-its-volume)
 
 ### Replay a figure
 

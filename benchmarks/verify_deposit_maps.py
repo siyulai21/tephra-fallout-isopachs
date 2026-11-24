@@ -12,8 +12,11 @@ from .refresh_figures import recorded_observations, regional_models
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.visualization.deposit import FAMILIES, volume_interval, digest, open_field, read_json
-from src.empirical_isopach.visualization.deposit_maps import LAND, local_half_width
-from src.empirical_isopach.visualization.deposit_field import polar_nodes
+from src.empirical_isopach.visualization.deposit_maps import LAND, local_half_width, outer_contour
+from src.empirical_isopach.visualization.deposit_field import PolarField, polar_nodes
+from src.empirical_isopach.visualization.deposit_integrals import within_cells
+from src.empirical_isopach.visualization.contour_limits import inner_contour, near_frame, near_levels, visible_levels
+from src.empirical_isopach.visualization.shorelines import detail
 from src.empirical_isopach.visualization.thickness_band import field_quantiles, regional_band
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.visualization.principal import case_section
@@ -45,6 +48,24 @@ def verify_global(folder, family, data, meta):
         assert ok==r["complete_field_checks_passed"]
     else:
         assert ok==r["posterior_checks_passed"]
+        import json
+        path = folder/"median-grid.npz"
+        assert r["median_grid_sha256"]==digest(path)
+        with np.load(path,allow_pickle=False) as packet:
+            assert str(packet["input_sha256"])==meta["input_sha256"]
+            assert json.loads(str(packet["sources_json"]))==r["sources_sha256"]
+            grid = PolarField(packet["radii_km"],packet["log10_cm"],float(packet["axis"]))
+        replayed,areas = within_cells(grid,r["levels_cm"])
+        np.testing.assert_allclose(replayed,r["median_map_volume_km3"],rtol=1e-12)
+        np.testing.assert_allclose(areas,pd.read_csv(folder/"thickness-area.csv").area_km2,rtol=1e-10,atol=1e-10)
+        border = outer_contour(grid,data)
+        for key in border:
+            np.testing.assert_allclose(border[key],r["outer_contour"][key],rtol=1e-11,atol=1e-10)
+        inner = inner_contour(border)
+        assert inner==r["inner_contour"] and inner["inside"]>=1 and inner["next_level_inside"]==0
+        h=r["near_half_width_km"]
+        assert r["near_visible_levels_cm"]==visible_levels(grid,h,near_levels(grid,inner["level_cm"]))
+        assert r["near_shoreline"]==detail(np.array(r["near_bounds_km"]))
         verify_band_and_extent(r,median,data,meta)
     areas=pd.read_csv(folder/"thickness-area.csv")
     levels=areas.thickness_cm.to_numpy()
@@ -107,8 +128,9 @@ def verify_band_and_extent(r,view,data,meta):
     required = int(np.ceil(.95*len(xy)))
     assert required==border["minimum_enclosed"] and count(2*level)==border["next_level_inside"]<required
     assert border["target_met"]==(count(level)>=required) and (level==1 or border["target_met"])
-    np.testing.assert_array_equal(r["full_levels_cm"],[v for v in r["levels_cm"] if v>=level])
-    half = local_half_width(data)
+    np.testing.assert_array_equal(r["full_levels_cm"],[v for v in r["levels_cm"] if level<=v<=r["inner_contour"]["level_cm"]])
+    half = r["near_half_width_km"]
+    assert half>=local_half_width(data)
     np.testing.assert_array_equal(r["near_bounds_km"],[-half,-half,half,half])
     assert r["near_sites"]==int((np.abs(xy)<=half).all(axis=1).sum())
 
@@ -122,6 +144,12 @@ def verify_case(record):
     # The two archived fits and the current nested fit may use different PROJ builds.
     for near_bounds in frames[1:]:
         np.testing.assert_allclose(near_bounds,frames[0],rtol=0.,atol=1e-9)
+    if not preview:
+        charts = []
+        for key in FAMILIES:
+            with np.load(home/key/"median-grid.npz",allow_pickle=False) as packet:
+                charts.append(PolarField(packet["radii_km"],packet["log10_cm"],float(packet["axis"])))
+        np.testing.assert_allclose(frames[0][2],near_frame(charts,data))
     published=(home if preview else home.parent)/"README.md"
     if record["slug"]=="mazama":
         assert case_section(home) in (home/"README.md").read_text() and "historical" in (home/"README.md").read_text().lower()

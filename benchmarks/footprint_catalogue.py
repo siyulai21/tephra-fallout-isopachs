@@ -21,7 +21,7 @@ def install(case, record, source):
     target = published_folder(case, record)
     target.mkdir(parents=True, exist_ok=True)
     shutil.copytree(source/"footprints", target/"footprints", dirs_exist_ok=True)
-    for name in ("deposit.png", "deposit.json", "thickness-area.csv", "README.md"):
+    for name in ("deposit.png", "deposit.json", "median-grid.npz", "thickness-area.csv", "README.md"):
         shutil.copyfile(source/name, target/name)
     if not (target/"footprints/archive-probes.json").is_file():
         from src.empirical_isopach.core.audit import audited_data
@@ -52,6 +52,9 @@ def install(case, record, source):
         sector_checks(target,data,FootprintField.load(target/"footprints/full-selected.npz"),j)
     describe_geography(target,j)
     home = target.parent
+    from src.empirical_isopach.core.audit import audited_data
+    from src.empirical_isopach.visualization.deposit import align_near_views
+    align_near_views(home,*audited_data(record["path"]))
     rows = volume_rows(home)
     write_rows(home/"principal-volumes.csv", rows)
     if (home/"report.json").is_file():

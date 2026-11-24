@@ -217,6 +217,15 @@
       -0.9914552914561364
     ]
   },
+  "inner_contour": {
+    "level_cm": 64.0,
+    "inside": 2,
+    "row_ids": [
+      2,
+      3
+    ],
+    "next_level_inside": 0
+  },
   "posterior_checks_passed": false,
   "grid_shape": [
     193,
@@ -309,6 +318,7 @@
       -14.238554018455847
     ]
   ],
+  "median_grid_sha256": "1b35800fbfc2a39141727869403178f644fe82b1567776d8d7edbe2f3bfba244",
   "thickness_area_sha256": "b257c97cba76336f344417fc647b21d764cdd9b5d419ea49f3604e9fe857567e",
   "full_bounds_km": [
     -1125.1216829993848,
@@ -317,14 +327,27 @@
     882.3205212631794
   ],
   "near_bounds_km": [
-    -100.0,
-    -100.0,
-    100.0,
-    100.0
+    -125.0,
+    -125.0,
+    125.0,
+    125.0
   ],
   "full_sites": 21,
-  "near_sites": 4,
-  "near_half_width_km": 100.0,
+  "near_sites": 6,
+  "near_half_width_km": 125.0,
+  "near_visible_levels_cm": [
+    16.0,
+    32.0,
+    64.0
+  ],
+  "near_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "tier": "h",
+    "resolution": "high",
+    "km_per_display_pixel": 0.5,
+    "raster_long_side": 901
+  },
   "full_levels_cm": [
     1.0,
     2.0,
@@ -345,5 +368,5 @@
     32.0,
     64.0
   ],
-  "figure_sha256": "1c7bc0e70940e5cdcf7d53085dd79eaacf34cec0a6c207314476d66a1d3303ba"
+  "figure_sha256": "5cac3b9000deb16a24f182f0db49411d221973d8eef7bb92ba9f2fecb08cf2d7"
 }

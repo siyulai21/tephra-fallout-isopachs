@@ -16,7 +16,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 ## Full deposits and near-vent detail
 
-Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The near-vent window depends on the eruption’s proximal sites. The curve sums all patches at each thickness.
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
 ![Mazama · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/primary-ranges/nested-isopachs/deposit.png)
 

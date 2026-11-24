@@ -108,7 +108,7 @@ def case_section(home, prefix="", *, reports=None, regional_subdir="", name=None
               "## Full deposits and near-vent detail", "",
               "Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. "
               "The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. "
-              "The near-vent window depends on the eruption’s proximal sites. The curve sums all patches at each thickness.", ""]
+              "The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.", ""]
     for method in FAMILIES:
         if method in names:
             lines += [f"![{name} · {names[method]}. Full deposit, near-vent detail and thickness versus square root of area.]({prefix}{method}/deposit.png)", ""]
