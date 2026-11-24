@@ -29,10 +29,10 @@
     {
       "name": "Mazama",
       "slug": "mazama",
-      "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
-      "global_report_sha256": "34900073da7d85e1786b6c52ceed923bfcdda1ef0c5dc61f70ea891a6219d645",
-      "regional_report_sha256": "9bdd38f4345f34a547ae6a347173e5ca2dc4a098a0ccadbc54bfd10b8addee52",
-      "extent_report_sha256": "2db73170897e8d8f4d57bc35a6e98a09cd05330a846600b6c2886cf80de7bf78"
+      "input_sha256": "2a6d9a4c6f23b7000e830a11fdfc2ddfeb27956c3d3990a548c02373aba39870",
+      "global_report_sha256": "cd94806b8ef0b1e77cbf811668936733cea2667e2ae435c29d5bc35c6020e9f0",
+      "regional_report_sha256": "91be68bcc222d25576ff1cdc3753d2a48348deb8debdde5de411fb61409ad4f9",
+      "extent_report_sha256": "b2e7f6ee82df78b4fc82137643114f00d5b8e2a01822968517fc460d48497916"
     },
     {
       "name": "Minoan",
@@ -138,19 +138,19 @@
       "eruption": "Mazama",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median_map_volume_km3": 170.5571151135034,
-      "lower95": 134.80842828930588,
-      "upper95": 913.609051477612,
-      "sensitivity_lower": 132.65021494875768,
-      "sensitivity_upper": 14423.397051220514,
+      "median_map_volume_km3": 370.20689652155505,
+      "lower95": 212.04119849318846,
+      "upper95": 7166.963559007089,
+      "sensitivity_lower": 203.6009200637811,
+      "sensitivity_upper": 167302.46883555944,
       "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": false,
-      "all_outer_sampling_passed": false,
-      "parent_median_fraction_outside_local_footprint": 0.8452335583682605,
-      "global_equal_region_negative_log_score": 1.5587746341973443,
-      "global_observation_coverage95": 0.8444444444444444,
-      "stacked_equal_region_negative_log_score": 1.2722152078519842,
-      "spline_equal_region_negative_log_score": 1.9712502424004417
+      "all_outer_sampling_passed": true,
+      "parent_median_fraction_outside_local_footprint": 0.916015625,
+      "global_equal_region_negative_log_score": 1.0004015740027798,
+      "global_observation_coverage95": 0.7241379310344828,
+      "stacked_equal_region_negative_log_score": 1.1661744287769542,
+      "spline_equal_region_negative_log_score": 2.633966698320179
     },
     {
       "slug": "minoan",
@@ -375,43 +375,43 @@
     {
       "eruption": "Mazama",
       "global": {
-        "equal_region_log_score": 1.5587746341973443,
-        "coverage95_observations": 0.8444444444444444,
+        "equal_region_log_score": 1.0004015740027798,
+        "coverage95_observations": 0.7241379310344828,
         "fold_log_scores": [
-          2.339224514970934,
-          1.086412169046413,
-          0.9042527523041938,
-          1.905209100467836
+          0.36021628567497377,
+          0.6977609786625467,
+          0.9320656085647107,
+          2.011563423108888
         ]
       },
       "stacked": {
-        "mean_log_score": 1.2758639297888945,
-        "rmse_log": 0.8837441331341291,
-        "coverage95_observations": 0.9555555555555556,
-        "mean_interval_width_log": 3.5712674146552024,
-        "equal_region_log_score": 1.2722152078519842,
+        "mean_log_score": 1.1661744287769544,
+        "rmse_log": 3.261504769783088,
+        "coverage95_observations": 0.7413793103448276,
+        "mean_interval_width_log": 6.8307772909283555,
+        "equal_region_log_score": 1.1661744287769542,
         "fold_log_scores": [
-          1.647694880175793,
-          0.9519039870734732,
-          1.0528542691457323,
-          1.4364076950129387
+          0.33600993808176344,
+          1.2168912380520351,
+          1.3585017128860322,
+          1.753294826087986
         ]
       },
       "spline": {
-        "mean_log_score": 1.954384498492424,
-        "rmse_log": 1.7001764750868522,
-        "coverage95_observations": 0.8222222222222222,
-        "mean_interval_width_log": 3.294654483788919,
-        "equal_region_log_score": 1.9712502424004417,
+        "mean_log_score": 2.6339666983201786,
+        "rmse_log": 3.1999226114301456,
+        "coverage95_observations": 0.8103448275862069,
+        "mean_interval_width_log": 13.58899371339602,
+        "equal_region_log_score": 2.633966698320179,
         "fold_log_scores": [
-          1.4435028952024886,
-          3.8437583713716132,
-          1.3854479364880026,
-          1.2122917665396613
+          0.2438717846763464,
+          0.7044899706834207,
+          8.04859212869383,
+          1.538912909227119
         ]
       },
       "matched_input_folds_buffer_and_training_rows": true,
-      "global_outer_sampling_passed": false
+      "global_outer_sampling_passed": true
     },
     {
       "eruption": "Minoan",

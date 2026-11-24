@@ -1,6 +1,6 @@
 # Mazama · Spherical mixture
 
-The principal bulk volume is **171 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **135–914 km³** across complete posterior draws.
+The principal bulk volume is **370 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **212–7.17e+03 km³** across complete posterior draws.
 
 ![Mazama, Spherical mixture. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
@@ -18,42 +18,44 @@ The following figures and statistics describe the fitted parent and its broader 
 
 | Continuation assumption | Conditional 95% volume interval (km³) |
 |---|---:|
-| Broad parent continuation | 145.3–3,628.7 |
-| Unknown fan, 90° half-thickness angle | 139.6–2,514.1 |
-| Unknown fan, 47° half-thickness angle | 137.4–1,849.3 |
-| Enhanced narrow hidden fan, separate sensitivity | 143.8–3,181.3 |
+| Broad parent continuation | 227.4–7,612.4 |
+| Unknown fan, 90° half-thickness angle | 220.7–7,518.0 |
+| Unknown fan, 47° half-thickness angle | 217.8–7,308.6 |
+| Enhanced narrow hidden fan, separate sensitivity | 225.0–7,682.9 |
 
 The three principal assumptions allow local thickness up to the parent prediction in the same draw. The enhanced-fan sensitivity allows extra ash along a hidden axis. Changing the angular spread of measured reach also changes the inferred mass.
 
 | Angle at which measured reach halves | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---|
-| 11.25° | 132.1–2,511.4 | Passed |
-| 45° | 144.0–2,957.4 | Passed |
+| 11.25° | 215.2–7,441.6 | Passed |
+| 45° | 225.8–7,602.0 | Passed |
 
-The median fraction inside the screened measurement footprint is **15.5%**. The median fraction beyond the farthest exact site is **0.2%**. Other mass lies in the intervening gaps and the unmeasured proximal cap. These are sampling classes.
+The median fraction inside the screened measurement footprint is **8.4%**. The median fraction beyond the farthest exact site is **1.3%**. Other mass lies in the intervening gaps and the unmeasured proximal cap. These are sampling classes.
 
 ## Prediction and uncertainty
 
-The equal-region held-out log score is **1.561**, compared with 1.577 for the original geometry. Lower scores indicate better predictions. The 95% predictive interval covered **88.9%** of exact held-out thicknesses. Every buffered training fold builds its own bearing support. Censored sites contribute their reported limit events to the score.
+The equal-region held-out log score is **0.923**, compared with 0.903 for the original geometry. Lower scores indicate better predictions. The 95% predictive interval covered **63.8%** of exact held-out thicknesses. Every buffered training fold builds its own bearing support. Censored sites contribute their reported limit events to the score.
 
-Across 3 held-out readings with gap exposure of at least 0.5, mean negative log score was 2.315 for the principal field and 2.900 for its parent. This subset weights individual sites equally.
+Across 63 held-out readings with gap exposure of at least 0.5, mean negative log score was 1.957 for the principal field and 1.893 for its parent. This subset weights individual sites equally.
 
 The shared contour audit identified no qualifying standard-policy band. [Complete decisions and geographic deletions](complete-contour-audit.json)
 
 | Spherical prior | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---|
-| baseline | 140.1–2,614.3 | Passed |
-| diffuse tail | 138.8–2,819.2 | Passed |
-| wide geography | 138.1–24,588.4 | parent sampler, volume draw split warning |
-| volume prior shift | 137.0–5,742.4 | Passed |
-| one fan | 208.9–92,709.0 | volume draw split warning |
-| five fans | 141.5–3,537.7 | Passed |
-| gaussian errors | 152.3–1,320.5 | parent sampler warning |
-| diffuse mixture weights | 137.7–592.0 | Passed |
+| baseline | 221.6–7,502.9 | Passed |
+| diffuse tail | 220.7–7,677.3 | Passed |
+| wide geography | 240.7–56,712.0 | Passed |
+| volume prior shift | 224.7–14,746.4 | volume draw split warning |
+| one fan | 568.8–199,544.9 | Passed |
+| five fans | 221.6–9,199.2 | Passed |
+| gaussian errors | 237.2–7,454.1 | Passed |
+| diffuse mixture weights | 209.2–1,025.7 | Passed |
 
-The resolved 1, 10 and 100 cm contour areas passed the split-draw test at 384 parent draws per chain. Sparsely represented or empty contour unions remain unresolved.
+The resolved 1, 10 and 100 cm contour areas passed the split-draw test at 96 parent draws per chain. Sparsely represented or empty contour unions remain unresolved.
 
-Geographic folds with sampling warnings (numbered from one) include 3.
+All four geographic training fits passed their sampling checks.
 The tail and overall scale can remain weakly identified even when numerical checks pass. The reference-amplitude prior induces a prior on retained volume. Reworking, incomplete sampling and source attribution can add uncertainty beyond these conditional intervals.
 
 [Prior sensitivity and mass partition](volume.png) · [Derived-volume chains](sampling.png) · [Numerical report](report.json) · [Held-out sites](heldout_predictions.csv) · [Whole-deposit draws](volume_draws.csv.gz) · [Joint sector and support-class volumes](bearing/baseline.npz) · [Original spherical fit and all attempts](bearing/parent-report.json)
+
+[Thickness and predictive intervals at inspected archives](archive-evidence/README.md)

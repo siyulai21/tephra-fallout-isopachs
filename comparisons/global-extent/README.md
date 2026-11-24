@@ -1,6 +1,24 @@
-# Where the three global models overextend a deposit
+# Global fallout models and geographic validation
 
-All nine registered eruptions were rerun. The GP and spline results on their common observation hull reproduced byte for byte in the matched benchmark. The three global families use the same accepted sites, limits and buffered geographic holdouts as their earlier fits. Every fitted log thickness was identical at every training location in the deletion checks. Each global map integrates over the physical Earth, including its thin tail. [All 45 estimates](../principal-volumes.csv) · [Paired results for the 27 global fits](paired-results.csv) · [Regional replay](regional-replay.json)
+## Mazama after the source audit
+
+The fits use 244 distinct locations. Each pair shares the same observations, geography and training folds. The two map integrals measure the effect of the assumed continuation into unsampled areas. Volumes are in km³. [Current case](../../eruptions/mazama/README.md) · [Matched outcomes](paired-results.csv) · [Parent map calculations](../../eruptions/mazama/results/source-audit/paired-continuation-checks.json)
+
+| Family | Parent map | Revised map | Revised conditional 95% | Geographic score, parent → revised | Withheld 95% coverage |
+|---|---:|---:|---:|---:|---:|
+| Directional ensemble | 333.0 | 332.1 | 257.2–1,037.7 · provisional | 0.875 → 0.813 | 87.9% |
+| Spherical mixture | 380.1 | 370.2 | 212.0–7,167.0 | 0.929 → 1.000 | 72.4% |
+| Bayesian nested corridors | 287.6 | 271.0 | 186.9–724.4 | 0.918 → 1.011 | 72.4% |
+
+The independent spherical-kernel integral passed. The case pages retain the sampling, spatial-integration and contour-support diagnostics for each family. [Kernel diagnostics](kernel-integrals.json)
+
+## Original nine-eruption experiment
+
+The following experiment used the earlier 45-observation Mazama dataset. Its maps, sector areas and study-wide averages retain that input. [Original publication](https://github.com/siyulai21/tephra-fallout-isopachs/blob/0a53d0211f2ac9cfc9fbeaff95217fc0d319a18b/comparisons/global-extent/README.md)
+
+<!-- original study -->
+
+All nine registered eruptions were rerun. The GP and spline results on their common observation hull reproduced byte for byte in the matched benchmark. The three global families use the same accepted sites, limits and buffered geographic holdouts as their earlier fits. Every fitted log thickness was identical at every training location in the deletion checks. Each global map integrates over the physical Earth, including its thin tail. [All 45 estimates](https://github.com/siyulai21/tephra-fallout-isopachs/blob/0a53d0211f2ac9cfc9fbeaff95217fc0d319a18b/comparisons/global-extent/../principal-volumes.csv) · [Paired results for the 27 global fits](https://github.com/siyulai21/tephra-fallout-isopachs/blob/0a53d0211f2ac9cfc9fbeaff95217fc0d319a18b/comparisons/global-extent/paired-results.csv) · [Regional replay](regional-replay.json)
 
 | Eruption and family | Earlier map (km³) | Revised map (km³) | Earlier conditional 95% (km³) | Revised conditional 95% (km³) | Geographic score, earlier → revised |
 |---|---:|---:|---:|---:|---:|
@@ -18,7 +36,7 @@ The white circles locate accepted observations and bounds. The red triangle mark
 
 ## What produces the anomalies
 
-**Displaced spherical kernels.** A narrow set of measurements can intersect the flank of a circular component even when its centre is far away. Raising its amplitude can fit those measurements and add substantial mass elsewhere. At Aso-4 the mass-weighted distance from the centres to the nearest positive sites has a median of 437 km. In the top 2.5% of the earlier paired volume draws it is 2,505 km. Its rank correlation with volume is 0.75. The corresponding correlation for the tail exponent is about 0.00. The revised model limits a component’s rise above its sampled flank and reduces the width an isolated long transect can imply. The source-focused B-Tm spherical field satisfies the condition by construction and gives the same map and interval. [Paired spherical diagnostics and independent integrals](kernel-integrals.json)
+**Displaced spherical kernels.** A narrow set of measurements can intersect the flank of a circular component even when its centre is far away. Raising its amplitude can fit those measurements and add substantial mass elsewhere. At Aso-4 the mass-weighted distance from the centres to the nearest positive sites has a median of 437 km. In the top 2.5% of the earlier paired volume draws it is 2,505 km. Its rank correlation with volume is 0.75. The corresponding correlation for the tail exponent is about 0.00. The revised model limits a component’s rise above its sampled flank and reduces the width an isolated long transect can imply. The source-focused B-Tm spherical field satisfies the condition by construction and gives the same map and interval. [Paired spherical diagnostics and independent integrals](https://github.com/siyulai21/tephra-fallout-isopachs/blob/0a53d0211f2ac9cfc9fbeaff95217fc0d319a18b/comparisons/global-extent/kernel-integrals.json)
 
 **Pinatubo and Ilopango.** Pinatubo’s modeled 1 cm area in the southern 45° sector falls from about 52,500 to 12,900 km². The weaker score when the offshore group is removed is a reason to retain the broader result as a sensitivity. The marine field study itself identifies incomplete distal and southern sampling. At Ilopango there are sites around the source, but their ranges differ sharply by bearing. The revised interval still permits a large distal deposit. The published physical-model estimate of 85–188 km³ uses overlapping thickness evidence. It supplies geological context and never enters the calibration. [Sector integrals from two independent grids](sector-areas.csv.gz) · [Pinatubo marine core study](https://pubs.usgs.gov/pinatubo/wiesner/) · [Ilopango physical-model study](https://pmc.ncbi.nlm.nih.gov/articles/PMC7584997/)
 

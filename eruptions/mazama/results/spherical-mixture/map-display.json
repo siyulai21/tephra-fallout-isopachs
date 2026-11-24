@@ -1,31 +1,31 @@
 {
   "protocol": "report-cartography-v1",
-  "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
-  "posterior_sha256": "965e2839cab986c91e7d17f0c4d696aa9799478226776adbd57857370f0484cc",
+  "input_sha256": "2a6d9a4c6f23b7000e830a11fdfc2ddfeb27956c3d3990a548c02373aba39870",
+  "posterior_sha256": "18823a41e0dd7464cfe7bc77b48be1a6297ec0c04c2ff7158feea0682e3c2d6a",
   "coastline_sha256": "db8b8a451c11fa91b6cd36f457d238f204f1ade8f337ef2da9f6cd84a30e6f8e",
   "coastline_scale": "1:10 million",
   "central_statistic": "Bearing-conditioned spherical median",
-  "posterior_fields": 1536,
-  "posterior_flat_indices_sha256": "dcb79adf6845fa831a822bb61dfb110ce628986692abb3b0ad32d3b882fb7ef8",
+  "posterior_fields": 384,
+  "posterior_flat_indices_sha256": "f2009493979a004070a2268a9772023afe004604275eb704dfc3cac72bfc9092",
   "global_bounds_km": [
-    -590.4229093567701,
-    -585.9164981286759,
-    1456.8513610336274,
-    1562.864331739335
+    -710.0716394561435,
+    -1002.8179504578421,
+    1449.7746893575422,
+    1656.1726963802828
   ],
   "local_bounds_km": [
-    -212.78997821759958,
-    -140.11101887710845,
-    1003.7899770940433,
-    1462.2109634810417
+    -347.1127698616626,
+    -764.8999814397838,
+    1039.9235642470103,
+    1519.5985290673425
   ],
   "global_grid_shape": [
     322,
-    307
+    262
   ],
   "local_grid_shape": [
     322,
-    245
+    196
   ],
   "extent_audit": {
     "minimum_display_contour_cm": 0.1,
@@ -33,15 +33,15 @@
     "edge_refinements": [
       {
         "bounds_km": [
-          -590.4229093567701,
-          -585.9164981286759,
-          1456.8513610336274,
-          1562.864331739335
+          -710.0716394561435,
+          -1002.8179504578421,
+          1449.7746893575422,
+          1656.1726963802828
         ],
-        "maximum_edge_log10_cm": -1.4632552383820348
+        "maximum_edge_log10_cm": -1.3768262584568918
       }
     ],
-    "physical_rim_maximum_log10_cm": -8.760770172291537,
+    "physical_rim_maximum_log10_cm": -6.649787338894084,
     "lowest_contour_within_chart": true,
     "scope": "Display-only finite-grid extent audit, not contour-support validation or an integration boundary."
   },
@@ -58,11 +58,8 @@
   "field_protocol": "spherical-mixture-bearing-continuation-v1",
   "gap_half_reach_degrees": 22.5,
   "assumptions_sha256": {
-    "__init__.py": "f399301519b7d3ecc72639937328fc7aeecb474833d74b656f2308a0bf8b1e90",
     "field.py": "862f5c54765c2645b9d4495d172f40f3fde4926046aaa9e1ee891beef5effb56",
     "maps.py": "4b62dad506dc4b15e90c9e356f7624fc85898a26298263a9c0ebab6b78a19140",
-    "narrative.py": "eeb161c39881ea1cc07b6158ad9ee943d4c0328d1e15d6ed64741b81ead56b7f",
-    "report.py": "01da617bdd02891b9ffee489245e93323cea0ffba84db415c59fc04aa1427d74",
     "study.py": "8b0fffeafcd63d1cacc601b6d07cb70023d4e6d4be491cce5be1ab8c47e9fdd0",
     "volume.py": "b3a1412c81b3b654c35b87ba1eee5c443754bf4c1a8f603c0efea36d56b75fb2"
   },

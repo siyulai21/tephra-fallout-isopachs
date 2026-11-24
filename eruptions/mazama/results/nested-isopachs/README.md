@@ -1,6 +1,6 @@
 # Mazama · Bayesian nested corridors
 
-The principal bulk volume is **219 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **116–960 km³** across complete posterior draws.
+The principal bulk volume is **271 km³**, the whole-Earth integral of the median-thickness map. The conditional 95% interval for total fallout volume is **187–724 km³** across complete posterior draws.
 
 ![Mazama, Bayesian nested corridors. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
@@ -12,7 +12,7 @@ The principal map uses the geographic continuation evaluated on all registered e
 
 The following figures and statistics describe the fitted parent and its broader continuation. The principal estimate and its interval appear above.
 
-The buffered geographic score is 1.365 for the corridor and 1.503 for the whole-area sensitivity. Lower scores indicate better predictions at withheld sites. The corridor’s 95% predictive intervals cover 43 of 45 exact withheld readings. 4 of 4 geographic fits passed their sampling checks. The full-data proposal and importance check passed, the final volume populations passed, and the integration check passed. The shared screen accepted a complete contour band under 0 policies. [Prediction scores and row identities](report.json) · [Full fit diagnostics](full.json)
+The buffered geographic score is 0.918 for the corridor and 0.858 for the whole-area sensitivity. Lower scores indicate better predictions at withheld sites. The corridor’s 95% predictive intervals cover 43 of 58 exact withheld readings. 4 of 4 geographic fits passed their sampling checks. The full-data proposal and importance check passed, the final volume populations passed, and the integration check passed. The shared screen accepted a complete contour band under 0 policies. [Prediction scores and row identities](report.json) · [Full fit diagnostics](full.json)
 
 ## Where the volume lies
 
@@ -22,18 +22,18 @@ The full-compass view includes all bearings through the antipode. Its logarithmi
 
 | Compass sector | Exact sites | Bounded sites | Corridor 1 cm area (km²) | Whole-area 1 cm area (km²) | Corridor conditional 95% volume interval (km³) |
 |---|---:|---:|---:|---:|---:|
-| N | 21 | 0 | 387,064 | 416,621 | 21.9–94.8 |
-| NE | 19 | 0 | 970,609 | 1,366,297 | 60.7–252.1 |
-| E | 3 | 0 | 693,944 | 1,161,925 | 33.2–333.3 |
-| SE | 0 | 0 | 173,801 | 407,034 | 1.4–177.3 |
-| S | 0 | 0 | 13,044 | 94,921 | 0.076–56.0 |
-| SW | 0 | 0 | 5,771 | 28,185 | 0.082–20.7 |
-| W | 0 | 0 | 10,289 | 20,188 | 0.3–16.8 |
-| NW | 2 | 0 | 28,999 | 35,920 | 1.7–28.5 |
+| N | 31 | 56 | 655,938 | 894,435 | 44.0–164.9 |
+| NE | 10 | 73 | 716,195 | 885,990 | 67.1–223.1 |
+| E | 13 | 30 | 378,854 | 392,718 | 36.7–176.5 |
+| SE | 3 | 22 | 117,655 | 117,542 | 12.5–102.9 |
+| S | 0 | 1 | 23,473 | 39,047 | 1.2–71.7 |
+| SW | 0 | 0 | 715 | 29,349 | 0.088–32.3 |
+| W | 0 | 1 | 9,498 | 64,268 | 0.5–73.0 |
+| NW | 1 | 3 | 181,288 | 470,565 | 6.2–103.7 |
 
-At 1 cm, the corridor median map encloses 2,283,521 km² and the whole-area sensitivity encloses 3,531,090 km². Of these, 2,109,644 and 3,357,213 km² fall outside the retained exact-site triangles. An unsampled sector can contain ash. Its allocation depends on the assumed continuation.
+At 1 cm, the corridor median map encloses 2,083,616 km² and the whole-area sensitivity encloses 2,893,914 km². Of these, 1,837,995 and 2,648,293 km² fall outside the retained exact-site triangles. An unsampled sector can contain ash. Its allocation depends on the assumed continuation.
 
-The prior assigns 25% to continuation across all bearings. The remaining probability spans three fan widths and three down-range extensions. The fitted probability of whole-bearing continuation is 25.0%. The widths and extensions are shared structural assumptions. A bound supplies a likelihood event. Only positive evidence supplies a potential dispersal corridor.
+The prior assigns 25% to continuation across all bearings. The remaining probability spans three fan widths and three down-range extensions. The fitted probability of whole-bearing continuation is 19.2%. The widths and extensions are shared structural assumptions. A bound supplies a likelihood event. Only positive evidence supplies a potential dispersal corridor.
 
 [Volume and sector draws](volume-budget.npz) · [Complete field draws](full.npz) · [Areas, assumptions, bounds and diagnostics](report.json)
 
@@ -43,10 +43,10 @@ The prior assigns 25% to continuation across all bearings. The remaining probabi
 
 | Prior probability of broad continuation | Conditional 95% volume interval (km³) |
 |---:|---:|
-| 10% | 126.8–720.4 |
-| 25% | 129.2–938.0 |
-| 50% | 139.0–1,264.4 |
-| 75% | 149.0–1,465.2 |
+| 10% | 204.4–706.6 |
+| 25% | 208.7–728.8 |
+| 50% | 213.2–769.0 |
+| 75% | 221.0–775.9 |
 
 The prior odds vary under the same observed likelihood. The numerical report also gives the volume by individual corridor law where the saved draws resolve it.
 

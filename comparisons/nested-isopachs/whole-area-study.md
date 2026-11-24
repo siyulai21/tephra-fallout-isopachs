@@ -11,14 +11,14 @@ Each row compares the same accepted thickness measurements and bounds. All three
 | [Aso-4](../../eruptions/aso-4/results/nested-whole-area/README.md) | 658.6 | 599.1 | **2,006.6** [648.8–15,969.9] | 75/83 | passed · 3/4 |
 | [B-Tm](../../eruptions/b-tm/results/nested-whole-area/README.md) | 33.5 | 37.1 | **67.9** [52.0–534.5] | 60/64 | passed · 4/4 |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-whole-area/README.md) | 40.8 | 145.4 | **47.7** [37.5–181.8] | 49/52 | **warning** · 1/4 |
-| [Mazama](../../eruptions/mazama/results/nested-whole-area/README.md) | 165.8 | 178.1 | **354.7** [162.2–1,663.6] | 41/45 | passed · 4/4 |
+| [Mazama](../../eruptions/mazama/results/nested-whole-area/README.md) | 332.1 | 370.2 | **324.9** [251.3–876.9] | 42/58 | passed · 4/4 |
 | [Minoan](../../eruptions/minoan/results/nested-whole-area/README.md) | 28.8 | 29.2 | **31.4** [25.1–91.8] | 85/92 | passed · 4/4 |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/nested-whole-area/README.md) | 6.4 | 13.9 | **11.4** [9.8–27.7] | 103/150 | passed · 3/4 |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-whole-area/README.md) | 7.1 | 7.3 | **11.5** [7.0–60.2] | 49/50 | **warning** · 1/4 |
 | [Tambora](../../eruptions/tambora/results/nested-whole-area/README.md) | 95.7 | 126.3 | **123.4** [96.1–290.7] | 26/26 | passed · 4/4 |
 | [YTT](../../eruptions/ytt/results/nested-whole-area/README.md) | 900.4 | 1,284.0 | **1,418.8** [1,048.5–3,339.5] | 43/46 | **warning** · 3/4 |
 
-The equal-eruption mean geographic negative log scores are 1.530 for directional, 1.444 for spherical and 1.454 for nested. Each case gives its four buffered regions equal weight. Lower scores indicate better prediction at the withheld sites. Complete contour bands qualified under at least one nested support policy in 0 of 9 cases. Ancient global volumes have no independent measured total here. [Case volumes and scores](whole-area-cases.csv) · [Matched regional rerun](regional-replay.csv)
+The equal-eruption mean geographic negative log scores are 1.471 for directional, 1.373 for spherical and 1.382 for nested. Each case gives its four buffered regions equal weight. Lower scores indicate better prediction at the withheld sites. Complete contour bands qualified under at least one nested support policy in 0 of 9 cases. Ancient global volumes have no independent measured total here. [Case volumes and scores](whole-area-cases.csv) · [Matched regional rerun](regional-replay.csv)
 
 ## Where the nested estimate comes from
 
@@ -27,7 +27,7 @@ The equal-eruption mean geographic negative log scores are 1.530 for directional
 | Aso-4 | 1.2% | 55.1% | 88.6% | 649–16,417 / 648–13,594 |
 | B-Tm | 4.9% | 21.7% | 83.8% | 51–497 / 56–600 |
 | Ilopango TBJ (Unit G) | 3.4% | 11.3% | 78.4% | 42–243 / 37–159 |
-| Mazama | 5.4% | 15.3% | 71.6% | 161–1,698 / 170–1,581 |
+| Mazama | 8.0% | 14.5% | 8.9% | 245–913 / 257–803 |
 | Minoan | 6.7% | 9.5% | 57.0% | 26–95 / 25–87 |
 | Pinatubo 1991 (Layer C) | 7.0% | 8.3% | 58.8% | 10–26 / 10–31 |
 | Sakurajima Satsuma (P14) | 1.4% | 45.9% | 89.9% | 7–63 / 7–58 |

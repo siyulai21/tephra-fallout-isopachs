@@ -1,12 +1,12 @@
-# Mazama source audit and model update
+# Mazama climactic fallout
 
-The revised ledger contains 733 evidence records. The current input contains 244 observations, with 58 measured beds, 153 lower bounds and 33 upper bounds. The original field logs supply the Yellowstone, Nevada, Utah and Lyman Lake measurements, Young's mapped sections and the corrected UBC Research Forest lakes and eight additional Great Basin and Carp Lake constraints. [Audit and sources](../../data/audits/Mazama/README.md) · [Accepted observations](../../data/eruptions/Mazama_reviewed.csv) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md) · [Great Basin field logs](../../data/audits/Mazama/GREAT_BASIN.md)
+**244 observations enter all five model families.** The common input has 58 measurements, 153 lower bounds and 33 upper bounds. The source ledger reconciles 293 original catalogue entries and 440 additional records, cross-references and controls. The original field evidence remains incomplete at sites identified in the audit.
 
-The GP, cubic spline and nested-isopach maps are available on the 244-location input. The 4–5 mm Yellowstone cores have a separate enlarged map. The directional, spherical and source-interpretation calculations are in progress. [244-site results and Yellowstone map](https://github.com/siyulai21/tephra-fallout-isopachs/blob/d092d96023a6a59e2764c1385a4e85e1e6cb2d19/eruptions/mazama/audit-run/README.md) · [Full calculation](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45261422486) · [Earlier 236-observation results](audit-run/README.md)
+[Accepted input](../../data/eruptions/Mazama_reviewed.csv) · [Audit assessment](../../data/audits/Mazama/README.md) · [Every locality](../../data/audits/Mazama/LOCALITIES.md) · [Young field sections](../../data/audits/Mazama/YOUNG_AND_FIELD_SECTIONS.md) · [Lake cores and Mount Baker field sections](../../data/audits/Mazama/LAKE_AND_FIELD_RECORDS.md) · [Dated sections](../../data/audits/Mazama/DATED_SECTIONS.md) · [Great Basin and Carp Lake](../../data/audits/Mazama/GREAT_BASIN.md) · [Thicknessless-site derivations](../../data/audits/Mazama/THICKNESSLESS_SITES.md) · [Yellowstone cores](../../data/audits/Mazama/YELLOWSTONE.md) · [Source sensitivities](results/source-audit/README.md)
 
-## Archived model comparison on 45 measurements
+The target is primary airborne bulk fallout from the climactic eruption, including co-ignimbrite ash. Identified precursor beds, flow deposits and reworked totals are excluded. Preserved primary components and range minima enter once as lower bounds, conditional on their identity and preservation. Green and Tepee Lake positions are corrected; the 850 cm Muir Creek facies-ambiguous value is quarantined. The Williams 46 cm phase ambiguity is retained explicitly and tested by omission.
 
-The accepted dataset contains 45 exact measurements. The regional fits share an observation hull of 930,447 km². [Accepted thickness CSV](../../data/eruptions/Mazama_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
+These global volumes are conditional estimates. Sparse bearings and unsampled regions remain uncertain even where a whole-Earth integral converges. Each family keeps its own interval, prior sensitivity and numerical status. [Shared support decisions](results/support/README.md) and each global extent report preserve rejected contours and unsupported gaps.
 
 ## Volumes and geographic prediction
 
@@ -14,11 +14,11 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 
 | Method | Median-map volume (km³) | Conditional 95% interval (km³) | Held-out score ↓ | 95% coverage |
 |---|---:|---:|---:|---:|
-| GP ensemble | **130** | 109–179 | 1.272 | 95.6% |
-| Cubic spline | **129** | 120–152 | 1.971 | 82.2% |
-| [Directional ensemble](results/directional/README.md) | **166** | 138–1.19e+03 (provisional) | 1.366 | 95.6% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **171** | 135–914 | 1.559 † | 84.4% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **219** | 116–960 | 1.369 | 95.6% |
+| GP ensemble | **409** | 332–835 | 1.166 | 74.1% |
+| Cubic spline | **2,138** | 1.13e+03–4.72e+03 | 2.634 | 81.0% |
+| [Directional ensemble](results/directional/README.md) | **332** | 257–1.04e+03 (provisional) | 0.813 † | 87.9% |
+| [Spherical mixture](results/spherical-mixture/README.md) | **370** | 212–7.17e+03 | 1.000 | 72.4% |
+| [Bayesian nested corridors](results/nested-isopachs/README.md) | **271** | 187–724 | 1.011 | 72.4% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -38,12 +38,17 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 The dashed boundary encloses all accepted sites. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
-The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 
-## Evidence and limitations
+## Evidence, reproduction and history
 
-The calculation uses the supplied acceptance flags. An independent row-by-row source review is still outstanding. Some spherical-mixture prior refits carry numerical warnings, and the broad upper interval reflects unsampled fallout.
+![Mazama evidence coverage](../../data/audits/Mazama/evidence-map.png)
 
-The standard local-support footprint covers 172,792 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)
+Ten Yellowstone Lake cores contain 4–5 mm of Mazama ash at eight positions. Seven positions enter the principal fit. Two core pairs share positions, and YL16-6A lies at a slump toe. The enlarged map resolves the cores that overlap at the continental scale. [Core identities and bed measurements](../../data/audits/Mazama/YELLOWSTONE.md)
 
-In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the southwestern sector has no measured sites or bounds. Its median 1 cm footprint changes from 28,185 to 5,771 km². Buffered thickness predictions improve, and withholding whole quadrants slightly favors the broader fit. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
+![Yellowstone Lake core locations and ash thicknesses](../../data/audits/Mazama/yellowstone-cores.png)
+
+The fit also includes 8 cm at Overland Lake, 4 cm at Soldier Lake, 1 cm in Great Salt Lake core GSL00-4A-2H-2, and the approximately 4 cm airfall bed in the Lyman Lake composite. [Primary core reports](../../data/audits/Mazama/FOLLOWUP_SEARCH.md) · [Lyman position and stratigraphy](../../data/audits/Mazama/LATE_SOURCE_REVIEW.md)
+
+The nested-model edge test refits the deposit after withholding the most influential outer site and again after withholding its geographic cluster. [Withheld rows, volumes and numerical checks](results/nested-whole-area/edge-deletion/README.md)
+
+Run `tephra-isopachs compare Mazama --output results/new-mazama-run` for the registered comparison. The source-refit commands and publication verification are recorded with the [release](results/source-audit/README.md). Earlier published results and superseded audit trials retain their inputs and hashes in [dated archives](../../archive/2026-11-23-mazama-source-audit/README.md).

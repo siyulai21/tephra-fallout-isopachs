@@ -1,12 +1,12 @@
 # Mazama · fixed-direction ensemble
 
-**179.9 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. The conditional 95% volume interval is **149.1–1,371.9 km³**.
+**356.4 km³ of bulk fallout** is the whole-Earth integral of the median thickness map below. The conditional 95% volume interval is **267.4–1,079.0 km³**.
 
-The measured triangles contain **26.2 km³** (14.6%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.
+The measured triangles contain **32.6 km³** (9.2%) of the median map. The remaining volume depends on how thickness continues through gaps, toward the vent and beyond the sites. Each mapped contour encloses the median thickness level. Lobes and holes can remain separate.
 
 ![Measured-bracketed median fragments and expanded median isopachs](isopachs.png)
 
-The star marks the supplied vent. Its median thickness is 418.2 cm. The largest median thickness on the two display grids is 560.3 cm at a source distance of 24.7 km. The evidence panel contains 15 measured-bracketed triangle and level pairs. The right panel includes conditional continuation.
+The star marks the supplied vent. Its median thickness is 6,528.3 cm. The largest median thickness on the two display grids is 6,528.3 cm at a source distance of 0.0 km. The evidence panel contains 20 measured-bracketed triangle and level pairs. The right panel includes conditional continuation.
 
 ![Local median thickness and pointwise 95% uncertainty](local.png)
 
@@ -16,22 +16,22 @@ The star marks the supplied vent. Its median thickness is 418.2 cm. The largest 
 
 | Direction | Exact rows | Bounds | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|---:|---:|
-| N | 21 | 0 | 33.6 | 27.5–45.7 |
-| NE | 19 | 0 | 92.1 | 58.6–273.2 |
-| E | 3 | 0 | 21.7 | 11.6–74.1 |
-| SE | 0 | 0 | 4.6 | 2.1–13.8 |
-| S | 0 | 0 | 5.0 | 1.8–278.2 |
-| SW | 0 | 0 | 7.7 | 2.2–810.8 |
-| W | 0 | 0 | 6.5 | 2.7–69.6 |
-| NW | 2 | 0 | 8.8 | 4.5–17.6 |
+| N | 31 | 56 | 67.9 | 50.1–238.2 |
+| NE | 10 | 73 | 109.2 | 64.3–505.5 |
+| E | 13 | 30 | 40.3 | 29.6–82.1 |
+| SE | 3 | 22 | 32.9 | 22.3–64.7 |
+| S | 0 | 1 | 26.1 | 14.5–75.0 |
+| SW | 0 | 0 | 26.9 | 14.9–260.3 |
+| W | 0 | 1 | 25.5 | 14.0–66.8 |
+| NW | 1 | 3 | 27.6 | 16.5–76.6 |
 
 | Domain | Median-map volume (km³) | Conditional 95% volume interval (km³) |
 |---|---:|---:|
-| Measured triangles | 26.2 | 21.0–34.9 |
-| Transition at triangle edges | 61.5 | 45.1–89.2 |
-| Proximal background | 0.0 | 0.0–0.0 |
-| Background between sampled radii | 78.6 | 62.4–538.6 |
-| Distal background | 13.6 | 3.6–766.0 |
+| Measured triangles | 32.6 | 27.0–45.3 |
+| Transition at triangle edges | 75.8 | 55.8–125.6 |
+| Proximal background | 91.1 | 41.6–230.5 |
+| Background between sampled radii | 93.2 | 72.9–197.4 |
+| Distal background | 63.7 | 15.1–723.0 |
 
 The median-map entries add to its global volume before rounding. Each simulated deposit uses one structure everywhere. Pointwise thickness bounds describe uncertainty at a location. The volume interval comes from integrating each complete field.
 
@@ -39,14 +39,14 @@ The median-map entries add to its global volume before rounding. Each simulated 
 
 | Fan half-width | Additional fan in largest distal gap | Predictive weight | Conditional 95% volume interval (km³) | Fit and mass checks |
 |---:|---|---:|---:|---|
-| 22.5° | Absent from this structure | 16.1% | 153.2–464.8 | passed |
-| 45° | Absent from this structure | 15.7% | 150.6–370.2 | passed |
-| 90° | Absent from this structure | 12.3% | 133.0–258.8 | passed |
-| 22.5° | Possible | 15.7% | 165.7–1,047.4 | passed |
-| 45° | Possible | 21.2% | 168.1–1,741.3 | passed |
-| 90° | Possible | 18.9% | 154.7–3,025.1 | passed |
+| 22.5° | Absent from this structure | 16.1% | 330.1–1,258.4 | **review** |
+| 45° | Absent from this structure | 15.7% | 269.3–636.5 | passed |
+| 90° | Absent from this structure | 12.3% | 238.0–582.5 | passed |
+| 22.5° | Possible | 15.7% | 347.7–1,457.6 | passed |
+| 45° | Possible | 21.2% | 285.6–1,053.0 | passed |
+| 90° | Possible | 18.9% | 258.4–828.9 | passed |
 
-Equal weights give a median-map volume of **177.5 km³**. Restricting to the three structures without an extra fan gives **178.7 km³**. Allowing an extra fan in all three gives **201.1 km³**. These possibilities share the same observations. A fan missed entirely by sampling remains weakly identified.
+Equal weights give a median-map volume of **354.5 km³**. Restricting to the three structures without an extra fan gives **356.5 km³**. Allowing an extra fan in all three gives **365.4 km³**. These possibilities share the same observations. A fan missed entirely by sampling remains weakly identified.
 
 Independent calibration cases with usable folds were tambora, aso-4, b-tm, ytt, minoan. Weights describe held-out thickness prediction. They depend on the small eruption catalogue.
 
@@ -54,14 +54,14 @@ Independent calibration cases with usable folds were tambora, aso-4, b-tm, ytt, 
 
 | Held-out design | Rows scored | Ensemble score ↓ | Equal weights ↓ | Single reference ↓ | Exact-site 95% coverage |
 |---|---:|---:|---:|---:|---:|
-| Geographic | 45/45 | 1.407 | 1.413 | 1.451 | 95.6% |
-| Quadrants | 45/45 | 1.990 | 1.995 | 2.070 | 68.9% |
+| Geographic | 244/244 | 0.844 | 0.849 | 0.963 | 86.2% |
+| Quadrants | 244/244 | 0.898 | 0.896 | 1.177 | 96.6% |
 
-Geographic sampling warnings occurred in zero folds. All four folds produced predictions.
+Geographic sampling warnings occurred in folds 1, 3. All four folds produced predictions.
 
-Quadrants sampling warnings occurred in folds 0. Unscored folds were 2 (empty).
+Quadrants sampling warnings occurred in folds 1. Unscored folds were 2 (empty).
 
-All six full-data structures passed their numerical checks. The whole-Earth spatial check passed using 16,384 points in each of two scrambles. The interleaved posterior-draw check passed (largest change 0.0%). The resolved isopach-area split checks passed. The independent same-fields mean-integral discrepancy was 0.00%.
+Full-data structures requiring numerical review were narrow fans. The whole-Earth spatial check passed using 16,384 points in each of two scrambles. The interleaved posterior-draw check passed (largest change 0.7%). The resolved isopach-area split checks passed. The independent same-fields mean-integral discrepancy was 0.02%.
 
 The shared complete-contour audit found **0 qualifying policies out of 3**. The conditional global estimate remains sensitive to preservation, source-region thickness, distal thinning and possible unseen fans.
 

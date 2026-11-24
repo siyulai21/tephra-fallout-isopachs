@@ -9,7 +9,7 @@ The uncertain-azimuth ensemble smooths the fitted fan ranges between sampled bea
 | [Aso-4](../../eruptions/aso-4/results/directional/README.md) | **661** | 293–3,581 | 1.482 | 90.4% |
 | [B-Tm](../../eruptions/b-tm/results/directional/README.md) | **32.5** | 22.4–73.2 | 1.233 † | 93.8% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/directional/README.md) | **41.9** | 29.6–384 | 1.493 | 94.2% |
-| [Mazama](../../eruptions/mazama/results/directional/README.md) | **166** | 138–1,191 · provisional | 1.366 | 95.6% |
+| [Mazama](../../eruptions/mazama/results/directional/README.md) | **332** | 257–1,038 · provisional | 0.813 † | 87.9% |
 | [Minoan](../../eruptions/minoan/results/directional/README.md) | **29.2** | 21.2–121 | 1.716 | 94.6% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/directional/README.md) | **6.38** | 4.92–10.8 · provisional | 1.744 † | 88.7% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/directional/README.md) | **7.21** | 3.73–70.3 | 1.156 † | 96.0% |

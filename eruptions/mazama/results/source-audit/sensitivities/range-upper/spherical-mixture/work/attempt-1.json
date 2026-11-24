@@ -1,0 +1,164 @@
+{
+  "signature": {
+    "input_array_sha256": "0a3d214e80fe087c1ee04b2aba5b00e514396577da534691d615eddca351132b",
+    "latitude": 42.95,
+    "prior": {
+      "name": "baseline",
+      "components": 3,
+      "log_volume_mean": 0.0,
+      "log_volume_sd": 6.0,
+      "log_scale_mean": 5.703782474656201,
+      "log_scale_sd": 1.5,
+      "offset_sd": 3.0,
+      "tail_log_mean": 0.0,
+      "tail_log_sd": 1.0,
+      "integrable_plane_tail": true,
+      "contamination": true,
+      "exponential_core": true,
+      "fan_concentration": 0.3,
+      "kernel_concentration": 0.3,
+      "noise_scale": 1.5,
+      "source_anchored": false,
+      "angular_sd": 0.75,
+      "angular_nodes": 256,
+      "source_shape": "harmonic",
+      "vent_envelope": false,
+      "supported_basis": false,
+      "basis_width_log_mean": -0.6931471805599453,
+      "basis_width_log_sd": 0.7
+    },
+    "model_source_sha256": {
+      "geometry.py": "7dcd2f4a8a59023e7273e96d200b6d3f473bf95b180b335601619ec265b5398e",
+      "prior.py": "c70b7a3b3230c4784e77eeb462995eb4cf45eb6e438f0fafbe7e997766807cf0",
+      "inference.py": "ac787ccba4b7377302f1441fc06a6816666b101ebfea0211d3bbd0c4a477c347",
+      "source_geometry.py": "5edfb351bb407571c777553c2cf3d5a584dfa93c09f4e12003c76bb784b61b33",
+      "vent_envelope.py": "e8f3adae47d1a3e482024f794bb45a8936b1ba726b4d9e152ccbda139fee33f9",
+      "supported_basis.py": "3711a365c9a9023bfc66cb69982b72aec8d213b601693241bd729694041421be",
+      "WGS84_EarthDomain": "7b5efee42d520d651d542ba8a8100d3da20c4d5a124a4346c72f424356da2098"
+    },
+    "runtime": {
+      "python": "3.11.18",
+      "packages": {
+        "numpy": "2.4.6",
+        "scipy": "1.17.1",
+        "numpyro": "0.22.0",
+        "jax": "0.10.2",
+        "jaxlib": "0.10.2",
+        "arviz": "0.22.0"
+      }
+    },
+    "sampling": {
+      "warmup": 1000,
+      "draws": 1500,
+      "chains": 4,
+      "target_accept": 0.95,
+      "max_tree_depth": 11,
+      "seed": 20261104
+    }
+  },
+  "diagnostics": {
+    "volume": {
+      "rhat": 1.0042357415934788,
+      "bulk_ess": 1162.0498022769352,
+      "tail_ess": 1474.1270699257013,
+      "log_quantile_mcse": {
+        "0.025": 0.009061732338537798,
+        "0.5": 0.027009019017655067,
+        "0.975": 0.1602500223283716
+      }
+    },
+    "max_label_invariant_rhat": 1.020740906350644,
+    "min_label_invariant_bulk_ess": 248.94558009587718,
+    "min_label_invariant_tail_ess": 527.386992464957,
+    "divergences": 0,
+    "energy_bfmi_per_chain": [
+      0.41326978489494154,
+      0.5409954570090523,
+      0.46659059598715885,
+      0.5687518181507317
+    ],
+    "min_energy_bfmi": 0.41326978489494154,
+    "label_invariant_variables": [
+      "log_volume",
+      "noise",
+      "tail_fraction",
+      "exponent",
+      "exponential_fraction",
+      "weighted_log_scale",
+      "effective_fans",
+      "field_0",
+      "field_1",
+      "field_2",
+      "field_3",
+      "field_4",
+      "field_5",
+      "field_6",
+      "field_7",
+      "field_8",
+      "field_9",
+      "field_10",
+      "field_11",
+      "field_12",
+      "field_13",
+      "field_14",
+      "field_15",
+      "extrapolation_0",
+      "extrapolation_1",
+      "extrapolation_2",
+      "extrapolation_3",
+      "extrapolation_4",
+      "extrapolation_5",
+      "extrapolation_6",
+      "extrapolation_7",
+      "extrapolation_8",
+      "extrapolation_9",
+      "extrapolation_10",
+      "extrapolation_11",
+      "extrapolation_12"
+    ],
+    "chain_volume_quantiles_km3": [
+      [
+        239.618312365834,
+        545.8356091981269,
+        13061.818502885602
+      ],
+      [
+        223.23951214722024,
+        527.7956858919869,
+        6710.660986198163
+      ],
+      [
+        230.348529240023,
+        562.7372640475999,
+        14248.47741842322
+      ],
+      [
+        230.68802410459298,
+        581.6404569869864,
+        14031.069928493851
+      ]
+    ],
+    "passed": false,
+    "interpretation": "Rank-normalized split R-hat and bulk/tail ESS across independent chains. Fan labels are exchangeable; field and volume diagnostics are used instead. Passing diagnostics does not prove global mode exploration or model correctness.",
+    "settings": {
+      "warmup": 1000,
+      "draws": 1500,
+      "chains": 4,
+      "target_accept": 0.95,
+      "max_tree_depth": 11,
+      "seed": 20261104
+    },
+    "elapsed_seconds": 230.99207244800004,
+    "max_depth_fraction": 0.0003333333333333333,
+    "mean_acceptance": 0.9398141983034772
+  },
+  "volume": {
+    "lower95": 229.71053731154063,
+    "median": 557.3678711487023,
+    "upper95": 12000.4339002509,
+    "unit": "km3 bulk fallout",
+    "draws": 6000,
+    "interpretation": "95% equal-tailed Bayesian credible interval conditional on this likelihood, prior and field family. Includes parameter and fan uncertainty; excludes unknown systematic preservation, sampling and source-attribution bias. Not dense-rock equivalent or ignimbrite volume."
+  },
+  "posterior_sha256": "868304e9cc081fc024506c4a4a0e6e8083f9dfda791b2757a791b031b4c561bd"
+}

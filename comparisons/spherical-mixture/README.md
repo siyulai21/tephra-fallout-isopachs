@@ -9,7 +9,7 @@ The spherical mixture limits how much a displaced component can rise above its s
 | [Aso-4](../../eruptions/aso-4/results/spherical-mixture/README.md) | **473** | 333–6,989 | 1.636 | 94.0% |
 | [B-Tm](../../eruptions/b-tm/results/spherical-mixture/README.md) | **37.1** | 30.2–276 | 1.496 † | 93.8% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/spherical-mixture/README.md) | **133** | 59.7–1,950 · provisional | 1.284 | 94.2% |
-| [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | **171** | 135–914 | 1.559 † | 84.4% |
+| [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | **370** | 212–7,167 | 1.000 | 72.4% |
 | [Minoan](../../eruptions/minoan/results/spherical-mixture/README.md) | **26.9** | 22.9–834 | 1.586 | 95.7% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/spherical-mixture/README.md) | **11.1** | 7.33–20.2 | 0.965 † | 94.7% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/spherical-mixture/README.md) | **6.94** | 4.89–305 | 1.351 | 88.0% |

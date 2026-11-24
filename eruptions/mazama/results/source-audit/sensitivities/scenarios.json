@@ -1,0 +1,261 @@
+{
+  "principal_input_sha256": "2a6d9a4c6f23b7000e830a11fdfc2ddfeb27956c3d3990a548c02373aba39870",
+  "cases": {
+    "great-basin-omit": {
+      "file": "results/mazama-recompute/sources/great-basin-omit/input.csv",
+      "sha256": "caeb106f5e3e9e835c8569da245cefdbbfa58de7c26ce88636f59fa51221d2db",
+      "definition": "Omit the eight additional quantitative observations in the Great Basin and Carp Lake source review. The predecessor had 236 observations.",
+      "measurements": 57,
+      "lower_limits": 152,
+      "upper_limits": 27
+    },
+    "great-basin-alternate": {
+      "file": "results/mazama-recompute/sources/great-basin-alternate/input.csv",
+      "sha256": "41e5b21830a1fe48b69d01f1993f65abc298d6da39799490a1593b25ae68b2bf",
+      "definition": "Read the Leidy trench at its upper endpoint, omit the less clean first peat hole, double the second cap to test net loss and move the Furnace auger to a corner of its mapped frame. Treat Patterson and Fish as lake ceilings, omit the assumed Lily bed and use the 26 cm Table 1 Dead Horse endpoint. Carp uses the 2 cm compiler alternative.",
+      "measurements": 56,
+      "lower_limits": 152,
+      "upper_limits": 34
+    },
+    "dated-sections-omit": {
+      "file": "results/mazama-recompute/sources/dated-sections-omit/input.csv",
+      "sha256": "77a53ded3843444aa9bda660267c7bca3db04ba2f56f600fa7369ac2512c19e6",
+      "definition": "Omit the two corrected UBC Research Forest beds, both dated host brackets, the complete Huff archive and the Kootenai pit. The other reviewed regions are retained.",
+      "measurements": 56,
+      "lower_limits": 152,
+      "upper_limits": 30
+    },
+    "dated-capture-alternate": {
+      "file": "results/mazama-recompute/sources/dated-capture-alternate/input.csv",
+      "sha256": "15a1197b5412004fd2f5f4020ae7400886d29805133492ede6dfd4cc3ab6f538",
+      "definition": "Allow net focusing in both UBC lake beds by treating them as maxima. Allow half capture at Waits and Huff. Replace the Hager mire with the central core host ceiling. Use only basal BCV1 and the western Kootenai section centre.",
+      "measurements": 56,
+      "lower_limits": 153,
+      "upper_limits": 35
+    },
+    "kootenai-position-east": {
+      "file": "results/mazama-recompute/sources/kootenai-position-east/input.csv",
+      "sha256": "41948b7d41a83eef2663f1874342af844054baa5ed00cc012fd33f083565f095",
+      "definition": "Move the single Kootenai pit likelihood to the eastern section centre without altering its component minimum.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "lake-field-omit": {
+      "file": "results/mazama-recompute/sources/lake-field-omit/input.csv",
+      "sha256": "a515ad9afedb2cf9dc1e5612ddf7bfa085c81cca4b6f6b73f6780be8c9237fc9",
+      "definition": "Omit the final lake-core and Mount Baker/Three Sisters interpretation group. Retain the independent Young and Round Meadow sections.",
+      "measurements": 52,
+      "lower_limits": 145,
+      "upper_limits": 20
+    },
+    "lake-capture-alternate": {
+      "file": "results/mazama-recompute/sources/lake-capture-alternate/input.csv",
+      "sha256": "0f7799aed576fe43e2f9a53c099d163b4ae7023b89a3cd4899fcba74ca5d4da7",
+      "definition": "For British Columbia measured beds, use the whole preserved package as a ceiling. Loosen original-to-preserved capture to at least one half in the three Idaho lake packages, two undated-width Washington beds, Redmountain, Pocket Lake and Pettit. Keep one Redfish core, RDF-4A. The facies cap is doubled for Redfish under the same response assumption.",
+      "measurements": 54,
+      "lower_limits": 153,
+      "upper_limits": 36
+    },
+    "field-range-alternate": {
+      "file": "results/mazama-recompute/sources/field-range-alternate/input.csv",
+      "sha256": "1eea4b664ba8411bdd1c47ccf9de6ed2e260ea6ae58352d43bbd3db5db068691",
+      "definition": "Use the opposite endpoints for mapped Mount Baker (RS\u20135, 17, 21) and Three Sisters (5, 15, 41) ranges, conditional on capture and no erosion. Omit RS\u201318 at its ambiguous coordinate.",
+      "measurements": 58,
+      "lower_limits": 146,
+      "upper_limits": 39
+    },
+    "young-sections-omit": {
+      "file": "results/mazama-recompute/sources/young-sections-omit/input.csv",
+      "sha256": "2c318e1597f4bb99f1f1ea2e6b0efe455b0311f98eebf196ffcdaa73a78c78c1",
+      "definition": "Omit the Young Appendix 1 upper-pumice sections together. The distinct modern measured locations retain their original treatment.",
+      "measurements": 58,
+      "lower_limits": 50,
+      "upper_limits": 33
+    },
+    "young-section-positions": {
+      "file": "results/mazama-recompute/sources/young-section-positions/input.csv",
+      "sha256": "ba085284a97e3644d54a02ea7c465bfe3ef7f08623197285d1606480730338d4",
+      "definition": "Translate the Young Appendix 1 observations coherently to the alternative Kirk Hill registration tying Young section 47 to the modern equivalent Upper Kirk site. All measured values are unchanged.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "young-distal-omit": {
+      "file": "results/mazama-recompute/sources/young-distal-omit/input.csv",
+      "sha256": "eda678283f83184e0102bad7b854927b38d1a85d0c85f63f46aac6b05e1d7489",
+      "definition": "Omit the three field-checked bog estimates, the five Young ceilings, and the Lofty Lake alternative-bearing record together. This tests the shared upland conversion and local preservation.",
+      "measurements": 58,
+      "lower_limits": 149,
+      "upper_limits": 28
+    },
+    "distal-transfer-alternates": {
+      "file": "results/mazama-recompute/sources/distal-transfer-alternates/input.csv",
+      "sha256": "90054bbaa216afe681f3cce33867f45367a025e9d596b32c02e22c7b37377f22",
+      "definition": "Jesmond uses the original observer\u2019s approximately 0.5 cm corer estimate under negligible smearing. Lofty uses Young\u2019s 0.2 cm ceiling. The three field-checked peat estimates retain the principal endpoints.",
+      "measurements": 59,
+      "lower_limits": 152,
+      "upper_limits": 33
+    },
+    "round-meadow-one": {
+      "file": "results/mazama-recompute/sources/round-meadow-one/input.csv",
+      "sha256": "5eed70e357d9fe0161fdb1e7bafdeae8d88bd668df9b8d765c255c264c7ccdb1",
+      "definition": "Retain only vibracore 3 from the Round Meadow 2015 group. Its unambiguous 330\u2013130 cm primary section tests the contribution of adjacent borings and less certain contacts.",
+      "measurements": 58,
+      "lower_limits": 145,
+      "upper_limits": 33
+    },
+    "offshore-omit": {
+      "file": "results/mazama-recompute/sources/offshore-omit/input.csv",
+      "sha256": "7812fd03250e3df8bdbadf509c0c26ca2e97903df642b8f2f243077b5e560a64",
+      "definition": "Omit the conditional Willapa Canyon ceiling. Marine reworking, compaction or export may decouple the 4 cm bed from local primary fallout.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 32
+    },
+    "western-field-omit": {
+      "file": "results/mazama-recompute/sources/western-field-omit/input.csv",
+      "sha256": "350cb123f3c9c3855783b0ef34e9aa7535dc2c51b79512307a0c5a426d5cc056",
+      "definition": "Omit the new Stillwater, North Twin Lake, Indian Prairie, Gold Lake Bog, Newberry and Walker Rim field studies together. Other Oregon sections and Young\u2019s table remain in the likelihood.",
+      "measurements": 56,
+      "lower_limits": 139,
+      "upper_limits": 33
+    },
+    "omit-bounds": {
+      "file": "results/mazama-recompute/sources/omit-bounds/input.csv",
+      "sha256": "7b2d732267dbb471cb6bc0de71ba8a685a335259128ff4e08f94121381b18226",
+      "definition": "Omit every conditional upper and lower bound. The remaining likelihood consists of measured beds.",
+      "measurements": 58,
+      "lower_limits": 0,
+      "upper_limits": 0
+    },
+    "half-transfer": {
+      "file": "results/mazama-recompute/sources/half-transfer/input.csv",
+      "sha256": "676410dbc04a24deef5b9c3ceae619eb6a8287f5b1ce50611e8e6f6c079f4c11",
+      "definition": "Halve the lower limits and double the upper limits together. This tests weaker preservation and original-to-recovered transfer across sites. A factor of two is a stress assumption.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "portage-upper": {
+      "file": "results/mazama-recompute/sources/portage-upper/input.csv",
+      "sha256": "f9d2951a7fa6d5be710710323d169918bb8c7902d98474af726e40f70ae72397",
+      "definition": "Replace the Portage lower endpoint of 1.27 cm with the upper endpoint of 1.905 cm. This one-sided approximation adds negligible loss and compaction assumptions.",
+      "measurements": 58,
+      "lower_limits": 152,
+      "upper_limits": 34
+    },
+    "range-upper": {
+      "file": "results/mazama-recompute/sources/range-upper/input.csv",
+      "sha256": "59c815415db5f69ec02fccabf8ec1f1e76486d857cc9cf12d32360d974301f9d",
+      "definition": "Replace the lower endpoints for Independence, Cleveland and Newman with upper endpoints of 6, 6 and 30 cm. Each horizon enters once. The upper endpoints additionally assume negligible loss and compaction.",
+      "measurements": 58,
+      "lower_limits": 150,
+      "upper_limits": 36
+    },
+    "omit-new-records": {
+      "file": "results/mazama-recompute/sources/omit-new-records/input.csv",
+      "sha256": "1a94d8a5bd0745739b830fecc4b2c5bc100023bbc863c01e4ba40619fe8b91b9",
+      "definition": "Retain the frozen 40-row selection to assess the combined effect of subsequent primary-source discoveries.",
+      "measurements": 26,
+      "lower_limits": 13,
+      "upper_limits": 1
+    },
+    "new-beds-lower": {
+      "file": "results/mazama-recompute/sources/new-beds-lower/input.csv",
+      "sha256": "8beb8f84d7ac3306097dbb7a3bcbc74d4328a35edbb107051c3eed6a4c316a59",
+      "definition": "Treat point beds added since the 40-row trial as lower limits at their observed thickness, conditional on primary attribution and negligible import. This tests incomplete preservation.",
+      "measurements": 26,
+      "lower_limits": 185,
+      "upper_limits": 33
+    },
+    "weak-identity-omit": {
+      "file": "results/mazama-recompute/sources/weak-identity-omit/input.csv",
+      "sha256": "8f54668fe7980fbe461f9d045a76dca3c7028ad380292eadd92519d07c408718",
+      "definition": "Omit the listed beds whose local climactic correlation or stratigraphic assignment is particularly uncertain. See WEAK_IDS in the reproduction script.",
+      "measurements": 52,
+      "lower_limits": 145,
+      "upper_limits": 32
+    },
+    "yellowstone-one": {
+      "file": "results/mazama-recompute/sources/yellowstone-one/input.csv",
+      "sha256": "07cb41a988a2f25b55dd2fac77ebcb2dec9c591e14dd9a8f1022b9f5122fd0f4",
+      "definition": "Retain YL16-5A as the central Yellowstone Lake representative and omit six other lake sites. Goose Lake remains a separate observation.",
+      "measurements": 52,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "yellowstone-2c-5mm": {
+      "file": "results/mazama-recompute/sources/yellowstone-2c-5mm/input.csv",
+      "sha256": "90aa6dcd5cf332184914a291405fa17a1f405199379c1a2ab58ca9330775e430",
+      "definition": "Use Schiller 2020 YL16-2C 0.5 cm in place of Morgan 2023 0.4 cm at the same core.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "yellowstone-slump": {
+      "file": "results/mazama-recompute/sources/yellowstone-slump/input.csv",
+      "sha256": "5293952df55dd0ad77f300a2a807e76f7eb76c11e835d5427eae56bb34ff972f",
+      "definition": "Admit YL16-6A 0.5 cm under the assumption that the deformed slump-toe bed retains the original local thickness.",
+      "measurements": 59,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "omit-gold": {
+      "file": "results/mazama-recompute/sources/omit-gold/input.csv",
+      "sha256": "734c776498c77e1eabd55c15d808e44a85df9653f6afef8c677e3842bc4ee5d4",
+      "definition": "Omit the 74 cm Gold Lake coarse-component minimum to test uncertain precursor contribution and lake focusing.",
+      "measurements": 58,
+      "lower_limits": 152,
+      "upper_limits": 33
+    },
+    "late-source-omit": {
+      "file": "results/mazama-recompute/sources/late-source-omit/input.csv",
+      "sha256": "d050f460228a28d71f859f785278b7585753c5902f65b7166fc35fccf481e3ea",
+      "definition": "Omit Dog Lake Oregon, White Pine Marsh, Connley Cave 2, Skull Creek and Lyman Lake to isolate their joint influence.",
+      "measurements": 57,
+      "lower_limits": 150,
+      "upper_limits": 32
+    },
+    "skull-omit": {
+      "file": "results/mazama-recompute/sources/skull-omit/input.csv",
+      "sha256": "3b00188a542cb8e60b1452bcc1b598350fa137b9f9fdd21469c51815fe4bbc61",
+      "definition": "Omit the Skull Creek author-estimated upper limit to test its uncertain decimal typography and transfer from a mixed interval.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 32
+    },
+    "field-source-omit": {
+      "file": "results/mazama-recompute/sources/field-source-omit/input.csv",
+      "sha256": "60ddbe93bdb7c5c627bab85e878042bfcc3df1a9c1ef6e147830cdcba375e456",
+      "definition": "Remove the nine additions from the final primary-source review. This isolates the change from the 67-observation reference.",
+      "measurements": 54,
+      "lower_limits": 152,
+      "upper_limits": 29
+    },
+    "bracket-omit": {
+      "file": "results/mazama-recompute/sources/bracket-omit/input.csv",
+      "sha256": "dde55cf5413209e2f5f2042c4a34c65551f0a110756706027d75d9260e73ea8e",
+      "definition": "Remove the four new conditional upper limits at Deep Creek, Medicine Lake, Mahoney Lake and Lodgepole Quarry. The Skull Creek estimate remains.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 29
+    },
+    "lake-core-alternates": {
+      "file": "results/mazama-recompute/sources/lake-core-alternates/input.csv",
+      "sha256": "9d3546148755fb3afe6b70c0ea1b46152ef47023e4774e0d5541e2645123d621",
+      "definition": "Use the separate Little Lake core 91 bed of 1 cm and the companion Mahoney Lake 80 cm package. Each lake enters once under the principal preservation assumptions.",
+      "measurements": 58,
+      "lower_limits": 153,
+      "upper_limits": 33
+    },
+    "bachelor-west-alternate": {
+      "file": "results/mazama-recompute/sources/bachelor-west-alternate/input.csv",
+      "sha256": "2372d1abed80986a138badb0700e0deef5777c9a95dc38b9711af6fbb6b35f51",
+      "definition": "Replace the Mount Bachelor 44 cm upper-pumice minimum with the historical nearby West Village two-unit package as a 38 cm ceiling. Exclude the overlying 70 cm reworked material. This tests an alternative section, phase attribution and preservation together.",
+      "measurements": 58,
+      "lower_limits": 152,
+      "upper_limits": 34
+    }
+  }
+}

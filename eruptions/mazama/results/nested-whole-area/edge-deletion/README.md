@@ -1,11 +1,11 @@
 # Sensitivity to the site setting the outermost sampled isopach
 
-CSV row 5 most frequently sets the last measured rank. The first test withholds that observation. The second also withholds every accepted row within the shared geographic buffer of 66.2 km. Each fit re-estimates shape, thinning and the remaining volume. The principal fit retains all accepted sites.
+CSV row 241 most frequently sets the last measured rank. The first test withholds that observation. The second also withholds every accepted row within the shared geographic buffer of 6.4 km. Each fit re-estimates shape, thinning and the remaining volume. The principal fit retains all accepted sites.
 
 | Withheld | Rows | Conditional 95% volume interval (km³) | Full-fit population check |
 |---|---:|---:|---|
-| One site | 1 | 222.3–2,456.2 | **warning** |
-| Site and local cluster | 1 | 222.3–2,456.2 | **warning** |
+| One site | 1 | 243.5–928.4 | passed |
+| Site and local cluster | 1 | 243.5–928.4 | passed |
 
 These sites were selected from their influence on the fitted geometry. The change measures sensitivity to that part of the survey. The observations retain their published provenance and acceptance status.
 
