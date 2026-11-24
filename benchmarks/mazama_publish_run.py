@@ -149,6 +149,18 @@ def main():
     provenance = dict(input_sha256=sha(INPUT),observations=len(list(csv.DictReader(INPUT.open()))),
         principal_sources={name:sha(HOME/name) for name in ('report.json','nested-isopachs/deposit.json',
             'spherical-mixture/deposit.json','directional/deposit.json')},prior_evidence_revision='929f26864cce78ff71a9af52492492094784f583')
+    previous = Path('archive/2026-11-24-mazama-distal-facies/244-release.json')
+    previous_receipt = read(previous)
+    assert previous_receipt['input_sha256'] == sha(AUDIT / 'history/2026-11-23-before-distal-review/input.csv')
+    provenance['preceding_244_position_publication'] = dict(
+        revision=previous_receipt['source_revision'], results_tree=previous_receipt['results_tree'],
+        input_sha256=previous_receipt['input_sha256'], receipt_sha256=sha(previous))
+    evidence = read(AUDIT / 'distal-review/counts.json')
+    provenance['locality_audit'] = dict(records=evidence['ledger_rows'],
+        ledger_sha256=sha(AUDIT / 'revised-locality-ledger.csv'),
+        unverified_originals_in_observer_queue=evidence['original_observer_queue_S1'],
+        field_crosswalk_sha256=sha(AUDIT / 'distal-review/locality-facies-crosswalk.csv'),
+        acquisition_receipt_sha256=sha(AUDIT / 'original-payload-verification.json'))
     if origin.is_file() and read(origin)['input_sha256']==sha(INPUT):
         computation = read(origin)
         assert computation['input_sha256'] == provenance['input_sha256']
