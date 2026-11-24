@@ -8,6 +8,8 @@ In that whole-area fit, the 1 cm marine bed at MR98-05 St.6PC sets the outermost
 
 Takarada and Hoshizumi reconstructed 590–920 km³ of bulk Aso-4 fallout from manual isopachs on 71 sites. Their reconstruction shares source evidence with this audit. It provides a geological comparison and supplied no prior target. [Original fallout-volume reconstruction](https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2020.00170/full)
 
+The revised nested footprint assigns **29%** of its 1,924 km³ median-map volume to the three unobserved western sectors. The 538–16,846 km³ interval depends strongly on whole-area and distal continuation. [Sector allocation and evidence](results/nested-isopachs/footprints/sector-volumes.csv)
+
 ## Volumes and geographic prediction
 
 Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
@@ -18,7 +20,7 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 | Cubic spline | **201** | 168–452 | 1.662 | 90.4% |
 | [Directional ensemble](results/directional/README.md) | **661** | 293–3.58e+03 | 1.482 | 90.4% |
 | [Spherical mixture](results/spherical-mixture/README.md) | **473** | 333–6.99e+03 | 1.636 | 94.0% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **432** | 197–1.01e+04 | 1.584 † | 91.6% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | **1,924** | 538–1.68e+04 | 1.352 | 92.8% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -30,7 +32,7 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 ![Aso-4 · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Aso-4 · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Aso-4 · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 

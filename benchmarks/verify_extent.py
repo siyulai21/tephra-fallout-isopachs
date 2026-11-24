@@ -59,7 +59,9 @@ def main():
             audit=json.loads(gzip.decompress((ext/"support.json.gz").read_bytes()))
             assert audit["status"]!="completed" or len(audit["refined_levels"])>=25
             pair=table.loc[(slug,family)]
-            receipt=read_json(folder/"deposit.json")
+            receipt_path = (Path("archive/2026-11-23-nested-geography")/slug/"deposit.json"
+                            if family == "nested-isopachs" else folder/"deposit.json")
+            receipt=read_json(receipt_path)
             np.testing.assert_allclose([pair.principal_km3,pair.lower95,pair.upper95,pair.principal_negative_log_score],
                                        [receipt["median_map_volume_km3"],*r["conditional_interval95_km3"],
                                         r["validation"]["geographic"]["negative_log_score"]])

@@ -7,7 +7,7 @@ from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
 from src.empirical_isopach.visualization.style import STYLE
 
 COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
-          "Directional":"#6657A1", "Spherical mixture":"#346DA4", "Nested corridor":"#933F66"}
+          "Directional":"#6657A1", "Spherical mixture":"#346DA4", "Nested corridor":"#933F66", "Nested footprints":"#933F66"}
 
 
 def saved_case_overview(output, name=None):
@@ -22,10 +22,13 @@ def saved_case_overview(output, name=None):
 
 
 def principal_report(home):
-    path = Path(home)/"nested-isopachs/report.json"
+    folder = Path(home)/"nested-isopachs"
+    path = folder/"footprints/report.json"
+    if not path.is_file():
+        path = folder/"report.json"
     if path.is_file():
         result = json.loads(path.read_text())
-        if result.get("protocol") == "nested-corridor-reach-v4":
+        if result.get("protocol") in ("nested-corridor-reach-v4","nested-dispersal-footprints-v2"):
             return result
     return None
 
@@ -52,12 +55,16 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
     if nested is not None:
         if nested["input_sha256"] != regional["input"]["input_sha256"]:
             raise ValueError("Corridor and regional inputs differ")
-        records.append(("Nested corridor", nested["geographic_score"], nested["exact_site_coverage95"]["fraction"],
-                        all(f["passed"] for f in nested["folds"])))
+        if nested["protocol"] == "nested-dispersal-footprints-v2":
+            v = nested["validation"]
+            records.append(("Nested footprints",v["negative_log_score"],v["coverage95_exact"],v["all_folds_passed"]))
+        else:
+            records.append(("Nested corridor", nested["geographic_score"], nested["exact_site_coverage95"]["fraction"],
+                            all(f["passed"] for f in nested["folds"])))
     if home is not None:
         for i,family in enumerate(("directional","spherical-mixture","nested-isopachs"),2):
             path = Path(home)/family/"extent/report.json"
-            if i<len(records) and path.is_file():
+            if i<len(records) and records[i][0] != "Nested footprints" and path.is_file():
                 val = json.loads(path.read_text())["validation"]["geographic"]
                 records[i] = (records[i][0],val["negative_log_score"],val["coverage95_exact"],val["all_folds_passed"])
     return records
@@ -77,7 +84,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
         folder = Path(map_home or output)
         families = [("Directional", "directional"), ("Spherical mixture", "spherical-mixture")]
         if nested is not None:
-            families.append(("Nested corridor", "nested-isopachs"))
+            families.append(("Nested footprints" if nested.get("protocol")=="nested-dispersal-footprints-v2" else "Nested corridor", "nested-isopachs"))
         for i, (label, family) in enumerate(families):
             receipt = folder/family/"deposit.json"
             if receipt.is_file():

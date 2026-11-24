@@ -2,6 +2,8 @@
 
 The widespread upper co-ignimbrite ash has **52 measured thicknesses and four reported lower bounds**. The fitted sites extend from 11 to 349 km from Ilopango caldera in El Salvador. All five models use the same accepted observations. [Thickness data](../../data/eruptions/Ilopango_TBJ_Unit_G.csv) · [Original sources](../../data/sources/ilopango-tbj/README.md) · [Source decisions and geographic coverage](../../data/audits/Ilopango-TBJ/README.md)
 
+The revised nested map integrates to 49.3 km³. Its 39.0–226 km³ interval and all four geographic refits retain population-sampling warnings. [Independent attempts and full diagnostics](results/nested-isopachs/footprints/report.json)
+
 ## Volumes and geographic prediction
 
 Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
@@ -12,7 +14,7 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 | Cubic spline | **25.7** | 22.6–31.5 | 1.462 | 92.3% |
 | [Directional ensemble](results/directional/README.md) | **41.9** | 29.6–384 | 1.493 | 94.2% |
 | [Spherical mixture](results/spherical-mixture/README.md) | **133** | 59.7–1.95e+03 (provisional) | 1.284 | 94.2% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **35.9** | 21–96.3 (provisional) | 1.359 † | 94.2% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | **49.3** | 39–226 (provisional) | 1.227 † | 84.6% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -24,7 +26,7 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 ![Ilopango TBJ (Unit G) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Ilopango TBJ (Unit G) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Ilopango TBJ (Unit G) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 

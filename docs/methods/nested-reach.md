@@ -1,4 +1,6 @@
-# Principal Bayesian nested isopachs with dispersal corridors
+# Historical Bayesian nested isopachs with dispersal corridors
+
+The station-corridor formulation is retained for reproduction and paired field tests. Current analyses use [nested dispersal footprints](nested-footprints.md).
 
 A distant ash bed establishes thickness at its location. It supplies limited information about a distant site on another bearing, even when both locations have the same radius in an idealized isopach. The geographic reach fit retains the nested thinning model, its source and detached-fan alternatives, and its analogue-informed distal continuation. It adds uncertainty about how far measured bearings can be continued across wind and beyond the last finding. The companion whole-area fit shows how much this choice matters. [Paired estimates](../../comparisons/nested-reach/README.md) · [Tests against actual surveys](../../comparisons/nested-reach/field-surveys/README.md) · [Original thinning and shape model](nested-isopachs.md)
 

@@ -367,12 +367,20 @@ def edge_summary(sites):
 
 
 def nested_dataset(path, output, name=None, *, archives=None, resume=False, parent=None, budget=None, base_cache=None):
-    """Fit the principal corridor model, with explicit historical profile options for existing callers."""
+    """Fit the principal dispersal footprints; explicit parent options replay the named historical fit."""
     if budget is not None or base_cache is not None:
         if parent is not None:
             raise ValueError("Specify a corridor parent or historical whole-area profile options.")
         return whole_area_dataset(path, output, name, archives=archives, resume=resume,
                                   budget=True if budget is None else budget, base_cache=base_cache)
+    if parent is not None:
+        return corridor_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
+    from .footprints.release import run
+    return run(path, output, name, resume=resume, archives=archives)
+
+
+def corridor_dataset(path, output, name=None, *, archives=None, resume=False, parent=None):
+    """Replay the station-corridor sensitivity and its finite-spread alternatives."""
     from .reach_report import reach_dataset
     result = reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
     from ...visualization.deposit import render_deposit

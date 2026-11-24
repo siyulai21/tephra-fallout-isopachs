@@ -92,9 +92,9 @@ class Continued(Deposit):
         return np.where(np.log(cm)>=edge_h,inner,np.minimum(DIAMETER,self.edge*(1+w)))
 
 
-def join(model,training,seed=97231,tilt=1.,donor=None,transfer=None):
+def join(model,training,seed=97231,tilt=1.,donor=None,transfer=None,*,ranker=ranks):
     geom,ids = np.unique(model.geometry,return_inverse=True)
-    edge = ranks(*positions(training.xy,model.latitude),geom).max(axis=1)[ids]
+    edge = ranker(*positions(training.xy,model.latitude),geom).max(axis=1)[ids]
     n = len(edge)
     if donor is None:
         rng = np.random.default_rng(seed)

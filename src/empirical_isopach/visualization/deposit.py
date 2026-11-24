@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .deposit_field import FAMILIES, PolarField, digest, doubling_levels, open_field, sample_field
+from .deposit_field import FAMILIES, PolarField, digest, display_name, doubling_levels, open_field, review_path, sample_field
 from .deposit_integrals import independent_integral, within_cells
 from .deposit_maps import LAND, frames, plate
 from .maps import boundary_points
@@ -13,6 +13,8 @@ from .maps import boundary_points
 
 def volume_interval(family, report, extent=None):
     """Return only the two conditional volume uncertainty endpoints."""
+    if "independent_draw_integration" in report:
+        return tuple(report["conditional_interval95_km3"]), report["draw_checks_passed"]
     if extent is not None:
         return tuple(extent["conditional_interval95_km3"]), extent["draw_checks_passed"]
     if family=="nested-isopachs":
@@ -42,15 +44,26 @@ def deposit_page(old, family, name, receipt, report):
     warning = "" if receipt["complete_field_checks_passed"] else " **Numerical warning on the fitted deposit distribution.**"
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
-    first = [f"# {name} · {FAMILIES[family]}", "",
+    label = display_name(family, receipt["sources_sha256"])
+    first = [f"# {name} · {label}", "",
              f"The principal bulk volume is **{volume_label} km³**, the whole-Earth integral of the median-thickness map. "
              f"The conditional 95% interval for total fallout volume is **{lo:,.3g}–{hi:,.3g} km³** across complete posterior draws.{warning}", "",
-             f"![{name}, {FAMILIES[family]}. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)", "",
+             f"![{name}, {label}. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)", "",
              "Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
              "The volume also includes thinner fallout beyond the 0.5 cm line. "
              "[Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)", ""]
     if not receipt["integration_passed"]:
         first.extend(["**Map integration warning.** The independent or refinement check exceeded its tolerance. See the numerical record.", ""])
+    if "footprints/report.json" in receipt["sources_sha256"]:
+        v = report["validation"]
+        first.extend([f"The fitted model predicts the four buffered geographic groups with an equal-group negative log score of {v['negative_log_score']:.3f}. "
+                      f"{v['passed_folds']} of four independent deletion fits passed their numerical checks.", "",
+                      "Each deposit draw expands one or more dispersal footprints. Stations enter through their thickness evidence. "
+                      "The direction and extent of each phase are inferred jointly with the area–thickness curve.", "",
+                      "[Joint fit, structural sensitivities and numerical checks](footprints/report.json) · "
+                      "[Held-out predictions](footprints/heldout.csv.gz) · [Contour support and all rejection reasons](footprints/support.json.gz) · "
+                      "[Archive-site predictions](footprints/archive-probes.json) · [Volume and observations by compass sector](footprints/sector-volumes.csv)"])
+        return "\n".join(first)+"\n"
     if "extent/report.json" in receipt["sources_sha256"]:
         markers = {"directional":"## Reach from the volcano","spherical-mixture":"## What the unobserved directions contribute",
                    "nested-isopachs":"The buffered geographic score is"}
@@ -132,9 +145,9 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     folder=Path(folder)
     dest=Path(output) if output else folder
     dest.mkdir(parents=True,exist_ok=True)
-    review = dest/"extent/report.json"
+    review = review_path(dest, family)
     if not review.is_file():
-        review = folder/"extent/report.json"
+        review = review_path(folder, family)
     view,model,sources=open_field(folder,family,data,meta,review=review)
     latitude=meta["vent_lonlat"][1]
     if sampled is None:

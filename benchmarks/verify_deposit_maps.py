@@ -64,7 +64,9 @@ def verify_case(record):
     region=home/"regional" if preview else home
     data,meta=audited_data(record["path"],allow_intervals=True)
     frames=[verify_global(home/key,key,data,meta) for key in FAMILIES]
-    assert frames[0]==frames[1]==frames[2]
+    # The two archived fits and the current nested fit may use different PROJ builds.
+    for near_bounds in frames[1:]:
+        np.testing.assert_allclose(near_bounds,frames[0],rtol=0.,atol=1e-9)
     published=(home if preview else home.parent)/"README.md"
     assert case_section(home,"" if preview else "results/",regional_subdir="regional" if preview else "") in published.read_text()
     r=read_json(region/"report.json")

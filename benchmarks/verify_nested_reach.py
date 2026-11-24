@@ -94,7 +94,8 @@ def verify_case(rec):
 
 def main():
     comp=Path("comparisons/nested-reach")
-    with Path("comparisons/nested-isopachs/cases.csv").open(newline="") as stream:
+    archive = Path("archive/2026-11-23-nested-geography")
+    with (archive/"cases.csv").open(newline="") as stream:
         rows = {r["slug"]:r for r in csv.DictReader(stream) if r["method"] == "Nested corridor"}
     for rec in records(published=True):
         j = verify_case(rec)
@@ -103,7 +104,7 @@ def main():
         row = rows.pop(rec["slug"])
         assert row["input_sha256"] == j["input_sha256"]
         home = case_home(rec["slug"])/"nested-isopachs"
-        receipt = read(home/"deposit.json")
+        receipt = read(archive/rec["slug"]/"deposit.json")
         np.testing.assert_allclose([float(row[k]) for k in ("lower95_km3","upper95_km3")],
                                    receipt["conditional_volume_interval95_km3"])
         np.testing.assert_allclose(float(row["median_map_km3"]),receipt["median_map_volume_km3"])

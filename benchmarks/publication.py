@@ -23,7 +23,7 @@ def published_nested_engine():
     files = [root/name for name in ("geometry.py", "profile.py", "budget_profile.py")]
     files += [INTERVAL_PREDECESSOR/"models/nested"/name for name in ("inference.py", "study.py")]
     engine = sha256(b"".join(path.read_bytes() for path in files) + ASSET.read_bytes()).hexdigest()
-    continuation = sha256((root/"continuation.py").read_bytes()).hexdigest()
+    continuation = sha256((ROOT/"archive/2026-11-23-nested-geography/continuation.py").read_bytes()).hexdigest()
     return sha256((engine + continuation).encode()).hexdigest()
 
 

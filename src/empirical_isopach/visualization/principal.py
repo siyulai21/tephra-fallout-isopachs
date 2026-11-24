@@ -3,7 +3,7 @@ import csv
 from pathlib import Path
 
 from .deposit import FAMILIES, volume_interval, read_json
-from .summary import metrics
+from .summary import metrics, principal_report
 
 
 def volume_rows(home, reports=None, *, regional_home=None):
@@ -13,7 +13,7 @@ def volume_rows(home, reports=None, *, regional_home=None):
         reports = (read_json(region/"report.json"),read_json(home/"directional/azimuth/report.json"),
                    read_json(home/"spherical-mixture/report.json"))
     regional, directional, spherical = reports
-    nested = read_json(home/"nested-isopachs/report.json")
+    nested = principal_report(home) or read_json(home/"nested-isopachs/report.json")
     values = []
     for key in ("stacked","spline"):
         result = regional["methods"][key]
@@ -53,6 +53,8 @@ def case_section(home, prefix="", *, reports=None, regional_subdir=""):
     rows = volume_rows(home,reports,regional_home=region)
     name = (reports[0] if reports else read_json(region/"report.json"))["dataset"]
     names = {"stacked":"GP ensemble","spline":"Cubic spline",**FAMILIES}
+    if (Path(home)/"nested-isopachs/footprints/report.json").is_file():
+        names["nested-isopachs"] = "Bayesian nested footprints"
     lines = ["## Volumes and geographic prediction", "",
              "Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. "
              "The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.", "",
@@ -77,7 +79,8 @@ def case_section(home, prefix="", *, reports=None, regional_subdir=""):
               "## Full deposits and near-vent detail", "",
               "The outer line is 0.5 cm. Contours and observation colours double from there. All three methods use the same near-vent window for this eruption. "
               "Each curve counts the combined area of all patches at or above a thickness.", ""]
-    for method,title in FAMILIES.items():
+    for method in FAMILIES:
+        title = names[method]
         lines += [f"![{name} · {title}. Full deposit, near-vent detail and thickness versus square root of area.]({prefix}{method}/deposit.png)", ""]
     regional_prefix = prefix + (regional_subdir.rstrip("/")+"/" if regional_subdir else "")
     lines += ["## Inside the observation hull", "",

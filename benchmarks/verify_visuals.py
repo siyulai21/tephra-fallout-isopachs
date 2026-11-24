@@ -139,7 +139,7 @@ def main():
         score_info = json.loads(figure.info["Description"])
         panels = score_info["eruption_panels"]
         assert set(score_info["methods_by_case"]) == set(panels)
-        assert all(names == ["GP ensemble", "Cubic spline", "Directional", "Spherical mixture", "Nested corridor"]
+        assert all(names == ["GP ensemble", "Cubic spline", "Directional", "Spherical mixture", "Nested footprints"]
                    for names in score_info["methods_by_case"].values())
     assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()

@@ -1,0 +1,100 @@
+"""Joint posterior for thinning and intrinsic geometry, with an analytic volume for every draw."""
+from pathlib import Path
+from hashlib import sha256
+import json
+
+import numpy as np
+from scipy.special import ndtr
+
+from .. import inference
+from ..continuation import Continued, join, outer_status
+from ..geometry import positions, ANGLES
+from ..profile import parameters
+from ..study import digest, engine_digest, write_json
+from . import geometry
+
+PROTOCOL = "nested-dispersal-footprints-v1"
+
+
+class FootprintField(Continued):
+    def field(self, xy):
+        geometry_ids, inverse = np.unique(self.geometry, return_inverse=True)
+        rank = geometry.ranks(*positions(xy, self.latitude), geometry_ids)
+        return self.log_at(rank[inverse])
+
+    def subset(self, idx):
+        return FootprintField(**vars(super().subset(idx)))
+
+    @classmethod
+    def load(cls, path):
+        with np.load(path, allow_pickle=False) as packed:
+            return cls(**{k: (float(packed[k]) if k == "latitude" else packed[k]) for k in packed})
+
+
+def engine():
+    root = Path(__file__).parent
+    sources = (engine_digest(), digest(root.parent/"continuation.py"), digest(root/"geometry.py"), digest(__file__))
+    return sha256("".join(sources).encode()).hexdigest()
+
+
+def predictions(model, test):
+    records = []
+    # Small batches keep a large posterior over a densely sampled campaign affordable.
+    for start in range(0, len(test.xy), 24):
+        part = test.subset((np.arange(len(test.xy)) >= start) & (np.arange(len(test.xy)) < start+24))
+        field = model.field(part.xy)
+        sd = parameters(model.z)[-1][:,None]
+        cdf = sum(w*ndtr((part.log_value-field)/np.hypot(k*sd, part.log_sd))
+                  for k,w in ((1.,.95),(3.,.05))).mean(axis=0)
+        from scipy.special import logsumexp
+        score = logsumexp(inference.log_events(field,sd[:,0],part),axis=0)-np.log(len(sd))
+        records.extend(dict(row_id=int(i), log_score=float(s), cdf=float(p), exact=bool(e))
+                       for i,s,p,e in zip(part.row_ids, score, cdf, ~part.censored, strict=True))
+    return records
+
+
+def fit_field(train, latitude, *, initial=768, ceiling=6144, seed=213091):
+    n = initial
+    attempts = []
+    while True:
+        raw, diagnostics = inference.fit(train, latitude, initial=n, ceiling=n, seed=seed,
+                                        ranker=geometry.ranks, geometry_prior=geometry.prior())
+        joined = join(raw, train, seed=97231, ranker=geometry.ranks)
+        model = FootprintField(**vars(joined))
+        check = outer_status(model)
+        parent = diagnostics["attempts"][-1]
+        # Evidence and every independent population are kept through the refinement ceiling.
+        attempts.append(dict(particles_per_population=n, intrinsic_passed=parent["passed"],
+                             intrinsic_volume_quantiles=parent["population_volume_quantiles_km3"],
+                             log_evidence_exponential_power=parent["log_evidence_exponential_power"],
+                             continuation=check))
+        if (parent["passed"] and check["passed"]) or n >= ceiling:
+            break
+        n = min(2*n, ceiling)
+    return model, dict(seed=seed, initial=initial, ceiling=ceiling, attempts=attempts,
+                       passed=bool(parent["passed"] and check["passed"]))
+
+
+def write_fit(folder, key, train, test, meta, *, initial=768, ceiling=6144, seed=213091):
+    folder = Path(folder)
+    folder.mkdir(parents=True, exist_ok=True)
+    info, packet = folder/(key+".json"), folder/(key+".npz")
+    identity = dict(protocol=PROTOCOL, engine_sha256=engine(), input_sha256=meta["input_sha256"],
+                    train=train.row_ids.tolist(), test=[] if test is None else test.row_ids.tolist(),
+                    initial=initial, ceiling=ceiling, seed=seed)
+    if info.exists():
+        r = json.loads(info.read_text())
+        if r["identity"] != identity or digest(packet) != r["posterior_sha256"]:
+            raise ValueError(f"Posterior, input, or run specification differs at {info}")
+        return r
+    model, checks = fit_field(train, meta["vent_lonlat"][1], initial=initial, ceiling=ceiling, seed=seed)
+    np.savez_compressed(packet, **vars(model))
+    draws = model.volume()
+    names = [s.family for s in geometry.SHAPES]
+    modes = np.array(names)[model.geometry // ANGLES]
+    r = dict(identity=identity, posterior_sha256=digest(packet), numerics=checks, draws=len(draws),
+             volume_quantiles_km3=np.quantile(draws, [.025,.5,.975]).tolist(),
+             posterior_family={f:float(np.mean(modes==f)) for f in geometry.FAMILY_PRIOR},
+             heldout=predictions(model,test) if test is not None else [])
+    write_json(info,r)
+    return r

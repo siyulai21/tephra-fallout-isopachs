@@ -18,7 +18,9 @@ Displaced circular kernels can fit stations on a flank and imply an enormous uno
 
 Calculate the distance to the nearest finite segment with $C_i$ and a downstream endpoint term scaled by $4(s^2+2sR_i)$. Evaluate this directional evidence at the last surveyed radius for farther targets. A positive polynomial taper with half thickness at one scaled displacement has width multipliers 1.5 and 0.75. The broad alternative applies half the log taper. Each retains a diffuse skirt, initially one half or one quarter, decreasing by up to three quarters according to axial concentration and $L$. The taper strength also accounts for the unsampled fraction of the component peak and diminishes beyond the surveyed range. The full rule and constants are public. The existing source-focused B-Tm kernels already put their maximum at the vent and retain their original field exactly. [Spherical continuation](../../src/empirical_isopach/models/mass_mixture/bearings/flank.py) · [Underlying spherical likelihood and mass normalization](probabilistic-global.md)
 
-## Nested corridors
+## Historical nested corridors
+
+The paired finite-spread study below predates the [principal dispersal footprints](nested-footprints.md).
 
 A site can establish a long axis. In the earlier finite laws the maximum permitted crosswind width grew in proportion to distance on that axis, even for a single distal observation. For each of the nine combinations of width and downstream reach, the revised model uses $C_i$ for transverse spread and preserves its longitudinal thinning. It blends in a positive diffuse skirt. It also evaluates the best intrinsic area rank on sampled bearings at each radius, gradually discounting bearings beyond their last positive site. A fitted turning ridge that thickens above this sampled flank receives the same smooth cap with allowances of a factor of four or two. The broad alternative takes half the crosswind correction. The original whole-area structural law in the fitted posterior persists in both alternatives. Its mass can dominate the upper interval.
 

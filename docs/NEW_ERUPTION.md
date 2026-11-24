@@ -8,9 +8,9 @@ Site-derived principal bounds belong in the accepted CSV. A separate archive inv
 
 The [optional intake template](../templates/README.md) gives the observation schema. Leave unknown values explicit. Decisions about sources and deposit interpretation belong in the audit.
 
-The default full run writes the principal corridor fit to `nested-isopachs/` and its broad sensitivity to `nested-whole-area/`. Use the corridor median isopachs, integral of median thickness, interval and geographic scores in case and catalogue summaries. Give independent surveys and buffered measurements priority when discussing how far a deposit actually extended. [Output and evidence hierarchy](methods/nested-reach.md)
+The default full run writes the principal footprint fit and geographic holdouts to `nested-isopachs/footprints/` and the original whole-area sensitivity to `nested-whole-area/`. Publish the integral of the median map, the interval across complete deposits and geographic scores. [Footprint model and assumptions](methods/nested-footprints.md)
 
-Each global family now writes its geographic continuation, blocked predictions and support decisions under `extent/`. The principal map and volume are in `deposit.png` and `deposit.json`. [Continuation and uncertainty](methods/finite-spread.md)
+The directional and spherical models save continuation and support results under `extent/`. The nested family saves its matching results under `footprints/`. Each principal map and volume are in `deposit.png` and `deposit.json`. [Directional and spherical continuation](methods/finite-spread.md)
 
 ## From upload to published case
 
@@ -38,4 +38,4 @@ tephra-isopachs compare path/to/observations.csv --output results/new-eruption -
 
 The full directional report opens at `directional/README.md` inside the output directory. Its principal fields and numeric result are under `directional/azimuth/`. The earlier fixed-direction calibration is in `directional/ensemble/` and the 13-policy reference in `directional/single-structure/`. The sibling `spherical-mixture/README.md` contains the independent global fit. The regional report is `README.md` and the local audit is `support/README.md`. [Installation and commands](QUICKSTART.md)
 
-Publish the nested report, full and withheld-fit posterior packets, geographic scores, local and full-compass maps, sector volume budgets and support screen in `results/nested-isopachs/`. Include both within-family sensitivity reports from `directional/sensitivity-study/` and `spherical-mixture/sensitivity-study/`. [Nested output and reproduction](methods/nested-reach.md) · [Continuation sensitivities](methods/continuation-sensitivities.md)
+Publish the nested report, full and withheld-fit packets, geographic scores, prior sensitivities, deposition map, rank-based volume fractions and support screen under the nested case folder. Keep the directional and spherical sensitivity reports alongside their own families. [Nested output and reproduction](methods/nested-footprints.md) · [Continuation sensitivities](methods/continuation-sensitivities.md)

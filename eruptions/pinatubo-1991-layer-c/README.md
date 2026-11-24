@@ -6,6 +6,8 @@ The 15 June 1991 climactic eruption deposited pumice and ash across Luzon and th
 
 The shared model input draws on 172 land-survey records, 34 marine cores or station groups and two airfield bounds. A further 366 entries document layers A, B and D. Wang’s 1999 dissertation and the original SO-132 station ledger were unavailable to this audit. Marine occurrences without a measured thickness or calibrated limit remain in the evidence inventory. [Offshore source coverage](../../data/audits/Pinatubo-1991/marine-check.md) · [Other fall layers](../../data/audits/Pinatubo-1991/other-phases/README.md)
 
+The revised nested model removes the narrow station-aligned fingers. Its central 6.70 km³ is close to the preceding 6.77 km³, but joint volume sampling remains provisional at 4.97–65.4 km³. Withholding all 34 offshore records favors the revised footprint, with fit warnings for all three geographies. [Matched maps and offshore tests](../../comparisons/nested-isopachs/geography/README.md)
+
 ## Volumes and geographic prediction
 
 Each volume integrates its method’s median-thickness map. The GP and spline cover the same observation hull. The other three methods cover Earth, including fallout below 0.5 cm. Conditional 95% intervals describe variation in whole-deposit volume across posterior draws.
@@ -16,7 +18,7 @@ Each volume integrates its method’s median-thickness map. The GP and spline co
 | Cubic spline | **14.8** | 10.4–1.69e+11 (provisional) | 1.590 | 85.3% |
 | [Directional ensemble](results/directional/README.md) | **6.38** | 4.92–10.8 (provisional) | 1.744 † | 88.7% |
 | [Spherical mixture](results/spherical-mixture/README.md) | **11.1** | 7.33–20.2 | 0.965 † | 94.7% |
-| [Bayesian nested corridors](results/nested-isopachs/README.md) | **6.77** | 5.57–8.09 | 3.342 † | 60.7% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | **6.7** | 4.97–65.4 (provisional) | 1.979 † | 72.7% |
 
 Lower scores indicate better predictions in withheld geographic regions. Coverage counts exact withheld measurements. A dagger marks a numerical or geographic validation warning. Provisional intervals retain their fit or integration warnings.
 
@@ -28,7 +30,7 @@ The outer line is 0.5 cm. Contours and observation colours double from there. Al
 
 ![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Pinatubo 1991 (Layer C) · Bayesian nested corridors. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Pinatubo 1991 (Layer C) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
