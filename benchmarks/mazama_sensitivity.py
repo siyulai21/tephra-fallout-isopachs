@@ -23,6 +23,8 @@ from src.empirical_isopach.visualization.deposit_integrals import independent_in
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES = {
+    'before-field-243': 'Exact archived review before the return to original Alberta, Montana and Vancouver Island field logs. This isolates the added field records from the earlier facies reclassification.',
+    'alternate-field-bounds': 'Use 14 cm from Kilpoola core 1 at the common location, the 108 cm main Johnson package alone, retain only Foy core A, and widen the three Greater Victoria host ceilings to the part of physical core left after subtracting the sampled early and late sections.',
     'prior-244': 'Exact archived 244-position input. Regional settings come from the revised geographic selection; compare all families on their stated domains.',
     'omit-reinterpreted-ceilings': 'Omit every new or changed ceiling in the deposit-nature review. This removes the complete-local-retention assumption for those packages.',
     'half-capture-ceilings': 'Double each new or revised package ceiling as a sensitivity to a retained thickness fraction of 0.5. The factor is a stress assumption.',
@@ -34,7 +36,7 @@ CASES = {
     'yellowstone-one': 'Retain central core YL16-5A as the single Yellowstone Lake likelihood. All core positions remain in the evidence inventory.',
     'restore-williams': 'Restore the former 46 cm Williams Lake Fen point alone. The unresolved two-horizon interpretation is a historical stress case.',
     'restore-thick-archive-readings': 'Restore the earlier readings at Windy, Thunder, Round WA, Tumalo, Round OR, Sunrise, Shadow, Dog OR and White Pine Marsh as a joint historical archive-transfer scenario.',
-    'omit-basin-beds': 'Remove conditional lake beds carried as measurements in the Ruby Mountains, Lyman, Roe, Great Salt Lake, Rainier and Yellowstone. This tests shared limnological preservation.',
+    'omit-basin-beds': 'Remove selected measured lake beds and conditional upper limits from the Ruby Mountains, Lyman, Roe, Great Salt Lake, Rainier and Yellowstone. This tests shared limnological preservation.',
     'omit-young-proximal': 'Omit Young’s individually mapped upper pumice minima as a group to test leverage of spatially clustered partial-component constraints.',
 }
 LEGACY = AUDIT/'history/2026-11-23-before-yellowstone/Mazama_reviewed_40.csv'
@@ -108,19 +110,30 @@ def prepare(root):
         former = {r['EvidenceID']:r for r in csv.DictReader(source)}
     interpretations = json.loads((AUDIT/'distal-review/interpretations.json').read_text())
     changed_caps = {key for key,r in interpretations.items() if r['use']=='upper_limit'}
-    weak = {'M2012-ONOFF02','L2016-STOWELL','B2020-285','B2020-003','P2018-MORT12','B2020-229','B2020-291','FLV93-T206'}
+    weak = {'M2012-ONOFF02','L2016-STOWELL','B2020-285','B2020-003','P2018-MORT12','B2020-229','B2020-291','FLV93-T206','H2026-FROG','H2026-SWANSON','H2026-WORLEY','B2019-BEGBIE','H1976-ELK','H1999-KILPOOLA-2'}
     basin = {'M2018-OVERLAND','M2018-SOLDIER','W2016-LYMAN','L2012-ROE','J2025-GSL4','W2017-SHADOW','W2017-SUNRISE'}
     result = {}
     for name, definition in CASES.items():
         folder = root/name
         folder.mkdir(parents=True, exist_ok=True)
         path = folder/'input.csv'
-        if name == 'prior-244':
-            shutil.copyfile(OLD244,path)
-            rows=list(former.values())
+        if name in ('prior-244','before-field-243'):
+            frozen=OLD244 if name=='prior-244' else AUDIT/'history/2026-11-24-before-field-logs/input.csv'
+            shutil.copyfile(frozen,path)
+            with frozen.open() as source:
+                rows=list(csv.DictReader(source))
         else:
             rows = [r.copy() for r in principal]
-            if name == 'omit-reinterpreted-ceilings':
+            if name == 'alternate-field-bounds':
+                alternate={'H1999-KILPOOLA-2':14,'B2020-250':108,'H2026-FROG':562-180-(495-405),
+                           'H2026-SWANSON':654-112-(549-380),'H2026-WORLEY':474-60-(360-250)}
+                rows=[r for r in rows if r['EvidenceID']!='S2009-FOY-C']
+                for r in rows:
+                    if r['EvidenceID'] in alternate:
+                        r.update(Limit_cm=alternate[r['EvidenceID']],Qualification=definition)
+                        if r['EvidenceID']=='H1999-KILPOOLA-2':
+                            r.update(EvidenceID='H1999-KILPOOLA-1',Site='Kilpoola Lake, 1993 core 1',Evidence='1993 core at the common lake coordinate, contacts 290–304 cm.')
+            elif name == 'omit-reinterpreted-ceilings':
                 rows = [r for r in rows if r['EvidenceID'] not in changed_caps]
             elif name == 'half-capture-ceilings':
                 for r in rows:

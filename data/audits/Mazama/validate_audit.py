@@ -56,21 +56,21 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 836
+    assert len(rows) == len({r['record_id'] for r in rows}) == 858
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
     accepted = list(csv.DictReader((ROOT / 'data/eruptions/Mazama_reviewed.csv').open()))
-    assert len(chosen) == len(accepted) == 243
+    assert len(chosen) == len(accepted) == 264
     assert sum(r['Kind'] == 'measurement' for r in accepted) == 31
     assert sum(r['Kind'] == 'lower_limit' for r in accepted) == 137
-    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 75
+    assert sum(r['Kind'] == 'upper_limit' for r in accepted) == 96
     assert float(lookup['S2023-DOG-OR']['bound_cm']) == 13 and float(lookup['S2023-DOG-OR']['observed_min_cm']) == 920-908
     assert float(lookup['S2023-WHITEPINE']['bound_cm']) == 30 and float(lookup['S2023-WHITEPINE']['observed_min_cm']) == 79-54
     assert float(lookup['S2023-CONNLEY2']['bound_cm']) == 180 - 152
     assert float(lookup['MW1986-SKULL']['bound_cm']) == 5
     assert abs(float(lookup['W2016-LYMAN']['latitude']) - (48 + 11/60 + 30/3600)) < 1e-12
-    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 243
+    assert sum(r['accepted_for_model'] == 'True' for r in rows) == 264
     for a, s in zip(accepted, chosen, strict=True):
         assert a['EvidenceID'] == s['record_id']
         assert float(a['Lat']) == float(s['latitude'])
@@ -104,6 +104,15 @@ def main(published=False):
         assert float(by_id[sid]['Thickness']) == value
     for sid,limit in {'CH2008-WIN':86,'CH2008-THU':32,'M2024-ROUNDWA':60,'B2020-275':5,'B2020-285':1,'M2012-ONOFF02':82,'B2020-291':.2,'M2013-NEL03':27}.items():
         assert by_id[sid]['Kind']=='upper_limit' and float(by_id[sid]['Limit_cm'])==limit
+    # Enclosing controls from the independent field campaigns use native, physical marks.
+    endpoints={'B2020-250':280-124,'B2020-217':96-94,'B2020-245':298-270,'B1997-COPL1':260-259,
+               'B1997-LL1':528-521,'B1997-LBSL2':73-68,'B1997-SIBL1':425-375,'B1997-SUML1':530-387,
+               'B2019-BEGBIE':406-405,'H1999-KILPOOLA-2':503-470,'H2026-FROG':405-180,
+               'H2026-SWANSON':380-112,'H2026-WORLEY':250-60,'S2009-FOY-A':8,'S2009-FOY-C':238-129,
+               'B2020-132':313,'B2020-137':201-74,'B2020-138':329,'B2020-140':294-50,'H1976-ELK':10,'G1988-GOL':575}
+    assert all(by_id[k]['Kind']=='upper_limit' and float(by_id[k]['Limit_cm'])==v for k,v in endpoints.items())
+    assert not {'B2020-175','B2020-211','B2020-128','B2020-153','H1999-KILPOOLA-1','J2002-FLORENCE','S2009-FOY-D'} & by_id.keys()
+    assert float(lookup['B2020-250']['observed_point_cm'])==232-124
     assert by_id['B2020-073']['Kind']=='lower_limit' and float(by_id['B2020-073']['Limit_cm'])==30
     assert not {'B2020-113','B2020-177','B2020-227'} & by_id.keys()
     assert sum(r['record_id'].startswith('E1997-') for r in rows)==48

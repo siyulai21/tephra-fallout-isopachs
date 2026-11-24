@@ -198,7 +198,6 @@ def assessment(home):
         '  python -m benchmarks.mazama_sensitivity --output results/new-mazama-sources --principal results/new-mazama --family "$family"',
         'done',
         'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-sources',
-        'python -m benchmarks.mazama_release regional --principal results/new-mazama --scenarios results/new-mazama-phase',
         'python -m benchmarks.mazama_release principal --principal results/new-mazama --scenarios results/new-mazama-sources',
         '```','',
         '[Publication checks](publication-checks.json) · [Release identities](release.json) · [Earlier published results](../../../../archive/2026-11-23-mazama-source-audit/README.md)']

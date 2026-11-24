@@ -53,7 +53,7 @@ def prepare():
                  Pseudo='No', Kind='measurement', EvidenceID=slump['record_id'],
                  Site=slump['locality'], Reference=slump['primary_reference'],
                  Evidence='Morgan2023 reported5 mm; excluded from principal because of slump-toe deformation.',
-                 Qualification='Prediction probe only. Used as a likelihood only in the separately labelled yellowstone-slump scenario.')
+                 Qualification='Prediction only. Slump-toe deformation excludes this observation from the current likelihood.')
     former = list(csv.DictReader((AUDIT/'history/2026-11-23-before-distal-review/input.csv').open()))
     probes = [dict(r, **{'Vent Lon':'','Vent Lat':''}, Qualification='Prediction location only. Frozen pre-review selection; omitted from the revised input.') for r in former if r['EvidenceID'] not in chosen]
     write_csv(AUDIT/'model-probes.csv',rows+[probe]+probes)

@@ -1,7 +1,7 @@
 name: Publish verified Mazama calculations
 on:
   push:
-    branches: [codex/mazama-audit-20261122]
+    branches: [codex/mazama-audit-20261122, codex/mazama-distal-facies-20261123]
     paths: [data/audits/Mazama/publication-request.json]
   workflow_dispatch:
 
@@ -55,7 +55,9 @@ jobs:
           names = subprocess.check_output(['gh','api','--paginate', endpoint+'/artifacts?per_page=100',
                                            '--jq','.artifacts[] | select(.expired == false) | .name'], text=True).splitlines()
           expected = {'principal-'+n for n in ('regional','directional','spherical-mixture','nested-isopachs')}
-          expected |= {'source-'+n for n in (*CASES,'omit-williams')}
+          expected |= {'source-'+n for n in CASES}
+          if info['head_branch'] == 'codex/mazama-audit-20261122':
+              expected.add('source-omit-williams')
           recovered = request.get('spherical_report')
           if recovered:
               repair_endpoint = f"repos/{repo}/actions/runs/{int(recovered['run_id'])}"
@@ -131,11 +133,12 @@ jobs:
           python scripts/check_repository_navigation.py
           python -m pytest -q
       - name: Publish the checked scientific results
-        if: github.ref == 'refs/heads/codex/mazama-audit-20261122'
+        if: startsWith(github.ref, 'refs/heads/codex/mazama-')
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- benchmarks/published-evidence.sha256 eruptions/mazama eruptions/README.md comparisons data/audits/Mazama/validation.json
           git diff --cached --stat
           git commit -m 'Publish audited Mazama maps, volume estimates, source tests and validation'
-          git push origin HEAD:refs/heads/codex/mazama-audit-20261122
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
