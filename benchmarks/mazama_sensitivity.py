@@ -110,7 +110,7 @@ def prepare(root):
         former = {r['EvidenceID']:r for r in csv.DictReader(source)}
     interpretations = json.loads((AUDIT/'distal-review/interpretations.json').read_text())
     changed_caps = {key for key,r in interpretations.items() if r['use']=='upper_limit'}
-    weak = {'M2012-ONOFF02','L2016-STOWELL','B2020-285','B2020-003','P2018-MORT12','B2020-229','B2020-291','FLV93-T206','H2026-FROG','H2026-SWANSON','H2026-WORLEY','B2019-BEGBIE','H1976-ELK','H1999-KILPOOLA-2'}
+    weak = {'M2012-ONOFF02','L2016-STOWELL','B2020-285','B2020-003','P2018-MORT12','B2020-229','B2020-291','FLV93-T206','H2026-FROG','H2026-SWANSON','H2026-WORLEY','B2019-BEGBIE','H1976-ELK','H1999-KILPOOLA-2','G1989-MICA','G1989-KOBAU','H1973-CALGARY'}
     basin = {'M2018-OVERLAND','M2018-SOLDIER','W2016-LYMAN','L2012-ROE','J2025-GSL4','W2017-SHADOW','W2017-SUNRISE'}
     result = {}
     for name, definition in CASES.items():

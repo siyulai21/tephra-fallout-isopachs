@@ -89,7 +89,7 @@ def yellowstone(output):
     ax.set_aspect(1/np.cos(np.deg2rad(44.46)));ax.grid(alpha=.2)
     ax.set_title('Yellowstone Lake — reported Mazama ash cores',fontsize=15,pad=18)
     fig.text(.5,.94,'10 cores • 8 locations • 7 principal observations',ha='center',fontsize=12,color='#425b60')
-    fig.text(.5,.045,'Positions from Morgan et al.2023, supplementary TableS1. Labels preserve each core identity.\nCoordinate plot; no lake shoreline inferred. Core pairs share one reported position.\nYL16-6A is retained in the ledger and an inclusion sensitivity; no extra principal likelihood.',ha='center',fontsize=9,color='#425b60')
+    fig.text(.5,.045,'Positions from Morgan et al.2023, supplementary TableS1. Labels preserve each core identity.\nCoordinate plot; no lake shoreline inferred. Core pairs share one reported position.\nYL16-6A is a prediction location only. Seven distinct stations enter the fit.',ha='center',fontsize=9,color='#425b60')
     metadata=dict(ledger_sha256=sha(AUDIT/'revised-locality-ledger.csv'),input_sha256=sha(INPUT),
                   source='Morgan et al.2023 doi:10.1130/B36190.1, TableS1; main-text thicknesses',
                   cores=[r['record_id'] for r in rows],locations=8,principal_locations=7)
