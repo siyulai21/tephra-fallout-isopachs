@@ -144,6 +144,10 @@ def main():
     spec.loader.exec_module(review)
     review.apply(records)
     review.registered_selection(records)
+    # These investigator records check existing observations without changing the issued likelihood inputs.
+    observer_checks = json.loads((HERE / 'distal-review/observer-crosschecks.json').read_text())
+    for record in records:
+        record.update(observer_checks.get(record['record_id'], {}))
     assert len({r['record_id'] for r in records}) == len(records)
     for r in records:
         assert r.get('accepted_for_model') is False

@@ -4,11 +4,11 @@
 
 [Case and historical calculations](../../../eruptions/mazama/README.md) · [Data guide](../../README.md) · [Preserved sources](../../sources/mazama/README.md)
 
-All 293 Buckland supplement localities and 573 additional records, core samples and controls appear in the ledger. The 52-row supplied table comprises 45 candidate field matches and seven contour-construction points. The 271-location principal input has 31 point values, 137 lower limits and 103 upper limits. Of the 155 fitted positions beyond 100 km, 29 carry point values, 23 minima and 103 ceilings. The facies review documents every change from the 244-position edition and links to the field descriptions. [Deposit-nature review](distal-review/README.md) · [866-record ledger](revised-locality-ledger.csv) · [Accepted input](../../eruptions/Mazama_reviewed.csv) · [Provenance](provenance.json)
+All 293 Buckland supplement localities and 574 additional records, core samples and controls appear in the ledger. The 52-row supplied table comprises 45 candidate field matches and seven contour-construction points. The 271-location principal input has 31 point values, 137 lower limits and 103 upper limits. Of the 155 fitted positions beyond 100 km, 29 carry point values, 23 minima and 103 ceilings. The facies review documents every change from the 244-position edition and links to the field descriptions. [Deposit-nature review](distal-review/README.md) · [867-record ledger](revised-locality-ledger.csv) · [Accepted input](../../eruptions/Mazama_reviewed.csv) · [Provenance](provenance.json)
 
 Young’s complete thesis contributed 103 mapped upper-pumice sections to the principal fit. The 25 separately numbered distal entries retain his field-check flags and 700 kg/m³ density convention. The follow-up also distinguishes primary pumice from floated pumice in Oregon borings, revisits borehole locations, and records the possible offshore Willapa bed. [Young and the additional field studies](YOUNG_AND_FIELD_SECTIONS.md) · [Thicknessless-site derivations](THICKNESSLESS_SITES.md) · [Input before Young](history/2026-11-23-before-young/README.md)
 
-Original observer verification remains open for 194 of the 293 compilation entries in the source queue. Ten of these are conditionally used in the principal fit. Some other sources confirm only identity, location or the preserved bed. The locality decisions state which link has been checked. [137-reference bibliography screen](bibliography-screen.csv) · [Outstanding observer records](primary-source-work-queue.csv) · [Search coverage](SEARCH_AND_GAPS.md)
+Original observer verification remains open for 193 of the 293 compilation entries in the source queue. Nine of these are conditionally used in the principal fit. Some other sources confirm only identity, location or the preserved bed. The locality decisions state which link has been checked. [137-reference bibliography screen](bibliography-screen.csv) · [Outstanding observer records](primary-source-work-queue.csv) · [Search coverage](SEARCH_AND_GAPS.md)
 
 The radiocarbon citation crosswalk covers all 81 laboratory entries and both ice-core estimates in Egan’s two tables. Checking the original logs recovered two measured British Columbia beds and four additional conditional field or archive bounds. [Dated sections and their locations](DATED_SECTIONS.md) · [Laboratory age crosswalk](egan-age-crosswalk.csv)
 
@@ -20,17 +20,17 @@ The [thick distal field assessment](distal-review/FIELD_EVIDENCE.md) follows eac
 
 | Artifact | Contents |
 |---|---|
-| [Revised locality ledger](revised-locality-ledger.csv) | All 866 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
+| [Revised locality ledger](revised-locality-ledger.csv) | All 867 records with coordinates/native locations, age basis, identity, observed quantity, bounds, references, quality, caveats and decisions |
 | [Readable locality register](LOCALITIES.md) | Compact GitHub-readable index of every record |
 | [Original published catalogue](buckland2020-293-localities.csv) | All 293 entries and all 15 original data columns, with Excel row identities |
 | [Original cells](buckland2020-cells.json) | Scalar values including nulls; preserves source spelling and numeric precision |
 | [Project-to-source crosswalk](supplied-row-crosswalk.csv) | All 52 supplied rows; both data-row and physical CSV-line numbers; seven pseudo rows excluded |
-| [Additional records](additional-localities.csv) | 573 additions and controls, including separate cores, correlated profiles, aliases and possible duplicates |
+| [Additional records](additional-localities.csv) | 574 additions and controls, including separate cores, correlated profiles, aliases and possible duplicates |
 | [Ranges and bounds](bounds-and-ranges.csv) | Source-qualified preserved-deposit quantities; no invented trace thresholds |
 | [Unquantified occurrences](occurrences-and-traces.csv) | Traces, cryptotephras, tentative signals and records without thickness |
 | [2022 reuse comparison](buckland2022-input-comparison.csv) | Later model-input table, including changed 1 cm values; not independent field evidence |
 | [Bibliography](compilation-bibliography.csv) | Complete transcribed S1 reference list; a citation is not a claim of verification |
-| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 214 retrieved source payloads, including 67 bundled originals and 147 linked with their checksums |
+| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 221 retrieved source payloads, including 67 bundled originals and 154 linked with their checksums |
 | [Search and remaining work](SEARCH_AND_GAPS.md) | Search scope, additional leads, failed retrievals and priority unresolved records |
 | [Data dictionary](DATA_DICTIONARY.md) | Quantity, evidence, coordinate and decision semantics |
 
@@ -119,7 +119,7 @@ Felker Lake is now an occurrence record: the2011 primary text reports microprobe
 
 Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 866 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 271 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 214 original payloads verified locally](original-payload-verification.json)
+An independent extraction checks all 4,395 source workbook cells, 293 original rows, 867 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 271 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 221 original payloads verified locally](original-payload-verification.json)
 
 Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
 

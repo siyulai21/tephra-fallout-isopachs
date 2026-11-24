@@ -57,7 +57,7 @@ def main(published=False):
     assert count == 4395
     wb.close()
     rows = list(csv.DictReader((HERE / 'revised-locality-ledger.csv').open()))
-    assert len(rows) == len({r['record_id'] for r in rows}) == 866
+    assert len(rows) == len({r['record_id'] for r in rows}) == 867
     lookup = {r['record_id']: r for r in rows}
     assert sum(r['record_id'].startswith('B2020-') for r in rows) == 293
     chosen = json.loads((HERE / 'model-selection.json').read_text())
@@ -195,7 +195,11 @@ def main(published=False):
     queued = {i for r in queue for i in r['record_ids'].split(';')}
     assert queued == {r['record_id'] for r in rows[:293] if r['verification'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending')}
     assert sum(int(r['record_count']) for r in queue) == len(queued)
-    assert len(queued) == 194 and len(queued & by_id.keys()) == 10
+    assert len(queued) == 193 and len(queued & by_id.keys()) == 9
+    assert lookup['B2020-099']['verification'] == 'original_investigator_archive_bed_and_horizon_checked'
+    assert float(by_id['B2020-099']['Limit_cm']) == 727 - 721 == 6
+    assert float(lookup['G1984-LOFTY79']['observed_point_cm']) == .5 / 10
+    assert 'G1984-LOFTY79' not in by_id
     models = []
     if published:
         for family in ('', 'directional/azimuth/', 'spherical-mixture/', 'nested-isopachs/', 'nested-whole-area/'):

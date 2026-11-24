@@ -2,7 +2,7 @@
 
 [Audit](../../audits/Mazama/README.md) · [CSV manifest](source-manifest.csv) · [JSON manifest](source-manifest.json)
 
-The inventory identifies 214 original payloads by source, byte count and SHA-256. GitHub carries 67 original files. The other 147 have source locators and checksums, including the user-supplied full Young thesis. Each site’s page, table or figure appears in the [locality ledger](../../audits/Mazama/revised-locality-ledger.csv). Public web-only field checks are also identified in the ledger.
+The inventory identifies 221 original payloads by source, byte count and SHA-256. GitHub carries 67 original files. The other 154 have source locators and checksums, including the user-supplied full Young thesis. Each site’s page, table or figure appears in the [locality ledger](../../audits/Mazama/revised-locality-ledger.csv). Public web-only field checks are also identified in the ledger.
 
 | Original source | Contents | Publication handling |
 |---|---|---|
@@ -81,6 +81,7 @@ The inventory identifies 214 original payloads by source, byte count and SHA-256
 | [gowan2007-core-logs.pdf](<https://dspace.library.uvic.ca/bitstream/handle/1828/263/thesis-final.pdf>) | Gowan (2007), southern Vancouver Island core stratigraphy and field positions | Source-linked original and acquisition checksum. |
 | [gsc-1976-76-7.pdf](<https://ostr-backend-prod.azure.cloud.nrcan-rncan.gc.ca/server/api/core/bitstreams/8ebb9932-cb65-488a-8bcf-3cd371a5700b/content>) | GSC radiocarbon dates XVI, Calgary and Elk Valley date records, p. 9 | Source-linked original and acquisition checksum. |
 | [gsc-1989-88-7.pdf](<https://ostr-backend-prod.azure.cloud.nrcan-rncan.gc.ca/server/api/core/bitstreams/8e810595-89c4-444e-ac96-0d90df53bc5a/content>) | McNeely (1989), GSC radiocarbon dates XXVIII, original field records, pp. 40–42 | Source-linked original and acquisition checksum. |
+| [gsc1984-lofty.pdf](<https://ostr-backend-prod.azure.cloud.nrcan-rncan.gc.ca/server/api/core/bitstreams/e87a984b-d1a2-4e55-a2e3-29ee65124aa0/content>) | GSC Paper 84-7, original Lofty Lake 1979 core and radiocarbon dates, p. 12 | Source-linked original and acquisition checksum. |
 | [harper-names.json](<https://geogratis.gc.ca/services/geoname/en/geonames.json?q=Harper%20Lake&province=59>) | Canadian Geographical Names Database, Harper Lake, JANPE. | Source-linked original and acquisition checksum. |
 | [harrison1973-field.pdf](<https://doi.org/10.4095/119848>) | GSC Paper 73-1B, Harrison high-terrace Calgary field section, pp. 127–128 | Source-linked original and acquisition checksum. |
 | [harrison1976-field.pdf](<https://doi.org/10.4095/119842>) | GSC Paper 76-1C, Harrison Upper Elk field section, pp. 169–170 | Source-linked original and acquisition checksum. |
@@ -122,6 +123,7 @@ The inventory identifies 214 original payloads by source, byte count and SHA-256
 | [mckay2012.pdf](<https://scholarsbank.uoregon.edu/server/api/core/bitstreams/bb66b5cf-7dc4-45fe-b393-a65af64635f6/content>) | McKay2012 University of Oregon PhD thesis | Source-linked original and acquisition checksum. |
 | [medicine-epa.html](<https://waterqualitydata.epa.gov/provider/STORET/CEDEN/CEDEN-526PML141/>) | Water Quality Portal, CEDEN-526PML141 Medicine Lake sampling station | Source-linked original and acquisition checksum. |
 | [medicine-sir2007.pdf](<medicine-sir2007.pdf>) | Nathenson, Donnelly-Nolan, Champion and Lowenstern 2007, Chronology of postglacial eruptive activity and calculation of eruption probabilities for Medicine Lake Volcano, Table 2 | Bundled original. |
+| [mehringer-basin-field.pdf](<https://www.fs.usda.gov/r6/icbemp/science/mehringe.pdf>) | Mehringer, Columbia River Basin Ecosystems, Wildcat and Steens Mountain coring field accounts | Source-linked original and acquisition checksum. |
 | [mehringer1987.pdf](<https://archive.org/download/lateholoceneenvi9157mehr/lateholoceneenvi9157mehr.pdf>) | Mehringer1987 Late-Holocene environments on the northern periphery of the Great Basin; BLM final report | Source-linked original and acquisition checksum. |
 | [menounos2004.pdf](<https://couplet.unbc.ca/pdfs/8200.pdf>) | Menounos et al.2004; Early Holocene glacier advance | Source-linked original and acquisition checksum. |
 | [menounos2006.pdf](<https://couplet.unbc.ca/pdfs/Menounos_2006.pdf>) | Menounos2006; Green Lake modern sedimentation and lake position | Source-linked original and acquisition checksum. |
@@ -159,6 +161,11 @@ The inventory identifies 214 original payloads by source, byte count and SHA-256
 | [neotoma-field-64901.json](<https://api.neotomadb.org/v2.0/data/downloads/64901>) | Neotoma investigator deposit 64901, Swanson Lake, charcoal | Source-linked original and acquisition checksum. |
 | [neotoma-field-64902.json](<https://api.neotomadb.org/v2.0/data/downloads/64902>) | Neotoma investigator deposit 64902, Worley Lake, geochronologic | Source-linked original and acquisition checksum. |
 | [neotoma-field-64904.json](<https://api.neotomadb.org/v2.0/data/downloads/64904>) | Neotoma investigator deposit 64904, Worley Lake, charcoal | Source-linked original and acquisition checksum. |
+| [neotoma-observer-15893.json](<https://api.neotomadb.org/v2.0/data/downloads/15893>) | Wildcat Lake, Mehringer, Davis and Kolva 1972 core metadata and investigator pollen samples | Source-linked original and acquisition checksum. |
+| [neotoma-observer-15894.json](<https://api.neotomadb.org/v2.0/data/downloads/15894>) | Wildhorse Lake, Mehringer investigator pollen archive and site polygon | Source-linked original and acquisition checksum. |
+| [neotoma-observer-1656.json](<https://api.neotomadb.org/v2.0/data/downloads/1656>) | Lofty Lake north-bay pollen dataset and alternative tephra control ages | Source-linked original and acquisition checksum. |
+| [neotoma-observer-550.json](<https://api.neotomadb.org/v2.0/data/downloads/550>) | Davis Lake, 1978 core A and dated adjacent core B, investigator chronology control 1791 | Source-linked original and acquisition checksum. |
+| [neotoma-observer-8345.json](<https://api.neotomadb.org/v2.0/data/downloads/8345>) | Lofty Lake north-bay geochronology with the same tephra controls | Source-linked original and acquisition checksum. |
 | [neotoma-three.json](<https://api.neotomadb.org/v2.0/data/sites?sitename=Three%20Creek%20Lake>) | Neotoma Three Creek Lake site record and collection-unit identifiers. | Source-linked original and acquisition checksum. |
 | [nevada168.pdf](<https://pubs.nbmg.unr.edu/Geol_map_of_Lahontan_Mts_quad_p/m168.htm>) | Bell, Caskey and House 2010, text accompanying the Lahontan Mountains and Grimes Point maps, Figure 12B and Table 2 | Source-linked original and acquisition checksum. |
 | [northgrip-drill.html](<https://www.cambridge.org/core/journals/annals-of-glaciology/article/northgrip-deep-drilling-programme/3F6E47B82CFDD5ED9A369C9F95A88793>) | Dahl-Jensen et al., The NorthGRIP deep drilling programme, nominal core diameter | Source-linked original and acquisition checksum. |
