@@ -30,7 +30,7 @@ The [thick distal field assessment](distal-review/FIELD_EVIDENCE.md) follows eac
 | [Unquantified occurrences](occurrences-and-traces.csv) | Traces, cryptotephras, tentative signals and records without thickness |
 | [2022 reuse comparison](buckland2022-input-comparison.csv) | Later model-input table, including changed 1 cm values; not independent field evidence |
 | [Bibliography](compilation-bibliography.csv) | Complete transcribed S1 reference list; a citation is not a claim of verification |
-| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 221 retrieved source payloads, including 67 bundled originals and 154 linked with their checksums |
+| [Source manifest](../../sources/mazama/source-manifest.csv) | Download URLs, byte counts and SHA-256 hashes of 222 retrieved source payloads, including 67 bundled originals and 155 linked with their checksums |
 | [Search and remaining work](SEARCH_AND_GAPS.md) | Search scope, additional leads, failed retrievals and priority unresolved records |
 | [Data dictionary](DATA_DICTIONARY.md) | Quantity, evidence, coordinate and decision semantics |
 
@@ -119,7 +119,7 @@ Felker Lake is now an occurrence record: the2011 primary text reports microprobe
 
 Run `python data/audits/Mazama/build_audit.py` from the repository. It uses the Python standard library, the preserved workbooks, [review decisions](review-decisions.json) and [additional records](additional-records.json). It rewrites only derived audit tables and checks the historical input snapshot. Source judgments are explicit data, not hidden parsing heuristics.
 
-An independent extraction checks all 4,395 source workbook cells, 293 original rows, 867 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 271 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 221 original payloads verified locally](original-payload-verification.json)
+An independent extraction checks all 4,395 source workbook cells, 293 original rows, 867 unique evidence records, the 52-row supplied table, 103 accepted Young section bounds and all 271 input rows. Hashes identify the source material, fitting input and deterministic ledger rebuild. [Validation record](validation.json) · [Checksums of all 222 original payloads verified locally](original-payload-verification.json)
 
 Rebuild the tables with `python data/audits/Mazama/build_audit.py`, then the accepted input and site decisions with `python -m benchmarks.mazama`. Run `python data/audits/Mazama/validate_audit.py` with `openpyxl` for independent source checks. Model and publication checks are recorded with the case results.
 

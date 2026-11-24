@@ -23,3 +23,18 @@ The earlier 244-position calculations use different source treatments and a diff
 No complete contour band qualified. Numerical fold checks passed in 3 of 4 geographic regions. [Integration](nested-map.json) · [Held-out comparisons](nested-extent.json) · [Support decisions](nested-support.json.gz)
 
 ![Bayesian nested isopachs conditional fallout map and area curve](nested-deposit.png)
+
+## Distal sites with their geographic region withheld
+
+The input column gives a measured bed or a conditional upper bound. The predictions use the other geographic regions. A model can predict a thick deposit where the field evidence allows only a much thinner bed. [Every regional prediction, interval and one-sided probability](regional-withheld-by-site.csv) · [Primary field accounts](../../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md)
+
+| Site | Field input (cm) | Withheld GP median (cm) | Withheld spline median (cm) |
+|---|---:|---:|---:|
+| Johnson Lake | ≤156 | 0.312 | 0.321 |
+| Windy Lake | ≤86 | 0.704 | 1.06 |
+| Thunder Lake, BC | ≤32 | 0.183 | 0.232 |
+| Sheep Mountain Bog | ≤42 | 12.9 | 8.08e+03 |
+| Foy core A | ≤8 | 8.47 | 40.9 |
+| Yellowstone Lake, central core | 0.5 | 7.06 | 0.0183 |
+
+At Sheep Mountain Bog, the original diagram encloses about 40 cm of preserved tephra. The large spline prediction comes from withholding the entire region. It documents the instability of extrapolating that fit into an unsampled area.

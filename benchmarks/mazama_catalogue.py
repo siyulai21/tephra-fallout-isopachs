@@ -208,6 +208,28 @@ def distal_facies_assessment(folder):
             r = sites[sid, family]
             entries.append(f"{thickness(r['latent_median_cm'])} → {thickness(r['principal_median_cm'])}")
         lines.append('| ' + label + ' | ' + ' | '.join(entries) + ' |')
+    with (folder / 'heldout-source-observations.csv').open(newline='') as stream:
+        withheld = {(r['evidence_id'], r['method']): r for r in csv.DictReader(stream)
+                    if r['evidence_id'] in site_ids and r['method'] in {'stacked', 'spline'}}
+    lines += [
+        '', '## When the surrounding geographic region is withheld', '',
+        'The two regional methods predict each observation using other geographic folds. Values below are '
+        'predictive medians in cm. For a ceiling, the probability column gives the fitted probability of an '
+        'observation at or below that ceiling; the measurement rows have no one-sided event. '
+        'A predictive median above a conditional field ceiling shows a conflict under the local-retention assumption. '
+        'The next columns give the probability assigned to the observed bound. '
+        '[Withheld intervals, folds and scores for every observation](heldout-source-observations.csv)', '',
+        '| Site | Observed point or bound (cm) | GP median | GP bound probability | Spline median | Spline bound probability |',
+        '|---|---:|---:|---:|---:|---:|',
+    ]
+    for sid, label in site_ids.items():
+        gp, spline = (withheld[sid, method] for method in ('stacked', 'spline'))
+        reading = {'measurement': '', 'upper_limit': '≤', 'lower_limit': '≥'}[gp['kind']] + thickness(gp['reported_value_cm'])
+        pair = []
+        for model in (gp, spline):
+            value = model['bound_probability']
+            pair.extend([thickness(model['predictive_median_cm']), f'{float(value):.1%}' if value else '—'])
+        lines.append('| ' + label + ' | ' + reading + ' | ' + ' | '.join(pair) + ' |')
     lines += [
         '', 'The geographic folds assess prediction away from training data. The contour screen tests which bands '
         'have observational support, including unsupported interior holes. The complete-Earth estimates condition '

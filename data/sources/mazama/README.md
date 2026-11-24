@@ -2,7 +2,7 @@
 
 [Audit](../../audits/Mazama/README.md) · [CSV manifest](source-manifest.csv) · [JSON manifest](source-manifest.json)
 
-The inventory identifies 221 original payloads by source, byte count and SHA-256. GitHub carries 67 original files. The other 154 have source locators and checksums, including the user-supplied full Young thesis. Each site’s page, table or figure appears in the [locality ledger](../../audits/Mazama/revised-locality-ledger.csv). Public web-only field checks are also identified in the ledger.
+The inventory identifies 222 original payloads by source, byte count and SHA-256. GitHub carries 67 original files. The other 155 have source locators and checksums, including the user-supplied full Young thesis. Each site’s page, table or figure appears in the [locality ledger](../../audits/Mazama/revised-locality-ledger.csv). Public web-only field checks are also identified in the ledger.
 
 | Original source | Contents | Publication handling |
 |---|---|---|
@@ -200,6 +200,7 @@ The inventory identifies 221 original payloads by source, byte count and SHA-256
 | [seawhitlock1995.pdf](<https://andrewsforest.oregonstate.edu/pubs/pdf/pub2181.pdf>) | Sea and Whitlock 1995, Postglacial vegetation and climate of the Cascade Range, central Oregon | Source-linked original and acquisition checksum. |
 | [shadow2017.pdf](<https://www.morageology.com/pubs/314.pdf>) | Walsh et al.2017 Shadow, Sunrise and Little Sunrise lakes | Source-linked original and acquisition checksum. |
 | [shapley2015.html](<https://doi.org/10.1007/s10933-015-9826-6>) | Shapley and Finney 2015, Pettit Lake original mass estimate, publisher abstract | Source-linked original and acquisition checksum. |
+| [sheppard1976-wildcat.pdf](<https://www.cambridge.org/core/services/aop-cambridge-core/content/view/FA51E82621D5F920F6CD7B9A33E93945/S0033822200002435a.pdf/washington_state_university_natural_radiocarbon_measurements_ii.pdf>) | Sheppard and Chatters (1976), Washington State University Natural Radiocarbon Measurements II, Wildcat Lake series, p. 146, WSU-1452 S | Source-linked original and acquisition checksum. |
 | [shuman2009-foy-core-logs.pdf](<https://annahenderson.wordpress.com/wp-content/uploads/2010/12/shuman-henderson-et-al-2009.pdf>) | Shuman et al. (2009), Foy Lake field transect and scaled core A photograph | Source-linked original and acquisition checksum. |
 | [sibbald-names.json](<sibbald-names.json>) | Natural Resources Canada, Canadian Geographical Names Database, sibbald | Bundled original. |
 | [skull-creek-blm-sections.json](<skull-creek-blm-sections.json>) | BLM Oregon PLSS, two enclosing Skull Creek sections | Bundled original. |
