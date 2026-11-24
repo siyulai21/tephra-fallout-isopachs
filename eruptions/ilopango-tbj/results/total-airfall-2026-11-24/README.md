@@ -1,0 +1,3 @@
+# Ilopango total primary TBJ airfall
+
+The 168-site input includes the revised field-stop sums and all four Dull Figure 9 readings. The principal nested median-thickness map integrates to 62.8 km³, with a conditional 95% interval of 40.2–316.5 km³ across complete deposits. All four buffered geographic refits and the full fit passed their sampling checks. The directional and spherical fits for this edition are in progress. [Nested map](nested-isopachs/README.md) · [Osa and historical T2 independent refits](source-sensitivity/comparison.csv) · [Source audit](../../../../data/audits/Ilopango-TBJ/field-logs/README.md)

@@ -18,6 +18,7 @@ jobs:
           python -m benchmarks.ilopango
           python -m benchmarks.ilopango_field_review --verify-workbook
           python -m benchmarks.ilopango_nested_review --verify
+          python -m benchmarks.ilopango_total_airfall
       - name: Replay the Pinatubo Layer C source audit
         run: |
           python -m benchmarks.pinatubo

@@ -1,0 +1,81 @@
+{
+  "sources": [
+    {
+      "file": "data/sources/ilopango-tbj/pedrazzi-supplement-1.xls",
+      "sha256": "0b9cf7846ed313bfb0383edae7088c97ab6df9f7390d24ddce588b79f8db6403",
+      "article": "https://doi.org/10.1016/j.jvolgeores.2019.03.006",
+      "download": "https://ars.els-cdn.com/content/image/1-s2.0-S0377027318303706-mmc1.xls",
+      "sheet": "Hoja1",
+      "thickness": "Column P, centimetres",
+      "site_rows": 107
+    },
+    {
+      "file": "data/sources/ilopango-tbj/smith-2020-cores.csv",
+      "sha256": "5797f79c2b837e8ada812e64796e13530f86351f1a67f24973f0db53054037d2",
+      "article": "https://doi.org/10.1073/pnas.2003008117",
+      "location": "Methods, Ash Dispersal Modeling",
+      "sites": 2
+    },
+    {
+      "source": "Hart & Steen-McIntyre (1983), in Sheets (ed.)",
+      "url": "https://www.colorado.edu/anthropology/sites/default/files/attached-files/the_zapotitan_valley_of_el_salvador._archeology_and_volcanism_in_central_america_payson_sheets_1983.pdf",
+      "location_and_use": "Chapter 2, pp. 14–34; Table 2-1 pp. 17–18, Fig. 2-2 locality positions, Fig. 2-9 T1 facies; Appendix 2-A pp. 35–43, Stops 1–50. Editor-hosted scan, paired print pages.",
+      "sha256": "2819b9171803a0dc2a8d509dd0b17e41fdd7cf15f5b9411c419b72b5807de54c",
+      "bytes": "46459001"
+    },
+    {
+      "source": "Sheets, 1975 field season; V. Steen-McIntyre, Appendix 1",
+      "url": "https://www.colorado.edu/anthropology/sites/default/files/attached-files/ilopango_volcano_and_the_maya_protoclassic.pdf",
+      "location_and_use": "Field-site and tephra sample Tables 1 and 3; Figs. 2–25; Appendix 1 pp. 71–75, Fig. 1 and petrographic Table 1, PDF pp. 89 and 94.",
+      "sha256": "382cd72269e33cebc4204dfb55c094cf875e206ec6e99c439edaed393a10d86e",
+      "bytes": "4775150"
+    }
+  ],
+  "preceding_sha256": "fc2c3dbb8b00df76300ad389e6bd24c70f5e7b4a81806a49bd2237e87574b4cf",
+  "target": "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout.",
+  "source_inputs_sha256": {
+    "data/audits/Ilopango-TBJ/reaudit/localities.csv": "a5b713d663fb983ea0741be43826bc74e39b3b6be81cc6adb699497befe1d332",
+    "data/audits/Ilopango-TBJ/reaudit/workbook-sections.csv": "dac8c4ac3f35b91bdaed8d37fd17feced838f38fdb04cf008242565655fa3e8d",
+    "data/audits/Ilopango-TBJ/reaudit/kitamura-symbols.csv": "2a598ef3b6938484707775dba1d4720a817a27e96ad19674a3fb42b2c3ec8124",
+    "data/audits/Ilopango-TBJ/reaudit/dull-figure9.csv": "b5bb6d52491a5bdb707a4cdbaa71ddb6be32bdb88658cc55f491b938a39aac0f",
+    "data/audits/Ilopango-TBJ/field-logs/table-2-1.csv": "db680c09908bc008fa6ce5d4873e38892f7cfeed1a13113951bd964e779f54ed",
+    "data/audits/Ilopango-TBJ/field-logs/hart-steen-mcintyre-stops.csv": "a1254cf7e546eead1edeaf8ef2d958f5eb2ad7eddad712d15fc4b1b9207609df",
+    "data/audits/Ilopango-TBJ/field-logs/carmen-total-contacts.csv": "fd9bb294f516e3e3e4ef61b26ee65cb649d440b296df34ff6412d7d8d2dc3d2c",
+    "data/audits/Ilopango-TBJ/field-logs/primary-scans.csv": "a03d414e6c485ff7a91b9e3f03e585d503b699934d66ba6c127a544563a0f0b0"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Ilopango_TBJ_total_airfall.csv",
+      "sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867",
+      "definition": "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout.",
+      "counts": {
+        "lower_limit": 84,
+        "interval": 14,
+        "upper_limit": 5,
+        "measurement": 65
+      }
+    }
+  },
+  "principal_limits": [
+    {
+      "evidence_id": "SM1-P26",
+      "interpreted_upper_cm": 350.0
+    },
+    {
+      "evidence_id": "SM1-P66",
+      "interpreted_upper_cm": 700.0
+    },
+    {
+      "evidence_id": "I21-SAN",
+      "interpreted_upper_cm": 52.0
+    },
+    {
+      "evidence_id": "R10-108",
+      "interpreted_upper_cm": 150.0
+    },
+    {
+      "evidence_id": "I18-TRAP",
+      "interpreted_upper_cm": 25.0
+    }
+  ]
+}

@@ -1,6 +1,10 @@
-# Ilopango Tierra Blanca Joven, Unit G
+# Ilopango Tierra Blanca Joven
 
-The November 24 field review brings the principal Unit G input to **116 localities**. The nested median-thickness map integrates to **51.0 km³**. All four geographic holdouts passed their numerical checks. The full posterior retained a sampling warning, and the northeast prediction misses the thin Lake Yojoa ash. The 95% conditional interval across complete deposits is **34–684 km³**. [Revised principal result and map](results/nested-isopachs/2026-11-24/README.md) · [Current input](../../data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Site audit and primary sources](../../data/audits/Ilopango-TBJ/reaudit/README.md)
+The current reconstruction maps **total primary TBJ airfall across eruption phases** from 168 localities. The directional, spherical and nested methods share the measurements, lower and upper limits, two-sided ranges and buffered geographic holdouts. All four Dull readings enter the principal data, including the questioned Osa margin core. [Current results and three maps](results/total-airfall-2026-11-24/README.md) · [All-phase input](../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Field table, appendix and source decisions](../../data/audits/Ilopango-TBJ/field-logs/README.md)
+
+## Earlier Unit G nested fit on 116 sites
+
+The November 24 field review brings the principal Unit G input to **116 localities**. The nested median-thickness map integrates to **51.0 km³**. All four geographic holdouts passed their numerical checks. The full posterior retained a sampling warning, and the northeast prediction misses the thin Lake Yojoa ash. The 95% conditional interval across complete deposits is **34–684 km³**. [Revised principal result and map](results/nested-isopachs/2026-11-24/README.md) · [116-site Unit G input](../../data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Site audit and primary sources](../../data/audits/Ilopango-TBJ/reaudit/README.md)
 
 ## Earlier matched five-method comparison on 56 sites
 
