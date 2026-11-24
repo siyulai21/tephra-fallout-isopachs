@@ -64,4 +64,4 @@ Cathy Whitlock’s Davis Lake archive independently records the 6 cm bed. A retu
 
 ## Previous edition
 
-The archived 244-position fits quantify the earlier selection. [Five-family results for that input](https://github.com/siyulai21/tephra-fallout-isopachs/blob/8130479529dfe2ac4b85c72ad363cd2be279ef50/eruptions/mazama/audit-run/README.md)
+The archived 244-position fits quantify the earlier selection. [Five-family results and all 33 historical source refits](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f84105cec3b7b3bc49e083e5d518218327108a6b/eruptions/mazama/results)
