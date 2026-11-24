@@ -1,5 +1,7 @@
 # Ambiguous thicknesses and interpreted bounds
 
+Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+
 [Assessment](README.md) · [All site decisions](site-evidence-decisions.csv) · [Selected input](model-selection.csv) · [Protocol](../../../docs/methods/sites-without-measured-thickness.md)
 
 This note documents the 67-observation stage of the audit, including 43 reported thicknesses, 23 conditional lower bounds and one conditional upper bound. The 14 initial minima and nine later additions preserve primary components that could be identified inside more ambiguous successions. The subsequent 244-location fit and its complete set of decisions are available in the [current selection](model-selection.csv). The [earlier 29-observation selection](history/2026-11-23-expanded-bounds/README.md) preserves the preceding revision.

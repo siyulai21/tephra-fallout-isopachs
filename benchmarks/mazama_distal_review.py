@@ -61,6 +61,21 @@ def build():
                       qualification=r['principal_assumption'] or r['caveats'],primary_reference=r['primary_reference'],
                       evidence_source=r['evidence_source'],evidence_locator=r['evidence_locator']))
     write_csv(OUT/'locality-facies-crosswalk.csv',rows)
+    thick=[]
+    for r in rows:
+        if not r['distance_from_vent_km'] or float(r['distance_from_vent_km'])<300:
+            continue
+        readings=[('S1 numeric column',r['S1_reported_cm']),('recorded point',r['reported_point_cm']),
+                  ('reported lower end',r['reported_min_cm']),('reported upper end',r['reported_max_cm'])]
+        if r['prior_use'] in ('measurement','lower_limit'):
+            readings.append(('previous point or minimum',r['prior_value_cm']))
+        if r['revised_use'] in ('measurement','lower_limit'):
+            readings.append(('current point or minimum',r['revised_value_cm']))
+        flagged=[name for name,value in readings if value not in ('','-') and float(value)>=30]
+        if flagged:
+            thick.append(dict(screen_fields=', '.join(flagged),**r))
+    thick.sort(key=lambda r:float(r['distance_from_vent_km']))
+    write_csv(OUT/'thick-distal-records.csv',thick)
     dist=[r for r in rows if r['distance_from_vent_km'] and float(r['distance_from_vent_km'])>100]
     accepted=[r for r in rows if r['revised_use']!='omitted']
     summary=dict(ledger_rows=len(rows),numeric_positions=sum(bool(r['latitude']) for r in rows),
@@ -70,7 +85,9 @@ def build():
                  removals=sum(r['prior_use']!='omitted' and r['revised_use']=='omitted' for r in rows),
                  changed_kind=sum(r['prior_use']!=r['revised_use'] and 'omitted' not in (r['prior_use'],r['revised_use']) for r in rows),
                  missing_coordinates=sum(not r['latitude'] for r in rows),source_status=dict(Counter(r['original_evidence'] for r in rows)),
-                 pending_293=sum('pending' in r['original_evidence'] for r in rows if r['original_S1_row']))
+                 S1_verification_labels_containing_pending=sum('pending' in r['original_evidence'] for r in rows if r['original_S1_row']),
+                 original_observer_queue_S1=sum(r['original_evidence'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending') for r in rows if r['original_S1_row']),
+                 thick_distal_screen_rows=len(thick),thick_distal_S1_numeric=sum('S1 numeric column' in r['screen_fields'] for r in thick))
     (OUT/'counts.json').write_text(json.dumps(summary,indent=2)+'\n')
     plot(dist)
     return summary
@@ -88,6 +105,7 @@ def plot(dist):
                color='#6e7073',marker='x',s=32,linewidth=1,label='Previous input, now withheld')
     labels={'CH2008-WIN':('Windy',(-4,13)),'CH2008-THU':('Thunder, BC',(4,-13)),'M2024-ROUNDWA':('Round, WA',(3,10)),
             'B2020-073':('Andies Prairie',(-42,12)),'J1985-FLODELLE':('Flodelle',(12,-13)),
+            'B2020-250':('Johnson',(-42,16)),'S2009-FOY-A':('Foy A',(4,-12)),
             'B2020-113':('Williams Fen',(-70,4)),'M2013-NEL03':('NEL03',(15,7))}
     for r in dist:
         if r['record_id'] in labels:

@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -119,9 +120,15 @@ def main(published=False):
     assert not {'B2020-113','B2020-177','B2020-227'} & by_id.keys()
     assert sum(r['record_id'].startswith('E1997-') for r in rows)==48
     for site in json.loads((HERE/'distal-review/cathedral-central-core-picks.json').read_text()):
-        import math
         expected_cap=math.ceil((site['base_outward_y']-site['top_outward_y'])*site['range_cm']/(site['y_end']-site['y_start']))
         assert float(by_id[site['record_id']]['Limit_cm'])==expected_cap
+    controls = json.loads((HERE / 'distal-review/field-graphic-controls.json').read_text())['source_assets']
+    assert {site['record_id'] for site in controls} == {'B2020-106', 'S2009-FOY-A'}
+    for site in controls:
+        span = site['lower_outside_y'] - site['upper_outside_y']
+        cm_per_pixel = (site['tick2_cm'] - site['tick1_cm']) / (site['tick2_y'] - site['tick1_y'])
+        assert math.ceil(span * cm_per_pixel) == site['upper_envelope_cm'] == float(by_id[site['record_id']]['Limit_cm'])
+        assert site['source_sha256'] in originals['sources_verified'].values()
     for sid,limit in {'B2020-042':130-75.5,'L2024-JEN13-2E':4,'L2024-JEN16-1A':232-184,'L2024-JEN15-3A':63,'L2024-JEN16-2':54}.items():
         assert by_id[sid]['Kind']=='upper_limit' and float(by_id[sid]['Limit_cm'])==limit
     assert not {'L2024-JEN16-1B','L2024-JEN15-4A','L2024-JEN21-1A','L2024-JEN21-1B'} & by_id.keys()
@@ -188,6 +195,7 @@ def main(published=False):
     queued = {i for r in queue for i in r['record_ids'].split(';')}
     assert queued == {r['record_id'] for r in rows[:293] if r['verification'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending')}
     assert sum(int(r['record_count']) for r in queue) == len(queued)
+    assert len(queued) == 194 and len(queued & by_id.keys()) == 10
     models = []
     if published:
         for family in ('', 'directional/azimuth/', 'spherical-mixture/', 'nested-isopachs/', 'nested-whole-area/'):
@@ -217,7 +225,12 @@ def main(published=False):
                       'Lyman Lake composite airfall and younger slopewash units',
                       'Fish Lake Valley peat-core plots, trench section and hand-auger records',
                       'Patterson, Lily and Dead Horse Lake core stratigraphy',
-                      'Carp Lake core logs and Egan 2015 radiocarbon and ice-age tables'])
+                      'Carp Lake core logs and Egan 2015 radiocarbon and ice-age tables',
+                      'Jensen glass assignments, Evans central core charts and Larsen Jenny Lake supplement Fig. S3 photographs',
+                      'Beierle 1997 Johnson, Frederick, Upper Kananaskis, lake and bog core lithologies',
+                      'Gowan 2007 Fig. 2.4; Brown and Horrelt individual core boundaries and Fig. 2 age columns',
+                      'Shuman 2009 Fig. 7c Foy A photo matched to the core registry, and Mehringer Fig. 15 Sheep Mountain Bog and field archive',
+                      'GSC 76-7 and 88-7 site and lithology records, Dyck and McCallum observer date lists'])
     (HERE / 'validation.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'derived_output_sha256'}, indent=2))
 

@@ -1,11 +1,12 @@
 """Assemble independently calculated Mazama reports and refresh the catalogue from the fitted packets."""
 import csv
 import json
+import os
 from pathlib import Path
 import shutil
 
 from benchmarks.mazama import AUDIT, INPUT, sha
-from benchmarks.mazama_catalogue import paired_estimates, source_summary, update_pages
+from benchmarks.mazama_catalogue import distal_facies_assessment, paired_estimates, source_summary, update_pages
 from benchmarks.extent_catalogue import summary as finite_catalogue
 from benchmarks.mazama_recompute import PRINCIPAL, ROOT, STUDIES, PHASE, execute
 from benchmarks.mazama_release import assemble, principal_details, regional_details, save
@@ -126,6 +127,15 @@ def main():
     execute('benchmarks.mazama_heldout','--home',HOME,'--output',extra)
     execute('benchmarks.mazama_release_check','--home',HOME,'--output',extra/'publication-checks.json')
     source_summary(extra)
+    distal_facies_assessment(extra)
+    links = ('[Distal sources and their effect on the estimates](results/source-audit/distal-facies-results.md) · '
+             '[Thick distal deposits and original field evidence](../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md) · '
+             '[Archived numerical editions](../../archive/2026-11-24-mazama-distal-facies/README.md)')
+    first, rest = case_page.read_text().split('\n\n', 1)
+    case_page.write_text(first + '\n\n' + links + '\n\n' + rest)
+    source_page = extra / 'README.md'
+    first, rest = source_page.read_text().split('\n\n', 1)
+    source_page.write_text(first + '\n\n[Distal field review, matched volumes and local thicknesses](distal-facies-results.md)\n\n' + rest)
     from benchmarks.refresh_figures import refresh_case
     record=next(r for r in datasets() if r['slug']=='mazama')
     replay=ROOT/'visual-replay'
@@ -141,6 +151,12 @@ def main():
         computation = read(origin)
         assert computation['input_sha256'] == provenance['input_sha256']
         provenance['calculation'] = computation
+    elif os.environ.get('GITHUB_RUN_ID') and os.environ.get('GITHUB_SHA'):
+        request = read(AUDIT / 'recompute-request.json')
+        assert request['input_sha256'] == provenance['input_sha256'] and request['observations'] == provenance['observations']
+        provenance['calculation'] = dict(run_id=int(os.environ['GITHUB_RUN_ID']), head_sha=os.environ['GITHUB_SHA'],
+            url=f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",
+            input_sha256=sha(INPUT), source_scenarios=request['source_scenarios'])
     provenance['nested_edge_deletion_sha256'] = sha(HOME / 'nested-whole-area/edge-deletion/report.json')
     save(extra/'publication-input.json', provenance)
     checkpoint=HOME.parent/'audit-run'

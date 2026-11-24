@@ -131,3 +131,88 @@ def source_summary(folder):
     text = page.read_text()
     first, rest = text.split('\n\n', 1)
     page.write_text(first + '\n\n' + '\n'.join(lines) + '\n' + rest)
+
+
+def distal_facies_assessment(folder):
+    """Report the effect of the actual source decisions on matched volumes and site fields."""
+    with (folder / 'source-sensitivity-volumes.csv').open(newline='') as stream:
+        volumes = {(r['method'], r['scenario']): r for r in csv.DictReader(stream)}
+    families = {'stacked': 'GP ensemble', 'spline': 'Cubic spline', **FAMILIES}
+    cases = {
+        'principal': 'Revised evidence',
+        'prior-244': 'Earlier 244 rows',
+        'alternate-field-bounds': 'Alternate field bounds',
+        'restore-thick-archive-readings': 'Restore thick readings',
+        'omit-reinterpreted-ceilings': 'Omit revised ceilings',
+        'half-capture-ceilings': 'Half capture',
+        'omit-all-archive-ceilings': 'Omit all ceilings',
+    }
+    site_ids = {
+        'CH2008-WIN': 'Windy Lake, BC', 'CH2008-THU': 'Thunder Lake, BC',
+        'B2020-250': 'Johnson Lake', 'B2020-106': 'Sheep Mountain Bog',
+        'S2009-FOY-A': 'Foy Lake core A', 'W2016-LYMAN': 'Lyman Lake',
+        'M2023-YL16-5A': 'Yellowstone Lake YL16-5A',
+    }
+    with (folder / 'local-thickness-comparison.csv').open(newline='') as stream:
+        sites = {(r['evidence_id'], r['method']): r for r in csv.DictReader(stream)
+                 if r['scenario'] == 'prior-244' and r['evidence_id'] in site_ids}
+
+    lines = [
+        '# Model response to the distal field evidence', '',
+        'The comparisons below use median-map volumes and local median thicknesses from the saved fits. '
+        'The GP and cubic spline share the fixed hull of 26 historical measurements in the source comparison. '
+        'Their case-home maps cover the larger current observation hull. The other three families integrate '
+        'a conditional continuation over Earth. Each volume interval comes from the corresponding family’s draws. '
+        '[Field evidence and original references](../../../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md) · '
+        '[Principal maps, current-hull volumes and intervals](../../README.md)', '',
+        '## Volumes under the tested readings', '',
+        'All entries are in km³. Each row uses one method and one integration domain. A dagger marks a retained '
+        'fit, draw or integration warning. The earlier 244 rows are refitted with the source-comparison procedure. '
+        'The archived standalone 244-position calculation has its own geographic tuning and observation hull. '
+        '[Original 244-position results](../../../../archive/2026-11-24-mazama-distal-facies/README.md)', '',
+        '| Method | Revised map (conditional 95%) | ' + ' | '.join(list(cases.values())[1:]) + ' |',
+        '|---|' + '---:|' * len(cases),
+    ]
+    for family, label in families.items():
+        items = []
+        for case in cases:
+            r = volumes[family, case]
+            value = f"{float(r['median_map_volume_km3']):,.3g}"
+            if case == 'principal':
+                value += f" ({float(r['lower95_km3']):,.3g}–{float(r['upper95_km3']):,.3g})"
+            if any(r[k] == 'False' for k in ('fit_passed', 'draw_checks_passed', 'map_integration_passed')):
+                value += ' †'
+            items.append(value)
+        lines.append('| ' + label + ' | ' + ' | '.join(items) + ' |')
+    lines += [
+        '', 'Restoring the thick readings reinstates the previous interpretations at nine archives, including '
+        'Windy, Thunder and Round Lake in Washington. The field alternative varies Johnson, Kilpoola, Foy and '
+        'three Greater Victoria core brackets together. Half capture doubles the revised package ceilings as a '
+        'stress test. Each scenario changes a group of evidence decisions, so the differences cannot apportion '
+        'causality to one site. [All unrounded volumes, conditional intervals and flags](source-sensitivity-volumes.csv) · '
+        '[Scenario definitions and input hashes](sensitivities/scenarios.json)', '',
+        '## Modelled thickness at the reviewed locations', '',
+        'Each cell gives the **earlier 244-row refit → revised principal** median thickness in cm. These are '
+        'fitted latent thicknesses. Laboratory identities, enclosing-section bounds and geological observations '
+        'are recorded separately. A dash indicates an unavailable prediction on the regional domain. '
+        '[Site intervals and all comparisons](local-thickness-comparison.csv) · '
+        '[Observed beds, bounds and withheld readings](../../../../data/audits/Mazama/distal-review/locality-facies-crosswalk.csv)', '',
+        '| Site | ' + ' | '.join(families.values()) + ' |', '|---|' + '---:|' * len(families),
+    ]
+    def thickness(value):
+        return f'{float(value):.3g}' if value else '—'
+
+    for sid, label in site_ids.items():
+        entries = []
+        for family in families:
+            r = sites[sid, family]
+            entries.append(f"{thickness(r['latent_median_cm'])} → {thickness(r['principal_median_cm'])}")
+        lines.append('| ' + label + ' | ' + ' | '.join(entries) + ' |')
+    lines += [
+        '', 'The geographic folds assess prediction away from training data. The contour screen tests which bands '
+        'have observational support, including unsupported interior holes. The complete-Earth estimates condition '
+        'on the family, continuation, retained evidence and numerical status. [Geographically withheld sites](heldout-source-observations.csv) · '
+        '[Probabilities at held-out bounds](heldout-bound-probabilities.csv) · [Regional contour support](../support/README.md) · '
+        '[Global support decisions by family](../../../../comparisons/support/README.md) · [Numerical checks](publication-checks.json)', '',
+    ]
+    (folder / 'distal-facies-results.md').write_text('\n'.join(lines))

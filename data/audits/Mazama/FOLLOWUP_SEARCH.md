@@ -1,8 +1,10 @@
 # Follow-up lake, marine and field-source audit
 
+Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+
 [Audit home](README.md) · [Every record](LOCALITIES.md) · [Full ledger](revised-locality-ledger.csv) · [Source hashes](../../sources/mazama/source-manifest.csv) · [Yellowstone cores](YELLOWSTONE.md)
 
-This stage added the primary beds at Overland Lake, Soldier Lake and Great Salt Lake hole 4A. At the end of this pass the ledger held 459 records, including 293 rows from Buckland and 166 additions or controls. The 67 fitting observations at that stage comprised 43 measurements, 23 lower bounds and one upper bound. The current audit holds 733 ledger records and uses 244 locations. [Current selection](model-selection.csv)
+This stage added the primary beds at Overland Lake, Soldier Lake and Great Salt Lake hole 4A. At the end of this pass the ledger held 459 records, including 293 rows from Buckland and 166 additions or controls. The 67 fitting observations at that stage comprised 43 measurements, 23 lower bounds and one upper bound. The later field review brings the ledger to 866 records and the fit to 271 locations. [Current selection](model-selection.csv)
 
 The [final citation pass](LATE_SOURCE_REVIEW.md) documents Dog Lake Oregon, White Pine Marsh, Connley Cave2, Skull Creek and Lyman Lake; it supersedes the earlier location hold on Lyman.
 

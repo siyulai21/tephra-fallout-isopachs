@@ -1,5 +1,7 @@
 # Mazama audit data dictionary
 
+Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+
 [Assessment](README.md) · [Revised ledger](revised-locality-ledger.csv)
 
 The revised ledger is an evidence inventory, not the strict model-input schema. Empty numeric cells mean **unknown or not applicable**, never zero. Descriptive unknowns are explicit. Thickness units are centimetres; latitude/longitude are decimal degrees with western longitudes negative. No source datum is assumed known merely because coordinates are printed as decimal degrees.

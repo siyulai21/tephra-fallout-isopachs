@@ -1,5 +1,7 @@
 # Lyman Lake and the 67-observation citation review
 
+Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+
 [Audit](README.md) · [All locality decisions](LOCALITIES.md) · [Source manifest](../../sources/mazama/source-manifest.csv) · [Superseded 62-site trial](history/2026-11-23-before-final-citation-pass/README.md)
 
 This stage reopened earlier exclusions and followed primary publications to additional sites. Its 67 observations comprised 43 measurements, 23 conditional lower bounds and one conditional upper bound. The current selection uses 244 locations. Each ledger entry identifies the source passage, location evidence and preservation assumption. [Current locality ledger](revised-locality-ledger.csv)
