@@ -10,6 +10,7 @@ from benchmarks.extent_catalogue import summary as finite_catalogue
 from benchmarks.mazama_recompute import PRINCIPAL, ROOT, STUDIES, PHASE, execute
 from benchmarks.mazama_release import assemble, principal_details, regional_details, save
 from benchmarks.mazama_sensitivity import prepare
+from benchmarks.nested_edge_deletion import run as nested_edge_deletion
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.visualization.comparison import add_comparison_to_run
 from src.empirical_isopach.visualization.summary import saved_case_overview, all_case_scores, principal_report
@@ -68,7 +69,14 @@ def update_inventory():
     previous=read_hashes()
     areas=('eruptions/mazama/results/','comparisons/regional/','comparisons/nested-isopachs/',
            'comparisons/directional/','comparisons/spherical-mixture/','comparisons/global-extent/','comparisons/support/')
-    specific={'eruptions/mazama/README.md','eruptions/README.md','comparisons/principal-volumes.csv','comparisons/method-scores.png'}
+    specific={'data/datasets.json','eruptions/mazama/README.md','eruptions/README.md','comparisons/principal-volumes.csv','comparisons/method-scores.png'}
+    registered = next(r for r in read(Path('data/datasets.json'))['datasets'] if r['slug'] == 'mazama')
+    provenance = AUDIT / 'provenance.json'
+    assert (Path('data') / registered['file']).resolve() == INPUT.resolve()
+    assert (Path('data') / registered['audit']).resolve() == provenance.resolve()
+    assert read(provenance)['cases']['principal']['sha256'] == sha(INPUT)
+    for item in (INPUT, provenance):
+        previous[item.resolve().relative_to(Path.cwd()).as_posix()] = sha(item)
     for name in list(previous):
         if name.startswith(areas) or name in specific:
             path=Path(name)
@@ -85,6 +93,8 @@ def update_inventory():
 
 
 def main():
+    parent = PRINCIPAL / 'nested-whole-area'
+    nested_edge_deletion((INPUT, parent, parent / 'edge-deletion'))
     saved_case_overview(PRINCIPAL)
     add_comparison_to_run(PRINCIPAL)
     prepare(STUDIES)
@@ -108,7 +118,10 @@ def main():
                    '[Lyman position and stratigraphy](../../data/audits/Mazama/LATE_SOURCE_REVIEW.md)')
     page_text = case_page.read_text()
     assert page_text.count(overview) == 1
-    case_page.write_text(page_text.replace(overview, overview + '\n\n' + lake_detail))
+    edge_note = ('The nested-model edge test refits the deposit after withholding the most influential outer site '
+                 'and again after withholding its geographic cluster. '
+                 '[Withheld rows, volumes and numerical checks](results/nested-whole-area/edge-deletion/README.md)')
+    case_page.write_text(page_text.replace(overview, overview + '\n\n' + lake_detail + '\n\n' + edge_note))
     execute('benchmarks.mazama_local_comparison','--scenarios',extra/'sensitivities','--output',extra)
     execute('benchmarks.mazama_heldout','--home',HOME,'--output',extra)
     execute('benchmarks.mazama_release_check','--home',HOME,'--output',extra/'publication-checks.json')
@@ -128,6 +141,7 @@ def main():
         computation = read(origin)
         assert computation['input_sha256'] == provenance['input_sha256']
         provenance['calculation'] = computation
+    provenance['nested_edge_deletion_sha256'] = sha(HOME / 'nested-whole-area/edge-deletion/report.json')
     save(extra/'publication-input.json', provenance)
     checkpoint=HOME.parent/'audit-run'
     if checkpoint.exists() and read(checkpoint/'nested-map.json')['input_sha256'] in {sha(INPUT), 'caeb106f5e3e9e835c8569da245cefdbbfa58de7c26ce88636f59fa51221d2db', '8ff013f2f0026d5eef7c0ca76e0d12584b4fbf11861160e972c9d0a81f847bfe'}:

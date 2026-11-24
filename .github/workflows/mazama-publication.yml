@@ -109,6 +109,7 @@ jobs:
           for archive in sorted(Path('results/packets').glob('*.tar.gz')):
               with tarfile.open(archive,'r:gz') as src:
                   src.extractall(target,filter='data')
+              archive.unlink()
           if os.environ['SPHERICAL_REPORT_RUN']:
               recovery=json.loads((target/'principal/spherical-mixture/report-recovery.json').read_text())
               request=json.loads(Path('data/audits/Mazama/publication-request.json').read_text())
