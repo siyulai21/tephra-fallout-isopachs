@@ -10,7 +10,7 @@ Include site names and source references for blanks, traces, dispersed ash and u
 - Coordinate system and how locations were obtained:
 - Source/vent longitude and latitude, with provenance:
 - Missing, eroded, reworked or incomplete deposits:
-- Documented upper detection limits or recovered lower bounds:
+- Reported thickness ranges, detection limits or recovered minima, with units and the bed or component they describe
 - Known observation uncertainty and its units:
 - Potential duplicate sites or correlated records:
 - Known inclusion/exclusion decisions and their evidence:
