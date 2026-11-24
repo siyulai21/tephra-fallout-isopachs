@@ -1,14 +1,12 @@
 # Mazama · Bayesian nested whole-area sensitivity
 
-[Principal corridor estimate and median isopachs](../nested-isopachs/README.md)
+The median-thickness field integrates to **210 km³** over Earth. Its conditional 95% interval is **136.0–750.3 km³**. [Map integral and numerical check](median-field.json)
 
-The median-thickness map integrates to **355 km³** over Earth. Its conditional 95% interval is **162.2–1,663.6 km³**. [Map integral and numerical check](median-field.json)
+Continuing the fitted slopes freely beyond every sampled isopach rank gives a conditional 95% interval of 147.4–837.7 km³. The whole-area fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Every accepted training site has exactly the same predicted thickness in these continuations.
 
-Continuing the fitted slopes freely beyond every sampled isopach rank gives a conditional 95% interval of 155.1–1,731.1 km³. The whole-area fit transfers the remaining-to-interior mass ratios of four independently mapped falls at the same relative thinning. Every accepted training site has exactly the same predicted thickness in these continuations.
+The refined profile learns the amount deposited beyond its own thinning break. Its median distal share is 17.8% (conditional 95% 6.8%–31.8%). The thinning break belongs to the deposit and can lie on either side of the outermost measured site.
 
-The refined profile learns the amount deposited beyond its own thinning break. Its median distal share is 73.3% (conditional 95% 2.4%–98.2%). The thinning break belongs to the deposit and can lie on either side of the outermost measured site.
-
-The 45 accepted rows include 45 exact thicknesses, 0 lower bounds, 0 upper bounds and 0 two-sided intervals.
+The 271 accepted rows include 31 exact thicknesses, 137 lower bounds, 103 upper bounds and 0 two-sided intervals.
 
 ![Median isopachs and uncertain total area](isopachs.png)
 
@@ -16,13 +14,13 @@ Dashed contours show model predictions. Shading in the area panel gives pointwis
 
 ## Validation
 
-Accepted CSV row 5 (54.69°, -112.51°) sets the last sampled isopach rank in 59.9% of complete draws and 17.6% among the largest 5% by volume. Ties split the credit. This identifies where the shape assumes that measured thinning ends. It does not measure the effect of deleting a site. [Attribution to every measured or bounded site](edge-sites.csv) · [Refit with the controlling site and its local cluster withheld](edge-deletion/README.md)
+Accepted CSV row 26 (Lofty Lake) sets the last sampled isopach rank in 78.8% of complete draws and 74.8% among the largest 5% by volume. Ties split the credit. This identifies where the shape assumes that measured thinning ends. It does not measure the effect of deleting a site. [Attribution to every measured or bounded site](edge-sites.csv)
 
-The independent populations’ upper 95% endpoints ranged from 1,575.4 to 1,731.9 km³. The unmodified thinning profile passed and the continued global volume passed. [Population estimates and refinement history](full.json)
+The independent populations’ upper 95% endpoints ranged from 622.2 to 984.5 km³. The unmodified thinning profile passed and the continued global volume passed. [Population estimates and refinement history](full.json)
 
-The matched geographic score is 1.503. 4/4 training-fold fits passed the population check. The full-fit population check passed. Direct spatial integration passed.
+The matched geographic score is 0.334. 4/4 training-fold fits passed the population check. The full-fit population check passed. Direct spatial integration passed.
 
-At withheld exact sites, 41/45 measurements fell inside their 95% predictive intervals. The median fraction of a draw’s volume inside the retained exact-site triangles is 5.4%. The median fraction beyond the farthest exact site is 15.3%. Geographic classes describe sampling coverage.
+At withheld exact sites, 29/31 measurements fell inside their 95% predictive intervals. The median fraction of a draw’s volume inside the retained exact-site triangles is 19.5%. The median fraction beyond the farthest exact site is 3.5%. Geographic classes describe sampling coverage.
 
 No complete contour band passed the shared support screen. The global estimate remains conditional on unsampled sectors, the unmeasured core and the distal thinning law.
 
@@ -32,30 +30,40 @@ A thickness slab counts the stated slice everywhere the deposit reaches it. The 
 
 | Thickness slice (cm) | Conditional 95% volume interval (km³) |
 |---|---:|
-| 0–0.01 | 0.58–51.01 |
-| 0.01–0.1 | 3.54–389.86 |
-| 0.1–1 | 19.23–644.82 |
-| 1–10 | 62.06–465.89 |
-| 10–100 | 48.97–358.20 |
-| 100–1000 | 0.00–89.14 |
-| >1000 | 0.00–2.03 |
+| 0–0.01 | 0.32–2.11 |
+| 0.01–0.1 | 2.79–8.68 |
+| 0.1–1 | 16.94–48.23 |
+| 1–10 | 10.17–32.03 |
+| 10–100 | 15.79–38.73 |
+| 100–1000 | 50.21–152.94 |
+| >1000 | 19.07–520.77 |
 
 ## Prior sensitivity
 
 | Assumption | Conditional 95% volume interval (km³) | Effective draws |
 |---|---:|---:|
-| baseline | 162.2–1,663.6 | 24,576 |
-| weak profile transfer | 161.9–1,857.0 | 3,658 |
-| broader peak prior | 162.1–1,647.5 | 20,500 |
-| power tail prior 80pct | 164.9–1,632.4 | 16,424 |
-| exponential tail prior 80pct | 161.3–1,687.7 | 20,046 |
-| detached prior 50pct | 162.2–1,662.4 | 23,072 |
-| more distal ash prior | 162.3–1,680.3 | 18,900 |
-| less distal ash prior | 158.1–1,558.1 | 14,938 |
-| distal prior without Santa Maria 1902 | 165.3–1,715.4 | 14,276 |
-| distal prior without Quizapu 1932 | 161.8–1,649.3 | 23,358 |
-| distal prior without Novarupta 1912 | 161.8–1,650.0 | 23,270 |
-| distal prior without Hudson 1991 | 161.9–1,652.6 | 22,597 |
+| baseline | 136.0–750.3 | 12,288 |
+| weak profile transfer | 134.5–798.4 | 11,932 |
+| broader peak prior | 142.1–984.0 | 11,515 |
+| power tail prior 80pct | 139.3–732.3 | 8,354 |
+| exponential tail prior 80pct | 134.3–761.3 | 9,819 |
+| detached prior 50pct | 138.7–774.3 | 7,271 |
+| more distal ash prior | 134.2–711.4 | 11,075 |
+| less distal ash prior | 142.3–912.3 | 11,021 |
+| distal prior without Santa Maria 1902 | 130.1–599.8 | 4,294 |
+| distal prior without Quizapu 1932 | 137.6–812.1 | 12,166 |
+| distal prior without Novarupta 1912 | 137.7–812.2 | 12,165 |
+| distal prior without Hudson 1991 | 137.4–819.3 | 12,187 |
+
+## Compatibility with fitted bounds
+
+Of 240 documented thickness bounds, 1 had a posterior-predictive probability below 5% under the fitted model. Each bound entered the likelihood once. This check includes field scatter and known measurement error.
+
+| Site or source row | Bound (cm) | Median field (cm) | Probability of observed bound |
+|---|---|---:|---:|
+| Row 9 | ≥ 30 | 2.79 | 1.20% |
+
+The numerical report gives the latent and observation probabilities at every fitted bound. A poorly predicted bound identifies a limitation of the fitted thinning geometry or error model.
 
 ## Additional distal thinning
 
@@ -63,9 +71,9 @@ Beyond the largest equivalent isopach radius of any training site in a draw, a s
 
 | Additional range | Conditional 95% volume interval (km³) | Geographic score ↓ |
 |---|---:|---:|
-| 1 × sampled radius | 154.3–1,063.5 | 1.501 |
-| 2 × sampled radius | 158.5–1,142.1 | 1.502 |
-| 4 × sampled radius | 160.9–1,288.1 | 1.503 |
+| 1 × sampled radius | 135.8–750.2 | 0.334 |
+| 2 × sampled radius | 135.9–750.3 | 0.334 |
+| 4 × sampled radius | 136.0–750.3 | 0.334 |
 
 The accepted sites give each scenario the same fitted likelihood. The difference in global volume measures sensitivity to the unobserved continuation. [Quadrature and withheld-site checks](distal-taper.json)
 

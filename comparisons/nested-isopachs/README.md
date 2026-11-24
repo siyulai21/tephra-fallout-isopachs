@@ -9,7 +9,7 @@ Finite corridors widen more slowly along an isolated transect, with two allowanc
 | [Aso-4](../../eruptions/aso-4/results/nested-isopachs/README.md) | **432** | 197–10,062 | 1.584 † | 91.6% |
 | [B-Tm](../../eruptions/b-tm/results/nested-isopachs/README.md) | **24.9** | 18.8–38.6 · provisional | 1.453 | 92.2% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-isopachs/README.md) | **35.9** | 21–96.3 · provisional | 1.359 † | 94.2% |
-| [Mazama](../../eruptions/mazama/results/nested-isopachs/README.md) | **219** | 116–960 | 1.369 | 95.6% |
+| [Mazama](../../eruptions/mazama/results/nested-isopachs/README.md) | **175** | 106–605 | 0.430 † | 87.1% |
 | [Minoan](../../eruptions/minoan/results/nested-isopachs/README.md) | **22.6** | 14.9–62.5 | 1.694 | 94.6% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/nested-isopachs/README.md) | **6.77** | 5.57–8.09 | 3.342 † | 60.7% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-isopachs/README.md) | **5.79** | 2.51–33.1 · provisional | 1.054 † | 98.0% |
