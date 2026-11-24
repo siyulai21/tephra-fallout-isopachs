@@ -163,9 +163,13 @@ def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch, tm
             (target/"report.json").write_text(json.dumps(current))
         section = comparison.comparison_section(tmp_path)
         row = next(line for line in section.splitlines() if line.startswith("| [Spherical mixture]"))
-        _, _, _, interval, score, _, _ = row.split("|")
-        assert ("†" in interval) == (not volume_ok)
-        assert ("†" in score) == (not prediction_ok)
+        header = next(line for line in section.splitlines() if line.startswith("| Method |"))
+        columns = [value.strip() for value in header.strip("|").split("|")]
+        values = [value.strip() for value in row.strip("|").split("|")]
+        cells = dict(zip(columns, values, strict=True))
+        assert cells["Integration area"] == "whole Earth"
+        assert ("†" in cells["Q25–Q75 thickness maps (km³)"]) == (not volume_ok)
+        assert ("†" in cells["Held-out score ↓"]) == (not prediction_ok)
 
 
 def test_full_run_opens_with_four_fits_and_retains_regional_detail(tmp_path, monkeypatch):
