@@ -1,6 +1,6 @@
 # Mazama principal observations and thickness intervals
 
-The accepted input contains **300 localities**. It adds 29 localities to the published 271-location edition. Each row supplies one observation to every family. Coordinates are WGS84 longitude and latitude and thicknesses are centimetres. [Principal CSV](../../../eruptions/Mazama_primary_ranges.csv) · [All 872 locality and evidence decisions](locality-decisions.csv) · [Source readings and figures](source-notes.md) · [Input and source hashes](provenance.json)
+The accepted input contains **300 localities**. It adds 29 localities to the preceding 271-location audit. Each row supplies one observation to every family. Coordinates are WGS84 longitude and latitude and thicknesses are centimetres. [Principal CSV](../../../eruptions/Mazama_primary_ranges.csv) · [All 872 locality and evidence decisions](locality-decisions.csv) · [Source readings and figures](source-notes.md) · [Input and source hashes](provenance.json)
 
 | Principal observation | Localities | Model input |
 |---|---:|---|
@@ -32,4 +32,4 @@ Examples include 1.27–1.905 cm at Portage Inlet, 15–30 cm wet thickness at N
 
 The audit also records ranges from mixed packages, partial eruptive units, multiple cores with documented focusing and studies reporting only a group-level facies envelope. These retain a one-sided constraint or an omission where only one endpoint or neither endpoint transfers to **original local fallout**. The CSV columns `ReportedLower_cm` and `ReportedUpper_cm` retain the observed values independently of the model columns. A bed depth pair such as 177–200 cm at Dog Lake measures a single 23 cm layer. [Quantity and locality decisions](locality-decisions.csv) · [Interpretation protocol](../../../../docs/methods/sites-without-measured-thickness.md)
 
-The published maps, volumes, scores and convergence diagnostics use the [271-location input](../../../eruptions/Mazama_reviewed.csv). The [case home](../../../../eruptions/mazama/README.md) identifies that edition. The 300-locality input awaits its first model run.
+All five published fits use these 300 localities on matched geographic holdouts. The case page gives the regional and whole-Earth estimates, their thickness bands and the numerical qualifications. [Maps and results](../../../../eruptions/mazama/README.md)

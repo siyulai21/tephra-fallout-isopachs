@@ -18,9 +18,11 @@ The re-examination found both genuinely thick surviving beds and thick accumulat
 
 The spreadsheet’s row ID and site name are both needed. For example, Rockslide Lake is workbook ID 176 and was called site 174 in the text. Workbook 174 is **Squeah Lake**. South Saskatchewan River is workbook 232 and was called 230 in the text. Marys Pond, Foy and Swiftcurrent show why a single drainage-area correction would be unjustified. Even visibly clean ash can have been redeposited rapidly. Glass chemistry identifies a volcanic source and cannot by itself give the initial bulk thickness. [Buckland et al., pp. 7 and 12–13 and supplement S2](https://doi.org/10.1007/s00445-020-1362-1)
 
-## How Buckland’s original deposit classes enter the fit
+## Deposit classes in the earlier facies review
 
-The table follows each of the 293 original row IDs. A later core or a better documented section in the same basin can enter under its own ID. The 574 additional evidence records preserve those links and shared positions. A secondary deposit can bound the material in a retained package only under the stated capture assumptions.
+This table records the earlier facies selection for the 293 original row IDs. The current 300-locality audit revisits every primary-coded record. [Current S1 decisions](../principal-ranges/buckland-primary.csv)
+
+A later core or a better documented section in the same basin can enter under its own ID. The 574 additional evidence records preserve those links and shared positions. A secondary deposit can bound the material in a retained package only under the stated capture assumptions.
 
 | Original S1 code | Source rows | Point thickness | Lower bound | Conditional upper bound | Original row omitted |
 |---|---:|---:|---:|---:|---:|
@@ -31,15 +33,11 @@ The table follows each of the 293 original row IDs. A later core or a better doc
 
 Sheep Mountain Bog is the single S-coded row with a fitted bound. The original profile and pollen archive document the preserved package in a wash-prone fen. The 42 cm cap permits much thinner local fallout. [Measured section and its transfer assumptions](FIELD_EVIDENCE.md) · [Original and revised use for every record](locality-facies-crosswalk.csv)
 
-Among the 29 point thicknesses beyond 100 km, the thickest is the approximately 20 cm Flodelle Creek lower-mine bed. Beyond 750 km there are 11 measurements, one lower bound and 40 conditional ceilings. The largest point thickness in this group is 1 cm, recorded at Lower Joffre, Green, Great Salt Lake and Yellowstone’s Goose Lake. All 20 fitted positions beyond 1,000 km are conditional upper bounds. The 30 cm Andies Prairie observation is a field minimum. [Fitting input](../../../eruptions/Mazama_reviewed.csv) · [Distances, original readings and decisions](locality-facies-crosswalk.csv)
+![Point thicknesses, measured ranges and one-sided bounds beyond 100 km on the current Mazama input](distal-thickness.png)
 
-## Revised dataset
+Vertical bars show the two measured endpoints at a single site. Triangles mark the fitted upper or lower limit. Distances are WGS84 geodesics from the registered vent.
 
-The principal input has **271 locations**. Beyond 100 km, 29 are point measurements, 23 are conditional minima and 103 are conditional ceilings. Another 435 distal records have known positions and carry no fitting likelihood. Across the full inventory, 77 records have no defensible numerical position. Relative to the 244-position edition, 18 locations leave the fit, 45 enter and 28 continuing locations change the direction or type of their constraint. Source descriptions determined these decisions before model fitting. [Every locality, its facies, reported quantity and both inclusion decisions](locality-facies-crosswalk.csv) · [Principal input](../../../eruptions/Mazama_reviewed.csv) · [Frozen earlier selection](../history/2026-11-23-before-distal-review/)
-
-![Distal measurements, one-sided bounds and withheld earlier readings](distal-thickness.png)
-
-A downward triangle means a local fallout thickness *up to* the plotted endpoint, conditional on the full local fall surviving in that archive. A lake can receive extra ash in the event or later from its catchment. Erosion, compaction or incomplete capture can also invalidate a ceiling. For example, a 1,080 cm enclosing stratigraphic section permits much less fallout and supplies no evidence of a 10.8 m regional blanket. The calculation includes separate omission and weaker-retention refits. For a positive lower bound, the case-specific evidence must instead support in-place material with negligible additional ash import. [Bound protocol](../../../../docs/methods/sites-without-measured-thickness.md) · [All selected bounds and their assumptions](../model-selection.csv)
+A lake can receive extra ash from its catchment. An upper limit assumes that the local fall survived within the measured package. Erosion or incomplete capture can invalidate that assumption. A 1,080 cm enclosing section consequently provides a ceiling on the primary deposit. A fitted lower limit requires evidence that in-place primary ash accounts for at least the stated thickness. The current decision table gives the evidence for each transfer. [Bound protocol](../../../../docs/methods/sites-without-measured-thickness.md) · [Current locality decisions](../principal-ranges/locality-decisions.csv) · [Facies review by source row](locality-facies-crosswalk.csv)
 
 The Jenny Lake primary supplement registers five core stations. One matched core photograph gives a 4 cm outer envelope; the other stations have weaker, physically bracketed ceilings. The source explicitly distinguishes airfall from turbidites. [Jenny Lake core measurements and photographic registration](JENNY_LAKE.md)
 
@@ -62,16 +60,6 @@ Tumalo (50 cm), Round Lake in Oregon (14 cm), Shadow (14 cm) and Sunrise (8 cm) 
 
 The 1995 chronology for Cathy Whitlock’s Davis Lake core reproduces the 6 cm bed recorded in the compilation. A return to the investigator records also distinguishes two different Lofty Lake campaigns and locates the Wildcat and Wildhorse cores. [Archived depth controls and qualifications](OBSERVER_ARCHIVES.md)
 
-## What changed in the five models
-
-Restoring the earlier readings at nine thick archives raises the directional median-map estimate from **214 to 323 km³**, the spherical mixture from **241 to 371 km³**, and the nested model from **175 to 208 km³**. The directional estimates retain sampling warnings. Each comparison keeps its model and whole-Earth integration domain fixed. On the matched regional footprint the GP rises from 91 to 162 km³ and the cubic spline from 194 to 345 km³. The common-footprint spline intervals carry numerical warnings in both fits. These are joint effects of the nine readings. [All five models, source choices and intervals](../../../../eruptions/mazama/results/source-audit/distal-facies-results.md) · [Independent checks of the 19 model packets](model-packet-verification.json)
-
-At Johnson Lake the 156 cm symbol represents the upper edge of a mixed archive. The principal regional fits give local median thicknesses of about 0.27 cm (GP) and 0.03 cm (spline). At Sheep Mountain Bog both maps give about 2 cm against the 42 cm archive ceiling. With that entire geographic region withheld, the predictions are 13 cm and 8,076 cm. The latter exceeds the field ceiling by two orders of magnitude. No complete contour band qualified under any of the three support policies in any family. The reported global volumes and their intervals depend on how each model extends fallout into sparsely observed regions. [Fitted and geographically withheld predictions](../../../../eruptions/mazama/results/source-audit/distal-facies-results.md) · [Support maps and rejected bands](../../../../eruptions/mazama/results/support/README.md)
-
 ## Fitted sites with outstanding original field profiles
 
 Seven distal constraints still depend on an unrecovered original field profile. Wildhorse Lake (≥2 cm) and Wildcat Lake (≥1 cm) retain interpreted primary components of mixed deposits. Young’s published limits apply at site 24 (<5 cm), South Saskatchewan River (<5 cm), Saskatchewan Crossing (<25 cm), Beverley (<5 cm) and Lofty Lake (≤0.2 cm in the specified density conversion). Each is entered once as a one-sided constraint. The two other fitted S1 rows in the observer queue are within 60 km of the vent. Buckland records upland thicknesses of 223 cm at Antelope Unit and 224 cm at Huckleberry Springs. Matz’s Table 6 lists separate C1 and C2 horizons at those named localities, 43 and 64 cm at Antelope, and 61–63.5 and 147–150 cm at Huckleberry. The link between the soil sections and Buckland’s measurement stations remains unresolved. The two points therefore retain their compilation-level qualification. [Source-by-source queue](../primary-source-work-queue.csv) · [Matz, Tables 5–6](https://studylib.net/doc/11985296/an-abstract-of-the-thesis-of) · [Original S1 rows and coordinates](../buckland2020-293-localities.csv)
-
-## Previous edition
-
-The archived 244-position fits quantify the earlier selection. [Five-family results and all 33 historical source refits](https://github.com/siyulai21/tephra-fallout-isopachs/tree/f84105cec3b7b3bc49e083e5d518218327108a6b/eruptions/mazama/results)

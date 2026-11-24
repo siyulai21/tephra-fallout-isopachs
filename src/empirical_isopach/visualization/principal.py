@@ -93,14 +93,14 @@ def case_section(home, prefix="", *, reports=None, regional_subdir="", name=None
     lines = ["## Volumes and geographic prediction", "",
              "Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. "
              "The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.", "",
-             "| Method | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |",
-             "|---|---:|---:|---:|---:|"]
+             "| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |",
+             "|---|---|---:|---:|---:|---:|"]
     for row in rows:
         k = row["method"]
         label = f"[{names[k]}]({prefix}{k}/README.md)" if k in FAMILIES else names[k]
         ok = row["thickness_band_integration_passed"] and row["posterior_checks_passed"] is not False
         s,c = row["heldout_log_score"],row["heldout_coverage95"]
-        lines.append(f"| {label} | **{number(row['median_map_volume_km3'])}**{'' if row['map_integration_passed'] else ' †'} "
+        lines.append(f"| {label} | {row['domain']} | **{number(row['median_map_volume_km3'])}**{'' if row['map_integration_passed'] else ' †'} "
                      f"| {number(row['thickness_q25_volume_km3'])}–{number(row['thickness_q75_volume_km3'])}{'' if ok else ' †'} "
                      f"| {'—' if s is None else f'{s:.3f}'}{'' if row['heldout_checks_passed'] else ' †'} "
                      f"| {'—' if c is None else f'{c:.1%}'} |")

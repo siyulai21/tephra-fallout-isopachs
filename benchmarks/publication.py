@@ -1,9 +1,7 @@
 """Read and verify the SHA-256 identities of the published evidence."""
 from functools import lru_cache
 from hashlib import sha256
-from io import BytesIO
 import json
-import tarfile
 import subprocess
 from pathlib import Path
 from zipfile import ZipFile
@@ -35,18 +33,12 @@ def published_reach_engine():
 
 def published_datasets():
     """Resolve the exact registered revision used by each published case report."""
-    from src.empirical_isopach.core.catalog import datasets, dataset_record
+    from src.empirical_isopach.core.catalog import datasets
     records = datasets()
-    for index, rec in enumerate(records):
-        if "published_input" in rec:
-            path = ROOT / "data" / rec["published_input"]
-            pinned = dataset_record(path)
-            report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
-            if (not pinned or pinned["slug"] != rec["slug"] or
-                    sha256(path.read_bytes()).hexdigest() != pinned["sha256"] or
-                    report["input"]["input_sha256"] != pinned["sha256"]):
-                raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
-            records[index] = pinned
+    for rec in records:
+        report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
+        if report["input"]["input_sha256"] != sha256(rec["path"].read_bytes()).hexdigest():
+            raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
     return records
 
 
@@ -70,18 +62,8 @@ def previous_mazama_bytes(name, root=ROOT):
     name = Path(name).as_posix()
     fingerprints = json.loads((folder / "files.json").read_text())
     expected = fingerprints[name]
-    manifest = json.loads((folder / "previous-release.tar.gz.parts.json").read_text())
-    archive = BytesIO()
-    for part in manifest["parts"]:
-        content = (folder / part["file"]).read_bytes()
-        if len(content) != part["bytes"] or sha256(content).hexdigest() != part["sha256"]:
-            raise ValueError(f"Changed Mazama archive part {part['file']}")
-        archive.write(content)
-    if sha256(archive.getbuffer()).hexdigest() != manifest["original_sha256"]:
-        raise ValueError("Changed Mazama release archive")
-    archive.seek(0)
-    with tarfile.open(fileobj=archive, mode="r:gz") as source:
-        content = source.extractfile(name).read()
+    relative = Path(name).relative_to("eruptions/mazama/results")
+    content = (folder / "controls" / relative).read_bytes()
     if sha256(content).hexdigest() != expected:
         raise ValueError(f"Archived Mazama evidence differs at {name}")
     return content

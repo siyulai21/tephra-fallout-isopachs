@@ -92,18 +92,55 @@ def verify_case(rec):
     return j
 
 
+def verify_replacement_controls(rec):
+    """Replay the corridor and whole-area reference fits on the current input revision."""
+    from .footprint_study import controls
+    from .publication import read_hashes, verify_files
+    corridor, _, whole = controls(rec["slug"],rec)
+    data, meta = audited_data(rec["path"])
+    report = read(corridor/"report.json")
+    hashes = read_hashes()
+    artifacts = {k:v for k,v in hashes.items() if Path(k).is_relative_to(corridor.parent)}
+    assert str(corridor/"report.json") in artifacts and str(whole/"full.npz") in artifacts
+    verify_files(artifacts)
+    assert report["input_sha256"] == meta["input_sha256"]
+    for i,train,test in [(None,data,None),*splits(data,meta["vent_lonlat"][1],"geographic")]:
+        key = "full" if i is None else f"fold-{i}"
+        fit = read(corridor/(key+".json"))
+        parent = read(whole/(key+".json"))
+        model = ReachDraws.load(corridor/(key+".npz"))
+        assert fit["identity"]["engine_sha256"] == report["engine_sha256"]
+        assert fit["posterior_sha256"] == digest(corridor/(key+".npz"))
+        assert fit["identity"]["parent_posterior_sha256"] == parent["posterior_sha256"] == digest(whole/(key+".npz"))
+        assert fit["identity"]["training_rows"] == parent["identity"]["training_rows"] == train.row_ids.tolist()
+        if test is not None:
+            assert fit["identity"]["test_rows"] == parent["identity"]["test_rows"] == test.row_ids.tolist()
+            np.testing.assert_allclose(model.score(test),fit["row_log_scores"],atol=1e-8)
+        else:
+            assert report["full_packet_sha256"] == fit["posterior_sha256"]
+            np.testing.assert_allclose(np.quantile(load_packet(whole/"full.npz").volume(),[.025,.975]),
+                                       report["reference_volume_interval95_km3"])
+    return meta["input_sha256"]
+
+
 def main():
     comp=Path("comparisons/nested-reach")
     archive = Path("archive/2026-11-23-nested-geography")
     with (archive/"cases.csv").open(newline="") as stream:
         rows = {r["slug"]:r for r in csv.DictReader(stream) if r["method"] == "Nested corridor"}
     for rec in records(published=True):
-        j = verify_case(rec)
-        if rec["slug"] == "pinatubo-1991":
+        slug = rec["slug"]
+        if slug == "pinatubo-1991":
+            verify_case(rec)
             continue
-        row = rows.pop(rec["slug"])
+        if (archive/f"{slug}-300-controls/corridor/full.npz").is_file():
+            assert slug not in rows and verify_replacement_controls(rec) == digest(rec["path"])
+            continue
+        row = rows.pop(slug)
+        assert row["input_sha256"] == digest(rec["path"])
+        home = case_home(slug)/"nested-isopachs"
+        j = verify_case(rec)
         assert row["input_sha256"] == j["input_sha256"]
-        home = case_home(rec["slug"])/"nested-isopachs"
         receipt = read(archive/rec["slug"]/"deposit.json")
         np.testing.assert_allclose([float(row[k]) for k in ("lower95_km3","upper95_km3")],
                                    receipt["conditional_volume_interval95_km3"])

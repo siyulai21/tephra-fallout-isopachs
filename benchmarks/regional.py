@@ -118,7 +118,7 @@ def summarize(output, published=False):
     if published:
         accepted = {r["slug"]: r["path"] for r in datasets()}
         from .principal_volumes import principal_home
-        sources = [(r["slug"],principal_home(r)/"report.json") for r in datasets() if (principal_home(r)/"report.json").is_file()]
+        sources = [(r["slug"],principal_home(r)/"report.json") for r in datasets()]
     else:
         sources = [(p.parent.name, p) for p in output.glob("*/report.json")]
     for slug, path in sorted(sources):
@@ -128,7 +128,8 @@ def summarize(output, published=False):
         bands = json.loads((path.parent/"thickness-bands.json").read_text())["methods"]
         for method, result in report["methods"].items():
             rows.append({"dataset": report["dataset"], "slug": slug, "method": method, "label": report_label(report, method),
-                "n_exact": report["input"]["n_measurements"], "n_lower": report["input"]["n_lower_limits"],
+                "n_exact": report["input"]["n_measurements"], "n_intervals":report["input"].get("n_intervals",0),
+                "n_lower": report["input"]["n_lower_limits"],
                 "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
                 "median_surface_km3": result["regional_volume"]["median_surface_km3"],

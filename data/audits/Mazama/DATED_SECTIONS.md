@@ -1,6 +1,6 @@
 # Dated sections and additional primary core logs
 
-Two previously unmeasured compilation entries are now measured beds at corrected locations. Three archive ceilings and one terrestrial component minimum also enter the registered input. The six additions take the previous 230 observations to 236. The source checks below cover several other entries that contribute no additional likelihood. [Reviewed input](../../eruptions/Mazama_reviewed.csv) · [Locality ledger](revised-locality-ledger.csv) · [Source receipts](../../sources/mazama/source-manifest.csv)
+This source review recovered six quantitative field records, including two lake beds at corrected locations. The current audit records the preservation assumptions and fitted reading for each locality. The source checks below cover several other entries that contribute no additional likelihood. [Current locality decisions](principal-ranges/locality-decisions.csv) · [Locality ledger](revised-locality-ledger.csv) · [Source receipts](../../sources/mazama/source-manifest.csv)
 
 | Locality and record | What the original source establishes | Principal use |
 |---|---|---|

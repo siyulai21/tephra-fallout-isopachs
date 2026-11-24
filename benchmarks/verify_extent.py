@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 
 from .publication import published_datasets as datasets
+from .footprint_study import controls
 from src.empirical_isopach.models.extent_release import draw_check,predictive_summary
 from src.empirical_isopach.models.extent_review import FAMILY_NAMES
 from src.empirical_isopach.models.extent_weights import ASSET,calibration
@@ -16,6 +17,8 @@ from src.empirical_isopach.visualization.deposit import digest,read_json
 def main():
     table=pd.read_csv("comparisons/global-extent/paired-results.csv").set_index(["slug","method"])
     kernels=read_json("comparisons/global-extent/kernel-integrals.json")
+    sectors=pd.read_csv("comparisons/global-extent/sector-areas.csv.gz")
+    angular=pd.read_csv("comparisons/global-extent/angular-variation.csv")
     ledger=read_json(ASSET)
     for rec in datasets():
         slug=rec["slug"]
@@ -23,7 +26,9 @@ def main():
         regional=read_json(home/"report.json")
         partitions=regional["validation"]["methods"]["stacked"]["selections"]
         for family in FAMILY_NAMES:
-            folder=home/family;ext=folder/"extent";r=read_json(ext/"report.json")
+            folder, map_home = controls(slug,rec)[:2] if family=="nested-isopachs" else (home/family,home/family)
+            ext = folder/"extent"
+            r = read_json(ext/"report.json")
             print(slug,family,flush=True)
             assert r["input_sha256"]==digest(rec["path"]) and r["calibration_sha256"]==digest(ASSET)
             assert r["heldout_sha256"]==digest(ext/"heldout.csv.gz") and r["volume_draws_sha256"]==digest(ext/"volumes.npz")
@@ -59,9 +64,13 @@ def main():
             audit=json.loads(gzip.decompress((ext/"support.json.gz").read_bytes()))
             assert audit["status"]!="completed" or len(audit["refined_levels"])>=25
             pair=table.loc[(slug,family)]
-            receipt_path = (Path("archive/2026-11-23-nested-geography")/slug/"deposit.json"
-                            if family == "nested-isopachs" else folder/"deposit.json")
-            receipt=read_json(receipt_path)
+            assert pair.input_sha256 == r["input_sha256"] and pair.accepted == len(regional["validation"]["row_ids"])
+            sector=sectors[(sectors.slug==slug) & (sectors.method==family)]
+            assert len(sector)==32 and set(sector.input_sha256)=={pair.input_sha256}
+            shape=angular[(angular.slug==slug) & (angular.family==family)]
+            if not shape.empty:
+                assert set(shape.input_sha256)=={pair.input_sha256}
+            receipt = read_json(map_home/"deposit.json")
             np.testing.assert_allclose([pair.principal_km3,pair.lower95,pair.upper95,pair.principal_negative_log_score],
                                        [receipt["median_map_volume_km3"],*r["conditional_interval95_km3"],
                                         r["validation"]["geographic"]["negative_log_score"]])

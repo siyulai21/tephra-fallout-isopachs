@@ -7,7 +7,7 @@ from PIL import Image
 
 from .nested_reach import case_home
 from .nested_reach_challenge import records
-from .principal_volumes import catalogue_rows, principal_home
+from .principal_volumes import catalogue_rows
 from .refresh_figures import recorded_observations, regional_models
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.distributions import predictive_distribution
@@ -18,7 +18,6 @@ from src.empirical_isopach.visualization.deposit_integrals import within_cells
 from src.empirical_isopach.visualization.contour_limits import inner_contour, near_frame, near_levels, visible_levels
 from src.empirical_isopach.visualization.shorelines import detail
 from src.empirical_isopach.visualization.thickness_band import field_quantiles, regional_band
-from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.visualization.principal import case_section
 
 
@@ -151,9 +150,7 @@ def verify_case(record):
                 charts.append(PolarField(packet["radii_km"],packet["log10_cm"],float(packet["axis"])))
         np.testing.assert_allclose(frames[0][2],near_frame(charts,data))
     published=(home if preview else home.parent)/"README.md"
-    if record["slug"]=="mazama":
-        assert case_section(home) in (home/"README.md").read_text() and "historical" in (home/"README.md").read_text().lower()
-    elif not preview:
+    if not preview:
         assert case_section(home,"results/") in published.read_text()
     r=read_json(region/"report.json")
     for item in r["methods"].values():
@@ -179,14 +176,6 @@ def verify_case(record):
 def main():
     for r in records(published=True):
         verify_case(r)
-    for rec in datasets():
-        if rec.get("principal_results"):
-            home = principal_home(rec)
-            data,meta = audited_data(rec["path"])
-            assert case_section(home,"results/"+rec["principal_results"]+"/") in (case_home(rec["slug"]).parent/"README.md").read_text()
-            for family in FAMILIES:
-                if (home/family/"deposit.json").is_file():
-                    verify_global(home/family,family,data,meta)
     expected=pd.DataFrame(catalogue_rows())
     pd.testing.assert_frame_equal(pd.read_csv("comparisons/principal-volumes.csv").convert_dtypes(),expected.convert_dtypes(),check_dtype=False)
     print(f"Replayed the median global field for every family and the two regional fits across {len(records(published=True))} case records.")

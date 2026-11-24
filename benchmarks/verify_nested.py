@@ -209,7 +209,11 @@ def main():
         verify_distal_holdout(receipts["outer"][slug], path)
     for record in sorted(registered.values(), key=lambda r:r["slug"]):
         home = ROOT/"eruptions"/record["slug"]/"results"
-        verify_case(home/"nested-whole-area",record["path"])
+        if (home/"nested-whole-area/report.json").is_file():
+            verify_case(home/"nested-whole-area",record["path"])
+        else:
+            from .verify_nested_reach import verify_replacement_controls
+            assert verify_replacement_controls(record) == digest(record["path"])
         rows, peer, report = case_results(record)
         expected_cases.extend(rows)
         expected_sensitivities.extend(peer)

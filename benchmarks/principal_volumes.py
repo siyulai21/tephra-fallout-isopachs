@@ -9,6 +9,7 @@ import numpy as np
 from .nested_reach import case_home
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.core.audit import audited_data
+from src.empirical_isopach.models.registry import active_methods
 from src.empirical_isopach.visualization.principal import FAMILIES, number, volume_rows, write_rows
 from src.empirical_isopach.visualization.summary import COLORS, all_case_scores
 
@@ -17,7 +18,7 @@ from src.empirical_isopach.visualization.deposit_field import digest
 
 
 def principal_home(record):
-    return case_home(record["slug"])/record.get("principal_results","")
+    return case_home(record["slug"])
 
 
 def catalogue_rows():
@@ -26,7 +27,12 @@ def catalogue_rows():
         slug = record["slug"]
         home = principal_home(record)
         accepted = len(audited_data(record["path"])[0].xy)
-        for row in volume_rows(home,input_sha256=digest(record["path"])):
+        fitted = volume_rows(home,input_sha256=digest(record["path"]))
+        expected = {*active_methods(),*FAMILIES}
+        found = {r["method"] for r in fitted}
+        if found != expected or len(fitted) != len(expected):
+            raise ValueError(f"{slug}: published families {sorted(found)} differ from registered families {sorted(expected)}")
+        for row in fitted:
             rows.append(dict(eruption=record["name"],slug=slug,accepted_observations=accepted,**row))
     return rows
 
@@ -99,6 +105,8 @@ def refresh_catalogue(output):
     for family in FAMILIES:
         (dest/family).mkdir(exist_ok=True)
         (dest/family/"README.md").write_text(family_page(family,rows,records))
+    from .azimuth_summary import current_control_summary
+    current_control_summary(dest/"directional/fixed-ensemble",records.values())
     volume_plot(rows,dest/"nested-isopachs/volumes.png")
     listing = Path("eruptions/README.md")
     body = listing.read_text()

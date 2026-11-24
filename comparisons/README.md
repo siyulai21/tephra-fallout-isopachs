@@ -6,7 +6,7 @@ The nested family fits its footprint and area–thickness law jointly. Matched c
 
 The published Pinatubo comparison uses 208 observations, including 34 offshore records. Its land measurements incorporate both the Koyaguchi and Paladio-Melosantos figure reviews. The earlier field-survey experiments keep their own fitted inputs and held-out predictions. [Audited Pinatubo case](../eruptions/pinatubo-1991-layer-c/README.md) · [Effect of the two land-map reviews](../eruptions/pinatubo-1991-layer-c/results/source-checks/figure7-review/README.md) · [Earlier survey tests](nested-isopachs/pinatubo-preview/README.md)
 
-The figure compares geographic predictions on the current inputs. Only nested footprints have a verified fit on Mazama’s 300 localities. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
+The figure compares geographic predictions on the current inputs. All five Mazama fits use the same 300 localities and the same buffered geographic holdouts. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
 
 ![Geographic prediction scores and exact-site coverage for the five methods](method-scores.png)
 

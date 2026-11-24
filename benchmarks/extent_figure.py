@@ -3,18 +3,19 @@ import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
 from matplotlib.ticker import MaxNLocator
 
 from .extent_challenges import paired
+from .footprint_study import controls
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.extent_integrals import parent_fields
 from src.empirical_isopach.models.extent_weights import calibration
 from src.empirical_isopach.visualization.deposit_field import PolarField
-from src.empirical_isopach.visualization.deposit_maps import draw_land,frames,regular_axes
+from src.empirical_isopach.visualization.contour_limits import inner_contour, outer_contour
+from src.empirical_isopach.visualization.deposit_maps import colours, draw_land, frames, plot_observations, regular_axes
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 CASES=(("pinatubo-1991-layer-c","spherical-mixture","Pinatubo Layer C · spherical mixture"),
@@ -29,7 +30,8 @@ def surfaces(slug,family):
     data,meta=audited_data(rec["path"],allow_intervals=True)
     latitude=meta["vent_lonlat"][1]
     dom=EarthDomain.wgs84(latitude)
-    fields=parent_fields(Path("eruptions")/slug/"results"/family,family,data,latitude,count=192 if family=="spherical-mixture" else 1024)
+    folder = controls(slug,rec)[0] if family=="nested-isopachs" else Path("eruptions")/slug/"results"/family
+    fields=parent_fields(folder,family,data,latitude,count=192 if family=="spherical-mixture" else 1024)
     cal=calibration(family,meta["input_sha256"],exclude_slug=slug)
     radius=np.r_[0.,np.geomspace(.1,dom.rho_max*(1.-1e-8),176)]
     theta=np.arange(240)*2*np.pi/240.
@@ -41,16 +43,20 @@ def surfaces(slug,family):
 def figure(out):
     out.mkdir(parents=True,exist_ok=True)
     fig,axes=plt.subplots(5,2,figsize=(9,16),layout="constrained")
-    levels=np.array([.5,1.,2.,4.,8.,16.,32.,64.,128.,256.,512.])
     ink="#244c59"
     rows=[]
     for pair,(slug,family,title) in zip(axes,CASES,strict=True):
         data,meta,fields=surfaces(slug,family)
-        limits=np.array([frames(field,data)[0] for field in fields])
+        cover = [outer_contour(field,data) for field in fields]
+        minimum = min(r["level_cm"] for r in cover)
+        limits=np.array([frames(field,data,minimum)[0] for field in fields])
         lo,hi=np.min(limits[:,:2],axis=0),np.max(limits[:,2:],axis=0)
         bounds=np.r_[lo,hi]
         x,y=regular_axes(bounds,340)
-        for ax,field,heading in zip(pair,fields,("Earlier","Revised"),strict=True):
+        for ax,field,selection,heading in zip(pair,fields,cover,("Earlier","Revised"),strict=True):
+            largest = inner_contour(selection)["level_cm"]
+            levels = 2.**np.arange(np.log2(selection["level_cm"]),np.log2(largest)+1)
+            brackets = 2.**np.arange(-1,np.log2(max(largest,.5))+1)
             draw_land(ax,bounds,meta["vent_lonlat"],320)
             z=field.on_grid(x,y)
             use=levels[(levels>10.**np.nanmin(z)) & (levels<10.**np.nanmax(z))]
@@ -59,8 +65,7 @@ def figure(out):
                 lines=ax.contour(x,y,z,levels=np.log10(use),colors=ink,linewidths=.7)
                 labelled=[np.log10(a) for a in (1.,4.,16.,64.) if a in use]
                 ax.clabel(lines,levels=labelled,fmt=lambda v:f"{10**v:g}",fontsize=6)
-            ax.scatter(*data.xy.T,s=6,facecolors="white",edgecolors="#333333",linewidths=.35,zorder=4)
-            ax.scatter(0,0,marker="^",s=32,color="#b13c2e",edgecolor="white",linewidth=.5,zorder=5)
+            plot_observations(ax,data,meta,brackets,colours(len(brackets)),bounds)
             ax.set(xlim=(lo[0],hi[0]),ylim=(lo[1],hi[1]),aspect="equal")
             ax.set_title(title+"\n"+heading,fontsize=10,loc="left")
             ax.xaxis.set_major_locator(MaxNLocator(5)); ax.yaxis.set_major_locator(MaxNLocator(4))
@@ -70,7 +75,7 @@ def figure(out):
                 if np.isfinite(cross).all() and (cross>0).all():
                     harmonics=abs(np.fft.rfft(np.log(cross)-np.mean(np.log(cross))))**2
                     fraction=harmonics[5:].sum()/max(harmonics[1:].sum(),1e-30)
-                    rows.append(dict(slug=slug,family=family,model=heading,level_cm=level,
+                    rows.append(dict(slug=slug,input_sha256=meta["input_sha256"],family=family,model=heading,level_cm=level,
                                      high_harmonic_fraction=fraction))
     fig.suptitle("How the inferred fallout footprint changes",fontsize=15)
     fig.supxlabel("Easting from the vent (km)   ·   contours in centimetres",fontsize=9)

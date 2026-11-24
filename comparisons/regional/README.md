@@ -10,6 +10,8 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 50.75 | 4.295 | 75.0% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | GP ensemble | 23.31 | 1.343 | 98.1% |
 | [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | Trend-regularized cubic spline | 25.67 | 1.462 | 92.3% |
+| [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 299.29 | 1.399 | 71.7% |
+| [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 1536.55 | 1.231 | 89.1% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |
 | [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.78 | 1.601 | 96.7% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | GP ensemble | 3.45 | 3.023 | 87.3% |

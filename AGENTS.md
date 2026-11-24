@@ -46,7 +46,7 @@ python -m benchmarks.verify_directional_ensemble
 python -m benchmarks.verify_azimuth_continuation
 ```
 
-Use the registered input hash for each principal table row. Put any previous-input comparison under its own historical heading. Follow the [contour and near-vent rules](docs/OUTPUTS.md#read-the-map-and-its-volume) and inspect the resulting images.
+Use the registered input hash for each principal table row. Use the case’s immutable Git revision for superseded reports. Retain the source evidence and any calibration controls used by current calculations. Follow the [contour and near-vent rules](docs/OUTPUTS.md#read-the-map-and-its-volume) and inspect the resulting images.
 
 For a navigation change, verify scientific artifacts against their pre-change bytes. For a numerical change, run the matched regional benchmark and the relevant global or support studies. New map releases need visual inspection and replay checks. [Study commands](benchmarks/README.md) · [Figure checks](docs/maintenance/README.md#checking-a-map)
 

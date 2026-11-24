@@ -11,10 +11,9 @@ from src.empirical_isopach.visualization.summary import saved_case_overview
 
 
 def published_folder(case, record):
-    home = Path("eruptions")/record["slug"]/"results"
-    if case == record["slug"]:
-        home = home/record.get("principal_results","")
-    return home/"nested-isopachs"
+    if case != record["slug"]:
+        raise ValueError(f"Expected the registered case {record['slug']}, received {case}")
+    return Path("eruptions")/case/"results/nested-isopachs"
 
 
 def install(case, record, source):
@@ -60,9 +59,8 @@ def install(case, record, source):
     if (home/"report.json").is_file():
         saved_case_overview(home)
     root = Path("eruptions")/record["slug"]
-    historical = case != record["slug"]
-    page = home/"README.md" if historical else root/"README.md"
-    prefix = "" if historical else home.relative_to(root).as_posix()+"/"
+    page = root/"README.md"
+    prefix = home.relative_to(root).as_posix()+"/"
     body = page.read_text()
     start = body.index("## Volumes and geographic prediction")
     if (home/"report.json").exists():

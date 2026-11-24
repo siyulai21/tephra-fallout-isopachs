@@ -1,6 +1,6 @@
 # Mazama directional continuation
 
-The median of the ensemble using measured fan directions integrates to **203.9 km³ of bulk fallout**. Angular reach varies across extrapolation assumptions. Changing reach alone preserves the field inside measured triangles. Conditioning on archive evidence can update the fitted thicknesses. A hypothetical extra fan in the largest sampling gap remains a separate structural sensitivity.
+The median of the ensemble using measured fan directions integrates to **289.6 km³ of bulk fallout**. Angular reach varies across extrapolation assumptions. Changing reach alone preserves the field inside measured triangles. Conditioning on archive evidence can update the fitted thicknesses. A hypothetical extra fan in the largest sampling gap remains a separate structural sensitivity.
 
 ![Agreement and disagreement about the median isopachs](isopach-agreement.png)
 
@@ -18,7 +18,7 @@ Each segment lies inside an accepted interpolation triangle with measurements on
 
 | Continuation | Integral of median map (km³) | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---:|---|
-| Measured fan directions | 203.89 | 139.9–500.4 | Passed |
+| Measured fan directions | 289.57 | 196.2–1,316.6 | Passed |
 
 ### Bulk volume of the median map by direction
 
@@ -26,11 +26,11 @@ Each entry is km³ in a 45° sector centred on the named bearing from the vent.
 
 | Continuation | N | NE | E | SE | S | SW | W | NW |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Measured fan directions | 18.5 | 39.7 | 44.5 | 28.1 | 22.5 | 18.9 | 21.6 | 10.1 |
+| Measured fan directions | 32.2 | 124 | 31.9 | 29.8 | 18.6 | 15.3 | 18.1 | 19.9 |
 
 The sector volumes sum through the antipode and include extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. The sector draws are retained for each fitted deposit. Agreement among medians cannot establish an observation-supported closed band.
 
-**Measured fan directions** scored geographic 0.553, quadrants 0.628. Geographic sampling warnings occurred in 0, 2. The shared screen accepted 0 complete bands across its policies. [Geographic and directional folds](quantitative/validation.json) · [Contour decisions](quantitative/complete-contour-audit.json)
+**Measured fan directions** scored geographic 0.898, quadrants 1.392. Geographic sampling warnings occurred in 0, 2. The shared screen accepted 0 complete bands across its policies. [Geographic and directional folds](quantitative/validation.json) · [Contour decisions](quantitative/complete-contour-audit.json)
 
 ## Reproducible results
 

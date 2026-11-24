@@ -1,135 +1,146 @@
-"""Verify the published Mazama source refits and their unchanged evidence identities.
-
-Numerical warnings are reported, not converted into successful fits. Geological
-interpretations remain conditional even when this consistency check passes.
-"""
+"""Verify the current Mazama publication against its source audit and matched geographic deletions."""
 import argparse
 import csv
 import json
+from collections import Counter
 from pathlib import Path
 
-from benchmarks.mazama import AUDIT, INPUT, sha
-from benchmarks.mazama_sensitivity import CASES
+import numpy as np
+import pandas as pd
 
-
-def read(path):
-    return json.loads(path.read_text())
-
-
-def rows(path):
-    with path.open() as source:
-        return list(csv.DictReader(source))
+from src.empirical_isopach.core.audit import audited_data
+from src.empirical_isopach.core.catalog import dataset_record, data_directory, resolve_dataset
+from src.empirical_isopach.visualization.deposit import digest, read_json
+from src.empirical_isopach.visualization.principal import volume_rows
 
 
 def check(home):
-    source = home/'source-audit'
-    cases = source/'sensitivities'
-    reference = sha(INPUT)
-    accepted = rows(INPUT)
-    probes = rows(AUDIT/'model-probes.csv')
-    ids = {r['EvidenceID'] for r in probes}
-    old_ids = {r['EvidenceID'] for r in rows(AUDIT/'history/2026-11-23-before-distal-review/input.csv')}
-    assert len(probes) == len(ids)
-    assert ids == old_ids | {r['EvidenceID'] for r in accepted} | {'M2023-YL16-6A'}
-    scenarios = set(CASES)
-    assert {p.name for p in cases.iterdir() if p.is_dir()} == scenarios | {'principal'}
-    expected = read(cases/'scenarios.json')
-    assert expected['principal_input_sha256'] == reference
-    assert set(expected['cases']) == set(CASES)
-    script = source/'reproduction/mazama_sensitivity.py'
-    assert sha(script) == sha(Path('benchmarks/mazama_sensitivity.py'))
-    principal = read(home/'report.json')
-    assert principal['input']['input_sha256'] == reference
-    partitions = principal['validation']['methods']['stacked']['selections']
-    assert partitions == principal['validation']['methods']['spline']['selections'] or all(
-        a['training_row_ids'] == b['training_row_ids'] and
-        a['withheld_row_ids'] == b['withheld_row_ids']
-        for a, b in zip(partitions, principal['validation']['methods']['spline']['selections'], strict=True))
-    family_names = ('directional', 'spherical-mixture', 'nested-isopachs')
-    warnings, principal_checks, artifact_count = [], [], 0
+    path = resolve_dataset("Mazama")
+    record = dataset_record(path)
+    data, meta = audited_data(path)
+    identity = meta["input_sha256"]
+    with path.open(newline="") as stream:
+        raw = list(csv.DictReader(stream))
+    audit = read_json(data_directory()/record["audit"])["cases"]["principal"]
+    assert audit["sha256"] == identity == digest(path)
+    assert len({r["EvidenceID"] for r in raw}) == len(data.xy) == len(raw) == 300
+    counts = Counter(r["Kind"] for r in raw)
+    assert [audit[key] for key in ("n_measurements","n_intervals","n_lower_limits","n_upper_limits")] == [46,29,129,96]
+    assert counts == {"measurement":46,"interval":29,"lower_limit":129,"upper_limit":96}
+    assert not any(r["Pseudo"].lower() == "yes" for r in raw)
 
-    def local(record):
-        assert len(record['sites']) == len(ids)
-        assert {r['evidence_id'] for r in record['sites']} == ids
-        keys = {(r['evidence_id'], r['bearing_offset_deg'], r['level_cm']) for r in record['crossings']}
-        wanted = {(sid, offset, cm) for sid in ids for offset in (-11.25, 0., 11.25) for cm in (.5, 1., 5., 10.)}
-        assert len(record['crossings']) == len(wanted) and keys == wanted
+    from PIL import Image
+    evidence = data_directory()/"audits/Mazama"
+    for name in ("evidence-map","yellowstone-cores","distal-review/distal-thickness"):
+        info = read_json(evidence/(name+".json"))
+        with Image.open(evidence/(name+".png")) as image:
+            assert json.loads(image.info["Description"]) == info
+        assert info["input_sha256"] == identity
+    source_map = read_json(evidence/"evidence-map.json")
+    assert source_map["site_types"] == counts and source_map["accepted_sites"] == len(raw)
 
-    for family in family_names:
-        folder = home/family
-        extent = read(folder/'extent/report.json')
-        deposit = read(folder/'deposit.json')
-        assert extent['input_sha256'] == deposit['input_sha256'] == reference
-        assert sha(folder/'extent/heldout.csv.gz') == extent['heldout_sha256']
-        assert sha(folder/'extent/volumes.npz') == extent['volume_draws_sha256']
-        for fold in extent['folds']:
-            if fold['design'] != 'geographic' or fold['status'] != 'estimated':
-                continue
-            base = partitions[fold['fold']]
-            assert fold['train'] == base['training_row_ids']
-            assert fold['test'] == base['withheld_row_ids']
-            assert not set(fold['train']) & set(fold['test'])
-        local(read(cases/'principal'/family/'local-checks.json')['local_checks'])
-        principal_checks.append(dict(family=family,
-            draw_checks_passed=extent['draw_checks_passed'],
-            geographic=extent['validation']['geographic']))
-    priors = read(home/'spherical-mixture/extent/prior-sensitivity.json')
-    assert len(priors) == 8 and set(priors) == set(read(home/'spherical-mixture/report.json')['fits'])
+    distal = read_json(evidence/"distal-review/distal-thickness.json")
+    from pyproj import Geod
+    geod = Geod(ellps="WGS84")
+    distances = [geod.inv(*meta["vent_lonlat"],float(r["Lon"]),float(r["Lat"]))[2]/1000 for r in raw]
+    included = Counter(r["Kind"] for r,km in zip(raw,distances,strict=True) if km>100)
+    assert distal["site_types"] == included and distal["plotted_sites"] == sum(included.values())
 
-    for case in sorted(scenarios | {'principal'}):
-        folder = cases/case
-        input_hash = reference if case == 'principal' else sha(folder/'input.csv')
-        if case in CASES:
-            assert input_hash == expected['cases'][case]['sha256']
-        regional = read(folder/'regional-details.json')
-        assert regional['input_sha256'] == input_hash
-        assert regional['principal_input_sha256'] == reference
-        assert regional['script_sha256'] == sha(source/'reproduction/mazama_release.py')
-        assert set(regional['methods']) == {'stacked', 'spline'}
-        for family, details in regional['methods'].items():
-            local(details)
-            assert details['profiles_sha256'] == sha(folder/(family+'-profiles.npz'))
-        if case == 'principal':
-            continue
-        for family in ('regional', *family_names):
-            packet = folder/family
-            report = read(packet/'report.json')
-            assert report['input_sha256'] == input_hash
-            assert report['principal_input_sha256'] == reference
-            assert report['script_sha256'] == sha(script)
-            for name, expected_sha in report['artifacts'].items():
-                assert sha(packet/name) == expected_sha, (case, family, name)
-                artifact_count += 1
-            if family != 'regional':
-                assert 'mazama' not in report['calibration']['donors']
-                local(report['local_checks'])
-                flags = {key: report[key] for key in ('fit_passed', 'draw_checks_passed', 'map_integration_passed')}
-                if not all(flags.values()):
-                    warnings.append(dict(scenario=case, family=family, **flags))
-    local_report = read(source/'local-comparison.json')
-    family_cases = 5 * (len(scenarios) + 1)
-    assert local_report['site_rows'] == family_cases * len(ids)
-    assert local_report['crossing_rows'] == family_cases * len(ids) * 12
-    volumes = rows(source/'source-sensitivity-volumes.csv')
-    assert len(volumes) == family_cases
-    assert {(r['scenario'], r['method']) for r in volumes} == {
-        (case, method) for case in scenarios | {'principal'}
-        for method in ('stacked', 'spline', *family_names)}
-    return dict(input_sha256=reference, principal_observations=len(accepted),
-        source_scenarios=len(scenarios), family_scenario_reports=4*len(scenarios),
-        artifact_hashes_verified=artifact_count, principal=principal_checks,
-        source_numerical_warnings=warnings, source_prior_sensitivities=8,
-        local_site_predictions=local_report['site_rows'],
-        local_contour_comparisons=local_report['crossing_rows'],
-        interpretation='Identity and completeness checks passed; numerical warnings and conditional geological interpretations remain explicit.')
+    regional = read_json(home/"report.json")
+    assert regional["input"]["input_sha256"] == identity
+    methods = regional["validation"]["methods"]
+    assert set(methods) == {"stacked","spline"}
+    folds = methods["stacked"]["selections"]
+    assert len(folds) == 4
+    all_ids = set(data.row_ids)
+    held = [row for part in folds for row in part["withheld_row_ids"]]
+    assert len(held) == len(all_ids) and set(held) == all_ids
+    for a,b in zip(folds,methods["spline"]["selections"],strict=True):
+        assert all(a[k] == b[k] for k in ("training_row_ids","withheld_row_ids"))
+        assert not set(a["training_row_ids"]).intersection(a["withheld_row_ids"])
+    observed = pd.read_csv(home/"accepted_observations.csv")
+    assert len(observed) == len(all_ids) and set(observed.row_id) == all_ids
+    packet = read_json(home/"thickness-bands.json")
+    assert packet["input_sha256"] == identity and packet["regional_report_sha256"] == digest(home/"report.json")
+    assert set(packet["methods"]) == set(methods)
+
+    for key in ("directional","spherical-mixture","nested-isopachs"):
+        family = home/key
+        receipt = read_json(family/"deposit.json")
+        assert receipt["input_sha256"] == identity
+        assert receipt["median_grid_sha256"] == digest(family/"median-grid.npz")
+        assert receipt["figure_sha256"] == digest(family/"deposit.png")
+        assert receipt["outer_contour"]["accepted_rows"] == len(data.xy)
+        if key == "nested-isopachs":
+            detail = family/"footprints"
+            report = read_json(detail/"report.json")
+            assert report["accepted_rows"] == len(data.xy)
+            for name, expected in report["posterior_sha256"].items():
+                assert digest(detail/name) == expected
+            partitions = [report["fits"][f"fold-{i}"] for i in range(4)]
+        else:
+            detail = family/"extent"
+            report = read_json(detail/"report.json")
+            assert digest(detail/"volumes.npz") == report["volume_draws_sha256"]
+            assert record["slug"] not in report["calibration"]["donors"]
+            partitions = sorted((p for p in report["folds"] if p["design"] == "geographic"),key=lambda p:p["fold"])
+        assert report["input_sha256"] == identity
+        assert digest(detail/"heldout.csv.gz") == report["heldout_sha256"]
+        heldout = pd.read_csv(detail/"heldout.csv.gz")
+        if "design" in heldout:
+            heldout = heldout[heldout.design == "geographic"]
+        assert len(heldout) == len(all_ids) and set(heldout.row_id) == all_ids
+        for i,(base,other) in enumerate(zip(folds,partitions,strict=True)):
+            assert base["training_row_ids"] == other["train"]
+            assert base["withheld_row_ids"] == other["test"] == heldout[heldout.fold == i].row_id.tolist()
+    priors = read_json(home/"spherical-mixture/extent/prior-sensitivity.json")
+    assert len(priors) == 8 and set(priors) == set(read_json(home/"spherical-mixture/report.json")["fits"])
+    rows = volume_rows(home,input_sha256=identity)
+    assert len(rows) == 5 and {r["method"] for r in rows} == {
+        "stacked","spline","directional","spherical-mixture","nested-isopachs"}
+    for r in rows:
+        assert 0 < r["thickness_q25_volume_km3"] <= r["median_map_volume_km3"] <= r["thickness_q75_volume_km3"]
+    study = Path("comparisons/nested-isopachs/geography")
+    matched_inputs = pd.read_csv(study/"paired-results.csv")
+    assert set(matched_inputs.loc[matched_inputs["case"]=="mazama","input_sha256"]) == {identity}
+    benchmark = pd.read_csv(study/"regional-benchmark.csv")
+    reference = benchmark[benchmark.slug=="mazama"].set_index("method")
+    for r in rows:
+        if r["method"] in methods:
+            prior = reference.loc[r["method"]]
+            np.testing.assert_allclose([r["median_map_volume_km3"],r["heldout_log_score"]],
+                                       [prior.median_surface_km3,prior.equal_region_log_score],rtol=1e-10)
+    from benchmarks.directional_comparison import case_extremes
+    fixed = read_json(home/"directional/ensemble/report.json")
+    stages = ["report.json","thickness-bands.json","directional/single-structure/report.json",
+              "directional/ensemble/report.json","directional/azimuth/report.json","spherical-mixture/report.json",
+              "nested-isopachs/footprints/report.json"]
+    for k in ("directional","spherical-mixture","nested-isopachs"):
+        stages.extend([f"{k}/deposit.json",f"{k}/median-grid.npz"])
+    files = {str(Path("eruptions/mazama/results")/name):digest(home/name) for name in stages}
+    files[str(Path("data")/record["file"])] = identity
+    files[str(Path("data")/record["audit"])] = digest(data_directory()/record["audit"])
+    return dict(input_sha256=identity, observations=len(raw), site_types=counts, matched_geographic_folds=len(folds),
+                spherical_prior_fits=len(priors), methods=rows,files=files,
+                independent_regional_benchmark_sha256=digest(study/"regional-benchmark.csv"),
+                directional_median_map_km3=fixed["median_surface"]["volume_km3"],
+                octant_extremes=case_extremes(record,read_json(home/"directional/single-structure/report.json"),by_octant=True))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--home', type=Path, default=Path('eruptions/mazama/results'))
-    parser.add_argument('--output', type=Path)
+    parser.add_argument("--home",type=Path,default=Path("eruptions/mazama/results"))
+    parser.add_argument("--output",type=Path)
     args = parser.parse_args()
-    result = check(args.home)
+    result = json.dumps(check(args.home),indent=2,allow_nan=False)+"\n"
     if args.output:
-        args.output.write_text(json.dumps(result, indent=2)+'\n')
-    print(json.dumps(result, indent=2))
+        args.output.write_text(result)
+    else:
+        published = read_json(args.home/"release.json")
+        actual = json.loads(result)
+        # Projected distances and bearings may round differently between PROJ builds.
+        extrema = pd.DataFrame(actual.pop("octant_extremes")).set_index(["slug","octant","row_id"])
+        stored = pd.DataFrame(published.pop("octant_extremes")).set_index(["slug","octant","row_id"])
+        pd.testing.assert_frame_equal(extrema,stored,check_dtype=False,rtol=2e-12,atol=1e-9)
+        assert published == actual, "Published current-input receipt differs"
+    print(result)

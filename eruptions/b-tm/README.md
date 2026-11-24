@@ -8,13 +8,13 @@ The earlier fan-direction sensitivity integrated to **33.5 km³**. The current d
 
 Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
 
-| Method | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
-|---|---:|---:|---:|---:|
-| GP ensemble | **27.6** † | 21.6–35.4 | 1.459 | 89.1% |
-| Cubic spline | **50.7** | 32.1–88.4 | 4.295 | 75.0% |
-| [Directional ensemble](results/directional/README.md) | **32.5** | 21.9–49.2 | 1.233 † | 93.8% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **37.1** | 26–58 | 1.496 † | 93.8% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | **33.9** | 27.3–43.7 | 1.270 † | 93.8% |
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| GP ensemble | observation hull | **27.6** † | 21.6–35.4 | 1.459 | 89.1% |
+| Cubic spline | observation hull | **50.7** | 32.1–88.4 | 4.295 | 75.0% |
+| [Directional ensemble](results/directional/README.md) | whole Earth | **32.5** | 21.9–49.2 | 1.233 † | 93.8% |
+| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **37.1** | 26–58 | 1.496 † | 93.8% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **33.9** | 27.3–43.7 | 1.270 † | 93.8% |
 
 Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 

@@ -29,9 +29,12 @@ def verify_case(rec):
     assert meta["input_sha256"]==r["input"]["input_sha256"]==parent["input"]["input_sha256"]
     assert r["bearing"]["parent_report_sha256"]==digest(home/"bearing/parent-report.json")
     for module, checksum in design()["model_sha256"].items():
-        if module == "study.py":
-            checksum = digest(INTERVAL_PREDECESSOR/"models/mass_mixture/bearings/study.py")
-        assert r["bearing"]["model_sha256"][module] == checksum, module
+        actual = r["bearing"]["model_sha256"][module]
+        if module == "study.py" and not np.isfinite(data.interval_log_upper).any():
+            # Historic no-interval fits used the exact predecessor source.
+            assert actual in (checksum, digest(INTERVAL_PREDECESSOR/"models/mass_mixture/bearings/study.py")), module
+        else:
+            assert actual == checksum, module
     for file,identity in read(home/"artifacts.json").items():
         assert digest(home/file)==identity,(rec["slug"],file)
     assert r["validation"]["fits"]==parent["validation"]["fits"]

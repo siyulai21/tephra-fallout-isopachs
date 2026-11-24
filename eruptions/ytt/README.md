@@ -8,13 +8,13 @@ The northern sector has no accepted locality and accounts for **44%** of the nes
 
 Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
 
-| Method | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
-|---|---:|---:|---:|---:|
-| GP ensemble | **1,079** | 799–1,460 | 1.934 | 91.3% |
-| Cubic spline | **944** | 686–1,357 | 2.153 | 82.6% |
-| [Directional ensemble](results/directional/README.md) | **900** | 605–1,481 | 1.534 † | 100.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **1,227** | 980–1,524 | 1.737 | 84.8% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | **1,994** | 1,094–3,296 | 1.707 † | 93.5% |
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| GP ensemble | observation hull | **1,079** | 799–1,460 | 1.934 | 91.3% |
+| Cubic spline | observation hull | **944** | 686–1,357 | 2.153 | 82.6% |
+| [Directional ensemble](results/directional/README.md) | whole Earth | **900** | 605–1,481 | 1.534 † | 100.0% |
+| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **1,227** | 980–1,524 | 1.737 | 84.8% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **1,994** | 1,094–3,296 | 1.707 † | 93.5% |
 
 Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 

@@ -1,6 +1,6 @@
 # Great Basin field logs and the Carp Lake core
 
-Eight local constraints enter the principal fit from this source review. The archive includes 20 additional evidence and control records. The Fish Lake peat cores on the Nevada alluvial fan and the lake on Steens Mountain in Oregon are different sites. [Model input](../../eruptions/Mazama_reviewed.csv) · [Complete locality ledger](revised-locality-ledger.csv) · [Map registration and core-log readings](great-basin-registration.json)
+This field review identified eight local constraints. The current audit records each site’s fitted reading and any updated endpoints. The archive includes 20 additional evidence and control records. The Fish Lake peat cores on the Nevada alluvial fan and the lake on Steens Mountain in Oregon are different sites. [Current model input](../../eruptions/Mazama_primary_ranges.csv) · [Complete locality ledger](revised-locality-ledger.csv) · [Map registration and core-log readings](great-basin-registration.json)
 
 | Locality | Primary reading | Use in the fit |
 |---|---|---|

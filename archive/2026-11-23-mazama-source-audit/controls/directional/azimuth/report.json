@@ -1,0 +1,2833 @@
+{
+  "protocol": "uncertain-azimuth-v1",
+  "dataset": "Mazama",
+  "slug": "mazama",
+  "input": {
+    "source": "data/eruptions/Mazama_tephra.csv",
+    "input_sha256": "2681729815cbb3f03241ff656edae71c12d57c1eea6911e7d1386a2ee4beeb39",
+    "vent_lonlat": [
+      -122.1,
+      42.95
+    ],
+    "projection": "+proj=laea +lat_0=42.95 +lon_0=-122.1 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 45,
+    "n_upper_limits": 0,
+    "n_lower_limits": 0,
+    "ignored_pseudo_rows": [
+      2,
+      3,
+      4,
+      6,
+      10,
+      11,
+      12
+    ],
+    "ignored_extra_columns": []
+  },
+  "data_rows": [
+    18,
+    14,
+    13,
+    17,
+    19,
+    9,
+    53,
+    25,
+    50,
+    23,
+    22,
+    33,
+    35,
+    48,
+    24,
+    42,
+    46,
+    52,
+    51,
+    16,
+    49,
+    8,
+    44,
+    30,
+    32,
+    47,
+    21,
+    37,
+    20,
+    38,
+    41,
+    27,
+    43,
+    40,
+    45,
+    31,
+    36,
+    39,
+    15,
+    29,
+    28,
+    34,
+    5,
+    26,
+    7
+  ],
+  "calibration_sha256": "aa73e3e276b1621fe334ad3b69925289866125799ac1cb879a9ec44fb2728fb2",
+  "weights": {
+    "calibration_cases": [
+      "tambora",
+      "aso-4",
+      "b-tm",
+      "ytt",
+      "minoan"
+    ],
+    "structure": [
+      0.14286674919135606,
+      0.13462570459091908,
+      0.1240267976797805,
+      0.14447290391851556,
+      0.1575718524361386,
+      0.2964359921832902
+    ],
+    "concentration": [
+      0.37771388863346433,
+      0.24631321608308715,
+      0.19069814739799348,
+      0.18527474788545495
+    ]
+  },
+  "members": {
+    "narrow_fans": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "27629a7d43e3174b7fc4bbaa0adc3f6ecd7c2fd10f55308b948e644f520653ac",
+      "diagnostics": {
+        "rhat_max": 1.003087018584715,
+        "bulk_ess_min": 1353.4970015005615,
+        "tail_ess_min": 1580.7316395787334,
+        "divergences": 0,
+        "bfmi_min": 0.8066352824817535,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    },
+    "reference": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "74c8b4fec32539bcd44ead2a7257eb86cd88545a6b3cc80a5f96dca58dec92bf",
+      "diagnostics": {
+        "rhat_max": 1.0036503644948505,
+        "bulk_ess_min": 1982.7021093583987,
+        "tail_ess_min": 1773.0067789177829,
+        "divergences": 0,
+        "bfmi_min": 0.9296258339188137,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    },
+    "broad_fans": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "24e6104bc446176d0e3296cf17fce807b21eee8e4183ce4583e1c835ef0cd7bd",
+      "diagnostics": {
+        "rhat_max": 1.002021431747078,
+        "bulk_ess_min": 2634.599561602211,
+        "tail_ess_min": 1735.8196805076766,
+        "divergences": 0,
+        "bfmi_min": 0.8994744497809117,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    },
+    "narrow_missing_fan": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "3b768705a4deb789a9184c4ce4dd7732d5aba6a29ccff7ba4e0669217492b919",
+      "diagnostics": {
+        "rhat_max": 1.0032242024287303,
+        "bulk_ess_min": 2084.6757768577554,
+        "tail_ess_min": 1758.338939885035,
+        "divergences": 0,
+        "bfmi_min": 0.7863738861061191,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    },
+    "possible_missing_fan": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "250218d55547f03ad24560b8723d939ae87a07b2c15074e8e80d429c6c97ab2d",
+      "diagnostics": {
+        "rhat_max": 1.002225399795347,
+        "bulk_ess_min": 1939.7654048597683,
+        "tail_ess_min": 1619.3589918408716,
+        "divergences": 0,
+        "bfmi_min": 0.8845152376802562,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    },
+    "broad_missing_fan": {
+      "draws_per_chain": 64,
+      "posterior_sha256": "a6879c29d3a09d170b8996d9a499638e4e6d2e063d46af87edc87c8ae6ace309",
+      "diagnostics": {
+        "rhat_max": 1.0036453750501289,
+        "bulk_ess_min": 2198.953774845713,
+        "tail_ess_min": 892.8012491644112,
+        "divergences": 0,
+        "bfmi_min": 0.8195984451248722,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      }
+    }
+  },
+  "volume": {
+    "median_map_km3": 166.05499073675048,
+    "matched_control_map_km3": 177.0333484852206,
+    "coherent_volume_km3": {
+      "lower95": 138.56751668137642,
+      "upper95": 1265.0512644372793
+    },
+    "joint_quantile_split_relative": [
+      0.02838681671490262,
+      0.008495094895869526,
+      0.08334614715004762
+    ],
+    "parts": [
+      "measured triangles",
+      "transition collar",
+      "proximal",
+      "between observed radii",
+      "distal"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "median_map_parts_by_sector_km3": [
+      [
+        8.146645971141004,
+        15.772957775481329,
+        1.1311510230054957,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9959428375446773
+      ],
+      [
+        10.089610904421047,
+        22.570733035983366,
+        6.243139267184267,
+        3.51275118308801,
+        2.842993715402166,
+        3.565691696012014,
+        4.733187627865707,
+        6.620494784536361
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        13.935755696423067,
+        35.692144782126846,
+        14.749602246213872,
+        0.7751550865771935,
+        1.4072793755779858,
+        2.2348512568454453,
+        1.2680403040058237,
+        1.0316341986068531
+      ],
+      [
+        1.2560639533710836,
+        7.304068800834936,
+        0.1750167766407696,
+        1.0626061169899625e-08,
+        8.118910881554586e-07,
+        7.744225125553395e-05,
+        3.9508487601645137e-10,
+        1.7269767175268187e-07
+      ]
+    ],
+    "control_parts_by_sector_km3": [
+      [
+        8.1465451484507,
+        15.771946881112388,
+        1.1309660375228463,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9958523539811384
+      ],
+      [
+        10.096666373236982,
+        22.590315061183187,
+        6.260017269018739,
+        3.6427422981179167,
+        3.019022306356909,
+        3.7378668393216685,
+        4.839863346948443,
+        6.647866585243156
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        14.096090604151414,
+        37.890240756563465,
+        15.607656423480005,
+        1.0807389210384275,
+        2.2819916389645614,
+        5.329677014774295,
+        1.7345356009368804,
+        1.1253489414816158
+      ],
+      [
+        1.3526309871758282,
+        9.348341055511469,
+        0.3057580427991732,
+        5.703520092391841e-08,
+        3.969765563670663e-06,
+        0.0006635591589214996,
+        1.960404174277107e-09,
+        4.099292984178935e-07
+      ]
+    ],
+    "level_cm": [
+      0.1,
+      1.0,
+      10.0,
+      30.0,
+      100.0
+    ],
+    "area_by_sector_km2": {
+      "control": [
+        [
+          1000192.920884266,
+          2635490.5845379317,
+          623061.008318386,
+          31866.6095475267,
+          45640.66133166266,
+          152732.8175651559,
+          35182.16531668142,
+          55919.42466412709
+        ],
+        [
+          399139.96036675497,
+          1022023.2646381233,
+          244125.05683171807,
+          15590.141885872286,
+          20853.356301465,
+          60377.256123942876,
+          16939.586127976767,
+          23670.1013842362
+        ],
+        [
+          71675.9483995037,
+          212063.84572304017,
+          48837.3892278977,
+          5981.177748924374,
+          7180.819108481554,
+          13559.244591783052,
+          6341.276214401356,
+          7038.322569356247
+        ],
+        [
+          15223.073214141768,
+          43989.15091571828,
+          10410.47983555585,
+          3161.388588626167,
+          3703.340371260246,
+          4976.584074170055,
+          3366.7786626835978,
+          3785.7693870387825
+        ],
+        [
+          2038.9834764456282,
+          2499.3634634484733,
+          3193.1717434985467,
+          1595.9208361368896,
+          1389.7367873071705,
+          1527.4042363112985,
+          1530.06559272385,
+          2348.343117307699
+        ]
+      ],
+      "revised": [
+        [
+          935350.212604373,
+          2377926.8139685215,
+          531261.9314561947,
+          26078.620588173442,
+          30317.11059027262,
+          61637.96695312307,
+          28063.069278024348,
+          47944.93848235617
+        ],
+        [
+          387697.6545526854,
+          922487.4503708663,
+          225643.2224429894,
+          13055.407602880756,
+          13989.786611257727,
+          21454.413531131344,
+          13787.517419284492,
+          21250.58066278132
+        ],
+        [
+          71633.79977933687,
+          206237.53038934257,
+          47328.083712747175,
+          5106.138826146647,
+          5293.222030379748,
+          6634.653125743056,
+          5255.71392830442,
+          6893.949444207534
+        ],
+        [
+          15223.073214141768,
+          43989.15091571828,
+          10217.188243541113,
+          2799.0731323562823,
+          2820.136094378414,
+          3345.0009332465033,
+          2877.4154294209757,
+          3758.57195787822
+        ],
+        [
+          2038.9834764456282,
+          2489.4620570861744,
+          3193.1717434985467,
+          1501.8220771481674,
+          1206.0982073228006,
+          1310.0670809888911,
+          1473.942766270755,
+          2348.343117307699
+        ]
+      ]
+    },
+    "numerical": {
+      "scramble_seeds": [
+        41791,
+        80627
+      ],
+      "history": [
+        {
+          "points_per_scramble": 2048,
+          "central_km3": 165.9237080362494,
+          "partition_scramble_L1": 0.0911289120561739,
+          "partition_nested_L1": null,
+          "joint_quantile_scramble_change": 0.005471567848097688,
+          "split_median_volume_change": 0.0027557002443816536
+        },
+        {
+          "points_per_scramble": 4096,
+          "central_km3": 165.98861977061574,
+          "partition_scramble_L1": 0.05233712831524366,
+          "partition_nested_L1": 0.01490108997558635,
+          "joint_quantile_scramble_change": 0.0046698229584220385,
+          "split_median_volume_change": 0.0027278347937427228
+        },
+        {
+          "points_per_scramble": 8192,
+          "central_km3": 165.8749633531068,
+          "partition_scramble_L1": 0.019495891648757896,
+          "partition_nested_L1": 0.01759168909267964,
+          "joint_quantile_scramble_change": 0.00221459301870776,
+          "split_median_volume_change": 0.0026706411749493064
+        },
+        {
+          "points_per_scramble": 16384,
+          "central_km3": 166.05499073675048,
+          "partition_scramble_L1": 0.015118390315251038,
+          "partition_nested_L1": 0.008170211163086562,
+          "joint_quantile_scramble_change": 0.00040057613684432405,
+          "split_median_volume_change": 0.0026659493786187483
+        }
+      ],
+      "spatial_passed": true,
+      "split_map_passed": true,
+      "split_areas": [
+        {
+          "level_cm": 0.1,
+          "effective_union_nodes": 1538.8109013317967,
+          "symmetric_difference_fraction": 0.0226757733470125
+        },
+        {
+          "level_cm": 1.0,
+          "effective_union_nodes": 1574.1258252729913,
+          "symmetric_difference_fraction": 0.010544229180941389
+        },
+        {
+          "level_cm": 10.0,
+          "effective_union_nodes": 1511.5147701204762,
+          "symmetric_difference_fraction": 0.017887270402974106
+        },
+        {
+          "level_cm": 30.0,
+          "effective_union_nodes": 1691.4024720106158,
+          "symmetric_difference_fraction": 0.022322996612809436
+        },
+        {
+          "level_cm": 100.0,
+          "effective_union_nodes": 2783.3925153088057,
+          "symmetric_difference_fraction": 0.013449505036533136
+        }
+      ],
+      "joint_quantile_split_passed": true
+    }
+  },
+  "draws_per_chain": 64,
+  "attempts": [
+    {
+      "draws_per_chain": 64,
+      "scramble_seeds": [
+        41791,
+        80627
+      ],
+      "history": [
+        {
+          "points_per_scramble": 2048,
+          "central_km3": 165.9237080362494,
+          "partition_scramble_L1": 0.0911289120561739,
+          "partition_nested_L1": null,
+          "joint_quantile_scramble_change": 0.005471567848097688,
+          "split_median_volume_change": 0.0027557002443816536
+        },
+        {
+          "points_per_scramble": 4096,
+          "central_km3": 165.98861977061574,
+          "partition_scramble_L1": 0.05233712831524366,
+          "partition_nested_L1": 0.01490108997558635,
+          "joint_quantile_scramble_change": 0.0046698229584220385,
+          "split_median_volume_change": 0.0027278347937427228
+        },
+        {
+          "points_per_scramble": 8192,
+          "central_km3": 165.8749633531068,
+          "partition_scramble_L1": 0.019495891648757896,
+          "partition_nested_L1": 0.01759168909267964,
+          "joint_quantile_scramble_change": 0.00221459301870776,
+          "split_median_volume_change": 0.0026706411749493064
+        },
+        {
+          "points_per_scramble": 16384,
+          "central_km3": 166.05499073675048,
+          "partition_scramble_L1": 0.015118390315251038,
+          "partition_nested_L1": 0.008170211163086562,
+          "joint_quantile_scramble_change": 0.00040057613684432405,
+          "split_median_volume_change": 0.0026659493786187483
+        }
+      ],
+      "spatial_passed": true,
+      "split_map_passed": true,
+      "split_areas": [
+        {
+          "level_cm": 0.1,
+          "effective_union_nodes": 1538.8109013317967,
+          "symmetric_difference_fraction": 0.0226757733470125
+        },
+        {
+          "level_cm": 1.0,
+          "effective_union_nodes": 1574.1258252729913,
+          "symmetric_difference_fraction": 0.010544229180941389
+        },
+        {
+          "level_cm": 10.0,
+          "effective_union_nodes": 1511.5147701204762,
+          "symmetric_difference_fraction": 0.017887270402974106
+        },
+        {
+          "level_cm": 30.0,
+          "effective_union_nodes": 1691.4024720106158,
+          "symmetric_difference_fraction": 0.022322996612809436
+        },
+        {
+          "level_cm": 100.0,
+          "effective_union_nodes": 2783.3925153088057,
+          "symmetric_difference_fraction": 0.013449505036533136
+        }
+      ],
+      "joint_quantile_split_passed": true
+    }
+  ],
+  "archive_evidence_sha256": null,
+  "archive": {},
+  "archive_independent_packet": {},
+  "validation": {
+    "geographic": {
+      "all_estimated": {
+        "folds": 4,
+        "rows": 45,
+        "control_score": 1.4196693285396504,
+        "revised_score": 1.4079835181812441
+      },
+      "passed_only": {
+        "folds": 4,
+        "rows": 45,
+        "control_score": 1.4196693285396504,
+        "revised_score": 1.4079835181812441
+      },
+      "folds": [
+        {
+          "kind": "geographic",
+          "fold": 0,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            14,
+            13,
+            17,
+            19,
+            9,
+            23,
+            16,
+            8,
+            44,
+            30,
+            32,
+            47,
+            21,
+            37,
+            20,
+            38,
+            41,
+            27,
+            43,
+            40,
+            45,
+            31,
+            36,
+            39,
+            15,
+            29,
+            28,
+            34,
+            5,
+            26,
+            7
+          ],
+          "test": [
+            18,
+            53,
+            25,
+            50,
+            33,
+            35,
+            48,
+            42,
+            46,
+            52,
+            51
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266218,
+                "diagnostics": {
+                  "rhat_max": 1.0017188085309674,
+                  "bulk_ess_min": 2537.987534319628,
+                  "tail_ess_min": 1776.064326425315,
+                  "divergences": 0,
+                  "bfmi_min": 0.7747960364253844,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "3e9ba3ee7880d54305097b767febab2d0cf2812fcaf9e2fbf24fd5a2962bcd5a",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261218,
+                "diagnostics": {
+                  "rhat_max": 1.0023339302272243,
+                  "bulk_ess_min": 2276.2916661634276,
+                  "tail_ess_min": 1803.564242820435,
+                  "divergences": 0,
+                  "bfmi_min": 0.9194689145128213,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "8ad88c4fb3955a7124df407e3ca41477ad510c9d2fdd82365a07bdc293b60b9c",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267218,
+                "diagnostics": {
+                  "rhat_max": 1.0011450653214475,
+                  "bulk_ess_min": 2769.2929994704778,
+                  "tail_ess_min": 2287.161630632298,
+                  "divergences": 0,
+                  "bfmi_min": 0.8415201681778972,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "639e65b3310add5ff0305df8992119db98a4021b1a158a6d8b3ff97ed4f0aff4",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274218,
+                "diagnostics": {
+                  "rhat_max": 1.0024063633074036,
+                  "bulk_ess_min": 2332.715939523693,
+                  "tail_ess_min": 2301.239297545722,
+                  "divergences": 0,
+                  "bfmi_min": 0.7975210115129346,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "14ff8e6591899e87a83ec3a9799478a7e563fb7f89d9f03db1394cf4eb051cfb",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268218,
+                "diagnostics": {
+                  "rhat_max": 1.0019068622098262,
+                  "bulk_ess_min": 2179.4583514693973,
+                  "tail_ess_min": 1482.769971997543,
+                  "divergences": 1,
+                  "bfmi_min": 0.822109244530906,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "c8667bbe36a770d2fcd9ad2c66a4068d4bd756218bb21df6e9871af9c431aae3",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20269227,
+                "diagnostics": {
+                  "rhat_max": 1.001104039488143,
+                  "bulk_ess_min": 4858.232326592271,
+                  "tail_ess_min": 3506.920718333763,
+                  "divergences": 0,
+                  "bfmi_min": 0.9210126798959242,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "2d269031326e9d2dad58beca233c6fe36516cdcc5565a970e9b93f1678f4f557",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275218,
+                "diagnostics": {
+                  "rhat_max": 1.0027304388522946,
+                  "bulk_ess_min": 2820.3925585281886,
+                  "tail_ess_min": 1737.1041157831949,
+                  "divergences": 0,
+                  "bfmi_min": 0.8547296496388933,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "76624ca486f1e1129baeb4f25d9a269d987ed1dc8b5d3b48221c249a205d3e87",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.45293266107452096,
+            0.057396447288593264,
+            0.00011868876969469386,
+            0.00012669154687446662,
+            0.004653943030788351,
+            0.0013078372313835797,
+            0.0004805963774190141,
+            0.0009401016517183671,
+            2.5383704484022116e-06,
+            4.668186353732721e-05,
+            0.00013938759170202227
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 7.367685173065297e-08,
+          "phase_passed": true,
+          "control_score": 1.365140648241822,
+          "revised_score": 1.3769366652990995,
+          "control_row_log_density": [
+            -1.8754308998144382,
+            -2.7163117516907045,
+            -1.0279005657335774,
+            -0.8588190146745864,
+            -1.9258179095907075,
+            -1.3785416824437047,
+            -0.8253838774230162,
+            -1.0434520727397525,
+            -0.8893803450503948,
+            -1.264492210036182,
+            -1.2110168014629767
+          ],
+          "revised_row_log_density": [
+            -2.003898621077474,
+            -2.717889338997853,
+            -1.0279005575072473,
+            -0.8588190855490515,
+            -1.9255385287648132,
+            -1.3785311186785139,
+            -0.8253849507760317,
+            -1.0434516636806095,
+            -0.8893803450674874,
+            -1.2644922188121885,
+            -1.2110168893788256
+          ]
+        },
+        {
+          "kind": "geographic",
+          "fold": 1,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            18,
+            14,
+            13,
+            17,
+            19,
+            9,
+            53,
+            25,
+            50,
+            23,
+            22,
+            33,
+            35,
+            48,
+            24,
+            42,
+            52,
+            16,
+            8,
+            30,
+            32,
+            21,
+            37,
+            27,
+            45,
+            31,
+            36,
+            15,
+            29,
+            28,
+            34,
+            5
+          ],
+          "test": [
+            49,
+            44,
+            47,
+            20,
+            38,
+            41,
+            43,
+            40,
+            39,
+            26,
+            7
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266219,
+                "diagnostics": {
+                  "rhat_max": 1.0025414642200225,
+                  "bulk_ess_min": 1714.2648216324828,
+                  "tail_ess_min": 1808.3449336833585,
+                  "divergences": 0,
+                  "bfmi_min": 0.85007047644265,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "7172f5aa20cdda950521941783eba679e487e13288d3a3524aa0ba7866f25eb7",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261219,
+                "diagnostics": {
+                  "rhat_max": 1.001588404263001,
+                  "bulk_ess_min": 2938.5922475809566,
+                  "tail_ess_min": 1835.686667005153,
+                  "divergences": 0,
+                  "bfmi_min": 0.8858789586803717,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "e7f4471cc251eb8a2000d4b1771f2bb40e8bb6455498ed8c94ff7ecc082347b8",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267219,
+                "diagnostics": {
+                  "rhat_max": 1.0020428477798329,
+                  "bulk_ess_min": 2179.8638711068124,
+                  "tail_ess_min": 1260.782127280835,
+                  "divergences": 0,
+                  "bfmi_min": 0.8997975790205063,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "fbc8c0f81be6fa6cf768863d0840f9f986e0780011b397e12d623efa3759eea2",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274219,
+                "diagnostics": {
+                  "rhat_max": 1.004917946383677,
+                  "bulk_ess_min": 1520.071062751589,
+                  "tail_ess_min": 1438.9880142334641,
+                  "divergences": 0,
+                  "bfmi_min": 0.8461240797114542,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "5e808e9e87a90ef83b45d39ad932ff7b636fd3bca8f7d46287dd719b1524a267",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268219,
+                "diagnostics": {
+                  "rhat_max": 1.003159646941193,
+                  "bulk_ess_min": 2318.3476099026566,
+                  "tail_ess_min": 1781.273448772539,
+                  "divergences": 0,
+                  "bfmi_min": 0.879292725149392,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "28664a044368d6526caa1c453a56c92df3968caa5c205feb1decb4cf07900fa3",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275219,
+                "diagnostics": {
+                  "rhat_max": 1.0028629517786505,
+                  "bulk_ess_min": 2566.2781603132457,
+                  "tail_ess_min": 1891.9426090468814,
+                  "divergences": 0,
+                  "bfmi_min": 0.9505491833507952,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "0a9e0a1043a2aae90627d7231cd90b654b908a1f507ab14f1e0dec232eb35582",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.06264724442376898,
+            0.001953195635941608,
+            0.2449933877908055,
+            0.7718891338685354,
+            0.28507148313342384,
+            0.06564442383475669,
+            0.07509634641356161,
+            0.09459893347530544,
+            0.09567278080514216,
+            0.527356499102946,
+            0.755091086651481
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 1.0633285290495564e-05,
+          "phase_passed": true,
+          "control_score": 1.8188691185866297,
+          "revised_score": 1.9086923941902754,
+          "control_row_log_density": [
+            -0.8575084355882487,
+            -0.8591982361145931,
+            -1.99559465993759,
+            -2.339934004986269,
+            -1.5520944362248432,
+            -1.2116583129937755,
+            -1.2633013126593062,
+            -1.1091640759684236,
+            -1.4164975002455298,
+            -2.7994752108460057,
+            -4.603134118888341
+          ],
+          "revised_row_log_density": [
+            -0.8792050024400643,
+            -0.859219059405363,
+            -2.0426721639588115,
+            -2.6023729740043,
+            -1.6991999279927588,
+            -1.2315741765462964,
+            -1.2873295212835787,
+            -1.150501228319476,
+            -1.447431757862071,
+            -3.0030417827612723,
+            -4.793068741519037
+          ]
+        },
+        {
+          "kind": "geographic",
+          "fold": 2,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            18,
+            13,
+            19,
+            9,
+            53,
+            50,
+            33,
+            35,
+            48,
+            42,
+            46,
+            52,
+            51,
+            16,
+            49,
+            8,
+            44,
+            30,
+            47,
+            20,
+            38,
+            41,
+            27,
+            43,
+            40,
+            31,
+            39,
+            15,
+            29,
+            34,
+            5,
+            26,
+            7
+          ],
+          "test": [
+            14,
+            17,
+            23,
+            22,
+            24,
+            32,
+            21,
+            37,
+            45,
+            36,
+            28
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266220,
+                "diagnostics": {
+                  "rhat_max": 1.002901431784029,
+                  "bulk_ess_min": 1334.5567391029933,
+                  "tail_ess_min": 1146.5030163664605,
+                  "divergences": 0,
+                  "bfmi_min": 0.7478845694219031,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "4c0124fa291c6ae05d49a125ca8daad316f63a5c950c608dac9d824f3e8513c8",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261220,
+                "diagnostics": {
+                  "rhat_max": 1.002072412620997,
+                  "bulk_ess_min": 1471.2522383418848,
+                  "tail_ess_min": 1477.5165481278846,
+                  "divergences": 0,
+                  "bfmi_min": 0.8699706699227385,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "34e965f9bc4485324281343e42843f45391e2dc0dab1663a3422ea82c92e9e69",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267220,
+                "diagnostics": {
+                  "rhat_max": 1.005038858570052,
+                  "bulk_ess_min": 1521.3302287761728,
+                  "tail_ess_min": 827.1055102346008,
+                  "divergences": 0,
+                  "bfmi_min": 0.8976736648835384,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "c999716b2c62636c4261dc80852efc65579ec5d01b6be414fe8cfca373426cd9",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274220,
+                "diagnostics": {
+                  "rhat_max": 1.0020317333803561,
+                  "bulk_ess_min": 1625.0632035704928,
+                  "tail_ess_min": 1687.8069592577974,
+                  "divergences": 0,
+                  "bfmi_min": 0.7745383492475171,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "9e552f4eba8cdbf47f84f00e32ab7f42168e8b9971c9e6091f6b92339ae8d68d",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268220,
+                "diagnostics": {
+                  "rhat_max": 1.0022598850475626,
+                  "bulk_ess_min": 1837.417666448463,
+                  "tail_ess_min": 1567.2984958184143,
+                  "divergences": 0,
+                  "bfmi_min": 0.8755047031434596,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "8698dc86f075dab6938cd96769f9563a443cabf93d7c021856e84874fead95d0",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275220,
+                "diagnostics": {
+                  "rhat_max": 1.003840529348386,
+                  "bulk_ess_min": 2547.9020776790544,
+                  "tail_ess_min": 1403.4795424958659,
+                  "divergences": 0,
+                  "bfmi_min": 0.8632488415790066,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "546f7d5ea9ad5c9b68c08542cbc3e87615425328ae20b56d5670e4fd9d343392",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.02707391651921002,
+            0.0012802975903042487,
+            0.007112276656943233,
+            0.0026730275222303676,
+            0.0005273864227249268,
+            0.0026348781935006988,
+            5.25576426061273e-06,
+            0.0002080813912575782,
+            0.010572841474296206,
+            0.007211093540418342,
+            0.002579569354386956
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 1.3322676295501878e-15,
+          "phase_passed": true,
+          "control_score": 1.127039504709196,
+          "revised_score": 1.1274114177242491,
+          "control_row_log_density": [
+            -1.1772437851201452,
+            -0.9109150991871391,
+            -0.8995639443556798,
+            -1.2319941407829198,
+            -1.15234908649409,
+            -0.9389035926295135,
+            -1.3243478924785304,
+            -1.1183185364040777,
+            -1.6628104856310961,
+            -1.0852842924419037,
+            -0.8957036962760601
+          ],
+          "revised_row_log_density": [
+            -1.1806619904724207,
+            -0.9109205621210019,
+            -0.8996999784713022,
+            -1.231969460858798,
+            -1.1523484612955508,
+            -0.93894608576225,
+            -1.3243478923408243,
+            -1.1183187652699211,
+            -1.6630095557048767,
+            -1.0855634552618987,
+            -0.8957393874078966
+          ]
+        },
+        {
+          "kind": "geographic",
+          "fold": 3,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            18,
+            14,
+            17,
+            53,
+            25,
+            50,
+            23,
+            22,
+            33,
+            35,
+            48,
+            24,
+            42,
+            46,
+            52,
+            51,
+            49,
+            44,
+            32,
+            47,
+            21,
+            37,
+            20,
+            38,
+            41,
+            43,
+            40,
+            45,
+            36,
+            39,
+            28,
+            26,
+            7
+          ],
+          "test": [
+            13,
+            19,
+            9,
+            16,
+            8,
+            30,
+            27,
+            31,
+            15,
+            29,
+            34,
+            5
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266221,
+                "diagnostics": {
+                  "rhat_max": 1.0021094661113097,
+                  "bulk_ess_min": 1421.3465105197536,
+                  "tail_ess_min": 1631.1330245352265,
+                  "divergences": 0,
+                  "bfmi_min": 0.8634874649892372,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "5a3014ca0dede48beef35728738705f60f41091c74835a4a03b9d03b8a87db1f",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261221,
+                "diagnostics": {
+                  "rhat_max": 1.0026489116565678,
+                  "bulk_ess_min": 1721.4220454639483,
+                  "tail_ess_min": 1521.1620235013459,
+                  "divergences": 0,
+                  "bfmi_min": 0.8802984047079011,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "67917c02a539ccd8fb4b97ec44e55a191b1f884020c9751297e7ca57d047377e",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267221,
+                "diagnostics": {
+                  "rhat_max": 1.0020684779665214,
+                  "bulk_ess_min": 1325.7025021287589,
+                  "tail_ess_min": 1248.609853674986,
+                  "divergences": 0,
+                  "bfmi_min": 0.8241612995768403,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "4abd7a8a52ebe09c00c5c5151d117f75d4d68a6fb4f4d7415cb57b722d32565a",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274221,
+                "diagnostics": {
+                  "rhat_max": 1.0025388809961442,
+                  "bulk_ess_min": 1538.359143875511,
+                  "tail_ess_min": 1511.7336397429035,
+                  "divergences": 0,
+                  "bfmi_min": 0.8512920228675197,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "34a4be75c25f62f1f9fb45c52d9f47f1a429c64582657de196764890e52217f1",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268221,
+                "diagnostics": {
+                  "rhat_max": 1.0033662850390648,
+                  "bulk_ess_min": 1555.286072425416,
+                  "tail_ess_min": 1383.702370667067,
+                  "divergences": 0,
+                  "bfmi_min": 0.8129385953546515,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "14cd409c5fc3ef82e9410ec70ca64b13ac5b5c89d762f0efdefe1904b446d24d",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275221,
+                "diagnostics": {
+                  "rhat_max": 1.0030159128641631,
+                  "bulk_ess_min": 1519.614746604944,
+                  "tail_ess_min": 1246.4092043426192,
+                  "divergences": 0,
+                  "bfmi_min": 0.8673607387856818,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "4338035dfaca69cabd8e60f9f69cafc4cb73758ac8dc227fca91f54b69e71081",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.09067794068665817,
+            0.14044184255886916,
+            0.32386776606876255,
+            0.29974695256178124,
+            0.3672677267661323,
+            0.1940486500744424,
+            0.1108648655880429,
+            0.29994188178733205,
+            0.30328969993857824,
+            0.22086982765998778,
+            0.04852229999419071,
+            0.2545011708130605
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 8.297715388128069e-06,
+          "phase_passed": true,
+          "control_score": 1.3676280426209537,
+          "revised_score": 1.2188935955113527,
+          "control_row_log_density": [
+            -0.5456519402266167,
+            -1.5498112963996522,
+            -0.5604231031308029,
+            -0.4988805969989827,
+            -0.8310759404081325,
+            -1.1446543443350994,
+            -0.4144197749665155,
+            -1.736069085748922,
+            -1.1010560428282667,
+            -0.5601620407194725,
+            -0.3681334041366837,
+            -7.1011989415522985
+          ],
+          "revised_row_log_density": [
+            -0.625136678827277,
+            -1.4972708529051124,
+            -0.8858751275797483,
+            -0.8185614201213248,
+            -1.0995651406846503,
+            -1.253292992780017,
+            -0.5185818923668729,
+            -1.7197596767215688,
+            -1.2047700801678647,
+            -0.7923672041127641,
+            -0.40059296181178383,
+            -3.8109491180572466
+          ]
+        }
+      ],
+      "observation_interval": {
+        "covered_exact": 43,
+        "scored_exact": 45,
+        "total_exact": 45,
+        "coverage95_exact": 0.9555555555555556,
+        "probabilities": [
+          0.025,
+          0.975
+        ],
+        "posterior_draws_per_chain_upper_limit": 128
+      }
+    },
+    "quadrants": {
+      "all_estimated": {
+        "folds": 3,
+        "rows": 45,
+        "control_score": 1.9608368729446655,
+        "revised_score": 1.9818885892586475
+      },
+      "passed_only": {
+        "folds": 2,
+        "rows": 10,
+        "control_score": 1.549635020822886,
+        "revised_score": 1.5578410698367497
+      },
+      "folds": [
+        {
+          "kind": "quadrants",
+          "fold": 0,
+          "passed": false,
+          "status": "estimated",
+          "train": [
+            18,
+            14,
+            13,
+            17,
+            19,
+            9,
+            53,
+            20
+          ],
+          "test": [
+            50,
+            23,
+            22,
+            33,
+            35,
+            48,
+            24,
+            42,
+            46,
+            51,
+            16,
+            49,
+            8,
+            44,
+            30,
+            32,
+            47,
+            21,
+            37,
+            38,
+            41,
+            27,
+            43,
+            40,
+            45,
+            31,
+            36,
+            39,
+            15,
+            29,
+            28,
+            34,
+            5,
+            26,
+            7
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266318,
+                "diagnostics": {
+                  "rhat_max": 1.0151379403029244,
+                  "bulk_ess_min": 650.1729459001095,
+                  "tail_ess_min": 1351.2521636829447,
+                  "divergences": 42,
+                  "bfmi_min": 0.7757427424771831,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "b98adff27864c16364b80643c072db20a892c58d6a5dcad875d232319c8b8419",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20267327,
+                "diagnostics": {
+                  "rhat_max": 1.0045557677829569,
+                  "bulk_ess_min": 1365.6901746938686,
+                  "tail_ess_min": 3012.41919299678,
+                  "divergences": 41,
+                  "bfmi_min": 0.7545749987274483,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "90f435ace58c85f2d405cf2f87faaa5d3cfc6a936ed52b48454db5a13baa3ac3",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261318,
+                "diagnostics": {
+                  "rhat_max": 1.0019889289025423,
+                  "bulk_ess_min": 737.1095915945195,
+                  "tail_ess_min": 1449.1452655461233,
+                  "divergences": 50,
+                  "bfmi_min": 0.733769155550939,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "ab78c6fc57cdd4a4588cee1b8ea3a18f0e120621d298fc605822bf224c4fabef",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20262327,
+                "diagnostics": {
+                  "rhat_max": 1.001395156844943,
+                  "bulk_ess_min": 1574.243656536924,
+                  "tail_ess_min": 3285.3084480235557,
+                  "divergences": 12,
+                  "bfmi_min": 0.7649741367857222,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "45dbf268088b6e129a88c56968a49c35f57cf2f84949fa468f3ab9f77e4e9a3d",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267318,
+                "diagnostics": {
+                  "rhat_max": 1.0014126573003532,
+                  "bulk_ess_min": 1675.1701348373233,
+                  "tail_ess_min": 1380.3324866534379,
+                  "divergences": 0,
+                  "bfmi_min": 0.9165587692373439,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "3e615f6b62ffa9e4087bc9a65df7c0cf2f86a26658e201ee7bf6cc14da458a0a",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274318,
+                "diagnostics": {
+                  "rhat_max": 1.0085203826505538,
+                  "bulk_ess_min": 324.21284349673977,
+                  "tail_ess_min": 103.8760794569865,
+                  "divergences": 138,
+                  "bfmi_min": 0.7572656287534715,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "8734e8bf36c13e82c068ba501cb9eadf1ab1d7f808c4ccaf9d570c952e79376e",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20275327,
+                "diagnostics": {
+                  "rhat_max": 1.001826815064989,
+                  "bulk_ess_min": 1705.9111414888696,
+                  "tail_ess_min": 3373.305543332428,
+                  "divergences": 33,
+                  "bfmi_min": 0.772210119134636,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "974b9e95b2a405df8fabe7753f78e1cf68b1ac6cfb6797c04623b9c87971d730",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268318,
+                "diagnostics": {
+                  "rhat_max": 1.0015832061089271,
+                  "bulk_ess_min": 881.7827960814034,
+                  "tail_ess_min": 1527.9089646598527,
+                  "divergences": 4,
+                  "bfmi_min": 0.7819267131971424,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "5814bb47582920be3a42f0737bdbedfca6b2dd1571ce1e05c4f1fcce7edb90cb",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20269327,
+                "diagnostics": {
+                  "rhat_max": 1.0009608200009799,
+                  "bulk_ess_min": 1757.7803613526448,
+                  "tail_ess_min": 3541.636856673687,
+                  "divergences": 13,
+                  "bfmi_min": 0.7669965596466377,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "66760732979a5214f107cec10ca61eba9f618a6f2de9e137f46a262a59abdf04",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275318,
+                "diagnostics": {
+                  "rhat_max": 1.0021454131450271,
+                  "bulk_ess_min": 1709.9707426527737,
+                  "tail_ess_min": 1741.2234877217504,
+                  "divergences": 0,
+                  "bfmi_min": 0.9413322431616538,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "6e914c943c49279f8524d53f4b166c661b8f6066665bf2bd6bea70820b2f418a",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.0,
+            0.025599021800539135,
+            0.03328746217227583,
+            0.04896503194170128,
+            0.05961696998936965,
+            0.03950629981993442,
+            0.06084863808304766,
+            0.060826837227263675,
+            0.06983297157706184,
+            0.0,
+            0.05066517550828516,
+            0.038014205861010134,
+            0.10181120523469724,
+            0.42158090747610955,
+            0.340329771280541,
+            0.4313993713568274,
+            0.6408147640953421,
+            0.5624006278199445,
+            0.5686033066038955,
+            0.6681259265932792,
+            0.7239281792976342,
+            0.5273248594790478,
+            0.7278315126853396,
+            0.7337263511925903,
+            0.6653397213316866,
+            0.4662585816147222,
+            0.6764618459239751,
+            0.7522633233619015,
+            0.4926899999345099,
+            0.581270893624715,
+            0.7155561379519656,
+            0.7054003631322554,
+            0.5595954879492697,
+            0.7462646847371232,
+            0.7379186223900057
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 0.0004183110201827489,
+          "phase_passed": true,
+          "control_score": 2.7832405771882245,
+          "revised_score": 2.8299836281024437,
+          "control_row_log_density": [
+            -3.337968142055418,
+            -1.037208756725038,
+            -0.8484583565049217,
+            -0.9284076436168804,
+            -1.04520706547046,
+            -2.9566065236069883,
+            -0.9482701602248962,
+            -2.096166782616484,
+            -2.579984667533086,
+            -3.119699261673185,
+            -0.915525656843678,
+            -3.6874071472042034,
+            -1.1227863239924891,
+            -2.4296449297901894,
+            -3.1778291545228896,
+            -3.006105147978057,
+            -3.5569789758379855,
+            -2.0889310166976185,
+            -3.603521339393414,
+            -3.136134488796835,
+            -3.647049751379332,
+            -2.9521894983637043,
+            -3.6972234240082793,
+            -3.4531168691695284,
+            -4.419866370731109,
+            -4.067501816524162,
+            -3.8827619595042413,
+            -3.968716143288253,
+            -2.470804021396712,
+            -3.782873073208995,
+            -3.585256709173328,
+            -4.247547099789971,
+            -2.2081030875395684,
+            -3.1540644930776875,
+            -2.2535043433482653
+          ],
+          "revised_row_log_density": [
+            -3.337968142055418,
+            -1.0404823814102415,
+            -0.857306936536661,
+            -0.9421360563805701,
+            -1.0610330673713706,
+            -2.955226009492652,
+            -0.9701999578453294,
+            -2.097210768037814,
+            -2.578327683232538,
+            -3.119699261673185,
+            -0.9320999047692818,
+            -3.6852245372597268,
+            -1.166458314669871,
+            -2.543673966519315,
+            -3.193063377627846,
+            -3.046313887723032,
+            -3.587561474664627,
+            -2.345305290992703,
+            -3.6057086706574886,
+            -3.224188150095626,
+            -3.668647496773441,
+            -3.0256189736774863,
+            -3.714767566810937,
+            -3.499247315878654,
+            -4.378350523608151,
+            -4.066126309858506,
+            -3.8798730022224293,
+            -3.9751911721362996,
+            -2.633015031195308,
+            -3.801006254900299,
+            -3.6358870171781503,
+            -4.256386126571925,
+            -2.381980766255449,
+            -3.310326099972803,
+            -2.533815487530394
+          ]
+        },
+        {
+          "kind": "quadrants",
+          "fold": 1,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            18,
+            14,
+            13,
+            17,
+            19,
+            9,
+            53,
+            25,
+            50,
+            23,
+            22,
+            33,
+            35,
+            48,
+            24,
+            42,
+            46,
+            16,
+            49,
+            8,
+            44,
+            30,
+            32,
+            47,
+            21,
+            37,
+            38,
+            41,
+            27,
+            43,
+            40,
+            45,
+            31,
+            36,
+            39,
+            15,
+            29,
+            28,
+            34,
+            5,
+            26,
+            7
+          ],
+          "test": [
+            52,
+            20
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266319,
+                "diagnostics": {
+                  "rhat_max": 1.0020434942264207,
+                  "bulk_ess_min": 1892.4773763160208,
+                  "tail_ess_min": 1378.3279278278787,
+                  "divergences": 0,
+                  "bfmi_min": 0.830716965743617,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "afad837e16054166e9ae4a7911344d7ec6cbb8b15c7914be703ed8645f302045",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261319,
+                "diagnostics": {
+                  "rhat_max": 1.0039257904777275,
+                  "bulk_ess_min": 1737.7527295016725,
+                  "tail_ess_min": 1490.9442851916358,
+                  "divergences": 0,
+                  "bfmi_min": 0.8934787085310401,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "6d361ea04461c10a209250862e72564a119fd4f9e49f3effa3351b5292d95cbc",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267319,
+                "diagnostics": {
+                  "rhat_max": 1.0035274794466393,
+                  "bulk_ess_min": 2291.156782458184,
+                  "tail_ess_min": 1947.0693581389955,
+                  "divergences": 0,
+                  "bfmi_min": 0.8810131825780443,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "cdcebdc8132ec51c93a455e7dc9d677d612d21598cce30cbecdd3cd8f3326606",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274319,
+                "diagnostics": {
+                  "rhat_max": 1.0040881822315015,
+                  "bulk_ess_min": 1762.5748528958677,
+                  "tail_ess_min": 1425.1980182462119,
+                  "divergences": 1,
+                  "bfmi_min": 0.7436797355546185,
+                  "max_depth_fraction": 0.0,
+                  "passed": false
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "0b47dfcffe96190be9c11ddc0fcec374da36335f8148f2c6cdb1a2e41bd601fa",
+                "file": "attempt-1.npz"
+              },
+              {
+                "attempt": 2,
+                "seed": 20275328,
+                "diagnostics": {
+                  "rhat_max": 1.0015274578214721,
+                  "bulk_ess_min": 3571.612184222202,
+                  "tail_ess_min": 2864.293820975557,
+                  "divergences": 0,
+                  "bfmi_min": 0.837369512380315,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 1200,
+                "draws_per_chain": 2000,
+                "posterior_sha256": "8a744d110d376c67dd9db163f0521f01a1771cb97234c8ac47461ced9331a16f",
+                "file": "attempt-2.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268319,
+                "diagnostics": {
+                  "rhat_max": 1.0025557614105642,
+                  "bulk_ess_min": 2151.68380392441,
+                  "tail_ess_min": 1569.8500202840246,
+                  "divergences": 0,
+                  "bfmi_min": 0.8991894332264876,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "70aed7d5b9a108f7e3ee6c2f5d342ac8036457322904b795d493ff250211e48c",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275319,
+                "diagnostics": {
+                  "rhat_max": 1.0019875830496854,
+                  "bulk_ess_min": 1928.4638102048557,
+                  "tail_ess_min": 1229.6890659986116,
+                  "divergences": 0,
+                  "bfmi_min": 0.8621193193583139,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "a1a7a52178d669ceb069d70c415f31d205e93f6a8ebdcf00709bdcbb4cd49ae3",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.012797664750002925,
+            0.19954502429367563
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 1.7763568394002505e-15,
+          "phase_passed": true,
+          "control_score": 1.3452922783897665,
+          "revised_score": 1.3368455050867443,
+          "control_row_log_density": [
+            -0.7842874204999535,
+            -1.9062971362795793
+          ],
+          "revised_row_log_density": [
+            -0.7851891218365308,
+            -1.8885018883369578
+          ]
+        },
+        {
+          "kind": "quadrants",
+          "fold": 2,
+          "passed": false,
+          "status": "empty",
+          "train": [],
+          "test": [],
+          "member_attempts": {
+            "narrow_fans": [],
+            "reference": [],
+            "broad_fans": [],
+            "narrow_missing_fan": [],
+            "possible_missing_fan": [],
+            "broad_missing_fan": []
+          }
+        },
+        {
+          "kind": "quadrants",
+          "fold": 3,
+          "passed": true,
+          "status": "estimated",
+          "train": [
+            50,
+            23,
+            33,
+            35,
+            48,
+            42,
+            46,
+            52,
+            51,
+            16,
+            49,
+            8,
+            44,
+            30,
+            32,
+            47,
+            21,
+            37,
+            20,
+            38,
+            41,
+            27,
+            43,
+            40,
+            45,
+            31,
+            36,
+            39,
+            15,
+            29,
+            28,
+            34,
+            5,
+            26,
+            7
+          ],
+          "test": [
+            18,
+            14,
+            13,
+            17,
+            19,
+            9,
+            53,
+            25
+          ],
+          "member_attempts": {
+            "narrow_fans": [
+              {
+                "attempt": 1,
+                "seed": 20266321,
+                "diagnostics": {
+                  "rhat_max": 1.0048531332680837,
+                  "bulk_ess_min": 1696.4438378975697,
+                  "tail_ess_min": 1575.8780213682062,
+                  "divergences": 0,
+                  "bfmi_min": 0.7972381321899428,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "52388a2ea65f205b97e173167e3ef63e9bb468815c90e963861245729d4b0e87",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "reference": [
+              {
+                "attempt": 1,
+                "seed": 20261321,
+                "diagnostics": {
+                  "rhat_max": 1.003981555803835,
+                  "bulk_ess_min": 2437.154789995571,
+                  "tail_ess_min": 1960.1828520176393,
+                  "divergences": 0,
+                  "bfmi_min": 0.869264138793982,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "18fa27d0daaf57eb2a73fb25038382a9d5a5a6074be4095db8aed5effc26ec42",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_fans": [
+              {
+                "attempt": 1,
+                "seed": 20267321,
+                "diagnostics": {
+                  "rhat_max": 1.0031103368412835,
+                  "bulk_ess_min": 2187.956337705257,
+                  "tail_ess_min": 1636.3927150934946,
+                  "divergences": 0,
+                  "bfmi_min": 0.8321325156699483,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "ebc784779cde7a44155b1175f59689340972b1fde58815d1cd88e7224845d3ed",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "narrow_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20274321,
+                "diagnostics": {
+                  "rhat_max": 1.0032340225364675,
+                  "bulk_ess_min": 1575.9394317756717,
+                  "tail_ess_min": 1472.4863846298706,
+                  "divergences": 0,
+                  "bfmi_min": 0.8483423247774512,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "432e67ca4ecbf6b8cb3f1c0380fe6089978aa1c507b50443889a5bd018725c6c",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "possible_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20268321,
+                "diagnostics": {
+                  "rhat_max": 1.0046016710761376,
+                  "bulk_ess_min": 2701.7722179528946,
+                  "tail_ess_min": 1844.1928293476785,
+                  "divergences": 0,
+                  "bfmi_min": 0.9097036898501922,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "511599c90d6ae831d01f69d0381ac7ed8ff72bb9bb72cb70a674bd9226cf54b6",
+                "file": "attempt-1.npz"
+              }
+            ],
+            "broad_missing_fan": [
+              {
+                "attempt": 1,
+                "seed": 20275321,
+                "diagnostics": {
+                  "rhat_max": 1.0023109922009144,
+                  "bulk_ess_min": 1899.166013116655,
+                  "tail_ess_min": 1546.8752478574436,
+                  "divergences": 0,
+                  "bfmi_min": 0.8550370932101282,
+                  "max_depth_fraction": 0.0,
+                  "passed": true
+                },
+                "chains": 4,
+                "warmup": 600,
+                "draws_per_chain": 1000,
+                "posterior_sha256": "a9e83b57ce6982a11ccd5b257cdd0db8993b4f567151a5c0d6af40c91501f576",
+                "file": "attempt-1.npz"
+              }
+            ]
+          },
+          "exposure": [
+            0.6270372177789625,
+            0.24379036363035286,
+            0.14178728157056156,
+            0.11629258225366852,
+            0.07780989694937826,
+            0.10632674731507435,
+            0.08110904678613132,
+            0.030256474595051607
+          ],
+          "phase_order": 32,
+          "phase_log_score_change": 3.1060106118196984e-06,
+          "phase_passed": true,
+          "control_score": 1.7539777632560056,
+          "revised_score": 1.7788366345867552,
+          "control_row_log_density": [
+            -1.8726090711393562,
+            -1.8345190388037542,
+            -1.7118222004318975,
+            -1.6662782369032276,
+            -1.4797237047115774,
+            -1.5499982129926724,
+            -2.767956104391232,
+            -1.1489155366743269
+          ],
+          "revised_row_log_density": [
+            -2.012871461281119,
+            -1.8868091654051389,
+            -1.7196655585418072,
+            -1.66343941184703,
+            -1.4924057151329653,
+            -1.5531680869190199,
+            -2.7517405328302322,
+            -1.15059314473673
+          ]
+        }
+      ],
+      "observation_interval": {
+        "covered_exact": 34,
+        "scored_exact": 45,
+        "total_exact": 45,
+        "coverage95_exact": 0.7555555555555555,
+        "probabilities": [
+          0.025,
+          0.975
+        ],
+        "posterior_draws_per_chain_upper_limit": 128
+      }
+    }
+  },
+  "source_connected_reach": [
+    {
+      "method": "control",
+      "sector": "N",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 1489.1721698835865
+    },
+    {
+      "method": "control",
+      "sector": "N",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 932.6099648990016
+    },
+    {
+      "method": "control",
+      "sector": "N",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 370.85714661185614
+    },
+    {
+      "method": "control",
+      "sector": "N",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 149.17201514195963
+    },
+    {
+      "method": "control",
+      "sector": "N",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 69.88792310258093
+    },
+    {
+      "method": "revised",
+      "sector": "N",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 1416.6025032600837
+    },
+    {
+      "method": "revised",
+      "sector": "N",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 925.2924968834373
+    },
+    {
+      "method": "revised",
+      "sector": "N",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 370.85591411795315
+    },
+    {
+      "method": "revised",
+      "sector": "N",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 149.18006225761474
+    },
+    {
+      "method": "revised",
+      "sector": "N",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 69.8871537543495
+    },
+    {
+      "method": "control",
+      "sector": "NE",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 2939.752075177279
+    },
+    {
+      "method": "control",
+      "sector": "NE",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 1820.1573274953898
+    },
+    {
+      "method": "control",
+      "sector": "NE",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 808.4766832587626
+    },
+    {
+      "method": "control",
+      "sector": "NE",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 430.2002879523321
+    },
+    {
+      "method": "control",
+      "sector": "NE",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 81.83441765043436
+    },
+    {
+      "method": "revised",
+      "sector": "NE",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 2699.7436130253186
+    },
+    {
+      "method": "revised",
+      "sector": "NE",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 1677.0476483552466
+    },
+    {
+      "method": "revised",
+      "sector": "NE",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 790.1919064932698
+    },
+    {
+      "method": "revised",
+      "sector": "NE",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 430.2002879523321
+    },
+    {
+      "method": "revised",
+      "sector": "NE",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 81.83441765043436
+    },
+    {
+      "method": "control",
+      "sector": "E",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 1273.8976419402725
+    },
+    {
+      "method": "control",
+      "sector": "E",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 780.9019705692044
+    },
+    {
+      "method": "control",
+      "sector": "E",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 336.78436254283326
+    },
+    {
+      "method": "control",
+      "sector": "E",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 156.98806964664345
+    },
+    {
+      "method": "control",
+      "sector": "E",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 90.69504266785636
+    },
+    {
+      "method": "revised",
+      "sector": "E",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 1181.6867883584239
+    },
+    {
+      "method": "revised",
+      "sector": "E",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 764.6819465207041
+    },
+    {
+      "method": "revised",
+      "sector": "E",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 325.929014777628
+    },
+    {
+      "method": "revised",
+      "sector": "E",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 156.158066093634
+    },
+    {
+      "method": "revised",
+      "sector": "E",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 90.71384904180343
+    },
+    {
+      "method": "control",
+      "sector": "SE",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 253.97775437887861
+    },
+    {
+      "method": "control",
+      "sector": "SE",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 181.81086801635567
+    },
+    {
+      "method": "control",
+      "sector": "SE",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 114.98181115282327
+    },
+    {
+      "method": "control",
+      "sector": "SE",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 85.5388437737998
+    },
+    {
+      "method": "control",
+      "sector": "SE",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 61.96790454438338
+    },
+    {
+      "method": "revised",
+      "sector": "SE",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 231.81141413562776
+    },
+    {
+      "method": "revised",
+      "sector": "SE",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 166.2171948709978
+    },
+    {
+      "method": "revised",
+      "sector": "SE",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 106.07440043479832
+    },
+    {
+      "method": "revised",
+      "sector": "SE",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 79.93211283078682
+    },
+    {
+      "method": "revised",
+      "sector": "SE",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 60.20277359079781
+    },
+    {
+      "method": "control",
+      "sector": "S",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 308.0288843015881
+    },
+    {
+      "method": "control",
+      "sector": "S",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 214.34740529191623
+    },
+    {
+      "method": "control",
+      "sector": "S",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 131.49669438294828
+    },
+    {
+      "method": "control",
+      "sector": "S",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 95.66778742274984
+    },
+    {
+      "method": "control",
+      "sector": "S",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 58.943125116669584
+    },
+    {
+      "method": "revised",
+      "sector": "S",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 266.1977001421647
+    },
+    {
+      "method": "revised",
+      "sector": "S",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 183.78307883105953
+    },
+    {
+      "method": "revised",
+      "sector": "S",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 114.52513183274229
+    },
+    {
+      "method": "revised",
+      "sector": "S",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 84.12172560907872
+    },
+    {
+      "method": "revised",
+      "sector": "S",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 55.24876524964966
+    },
+    {
+      "method": "control",
+      "sector": "SW",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 694.4421668155459
+    },
+    {
+      "method": "control",
+      "sector": "SW",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 434.5231479825804
+    },
+    {
+      "method": "control",
+      "sector": "SW",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 198.86086753652356
+    },
+    {
+      "method": "control",
+      "sector": "SW",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 117.61377886692581
+    },
+    {
+      "method": "control",
+      "sector": "SW",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 63.0917292625632
+    },
+    {
+      "method": "revised",
+      "sector": "SW",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 433.0833993135727
+    },
+    {
+      "method": "revised",
+      "sector": "SW",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 244.78090251058688
+    },
+    {
+      "method": "revised",
+      "sector": "SW",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 134.51198297756423
+    },
+    {
+      "method": "revised",
+      "sector": "SW",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 93.66729604809106
+    },
+    {
+      "method": "revised",
+      "sector": "SW",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 57.89671868399269
+    },
+    {
+      "method": "control",
+      "sector": "W",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 287.3101010706488
+    },
+    {
+      "method": "control",
+      "sector": "W",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 202.03885750436152
+    },
+    {
+      "method": "control",
+      "sector": "W",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 125.65242497572555
+    },
+    {
+      "method": "control",
+      "sector": "W",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 91.65523958642285
+    },
+    {
+      "method": "control",
+      "sector": "W",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 60.823536838546254
+    },
+    {
+      "method": "revised",
+      "sector": "W",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 259.25751497886716
+    },
+    {
+      "method": "revised",
+      "sector": "W",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 182.78933972947613
+    },
+    {
+      "method": "revised",
+      "sector": "W",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 114.25236383841509
+    },
+    {
+      "method": "revised",
+      "sector": "W",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 84.31073000218491
+    },
+    {
+      "method": "revised",
+      "sector": "W",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 59.355022579194724
+    },
+    {
+      "method": "control",
+      "sector": "NW",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 374.1851124828432
+    },
+    {
+      "method": "control",
+      "sector": "NW",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 242.6570677673608
+    },
+    {
+      "method": "control",
+      "sector": "NW",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 133.96654960153992
+    },
+    {
+      "method": "control",
+      "sector": "NW",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 96.95183112740963
+    },
+    {
+      "method": "control",
+      "sector": "NW",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 78.12062315840852
+    },
+    {
+      "method": "revised",
+      "sector": "NW",
+      "level_cm": 0.1,
+      "first_crossing_great_circle_km": 342.91916019991953
+    },
+    {
+      "method": "revised",
+      "sector": "NW",
+      "level_cm": 1.0,
+      "first_crossing_great_circle_km": 235.8199600662859
+    },
+    {
+      "method": "revised",
+      "sector": "NW",
+      "level_cm": 10.0,
+      "first_crossing_great_circle_km": 134.3065639742664
+    },
+    {
+      "method": "revised",
+      "sector": "NW",
+      "level_cm": 30.0,
+      "first_crossing_great_circle_km": 96.97998264793905
+    },
+    {
+      "method": "revised",
+      "sector": "NW",
+      "level_cm": 100.0,
+      "first_crossing_great_circle_km": 78.12217851743569
+    }
+  ],
+  "implementation_sha256": {
+    "__init__.py": "ccf5056cf45290077f969f405f4e0851160c07c074bfb6fcf7e050480db95adb",
+    "archive.py": "c6b3c817ea4352266ce9d58c4e44b96ffde85cd965f63bbdc3a3b4f41775af56",
+    "calibration.py": "69e8c9664310a291a959b633632bb73558b9c3c4cd97ff2208f6bdb083ddb89d",
+    "field.py": "65e40a4327334a391632d13644dad821087d2343a873a986b12142d943119810",
+    "integrals.py": "e6e92faafc53f8b59c3a37a40a10b2e6735176f061c49cb3d577735bfd7c19c8",
+    "maps.py": "e024386d0332dd6f1b0023b11feb90d4b128203ecd3ef1fcc2568ac99be15608",
+    "narrative.py": "056aa7faf39dbf06a6f2a86adf8bc5dbc8bf91eea1ab17b491d9cdfeb218bd56",
+    "report.py": "f22364f000f3ebb5064dc2e561b25ec748f08ce1efc5436f1c8192188e065f61"
+  },
+  "principal_estimate": {
+    "conditioning": "quantitative thicknesses and bounds",
+    "map": "isopachs.png",
+    "whole_earth_map": "world.png",
+    "volume_key": "volume.median_map_km3",
+    "heldout_predictions": "heldout.csv",
+    "reporting_sha256": {
+      "report.py": "95686f92fb5ac333ef9bb120f388c6f6ddb35cee2f83c4fcc6f27114d9fc8c1d",
+      "primary.py": "c758dfb3dc1e9aa65bf8b402d12010f632be99e2e2a9c8c22919dc3b858bf4fb",
+      "maps.py": "aed139c2068ca6973d719e717be74d1ab32000c001f20b44a69438169f1d7a9d",
+      "narrative.py": "9310d029e1fafff408e91c9eb0844312b7bc3fdf59694cbf9698be4ce14cc651"
+    },
+    "conditional_volume_interval_key": "volume.coherent_volume_km3"
+  }
+}

@@ -2,12 +2,14 @@
 
 [Shared framework](../README.md) · [Output guide](../../../docs/OUTPUTS.md) · [Rendering policy](../../../docs/maintenance/README.md#checking-a-map)
 
-This package presents recorded fits. It does not choose models, alter observations, or integrate global volume.
+This package reads fitted thickness distributions, integrates their published maps and renders the figures. The fitting code and accepted observations are maintained by their model and data modules.
 
 | File | Responsibility |
 |---|---|
 | [deposit.py](deposit.py), [deposit_field.py](deposit_field.py), [deposit_integrals.py](deposit_integrals.py) and [deposit_maps.py](deposit_maps.py) | Verified global median surfaces, whole-Earth map integrals, doubling contours, land and lake fills, near-vent detail and thickness–area curves |
-| [principal.py](principal.py) | Five-method table of map integrals and complete-draw intervals |
+| [principal.py](principal.py) | Five-method table of median-map integrals, integrated thickness quartiles and geographic validation |
+| [contour_limits.py](contour_limits.py) and [shorelines.py](shorelines.py) | Site-enclosing contour levels, matched local windows and scale-dependent land and lake polygons |
+| [thickness_band.py](thickness_band.py) | Pointwise thickness quantiles, local hull and whole-Earth integration, and independent numerical checks |
 | [maps.py](maps.py) | Pinned fine coastlines, complete observation frames, aspect-aware layouts and global display-edge checks |
 | [style.py](style.py) | Shared colours and typography for report figures |
 | [regional.py](regional.py) | Common-scale median fields clipped to the exact observation hull |

@@ -11,7 +11,7 @@ import numpy as np
 from ...core.validation import spatial_folds, training_mask, interval_metrics
 from ...validation import automatic_buffer
 from .geometry import BASE, POLICIES, Geometry, polar
-from .inference import sample, predict
+from .inference import _sampler, sample, predict
 
 
 SEED = 20261117
@@ -65,7 +65,16 @@ def fit(data, g, seed, folder):
             with np.load(path) as saved:
                 draws = dict(saved)
         else:
-            draws, diag = sample(data, g, seed+1009*attempt, attempt)
+            attempt_seed = seed+1009*attempt
+            try:
+                draws, diag = sample(data, g, attempt_seed, attempt)
+            except ValueError as exc:
+                if "vmap was requested to map its argument along axis 0" not in str(exc):
+                    raise
+                # NumPyro can vectorize an equal-shaped kernel a second time.
+                # Reinitialize it and replay the identical seed and sampler settings.
+                _sampler.cache_clear()
+                draws, diag = sample(data, g, attempt_seed, attempt)
             with path.with_suffix(".tmp").open("wb") as f:
                 np.savez_compressed(f, **draws)
             path.with_suffix(".tmp").replace(path)

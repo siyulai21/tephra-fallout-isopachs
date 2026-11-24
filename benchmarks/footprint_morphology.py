@@ -57,14 +57,11 @@ def outlines(field, cm):
 
 
 def paths(slug, rec, scratch):
-    if slug=="mazama" and "published_input" in rec and cases()["mazama-published"]["path"]!=rec["path"]:
-        if (scratch/"mazama300-corridor").is_dir():
-            return scratch/"mazama300-corridor", scratch/"mazama300-whole"
-        from .footprint_study import ARCHIVE
-        reference = ARCHIVE/"mazama-300-controls"
-        return reference/"corridor",reference/"whole"
-    base = Path("eruptions")/rec["slug"]/"results"
-    return base/"nested-isopachs",base/"nested-whole-area"
+    from .footprint_study import controls
+    if slug=="mazama" and (scratch/"mazama300-corridor").is_dir():
+        return scratch/"mazama300-corridor", scratch/"mazama300-whole"
+    corridor, _, whole = controls(slug,rec)
+    return corridor, whole
 
 
 def intervention(model, train, meta, calibration, slug):

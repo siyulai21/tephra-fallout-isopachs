@@ -1,11 +1,8 @@
-"""Publish the row-by-row facies crosswalk and distal evidence plot."""
+"""Publish the row-by-row facies crosswalk from the preceding source inventory."""
 import csv
 import json
 from collections import Counter
-from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
 
 from benchmarks.mazama import AUDIT, write_csv
 
@@ -89,35 +86,7 @@ def build():
                  original_observer_queue_S1=sum(r['original_evidence'] in ('compilation_checked_primary_pending','young_compiled_table_read_original_observer_pending') for r in rows if r['original_S1_row']),
                  thick_distal_screen_rows=len(thick),thick_distal_S1_numeric=sum('S1 numeric column' in r['screen_fields'] for r in thick))
     (OUT/'counts.json').write_text(json.dumps(summary,indent=2)+'\n')
-    plot(dist)
     return summary
-
-
-def plot(dist):
-    fig,ax=plt.subplots(figsize=(10,5.8),layout='constrained')
-    kinds=[('measurement','o','#00695e','Primary-bed proxy'),('upper_limit','v','#4765aa','Conditional ceiling (≤)'),('lower_limit','^','#b95324','Conditional minimum (≥)')]
-    for kind,marker,color,label in kinds:
-        group=[r for r in dist if r['revised_use']==kind]
-        ax.scatter([float(r['distance_from_vent_km']) for r in group],[float(r['revised_value_cm']) for r in group],
-                   s=38,marker=marker,color=color,edgecolor='white',linewidth=.45,alpha=.84,label=label,zorder=3)
-    removed=[r for r in dist if r['prior_use']!='omitted' and r['revised_use']=='omitted']
-    ax.scatter([float(r['distance_from_vent_km']) for r in removed],[float(r['prior_value_cm']) for r in removed],
-               color='#6e7073',marker='x',s=32,linewidth=1,label='Previous input, now withheld')
-    labels={'CH2008-WIN':('Windy',(-4,13)),'CH2008-THU':('Thunder, BC',(4,-13)),'M2024-ROUNDWA':('Round, WA',(3,10)),
-            'B2020-073':('Andies Prairie',(-42,12)),'J1985-FLODELLE':('Flodelle',(12,-13)),
-            'B2020-250':('Johnson',(-42,16)),'S2009-FOY-A':('Foy A',(4,-12)),
-            'B2020-113':('Williams Fen',(-70,4)),'M2013-NEL03':('NEL03',(15,7))}
-    for r in dist:
-        if r['record_id'] in labels:
-            name,offset=labels[r['record_id']]
-            ax.annotate(name,(float(r['distance_from_vent_km']),float(r['revised_value_cm'] or r['prior_value_cm'])),xytext=offset,textcoords='offset points',fontsize=8,
-                    arrowprops=dict(arrowstyle='-',color='#818981',lw=.6))
-    ax.set(xscale='log',yscale='log',xlabel='Geodesic distance from Crater Lake (km)',ylabel='Reported thickness or one-sided endpoint (cm)',
-           title='Distal Mazama evidence beyond 100 km')
-    ticks=[100,200,400,700,1000,1500]
-    ax.set_xticks(ticks,labels=[f'{t:,}' for t in ticks]);ax.grid(which='major',alpha=.16)
-    ax.legend(loc='lower left',fontsize=8,ncol=2)
-    fig.savefig(OUT/'distal-thickness.png',dpi=155);plt.close(fig)
 
 
 if __name__=='__main__':

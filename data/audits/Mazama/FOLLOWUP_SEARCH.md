@@ -1,6 +1,6 @@
 # Follow-up lake, marine and field-source audit
 
-Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+Historical stage. The [current source decisions](principal-ranges/locality-decisions.csv) give the fitted reading and field qualification for each record in the 300-locality release.
 
 [Audit home](README.md) · [Every record](LOCALITIES.md) · [Full ledger](revised-locality-ledger.csv) · [Source hashes](../../sources/mazama/source-manifest.csv) · [Yellowstone cores](YELLOWSTONE.md)
 

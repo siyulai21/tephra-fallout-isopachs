@@ -16,7 +16,7 @@ Start at the [eruption catalogue](../eruptions/README.md) for a published result
 
 | Location | What belongs there |
 |---|---|
-| `eruptions/<slug>/` | One case home for maps, volumes, geographic prediction and the accepted input. A revised case lists the fits available on its current input and links the historical comparison separately. |
+| `eruptions/<slug>/` | One case home for maps, volumes, geographic prediction and the accepted input. All principal fits for a case share one audited input and one set of geographic holdouts. |
 | `data/` | Original sources and hashes, row-level audit decisions and accepted CSVs. [Dataset catalogue](../data/datasets.json) |
 | `docs/methods/` | [Five model descriptions, evidence rules and statistical protocols](methods/README.md). |
 | `comparisons/` | Cross-eruption validation and simulations. The directional comparison groups the principal fit, its paired control and earlier alternatives. [Directional studies](../comparisons/directional/README.md) |

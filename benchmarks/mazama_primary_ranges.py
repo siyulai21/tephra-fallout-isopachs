@@ -1,4 +1,4 @@
-"""Build the next principal Mazama input from the frozen field audit and cited decisions."""
+"""Build the principal Mazama input from the frozen field audit and cited decisions."""
 import csv
 from collections import Counter
 import json
@@ -40,6 +40,33 @@ def site_reading(row, spec):
         "Site": row["locality"], "Reference": row["primary_reference"],
         "Evidence": spec["reason"], "Qualification": spec["qualification"],
     }
+
+
+def write_register(records):
+    def cell(value):
+        return str(value).replace("|", r"\|").replace("\n", " ").replace("<", "&lt;")
+
+    included = sum(row["principal_kind"] != "omitted" for row in records)
+    lines = ["# Mazama locality register", "",
+             f"All {len(records)} evidence records appear below. The five fits use {included} distinct localities. "
+             "A range enters as one observation with both endpoints. The ledger records the original readings, preservation assumptions, coordinate precision and reasons for each decision. "
+             "[Full locality decisions](principal-ranges/locality-decisions.csv) · [Model input](../../eruptions/Mazama_primary_ranges.csv) · [Field audit](principal-ranges/README.md)", ""]
+    for start in range(0, len(records), 50):
+        group = records[start:start+50]
+        lines.extend([f"## Records {start+1}–{start+len(group)}", "",
+                      "| Locality and ID | Latitude, longitude | Fitted thickness (cm) | Field decision | Source or figure |",
+                      "|---|---|---|---|---|"])
+        for row in group:
+            kind = row["principal_kind"]
+            quantity = {"measurement": row["point_cm"], "lower_limit": "≥"+row["limit_cm"],
+                        "upper_limit": "≤"+row["limit_cm"], "interval": row["lower_cm"]+"–"+row["upper_cm"],
+                        "omitted": "Omitted"}[kind]
+            coords = f'{row["latitude"]}, {row["longitude"]}' if row["latitude"] else "Unlocated"
+            reference = " · ".join(filter(None,(row["field_reference"],row["evidence_locator"])))
+            values = [row["record_id"]+" — "+row["locality"],coords,quantity,row["decision"],reference]
+            lines.append("| "+" | ".join(map(cell,values))+" |")
+        lines.append("")
+    (AUDIT/"LOCALITIES.md").write_text("\n".join(lines))
 
 
 def cypress_checks(specs):
@@ -145,6 +172,7 @@ def build():
     write_csv(OUTPUT, [{k:r[k] for k in fields} for r in accepted])
     for name, rows in [("locality-decisions", crosswalk), ("buckland-primary", primary_review), ("range-review", range_review)]:
         write_csv(REVIEW/(name+".csv"), rows)
+    write_register(crosswalk)
     archive = json.loads((AUDIT/"archive-sites.json").read_text())
     prior_limits = {r["evidence_id"]:r for r in json.loads((AUDIT/"provenance.json").read_text())["principal_limits"]}
     by_site = {r["id"]:r for r in archive["sites"]}

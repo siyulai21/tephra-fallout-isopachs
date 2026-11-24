@@ -1,6 +1,6 @@
 # Reading maps, volumes and geographic validation
 
-Open the eruption page for the maps side by side, accepted input and field audit. A case with a revised input lists the methods fitted to that revision. Historical comparisons identify their own observation counts. [Eruption catalogue](../eruptions/README.md) · [Numerical results](../comparisons/principal-volumes.csv)
+Open the eruption page for the maps side by side, accepted input and field audit. The catalogue compares all active families on the same registered observations. Each current fit records the input hash and the geographic holdouts. [Eruption catalogue](../eruptions/README.md) · [Numerical results](../comparisons/principal-volumes.csv)
 
 ## Read the map and its volume
 
@@ -14,7 +14,7 @@ The GP and spline integrate their latent thickness distributions over the observ
 
 ### Full-deposit panel
 
-Evaluate the plotted median interpolant at every accepted model row, including measured values, bounds and two-sided intervals. Choose the **highest power of two in cm** whose footprint contains at least 95% of those rows, then apply a **1 cm minimum**. Membership uses the predicted thickness at the row coordinate. Disconnected patches count and holes stay outside. An observation on a contour counts inside. The caption reports the resulting count even when the floor prevents 95% coverage. The innermost contour is the highest doubling level that still encloses one or more modeled rows. Its receipt gives the enclosed row IDs. This display rule leaves the geological support decision to the independent contour audit. The frame includes every patch of the outer contour.
+Evaluate the plotted median interpolant at every accepted model row, including measured values, bounds and two-sided intervals. Choose the **highest power of two in cm** whose footprint contains at least 95% of those rows, then apply a **1 cm minimum**. Membership uses the predicted thickness at the row coordinate. Disconnected patches count and holes stay outside. An observation on a contour counts inside. The caption reports the resulting count even when the floor prevents 95% coverage. The innermost contour is the highest doubling level that still encloses one or more modeled rows. Its receipt gives the enclosed row IDs. This display rule leaves the geological support decision to the independent contour audit. The frame includes every patch of the outer contour. The GP and spline apply the same upper-level criterion to their respective median grids inside the observation hull. The fill above each panel’s highest eligible level uses one color. Observation symbols preserve the measured or bounded thickness bracket.
 
 ### Near-vent panel and area curve
 

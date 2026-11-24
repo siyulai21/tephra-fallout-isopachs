@@ -1,6 +1,6 @@
 # Lyman Lake and the 67-observation citation review
 
-Historical stage. The [current facies crosswalk](distal-review/locality-facies-crosswalk.csv) gives the final disposition of each source record, including replacements for the interpretations below.
+Historical stage. The [current source decisions](principal-ranges/locality-decisions.csv) give the fitted reading and field qualification for each record in the 300-locality release.
 
 [Audit](README.md) · [All locality decisions](LOCALITIES.md) · [Source manifest](../../sources/mazama/source-manifest.csv) · [Superseded 62-site trial](history/2026-11-23-before-final-citation-pass/README.md)
 

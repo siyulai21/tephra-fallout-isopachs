@@ -14,13 +14,13 @@ The revised nested footprint assigns **29%** of its 1,924 km³ median-map volume
 
 Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
 
-| Method | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
-|---|---:|---:|---:|---:|
-| GP ensemble | **171** | 118–249 | 1.514 | 94.0% |
-| Cubic spline | **201** | 146–289 | 1.662 | 90.4% |
-| [Directional ensemble](results/directional/README.md) | **661** | 343–1,313 | 1.482 | 90.4% |
-| [Spherical mixture](results/spherical-mixture/README.md) | **473** | 282–942 | 1.636 | 94.0% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | **1,924** | 802–5,577 | 1.352 | 92.8% |
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| GP ensemble | observation hull | **171** | 118–249 | 1.514 | 94.0% |
+| Cubic spline | observation hull | **201** | 146–289 | 1.662 | 90.4% |
+| [Directional ensemble](results/directional/README.md) | whole Earth | **661** | 343–1,313 | 1.482 | 90.4% |
+| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **473** | 282–942 | 1.636 | 94.0% |
+| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **1,924** | 802–5,577 | 1.352 | 92.8% |
 
 Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 
