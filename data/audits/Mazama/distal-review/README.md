@@ -45,8 +45,8 @@ At each locality the compilation code is printed only on its own S1 row. A linke
 
 Tumalo (50 cm), Round Lake in Oregon (14 cm), Shadow (14 cm) and Sunrise (8 cm) each have a real bed reported by a primary investigator. They now contribute upper bounds where a lake-to-land transfer remains uncalibrated. Saban’s Dog Lake record gives conflicting 12–13 cm readings, and White Pine Marsh yields 25–30 cm across the log, chronology table and discussion. The larger endpoints enter as conditional ceilings. The 1–2 mm lapilli and basal fine ash at White Pine support an eruptive bed. The competing lower-bound interpretation remains in the historical refits. [Original-site locators and preserved observations](locality-facies-crosswalk.csv)
 
+Cathy Whitlock’s Davis Lake archive independently records the 6 cm bed. A return to the investigator records also distinguishes two different Lofty Lake campaigns and locates the Wildcat and Wildhorse cores. [Archived depth controls and qualifications](OBSERVER_ARCHIVES.md)
+
 ## Previous edition
 
 The archived 244-position fits quantify the earlier selection. [Five-family results for that input](https://github.com/siyulai21/tephra-fallout-isopachs/blob/8130479529dfe2ac4b85c72ad363cd2be279ef50/eruptions/mazama/audit-run/README.md)
-
-Cathy Whitlock’s Davis Lake archive independently records the 6 cm bed. A return to the investigator records also distinguishes two different Lofty Lake campaigns and locates the Wildcat and Wildhorse cores. [Archived depth controls and qualifications](OBSERVER_ARCHIVES.md)
