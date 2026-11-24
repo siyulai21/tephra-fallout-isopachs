@@ -1,5 +1,7 @@
 # Pinatubo 1991 (Layer C) · Bayesian nested footprints
 
+**November 24 update.** The current principal estimate is 7.37 km³ on 235 sites. The figures below document the 208-site comparison. [Current nested results](2026-11-24/README.md) · [Data re-audit](../../../../data/audits/Pinatubo-1991/reaudit/README.md)
+
 The principal bulk volume is **6.7 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **5.01–15 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth. **Numerical warning on the fitted deposit distribution.**
 
 ![Pinatubo 1991 (Layer C), Bayesian nested footprints. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)

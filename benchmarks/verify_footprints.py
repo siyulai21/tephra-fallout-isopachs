@@ -7,7 +7,7 @@ import pandas as pd
 
 from .footprint_catalogue import published_folder
 from .footprint_study import STUDY, paired, structural, controls
-from .nested_footprints import cases
+from .publication import published_datasets
 from .verify_deposit_maps import verify_global
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.directional.ensemble.members import splits
@@ -18,7 +18,8 @@ from src.empirical_isopach.visualization.deposit import digest, read_json
 def main():
     pairs, sensitivity = [], []
     quadrants = json.loads(gzip.decompress((STUDY/"quadrant-fits.json.gz").read_bytes()))
-    for case,rec in cases().items():
+    for rec in published_datasets():
+        case = rec["slug"]
         home=published_folder(case,rec)
         packet=home/"footprints"
         report=read_json(packet/"report.json")

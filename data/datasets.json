@@ -109,10 +109,19 @@
     {
       "name": "Pinatubo 1991 (Layer C)",
       "slug": "pinatubo-1991-layer-c",
-      "file": "eruptions/Pinatubo_1991_layer_C.csv",
-      "audit": "audits/Pinatubo-1991/provenance.json",
+      "file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+      "audit": "audits/Pinatubo-1991/reaudit/provenance.json",
       "audit_case": "principal",
-      "archive_evidence": "audits/Pinatubo-1991/archive-probes.json"
+      "archive_evidence": "audits/Pinatubo-1991/reaudit/archive-probes.json",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Pinatubo_1991_layer_C.csv",
+          "audit": "audits/Pinatubo-1991/provenance.json",
+          "archive_evidence": "audits/Pinatubo-1991/archive-probes.json",
+          "audit_case": "principal"
+        }
+      ],
+      "principal_nested_result": "eruptions/pinatubo-1991-layer-c/results/nested-isopachs/2026-11-24"
     }
   ]
 }

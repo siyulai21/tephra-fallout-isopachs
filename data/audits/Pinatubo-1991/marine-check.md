@@ -1,5 +1,7 @@
 # Check the offshore station readings
 
+This page records the 208-site edition. The later review re-examines all Hess ranges, the early shipboard sections and original surfaces, the trap record, and Wetzel’s X-ray sections. [Revised marine decisions](reaudit/source-notes.md) · [Core-by-core worksheet](reaudit/marine-site-decisions.csv)
+
 Start with SO-140-25. In the publisher’s Table 1, the 72 mm lower unit and 16 mm upper unit sum to 88 mm. The accepted observation is 8.8 cm. In the corrected Figure 1 on page 2 of the PDF, find station 25 near 119.64° E, 14.76° N. The number on that map identifies the station. The table supplies its thickness. [Publisher’s Table 1](https://link.springer.com/article/10.1007/s00445-003-0306-x/tables/1) · [Corrected plates](https://doi.org/10.1007/s00445-005-0421-y)
 
 ## Eleven beds with published bulk thickness

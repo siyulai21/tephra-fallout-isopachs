@@ -1,6 +1,6 @@
 # Published Pinatubo fallout evidence
 
-The fitted case represents the climactic 15 June 1991 airborne fallout. Each observation retains its original unit, station, figure pixel or section name. Ship positions come from the cruise logs wherever a published station number permits a match. [Accepted CSV](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](../../audits/Pinatubo-1991/full-evidence.csv) · [Visual guide](../../audits/Pinatubo-1991/VISUAL-CHECK.md)
+The fitted case represents the climactic 15 June 1991 airborne fallout. Each observation retains its original unit, station, figure pixel or section name. Ship positions come from the cruise logs wherever a published station number permits a match. [Current accepted CSV](../../eruptions/Pinatubo_1991_layer_C_reviewed.csv) · [New field records and original source fingerprints](../../audits/Pinatubo-1991/reaudit/README.md) · [Full evidence inventory](../../audits/Pinatubo-1991/full-evidence.csv) · [Visual guide](../../audits/Pinatubo-1991/VISUAL-CHECK.md)
 
 | Source | Original evidence | Project transcription |
 |---|---|---|

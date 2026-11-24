@@ -1,5 +1,7 @@
 # Pinatubo climactic fallout audit
 
+**Current re-audit, 24 November 2026.** The revised input contains 235 localities. It includes offshore ranges, terrestrial pumice minima, and source-specific limits at cores without a visible bed. The 208-site audit below documents the previous edition. [Current source audit](reaudit/README.md) · [Current locality ledger](reaudit/localities.csv)
+
 **208 accepted observations comprise 150 measured thicknesses, 28 lower bounds and 30 upper bounds.** The target is accumulated bulk thickness from the climactic 15 June 1991 airborne fallout on Luzon and its correlated offshore deposit, including co-ignimbrite ash. The input uses centimetres and WGS84 longitude and latitude. [Accepted observations](../../eruptions/Pinatubo_1991_layer_C.csv) · [Full evidence inventory](full-evidence.csv) · [Check a reading by eye](VISUAL-CHECK.md)
 
 | Evidence | Measured | Lower | Upper | Original scope |
