@@ -10,7 +10,7 @@ from scipy.stats import qmc
 from .footprint_study import controls
 from .nested_reach_challenge import known_design, matched_models
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets, result_home
 from src.empirical_isopach.models.directional.azimuth.calibration import calibrate
 from src.empirical_isopach.models.directional.azimuth.report import model_for
 from src.empirical_isopach.models.directional.ensemble.fields import inverse_cdf
@@ -88,10 +88,10 @@ def run(args):
             ok=r["parent"]["passed"]
         fields=ExtentFields(family,parent,data,lat)
     else:
-        rec=next(r for r in datasets() if r["slug"]==slug)
+        rec=next(r for r in published_datasets() if r["slug"]==slug)
         data,meta=audited_data(rec["path"],allow_intervals=True)
         lat,key,truths=meta["vent_lonlat"][1],meta["input_sha256"],None
-        folder = controls(slug,rec)[0] if family=="nested-isopachs" else Path("eruptions")/slug/"results"/family
+        folder = controls(slug,rec)[0] if family=="nested-isopachs" else result_home(rec)/family
         fields=parent_fields(folder,family,data,lat,count=128 if family=="spherical-mixture" else 768)
         ok=None
     cal=calibration(family,key,exclude_slug=slug)
@@ -109,7 +109,7 @@ if __name__=="__main__":
     p.add_argument("--spherical-known-fits",type=Path)
     p.add_argument("--workers",type=int,default=2)
     a=p.parse_args()
-    cases=[(r["slug"],f,0) for r in datasets() for f in ("directional","spherical-mixture","nested-isopachs")]
+    cases=[(r["slug"],f,0) for r in published_datasets() for f in ("directional","spherical-mixture","nested-isopachs")]
     if (a.directional_known_fits is None)!=(a.spherical_known_fits is None):
         p.error("Supply both known-deposit posterior directories")
     if a.directional_known_fits:

@@ -125,7 +125,7 @@ def marine_probe_predictions(home, output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--case-results", type=Path, default=ROOT/"eruptions/pinatubo-1991-layer-c/results")
+    parser.add_argument("--case-results", type=Path, default=ROOT/"archive/2026-11-24-case-editions/pinatubo-layer-c-208")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--paired-output", type=Path, help="Also compare the fixed principal fields at the original C1 and C2 map positions.")
     parser.add_argument("--probe-output", type=Path, help="Also collect the three global families' predictions at the unquantified marine probes.")

@@ -134,7 +134,7 @@ def test_old_fit_packets_use_median_maps_and_do_not_substitute_an_unmapped_volum
 def test_volume_interval_and_geographic_warnings_are_independent(monkeypatch, tmp_path):
     from src.empirical_isopach.visualization import comparison
 
-    home = Path(__file__).resolve().parents[1] / "eruptions/ilopango-tbj/results"
+    home = Path(__file__).resolve().parents[1] / "archive/2026-11-24-case-editions/ilopango-unit-g-56"
     import json
     import shutil
     for name in ("directional","spherical-mixture","nested-isopachs"):

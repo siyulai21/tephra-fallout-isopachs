@@ -6,19 +6,12 @@ import re
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .nested_reach import case_home
-from .publication import published_datasets as datasets
+from .publication import published_methods, result_home as principal_home
+from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.models.registry import active_methods
+from src.empirical_isopach.visualization.deposit_field import digest
 from src.empirical_isopach.visualization.principal import FAMILIES, number, volume_rows, write_rows
 from src.empirical_isopach.visualization.summary import COLORS, all_case_scores
-
-
-from src.empirical_isopach.visualization.deposit_field import digest
-
-
-def principal_home(record):
-    return case_home(record["slug"])
 
 
 def catalogue_rows():
@@ -28,7 +21,7 @@ def catalogue_rows():
         home = principal_home(record)
         accepted = len(audited_data(record["path"])[0].xy)
         fitted = volume_rows(home,input_sha256=digest(record["path"]))
-        expected = {*active_methods(),*FAMILIES}
+        expected = set(published_methods(record))
         found = {r["method"] for r in fitted}
         if found != expected or len(fitted) != len(expected):
             raise ValueError(f"{slug}: published families {sorted(found)} differ from registered families {sorted(expected)}")

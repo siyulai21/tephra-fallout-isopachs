@@ -131,4 +131,4 @@ if __name__ == "__main__":
     p.add_argument("--workers",type=int,default=2)
     a=p.parse_args()
     with ProcessPoolExecutor(max_workers=a.workers) as pool:
-        list(pool.map(run,[(s,r,a.scratch,a.output) for s,r in cases().items() if not a.case or s in a.case]))
+        list(pool.map(run,[(s,r,a.scratch,a.output) for s,r in cases(published=True).items() if not a.case or s in a.case]))

@@ -4,6 +4,8 @@ import gzip
 import json
 from pathlib import Path
 
+from .publication import result_home
+
 import numpy as np
 import pandas as pd
 
@@ -24,7 +26,7 @@ def read(p):
 
 
 def verify_case(rec, expected_input, median_map_km3, *, home=None):
-    home = Path("eruptions")/rec["slug"]/"results" if home is None else Path(home)
+    home = result_home(rec) if home is None else Path(home)
     folder = home/"directional"/"ensemble"
     report = read(folder/"report.json")
     for f,h in read(folder/"artifacts.json").items():
@@ -105,7 +107,7 @@ def main():
     verification=read(root/"verification.json")
     for rec in datasets():
         slug = rec["slug"]
-        home = Path("eruptions")/slug/"results"
+        home = result_home(rec)
         historic_input = tab.loc[slug].input_sha256 if slug in tab.index else None
         if digest(rec["path"]) == historic_input:
             expected_input = historic_input
@@ -115,7 +117,7 @@ def main():
             release = read(home/rec.get("release_receipt", "source-audit/release.json"))
             expected_input = release["files"][rec["path"].relative_to(Path.cwd()).as_posix()]
             median_map = release["directional_median_map_km3"]
-            expected_report = release["files"][str(home/"directional/ensemble/report.json")]
+            expected_report = release["files"][f"eruptions/{slug}/results/directional/ensemble/report.json"]
         assert digest(home/"directional/ensemble/report.json") == expected_report
         verify_case(rec, expected_input, median_map)
     assert digest(PACKET)==verification["calibration_sha256"]

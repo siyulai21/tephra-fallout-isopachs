@@ -43,11 +43,11 @@ The complete run writes a plate and area table per global method, a regional map
 
 For a revision, record the prior commit, input and model identity and explain what changed. Preserve the scientific evidence needed to reproduce or challenge the result. If a revised input is published ahead of its model run, label both editions on the case home. Link the new principal input and its audit, and identify the exact input revision or hash and site count behind the displayed maps and volumes. [Publication and history policy](maintenance/README.md)
 
-When only one family is rerun, give that family a dated result linked to its input hash. Keep the earlier matched-family comparison tied to its original input, including in the comparison tables and replay commands. A score or volume comparison across families requires a common observation edition.
+For a partial rerun, list the reviewed families in the current registry entry’s `published_methods` and place their packets under the case’s `results/<family>/`. The case home and family catalogues use this input and show the fits available on it. When a fixed benchmark still reads the preceding five-family edition, record its directory as `matched_results` on that previous input. Preserve its measurements, predictions and numerical checks together. [Worked editions](../archive/2026-11-24-case-editions/README.md)
 
 Publish the spherical contour decisions and their field samples under `results/spherical-mixture/support/` within the case. The published-packet replay checks their hashes against that case’s accepted input and posterior.
 
-When a case changes, rebuild the cross-eruption summaries from the saved fits and refresh the five-method score figure. The summary-only commands retain the original fold scores and numerical warnings. [Comparison commands](../benchmarks/README.md#current-evaluations)
+When a case changes, rebuild the cross-eruption summaries from the saved fits and refresh the score figure for the methods published on that input. The summary-only commands retain the original fold scores and numerical warnings. [Comparison commands](../benchmarks/README.md#current-evaluations)
 
 ## Local equivalent
 

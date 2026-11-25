@@ -225,7 +225,7 @@ def draw_sheets():
             guide.extend(locator_guide(tag, title, image, locations))
         if tag == "K3":
             guide += ["Four C1 readings were reviewed against both original panels and the neighbouring Figure 7 labels. [Read the four decisions](koyaguchi-c1-review.md) · [Compare the original pixels](visual/koyaguchi-c1-review.png)", ""]
-            guide += ["The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md#position-on-the-two-sublayer-maps)", ""]
+            guide += ["The mapped coordinate on each card comes from the C1 panel. Compare it with the independently registered C2 panel for every accepted pair. [Both sets of ticks, pixels and coordinates](../../../archive/2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/paired-map-coordinates/paired-coordinates.csv) · [Effect on the fitted volumes](../../../archive/2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/README.md#position-on-the-two-sublayer-maps)", ""]
         if tag == "P2":
             guide += ["[Printed sample names, thicknesses and geographic coordinates](field-check.md)", ""]
         if tag == "P7":

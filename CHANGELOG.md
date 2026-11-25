@@ -1,5 +1,9 @@
 # Release history
 
+## Pinatubo and Ilopango audit editions
+
+The case homes and catalogue now lead with the 235-locality Pinatubo Layer C nested fit and the three 168-locality all-phase Ilopango fits. The 208-site Layer C and 56-site Unit G comparisons retain their original matched inputs. A separate Unit G nested study uses 116 sites. [Current results](comparisons/principal-volumes.csv) · [Earlier evidence and studies](archive/2026-11-24-case-editions/README.md)
+
 ## 24 November 2026 · Thickness bands and eruption-specific maps
 
 Each principal range integrates the pointwise 25th and 75th thickness percentiles on the median map’s domain. The full global figures report the outer contour and its actual observation coverage. The innermost line encloses at least one fitted site. Close-ups expand until eligible contours are visible and use scale-dependent GSHHG shorelines. All five Mazama fits use the same 300 audited localities. [Current volumes](comparisons/principal-volumes.csv) · [Map definitions](docs/OUTPUTS.md) · [Mazama](eruptions/mazama/README.md)

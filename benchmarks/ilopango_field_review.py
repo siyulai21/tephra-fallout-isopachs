@@ -11,7 +11,7 @@ from .ilopango import AUDIT, BOOK, BOOK_HASH, CORES, CORE_TABLE_HASH, GEOD, ROOT
 
 REV = AUDIT / "reaudit"
 INPUT = ROOT / "data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv"
-OUT = ROOT / "eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24"
+OUT = ROOT / "archive/2026-11-24-case-editions/ilopango-unit-g-116"
 FITTED = {"measurement", "interval", "lower_limit", "upper_limit"}
 AGE = "TBJ eruption correlation; Smith et al. 431 ± 2 CE; Dull et al. propose 539/540 CE. No independent local age in this row."
 

@@ -1,6 +1,6 @@
 # GP and cubic spline inside the observation hull
 
-Each pair uses the same accepted sites, geographic holdouts and integration area. The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps.
+Each pair uses the same accepted sites, geographic holdouts and integration area. The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps. The table includes eruptions with both regional fits on their current input. See the [eruption catalogue](../../eruptions/README.md) for coverage across families.
 
 | Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |
 |---|---|---:|---:|---:|
@@ -8,14 +8,10 @@ Each pair uses the same accepted sites, geographic holdouts and integration area
 | [Aso-4](../../eruptions/aso-4/results/README.md) | Trend-regularized cubic spline | 200.94 | 1.662 | 90.4% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | GP ensemble | 27.64 † | 1.459 | 89.1% |
 | [B-Tm](../../eruptions/b-tm/results/README.md) | Trend-regularized cubic spline | 50.75 | 4.295 | 75.0% |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | GP ensemble | 23.31 | 1.343 | 98.1% |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/README.md) | Trend-regularized cubic spline | 25.67 | 1.462 | 92.3% |
 | [Mazama](../../eruptions/mazama/results/README.md) | GP ensemble | 299.29 | 1.399 | 71.7% |
 | [Mazama](../../eruptions/mazama/results/README.md) | Trend-regularized cubic spline | 1536.55 | 1.231 | 89.1% |
 | [Minoan](../../eruptions/minoan/results/README.md) | GP ensemble | 22.05 | 1.451 | 96.7% |
 | [Minoan](../../eruptions/minoan/results/README.md) | Trend-regularized cubic spline | 24.78 | 1.601 | 96.7% |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | GP ensemble | 3.45 | 3.023 | 87.3% |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/README.md) | Trend-regularized cubic spline | 14.82 † | 1.590 | 85.3% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | GP ensemble | 3.08 | 1.264 | 94.0% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/README.md) | Trend-regularized cubic spline | 9.12 | 1.371 | 90.0% |
 | [Tambora](../../eruptions/tambora/results/README.md) | GP ensemble | 91.14 | 1.620 | 96.2% |

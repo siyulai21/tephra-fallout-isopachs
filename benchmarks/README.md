@@ -8,7 +8,7 @@ For a new case, run the four families with the [intake workflow](../docs/NEW_ERU
 
 The nested comparison refits the original whole-area geography and the dispersal footprints to matched observations and folds, and retains the finite-corridor control. The study lists commands for the known deposits, survey rotations, field campaigns, compass deletions and release verification. [Nested footprints across all eruptions](../comparisons/nested-isopachs/geography/README.md)
 
-Rebuild a case from its signed full and fold fits with `python -m benchmarks.extent_review --help`. Recreate primary tables from input-matched case reports with `python -m benchmarks.principal_volumes --catalogue --output results/current-indexes`. The normal eruption commands calculate the continuation and its support audit automatically. The paired geographic and known-deposit comparisons use `benchmarks.extent_challenges`, the external surveys use `benchmarks.extent_surveys`, and the normalized-kernel integration check uses `benchmarks.extent_spherical_check`. [Results and numerical checks](../comparisons/global-extent/README.md)
+Rebuild a case from its signed full and fold fits with `python -m benchmarks.extent_review --help`. Recreate primary tables from the families published on each current input with `python -m benchmarks.principal_volumes --catalogue --output results/current-indexes`. The normal eruption commands calculate the continuation and its support audit automatically. The paired geographic and known-deposit comparisons use `benchmarks.extent_challenges`, the external surveys use `benchmarks.extent_surveys`, and the normalized-kernel integration check uses `benchmarks.extent_spherical_check`. [Results and numerical checks](../comparisons/global-extent/README.md)
 
 Replay the principal global plates and physical map integrals with `python -m benchmarks.deposit_maps --output results/deposit-maps --workers 3`. The map replay includes both the registered Pinatubo case and its earlier 137-observation development snapshot. Refresh the matched five-family table with `python -m benchmarks.principal_volumes --output results/principal-volumes.csv`. Each registered eruption appears once in that table.
 
@@ -27,9 +27,10 @@ Replay the principal global plates and physical map integrals with `python -m be
 | `python -m benchmarks.support --output results/support-trials` | Twelve known-truth tests of local footprints, complete-contour gates and hidden extrapolation | Regional GP and cubic spline |
 | `python -m benchmarks.support_domain --base results/regional-methods --output results/domain-sensitivity` | Retune spline fitting-rectangle padding while keeping the integration footprint fixed | Spline; unchanged GP reference |
 
-To rebuild the published comparisons from the saved fits, run these commands in the repository root. The regional and spherical tables use the accepted input for each eruption. The spherical command writes one report containing the broad controls, principal volumes, prior envelopes, paired maps and 24 known-deposit tests. The directional command reads the uncertain-direction estimates and their matched controls from the same fits.
+To rebuild the published comparisons from the saved fits, run these commands in the repository root. Each table includes the families published on the current registered input. Fixed model-development studies use the [earlier matched editions](../archive/2026-11-24-case-editions/README.md) where needed. The spherical command writes one report containing the broad controls, principal volumes, prior envelopes, paired maps and 24 known-deposit tests. The directional command reads the uncertain-direction estimates and their matched controls from the same fits.
 
 ```sh
+python -m benchmarks.principal_volumes --catalogue --output results/principal-catalogue
 python -m benchmarks.azimuth_summary --output results/directional-summary
 python -m benchmarks.regional --summarize-only --published --output results/regional-summary
 python -m benchmarks.global_posterior --summarize-only --published --output results/spherical-summary
@@ -43,7 +44,7 @@ Replay the contour screens directly from the published spherical fits with `pyth
 
 | Command | Evidence checked |
 |---|---|
-| `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests` | Pinatubo marine holdout, map-reading holdout, two-sided marine ranges and upper-endpoint regional refits. [Checks and results](../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md) |
+| `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests` | Pinatubo marine holdout, map-reading holdout, two-sided marine ranges and upper-endpoint regional refits. [Checks and results](../archive/2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/README.md) |
 | `python -m benchmarks.pinatubo_field_review --output results/pinatubo-new-sites.csv --volume-output results/pinatubo-review-volumes.csv` | Compare the archived fields at 14 newly read sites and the five median-map volumes before and after both source reviews. [Record of the original fits](../archive/2026-11-22-pinatubo-intake/pre-visual-review/README.md) |
 | `python -m benchmarks.pinatubo` | Pinatubo’s measured sections, paired sublayers, marine bounds, map coordinates and accepted decisions. [Visual checks](../data/audits/Pinatubo-1991/VISUAL-CHECK.md) |
 | `python -m benchmarks.sakurajima_satsuma` | Satsuma source cells, numerical literature readings, original bounds and eight-sector coverage |
@@ -84,4 +85,6 @@ Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the pu
 
 ## Bayesian nested isopach volumes
 
-Run the principal corridor catalogue with `python -m benchmarks.nested_catalogue --output results/nested-cases`. Pass `--whole-area` for the historical control. Replay principal maps and exact-site coverage with `python -m benchmarks.nested_principal_maps --output results/corridor-display`. Run `python -m benchmarks.nested_known --output results/nested-known --with-directional` and `python -m benchmarks.nested_spherical_known --output results/nested-spherical-known` for matched known deposits. Replay the published tables with `python -m benchmarks.nested_summary --output results/nested-comparison` and verify the published packets with `python -m benchmarks.verify_nested_reach` and `python -m benchmarks.verify_nested`. [Results](../comparisons/nested-isopachs/README.md)
+The dispersal-footprint model is the current nested method. [Model and fitting commands](../docs/methods/nested-footprints.md)
+
+Fit the earlier corridor model with `python -m benchmarks.nested_catalogue --output results/nested-cases`. Pass `--whole-area` for the historical control. Replay its maps and exact-site coverage with `python -m benchmarks.nested_principal_maps --output results/corridor-display`. Run `python -m benchmarks.nested_known --output results/nested-known --with-directional` and `python -m benchmarks.nested_spherical_known --output results/nested-spherical-known` for matched known deposits. Replay the published tables with `python -m benchmarks.nested_summary --output results/nested-comparison` and verify the published packets with `python -m benchmarks.verify_nested_reach` and `python -m benchmarks.verify_nested`. [Results](../comparisons/nested-isopachs/README.md)

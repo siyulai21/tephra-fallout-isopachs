@@ -8,9 +8,13 @@ from src.empirical_isopach.models.nested.reach_report import reach_dataset
 
 
 def case_home(slug):
+    """Locate the baseline used by the matched reach study, including its development case."""
     if slug == "pinatubo-1991":
         return Path("comparisons/nested-isopachs/pinatubo-preview")
-    return Path("eruptions") / slug / "results"
+    from .publication import matched_edition, result_home
+    from src.empirical_isopach.core.catalog import datasets
+    record = next(r for r in datasets() if r["slug"] == slug)
+    return result_home(matched_edition(record))
 
 
 def run(job):
@@ -28,7 +32,7 @@ def main():
     p.add_argument("--workers", type=int, default=1)
     p.add_argument("--resume", action="store_true")
     a = p.parse_args()
-    jobs = [(rec, a.output, a.parents, a.resume) for rec in records()]
+    jobs = [(rec, a.output, a.parents, a.resume) for rec in records(published=a.parents is None)]
     with ProcessPoolExecutor(a.workers) as pool:
         list(pool.map(run,jobs))
 

@@ -149,9 +149,6 @@ def verify_case(record):
             with np.load(home/key/"median-grid.npz",allow_pickle=False) as packet:
                 charts.append(PolarField(packet["radii_km"],packet["log10_cm"],float(packet["axis"])))
         np.testing.assert_allclose(frames[0][2],near_frame(charts,data))
-    published=(home if preview else home.parent)/"README.md"
-    if not preview:
-        assert case_section(home,"results/") in published.read_text()
     r=read_json(region/"report.json")
     for item in r["methods"].values():
         assert "expected_km3" not in item["regional_volume"]
@@ -176,6 +173,16 @@ def verify_case(record):
 def main():
     for r in records(published=True):
         verify_case(r)
+    from .publication import published_methods, result_home
+    from src.empirical_isopach.core.catalog import datasets
+    for record in datasets():
+        home = result_home(record)
+        assert case_section(home,"results/") in (home.parent/"README.md").read_text()
+        if "published_methods" in record:
+            data, meta = audited_data(record["path"])
+            frames = [verify_global(home/key,key,data,meta) for key in FAMILIES if key in published_methods(record)]
+            for frame in frames[1:]:
+                np.testing.assert_allclose(frame,frames[0],rtol=0.,atol=1e-9)
     expected=pd.DataFrame(catalogue_rows())
     pd.testing.assert_frame_equal(pd.read_csv("comparisons/principal-volumes.csv").convert_dtypes(),expected.convert_dtypes(),check_dtype=False)
     print(f"Replayed the median global field for every family and the two regional fits across {len(records(published=True))} case records.")

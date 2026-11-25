@@ -1,6 +1,6 @@
 {
   "protocol": "spherical-median-thickness-and-finite-spread-v2",
-  "summary_source_sha256": "784773e2f11efea32553074ab88cb17078db1f619f68eebf938d56ecbd3d283a",
+  "summary_source_sha256": "858ed8745612ca66ff69d100e6f18a9495c1a572a8fb85a04e14912a0f0c81f5",
   "cases": [
     {
       "name": "Aso-4",
@@ -21,13 +21,13 @@
       "extent_report_sha256": "45be138cedd01f618306b9b1fb05f87c68d2d50c8a2a7085a7d7c884ae5718e1"
     },
     {
-      "name": "Ilopango TBJ (Unit G)",
+      "name": "Ilopango TBJ (total primary airfall)",
       "slug": "ilopango-tbj",
-      "input_sha256": "17392b010ca5814d719884c0b5c925b14fe9b70a34a7e2832f30f31b82e713c9",
-      "global_report_sha256": "555d222a7a9cbc946d9bd177602f1c3283358b289c514e35e403f658f099ba0b",
-      "regional_report_sha256": "abfaee54bf1ee4510b098cc619d23c3dde32f2d001d95c0d567815c11855ca2f",
-      "deposit_sha256": "3d1ca5d2157c62dac8fadf853e0e980d3f93be5c03fc29e8ee089e4118621aa1",
-      "extent_report_sha256": "9a91f9ce3d6b6ee7876d712747a14b2997fd1bff5be862faa12a888f30e34fc6"
+      "input_sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867",
+      "global_report_sha256": "aecd376687e78c1016d96bd6c78f9c911cefb296f32901a4ecc9e60d27b86086",
+      "regional_report_sha256": null,
+      "deposit_sha256": "ea5b516ceba1dd77cbaabc585392179d9bcd5a1715fec8a0ddcfcb1c2a9bae37",
+      "extent_report_sha256": "682490f7511b0c47335ae52b553b20950a1628d1e02bbf1c725ceadf0d6fa168"
     },
     {
       "name": "Mazama",
@@ -46,15 +46,6 @@
       "regional_report_sha256": "ff69f50a807d6a59253b0e4023689caed5d8193a944f3690edd2dc094e6b5579",
       "deposit_sha256": "4d0b47e056eac2281a44387533d3fd9adf1c4483fb5ca6cf0f005b3e6b8a619a",
       "extent_report_sha256": "bd55c38783543710487bc9e3861fe8d9a9e9fb6b4ad0ca2634477477f8c33b97"
-    },
-    {
-      "name": "Pinatubo 1991 (Layer C)",
-      "slug": "pinatubo-1991-layer-c",
-      "input_sha256": "2899fd9e79d88f81065dc87e50da41e0673b525bf370b6788a8f72d4ad14f5ce",
-      "global_report_sha256": "12f1da5e33dd8b8626a9a1d6c3b4397568954050decaaed006fee0a4f3716f2a",
-      "regional_report_sha256": "518e3573f2772b6fdcc18c80e243e3f2d48e4c64e08b3c5e9c01404bc2657104",
-      "deposit_sha256": "dda8ccc449f02fedf61057be835b94644f61822a09a4d2f3e2595351411f7400",
-      "extent_report_sha256": "9ab1842a8b491f28f6aec24fbf0202e37b63f4c3f2d01a2c06c004563307c2ac"
     },
     {
       "name": "Sakurajima Satsuma (P14)",
@@ -124,23 +115,21 @@
       "spline_equal_region_negative_log_score": 4.294670376580042
     },
     {
-      "eruption": "Ilopango TBJ (Unit G)",
+      "eruption": "Ilopango TBJ (total primary airfall)",
       "slug": "ilopango-tbj",
       "geometry": "displaced",
       "review_status": "conditional",
-      "median_map_volume_km3": 132.96413019730764,
-      "thickness_q25_volume_km3": 76.7684613956236,
-      "thickness_q75_volume_km3": 233.94211687808323,
-      "sensitivity_lower": 41.79711578543239,
-      "sensitivity_upper": 7478.2594517148655,
-      "baseline_sampling_passed": false,
+      "median_map_volume_km3": 242.14045682926553,
+      "thickness_q25_volume_km3": 96.4872182301863,
+      "thickness_q75_volume_km3": 768.8495850569906,
+      "sensitivity_lower": 37.951744654045825,
+      "sensitivity_upper": 69680.41798723306,
+      "baseline_sampling_passed": true,
       "all_sensitivity_sampling_passed": false,
       "all_outer_sampling_passed": true,
-      "median_fraction_outside_local_footprint": 0.9916771782815992,
-      "global_equal_region_negative_log_score": 1.2838951774904492,
-      "global_observation_coverage95": 0.9423076923076923,
-      "stacked_equal_region_negative_log_score": 1.342825812349835,
-      "spline_equal_region_negative_log_score": 1.4616043474144238
+      "median_fraction_outside_local_footprint": 0.9982721471538109,
+      "global_equal_region_negative_log_score": 1.2038243308643013,
+      "global_observation_coverage95": 0.9846153846153847
     },
     {
       "eruption": "Mazama",
@@ -179,25 +168,6 @@
       "global_observation_coverage95": 0.9565217391304348,
       "stacked_equal_region_negative_log_score": 1.450521534669888,
       "spline_equal_region_negative_log_score": 1.600616075530494
-    },
-    {
-      "eruption": "Pinatubo 1991 (Layer C)",
-      "slug": "pinatubo-1991-layer-c",
-      "geometry": "displaced",
-      "review_status": "conditional",
-      "median_map_volume_km3": 11.080464614596773,
-      "thickness_q25_volume_km3": 8.676122720886411,
-      "thickness_q75_volume_km3": 14.42173396918347,
-      "sensitivity_lower": 5.297030666521225,
-      "sensitivity_upper": 159.01376311663313,
-      "baseline_sampling_passed": true,
-      "all_sensitivity_sampling_passed": false,
-      "all_outer_sampling_passed": false,
-      "median_fraction_outside_local_footprint": 0.9602223398730512,
-      "global_equal_region_negative_log_score": 0.9651135105703395,
-      "global_observation_coverage95": 0.9466666666666667,
-      "stacked_equal_region_negative_log_score": 3.0231683476183253,
-      "spline_equal_region_negative_log_score": 1.5902606554125653
     },
     {
       "eruption": "Sakurajima Satsuma (P14)",
@@ -341,44 +311,18 @@
       "global_outer_sampling_passed": false
     },
     {
-      "eruption": "Ilopango TBJ (Unit G)",
+      "eruption": "Ilopango TBJ (total primary airfall)",
       "global": {
-        "equal_region_log_score": 1.2838951774904492,
-        "coverage95_observations": 0.9423076923076923,
+        "equal_region_log_score": 1.2038243308643013,
+        "coverage95_observations": 0.9846153846153847,
         "fold_log_scores": [
-          0.9639241844305506,
-          1.345735010544329,
-          1.2028780067702236,
-          1.6230435082166934
+          1.731290108753933,
+          1.007697265578641,
+          1.2928535252120135,
+          0.7834564239126184
         ]
       },
-      "stacked": {
-        "mean_log_score": 1.342825812349835,
-        "rmse_log": 0.9643473736804009,
-        "coverage95_observations": 0.9807692307692307,
-        "mean_interval_width_log": 4.407179468368288,
-        "equal_region_log_score": 1.342825812349835,
-        "fold_log_scores": [
-          1.3147039311543673,
-          1.3239584047219208,
-          1.4570443714804644,
-          1.2755965420425868
-        ]
-      },
-      "spline": {
-        "mean_log_score": 1.461604347414424,
-        "rmse_log": 1.0530054096885957,
-        "coverage95_observations": 0.9230769230769231,
-        "mean_interval_width_log": 4.315775948511608,
-        "equal_region_log_score": 1.4616043474144238,
-        "fold_log_scores": [
-          1.2260076667513486,
-          1.3497674935666815,
-          1.575635112050477,
-          1.6950071172891887
-        ]
-      },
-      "matched_input_folds_buffer_and_training_rows": true,
+      "matched_input_folds_buffer_and_training_rows": null,
       "global_outer_sampling_passed": true
     },
     {
@@ -462,47 +406,6 @@
       },
       "matched_input_folds_buffer_and_training_rows": true,
       "global_outer_sampling_passed": true
-    },
-    {
-      "eruption": "Pinatubo 1991 (Layer C)",
-      "global": {
-        "equal_region_log_score": 0.9651135105703395,
-        "coverage95_observations": 0.9466666666666667,
-        "fold_log_scores": [
-          1.8830194742968278,
-          0.313712492071686,
-          0.659451377332287,
-          1.0042706985805572
-        ]
-      },
-      "stacked": {
-        "mean_log_score": 3.0231683476183258,
-        "rmse_log": 7.105806057229753,
-        "coverage95_observations": 0.8733333333333333,
-        "mean_interval_width_log": 5.251553403398252,
-        "equal_region_log_score": 3.0231683476183253,
-        "fold_log_scores": [
-          9.261913956437562,
-          0.9143212723623834,
-          0.8979300051408305,
-          1.0185081565325271
-        ]
-      },
-      "spline": {
-        "mean_log_score": 1.5902606554125651,
-        "rmse_log": 7.232945125567599,
-        "coverage95_observations": 0.8533333333333334,
-        "mean_interval_width_log": 7.469501635982012,
-        "equal_region_log_score": 1.5902606554125653,
-        "fold_log_scores": [
-          2.7134912568722336,
-          1.4415217442292674,
-          0.8390581924456966,
-          1.366971428103064
-        ]
-      },
-      "matched_input_folds_buffer_and_training_rows": true,
-      "global_outer_sampling_passed": false
     },
     {
       "eruption": "Sakurajima Satsuma (P14)",

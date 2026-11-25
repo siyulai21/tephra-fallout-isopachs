@@ -118,7 +118,9 @@ def summarize(output, published=False):
     if published:
         accepted = {r["slug"]: r["path"] for r in datasets()}
         from .principal_volumes import principal_home
-        sources = [(r["slug"],principal_home(r)/"report.json") for r in datasets()]
+        from .publication import published_methods
+        sources = [(r["slug"], principal_home(r) / "report.json") for r in datasets()
+                   if set(active_methods()).intersection(published_methods(r))]
     else:
         sources = [(p.parent.name, p) for p in output.glob("*/report.json")]
     for slug, path in sorted(sources):
@@ -145,6 +147,9 @@ def summarize(output, published=False):
         "The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps.", "",
         "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |",
         "|---|---|---:|---:|---:|"]
+    if published:
+        lines[2] += (" The table includes eruptions with both regional fits on their current input. "
+                     "See the [eruption catalogue](../../eruptions/README.md) for coverage across families.")
     for row in table.itertuples():
         link = f"../../eruptions/{row.slug}/results/README.md" if published else f"{row.slug}/README.md"
         precision = " †" if not row.volume_converged else ""

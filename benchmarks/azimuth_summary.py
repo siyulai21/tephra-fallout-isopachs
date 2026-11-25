@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import pandas as pd
 
-from .publication import published_datasets
+from .publication import published_methods, result_home
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.study import digest, write_json
 
@@ -21,7 +21,9 @@ def current_control_summary(output, records):
     output.mkdir(exist_ok=True,parents=True)
     rows = []
     for rec in sorted(records,key=lambda r:r["name"]):
-        home = Path("eruptions")/rec["slug"]/"results/directional"
+        home = result_home(rec)/"directional"
+        if "directional" not in published_methods(rec):
+            continue
         ensemble = json.loads((home/"ensemble/report.json").read_text())
         single = json.loads((home/"single-structure/report.json").read_text())
         identity = digest(rec["path"])
@@ -71,10 +73,12 @@ def current_control_summary(output, records):
 def case_table(cases=None, published_root=Path("eruptions")):
     """Read the paired controls and both holdout designs from the same fitted report."""
     records = []
-    for rec in (published_datasets() if cases is None else datasets()):
+    for rec in datasets():
+        if cases is None and "directional" not in published_methods(rec):
+            continue
         slug = rec["slug"]
         path = (cases/slug/"report.json" if cases is not None else
-                published_root/slug/"results/directional/azimuth/report.json")
+                published_root.parent/result_home(rec)/"directional/azimuth/report.json")
         r = json.loads(path.read_text())
         if cases is None and r["input"]["input_sha256"] != digest(rec["path"]):
             raise ValueError(f"{slug}: published directional fit and accepted input differ")

@@ -1,143 +1,31 @@
-# Ilopango TBJ (Unit G) · regional fits inside the observation hull
+# Ilopango · field sensitivities and validation
 
-[All available methods on the eruption page](../README.md)
+The all-phase reconstruction uses 168 localities. The four geographic groups contribute equally to the predictive score. Coverage is measured on the 65 point thicknesses. The source-sensitivity fits and the eight spherical prior settings test assumptions that matter in unsampled areas. [Current maps and volume table](../README.md) · [504 held-out predictions](geographic-site-validation.csv) · [Full numerical comparison](model-comparison.csv)
 
-The GP and cubic spline use the same accepted observations, geographic holdouts and observation hull.
+## Distal and historical evidence
 
-**52 exact measurements, 4 lower bounds, 0 upper limits.** The observation hull covers 166,961 km². The automatic validation buffer is 8.11 km.
+Dull L08 contributes one 25–60 cm interval, L10 a >60 cm lower bound, and L12 a >65 cm lower bound. M12 contributes >1? cm about 819 km from Ilopango. The core attribution remains queried. The table below compares the median thickness on the full map to the probability of exceeding 1 cm when the entire geographic group containing M12 was withheld. [Source dots and readings](../../../data/audits/Ilopango-TBJ/field-logs/dull-four-readings.png)
 
-![Matched median isopachs](isopachs.png)
-
-The full observation hull and every accepted location are in view. The coloured field is clipped to the exact hull; fine coastlines are context only. [Map frame and rendering provenance](map-display.json).
-
-| Quantity | GP ensemble | Trend-regularized cubic spline |
+| Model | Median map at M12 | P(>1 cm) with geographic group withheld |
 |---|---:|---:|
-| Principal median-map volume inside hull (km³) | 23.31 | 25.67 |
-| Integrated Q25–Q75 thickness (km³) | 18.39–29.70 | 21.29–31.01 |
-| Outer equal-region negative log score ↓ | 1.343 | 1.462 |
-| Outer log-thickness RMSE ↓ | 0.964 | 1.053 |
-| Outer 95% observation-interval coverage | 98.1% | 92.3% |
+| Directional | 1.63 cm | 5.5% |
+| Spherical mixture | 5.73 cm | 40.9% |
+| Nested dispersal footprints | 1.37 cm | 9.8% |
 
-Lower predictive score and RMSE are better. Coverage must be read with interval width and predictive score; wider intervals alone are not improvement.
+An independent nested fit omitting only M12 gives 0.016 cm median latent thickness there, compared with 1.50 cm in the principal posterior. A second independent fit omits the historical T2 contribution while preserving other logged fall and independent workbook evidence. Three sites then lose their only numerical constraint. On the remaining 165 sites, the median predicted thickness at core L12 falls from 93.8 to 71.1 cm. Both refits passed their final sampling checks. At Laguna Seca, the nested principal predicts about 23 cm at the field locality against the 45–50 cm range derived from the two investigations. [Source-by-source refit results](source-sensitivity/comparison.csv) · [Osa omission posterior](source-sensitivity/without-osa/full.json) · [T2 omission and refinement](source-sensitivity/without-historical-T2/refinement/full.json)
 
-![Withheld predictions and regional volumes](diagnostics.png)
+## Geographic support and numerical checks
 
-## Scope
+| Method | Complete-draw checks | Median-map integral | Q25–Q75 integrals | Standard complete contour band |
+|---|---|---|---|---|
+| Directional | Passed | Passed | Passed | None |
+| Spherical mixture | Passed | Passed | Passed | None |
+| Nested dispersal footprints | Passed | Passed | Passed | None |
 
-The footprint is the convex hull of measured/bounded locations, with no source point or invented observations added. It can contain large unsampled gaps and can exclude proximal deposits. These are **regional bulk fallout volumes, not total eruption volumes or dense-rock equivalents**. No global extrapolation enters this comparison.
+The support screen tests local observations around complete contours, including where evidence is absent. A whole-Earth integral includes assumptions beyond those observations. The complete decisions and rejected segments are available for each method. [Directional screen](directional/extent/support.json.gz) · [Spherical screen](spherical-mixture/extent/support.json.gz) · [Nested screen](nested-isopachs/footprints/support.json.gz)
 
-Volume integrates pointwise median thickness over the observation hull. The endpoints integrate the pointwise 25th and 75th percentiles of latent thickness on the same hull. [Band integrals and refinements](thickness-bands.json)
+The spherical model uses eight fixed prior settings. The smallest lower endpoint is 38.0 km³ and the largest upper endpoint is 69,680 km³ across these separate conditional intervals. Six of eight settings passed both their required sampling and continuation checks. The diffuse-tail setting retained a warning for the parent field’s bearing, and the one-fan setting retained a warning for instability in volume quantiles between draw subsets. The nested fitter emitted floating-point warnings while evaluating very small interval probabilities for some trial particles. The published held-out probabilities and posterior integrals were checked separately. [Eight spherical intervals and checks](spherical-priors.csv) · [Full spherical prior diagnostics](spherical-mixture/extent/prior-sensitivity.json) · [Nested fits and integration](nested-isopachs/footprints/report.json) · [Directional folds and continuation](directional/extent/report.json)
 
-## Fitted methods
+## Reproduction
 
-### GP ensemble
-
-```json
-{
-  "candidate": {
-    "tail": "stacked"
-  },
-  "components": [
-    {
-      "weight": 1.0,
-      "model": {
-        "candidate": {
-          "tail": "power",
-          "length_factor": 1.5,
-          "noise_ratio": 1.5
-        },
-        "beta": [
-          5.877882565797928,
-          2.3646239542705834,
-          0.014532660036742534,
-          -0.36433322738101886
-        ],
-        "radius_scale_km": 36.57850657147445,
-        "length_km": 159.7258596900914,
-        "amplitude_log": 0.6824933387478334,
-        "noise_log": 1.02374000812175,
-        "jitter": 4.657971574351648e-10,
-        "trend_on_constraint_boundary": true,
-        "uncertainty": "conditional Laplace"
-      }
-    }
-  ],
-  "dominant_tail": "power",
-  "observation_discrepancy_variance_log": 0.0,
-  "trend_on_constraint_boundary": true,
-  "uncertainty": "Predictive mixture; includes disagreement among retained candidates, conditional on each fit and estimated weights. Fitted-parameter uncertainty is not integrated."
-}
-```
-
-### Trend-regularized cubic spline
-
-```json
-{
-  "method": "spline",
-  "candidate": {
-    "tail": "power",
-    "knot_intervals": 4,
-    "tension": 1.0,
-    "smoothing": 1e-08,
-    "trend_strength": 100.0,
-    "noise_ratio": 1.5
-  },
-  "bounds_km": [
-    -359.99334443125537,
-    -349.72718466324744,
-    183.1725013964103,
-    156.57345952248915
-  ],
-  "knot_intervals_xy": [
-    4,
-    4
-  ],
-  "n_coefficients": 49,
-  "noise_log": 0.9827594136709957,
-  "amplitude_log": 0.6551729424473305,
-  "trend_beta": [
-    5.63400524303206,
-    2.1459918386242784,
-    0.024895812665345022,
-    -0.4568280516334591
-  ],
-  "trend_radius_scale_km": 36.57850657147445,
-  "trend_on_constraint_boundary": false,
-  "effective_df_exact": 3.335974118041806,
-  "newton_decrement": 1.325114647418844e-18,
-  "newton_iterations": 2,
-  "quadrature_order": 6,
-  "uncertainty": "Conditional Laplace",
-  "uncertainty_omits": [
-    "fitted trend",
-    "noise and smoothing estimation",
-    "knot/trend selection",
-    "sampling and preservation bias",
-    "vent location error"
-  ],
-  "pseudo_observations": 0
-}
-```
-
-Every explored candidate is retained in the selection tables. All response-dependent choices are retuned within training folds; no hand-placed pseudo-data enter the likelihood.
-
-## Reliability checks
-
-- All probability intervals condition on fitted parameters and selected settings; they omit parameter/selection and preservation/sampling uncertainty.
-- Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.
-- Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals.
-- Spline selection reaches an explored search boundary: smoothing. This is a bounded-grid result, not proof of a continuous optimum.
-
-## Reproduce and inspect
-
-```sh
-tephra-isopachs compare 'Ilopango TBJ (Unit G)' --output results/new-regional-run
-```
-
-[Complete numerical report](report.json) · [Withheld predictions](heldout_predictions.csv) · [Accepted observation semantics](accepted_observations.csv) · [Selection tables](selection/README.md)
-
-The JSON records input/source hashes, package versions, all fold memberships, regional integration refinements, conditional-volume sampling precision and geographic-deletion sensitivity. Historical GP global calculations remain separate.
-
-## Which parts are actually supported?
-
-Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
+Run `python -m benchmarks.ilopango_total_airfall` for the input, `python -m benchmarks.ilopango_total_checks` for the three published maps, geographic predictions and source refits, and `python -m benchmarks.ilopango_total_map --verify` for the all-locality overview. The input SHA-256 is `fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867`. [Sampling evidence](sampling/README.md) · [Original PDFs and hashes](../../../data/audits/Ilopango-TBJ/field-logs/primary-scans.csv) · [Published evidence inventory](../../../benchmarks/published-evidence.sha256)

@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .publication import published_datasets as datasets
+from .publication import published_datasets as datasets, result_home
 from .footprint_study import controls
 from src.empirical_isopach.models.extent_release import draw_check,predictive_summary
 from src.empirical_isopach.models.extent_review import FAMILY_NAMES
@@ -22,7 +22,7 @@ def main():
     ledger=read_json(ASSET)
     for rec in datasets():
         slug=rec["slug"]
-        home=Path("eruptions")/slug/"results"
+        home=result_home(rec)
         regional=read_json(home/"report.json")
         partitions=regional["validation"]["methods"]["stacked"]["selections"]
         for family in FAMILY_NAMES:

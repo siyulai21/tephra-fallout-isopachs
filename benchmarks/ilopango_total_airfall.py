@@ -20,7 +20,7 @@ from .ilopango_field_review import (
 
 FIELD = AUDIT / "field-logs"
 INPUT = ROOT / "data/eruptions/Ilopango_TBJ_total_airfall.csv"
-RESULT = ROOT / "eruptions/ilopango-tbj/results/total-airfall-2026-11-24"
+RESULT = ROOT / "eruptions/ilopango-tbj/results"
 TARGET = "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout."
 BASE = ROOT / "data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv"
 

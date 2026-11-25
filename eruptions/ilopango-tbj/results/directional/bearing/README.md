@@ -1,6 +1,6 @@
-# Ilopango TBJ (Unit G) directional continuation
+# Ilopango TBJ (total primary airfall) directional continuation
 
-The median of the ensemble using measured fan directions integrates to **49.6 km³ of bulk fallout**. Angular reach varies across extrapolation assumptions. Changing reach alone preserves the field inside measured triangles. Conditioning on archive evidence can update the fitted thicknesses. A hypothetical extra fan in the largest sampling gap remains a separate structural sensitivity.
+The median of the ensemble using measured fan directions integrates to **73.2 km³ of bulk fallout**. Angular reach varies across extrapolation assumptions. Changing reach alone preserves the field inside measured triangles. Conditioning on archive evidence can update the fitted thicknesses. A hypothetical extra fan in the largest sampling gap remains a separate structural sensitivity.
 
 ![Agreement and disagreement about the median isopachs](isopach-agreement.png)
 
@@ -18,7 +18,7 @@ Each segment lies inside an accepted interpolation triangle with measurements on
 
 | Continuation | Integral of median map (km³) | Conditional 95% volume interval (km³) | Numerical checks |
 |---|---:|---:|---|
-| Measured fan directions | 49.62 | 32.3–433.2 | Passed |
+| Measured fan directions | 73.17 | 48.7–475.8 | Passed |
 
 ### Bulk volume of the median map by direction
 
@@ -26,11 +26,23 @@ Each entry is km³ in a 45° sector centred on the named bearing from the vent.
 
 | Continuation | N | NE | E | SE | S | SW | W | NW |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Measured fan directions | 1.3 | 1.45 | 6.42 | 14.1 | 11.1 | 6.07 | 5.07 | 4.16 |
+| Measured fan directions | 2.35 | 1.85 | 3.37 | 26 | 18.6 | 8.52 | 7.36 | 5.13 |
 
 The sector volumes sum through the antipode and include extrapolated proximal, unsampled and distal fallout. The conditional intervals integrate individual deposits. The sector draws are retained for each fitted deposit. Agreement among medians cannot establish an observation-supported closed band.
 
-**Measured fan directions** scored geographic 1.684, quadrants 1.879. Geographic sampling warnings occurred in zero folds. The shared screen accepted 0 complete bands across its policies. [Geographic and directional folds](quantitative/validation.json) · [Contour decisions](quantitative/complete-contour-audit.json)
+**Measured fan directions** scored geographic 1.361, quadrants 1.274. Geographic sampling warnings occurred in zero folds. The shared screen accepted 0 complete bands across its policies. [Geographic and directional folds](quantitative/validation.json) · [Contour decisions](quantitative/complete-contour-audit.json)
+
+## Broad spherical continuation control
+
+This comparison uses the original unattenuated spherical draws. The principal spherical case integrates a range of possible continuations across unobserved bearings.
+
+These archive predictions use the spherical posterior fitted to the quantitative measurements and bounds. Each complete deposit retains its original weight.
+
+| Archive transfer | Conditional 95% volume interval (km³) | Weight ESS | Numerical check |
+|---|---:|---:|---|
+| Principal observation bounds and thicknesses | 119.7–60,535.1 | 6,000 | Passed |
+
+[Spherical archive probabilities, chain checks and hull membership](spherical-archive-checks.json) · [Posterior weights by chain](spherical-archive-weights.npz)
 
 ## Reproducible results
 

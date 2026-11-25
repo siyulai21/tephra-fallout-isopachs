@@ -31,22 +31,35 @@ def published_reach_engine():
     return sha256((published_nested_engine() + "".join(components)).encode()).hexdigest()
 
 
+def result_home(record):
+    """Results root for a current case or its matched five-family study edition."""
+    return Path(record.get("matched_results", f"eruptions/{record['slug']}/results"))
+
+
+def published_methods(record):
+    """Families reviewed for this input. An undeclared partial release is an error."""
+    from src.empirical_isopach.models.registry import active_methods
+    from src.empirical_isopach.visualization.deposit import FAMILIES
+    return tuple(record.get("published_methods", (*active_methods(), *FAMILIES)))
+
+
+def matched_edition(record):
+    """Return the input used by the published five-family development studies."""
+    from src.empirical_isopach.core.catalog import data_directory, dataset_record
+    earlier = [item for item in record.get("previous_inputs", []) if "matched_results" in item]
+    if len(earlier) > 1:
+        raise ValueError(f"Multiple matched study editions for {record['slug']}")
+    return dataset_record(data_directory() / earlier[0]["file"]) if earlier else record
+
+
 def published_datasets():
-    """Resolve the exact registered revision used by each published case report."""
-    from src.empirical_isopach.core.catalog import datasets, data_directory, dataset_record
-    records = datasets()
-    for i, rec in enumerate(records):
-        report = json.loads((ROOT/"eruptions"/rec["slug"]/"results/report.json").read_text())
-        expected = report["input"]["input_sha256"]
-        if expected == sha256(rec["path"].read_bytes()).hexdigest():
-            continue
-        for previous in rec.get("previous_inputs", []):
-            path = data_directory() / previous["file"]
-            if sha256(path.read_bytes()).hexdigest() == expected:
-                records[i] = dataset_record(path)
-                break
-        else:
-            raise ValueError(f"Published input identity disagrees with {rec['slug']} report")
+    """Verify the actual input of every fixed five-family benchmark before replay."""
+    from src.empirical_isopach.core.catalog import datasets
+    records = [matched_edition(r) for r in datasets()]
+    for r in records:
+        report = json.loads((ROOT / result_home(r) / "report.json").read_text())
+        if report["input"]["input_sha256"] != sha256(r["path"].read_bytes()).hexdigest():
+            raise ValueError(f"Matched study and registered input differ for {r['slug']}")
     return records
 
 

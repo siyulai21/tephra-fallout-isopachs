@@ -10,10 +10,10 @@ Each row compares the same accepted thickness measurements and bounds. All three
 |---|---:|---:|---:|---:|---|
 | [Aso-4](../../eruptions/aso-4/results/nested-whole-area/README.md) | 658.6 | 599.1 | **2,006.6** [648.8–15,969.9] | 75/83 | passed · 3/4 |
 | [B-Tm](../../eruptions/b-tm/results/nested-whole-area/README.md) | 33.5 | 37.1 | **67.9** [52.0–534.5] | 60/64 | passed · 4/4 |
-| [Ilopango TBJ (Unit G)](../../eruptions/ilopango-tbj/results/nested-whole-area/README.md) | 40.8 | 145.4 | **47.7** [37.5–181.8] | 49/52 | **warning** · 1/4 |
+| [Ilopango TBJ (Unit G)](../../archive/2026-11-24-case-editions/ilopango-unit-g-56/nested-whole-area/README.md) | 40.8 | 145.4 | **47.7** [37.5–181.8] | 49/52 | **warning** · 1/4 |
 | [Mazama](../../archive/2026-11-23-nested-geography/mazama-300-controls/whole/report.json) | 280.0 | 429.5 | **279.1** [215.1–1,289.4] | 42/46 | passed · 3/4 |
 | [Minoan](../../eruptions/minoan/results/nested-whole-area/README.md) | 28.8 | 29.2 | **31.4** [25.1–91.8] | 85/92 | passed · 4/4 |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/nested-whole-area/README.md) | 6.4 | 13.9 | **11.4** [9.8–27.7] | 103/150 | passed · 3/4 |
+| [Pinatubo 1991 (Layer C)](../../archive/2026-11-24-case-editions/pinatubo-layer-c-208/nested-whole-area/README.md) | 6.4 | 13.9 | **11.4** [9.8–27.7] | 103/150 | passed · 3/4 |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/nested-whole-area/README.md) | 7.1 | 7.3 | **11.5** [7.0–60.2] | 49/50 | **warning** · 1/4 |
 | [Tambora](../../eruptions/tambora/results/nested-whole-area/README.md) | 95.7 | 126.3 | **123.4** [96.1–290.7] | 26/26 | passed · 4/4 |
 | [YTT](../../eruptions/ytt/results/nested-whole-area/README.md) | 900.4 | 1,284.0 | **1,418.8** [1,048.5–3,339.5] | 43/46 | **warning** · 3/4 |

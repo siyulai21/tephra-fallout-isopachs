@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets, result_home
 from src.empirical_isopach.models.directional.study import digest, write_json
 from src.empirical_isopach.models.directional.ensemble.weights import PACKET
 
@@ -52,7 +52,7 @@ def summarize(known, regional, output, cli_replay=None):
         raise ValueError("Review discrepancies in the matched regional benchmark before publishing")
     cases, trials, contours, full = [], [], [], {}
     for rec in datasets():
-        home = Path("eruptions")/rec["slug"]/"results"
+        home = result_home(rec)
         folder = home/"directional"/"ensemble"
         r = json.loads((folder/"report.json").read_text())
         c, j = r["median_surface"], r["coherent_fields"]
@@ -148,11 +148,11 @@ def summarize(known, regional, output, cli_replay=None):
     (output/"README.md").write_text("\n".join(lines))
     artifacts = {f:digest(output/f) for f in ("README.md","volumes.png","comparison.csv","known-volumes.csv","contour-accuracy.csv","simulation-records.json.gz")}
     verification = {"regional_benchmark":regional_check,"calibration_sha256":digest(PACKET),"artifacts":artifacts,
-                    "case_reports":{r["slug"]:digest(Path("eruptions")/r["slug"]/"results/directional/ensemble/report.json") for r in datasets()}}
+                    "case_reports":{r["slug"]:digest(result_home(r)/"directional/ensemble/report.json") for r in datasets()}}
     if cli_replay is not None:
         run = json.loads((cli_replay/"ensemble/report.json").read_text())
         case, = (r for r in datasets() if digest(r["path"]) == run["input"]["input_sha256"])
-        home = Path("eruptions")/case["slug"]/"results/directional/ensemble"
+        home = result_home(case)/"directional/ensemble"
         hashes = json.loads((home/"artifacts.json").read_text())
         for f, expected in hashes.items():
             if digest(cli_replay/"ensemble"/f) != expected:

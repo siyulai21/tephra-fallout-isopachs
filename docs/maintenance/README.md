@@ -1,6 +1,6 @@
 # Publish and revise a case
 
-The case home is the reading copy. It shows the five principal maps, volumes, validation and material limitations. The audit owns source decisions. The result directories own the fitted fields, volume draws, geographic tests and diagnostics. Cite those files from related studies.
+The case home is the reading copy. It shows every principal map published on the registered input, together with its volume, validation and material limitations. The audit owns source decisions. The result directories own the fitted fields, volume draws, geographic tests and diagnostics. Cite those files from related studies.
 
 ## Revising a result
 

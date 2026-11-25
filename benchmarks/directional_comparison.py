@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 from benchmarks.directional import SCENARIOS, trial
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets, result_home
 from src.empirical_isopach.models.directional.estimate import interval
 from src.empirical_isopach.models.directional.geometry import COMPASS, Geometry, polar
 from src.empirical_isopach.models.directional.source_cap import cap_volumes
@@ -23,7 +23,7 @@ def read(path):
 
 def matched_rows(record, run, regional, output):
     slug = record["slug"]
-    home = Path("eruptions")/slug/"results"
+    home = result_home(record)
     old, published = read(home/"spherical-mixture/report.json"), read(home/"report.json")
     fresh = read(regional/slug/"report.json")
     new = read(output/slug/"report.json")

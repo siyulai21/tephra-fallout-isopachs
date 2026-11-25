@@ -3,6 +3,8 @@ import gzip
 from hashlib import sha256
 from pathlib import Path
 
+from .publication import result_home
+
 import numpy as np
 from scipy.spatial import cKDTree
 
@@ -208,7 +210,7 @@ def main():
         verify_case(historical, path)
         verify_distal_holdout(receipts["outer"][slug], path)
     for record in sorted(registered.values(), key=lambda r:r["slug"]):
-        home = ROOT/"eruptions"/record["slug"]/"results"
+        home = ROOT/result_home(record)
         if (home/"nested-whole-area/report.json").is_file():
             verify_case(home/"nested-whole-area",record["path"])
         else:

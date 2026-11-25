@@ -62,6 +62,11 @@ if __name__ == "__main__":
     p.add_argument("--output",required=True,type=Path)
     p.add_argument("--cases",nargs="+",choices=[r["slug"] for r in datasets()])
     args = p.parse_args()
-    for record in datasets():
+    from .publication import published_methods
+    records = [r for r in datasets() if "spherical-mixture" in published_methods(r)]
+    missing = set(args.cases or ()) - {r["slug"] for r in records}
+    if missing:
+        p.error("No published spherical fit on the current input for " + ", ".join(sorted(missing)))
+    for record in records:
         if not args.cases or record["slug"] in args.cases:
             run(record, args.output, args.runs, args.replay, published=args.published)

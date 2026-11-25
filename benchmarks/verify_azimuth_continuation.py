@@ -3,6 +3,8 @@ import json
 from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
+
+from .publication import result_home
 from benchmarks.publication import previous_btm_file, previous_mazama_bytes
 
 import numpy as np
@@ -52,7 +54,7 @@ def verify_published_estimates():
 
 
 def verify(rec):
-    home = Path("eruptions")/rec["slug"]/"results"
+    home = result_home(rec)
     folder = home/"directional/azimuth"
     r = json.loads((folder/"report.json").read_text())
     for name,value in json.loads((folder/"artifacts.json").read_text()).items():

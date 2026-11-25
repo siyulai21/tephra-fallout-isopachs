@@ -15,4 +15,4 @@ python -m benchmarks.pinatubo_cruise_check \
   --output results/pinatubo-core-23.json
 ```
 
-[Published core predictions and the 15 chart-registration checks](../../eruptions/pinatubo-1991-layer-c/results/source-checks/cruise-core-holdout/result.json)
+[Published core predictions and the 15 chart-registration checks](../2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/cruise-core-holdout/result.json)

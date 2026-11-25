@@ -1,6 +1,6 @@
 # Reading maps, volumes and geographic validation
 
-Open the eruption page for the maps side by side, accepted input and field audit. The catalogue compares all active families on the same registered observations. Each current fit records the input hash and the geographic holdouts. [Eruption catalogue](../eruptions/README.md) · [Numerical results](../comparisons/principal-volumes.csv)
+Open the eruption page for its current maps, accepted input and field audit. The principal catalogue lists published fits on the registered input. Each row records the input hash, integration area and geographic holdout results. A family awaiting a rerun on a changed dataset has no current estimate. [Eruption catalogue](../eruptions/README.md) · [Numerical results](../comparisons/principal-volumes.csv)
 
 ## Read the map and its volume
 

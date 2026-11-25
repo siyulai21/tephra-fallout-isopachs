@@ -10,7 +10,7 @@ from matplotlib.ticker import MaxNLocator
 from .extent_challenges import paired
 from .footprint_study import controls
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets, result_home
 from src.empirical_isopach.models.extent_integrals import parent_fields
 from src.empirical_isopach.models.extent_weights import calibration
 from src.empirical_isopach.visualization.deposit_field import PolarField
@@ -26,11 +26,11 @@ CASES=(("pinatubo-1991-layer-c","spherical-mixture","Pinatubo Layer C · spheric
 
 
 def surfaces(slug,family):
-    rec=next(r for r in datasets() if r["slug"]==slug)
+    rec=next(r for r in published_datasets() if r["slug"]==slug)
     data,meta=audited_data(rec["path"],allow_intervals=True)
     latitude=meta["vent_lonlat"][1]
     dom=EarthDomain.wgs84(latitude)
-    folder = controls(slug,rec)[0] if family=="nested-isopachs" else Path("eruptions")/slug/"results"/family
+    folder = controls(slug,rec)[0] if family=="nested-isopachs" else result_home(rec)/family
     fields=parent_fields(folder,family,data,latitude,count=192 if family=="spherical-mixture" else 1024)
     cal=calibration(family,meta["input_sha256"],exclude_slug=slug)
     radius=np.r_[0.,np.geomspace(.1,dom.rho_max*(1.-1e-8),176)]

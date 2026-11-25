@@ -3,6 +3,8 @@ import csv
 import gzip
 import json
 from pathlib import Path
+
+from .publication import result_home
 from hashlib import sha256
 
 import numpy as np
@@ -133,7 +135,7 @@ def main():
     extremes = pd.read_csv(root/"octant-extremes.csv")
     for record in datasets():
         slug = record["slug"]
-        home = Path("eruptions")/slug/"results"
+        home = result_home(record)
         historic_input = cases.loc[slug].input_sha256 if slug in cases.index else None
         if digest(record["path"]) == historic_input:
             expected_input = historic_input
@@ -143,7 +145,7 @@ def main():
             release_path = home/record.get("release_receipt", "source-audit/release.json")
             release = read(release_path)
             expected_input = release["files"][record["path"].relative_to(Path.cwd()).as_posix()]
-            expected_report = release["files"][str(home/"directional/single-structure/report.json")]
+            expected_report = release["files"][f"eruptions/{slug}/results/directional/single-structure/report.json"]
             case_extremes = (pd.DataFrame(release["octant_extremes"]) if "octant_extremes" in release
                              else pd.read_csv(release_path.with_name("octant-extremes.csv")))
         verify(home/"directional/single-structure", record, expected_input, expected_report, case_extremes)

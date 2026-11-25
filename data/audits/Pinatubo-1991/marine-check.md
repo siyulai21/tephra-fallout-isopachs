@@ -36,7 +36,7 @@ Marquez and colleagues examined 16 December 1996 Sonne cores, numbered 1–8, 15
 
 ## Hess station groups
 
-The source reports 30 groups. Twelve supply distinct constraints after repeat visits and uncertain primary beds are reviewed. Nine ranges represent replicate thicknesses and their full endpoints are preserved below. The common five-family input uses their lower endpoints as minima. A separate nested-corridor fit uses both endpoints. [All 30 source groups](../../sources/pinatubo-1991/hess-table-1.csv) · [Original paper](https://doi.org/10.1016/S0377-8398%2801%2900025-1) · [Model sensitivity](../../../eruptions/pinatubo-1991-layer-c/results/source-checks/README.md)
+The source reports 30 groups. Twelve supply distinct constraints after repeat visits and uncertain primary beds are reviewed. Nine ranges represent replicate thicknesses and their full endpoints are preserved below. The common five-family input uses their lower endpoints as minima. A separate nested-corridor fit uses both endpoints. [All 30 source groups](../../sources/pinatubo-1991/hess-table-1.csv) · [Original paper](https://doi.org/10.1016/S0377-8398%2801%2900025-1) · [Model sensitivity](../../../archive/2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/README.md)
 
 | Evidence ID | Ship stations | Original | Common input (cm) |
 |---|---|---|---:|
