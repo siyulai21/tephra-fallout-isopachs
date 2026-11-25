@@ -12,7 +12,7 @@ def test_current_audits_and_historical_controls_have_distinct_inputs():
     rows = catalogue_rows()
     for slug, count, families, previous_count in (
         ("ilopango-tbj", 168, {"directional", "spherical-mixture", "nested-isopachs"}, 56),
-        ("pinatubo-1991-layer-c", 235, {"stacked", "spline", "spherical-mixture", "nested-isopachs"}, 208),
+        ("pinatubo-1991-layer-c", 235, {"stacked", "spline", "directional", "spherical-mixture", "nested-isopachs"}, 208),
     ):
         case = current[slug]
         case_rows = [r for r in rows if r["slug"] == slug]

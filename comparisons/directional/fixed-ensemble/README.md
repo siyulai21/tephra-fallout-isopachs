@@ -9,6 +9,7 @@ Each row uses the same input and buffered geographic holdouts as its eruption pa
 | [Ilopango TBJ (total primary airfall)](../../../eruptions/ilopango-tbj/results/directional/ensemble/README.md) | 168 | 1.328 | 1.252 | 1.361 | 71.11 |
 | [Mazama](../../../eruptions/mazama/results/directional/ensemble/README.md) | 300 | 1.002 | 0.781 † | 0.898 | 306.79 |
 | [Minoan](../../../eruptions/minoan/results/directional/ensemble/README.md) | 101 | 1.732 | 1.695 | — | 33.67 |
+| [Pinatubo 1991 (Layer C)](../../../eruptions/pinatubo-1991-layer-c/results/directional/ensemble/README.md) | 235 | 2.072 | 1.014 † | 1.072 | 5.96 |
 | [Sakurajima Satsuma (P14)](../../../eruptions/sakurajima-satsuma/results/directional/ensemble/README.md) | 57 | 1.264 | 1.069 † | 1.244 | 8.57 |
 | [Tambora](../../../eruptions/tambora/results/directional/ensemble/README.md) | 26 | 1.953 | 1.964 † | — | 105.80 |
 | [YTT](../../../eruptions/ytt/results/directional/ensemble/README.md) | 46 | 1.811 | 1.777 † | — | 985.66 |

@@ -26,6 +26,8 @@ jobs:
           python -m benchmarks.pinatubo_offshore
           python -m benchmarks.pinatubo_archive_review
           python -m benchmarks.pinatubo_nested_review --verify
+          python -m benchmarks.global_case_validation --case pinatubo-1991-layer-c
+          python -m benchmarks.pinatubo_marine_map --station-table eruptions/pinatubo-1991-layer-c/results/marine-stations.csv --verify
           git diff --exit-code -- data/eruptions/Pinatubo_1991_layer_C_reviewed.csv data/audits/Pinatubo-1991/reaudit
       - name: Reproduce the Mazama source audit and the 300-locality input
         run: |
