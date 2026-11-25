@@ -159,7 +159,7 @@ def checked_field(view,data,latitude):
     return field,checks
 
 
-def render_deposit(folder, family, data, meta, name, *, output=None, sampled=None, near_half=None):
+def render_deposit(folder, family, data, meta, name, *, output=None, sampled=None, near_half=None, write_page=True):
     """Integrate and draw the median thickness of the saved posterior."""
     folder=Path(folder)
     dest=Path(output) if output else folder
@@ -207,6 +207,8 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         probability_plate(dest,field,model,data,meta,name,receipt)
     receipt["figure_sha256"]=digest(dest/"deposit.png")
     write_json(dest/"deposit.json",receipt)
+    if not write_page:
+        return receipt
     page=folder/"README.md"
     old_hash=digest(page) if page.exists() else None
     old = page.read_text() if page.exists() else ""

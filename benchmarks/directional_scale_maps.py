@@ -3,20 +3,45 @@
 import argparse
 import json
 from pathlib import Path
+import shutil
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 import numpy as np
 
+from .publication import result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
-from src.empirical_isopach.visualization.deposit_field import PolarField
+from src.empirical_isopach.visualization.deposit_field import PolarField, digest
 from src.empirical_isopach.visualization.deposit_maps import draw_land, regular_axes, frames
 from src.empirical_isopach.visualization.contour_limits import local_half_width
 
 ARCHIVE = Path("archive/2026-11-25-directional-geography")
 LEVELS = 0.5 * 2.0 ** np.arange(16)
+
+
+def preceding_control(record, scratch):
+    """Reuse or render the preceding extent model on this exact fitting input."""
+    folder = result_home(record) / "directional"
+    identity = digest(record["path"])
+    cached = scratch / "preceding-directional-controls" / record["slug"]
+    for candidate in (ARCHIVE / record["slug"], folder, cached):
+        page = candidate / "deposit.json"
+        if not page.is_file():
+            continue
+        receipt = json.loads(page.read_text())
+        sources = receipt["sources_sha256"]
+        if (receipt["input_sha256"] == identity and "extent/report.json" in sources
+                and "multiscale/report.json" not in sources
+                and all(digest(folder / name) == h for name, h in sources.items())
+                and digest(candidate / "median-grid.npz") == receipt["median_grid_sha256"]):
+            return candidate
+    from src.empirical_isopach.visualization.deposit import render_deposit
+    data, meta = audited_data(record["path"])
+    shutil.copytree(folder / "extent", cached / "extent", dirs_exist_ok=True)
+    render_deposit(folder, "directional", data, meta, record["name"], output=cached, write_page=False)
+    return cached
 
 
 def read_grid(path):
@@ -93,17 +118,19 @@ def plate(items, output, title):
             if row == len(items) - 1:
                 ax.set_xlabel("Easting from vent (km)", fontsize=8)
     fig.suptitle(title, fontsize=15)
+    observations = [item[2] for item in items]
+    point_label = "Point (includes reported minima)" if any(d.reported_minimum.any() for d in observations) else "Measurement"
+    symbols = [("o", point_label)]
+    if any((d.lower_censored & ~d.interval).any() for d in observations):
+        symbols.append(("^", "Lower limit"))
+    if any((d.censored & ~d.lower_censored).any() for d in observations):
+        symbols.append(("v", "Upper limit"))
+    if any(d.interval.any() for d in observations):
+        symbols.append(("s", "Interval"))
+    symbols.append(("*", "Vent"))
     fig.legend(
-        handles=[
-            Line2D([], [], ls="", marker=k, color="#48555a", label=s, ms=5)
-            for k, s in (
-                ("o", "Measurement"),
-                ("^", "Lower limit"),
-                ("v", "Upper limit"),
-                ("s", "Interval"),
-                ("*", "Vent"),
-            )
-        ]
+        handles=[Line2D([], [], ls="", marker=marker, color="#48555a", label=label, ms=5)
+                 for marker, label in symbols]
         + [Line2D([], [], ls=":", color="#785e83", label="Geographic windows enlarged at left")],
         loc="outside lower center",
         ncol=6,
@@ -119,8 +146,7 @@ def figures(scratch, out, initial=False):
     gallery = []
     for r in datasets():
         slug = r["slug"]
-        home = Path("eruptions") / slug / "results/directional"
-        old = ARCHIVE / slug if (ARCHIVE / slug / "median-grid.npz").exists() else home
+        old = preceding_control(r, scratch)
         rec = json.loads((old / "deposit.json").read_text())
         data, meta = audited_data(r["path"])
         assert rec["input_sha256"] == meta["input_sha256"]
@@ -133,6 +159,7 @@ def figures(scratch, out, initial=False):
             continue
         new = scratch / slug
         current = json.loads((new / "deposit.json").read_text())
+        assert current["input_sha256"] == meta["input_sha256"]
         newfield = read_grid(new / "median-grid.npz")
         near = local_half_width(data) * np.array([-1.0, -1.0, 1.0, 1.0])
         bounds = windows(

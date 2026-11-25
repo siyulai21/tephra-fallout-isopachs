@@ -7,7 +7,8 @@ import numpy as np
 import pandas as pd
 from scipy.special import logsumexp
 
-from .directional_scale_maps import ARCHIVE
+from .directional_scale_maps import preceding_control
+from .publication import result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.multiscale.validation import predictions
@@ -33,11 +34,11 @@ def evaluation(release, output):
     for rec in datasets():
         slug = rec["slug"]
         data, meta = audited_data(rec["path"])
-        folder = Path("eruptions") / slug / "results/directional"
+        folder = result_home(rec) / "directional"
         prior = read_json(folder / "extent/report.json")
-        archive = ARCHIVE / slug
-        old = read_json((archive if archive.is_dir() else folder) / "deposit.json")
+        old = read_json(preceding_control(rec, release) / "deposit.json")
         new = read_json(release / slug / "deposit.json")
+        assert prior["input_sha256"] == old["input_sha256"] == new["input_sha256"] == meta["input_sha256"]
         baseline, model, _ = open_field(
             folder, "directional", data, meta, review=folder / "extent/report.json"
         )

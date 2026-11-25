@@ -1,19 +1,22 @@
 name: Refit spherical maps at reported minima
 on:
   workflow_dispatch:
-  push:
-    branches: [codex/lower-only-fit-20261125]
-    paths: [.github/workflows/refit-reported-minima.yml]
+    inputs:
+      case:
+        description: Registered eruption slug with reported minima
+        required: true
+        type: string
 permissions:
   contents: read
 env:
+  SLUG: ${{ inputs.case }}
   MPLBACKEND: Agg
   OPENBLAS_NUM_THREADS: 1
   OMP_NUM_THREADS: 1
 
 jobs:
   posterior:
-    name: ${{ matrix.slug }} / ${{ matrix.part }}
+    name: ${{ inputs.case }} / ${{ matrix.part }}
     runs-on: ubuntu-latest
     timeout-minutes: 355
     strategy:
@@ -21,7 +24,6 @@ jobs:
       max-parallel: 14
       matrix:
         part: [baseline, wide_geography, five_fans, diffuse_tail, diffuse_mixture_weights, one_fan, gaussian_errors, volume_prior_shift, fold-0, fold-1, fold-2, fold-3]
-        slug: [b-tm, mazama, ilopango-tbj, pinatubo-1991-layer-c, minoan, sakurajima-satsuma, aso-4]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,26 +39,19 @@ jobs:
       - run: python -m pip install -e .
       - run: python -u -m benchmarks.lower_limit_spherical "$SLUG" "$PART" --out packet
         env:
-          SLUG: ${{ matrix.slug }}
           PART: ${{ matrix.part }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: posterior-${{ matrix.slug }}-${{ matrix.part }}
+          name: posterior-${{ inputs.case }}-${{ matrix.part }}
           path: packet/posteriors
           if-no-files-found: error
           retention-days: 7
   maps:
-    name: Assemble ${{ matrix.slug }}
+    name: Assemble ${{ inputs.case }}
     needs: posterior
     runs-on: ubuntu-latest
     timeout-minutes: 350
-    permissions:
-      contents: write
-    strategy:
-      fail-fast: false
-      matrix:
-        slug: [b-tm, mazama, ilopango-tbj, pinatubo-1991-layer-c, minoan, sakurajima-satsuma, aso-4]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -72,24 +67,12 @@ jobs:
       - run: python -m pip install -e .
       - uses: actions/download-artifact@v4
         with:
-          pattern: posterior-${{ matrix.slug }}-*
+          pattern: posterior-${{ inputs.case }}-*
           merge-multiple: true
           path: results/spherical-mixture/posteriors
       - run: python -u -m benchmarks.lower_limit_spherical "$SLUG" assemble --out results/spherical-mixture
-        env:
-          SLUG: ${{ matrix.slug }}
       - uses: actions/upload-artifact@v4
         with:
-          name: spherical-${{ matrix.slug }}
+          name: spherical-${{ inputs.case }}
           path: results/spherical-mixture
           retention-days: 7
-      - name: Save completed packet on a review branch
-        env:
-          SLUG: ${{ matrix.slug }}
-          RUN_ID: ${{ github.run_id }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add --sparse --force -- results/spherical-mixture
-          git commit -m "Stage the checked $SLUG spherical minimum-fit packet"
-          git push origin "HEAD:refs/heads/codex/minimum-fit-packets/$RUN_ID/$SLUG"

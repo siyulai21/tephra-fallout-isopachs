@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import shapely
 
-from .directional_scale_maps import ARCHIVE, read_grid
+from .directional_scale_maps import preceding_control, read_grid
 from .footprint_morphology import outlines
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.contour_support import level_polygons
@@ -104,11 +104,9 @@ def level_metrics(field, level, size):
     )
 
 
-def fields(slug, release):
-    home = Path("eruptions") / slug / "results/directional"
-    previous = ARCHIVE / slug
-    if not (previous / "median-grid.npz").exists():
-        previous = home
+def fields(record, release):
+    slug = record["slug"]
+    previous = preceding_control(record, release)
     return {
         "previous": read_grid(previous / "median-grid.npz"),
         "multiscale": read_grid(release / slug / "median-grid.npz"),
@@ -119,7 +117,7 @@ def study(release, output):
     rows = []
     for rec in datasets():
         slug = rec["slug"]
-        for method, field in fields(slug, release).items():
+        for method, field in fields(rec, release).items():
             levels = doubling_levels(10 ** field.log10_cm.max())
             for size in (193, 385):
                 previous = None

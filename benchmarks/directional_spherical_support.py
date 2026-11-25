@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .publication import result_home
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.mass_mixture.contours import load_surfaces, screen
 from src.empirical_isopach.models.mass_mixture.study import audited_data
@@ -14,7 +15,7 @@ from src.empirical_isopach.models.directional.study import digest
 
 def run(record, output, runs=None, replay=None, published=False):
     slug = record["slug"]
-    home = Path("eruptions")/slug/"results/spherical-mixture"
+    home = result_home(record) / "spherical-mixture"
     report = json.loads((home/"report.json").read_text())
     data, meta = audited_data(record["path"])
     assert meta["input_sha256"] == report["input"]["input_sha256"]
