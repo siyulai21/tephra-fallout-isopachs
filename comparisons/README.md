@@ -6,6 +6,8 @@ The figure uses the same inputs as the table. Lower scores indicate better predi
 
 ![Geographic prediction scores and exact-site coverage for the methods fitted to each current input](method-scores.png)
 
+[Reported lower limits across all distances, including the change in near-vent thickness](reported-minima/README.md)
+
 | Question | Evidence |
 |---|---|
 | How do the GP ensemble and cubic spline compare inside the same observation hull? | [Regional fits and known-deposit tests](regional/README.md) |

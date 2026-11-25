@@ -10,7 +10,7 @@ Let the parent spherical mixture have thickness `T₀(s) = 10⁵ V₀ ∑ wⱼ K
 
 ## Directional reach from the training design
 
-Use finite source-centred authalic chord distances. For exact and lower-bound sites with radii `rᵢ` and bearings `θᵢ`, define the directional reach
+Use finite source-centred authalic chord distances. For point thicknesses, including those reported as minima, and positive intervals with radii `rᵢ` and bearings `θᵢ`, define the directional reach
 
 ```text
 R(θ) = maxᵢ rᵢ max(0, cos(θ − θᵢ))ᵇ

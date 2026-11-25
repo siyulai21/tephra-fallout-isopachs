@@ -58,6 +58,41 @@ def summarize(output):
     plt.close(fig)
     pd.DataFrame(rows).to_csv(output/"all-distances.csv", index=False)
 
+    lines = ["# Fitting reported lower limits as point thicknesses", "",
+             "These seven eruptions have accepted fallout sites with a numeric lower limit. Each fit uses that value "
+             "as a point thickness at its actual location. Upper limits retain a one-sided probability and ranges "
+             "use the probability between both endpoints. The source tables retain the original qualifiers. "
+             "[Fitting and plotting convention](../../docs/methods/reported-minimum-fitting.md)", "",
+             "![Ratio of revised to previous median thickness at reported minima versus distance from the vent](site-ratios.png)", "",
+             "Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a "
+             "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
+             "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
+             "[Values by case and method](all-distances.csv)", "",
+             "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for slug in cases:
+        home = result_home(records[slug])
+        stats = pd.read_csv(home / "minimum-fit-comparison.csv").set_index("method")
+        n = int(stats.reported_minima.iloc[0])
+        near = int(stats.minima_within_25_km.iloc[0])
+        name = names.get(slug, records[slug]["name"])
+        def vent(method):
+            pair = stats.loc[method, ["old_vent_cm", "new_vent_cm"]]
+            return " → ".join("—" if pd.isna(x) else f"{x:,.1f}" for x in pair)
+        lines.append(f"| [{name}](../../eruptions/{slug}/README.md) | {n} | {near} | {n-near} | "
+                     f"{vent('directional')} | {vent('nested-isopachs')} |")
+    lines += ["", "Vent values in the table are modeled median thicknesses read from the checked grids. "
+              "Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore "
+              "underestimate total local fallout. Each case links its original sources and separate validation coverage "
+              "for directly measured thicknesses and minima fitted as points.", "",
+              "All five methods use the same accepted observations and four geographic holdouts within each case. "
+              "An annotation-removal check compares the median field at the vent and every accepted site with and without "
+              "the provenance marker. The case comparison tables record the maximum absolute difference. "
+              "The global estimates include extrapolation into unsampled regions. Numerical warnings and unsupported "
+              "contour bands are retained in the individual case reports. [Method scores and volumes](../principal-volumes.csv) · [Matched regional benchmark](regional-benchmark/README.md)", ""]
+    (output / "README.md").write_text("\n".join(lines))
+
+
 
 if __name__ == "__main__":
     p=argparse.ArgumentParser(description=__doc__)

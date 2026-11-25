@@ -10,7 +10,7 @@ This is a reproducible **development protocol**, not a calibrated contour-confid
 
 ## General volcanological judgments
 
-We require positive thickness and keep bulk fallout distinct from ignimbrite, reworked deposits and dense-rock equivalents. Missing, eroded or unvisited sites do not establish zero deposition. A documented absence requires a detection limit; an incomplete core can supply a lower bound, not an exact recovered total.
+We require positive thickness and keep bulk fallout distinct from ignimbrite, reworked deposits and dense-rock equivalents. Missing, eroded or unvisited sites do not establish zero deposition. A documented absence requires a detection limit. Record the geological minimum from an incomplete core in the source ledger. Its numeric threshold enters the modeled support footprint, local brackets and geographic deletion checks exactly as a measured point does. [Reported-minimum fitting policy](reported-minimum-fitting.md)
 
 Multiple fans, secondary thickness maxima, islands and holes remain possible. We do **not** require every isopach to be an ellipse, star-shaped around the vent, or monotonically thinning along every ray. The directional background trends are regularization assumptions; the fitted residual surfaces may depart from them. Minoan Plinian and co-ignimbrite observations remain one total-fallout field. All components of each fitted superlevel set enter the area calculation together.
 

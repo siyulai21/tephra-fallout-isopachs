@@ -37,7 +37,8 @@ def synthetic_case(scenario, seed):
     upper = observed < 1. if scenario == "censored" else np.zeros(len(xy), bool)
     lower = observed > 3. if scenario == "censored" else np.zeros(len(xy), bool)
     observed[upper], observed[lower] = 1., 3.
-    data = Observations(xy, observed, upper | lower, np.zeros(len(xy)), np.arange(len(xy)), lower).canonical()
+    data = Observations(xy, observed, upper, np.zeros(len(xy)), np.arange(len(xy)),
+                        reported_minimum=lower).canonical()
     region = SurveyRegion(xy)
     points = []
     while sum(len(p) for p in points) < 400:
@@ -57,7 +58,7 @@ def synthetic_benchmark(output, repeats=10):
     def save():
         (output/"synthetic.json").write_text(json.dumps({"design": {"repeats": repeats, "noise_sd_log": .25,
             "test_locations": "400 independent uniform locations within the training-site hull",
-            "censoring": "Training observations below log thickness 1 are upper limits at 1; above 3 are lower bounds at 3. Test observations remain exact.",
+            "censoring": "Training observations below log thickness 1 are upper limits at 1. Values above 3 are reported minima fitted as points at 3. Test observations have measured thickness.",
             "scope": "Fixed development scenarios, not samples from the fitted spline/GP and not external validation. Unestimable trials are retained explicitly.",
             "method_metadata": method_metadata(), "reproducibility": provenance(), "benchmark_sha256": sha256(Path(__file__).read_bytes()).hexdigest()},
             "runs": rows}, indent=2, allow_nan=False)+"\n")
@@ -133,6 +134,7 @@ def summarize(output, published=False):
             rows.append({"dataset": report["dataset"], "slug": slug, "method": method, "label": report_label(report, method),
                 "n_exact": report["input"]["n_measurements"], "n_intervals":report["input"].get("n_intervals",0),
                 "n_lower": report["input"]["n_lower_limits"],
+                "n_reported_minima_as_points":report["input"].get("n_minima_fitted_as_measurements",0),
                 "n_upper": report["input"]["n_upper_limits"],
                 "area_km2": report["region"]["area_km2"], "buffer_km": report["validation"]["buffer_km"],
                 "median_surface_km3": result["regional_volume"]["median_surface_km3"],
@@ -146,7 +148,7 @@ def summarize(output, published=False):
     lines = ["# GP and cubic spline inside the observation hull", "",
         "Each pair uses the same accepted sites, geographic holdouts and integration area. "
         "The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps.", "",
-        "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Exact-site 95% coverage |",
+        "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Fitted-point 95% coverage |",
         "|---|---|---:|---:|---:|"]
     if published:
         lines[2] += (" The table includes eruptions with both regional fits on their current input. "
@@ -165,8 +167,9 @@ def summarize(output, published=False):
                   "is dominated by a poorly constrained upper tail near Lake Suigetsu. The case study compares "
                   "the median map with 20,000 complete-surface draws and reports the integration diagnostics. "
                   "[Spline sensitivity and regional footprint](../../eruptions/b-tm/results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail)",
-                  "", "The known-deposit benchmark retains all 40 attempted datasets, including two where both methods "
-                  "had insufficient training support. [Simulation results](synthetic/README.md) · "
+                  "", "The earlier lower-censored benchmark retains two trials with insufficient training support. "
+                  "[Earlier simulation results](synthetic/README.md) · "
+                  "[Known-deposit benchmark under the current fitting rule](../reported-minima/regional-benchmark/README.md) · "
                   "[Matched regional protocol](../../docs/methods/regional-comparison.md)"]
     if (output/"synthetic/synthetic.json").exists():
         simulations = json.loads((output/"synthetic/synthetic.json").read_text())

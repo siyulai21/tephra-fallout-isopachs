@@ -24,9 +24,13 @@ def read(path):
 
 
 def compare_frame(frame, path, write):
+    # Entirely missing numeric columns (e.g. an unavailable earlier map) round-trip as NaN.
+    frame = frame.where(frame.notna(), np.nan)
+    for column in frame.columns[frame.isna().all()]:
+        frame[column] = frame[column].astype(float)
     if write:
         frame.to_csv(path, index=False)
-    saved = pd.read_csv(path, keep_default_na=False, na_values=[""], dtype={"source_id": str})
+    saved = pd.read_csv(path, keep_default_na=False, na_values=[""], dtype={"source_id": str, "site": str, "reference": str})
     pd.testing.assert_frame_equal(frame, saved, check_dtype=False, rtol=2e-7, atol=1e-9)
 
 
@@ -157,6 +161,7 @@ def assess(record, write=False):
                           heldout_fraction_medians_at_or_above_minimum=float(above[data.reported_minimum].mean())))
         for j, (row_id, row) in enumerate(reported.iterrows()):
             points.append(dict(method=family, row_id=row_id, source_id=row.get("EvidenceID") or f"row-{row_id}",
+                               site=row.get("Site") or None, reference=row.get("Reference") or row.get("Refs") or None,
                                latitude_deg=float(row.Lat), longitude_deg=float(row.Lon),
                                projected_distance_km=distances[j], reported_kind=kind[j],
                                fit_kind="measurement" if data.reported_minimum[j] else kind[j],

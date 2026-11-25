@@ -104,7 +104,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
         'Each estimate integrates the pointwise median thickness over Earth. The range integrates the pointwise Q25 and Q75 thickness maps. '
         'The separate prior sensitivity envelope summarizes total-volume draws under eight alternative assumptions. '
         '[Model and assumptions](../../docs/methods/spherical-bearings.md)','',
-        '| Eruption | Median map (km³) | Q25–Q75 thickness maps (km³) | Geographic score ↓ | Exact coverage |',
+        '| Eruption | Median map (km³) | Q25–Q75 thickness maps (km³) | Geographic score ↓ | Fitted-point coverage |',
         '|---|---:|---:|---:|---:|']
     for row in rows:
         case = f"[{row['eruption']}](../../eruptions/{row['slug']}/README.md)"

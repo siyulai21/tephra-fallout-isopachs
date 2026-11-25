@@ -8,7 +8,7 @@ The active spline is a cubic tensor-product B-spline model of **log thickness**,
 
 ## Model and likelihood
 
-Let f(x)=B(x)c. Exact observations satisfy log(Y_i) ~ Normal(f(x_i), sigma²+v_i), with optional known log-scale error variance v_i. An upper limit contributes Phi((log L_i-f_i)/s_i); a lower bound contributes Phi((f_i-log L_i)/s_i). No bound becomes an exact thickness and no unsampled location becomes zero.
+Let f(x)=B(x)c. Exact observations satisfy log(Y_i) ~ Normal(f(x_i), sigma²+v_i), with optional known log-scale error variance v_i. A lower-only thickness contributes this same density at its reported minimum. An upper limit U contributes Phi((log U-f_i)/s_i). An interval [L,U] contributes Phi((log U-f_i)/s_i) minus Phi((log L-f_i)/s_i).
 
 The objective is
 

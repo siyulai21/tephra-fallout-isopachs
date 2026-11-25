@@ -50,11 +50,13 @@ def deposit_page(old, family, name, receipt, report):
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
     label = display_name(family, receipt["sources_sha256"])
+    point_caption = ("Circles show point thicknesses, including reported lower limits fitted at their stated values."
+                     if receipt.get("observation_policy") else "Each circle shows a measurement.")
     first = [f"# {name} · {label}", "",
              f"The principal bulk volume is **{volume_label} km³**, the whole-Earth integral of the median-thickness map. "
              f"The conditional thickness-band range is **{lo:,.3g}–{hi:,.3g} km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.{warning}", "",
              f"![{name}, {label}. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)", "",
-             "Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
+             f"{point_caption} Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
              f"The {border['level_cm']:g} cm footprint includes {border['inside']} of {border['accepted_rows']} modeled locations. "
              f"The thickest displayed line is {receipt['inner_contour']['level_cm']:g} cm and encloses {receipt['inner_contour']['inside']} fitted locations. "
              "The volume includes fallout beyond the displayed contours. "

@@ -25,7 +25,7 @@ The GP ensemble and cubic spline tune inside geographic training folds and integ
 
 Use `compare --regional-only` for the regional pair. The separate `global` command supports `--resume` with verified posterior caches.
 
-Before preparing a new input or revising an existing one, review real sites that lack measured thickness. Include source-supported upper or lower limits in the common input and document decisions for the remaining sites. The calculation uses the reviewed CSV and its audit. [Site review before fitting](methods/sites-without-measured-thickness.md)
+Before preparing a new input or revising an existing one, review real sites that lack measured thickness. Register supported upper limits and ranges with their bounds. Fit lower-only thicknesses as points at their stated values and document decisions for the remaining sites. The calculation uses the reviewed CSV and its audit. [Site review before fitting](methods/sites-without-measured-thickness.md)
 
 The default spherical geometry uses displaced kernels. The catalogue specifies source-focused kernels for B-Tm. Both geometries use the current bearing continuation. The earlier broad control is saved within the same fit at `bearing/parent-report.json`. [B-Tm source audit and fits](../eruptions/b-tm/README.md) · [Spherical protocol](methods/spherical-bearings.md)
 

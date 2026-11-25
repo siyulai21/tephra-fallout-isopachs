@@ -2,7 +2,7 @@
 
 The directional and nested results here are archived comparison methods. The spherical finite-spread extension remains current. [Current directional method](directional-multiscale.md) · [Current nested geography](nested-footprints.md)
 
-The three global families retain their fitted observation models. Each uses the locations of positive training records to control how its thickness field continues into unsampled ground. Every exact reading, lower bound and upper bound keeps its original likelihood. Every retained measurement triangle keeps its field. Continuation therefore leaves the fitted posterior parameters valid and produces a different distribution of complete deposits. [Catalogue results and controlled challenges](../../comparisons/global-extent/README.md)
+The three global families retain their fitted observation models. Each uses the locations of positive training records to control how its thickness field continues into unsampled ground. Measured values and reported minima are fitted as points. Upper limits and two-sided ranges retain their respective probabilities through continuation. Every retained measurement triangle keeps its field. Continuation therefore leaves the fitted posterior parameters valid and produces a different distribution of complete deposits. [Catalogue results and controlled challenges](../../comparisons/global-extent/README.md)
 
 ## Sampling geometry
 

@@ -6,7 +6,7 @@ A distant ash bed establishes thickness at its location. It supplies limited inf
 
 ## Construction
 
-The source-centred, equal-area Earth chart gives each positive site a chord radius and compass bearing. An exact thickness, a lower bound or a positive interval supplies a potential source-to-site corridor. The median distance of the three closest distinct positive locations sets the proximal spatial resolution. With fewer than three, the median uses the available sites. A finite upper limit contributes its probability to the fit. Occurrence-only reports without a quantitative bound have no thickness likelihood.
+The source-centred, equal-area Earth chart gives each positive site a chord radius and compass bearing. A point thickness (including a reported minimum) or a positive interval supplies a potential source-to-site corridor. The median distance of the three closest distinct positive locations sets the proximal spatial resolution. With fewer than three, the median uses the available sites. A finite upper limit contributes its probability to the fit. Occurrence-only reports without a quantitative bound have no thickness likelihood.
 
 For a prediction point and a positive site at radius $R_i$, let $a$ and $b$ be the along-bearing and perpendicular coordinates in kilometres. Write $u=\min(R_i,\max(0,a))$ and let $r_0$ be the proximal resolution. The squared scaled distance from its corridor is
 

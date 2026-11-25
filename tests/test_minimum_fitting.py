@@ -65,3 +65,12 @@ def test_geometry_uses_the_same_points_as_independently_reported_measurements():
     from src.empirical_isopach.contour_support import candidate_levels
     np.testing.assert_array_equal(candidate_levels(fit), candidate_levels(equivalent))
     np.testing.assert_array_equal(SupportMesh(fit).triangles, SupportMesh(equivalent).triangles)
+
+
+def test_matched_synthetic_benchmark_uses_the_current_observation_rule():
+    from benchmarks.regional import synthetic_case
+    data, _, _, _, _ = synthetic_case("censored", 0)
+    assert data.reported_minimum.any() and data.censored.any()
+    assert not np.any(data.lower_censored)
+    np.testing.assert_array_equal(data.log_value[data.reported_minimum], 3.)
+    np.testing.assert_array_equal(data.log_value[data.censored], 1.)

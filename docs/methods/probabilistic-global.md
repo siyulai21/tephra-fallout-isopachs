@@ -84,7 +84,7 @@ At each accepted location, the exact log-thickness `y_i` has mixture likelihood
    + ε Normal(log T(s_i), 16σ² + known_sd_i²).
 ```
 
-For an upper limit use the corresponding mixture CDF; for a lower bound use its survival probability. Known measurement errors enter once, without multiplying them by the broad-error factor. Bounds are not exact thicknesses and absent samples are not zeros. Legacy pseudo rows are ignored, including their coordinates. No pseudo-observations, fitted contours, sampled integration points or predicted values are fed back into the likelihood.
+For a lower-only report, evaluate the mixture density at its stated minimum. Use the mixture CDF for an upper limit and the difference of the mixture CDFs for an interval. Known measurement errors enter once, without multiplying them by the broad-error factor. Legacy pseudo rows are ignored, including their coordinates. No pseudo-observations, fitted contours, sampled integration points or predicted values are fed back into the likelihood.
 
 The field is a latent central thickness under multiplicative observation/preservation scatter. It is **not** multiplied by `exp(σ²/2)` to inflate total volume: residual scatter belongs to the observation model. Systematic erosion, preferential sampling, coring bias, reworking, correlation between records and incorrect source assignments can still bias inference. These require evidence and potentially a different likelihood, not invented uncertainty corrections.
 
