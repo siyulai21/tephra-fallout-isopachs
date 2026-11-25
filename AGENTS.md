@@ -36,6 +36,8 @@ Preserve earlier result identities, raw evidence, relevant sensitivity studies, 
 
 ## Verify
 
+When improving an existing fit or proposing a new family, review the isopachs at proximal, intermediate and full-deposit scales. Tie concerns about shape to the field evidence and address artifacts in the model or rendering step that produced them. [Visual and geological review criteria](docs/ADDING_METHOD.md#visual-and-geological-review-of-isopachs)
+
 ```sh
 python -m pytest -q
 python scripts/check_repository_navigation.py
