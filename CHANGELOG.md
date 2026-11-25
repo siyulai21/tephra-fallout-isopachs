@@ -1,5 +1,9 @@
 # Release history
 
+## Pinatubo regional reconstruction on 235 localities
+
+The GP ensemble and cubic spline median maps integrate to 4.21 and 6.10 km³ over the same 614,065 km² observation hull. All four geographic holdouts retain the measured values and bounds. The spline's southwestern deletion records the overflow of its auxiliary expected volume alongside its finite median-map integral. [Maps, support and geographic prediction](eruptions/pinatubo-1991-layer-c/README.md)
+
 ## Pinatubo and Ilopango audit editions
 
 The case homes and catalogue now lead with the 235-locality Pinatubo Layer C nested fit and the three 168-locality all-phase Ilopango fits. The 208-site Layer C and 56-site Unit G comparisons retain their original matched inputs. A separate Unit G nested study uses 116 sites. [Current results](comparisons/principal-volumes.csv) · [Earlier evidence and studies](archive/2026-11-24-case-editions/README.md)

@@ -46,8 +46,10 @@ class SurveyRegion:
                 "interpretation": "Bulk fallout inside the surveyed footprint, including unsampled gaps; not total eruption volume."}
 
 
-def integrate_region(model, region, orders=(8, 12, 20, 32, 48, 64), tolerance=.001):
+def integrate_region(model, region, orders=(8, 12, 20, 32, 48, 64), tolerance=.001,
+                     *, allow_unrepresentable_mean=False):
     history, previous, consecutive = [], None, 0
+    median_refinement = False
     for order in orders:
         xy, weights = region.quadrature(order)
         # Bound prediction memory for triangulated supports with many components.
@@ -58,21 +60,32 @@ def integrate_region(model, region, orders=(8, 12, 20, 32, 48, 64), tolerance=.0
             medians.append(dist.quantile(.5))
         logs = np.array([logsumexp(np.log(weights)+np.concatenate(expected)),
                          logsumexp(np.log(weights)+np.concatenate(medians))])+np.log(1e-5)
-        if not np.isfinite(logs).all() or np.any(logs > 700):
-            raise RuntimeError("Regional volume is not numerically representable; inspect unconstrained surface variance.")
-        values = np.exp(logs)
+        if not np.isfinite(logs).all() or logs[1] > 700 or (logs[0] > 700 and not allow_unrepresentable_mean):
+            raise RuntimeError(f"Regional volume is not numerically representable at order {order} "
+                               f"(log expected km³ {logs[0]:.6g}, log median-map km³ {logs[1]:.6g}).")
+        if logs[0] > 700 and not median_refinement:
+            # A deletion can expose a high-variance gap while its median surface stays finite.
+            median_refinement, consecutive = True, 0
+            previous = None
+        values = np.exp(logs[1:] if median_refinement else logs)
+        expected = float(np.exp(logs[0])) if logs[0] <= 700 else None
         change = None if previous is None else float(np.max(abs(values-previous)/np.maximum(values, 1e-300)))
-        history.append({"order": order, "n_points": len(xy), "expected_km3": float(values[0]),
-                        "median_surface_km3": float(values[1]), "relative_change": change})
+        history.append({"order": order, "n_points": len(xy), "expected_km3": expected,
+                        "median_surface_km3": float(values[-1]), "relative_change": change})
+        if median_refinement:
+            history[-1]["log_expected_km3"] = float(logs[0])
         consecutive = consecutive+1 if change is not None and change < tolerance else 0
         if consecutive >= 2:
             break
         previous = values
-    return {"expected_km3": float(values[0]), "median_surface_km3": float(values[1]),
+    result = {"expected_km3": expected, "median_surface_km3": float(values[-1]),
             "converged": consecutive >= 2, "tolerance": tolerance, "refinement": history,
             "unit_conversion": "cm * km^2 * 1e-5 = km^3",
             "scope": "Integral on the explicitly supplied regional geometry; no global integral.",
             "median_surface_note": "Integral of pointwise median thickness; not the median of the volume distribution."}
+    if median_refinement:
+        result["expected_volume_warning"] = "The log expected volume exceeded 700. Refinement tests the median map. Each affected step records the log expected integral."
+    return result
 
 
 def regional_draws(model, region, reference, draws=2000, seed=1729):

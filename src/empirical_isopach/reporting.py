@@ -172,6 +172,11 @@ def compare_dataset(path, output, name=None, draws=2000, progress=print):
              "Four geographic outer folds evaluate the entire tuning procedure; this is development evidence, not independent external validation.",
              "Geographic-deletion volume ranges show refitting sensitivity and are not confidence intervals."]
     for method in active_methods():
+        affected = [str(f["fold"]) for f in validation["methods"][method]["selections"]
+                    if f["regional_deletion_volume"].get("expected_volume_warning")]
+        if affected:
+            notes.append(f"{labels[method]} geographic deletion folds {', '.join(affected)} have an unrepresentable "
+                         "expected volume. Their median-map integrals, observed-site predictions and log expected volumes are retained.")
         model, selection = fit_method(method, data, bounds, 4, validation["buffer_km"])
         volume = integrate_region(model, region)
         joint = regional_draws(model, region, volume["expected_km3"], draws=draws)

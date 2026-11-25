@@ -89,7 +89,7 @@ def nested_comparison(data, region, bounds=None, buffer_km=None, outer_folds=4, 
                                "training_row_ids": data.row_ids[train].tolist(),
                                "withheld_row_ids": data.row_ids[test].tolist(),
                                "model": model.describe(), "selection": selection,
-                               "regional_deletion_volume": integrate_region(model, region)})
+                               "regional_deletion_volume": integrate_region(model, region, allow_unrepresentable_mean=True)})
             if model_callback is not None:
                 model_callback(method, fold, model)
             if progress:
