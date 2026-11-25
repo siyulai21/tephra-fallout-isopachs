@@ -20,6 +20,15 @@ def audited_data(path, *, allow_intervals=True):
             raise ValueError("Fitting rows differ from the audited source and lower-limit policy.")
         evidence_hash = sha256(source.read_bytes()).hexdigest()
         meta.update(reported_source="data/" + record["reported_file"], reported_source_sha256=evidence_hash)
+    if not record and meta.get("fitting_policy"):
+        fitted = Path(path)
+        reported = fitted.parent / "reported" / fitted.name
+        if fitted.parent.parent.name == "fitting-inputs" and reported.is_file():
+            from .fitting import fitting_bytes
+            original = sha256(reported.read_bytes()).hexdigest()
+            if fitted.parent.name != original or fitting_bytes(reported) != fitted.read_bytes():
+                raise ValueError("Fitting table disagrees with its content-addressed source.")
+            meta.update(reported_source="reported/" + fitted.name, reported_source_sha256=original)
     if not record or not record.get("audit"):
         return data, meta
     audit_path = data_directory()/record["audit"]

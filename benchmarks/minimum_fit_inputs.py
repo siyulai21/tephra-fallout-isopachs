@@ -1,11 +1,12 @@
 """Verify every registered source-to-fit translation, optionally refreshing the declared fitting files."""
 import argparse
+import json
 
 import numpy as np
 
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import data_directory, datasets
-from src.empirical_isopach.core.fitting import fitting_bytes
+from src.empirical_isopach.core.fitting import POLICY, fitting_bytes
 
 
 def verify(record, write=False):
@@ -36,5 +37,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
+    assert json.loads((data_directory() / "datasets.json").read_text())["observation_fitting_policy"]["id"] == POLICY
     for item in datasets():
         print(item["slug"], verify(item, args.write), "reported minima fitted as measurements")

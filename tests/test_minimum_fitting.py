@@ -26,6 +26,7 @@ def test_minimum_has_point_likelihood_and_symbol_while_bounds_keep_their_events(
     assert target != src and model_input(target, tmp_path / "again") == target
     assert sha256(src.read_bytes()).digest() == before
     data, meta = audited_data(target)
+    assert meta["reported_source_sha256"] == before.hex()
     order = np.argsort(data.row_ids)
     points = data.subset(order)
     np.testing.assert_array_equal(points.censored, [False, False, True, True])

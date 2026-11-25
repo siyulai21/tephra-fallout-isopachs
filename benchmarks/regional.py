@@ -116,7 +116,8 @@ def summarize(output, published=False):
     output.mkdir(parents=True, exist_ok=True)
     rows = []
     if published:
-        accepted = {r["slug"]: r["path"] for r in datasets()}
+        records = {r["slug"]: r for r in datasets()}
+        accepted = {slug:r["path"] for slug,r in records.items()}
         from .principal_volumes import principal_home
         from .publication import published_methods
         sources = [(r["slug"], principal_home(r) / "report.json") for r in datasets()
@@ -151,12 +152,12 @@ def summarize(output, published=False):
         lines[2] += (" The table includes eruptions with both regional fits on their current input. "
                      "See the [eruption catalogue](../../eruptions/README.md) for coverage across families.")
     for row in table.itertuples():
-        link = f"../../eruptions/{row.slug}/results/README.md" if published else f"{row.slug}/README.md"
+        link = f"../../{principal_home(records[row.slug])}/README.md" if published else f"{row.slug}/README.md"
         precision = " †" if not row.volume_converged else ""
         lines.append(f"| [{row.dataset}]({link}) | {row.label} | {row.median_surface_km3:.2f}{precision} | "
                      f"{row.equal_region_log_score:.3f} | {row.coverage95_observations:.1%} |")
     lines += ["", "Lower negative log predictive scores indicate better predictions in withheld regions. "
-              "Coverage counts measured thicknesses within the predictive interval. A dagger marks a numerical "
+              "Coverage counts fitted point thicknesses, including source minima fitted as points, within the predictive interval. A dagger marks a numerical "
               "volume integration warning. [Regional volumes, thickness bands and held-out scores](comparison.csv)", "",
               "![Regional median-map volumes and geographic prediction scores](comparison.png)"]
     if published:

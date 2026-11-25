@@ -47,7 +47,7 @@ def current_control_summary(output, records):
              "| Eruption | Sites | Single-structure score | Fixed-direction score | Measured-fan score | Fixed median map (km³) |",
              "|---|---:|---:|---:|---:|---:|"]
     for r in rows:
-        link=f"../../../eruptions/{r['slug']}/results/directional/ensemble/README.md"
+        link=f"../../../{result_home(next(rec for rec in records if rec['slug'] == r['slug']))}/directional/ensemble/README.md"
         score="—" if r["measured"] is None else f"{r['measured']:.3f}"
         lines.append(f"| [{r['name']}]({link}) | {r['n']} | {r['single']:.3f} | {r['fixed']:.3f}{'' if r['passed'] else ' †'} | {score} | {r['median']:,.2f}{'' if r['median_passed'] else ' †'} |")
     lines += ["","A dagger marks a numerical warning on the fixed ensemble’s geographic fits or its median-map integral. Each case links the individual policies, holdouts and sampling diagnostics.","",
@@ -142,9 +142,10 @@ def summarize(cases, synthetic, output):
         "| Eruption | Accepted observations | Median-thickness map (km³) | Fixed-direction control (km³) | Conditional 95% interval (km³) |",
         "|---|---:|---:|---:|---:|"]
     for a in table.itertuples():
-        path = Path("eruptions")/a.slug/"results/directional/deposit.json"
+        current = result_home(next(r for r in datasets() if r["slug"] == a.slug))
+        path = current/"directional/deposit.json"
         mapped = json.loads(path.read_text())
-        rows.append(f"| [{a.eruption}](../../eruptions/{a.slug}/results/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {a.fixed_map_km3:,.1f} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
+        rows.append(f"| [{a.eruption}](../../{current}/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {a.fixed_map_km3:,.1f} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
     rows += ["", "At B-Tm the source review adds two lake limits and one peat limit to the directly measured thicknesses and bounds. "
         "The before-and-after study isolates how those interpretations move the western contours. Each eruption report above gives "
         "all eight compass bearings, supported contour fragments and numerical warnings. "

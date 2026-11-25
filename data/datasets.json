@@ -2,6 +2,15 @@
   "schema_version": 1,
   "thickness_unit": "cm",
   "coordinate_system": "WGS84 longitude, latitude in decimal degrees",
+  "observation_fitting_policy": {
+    "id": "lower-only-at-reported-minimum-v1",
+    "applies_to": "all accepted localities, at every distance and bearing",
+    "measurement": "point at Thickness",
+    "lower_limit": "point at Limit_cm",
+    "upper_limit": "upper-censored at Limit_cm",
+    "interval": "interval-censored between Lower_cm and Upper_cm",
+    "source_qualifier": "provenance only"
+  },
   "datasets": [
     {
       "name": "Mazama",

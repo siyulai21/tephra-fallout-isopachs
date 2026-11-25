@@ -18,7 +18,7 @@ The required columns are `Lon`, `Lat`, `Thickness`, `Vent Lon` and `Vent Lat`.
 - Upper limits and lower bounds require documented, positive `Limit_cm`. A lower bound describes minimum recovered thickness in an incomplete deposit, not an exact measurement.
 - Optional `LogSD`: known additional standard deviation of natural-log thickness. The fitted residual nugget is separate.
 
-For a one-sided bound, leave `Thickness` blank and put the positive limit in `Limit_cm`. For a two-sided interval, leave both of those fields blank and enter positive, ordered `Lower_cm` and `Upper_cm` on one row. All five families fit and score the probability between its endpoints. Preserve the source range, units and transfer assumptions in the ledger, including for partial or mixed packages. [Sites without measured thickness](../docs/methods/sites-without-measured-thickness.md)
+In the reported source table, for a one-sided bound leave `Thickness` blank and put the positive limit in `Limit_cm`. For a two-sided interval, leave both of those fields blank and enter positive, ordered `Lower_cm` and `Upper_cm` on one row. All five families fit and score the probability between a range’s two endpoints. A lower-only row enters the fit as a point at its reported limit at every distance. An upper-only row contributes the probability of a thickness at or below that limit. Preserve the source range, units and transfer assumptions in the ledger, including for partial or mixed packages. [Sites without measured thickness](../docs/methods/sites-without-measured-thickness.md)
 
 Illustrative schema only:
 

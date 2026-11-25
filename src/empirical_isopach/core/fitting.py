@@ -58,11 +58,19 @@ def model_input(path, output):
     # Content addressing keeps old and new fits apart when an external CSV is updated.
     directory = Path(output).parent / "fitting-inputs" / sha256(original).hexdigest()
     directory.mkdir(parents=True, exist_ok=True)
+    from tempfile import NamedTemporaryFile
+    reported = directory / "reported" / path.name
+    reported.parent.mkdir(exist_ok=True)
+    if reported.exists() and reported.read_bytes() != original:
+        raise ValueError(f"Stored reported source differs at {reported}")
+    if not reported.exists():
+        with NamedTemporaryFile(dir=reported.parent, delete=False) as tmp:
+            tmp.write(original)
+        Path(tmp.name).replace(reported)
     target = directory / path.name
     if target.exists() and target.read_bytes() != effective:
         raise ValueError(f"Existing fitting input has different contents: {target}")
     if not target.exists():
-        from tempfile import NamedTemporaryFile
         with NamedTemporaryFile(dir=directory, delete=False) as tmp:
             tmp.write(effective)
         Path(tmp.name).replace(target)
