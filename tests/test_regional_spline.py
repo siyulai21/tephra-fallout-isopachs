@@ -157,6 +157,20 @@ def test_hull_quadrature_area_linear_function_and_units():
     assert_allclose(volume["median_surface_km3"], 1, rtol=1e-12)
 
 
+def test_deletion_keeps_median_and_records_unrepresentable_mean():
+    class Uncertain:
+        def predict_log(self, xy):
+            return np.zeros(len(xy)), np.full(len(xy), 2000.)
+
+    region = SurveyRegion([[0, 0], [100, 0], [0, 100]])
+    with pytest.raises(RuntimeError, match="not numerically representable"):
+        integrate_region(Uncertain(), region)
+    result = integrate_region(Uncertain(), region, allow_unrepresentable_mean=True)
+    assert result["expected_km3"] is None and result["expected_volume_warning"]
+    assert result["converged"] and result["median_surface_km3"] == pytest.approx(.05)
+    assert result["refinement"][-1]["log_expected_km3"] == pytest.approx(1000 + np.log(.05))
+
+
 def test_automatic_buffer_uses_geometry_and_kinds_only():
     data = sample(n=50)
     a, rule_a = automatic_buffer(data)

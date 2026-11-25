@@ -9,7 +9,7 @@ Each case shows the maps and geographic validation for its current audited input
 | [Ilopango TBJ, total primary airfall](ilopango-tbj/README.md) | 60.6 | 242 | 62.8 | 168 sites, including 14 thickness ranges | All four geographic fits passed for each family. The Osa ash correlation and two spherical prior settings carry qualifications. |
 | [Mazama](mazama/README.md) | 277 | 418 | 291 | 300 localities with 46 measurements, 29 ranges, 129 lower and 96 upper limits. | Unsampled sectors and the treatment of thick distal sites affect whole-Earth estimates. |
 | [Minoan](minoan/README.md) | 29.2 | 26.9 | 38.5 | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |
-| [Pinatubo 1991, Layer C](pinatubo-1991-layer-c/README.md) | — | — | 7.37 | 235 sites, including 18 thickness ranges | Three of four geographic fits passed. Southern extrapolation contributes about a quarter of the median-map volume. |
+| [Pinatubo 1991, Layer C](pinatubo-1991-layer-c/README.md) | — | — | 7.37 | 235 sites, including 18 thickness ranges | The regional GP and spline use the full observation hull. Three of four nested geographic refits passed. |
 | [Sakurajima Satsuma](sakurajima-satsuma/README.md) | 7.21 | 6.94 | 12.7 | 50 measurements, 5 lower bounds, 2 upper bounds | All eight bearings are sampled. Both northwest sites are proximal. The single distal western core materially constrains the spherical upper tail. |
 | [Tambora](tambora/README.md) | 95.7 | 117 | 133 | 26 exact | Four of six full-data directional fits carry a numerical warning. |
 | [Younger Toba Tuff (YTT)](ytt/README.md) | 900 | 1,227 | 1,994 | 46 exact | The audited principal selection includes two qualified Maninjau beds and the U1445B core. |
