@@ -91,6 +91,7 @@ def plot_observations(ax, data, meta, levels, palette, bounds):
     ranks = np.searchsorted(np.log(levels),data.log_value,side="right")
     fill = np.array([UNDER,*palette])[ranks]
     interpreted = np.isin(data.row_ids,[row["row_id"] for row in meta.get("interpreted_upper_limits",[])])
+    data = data.reported_bounds()
     upper = data.censored & ~data.lower_censored
     interval = np.isfinite(getattr(data,"interval_log_upper",np.full(len(ranks),np.nan)))
     kinds = [(~data.censored & ~interval,"o","Measurement"), (data.lower_censored & ~interval,"^","Lower limit"),

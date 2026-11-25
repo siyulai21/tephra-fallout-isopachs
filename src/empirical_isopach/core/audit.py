@@ -12,12 +12,20 @@ def audited_data(path, *, allow_intervals=True):
     data, meta = read_observations(path,allow_intervals=allow_intervals)
     record = dataset_record(path)
     meta["source"] = "data/"+record["file"] if record else Path(path).name
+    evidence_hash = meta["input_sha256"]
+    if record and record.get("reported_file"):
+        from .fitting import fitting_bytes
+        source = data_directory() / record["reported_file"]
+        if fitting_bytes(source) != Path(path).read_bytes():
+            raise ValueError("Fitting rows differ from the audited source and lower-limit policy.")
+        evidence_hash = sha256(source.read_bytes()).hexdigest()
+        meta.update(reported_source="data/" + record["reported_file"], reported_source_sha256=evidence_hash)
     if not record or not record.get("audit"):
         return data, meta
     audit_path = data_directory()/record["audit"]
     audit = json.loads(audit_path.read_text())
     case = audit["cases"][record["audit_case"]]
-    if meta["input_sha256"] != case["sha256"]:
+    if evidence_hash != case["sha256"]:
         raise ValueError("Accepted input differs from its recorded audit.")
     meta["audit"] = {"file": record["audit"], "sha256": sha256(audit_path.read_bytes()).hexdigest(),
                      "case": record["audit_case"], "definition": case["definition"]}

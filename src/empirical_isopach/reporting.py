@@ -9,6 +9,7 @@ import shlex
 import numpy as np
 import pandas as pd
 
+from .core.fitting import model_input
 from .core.catalog import dataset_record
 from .core.audit import audited_data
 from .region import SurveyRegion, integrate_region, regional_draws
@@ -155,6 +156,7 @@ def write_readme(output, name, report):
 
 
 def compare_dataset(path, output, name=None, draws=2000, progress=print):
+    path = model_input(path, output)
     output = Path(output)
     if output.exists() and any(output.iterdir()):
         raise ValueError("Output directory is not empty; use a fresh destination.")

@@ -6,7 +6,7 @@
     {
       "name": "Mazama",
       "slug": "mazama",
-      "file": "eruptions/Mazama_primary_ranges.csv",
+      "file": "eruptions/Mazama_primary_ranges_minimum_fit.csv",
       "audit": "audits/Mazama/principal-ranges/provenance.json",
       "archive_evidence": "audits/Mazama/principal-ranges/archive-sites.json",
       "audit_case": "principal",
@@ -42,9 +42,19 @@
           "audit_case": "principal",
           "revision": "6ba3b2333415e2ce5ad2fa32fac329a165aab46e",
           "sha256": "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29"
+        },
+        {
+          "file": "eruptions/Mazama_primary_ranges.csv",
+          "audit": "audits/Mazama/principal-ranges/provenance.json",
+          "archive_evidence": "audits/Mazama/principal-ranges/archive-sites.json",
+          "audit_case": "principal",
+          "release_receipt": "release.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a"
         }
       ],
-      "release_receipt": "release.json"
+      "release_receipt": "release.json",
+      "reported_file": "eruptions/Mazama_primary_ranges.csv"
     },
     {
       "name": "Tambora",
@@ -55,15 +65,26 @@
       "name": "Aso-4",
       "slug": "aso-4",
       "global_review_status": "questioned",
-      "file": "eruptions/Aso-4_reviewed.csv",
+      "file": "eruptions/Aso-4_reviewed_minimum_fit.csv",
       "audit": "audits/Aso-4/provenance.json",
-      "audit_case": "principal"
+      "audit_case": "principal",
+      "previous_inputs": [
+        {
+          "global_review_status": "questioned",
+          "file": "eruptions/Aso-4_reviewed.csv",
+          "audit": "audits/Aso-4/provenance.json",
+          "audit_case": "principal",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9"
+        }
+      ],
+      "reported_file": "eruptions/Aso-4_reviewed.csv"
     },
     {
       "name": "B-Tm",
       "slug": "b-tm",
       "global_geometry": "source-fans",
-      "file": "eruptions/B-Tm_cryptotephra.csv",
+      "file": "eruptions/B-Tm_cryptotephra_minimum_fit.csv",
       "audit": "audits/B-Tm/cryptotephra-principal.json",
       "audit_case": "principal",
       "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
@@ -74,8 +95,19 @@
           "audit": "audits/B-Tm/provenance.json",
           "audit_case": "principal",
           "archive_evidence": "audits/B-Tm/archive-observations.json"
+        },
+        {
+          "global_geometry": "source-fans",
+          "file": "eruptions/B-Tm_cryptotephra.csv",
+          "audit": "audits/B-Tm/cryptotephra-principal.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+          "release_receipt": "cryptotephra/release.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0"
         }
-      ]
+      ],
+      "reported_file": "eruptions/B-Tm_cryptotephra.csv"
     },
     {
       "name": "YTT",
@@ -87,14 +119,24 @@
     {
       "name": "Minoan",
       "slug": "minoan",
-      "file": "eruptions/Minoan_tephra.csv",
+      "file": "eruptions/Minoan_tephra_minimum_fit.csv",
       "audit": "audits/Minoan/provenance.json",
-      "audit_case": "combined"
+      "audit_case": "combined",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Minoan_tephra.csv",
+          "audit": "audits/Minoan/provenance.json",
+          "audit_case": "combined",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1"
+        }
+      ],
+      "reported_file": "eruptions/Minoan_tephra.csv"
     },
     {
       "name": "Ilopango TBJ (total primary airfall)",
       "slug": "ilopango-tbj",
-      "file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+      "file": "eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv",
       "audit": "audits/Ilopango-TBJ/field-logs/provenance.json",
       "audit_case": "principal",
       "previous_inputs": [
@@ -112,6 +154,20 @@
           "audit_case": "principal",
           "archive_evidence": "audits/Ilopango-TBJ/reaudit/archive-probes.json",
           "principal_nested_result": "archive/2026-11-24-case-editions/ilopango-unit-g-116"
+        },
+        {
+          "file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+          "audit": "audits/Ilopango-TBJ/field-logs/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
+          "principal_global_results": "eruptions/ilopango-tbj/results",
+          "published_methods": [
+            "directional",
+            "spherical-mixture",
+            "nested-isopachs"
+          ],
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867"
         }
       ],
       "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
@@ -120,20 +176,32 @@
         "directional",
         "spherical-mixture",
         "nested-isopachs"
-      ]
+      ],
+      "reported_file": "eruptions/Ilopango_TBJ_total_airfall.csv"
     },
     {
       "name": "Sakurajima Satsuma (P14)",
       "slug": "sakurajima-satsuma",
-      "file": "eruptions/Sakurajima_Satsuma.csv",
+      "file": "eruptions/Sakurajima_Satsuma_minimum_fit.csv",
       "audit": "audits/Sakurajima-Satsuma/provenance.json",
       "audit_case": "principal",
-      "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json"
+      "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Sakurajima_Satsuma.csv",
+          "audit": "audits/Sakurajima-Satsuma/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1"
+        }
+      ],
+      "reported_file": "eruptions/Sakurajima_Satsuma.csv"
     },
     {
       "name": "Pinatubo 1991 (Layer C)",
       "slug": "pinatubo-1991-layer-c",
-      "file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+      "file": "eruptions/Pinatubo_1991_layer_C_reviewed_minimum_fit.csv",
       "audit": "audits/Pinatubo-1991/reaudit/provenance.json",
       "audit_case": "principal",
       "archive_evidence": "audits/Pinatubo-1991/reaudit/archive-probes.json",
@@ -144,6 +212,23 @@
           "archive_evidence": "audits/Pinatubo-1991/archive-probes.json",
           "audit_case": "principal",
           "matched_results": "archive/2026-11-24-case-editions/pinatubo-layer-c-208"
+        },
+        {
+          "file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+          "audit": "audits/Pinatubo-1991/reaudit/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Pinatubo-1991/reaudit/archive-probes.json",
+          "principal_nested_result": "eruptions/pinatubo-1991-layer-c/results/nested-isopachs",
+          "principal_global_results": "eruptions/pinatubo-1991-layer-c/results",
+          "published_methods": [
+            "stacked",
+            "spline",
+            "directional",
+            "spherical-mixture",
+            "nested-isopachs"
+          ],
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "2f895e0a143a0097a651cd25458059eff7c1b4e939ac70193b2b64a53ef4e8e8"
         }
       ],
       "principal_nested_result": "eruptions/pinatubo-1991-layer-c/results/nested-isopachs",
@@ -154,7 +239,8 @@
         "directional",
         "spherical-mixture",
         "nested-isopachs"
-      ]
+      ],
+      "reported_file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv"
     }
   ]
 }

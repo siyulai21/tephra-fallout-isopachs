@@ -10,6 +10,7 @@ import shutil
 import numpy as np
 import pandas as pd
 
+from .core.fitting import model_input
 from .core.catalog import dataset_record
 from .core.validation import interval_metrics
 from .models.mass_mixture.study import fit_study
@@ -100,6 +101,7 @@ def figures(output, name, data, meta, samples, report):
 
 
 def global_dataset(path, output, name=None, settings=Sampling(), resume=False, progress=print, geometry=None, archives=None):
+    path = model_input(path, output)
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh output directory, or --resume for verified posterior caches.")

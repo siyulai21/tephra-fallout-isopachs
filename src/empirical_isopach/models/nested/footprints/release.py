@@ -7,6 +7,7 @@ import shutil
 import numpy as np
 import pandas as pd
 
+from ....core.fitting import model_input
 from ....core.audit import audited_data
 from ....core.catalog import dataset_record
 from ....visualization.deposit import render_deposit
@@ -135,6 +136,7 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
 
 
 def run(path, output, name=None, *, resume=False, upstream=None, archives=None):
+    path = model_input(path, output)
     folder = Path(output)
     if folder.exists() and any(folder.iterdir()) and not resume:
         raise ValueError("Use a fresh nested result folder or resume a verified run.")
