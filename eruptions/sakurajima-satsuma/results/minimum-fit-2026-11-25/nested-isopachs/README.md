@@ -4,7 +4,7 @@ The principal bulk volume is **9.57 km³**, the whole-Earth integral of the medi
 
 ![Sakurajima Satsuma (P14), Bayesian nested footprints. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 4 cm footprint includes 55 of 57 modeled locations. The thickest displayed line is 32 cm and encloses 7 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Circles show point thicknesses, including reported lower limits fitted at their stated values. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 4 cm footprint includes 55 of 57 modeled locations. The thickest displayed line is 32 cm and encloses 7 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
 The fitted model predicts the four buffered geographic groups with an equal-group negative log score of 1.092. 3 of four independent deletion fits passed their numerical checks.
 

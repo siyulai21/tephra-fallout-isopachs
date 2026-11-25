@@ -68,8 +68,8 @@ def summarize(output):
              "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
              "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
              "[Values by case and method](all-distances.csv)", "",
-             "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
-             "|---|---:|---:|---:|---:|---:|"]
+             "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
+             "|---|---:|---:|---:|---:|---:|---:|"]
     for slug in cases:
         home = result_home(records[slug])
         stats = pd.read_csv(home / "minimum-fit-comparison.csv").set_index("method")
@@ -82,8 +82,8 @@ def summarize(output):
             pair = stats.loc[method, ["old_vent_cm", "new_vent_cm"]]
             return " → ".join("—" if pd.isna(x) else f"{x:,.1f}" for x in pair)
         lines.append(f"| [{name}](../../eruptions/{slug}/README.md) | {n} | {near} | {n-near} | "
-                     f"{vent('directional')} | {vent('nested-isopachs')} |")
-    lines += ["", "Vent values in the table are modeled median thicknesses read from the checked grids. "
+                     f"{vent('directional')} | {vent('spherical-mixture')} | {vent('nested-isopachs')} |")
+    lines += ["", "Vent values in the table are modeled median thicknesses at the vent coordinates. A model can place its thickest deposit elsewhere. "
               "Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore "
               "underestimate total local fallout. Each case links its original sources and separate validation coverage "
               "for directly measured thicknesses and minima fitted as points.", "",

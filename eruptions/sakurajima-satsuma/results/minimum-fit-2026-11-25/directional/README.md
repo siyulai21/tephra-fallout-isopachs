@@ -4,7 +4,7 @@ The principal bulk volume is **6.97 km³**, the whole-Earth integral of the medi
 
 ![Sakurajima Satsuma (P14), Multiscale directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 2 cm footprint includes 56 of 57 modeled locations. The thickest displayed line is 64 cm and encloses 1 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Circles show point thicknesses, including reported lower limits fitted at their stated values. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 2 cm footprint includes 56 of 57 modeled locations. The thickest displayed line is 64 cm and encloses 1 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
 The equal-region negative log score was 1.052. The 95% predictive intervals covered 100.0% of the withheld measurements. 4 of four buffered fits passed the numerical checks.
 
