@@ -87,4 +87,3 @@ if __name__ == "__main__":
     p.add_argument("case")
     slug = p.parse_args().case
     publish(next(r for r in datasets() if r["slug"] == slug and r.get("reported_file")))
-
