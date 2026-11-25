@@ -78,7 +78,10 @@ def field_validation(folder, input_path, slug, *, verify=True):
                 if not receipt["exact_parent_identity"]:
                     np.testing.assert_allclose(q[[0, 2]], receipt["conditional_interval95_km3"], rtol=1e-5)
             rebuilt, metrics = predictive_summary(held, receipt["folds"], cal)
-            np.testing.assert_allclose(held.principal_log_score, rebuilt.principal_log_score)
+            # A probability indistinguishable from one has a log score near zero.
+            columns = ["principal_log_score", "principal_cdf"]
+            np.testing.assert_allclose(held[columns], rebuilt[columns],
+                                       rtol=1e-11, atol=8 * np.finfo(float).eps)
             assert (
                 abs(
                     metrics["geographic"]["negative_log_score"]
