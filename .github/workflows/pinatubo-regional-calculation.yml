@@ -1,0 +1,36 @@
+name: Audited Pinatubo regional fits
+on:
+  push:
+    branches: ['compute/pinatubo235-regional-20261124']
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  MPLBACKEND: Agg
+  PYTHONUNBUFFERED: '1'
+jobs:
+  regional:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.4'
+      - name: Install the fitting environment
+        run: python -m pip install -e '.[test]' -c requirements-tested.txt
+      - name: Fit the GP and spline on the registered input and buffered folds
+        run: |
+          echo '2f895e0a143a0097a651cd25458059eff7c1b4e939ac70193b2b64a53ef4e8e8  data/eruptions/Pinatubo_1991_layer_C_reviewed.csv' | sha256sum -c -
+          tephra-isopachs compare pinatubo-1991-layer-c --regional-only --output results/pinatubo-hosted/regional
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pinatubo235-regional
+          path: results/pinatubo-hosted/regional
+          if-no-files-found: warn
+          retention-days: 14
