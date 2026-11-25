@@ -1,0 +1,845 @@
+{
+  "protocol": "nested-observed-range-v3",
+  "name": "Ilopango TBJ (total primary airfall)",
+  "input": {
+    "source": "data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv",
+    "input_sha256": "5a7c65dd2db00796bbb1107aad165f077452c067e9a6ef3863bd5667aecd2665",
+    "vent_lonlat": [
+      -89.053,
+      13.672
+    ],
+    "projection": "+proj=laea +lat_0=13.672 +lon_0=-89.053 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 149,
+    "n_upper_limits": 5,
+    "n_lower_limits": 0,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [
+      "EvidenceID",
+      "Site"
+    ],
+    "fitting_policy": "lower-only-at-reported-minimum-v1",
+    "n_reported_measurements": 65,
+    "n_minima_fitted_as_measurements": 84,
+    "minimum_as_measurement_rows": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      32,
+      34,
+      37,
+      39,
+      43,
+      44,
+      48,
+      50,
+      52,
+      55,
+      58,
+      59,
+      60,
+      64,
+      66,
+      68,
+      88,
+      89,
+      91,
+      126,
+      127,
+      128,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      166,
+      167,
+      168,
+      169
+    ],
+    "n_intervals": 14,
+    "reported_source": "data/eruptions/Ilopango_TBJ_total_airfall.csv",
+    "reported_source_sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867",
+    "audit": {
+      "file": "audits/Ilopango-TBJ/field-logs/provenance.json",
+      "sha256": "d65023b502de9947b4c49cdd52b55d5bf2cff49d51846f1329654f62d5f17952",
+      "case": "principal",
+      "definition": "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout."
+    },
+    "interpreted_upper_limits": [
+      {
+        "id": "SM1-P26",
+        "name": "39",
+        "row_id": 9,
+        "limit_cm": 350.0,
+        "latitude": 13.73191667,
+        "longitude": -89.27618333
+      },
+      {
+        "id": "SM1-P66",
+        "name": "286",
+        "row_id": 35,
+        "limit_cm": 700.0,
+        "latitude": 13.71156667,
+        "longitude": -89.35055
+      },
+      {
+        "id": "I21-SAN",
+        "name": "San Andr\u00e9s, Campana Trench 3",
+        "row_id": 86,
+        "limit_cm": 52.0,
+        "latitude": 13.803,
+        "longitude": -89.388
+      },
+      {
+        "id": "R10-108",
+        "name": "S03/108, pit south of El Bable",
+        "row_id": 87,
+        "limit_cm": 150.0,
+        "latitude": 13.269444444444446,
+        "longitude": -87.90777777777778
+      },
+      {
+        "id": "I18-TRAP",
+        "name": "El Trapiche, Finca San Antonio trenches",
+        "row_id": 124,
+        "limit_cm": 25.0,
+        "latitude": 13.996,
+        "longitude": -89.67
+      }
+    ]
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "7d344ca3215bbf4ecd362debe2c437f455caeff81d591ab620f61345716451bc",
+  "draws": 3072,
+  "population_check_passed": true,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 8.735339057386327e-05,
+      "q95_relative_error": 0.0013340444353653774,
+      "maximum_relative_error": 0.002415858992131481,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.027825669256325347,
+        0.05547750341941718,
+        0.07193129953586092
+      ],
+      [
+        0.0022569723744603914,
+        0.006259288010044569,
+        0.014129747214125401
+      ],
+      [
+        0.010028302355598052,
+        0.05758791492605045,
+        0.4690396413337081
+      ],
+      [
+        0.4962246939694728,
+        0.8807058534838497,
+        0.918789081485867
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.06469239273827813,
+        0.09504980607914393,
+        0.12648781252272498
+      ],
+      [
+        0.023718904061589375,
+        0.026541812778468156,
+        0.04059409884153112
+      ],
+      [
+        0.0386080666148057,
+        0.0648823523563751,
+        0.10360607496040163
+      ],
+      [
+        0.14990586665975675,
+        0.19575949327435643,
+        0.23014708734549855
+      ],
+      [
+        0.19532391576176722,
+        0.23013242442109677,
+        0.24109242302321282
+      ],
+      [
+        0.0826501502284111,
+        0.1051730547621832,
+        0.14998820077628905
+      ],
+      [
+        0.08876264728613564,
+        0.11633534447347366,
+        0.14523500780955337
+      ],
+      [
+        0.1528693216731575,
+        0.16649986584004062,
+        0.16741073667962192
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.027745032262517042,
+      0.0022372285036111605,
+      0.460276007794627,
+      0.5094740491334913
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 149,
+    "covered": 137,
+    "fraction": 0.9194630872483222
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "effective_draws": 3071.9999999999854,
+      "relative_ess": 0.9999999999999952,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.458899375447576,
+        92.53357298089995
+      ]
+    },
+    "weak_profile_transfer": {
+      "effective_draws": 2430.8782722156266,
+      "relative_ess": 0.7913015209035242,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.96624892515049,
+        95.98945880340148
+      ]
+    },
+    "broader_peak_prior": {
+      "effective_draws": 3061.2746667962692,
+      "relative_ess": 0.9965086805977439,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.441228239241507,
+        91.91396912456091
+      ]
+    },
+    "power_tail_prior_80pct": {
+      "effective_draws": 2801.7987673785256,
+      "relative_ess": 0.9120438695893638,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.346122780342142,
+        93.40161642603948
+      ]
+    },
+    "exponential_tail_prior_80pct": {
+      "effective_draws": 1980.399536768957,
+      "relative_ess": 0.6446613075419781,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.62193987753378,
+        91.39038487207615
+      ]
+    },
+    "detached_prior_50pct": {
+      "effective_draws": 3071.9999999999854,
+      "relative_ess": 0.9999999999999952,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.4442049887635,
+        92.9482318672958
+      ]
+    },
+    "more_distal_ash_prior": {
+      "effective_draws": 3062.5060873497077,
+      "relative_ess": 0.996909533642483,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.56331336407163,
+        93.2645949337533
+      ]
+    },
+    "less_distal_ash_prior": {
+      "effective_draws": 3066.3338011551723,
+      "relative_ess": 0.9981555342301993,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.49897900391419,
+        92.9482318672958
+      ]
+    },
+    "distal_prior_without_Santa Maria 1902": {
+      "effective_draws": 2783.487782620035,
+      "relative_ess": 0.906083262571626,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        29.726229795567857,
+        90.17258978496817
+      ]
+    },
+    "distal_prior_without_Quizapu 1932": {
+      "effective_draws": 3045.6442271344367,
+      "relative_ess": 0.9914206468536578,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.566922349829817,
+        93.2645949337533
+      ]
+    },
+    "distal_prior_without_Novarupta 1912": {
+      "effective_draws": 3042.3791655980604,
+      "relative_ess": 0.9903578013014519,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.62193987753378,
+        93.40161642603948
+      ]
+    },
+    "distal_prior_without_Hudson 1991": {
+      "effective_draws": 3029.808625340655,
+      "relative_ess": 0.9862658285614111,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        30.65756370104157,
+        93.40161642603948
+      ]
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      1723298.3545942595,
+      4469453.560642822,
+      63521366.47947572
+    ],
+    "0.1": [
+      1337558.3166560524,
+      2091658.9087833732,
+      11011003.0469885
+    ],
+    "1.0": [
+      518971.027192462,
+      865726.6688102195,
+      1522584.1460839158
+    ],
+    "10.0": [
+      46234.178312340315,
+      71027.36544796012,
+      118499.46104926408
+    ],
+    "100.0": [
+      448.02776130517515,
+      927.3453175422974,
+      1408.9394196659746
+    ],
+    "1000.0": [
+      0.0,
+      0.0,
+      6.3427104172633975
+    ]
+  },
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.841796875,
+  "geographic_score": 1.567960930213966,
+  "geographic_folds_passed": 4,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 74,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 30.000000000000004,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        12.41414511955464,
+        15.726872940741371,
+        20.299333055109457
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.13374677590332204
+    },
+    {
+      "row_id": 81,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 15.999999999999998,
+      "upper_cm": 17.999999999999996,
+      "latent_cm": [
+        17.393264750825395,
+        22.867403203547376,
+        28.486998382037267
+      ],
+      "latent_satisfies": 0.033203125,
+      "predictive_probability_of_event": 0.04858238073042268
+    },
+    {
+      "row_id": 165,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 44.99999999999999,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        17.44507618759857,
+        22.99477216204235,
+        28.57984711529011
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.03274592704334421
+    },
+    {
+      "row_id": 85,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 15.0,
+      "upper_cm": 24.999999999999996,
+      "latent_cm": [
+        17.41395022182338,
+        22.89757674354266,
+        28.539768830458403
+      ],
+      "latent_satisfies": 0.7906901041666666,
+      "predictive_probability_of_event": 0.2161041486639781
+    },
+    {
+      "row_id": 124,
+      "name": "El Trapiche, Finca San Antonio trenches",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 24.999999999999996,
+      "latent_cm": [
+        17.39586667053766,
+        22.843197308599507,
+        28.513367542712988
+      ],
+      "latent_satisfies": 0.8011067708333334,
+      "predictive_probability_of_event": 0.5418662397710582
+    },
+    {
+      "row_id": 129,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 24.999999999999996,
+      "upper_cm": 59.999999999999986,
+      "latent_cm": [
+        17.825218888524923,
+        23.556679862204287,
+        29.43629445487758
+      ],
+      "latent_satisfies": 0.3277994791666667,
+      "predictive_probability_of_event": 0.31655518474879735
+    },
+    {
+      "row_id": 86,
+      "name": "San Andr\u00e9s, Campana Trench 3",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 52.00000000000001,
+      "latent_cm": [
+        27.780369709814963,
+        36.87377373839299,
+        48.36609528070938
+      ],
+      "latent_satisfies": 0.9947916666666666,
+      "predictive_probability_of_event": 0.6457662736435796
+    },
+    {
+      "row_id": 92,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 30.000000000000004,
+      "upper_cm": 40.0,
+      "latent_cm": [
+        29.650548236512456,
+        40.158939701698735,
+        54.15980399874891
+      ],
+      "latent_satisfies": 0.4654947916666667,
+      "predictive_probability_of_event": 0.12241814134068925
+    },
+    {
+      "row_id": 35,
+      "name": "286",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 699.9999999999998,
+      "latent_cm": [
+        30.85548802505222,
+        41.1404410867353,
+        54.51940698833302
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9920436780182736
+    },
+    {
+      "row_id": 40,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 38.99999999999999,
+      "upper_cm": 59.000000000000014,
+      "latent_cm": [
+        30.194173701700965,
+        39.22393455139358,
+        51.72286642207752
+      ],
+      "latent_satisfies": 0.5149739583333334,
+      "predictive_probability_of_event": 0.17408949325624692
+    },
+    {
+      "row_id": 4,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": 180.0,
+      "latent_cm": [
+        34.93240452873895,
+        50.46001864370115,
+        68.23725612557163
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8966172842551333
+    },
+    {
+      "row_id": 9,
+      "name": "39",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 349.9999999999999,
+      "latent_cm": [
+        41.101212157015354,
+        66.53608858407314,
+        87.51115134700275
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9585490541343934
+    },
+    {
+      "row_id": 10,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 79.99999999999997,
+      "upper_cm": 119.99999999999997,
+      "latent_cm": [
+        41.38731862999406,
+        67.09491746661855,
+        88.28963470693655
+      ],
+      "latent_satisfies": 0.13346354166666666,
+      "predictive_probability_of_event": 0.1557085235903969
+    },
+    {
+      "row_id": 125,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 119.99999999999997,
+      "upper_cm": 190.0,
+      "latent_cm": [
+        49.79148612179027,
+        88.11431743616666,
+        137.94787240125797
+      ],
+      "latent_satisfies": 0.10123697916666667,
+      "predictive_probability_of_event": 0.1611636878410441
+    },
+    {
+      "row_id": 38,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 100.00000000000004,
+      "upper_cm": 279.9999999999999,
+      "latent_cm": [
+        19.252252281520533,
+        28.037314284235855,
+        39.59846057415794
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.07515670765869169
+    },
+    {
+      "row_id": 31,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 36.0,
+      "upper_cm": 51.0,
+      "latent_cm": [
+        58.774750459039055,
+        103.88432123777878,
+        145.79425480242358
+      ],
+      "latent_satisfies": 0.0035807291666666665,
+      "predictive_probability_of_event": 0.09402500684870034
+    },
+    {
+      "row_id": 33,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        22.048485300563677,
+        30.603368669859595,
+        41.5425491468128
+      ],
+      "latent_satisfies": 0.9915364583333334,
+      "predictive_probability_of_event": 0.6703736243128818
+    },
+    {
+      "row_id": 70,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 0.2,
+      "upper_cm": 0.3,
+      "latent_cm": [
+        0.7059267559112151,
+        2.1164604178966835,
+        4.698066236756307
+      ],
+      "latent_satisfies": 0.0006510416666666666,
+      "predictive_probability_of_event": 0.019339694165858765
+    },
+    {
+      "row_id": 87,
+      "name": "S03/108, pit south of El Bable",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 149.99999999999997,
+      "latent_cm": [
+        7.364280821043431,
+        10.624865056516516,
+        15.496113740102729
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9902795722523988
+    }
+  ],
+  "archive_predictions": {
+    "inventory_sha256": "beeffe901f00474a91b42f47c2e08b15da8cb1f980cd7a91a12dd2fd3e07d7d4",
+    "sites": {
+      "S20-TUNU2013": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          5.6348197163814933e-70,
+          3.03682719361189e-06,
+          0.0013913636599956266
+        ],
+        "coincident_with_training": false
+      },
+      "S18-499": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.74667982232329,
+          3.0563477421372145,
+          5.536897623907688
+        ],
+        "coincident_with_training": false
+      },
+      "B73-V15-26": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          6.453681586001491,
+          9.678923186783557,
+          13.5518070350597
+        ],
+        "coincident_with_training": false
+      },
+      "B73-RC12-31": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.6571066473802649,
+          1.2874444502706104,
+          2.445109907161959
+        ],
+        "coincident_with_training": false
+      },
+      "SM75-CH2": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          20.644151229479657,
+          29.898543831055374,
+          40.29006910734379
+        ],
+        "coincident_with_training": false
+      }
+    },
+    "scenarios": {},
+    "usage": "Predictions only. Coincident bounds already contribute once to the accepted quantitative likelihood."
+  },
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "distal_budget": {
+    "donor_reference_tail_to_core_odds": {
+      "Santa Maria 1902": 0.12228980213463429,
+      "Quizapu 1932": 2.7009896692936874,
+      "Novarupta 1912": 2.420692312263672,
+      "Hudson 1991": 1.187524116429101
+    },
+    "predictive_df": 3,
+    "centre_log_odds": -0.012954807438836993,
+    "scale_log_odds": 1.609013260484478,
+    "reference_log_odds": [
+      2.1151115904257423,
+      2.984972966644825,
+      4.447440689941493
+    ],
+    "physical_distal_volume_fraction": [
+      0.882931831352503,
+      0.9345526721206854,
+      0.9715520886886578
+    ]
+  },
+  "terminal_continuation": {
+    "volume_fraction_beyond_last_sampled_rank": [
+      0.008891509422223299,
+      0.06595582315286375,
+      0.5228283574808287
+    ],
+    "sampling_rule": "Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit.",
+    "unrestricted_volume_interval95_km3": [
+      33.905904557134825,
+      126.90406709557264
+    ],
+    "transfer_multiplier_intervals95_km3": {
+      "0.25": [
+        29.393857570677973,
+        64.97982214215465
+      ],
+      "1.0": [
+        30.458899375447576,
+        92.53357298089995
+      ],
+      "4.0": [
+        32.9864240081395,
+        204.3546607235423
+      ]
+    }
+  },
+  "median_map_volume_km3": 42.293413615803914,
+  "estimate_source": "median-field.json#median_map_volume_km3",
+  "conditional_volume_interval95_km3": [
+    30.458899375447576,
+    92.53357298089995
+  ],
+  "slab_volume_intervals95_km3": [
+    [
+      0.20136434312762772,
+      15.263126793122455
+    ],
+    [
+      1.3165960203500429,
+      20.249245374567902
+    ],
+    [
+      7.469521898319964,
+      26.12515795726381
+    ],
+    [
+      13.178569626514502,
+      34.517414695786435
+    ],
+    [
+      4.510423269346528,
+      9.774879010519287
+    ],
+    [
+      0.09973668878171116,
+      1.704953553411287
+    ],
+    [
+      -0.0,
+      0.005297303673154838
+    ]
+  ],
+  "volume_intervals95_by_tail_km3": {
+    "power": [
+      30.33603779805606,
+      93.41017638135392
+    ],
+    "exponential": [
+      31.13451413423916,
+      88.99111513028137
+    ]
+  }
+}

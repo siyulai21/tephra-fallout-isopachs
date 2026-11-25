@@ -1,0 +1,4835 @@
+{
+  "protocol": "nested-observed-range-v3",
+  "name": "Mazama",
+  "input": {
+    "source": "data/eruptions/Mazama_primary_ranges_minimum_fit.csv",
+    "input_sha256": "1cd60d207a3ddbb7393775683664a92be06fada73479dabaa55351e0ec3f9bb1",
+    "vent_lonlat": [
+      -122.1,
+      42.95
+    ],
+    "projection": "+proj=laea +lat_0=42.95 +lon_0=-122.1 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 175,
+    "n_upper_limits": 96,
+    "n_lower_limits": 0,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [
+      "Evidence",
+      "EvidenceID",
+      "Qualification",
+      "Reference",
+      "ReportedLower_cm",
+      "ReportedUpper_cm",
+      "Site"
+    ],
+    "fitting_policy": "lower-only-at-reported-minimum-v1",
+    "n_reported_measurements": 46,
+    "n_minima_fitted_as_measurements": 129,
+    "minimum_as_measurement_rows": [
+      5,
+      12,
+      22,
+      23,
+      30,
+      77,
+      78,
+      79,
+      80,
+      91,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      229,
+      230,
+      231,
+      244,
+      257
+    ],
+    "n_intervals": 29,
+    "reported_source": "data/eruptions/Mazama_primary_ranges.csv",
+    "reported_source_sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a",
+    "audit": {
+      "file": "audits/Mazama/principal-ranges/provenance.json",
+      "sha256": "e416555eb6d14f2b2753f937e95ae98cf0796154497b6c341f67ba8465e7ef97",
+      "case": "principal",
+      "definition": "Climactic Mazama bulk airborne fallout, including co-ignimbrite ash. Both endpoints of an eligible complete-bed range enter as one interval event. Primary-coded Buckland observations with a local quantity enter by default, subject to documented site exceptions."
+    },
+    "interpreted_upper_limits": [
+      {
+        "id": "B2020-004",
+        "name": "Simon Young Site 24",
+        "row_id": 2,
+        "limit_cm": 5.0,
+        "latitude": 39.97425095,
+        "longitude": -118.2408447
+      },
+      {
+        "id": "B2020-023",
+        "name": "Fish Lake",
+        "row_id": 6,
+        "limit_cm": 5,
+        "latitude": 42.737033,
+        "longitude": -118.647315
+      },
+      {
+        "id": "B2020-042",
+        "name": "Jenny Lake, Wyoming",
+        "row_id": 10,
+        "limit_cm": 54.5,
+        "latitude": 43.75054,
+        "longitude": -110.73428
+      },
+      {
+        "id": "B2020-045",
+        "name": "Pettit Lake",
+        "row_id": 11,
+        "limit_cm": 6.0,
+        "latitude": 43.97954,
+        "longitude": -114.88334
+      },
+      {
+        "id": "B2020-047",
+        "name": "Tumalo Lake",
+        "row_id": 13,
+        "limit_cm": 50,
+        "latitude": 44.021667,
+        "longitude": -121.543611
+      },
+      {
+        "id": "B2020-048",
+        "name": "Lower Decker Lake",
+        "row_id": 14,
+        "limit_cm": 300.0,
+        "latitude": 44.069304,
+        "longitude": -114.889116
+      },
+      {
+        "id": "B2020-054",
+        "name": "Round Lake",
+        "row_id": 18,
+        "limit_cm": 14,
+        "latitude": 44.442778,
+        "longitude": -121.786667
+      },
+      {
+        "id": "B2020-079",
+        "name": "Carp Lake",
+        "row_id": 26,
+        "limit_cm": 4.0,
+        "latitude": 45.918393,
+        "longitude": -120.882501
+      },
+      {
+        "id": "B2020-094",
+        "name": "Moscow, Idaho",
+        "row_id": 27,
+        "limit_cm": 60.0,
+        "latitude": 46.46807355,
+        "longitude": -116.8403492
+      },
+      {
+        "id": "B2020-099",
+        "name": "Davis Lake",
+        "row_id": 29,
+        "limit_cm": 6,
+        "latitude": 46.558735,
+        "longitude": -122.295663
+      },
+      {
+        "id": "B2020-106",
+        "name": "Sheep Mountain Bog",
+        "row_id": 32,
+        "limit_cm": 42,
+        "latitude": 46.951776,
+        "longitude": -113.794389
+      },
+      {
+        "id": "B2020-118",
+        "name": "Lake Washington",
+        "row_id": 33,
+        "limit_cm": 1100.0,
+        "latitude": 47.624553,
+        "longitude": -122.264756
+      },
+      {
+        "id": "B2020-129",
+        "name": "Waits Lake",
+        "row_id": 38,
+        "limit_cm": 141.0,
+        "latitude": 48.18333333333333,
+        "longitude": -117.8
+      },
+      {
+        "id": "B2020-132",
+        "name": "Matheson Lake",
+        "row_id": 39,
+        "limit_cm": 313,
+        "latitude": 48.361,
+        "longitude": -123.597
+      },
+      {
+        "id": "B2020-133",
+        "name": "Dailey Lake Bog",
+        "row_id": 40,
+        "limit_cm": 345,
+        "latitude": 48.458,
+        "longitude": -117.809
+      },
+      {
+        "id": "B2020-136",
+        "name": "Starvation Flat bog",
+        "row_id": 42,
+        "limit_cm": 210,
+        "latitude": 48.484,
+        "longitude": -117.698
+      },
+      {
+        "id": "B2020-137",
+        "name": "Prior Lake",
+        "row_id": 43,
+        "limit_cm": 127,
+        "latitude": 48.476,
+        "longitude": -123.466
+      },
+      {
+        "id": "B2020-138",
+        "name": "Pike Lake ",
+        "row_id": 44,
+        "limit_cm": 329,
+        "latitude": 48.488,
+        "longitude": -123.468
+      },
+      {
+        "id": "B2020-140",
+        "name": "Maltby Lake ",
+        "row_id": 45,
+        "limit_cm": 244,
+        "latitude": 48.497,
+        "longitude": -123.449
+      },
+      {
+        "id": "B2020-141",
+        "name": "Hager Pond ",
+        "row_id": 46,
+        "limit_cm": 105.0,
+        "latitude": 48.6,
+        "longitude": -116.95
+      },
+      {
+        "id": "B2020-147",
+        "name": "Huff Lake ",
+        "row_id": 47,
+        "limit_cm": 1080.0,
+        "latitude": 48.7407,
+        "longitude": -117.0625
+      },
+      {
+        "id": "B2020-148",
+        "name": "Bonaparte Meadows",
+        "row_id": 48,
+        "limit_cm": 12,
+        "latitude": 48.778243,
+        "longitude": -119.061323
+      },
+      {
+        "id": "B2020-169",
+        "name": "Twobit Creek",
+        "row_id": 52,
+        "limit_cm": 8,
+        "latitude": 49.50833333333333,
+        "longitude": -118.08888888888889
+      },
+      {
+        "id": "B2020-203",
+        "name": "Surprise Lake",
+        "row_id": 58,
+        "limit_cm": 3.5,
+        "latitude": 49.319444,
+        "longitude": -122.561944
+      },
+      {
+        "id": "B2020-205",
+        "name": "Lavington",
+        "row_id": 59,
+        "limit_cm": 10,
+        "latitude": 50.236111111111114,
+        "longitude": -119.025
+      },
+      {
+        "id": "B2020-206",
+        "name": "Deep Creek",
+        "row_id": 60,
+        "limit_cm": 5.0,
+        "latitude": 50.38611111111111,
+        "longitude": -119.27777777777777
+      },
+      {
+        "id": "B2020-217",
+        "name": "Upper Kananaskis Lake",
+        "row_id": 62,
+        "limit_cm": 2,
+        "latitude": 50.621492,
+        "longitude": -115.15016
+      },
+      {
+        "id": "B2020-229",
+        "name": "Jesmond Bog",
+        "row_id": 65,
+        "limit_cm": 1.0,
+        "latitude": 51.083333333333336,
+        "longitude": -121.98333333333333
+      },
+      {
+        "id": "B2020-232",
+        "name": "South Saskatchewan River",
+        "row_id": 66,
+        "limit_cm": 5.0,
+        "latitude": 50.860909,
+        "longitude": -109.969648
+      },
+      {
+        "id": "B2020-245",
+        "name": "Frederick Lake",
+        "row_id": 67,
+        "limit_cm": 28,
+        "latitude": 51.093956,
+        "longitude": -114.728953
+      },
+      {
+        "id": "B2020-250",
+        "name": "Johnson Lake",
+        "row_id": 68,
+        "limit_cm": 156,
+        "latitude": 51.196792,
+        "longitude": -115.48492
+      },
+      {
+        "id": "B2020-251",
+        "name": "Marion Lake",
+        "row_id": 69,
+        "limit_cm": 5,
+        "latitude": 49.31666666666667,
+        "longitude": -122.55
+      },
+      {
+        "id": "B2020-264",
+        "name": "Banff National Park, Saskatchewan Crossing",
+        "row_id": 71,
+        "limit_cm": 25.0,
+        "latitude": 51.967316,
+        "longitude": -116.751932
+      },
+      {
+        "id": "B2020-275",
+        "name": "Nordegg Bridge",
+        "row_id": 72,
+        "limit_cm": 5,
+        "latitude": 52.39993,
+        "longitude": -116.07983
+      },
+      {
+        "id": "B2020-285",
+        "name": "Hasse Lake",
+        "row_id": 73,
+        "limit_cm": 1,
+        "latitude": 53.488,
+        "longitude": -114.174
+      },
+      {
+        "id": "B2020-290",
+        "name": "Beverley",
+        "row_id": 74,
+        "limit_cm": 5.0,
+        "latitude": 53.557036727115,
+        "longitude": -113.353746578199
+      },
+      {
+        "id": "B2020-291",
+        "name": "Lofty Lake",
+        "row_id": 75,
+        "limit_cm": 0.2,
+        "latitude": 54.733333333333334,
+        "longitude": -112.48333333333333
+      },
+      {
+        "id": "MK2012-PATJENS",
+        "name": "Patjens Lakes south-shore fen",
+        "row_id": 94,
+        "limit_cm": 4,
+        "latitude": 44.352,
+        "longitude": -121.89
+      },
+      {
+        "id": "W2017-SHADOW",
+        "name": "Shadow Lake SL11C",
+        "row_id": 96,
+        "limit_cm": 14,
+        "latitude": 46.9114,
+        "longitude": -121.6571
+      },
+      {
+        "id": "W2017-SUNRISE",
+        "name": "Sunrise Lake UL11D",
+        "row_id": 97,
+        "limit_cm": 8,
+        "latitude": 46.9198,
+        "longitude": -121.5886
+      },
+      {
+        "id": "M2024-ROUNDWA",
+        "name": "Round Lake A17/A18 composite, Washington",
+        "row_id": 98,
+        "limit_cm": 60,
+        "latitude": 48.61,
+        "longitude": -119.12
+      },
+      {
+        "id": "R2021-LONG",
+        "name": "Long Lake LOL14C composite, eastern Cascades",
+        "row_id": 99,
+        "limit_cm": 7,
+        "latitude": 46.62226666666667,
+        "longitude": -121.06453333333333
+      },
+      {
+        "id": "MW1986-SKULL",
+        "name": "Skull Creek dunes, Catlow Valley",
+        "row_id": 105,
+        "limit_cm": 5.0,
+        "latitude": 42.407968610407956,
+        "longitude": -119.00347006299178
+      },
+      {
+        "id": "P1999-BEAVER-OR",
+        "name": "Beaver Lake, Linn County, Willamette Valley",
+        "row_id": 107,
+        "limit_cm": 2,
+        "latitude": 44.55027777777777,
+        "longitude": -123.18333333333334
+      },
+      {
+        "id": "S2003-MEDICINE",
+        "name": "Medicine Lake, California, core B100NC-1",
+        "row_id": 108,
+        "limit_cm": 13.75,
+        "latitude": 41.5817,
+        "longitude": -121.599
+      },
+      {
+        "id": "H1997-MAHONEY",
+        "name": "Mahoney Lake, British Columbia, deepest basin",
+        "row_id": 110,
+        "limit_cm": 63.0,
+        "latitude": 49.28972222222222,
+        "longitude": -119.58194444444445
+      },
+      {
+        "id": "SG1989-LODGEPOLE",
+        "name": "Lodgepole Quarry, Deschutes National Forest outwash",
+        "row_id": 111,
+        "limit_cm": 50.0,
+        "latitude": 43.84643467636394,
+        "longitude": -121.74621895129918
+      },
+      {
+        "id": "R1967-BB326-36",
+        "name": "Willapa Canyon terrace, Brown Bear BB326-36-PC",
+        "row_id": 227,
+        "limit_cm": 4.0,
+        "latitude": 46.48333,
+        "longitude": -124.70667
+      },
+      {
+        "id": "SP2007-THU",
+        "name": "Thunder Lake, North Cascades, Washington",
+        "row_id": 232,
+        "limit_cm": 119.5,
+        "latitude": 48.69683333333333,
+        "longitude": -121.1085
+      },
+      {
+        "id": "SP2008-RID",
+        "name": "Ridley Lake, North Cascades, Washington",
+        "row_id": 233,
+        "limit_cm": 111.0,
+        "latitude": 48.949,
+        "longitude": -121.03
+      },
+      {
+        "id": "CH2008-WIN",
+        "name": "Windy Lake, British Columbia",
+        "row_id": 234,
+        "limit_cm": 86,
+        "latitude": 49.81352,
+        "longitude": -117.877558
+      },
+      {
+        "id": "CH2008-THU",
+        "name": "Thunder Lake, Cariboo Mountains, British Columbia",
+        "row_id": 235,
+        "limit_cm": 32,
+        "latitude": 52.22833,
+        "longitude": -119.34833
+      },
+      {
+        "id": "CH2008-RED",
+        "name": "Redmountain Lake, British Columbia",
+        "row_id": 236,
+        "limit_cm": 111.0,
+        "latitude": 53.921388888888885,
+        "longitude": -121.29416666666667
+      },
+      {
+        "id": "HER2014-DIS",
+        "name": "Dismal Lake, Idaho",
+        "row_id": 237,
+        "limit_cm": 141.0,
+        "latitude": 47.11666666666667,
+        "longitude": -115.63333333333334
+      },
+      {
+        "id": "HER2014-RRL",
+        "name": "Rocky Ridge Lake, Idaho",
+        "row_id": 238,
+        "limit_cm": 161.0,
+        "latitude": 46.44194444444444,
+        "longitude": -115.49305555555556
+      },
+      {
+        "id": "HER2014-HOR",
+        "name": "Horseshoe Lake, Idaho",
+        "row_id": 239,
+        "limit_cm": 211.0,
+        "latitude": 46.54972222222222,
+        "longitude": -115.06833333333333
+      },
+      {
+        "id": "ROS2004-FRO",
+        "name": "Lower Frozen Lake, British Columbia",
+        "row_id": 240,
+        "limit_cm": 8,
+        "latitude": 49.6,
+        "longitude": -121.46666666666667
+      },
+      {
+        "id": "ROS2004-EAG",
+        "name": "Eagle Lake, Mount Revelstoke, British Columbia",
+        "row_id": 241,
+        "limit_cm": 15,
+        "latitude": 51.05,
+        "longitude": -118.16666666666667
+      },
+      {
+        "id": "OS2012-SFL",
+        "name": "Mount Baker south-flank pits between Easton and Squak glaciers",
+        "row_id": 249,
+        "limit_cm": 30.0,
+        "latitude": 48.73166666666667,
+        "longitude": -121.82166666666667
+      },
+      {
+        "id": "OS2012-POC",
+        "name": "Pocket Lake, Mount Baker",
+        "row_id": 250,
+        "limit_cm": 38.0,
+        "latitude": 48.711666666666666,
+        "longitude": -121.84333333333333
+      },
+      {
+        "id": "MAR2009-S15",
+        "name": "North Fork Whychus Creek, downstream cutbank, Oregon",
+        "row_id": 251,
+        "limit_cm": 66,
+        "latitude": 44.14964,
+        "longitude": -121.7415
+      },
+      {
+        "id": "SHP2023-RDF1A",
+        "name": "Redfish Lake, RDF07-1A, Idaho",
+        "row_id": 254,
+        "limit_cm": 8.0,
+        "latitude": 44.11202,
+        "longitude": -114.93026
+      },
+      {
+        "id": "SHP2023-RDF4A",
+        "name": "Redfish Lake, RDF07-4A, Idaho",
+        "row_id": 255,
+        "limit_cm": 8.0,
+        "latitude": 44.13096,
+        "longitude": -114.92577
+      },
+      {
+        "id": "SHP2023-LRFL",
+        "name": "Little Redfish Lake, LRFL08-02, Idaho",
+        "row_id": 256,
+        "limit_cm": 8.0,
+        "latitude": 44.161,
+        "longitude": -114.909
+      },
+      {
+        "id": "FLV94-FC-AUG",
+        "name": "Fish Lake Valley, Furnace Creek hand auger",
+        "row_id": 261,
+        "limit_cm": 1.0,
+        "latitude": 37.5524,
+        "longitude": -118.0206
+      },
+      {
+        "id": "MWB07-LIL",
+        "name": "Lily Lake",
+        "row_id": 263,
+        "limit_cm": 45.0,
+        "latitude": 41.9758,
+        "longitude": -120.2097
+      },
+      {
+        "id": "L2016-STOWELL",
+        "name": "Stowell Lake, Salt Spring Island",
+        "row_id": 266,
+        "limit_cm": 2,
+        "latitude": 48.781666666666666,
+        "longitude": -123.44388888888889
+      },
+      {
+        "id": "M2013-NEL01",
+        "name": "NEL01, small lake near Nelson",
+        "row_id": 267,
+        "limit_cm": 6,
+        "latitude": 49.541666666666664,
+        "longitude": -117.46666666666667
+      },
+      {
+        "id": "M2012-ONOFF02",
+        "name": "On-off Lake core 08-Onoff02",
+        "row_id": 269,
+        "limit_cm": 82,
+        "latitude": 53.0738642293271,
+        "longitude": -120.43371974332632
+      },
+      {
+        "id": "N2004-CASTOR",
+        "name": "Castor Lake, 2003 recovery",
+        "row_id": 270,
+        "limit_cm": 30,
+        "latitude": 48.54,
+        "longitude": -119.56
+      },
+      {
+        "id": "E1997-A12",
+        "name": "Lake of the Woods, Cathedral Park core A12",
+        "row_id": 271,
+        "limit_cm": 4,
+        "latitude": 49.061111,
+        "longitude": -120.185833
+      },
+      {
+        "id": "E1997-B7B",
+        "name": "Pyramid Lake, Cathedral Park core B7b",
+        "row_id": 272,
+        "limit_cm": 20,
+        "latitude": 49.055833,
+        "longitude": -120.189722
+      },
+      {
+        "id": "E1997-C5",
+        "name": "Glacier Lake, Cathedral Park core C5",
+        "row_id": 273,
+        "limit_cm": 13,
+        "latitude": 49.055833,
+        "longitude": -120.2075
+      },
+      {
+        "id": "E1997-D8",
+        "name": "Quiniscoe Lake, Cathedral Park core D8",
+        "row_id": 274,
+        "limit_cm": 28,
+        "latitude": 49.064444,
+        "longitude": -120.201111
+      },
+      {
+        "id": "L2024-JEN13-2E",
+        "name": "Jenny Lake, JEN13-2E",
+        "row_id": 275,
+        "limit_cm": 4,
+        "latitude": 43.77172,
+        "longitude": -110.72578
+      },
+      {
+        "id": "L2024-JEN15-3A",
+        "name": "Jenny Lake, JEN15-3A",
+        "row_id": 276,
+        "limit_cm": 63,
+        "latitude": 43.75893,
+        "longitude": -110.73382
+      },
+      {
+        "id": "L2024-JEN16-1A",
+        "name": "Jenny Lake, JEN16-1A",
+        "row_id": 277,
+        "limit_cm": 48,
+        "latitude": 43.76351,
+        "longitude": -110.73082
+      },
+      {
+        "id": "L2024-JEN16-2",
+        "name": "Jenny Lake, JEN16-2",
+        "row_id": 278,
+        "limit_cm": 54,
+        "latitude": 43.76678,
+        "longitude": -110.73705
+      },
+      {
+        "id": "B1997-COPL1",
+        "name": "Copper Lake, core COPL1",
+        "row_id": 279,
+        "limit_cm": 1,
+        "latitude": 51.260418,
+        "longitude": -115.923281
+      },
+      {
+        "id": "B1997-LL1",
+        "name": "Lake Louise, core LL1",
+        "row_id": 280,
+        "limit_cm": 7,
+        "latitude": 51.4095442712406,
+        "longitude": -116.138700240843
+      },
+      {
+        "id": "B1997-LBSL2",
+        "name": "Lower Burstall Lake, core LBSL2",
+        "row_id": 281,
+        "limit_cm": 5,
+        "latitude": 50.7838889,
+        "longitude": -115.3316667
+      },
+      {
+        "id": "B1997-SUML1",
+        "name": "Summit Lake, Waterton, core SUML1",
+        "row_id": 282,
+        "limit_cm": 143,
+        "latitude": 49.0075,
+        "longitude": -114.025
+      },
+      {
+        "id": "B1997-SIBL1",
+        "name": "Sibbald Lake, core SIBL1",
+        "row_id": 283,
+        "limit_cm": 50,
+        "latitude": 51.0455556,
+        "longitude": -114.8725
+      },
+      {
+        "id": "H2026-FROG",
+        "name": "Frog Lake, Greater Victoria water supply core",
+        "row_id": 284,
+        "limit_cm": 225,
+        "latitude": 48.482,
+        "longitude": -123.595
+      },
+      {
+        "id": "H2026-SWANSON",
+        "name": "Swanson Lake, Greater Victoria water supply core",
+        "row_id": 285,
+        "limit_cm": 268,
+        "latitude": 48.57,
+        "longitude": -123.74
+      },
+      {
+        "id": "H2026-WORLEY",
+        "name": "Worley Lake, Greater Victoria water supply core",
+        "row_id": 286,
+        "limit_cm": 190,
+        "latitude": 48.59,
+        "longitude": -123.81
+      },
+      {
+        "id": "B2019-BEGBIE",
+        "name": "Begbie Lake, Greater Victoria water supply core",
+        "row_id": 287,
+        "limit_cm": 1,
+        "latitude": 48.58,
+        "longitude": -123.68
+      },
+      {
+        "id": "H1999-KILPOOLA-2",
+        "name": "Kilpoola Lake, 1996 core 2",
+        "row_id": 288,
+        "limit_cm": 33,
+        "latitude": 49.016666666666666,
+        "longitude": -119.55
+      },
+      {
+        "id": "S2009-FOY-A",
+        "name": "Foy Lake, core A, drive 4",
+        "row_id": 289,
+        "limit_cm": 8,
+        "latitude": 48.168202,
+        "longitude": -114.357437
+      },
+      {
+        "id": "S2009-FOY-C",
+        "name": "Foy Lake, core C",
+        "row_id": 290,
+        "limit_cm": 109,
+        "latitude": 48.168244,
+        "longitude": -114.356586
+      },
+      {
+        "id": "H1976-ELK",
+        "name": "Upper Elk Valley terrace, north of Elkford",
+        "row_id": 291,
+        "limit_cm": 10,
+        "latitude": 50.15833333333333,
+        "longitude": -114.95555555555556
+      },
+      {
+        "id": "G1988-GOL",
+        "name": "Goldeye Lake, winter 1981 lake core",
+        "row_id": 292,
+        "limit_cm": 575,
+        "latitude": 52.45,
+        "longitude": -116.2
+      },
+      {
+        "id": "G1989-MICA",
+        "name": "Mica Creek, Columbia River peat terrace",
+        "row_id": 293,
+        "limit_cm": 5,
+        "latitude": 52.020833333333336,
+        "longitude": -118.55833333333334
+      },
+      {
+        "id": "G1989-KOBAU",
+        "name": "Mt. Kobau Lake near Osoyoos",
+        "row_id": 294,
+        "limit_cm": 10,
+        "latitude": 49.11944444444445,
+        "longitude": -119.67500000000001
+      },
+      {
+        "id": "H1973-CALGARY",
+        "name": "West Calgary, Harrison high-terrace pit",
+        "row_id": 295,
+        "limit_cm": 5,
+        "latitude": 51.075,
+        "longitude": -114.21111111111111
+      },
+      {
+        "id": "F2018-ELSMITH",
+        "name": "E.L. Smith project, southwest Edmonton",
+        "row_id": 296,
+        "limit_cm": 100,
+        "latitude": 53.47,
+        "longitude": -113.61
+      }
+    ]
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "c2f74a4942147c4bc0e9dfefdb19e2b688ff790fd9eda7c91506de39f4fda214",
+  "draws": 49152,
+  "population_check_passed": true,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 0.00032716079033096035,
+      "q95_relative_error": 0.002516814587837278,
+      "maximum_relative_error": 0.32092121730467404,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.036987542496283866,
+        0.08155023189050793,
+        0.118683746080613
+      ],
+      [
+        0.00010075092812198761,
+        0.00023678364481425777,
+        0.0004134151700309362
+      ],
+      [
+        0.06065801873939824,
+        0.26732990912634536,
+        0.5736222503187475
+      ],
+      [
+        0.38915966452817713,
+        0.6586752997547717,
+        0.8422917687548701
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.10039351558945148,
+        0.15019842175077305,
+        0.19623903428246703
+      ],
+      [
+        0.16636253088520137,
+        0.24277683141612622,
+        0.4372057080741116
+      ],
+      [
+        0.11080865901465073,
+        0.17387727996291558,
+        0.34241324010439217
+      ],
+      [
+        0.03173017540483646,
+        0.04995940665959723,
+        0.08295687369875314
+      ],
+      [
+        0.006623751422720372,
+        0.04058849311486463,
+        0.25683882966058347
+      ],
+      [
+        0.004204116678753849,
+        0.07268914790118758,
+        0.17392746297429645
+      ],
+      [
+        0.004404273738326817,
+        0.06472857181342474,
+        0.2397511910558345
+      ],
+      [
+        0.01512751286674029,
+        0.10031094252587885,
+        0.23751418754567277
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.03632039540918509,
+      0.00010066176283823212,
+      0.5648713052609015,
+      0.3997888256551273
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 175,
+    "covered": 156,
+    "fraction": 0.8914285714285715
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "effective_draws": 49152.000000006534,
+      "relative_ess": 1.000000000000133,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.18811095532315,
+        267.32333191908305
+      ]
+    },
+    "weak_profile_transfer": {
+      "effective_draws": 42558.00297751436,
+      "relative_ess": 0.8658447871401848,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.93012258151232,
+        267.4151693508421
+      ]
+    },
+    "broader_peak_prior": {
+      "effective_draws": 49042.3624148386,
+      "relative_ess": 0.9977694176196005,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.19272304734032,
+        272.3117500725166
+      ]
+    },
+    "power_tail_prior_80pct": {
+      "effective_draws": 36503.14321949869,
+      "relative_ess": 0.7426583500060769,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.63740189379659,
+        281.40978858469674
+      ]
+    },
+    "exponential_tail_prior_80pct": {
+      "effective_draws": 35784.85620924924,
+      "relative_ess": 0.72804476337177,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        85.53517913233382,
+        250.2815063039909
+      ]
+    },
+    "detached_prior_50pct": {
+      "effective_draws": 34382.46100201898,
+      "relative_ess": 0.6995129598392533,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        84.64943832187348,
+        246.24266381262515
+      ]
+    },
+    "more_distal_ash_prior": {
+      "effective_draws": 46803.09660868689,
+      "relative_ess": 0.9522114381650164,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.63740189379659,
+        267.4703720702692
+      ]
+    },
+    "less_distal_ash_prior": {
+      "effective_draws": 48901.939735706226,
+      "relative_ess": 0.994912510898971,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.14088458936874,
+        272.9913483322856
+      ]
+    },
+    "distal_prior_without_Santa Maria 1902": {
+      "effective_draws": 33759.78634943799,
+      "relative_ess": 0.6868446116015217,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        84.50958247100823,
+        251.2639326743208
+      ]
+    },
+    "distal_prior_without_Quizapu 1932": {
+      "effective_draws": 48911.24342975392,
+      "relative_ess": 0.9951017950389388,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.29663126349188,
+        269.25683286386374
+      ]
+    },
+    "distal_prior_without_Novarupta 1912": {
+      "effective_draws": 48831.90202051628,
+      "relative_ess": 0.993487589935634,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.3114891660329,
+        269.1577439450391
+      ]
+    },
+    "distal_prior_without_Hudson 1991": {
+      "effective_draws": 48387.448976738175,
+      "relative_ess": 0.9844451696113724,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        86.40673543186568,
+        268.8173160085404
+      ]
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      4719640.793347479,
+      13998238.673852663,
+      113909072.28100802
+    ],
+    "0.1": [
+      4011714.155058333,
+      9034106.040200468,
+      29667418.851130143
+    ],
+    "1.0": [
+      1979368.7812594767,
+      3196992.709902595,
+      7291297.612171512
+    ],
+    "10.0": [
+      24738.460655505205,
+      40852.220761690056,
+      126585.86521232437
+    ],
+    "100.0": [
+      3947.7685888552965,
+      6672.676149957214,
+      11032.723179072056
+    ],
+    "1000.0": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.5156453450520834,
+  "geographic_score": 1.2571516472289173,
+  "geographic_folds_passed": 4,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 227,
+      "name": "Willapa Canyon terrace, Brown Bear BB326-36-PC",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        1.215684670753628,
+        2.4325126982190124,
+        3.3748474651119515
+      ],
+      "latent_satisfies": 0.9977620442708334,
+      "predictive_probability_of_event": 0.719783906387225
+    },
+    {
+      "row_id": 286,
+      "name": "Worley Lake, Greater Victoria water supply core",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 190.0,
+      "latent_cm": [
+        1.3300701056126623,
+        1.9595805018830483,
+        2.5393377995995943
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.99827548139801
+    },
+    {
+      "row_id": 285,
+      "name": "Swanson Lake, Greater Victoria water supply core",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 267.99999999999994,
+      "latent_cm": [
+        1.3648216876314678,
+        1.9914070623103826,
+        2.5727823501905043
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9987097993026123
+    },
+    {
+      "row_id": 287,
+      "name": "Begbie Lake, Greater Victoria water supply core",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        1.3845554060070533,
+        2.008120889168711,
+        2.5901542213307103
+      ],
+      "latent_satisfies": 0.0007731119791666666,
+      "predictive_probability_of_event": 0.2213250450532985
+    },
+    {
+      "row_id": 39,
+      "name": "Matheson Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 312.9999999999999,
+      "latent_cm": [
+        1.4902340608304792,
+        2.128696704899073,
+        2.7250742506446297
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9988078060664893
+    },
+    {
+      "row_id": 284,
+      "name": "Frog Lake, Greater Victoria water supply core",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 225.0,
+      "latent_cm": [
+        1.4505217750185055,
+        2.078760037090605,
+        2.6666906944047613
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9984311228973728
+    },
+    {
+      "row_id": 44,
+      "name": "Pike Lake ",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 329.0,
+      "latent_cm": [
+        1.501089143507407,
+        2.118678927435061,
+        2.7109424551930736
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9988655362018849
+    },
+    {
+      "row_id": 43,
+      "name": "Prior Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 126.99999999999999,
+      "latent_cm": [
+        1.5057406438570142,
+        2.12469566763663,
+        2.7174240215480734
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9974083360361692
+    },
+    {
+      "row_id": 45,
+      "name": "Maltby Lake ",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 244.00000000000006,
+      "latent_cm": [
+        1.504965314440648,
+        2.1212927517757323,
+        2.7135490828870155
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9985107440281483
+    },
+    {
+      "row_id": 266,
+      "name": "Stowell Lake, Salt Spring Island",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        1.4065113646920324,
+        2.0007728545352297,
+        2.57830767583476
+      ],
+      "latent_satisfies": 0.4984130859375,
+      "predictive_probability_of_event": 0.5067233491026583
+    },
+    {
+      "row_id": 41,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 1.27,
+      "upper_cm": 1.905,
+      "latent_cm": [
+        1.5279118271165462,
+        2.1453293539759986,
+        2.740554233556555
+      ],
+      "latent_satisfies": 0.20062255859375,
+      "predictive_probability_of_event": 0.17129195178732284
+    },
+    {
+      "row_id": 107,
+      "name": "Beaver Lake, Linn County, Willamette Valley",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        3.6460915137768533,
+        5.237100109651106,
+        7.863508653827634
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.14092733598896073
+    },
+    {
+      "row_id": 58,
+      "name": "Surprise Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 3.5,
+      "latent_cm": [
+        1.487182128369904,
+        2.010618385389642,
+        2.5715333328326624
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7395369069471199
+    },
+    {
+      "row_id": 69,
+      "name": "Marion Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.4921338445441574,
+        2.014828473921521,
+        2.5756554490945747
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8498763957701461
+    },
+    {
+      "row_id": 300,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 5.080000000000001,
+      "upper_cm": 7.619999999999999,
+      "latent_cm": [
+        2.418477638873603,
+        3.060444316391072,
+        3.798039606943964
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.12967006413209256
+    },
+    {
+      "row_id": 29,
+      "name": "Davis Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        3.0535038576224443,
+        3.9293550941625575,
+        5.0537534986296375
+      ],
+      "latent_satisfies": 0.9993693033854166,
+      "predictive_probability_of_event": 0.684983190399075
+    },
+    {
+      "row_id": 33,
+      "name": "Lake Washington",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1099.9999999999995,
+      "latent_cm": [
+        2.421792998284491,
+        3.0626998597134447,
+        3.799619911313595
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9994969107164566
+    },
+    {
+      "row_id": 65,
+      "name": "Jesmond Bog",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        1.0038488273769817,
+        1.441646187293728,
+        1.9972041624966343
+      ],
+      "latent_satisfies": 0.024210611979166668,
+      "predictive_probability_of_event": 0.33845077209620333
+    },
+    {
+      "row_id": 94,
+      "name": "Patjens Lakes south-shore fen",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        4.880760265450087,
+        7.474458451645385,
+        11.94676495579662
+      ],
+      "latent_satisfies": 0.0018107096354166667,
+      "predictive_probability_of_event": 0.2392831253248615
+    },
+    {
+      "row_id": 243,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.999999999999999,
+      "upper_cm": 19.999999999999996,
+      "latent_cm": [
+        1.95323789473742,
+        2.472976427122334,
+        3.077314093500962
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.19389723174653142
+    },
+    {
+      "row_id": 250,
+      "name": "Pocket Lake, Mount Baker",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 37.99999999999999,
+      "latent_cm": [
+        1.9618855032365097,
+        2.482826186007563,
+        3.0875394227218282
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9923649429152258
+    },
+    {
+      "row_id": 246,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 3.0000000000000004,
+      "latent_cm": [
+        1.9576001451733454,
+        2.4768145696472876,
+        3.081173489910421
+      ],
+      "latent_satisfies": 0.9222819010416666,
+      "predictive_probability_of_event": 0.18367688599426024
+    },
+    {
+      "row_id": 249,
+      "name": "Mount Baker south-flank pits between Easton and Squak glaciers",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        1.957816712933806,
+        2.476527324034219,
+        3.0807031994258978
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9903016058123785
+    },
+    {
+      "row_id": 245,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        1.971163232748937,
+        2.492147967333949,
+        3.0992642429760466
+      ],
+      "latent_satisfies": 0.9676106770833334,
+      "predictive_probability_of_event": 0.3050125266196596
+    },
+    {
+      "row_id": 242,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.9625827599801875,
+        2.4812185439336285,
+        3.085724471707348
+      ],
+      "latent_satisfies": 0.9656778971354166,
+      "predictive_probability_of_event": 0.38460282669168483
+    },
+    {
+      "row_id": 248,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 1.0,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        1.972650158836071,
+        2.4938524375158027,
+        3.1011687188115493
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.5550150275056455
+    },
+    {
+      "row_id": 18,
+      "name": "Round Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 13.999999999999996,
+      "latent_cm": [
+        4.745255279839753,
+        7.310210110571849,
+        11.631833571089423
+      ],
+      "latent_satisfies": 0.99725341796875,
+      "predictive_probability_of_event": 0.760251211786585
+    },
+    {
+      "row_id": 111,
+      "name": "Lodgepole Quarry, Deschutes National Forest outwash",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        19.954219460056233,
+        28.94649534933403,
+        37.66858563291622
+      ],
+      "latent_satisfies": 0.9999593098958334,
+      "predictive_probability_of_event": 0.7372193100670604
+    },
+    {
+      "row_id": 251,
+      "name": "North Fork Whychus Creek, downstream cutbank, Oregon",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 65.99999999999997,
+      "latent_cm": [
+        6.906594326829243,
+        11.045770746758299,
+        16.323350805827957
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9700098304787138
+    },
+    {
+      "row_id": 252,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.0,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        8.203071626225489,
+        13.073790475863353,
+        19.107130001200094
+      ],
+      "latent_satisfies": 0.020161946614583332,
+      "predictive_probability_of_event": 0.1955624563242144
+    },
+    {
+      "row_id": 96,
+      "name": "Shadow Lake SL11C",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 13.999999999999996,
+      "latent_cm": [
+        3.0370027752946944,
+        3.889899606561244,
+        4.946018659952559
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.922776325837324
+    },
+    {
+      "row_id": 97,
+      "name": "Sunrise Lake UL11D",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        3.0488047070655746,
+        3.917312415209715,
+        4.962971499561434
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.7927973715383381
+    },
+    {
+      "row_id": 108,
+      "name": "Medicine Lake, California, core B100NC-1",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 13.750000000000002,
+      "latent_cm": [
+        1.7371123520391893,
+        4.09893288726424,
+        9.327114804428101
+      ],
+      "latent_satisfies": 0.9998575846354166,
+      "predictive_probability_of_event": 0.8920994728892624
+    },
+    {
+      "row_id": 13,
+      "name": "Tumalo Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        11.032775563465014,
+        17.376322238556813,
+        23.99017906560707
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8833629764883595
+    },
+    {
+      "row_id": 240,
+      "name": "Lower Frozen Lake, British Columbia",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        1.6263677042123594,
+        2.1104677640911826,
+        2.660027714847939
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9309644253226476
+    },
+    {
+      "row_id": 236,
+      "name": "Redmountain Lake, British Columbia",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 110.99999999999997,
+      "latent_cm": [
+        0.47859246537866407,
+        0.8698438424657495,
+        1.3814409285349414
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9986201683689515
+    },
+    {
+      "row_id": 232,
+      "name": "Thunder Lake, North Cascades, Washington",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 119.50000000000003,
+      "latent_cm": [
+        2.132155389538539,
+        2.654808691937034,
+        3.2704571807931107
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9967327195897666
+    },
+    {
+      "row_id": 233,
+      "name": "Ridley Lake, North Cascades, Washington",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 110.99999999999997,
+      "latent_cm": [
+        2.0148322024682104,
+        2.5186031653641683,
+        3.11066936423865
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9966783590393374
+    },
+    {
+      "row_id": 99,
+      "name": "Long Lake LOL14C composite, eastern Cascades",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.999999999999999,
+      "latent_cm": [
+        3.325931906068505,
+        4.371462140519152,
+        5.6675964074338525
+      ],
+      "latent_satisfies": 0.9997965494791666,
+      "predictive_probability_of_event": 0.7049327209601516
+    },
+    {
+      "row_id": 104,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 27.999999999999996,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        35.23465206267906,
+        44.871960989377804,
+        62.91769107537268
+      ],
+      "latent_satisfies": 0.0004069010416666667,
+      "predictive_probability_of_event": 0.027381561014893113
+    },
+    {
+      "row_id": 26,
+      "name": "Carp Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        3.7868249072904,
+        5.244966613358222,
+        7.130906057974384
+      ],
+      "latent_satisfies": 0.0556640625,
+      "predictive_probability_of_event": 0.38059964766672344
+    },
+    {
+      "row_id": 264,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 26.000000000000004,
+      "upper_cm": 27.0,
+      "latent_cm": [
+        4.965540954097856,
+        7.723148277761545,
+        12.359725440470948
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.006332176803912576
+    },
+    {
+      "row_id": 269,
+      "name": "On-off Lake core 08-Onoff02",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 82.00000000000001,
+      "latent_cm": [
+        0.6726026785780551,
+        1.0718699492229395,
+        1.603432379575207
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9978368965840589
+    },
+    {
+      "row_id": 102,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 12.0,
+      "upper_cm": 13.0,
+      "latent_cm": [
+        3.995751503239954,
+        5.68993771986447,
+        8.112002696037711
+      ],
+      "latent_satisfies": 4.0690104166666664e-05,
+      "predictive_probability_of_event": 0.023797848769344848
+    },
+    {
+      "row_id": 273,
+      "name": "Glacier Lake, Cathedral Park core C5",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 13.0,
+      "latent_cm": [
+        2.074105291802332,
+        2.581242150706944,
+        3.1674499865133696
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9604761185537268
+    },
+    {
+      "row_id": 274,
+      "name": "Quiniscoe Lake, Cathedral Park core D8",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 27.999999999999996,
+      "latent_cm": [
+        2.0691562717544283,
+        2.577206572415387,
+        3.1627998850892682
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9890121607125918
+    },
+    {
+      "row_id": 272,
+      "name": "Pyramid Lake, Cathedral Park core B7b",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 19.999999999999996,
+      "latent_cm": [
+        2.076577509258771,
+        2.583567109440868,
+        3.1690952234061234
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9820493891856331
+    },
+    {
+      "row_id": 271,
+      "name": "Lake of the Woods, Cathedral Park core A12",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        2.073530672472525,
+        2.580779204356011,
+        3.1662797278335435
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.6941396294671828
+    },
+    {
+      "row_id": 103,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 24.999999999999996,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        4.350815765528028,
+        6.487828430643996,
+        9.68458751759399
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.02114690486228593
+    },
+    {
+      "row_id": 263,
+      "name": "Lily Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 44.99999999999999,
+      "latent_cm": [
+        3.759047138226622,
+        5.243838574284764,
+        7.284275845647412
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9841495204677897
+    },
+    {
+      "row_id": 294,
+      "name": "Mt. Kobau Lake near Osoyoos",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 10.000000000000002,
+      "latent_cm": [
+        2.088199832384445,
+        2.599807013843296,
+        3.1845049564937735
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9331724434582864
+    },
+    {
+      "row_id": 110,
+      "name": "Mahoney Lake, British Columbia, deepest basin",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 62.99999999999999,
+      "latent_cm": [
+        2.002675951990497,
+        2.5107185892778947,
+        3.080854302769566
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9949289051257136
+    },
+    {
+      "row_id": 288,
+      "name": "Kilpoola Lake, 1996 core 2",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 33.0,
+      "latent_cm": [
+        2.144683069125584,
+        2.665665479166485,
+        3.264850002283381
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9905830748883705
+    },
+    {
+      "row_id": 270,
+      "name": "Castor Lake, 2003 recovery",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        2.3829295200357548,
+        2.9604197365462617,
+        3.630129054509931
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9880098672075658
+    },
+    {
+      "row_id": 235,
+      "name": "Thunder Lake, Cariboo Mountains, British Columbia",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 32.0,
+      "latent_cm": [
+        0.9345586332418443,
+        1.3427046128282625,
+        1.877124599410328
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9946467856097555
+    },
+    {
+      "row_id": 60,
+      "name": "Deep Creek",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.5379347738294582,
+        1.9802418846273844,
+        2.5246793068388045
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8515012175257352
+    },
+    {
+      "row_id": 59,
+      "name": "Lavington",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 10.000000000000002,
+      "latent_cm": [
+        1.6145457874899627,
+        2.0587704369116007,
+        2.6094722194810225
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9567067871505716
+    },
+    {
+      "row_id": 98,
+      "name": "Round Lake A17/A18 composite, Washington",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 59.999999999999986,
+      "latent_cm": [
+        2.3602641219508222,
+        2.9261262818755664,
+        3.6030520053763047
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9940625539932428
+    },
+    {
+      "row_id": 48,
+      "name": "Bonaparte Meadows",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 12.0,
+      "latent_cm": [
+        2.280770592218181,
+        2.828143632711031,
+        3.477328842871544
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9447409750465674
+    },
+    {
+      "row_id": 19,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 40.0,
+      "upper_cm": 72.0,
+      "latent_cm": [
+        4.185765805986875,
+        6.102345502943255,
+        9.323691711087735
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.015482423021008072
+    },
+    {
+      "row_id": 293,
+      "name": "Mica Creek, Columbia River peat terrace",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.026248344305655,
+        1.4425214134979498,
+        1.9681747107482155
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9151755439948003
+    },
+    {
+      "row_id": 105,
+      "name": "Skull Creek dunes, Catlow Valley",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        3.852781778208793,
+        5.390460427252515,
+        7.687252442808547
+      ],
+      "latent_satisfies": 0.3575032552083333,
+      "predictive_probability_of_event": 0.46672662934902887
+    },
+    {
+      "row_id": 241,
+      "name": "Eagle Lake, Mount Revelstoke, British Columbia",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 15.0,
+      "latent_cm": [
+        1.3358429893168209,
+        1.7639158447993035,
+        2.30305385631437
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9841314485642324
+    },
+    {
+      "row_id": 6,
+      "name": "Fish Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        3.895614835262852,
+        5.486055995077656,
+        7.986607835526446
+      ],
+      "latent_satisfies": 0.31939697265625,
+      "predictive_probability_of_event": 0.457377389641824
+    },
+    {
+      "row_id": 52,
+      "name": "Twobit Creek",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        1.9380947717411885,
+        2.433164010908707,
+        3.0151013493446515
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9093045926260704
+    },
+    {
+      "row_id": 234,
+      "name": "Windy Lake, British Columbia",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 85.99999999999997,
+      "latent_cm": [
+        1.806367452385651,
+        2.2751208346362635,
+        2.8492720394282394
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9962563283762419
+    },
+    {
+      "row_id": 24,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 62.99999999999999,
+      "upper_cm": 90.0,
+      "latent_cm": [
+        3.55517168978534,
+        4.803092445485539,
+        6.768184093714332
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.00260795692286473
+    },
+    {
+      "row_id": 25,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 30.000000000000004,
+      "upper_cm": 70.00000000000003,
+      "latent_cm": [
+        3.5415585427376857,
+        4.778319640974405,
+        6.7257696440991195
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.019090467647246666
+    },
+    {
+      "row_id": 40,
+      "name": "Dailey Lake Bog",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 345.00000000000017,
+      "latent_cm": [
+        2.3948707504909383,
+        2.970128941410175,
+        3.7208127470154713
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9985102404483256
+    },
+    {
+      "row_id": 38,
+      "name": "Waits Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 141.00000000000003,
+      "latent_cm": [
+        2.5180033188401025,
+        3.114572857573848,
+        3.9346590828255135
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.996735324956624
+    },
+    {
+      "row_id": 42,
+      "name": "Starvation Flat bog",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 209.99999999999994,
+      "latent_cm": [
+        2.3769976165876914,
+        2.946327148892335,
+        3.693636038900463
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9977365973297321
+    },
+    {
+      "row_id": 2,
+      "name": "Simon Young Site 24",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.037245286726597,
+        1.6978814264703146,
+        2.8148335663942907
+      ],
+      "latent_satisfies": 0.9999796549479166,
+      "predictive_probability_of_event": 0.8791945000983327
+    },
+    {
+      "row_id": 267,
+      "name": "NEL01, small lake near Nelson",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        1.907197811152994,
+        2.39739283589524,
+        2.9985967832149805
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8513247251651687
+    },
+    {
+      "row_id": 260,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 0.10000000000000002,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        0.22459403870799613,
+        0.5838693848156685,
+        1.6250501296059257
+      ],
+      "latent_satisfies": 0.8460489908854166,
+      "predictive_probability_of_event": 0.6505199841871212
+    },
+    {
+      "row_id": 258,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 1.0,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        0.23015095009236694,
+        0.5895161495172022,
+        1.6191791930982193
+      ],
+      "latent_satisfies": 0.15049235026041666,
+      "predictive_probability_of_event": 0.188679879683009
+    },
+    {
+      "row_id": 259,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 1.5,
+      "upper_cm": 2.5,
+      "latent_cm": [
+        0.23181763906957956,
+        0.5919313542957078,
+        1.6223265867492545
+      ],
+      "latent_satisfies": 0.054728190104166664,
+      "predictive_probability_of_event": 0.10163948148582007
+    },
+    {
+      "row_id": 261,
+      "name": "Fish Lake Valley, Furnace Creek hand auger",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        0.20313193143108949,
+        0.5422438611022408,
+        1.5337417776198543
+      ],
+      "latent_satisfies": 0.8567301432291666,
+      "predictive_probability_of_event": 0.7158690090998158
+    },
+    {
+      "row_id": 71,
+      "name": "Banff National Park, Saskatchewan Crossing",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 24.999999999999996,
+      "latent_cm": [
+        1.0699140339260125,
+        1.481309197084847,
+        2.025008601529297
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9928871464859795
+    },
+    {
+      "row_id": 47,
+      "name": "Huff Lake ",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1080.0000000000005,
+      "latent_cm": [
+        2.215941828274068,
+        2.7514353456063425,
+        3.464013020465206
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9995388655545043
+    },
+    {
+      "row_id": 36,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 15.0,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        2.6153640115611805,
+        3.2425610311831385,
+        4.1896913819133115
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.03394263975922822
+    },
+    {
+      "row_id": 268,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 26.000000000000004,
+      "upper_cm": 27.0,
+      "latent_cm": [
+        1.8966196379964706,
+        2.3743582412459534,
+        3.001029095265793
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.0004989263416096713
+    },
+    {
+      "row_id": 46,
+      "name": "Hager Pond ",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 104.99999999999997,
+      "latent_cm": [
+        2.2643857566569427,
+        2.809484566803271,
+        3.5496414696869327
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9962301539167218
+    },
+    {
+      "row_id": 292,
+      "name": "Goldeye Lake, winter 1981 lake core",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 575.0000000000001,
+      "latent_cm": [
+        0.9420282444116037,
+        1.3553176385878425,
+        1.891770614633721
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9995680472962188
+    },
+    {
+      "row_id": 100,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.0,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.4058496325695662,
+        1.8302490644329217,
+        2.395155223784957
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.05905140976201818
+    },
+    {
+      "row_id": 27,
+      "name": "Moscow, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 59.999999999999986,
+      "latent_cm": [
+        3.0291832189999504,
+        3.870096510874359,
+        5.286999420209722
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9923589980546743
+    },
+    {
+      "row_id": 72,
+      "name": "Nordegg Bridge",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        0.9534861772715726,
+        1.366913677534884,
+        1.906885902869928
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9224520113792871
+    },
+    {
+      "row_id": 280,
+      "name": "Lake Louise, core LL1",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.999999999999999,
+      "latent_cm": [
+        1.2187725280830708,
+        1.6359033078878626,
+        2.1889425878188185
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9431673214346156
+    },
+    {
+      "row_id": 299,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.0,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        1.371391104738324,
+        1.7946766482166974,
+        2.3629396964548777
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.13231606068370685
+    },
+    {
+      "row_id": 279,
+      "name": "Copper Lake, core COPL1",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        1.2553804522620766,
+        1.6731270584443372,
+        2.2303812788276836
+      ],
+      "latent_satisfies": 0.0005086263020833334,
+      "predictive_probability_of_event": 0.2767217356177637
+    },
+    {
+      "row_id": 63,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 6.999999999999999,
+      "latent_cm": [
+        1.4354795116481285,
+        1.8602221694450414,
+        2.438786388526488
+      ],
+      "latent_satisfies": 0.3159586588541667,
+      "predictive_probability_of_event": 0.3975729573059336
+    },
+    {
+      "row_id": 68,
+      "name": "Johnson Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 156.0,
+      "latent_cm": [
+        1.2586495314140567,
+        1.6769835207374795,
+        2.2382922159713865
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9981694334769654
+    },
+    {
+      "row_id": 281,
+      "name": "Lower Burstall Lake, core LBSL2",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.3686966222633046,
+        1.7916586521976248,
+        2.3737183481370994
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8732266314009922
+    },
+    {
+      "row_id": 237,
+      "name": "Dismal Lake, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 141.00000000000003,
+      "latent_cm": [
+        2.5797181764119785,
+        3.2018732689974967,
+        4.260143515981357
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9966525397549203
+    },
+    {
+      "row_id": 62,
+      "name": "Upper Kananaskis Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 2.0,
+      "latent_cm": [
+        1.4079739726154983,
+        1.830136205063909,
+        2.425671932634984
+      ],
+      "latent_satisfies": 0.71478271484375,
+      "predictive_probability_of_event": 0.5367891674525221
+    },
+    {
+      "row_id": 238,
+      "name": "Rocky Ridge Lake, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 161.00000000000003,
+      "latent_cm": [
+        2.7152915188441016,
+        3.3932354925093517,
+        4.581832940097686
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9968361427136859
+    },
+    {
+      "row_id": 283,
+      "name": "Sibbald Lake, core SIBL1",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 49.99999999999999,
+      "latent_cm": [
+        1.2709653821218314,
+        1.691044068901295,
+        2.2658331139104
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9954552387326531
+    },
+    {
+      "row_id": 291,
+      "name": "Upper Elk Valley terrace, north of Elkford",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 10.000000000000002,
+      "latent_cm": [
+        1.5310947736091534,
+        1.956153272644666,
+        2.5872899035490935
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9597738696068596
+    },
+    {
+      "row_id": 67,
+      "name": "Frederick Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 27.999999999999996,
+      "latent_cm": [
+        1.2501265062217246,
+        1.6703730355270832,
+        2.243949843764595
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9928529143901813
+    },
+    {
+      "row_id": 73,
+      "name": "Hasse Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 1.0,
+      "latent_cm": [
+        0.7029956612586008,
+        1.1095113982567804,
+        1.6347176298180088
+      ],
+      "latent_satisfies": 0.2894083658854167,
+      "predictive_probability_of_event": 0.45504980053369665
+    },
+    {
+      "row_id": 239,
+      "name": "Horseshoe Lake, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 211.00000000000003,
+      "latent_cm": [
+        2.584833688397545,
+        3.2133711037200343,
+        4.328685860285277
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9975574425681808
+    },
+    {
+      "row_id": 295,
+      "name": "West Calgary, Harrison high-terrace pit",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        1.223106401729212,
+        1.6433293524201815,
+        2.2278201089357177
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8911309355889695
+    },
+    {
+      "row_id": 296,
+      "name": "E.L. Smith project, southwest Edmonton",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 100.00000000000004,
+      "latent_cm": [
+        0.695086006194293,
+        1.1012501332228368,
+        1.6296400615827698
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9981322673742739
+    },
+    {
+      "row_id": 254,
+      "name": "Redfish Lake, RDF07-1A, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        2.6907062889644777,
+        3.4066333213508964,
+        4.636566614519179
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8309964186835405
+    },
+    {
+      "row_id": 255,
+      "name": "Redfish Lake, RDF07-4A, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        2.6914998381112927,
+        3.4061666383782683,
+        4.63818743271919
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8309636015849263
+    },
+    {
+      "row_id": 256,
+      "name": "Little Redfish Lake, LRFL08-02, Idaho",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        2.6885882598690345,
+        3.400719276972889,
+        4.633212806023472
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8313210790118702
+    },
+    {
+      "row_id": 289,
+      "name": "Foy Lake, core A, drive 4",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 7.999999999999998,
+      "latent_cm": [
+        2.0314446884974435,
+        2.5185869603734474,
+        3.352134517171853
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.8999573778956589
+    },
+    {
+      "row_id": 290,
+      "name": "Foy Lake, core C",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 108.99999999999997,
+      "latent_cm": [
+        2.031347896930509,
+        2.5183533094480164,
+        3.3520033591310647
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9965949921644608
+    },
+    {
+      "row_id": 14,
+      "name": "Lower Decker Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 299.99999999999994,
+      "latent_cm": [
+        2.670543816535394,
+        3.3820472091102807,
+        4.595428233106674
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9980991623836956
+    },
+    {
+      "row_id": 11,
+      "name": "Pettit Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        2.655319506477827,
+        3.368577875556174,
+        4.565846166353164
+      ],
+      "latent_satisfies": 0.99951171875,
+      "predictive_probability_of_event": 0.7432749408786646
+    },
+    {
+      "row_id": 74,
+      "name": "Beverley",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        0.6748969346985552,
+        1.079460337612998,
+        1.6068593915842513
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9497897059688353
+    },
+    {
+      "row_id": 282,
+      "name": "Summit Lake, Waterton, core SUML1",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 142.99999999999994,
+      "latent_cm": [
+        1.753542587164711,
+        2.197866129040096,
+        2.934048852989183
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9975238468015751
+    },
+    {
+      "row_id": 75,
+      "name": "Lofty Lake",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.2,
+      "latent_cm": [
+        0.4904794319662445,
+        0.8853136305294084,
+        1.3883798843728412
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.059066222733373676
+    },
+    {
+      "row_id": 32,
+      "name": "Sheep Mountain Bog",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 42.00000000000001,
+      "latent_cm": [
+        2.1788414322492926,
+        2.7061125734442233,
+        3.6695167254909067
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9923289661230826
+    },
+    {
+      "row_id": 3,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        1.7180456969878448,
+        2.2592373256003824,
+        3.0988750695250715
+      ],
+      "latent_satisfies": 0.8072509765625,
+      "predictive_probability_of_event": 0.41927457324806744
+    },
+    {
+      "row_id": 4,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 2.0,
+      "upper_cm": 6.0,
+      "latent_cm": [
+        1.7595952495434948,
+        2.3009206587795465,
+        3.1556227971658974
+      ],
+      "latent_satisfies": 0.8489583333333334,
+      "predictive_probability_of_event": 0.4233903918256586
+    },
+    {
+      "row_id": 55,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 4.0,
+      "upper_cm": 12.0,
+      "latent_cm": [
+        1.1086826507150054,
+        1.536450079968348,
+        2.2124932309211354
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.12650550008673997
+    },
+    {
+      "row_id": 66,
+      "name": "South Saskatchewan River",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.999999999999999,
+      "latent_cm": [
+        0.9084517012583846,
+        1.3301213132091356,
+        1.9575238219970288
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.924740948544689
+    },
+    {
+      "row_id": 57,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 10.000000000000002,
+      "upper_cm": 30.000000000000004,
+      "latent_cm": [
+        1.1030252166764911,
+        1.5308373633463406,
+        2.206123208723328
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.01968165433282178
+    },
+    {
+      "row_id": 56,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 6.999999999999999,
+      "upper_cm": 9.000000000000002,
+      "latent_cm": [
+        1.0803668953618484,
+        1.5085307147087093,
+        2.1847789262419703
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.019168557167982173
+    },
+    {
+      "row_id": 278,
+      "name": "Jenny Lake, JEN16-2",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 54.00000000000001,
+      "latent_cm": [
+        1.3403196586486863,
+        1.8335818826829464,
+        2.6169179828189693
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9954283996111162
+    },
+    {
+      "row_id": 276,
+      "name": "Jenny Lake, JEN15-3A",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 62.99999999999999,
+      "latent_cm": [
+        1.338608868419511,
+        1.831947056880682,
+        2.6141605917846586
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9959342049837429
+    },
+    {
+      "row_id": 10,
+      "name": "Jenny Lake, Wyoming",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 54.50000000000001,
+      "latent_cm": [
+        1.3374727763333354,
+        1.8307835220720352,
+        2.6124108093701177
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9954652990575169
+    },
+    {
+      "row_id": 277,
+      "name": "Jenny Lake, JEN16-1A",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 48.00000000000001,
+      "latent_cm": [
+        1.3386055152339187,
+        1.8317980968090521,
+        2.614374053364873
+      ],
+      "latent_satisfies": 1.0,
+      "predictive_probability_of_event": 0.9950037004240743
+    },
+    {
+      "row_id": 275,
+      "name": "Jenny Lake, JEN13-2E",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 4.0,
+      "latent_cm": [
+        1.3386841867383903,
+        1.8316708244222968,
+        2.614516984929815
+      ],
+      "latent_satisfies": 0.9999186197916666,
+      "predictive_probability_of_event": 0.8080775049487746
+    },
+    {
+      "row_id": 81,
+      "name": null,
+      "event": "interval",
+      "lower_cm": 0.4,
+      "upper_cm": 0.5,
+      "latent_cm": [
+        1.354715595142998,
+        1.8333452364580343,
+        2.644055431887152
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.026384295895152954
+    }
+  ],
+  "archive_predictions": {
+    "inventory_sha256": "a5bf8c55a9bf36fe9679ef95d6e2976dadaf54829c3a6ad716928257315e4a1d",
+    "sites": {
+      "B2020-023": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.895614835262852,
+          5.486055995077656,
+          7.986607835526446
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-042": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3374727763333354,
+          1.8307835220720352,
+          2.6124108093701177
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-047": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          11.032775563465014,
+          17.376322238556813,
+          23.99017906560707
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-054": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.745255279839753,
+          7.310210110571849,
+          11.631833571089423
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-099": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.0535038576224443,
+          3.9293550941625575,
+          5.0537534986296375
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-148": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.280770592218181,
+          2.828143632711031,
+          3.477328842871544
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-169": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.9380947717411885,
+          2.433164010908707,
+          3.0151013493446515
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-205": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.6145457874899627,
+          2.0587704369116007,
+          2.6094722194810225
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-017": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.7180456969878448,
+          2.2592373256003824,
+          3.0988750695250715
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-019": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.7595952495434948,
+          2.3009206587795465,
+          3.1556227971658974
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-229": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0038488273769817,
+          1.441646187293728,
+          1.9972041624966343
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-291": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.4904794319662445,
+          0.8853136305294084,
+          1.3883798843728412
+        ],
+        "coincident_with_training": true
+      },
+      "W2017-SHADOW": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.0370027752946944,
+          3.889899606561244,
+          4.946018659952559
+        ],
+        "coincident_with_training": true
+      },
+      "W2017-SUNRISE": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.0488047070655746,
+          3.917312415209715,
+          4.962971499561434
+        ],
+        "coincident_with_training": true
+      },
+      "M2024-ROUNDWA": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.3602641219508222,
+          2.9261262818755664,
+          3.6030520053763047
+        ],
+        "coincident_with_training": true
+      },
+      "R2021-LONG": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.325931906068505,
+          4.371462140519152,
+          5.6675964074338525
+        ],
+        "coincident_with_training": true
+      },
+      "M2014-CLELAND-F": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4058496325695662,
+          1.8302490644329217,
+          2.395155223784957
+        ],
+        "coincident_with_training": true
+      },
+      "MK2012-PATJENS": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.880760265450087,
+          7.474458451645385,
+          11.94676495579662
+        ],
+        "coincident_with_training": true
+      },
+      "S2023-DOG-OR": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.995751503239954,
+          5.68993771986447,
+          8.112002696037711
+        ],
+        "coincident_with_training": true
+      },
+      "S2023-WHITEPINE": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.350815765528028,
+          6.487828430643996,
+          9.68458751759399
+        ],
+        "coincident_with_training": true
+      },
+      "MW1986-SKULL": {
+        "reading": "dispersed_no_continuous_bed",
+        "latent_cm": [
+          3.852781778208793,
+          5.390460427252515,
+          7.687252442808547
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-206": {
+        "reading": "unclear_thickness",
+        "latent_cm": [
+          1.5379347738294582,
+          1.9802418846273844,
+          2.5246793068388045
+        ],
+        "coincident_with_training": true
+      },
+      "P1999-BEAVER-OR": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.6460915137768533,
+          5.237100109651106,
+          7.863508653827634
+        ],
+        "coincident_with_training": true
+      },
+      "S2003-MEDICINE": {
+        "reading": "unclear_thickness",
+        "latent_cm": [
+          1.7371123520391893,
+          4.09893288726424,
+          9.327114804428101
+        ],
+        "coincident_with_training": true
+      },
+      "H1997-MAHONEY": {
+        "reading": "unclear_thickness",
+        "latent_cm": [
+          2.002675951990497,
+          2.5107185892778947,
+          3.080854302769566
+        ],
+        "coincident_with_training": true
+      },
+      "SG1989-LODGEPOLE": {
+        "reading": "unclear_thickness",
+        "latent_cm": [
+          19.954219460056233,
+          28.94649534933403,
+          37.66858563291622
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-004": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.037245286726597,
+          1.6978814264703146,
+          2.8148335663942907
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-264": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0699140339260125,
+          1.481309197084847,
+          2.025008601529297
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-290": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.6748969346985552,
+          1.079460337612998,
+          1.6068593915842513
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-232": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9084517012583846,
+          1.3301213132091356,
+          1.9575238219970288
+        ],
+        "coincident_with_training": true
+      },
+      "R1967-BB326-36": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.215684670753628,
+          2.4325126982190124,
+          3.3748474651119515
+        ],
+        "coincident_with_training": true
+      },
+      "SP2007-THU": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.132155389538539,
+          2.654808691937034,
+          3.2704571807931107
+        ],
+        "coincident_with_training": true
+      },
+      "SP2008-RID": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.0148322024682104,
+          2.5186031653641683,
+          3.11066936423865
+        ],
+        "coincident_with_training": true
+      },
+      "CH2008-WIN": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.806367452385651,
+          2.2751208346362635,
+          2.8492720394282394
+        ],
+        "coincident_with_training": true
+      },
+      "CH2008-THU": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9345586332418443,
+          1.3427046128282625,
+          1.877124599410328
+        ],
+        "coincident_with_training": true
+      },
+      "CH2008-RED": {
+        "reading": "inspected_no_bed",
+        "latent_cm": [
+          0.47859246537866407,
+          0.8698438424657495,
+          1.3814409285349414
+        ],
+        "coincident_with_training": true
+      },
+      "HER2014-DIS": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.5797181764119785,
+          3.2018732689974967,
+          4.260143515981357
+        ],
+        "coincident_with_training": true
+      },
+      "HER2014-RRL": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.7152915188441016,
+          3.3932354925093517,
+          4.581832940097686
+        ],
+        "coincident_with_training": true
+      },
+      "HER2014-HOR": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.584833688397545,
+          3.2133711037200343,
+          4.328685860285277
+        ],
+        "coincident_with_training": true
+      },
+      "ROS2004-FRO": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.6263677042123594,
+          2.1104677640911826,
+          2.660027714847939
+        ],
+        "coincident_with_training": true
+      },
+      "ROS2004-EAG": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3358429893168209,
+          1.7639158447993035,
+          2.30305385631437
+        ],
+        "coincident_with_training": true
+      },
+      "SC2020-RS15": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.95323789473742,
+          2.472976427122334,
+          3.077314093500962
+        ],
+        "coincident_with_training": true
+      },
+      "OS2012-SFL": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.957816712933806,
+          2.476527324034219,
+          3.0807031994258978
+        ],
+        "coincident_with_training": true
+      },
+      "OS2012-POC": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.9618855032365097,
+          2.482826186007563,
+          3.0875394227218282
+        ],
+        "coincident_with_training": true
+      },
+      "MAR2009-S15": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          6.906594326829243,
+          11.045770746758299,
+          16.323350805827957
+        ],
+        "coincident_with_training": true
+      },
+      "SHP2023-RDF1A": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.6907062889644777,
+          3.4066333213508964,
+          4.636566614519179
+        ],
+        "coincident_with_training": true
+      },
+      "SHP2023-RDF4A": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.6914998381112927,
+          3.4061666383782683,
+          4.63818743271919
+        ],
+        "coincident_with_training": true
+      },
+      "SHP2023-LRFL": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.6885882598690345,
+          3.400719276972889,
+          4.633212806023472
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-045": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.655319506477827,
+          3.368577875556174,
+          4.565846166353164
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-251": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4921338445441574,
+          2.014828473921521,
+          2.5756554490945747
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-203": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.487182128369904,
+          2.010618385389642,
+          2.5715333328326624
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-141": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.2643857566569427,
+          2.809484566803271,
+          3.5496414696869327
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-129": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.5180033188401025,
+          3.114572857573848,
+          3.9346590828255135
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-147": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.215941828274068,
+          2.7514353456063425,
+          3.464013020465206
+        ],
+        "coincident_with_training": true
+      },
+      "FLV93-C1": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.23015095009236694,
+          0.5895161495172022,
+          1.6191791930982193
+        ],
+        "coincident_with_training": true
+      },
+      "FLV93-C7": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.23181763906957956,
+          0.5919313542957078,
+          1.6223265867492545
+        ],
+        "coincident_with_training": true
+      },
+      "FLV94-FC-AUG": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.20313193143108949,
+          0.5422438611022408,
+          1.5337417776198543
+        ],
+        "coincident_with_training": true
+      },
+      "MWB07-LIL": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.759047138226622,
+          5.243838574284764,
+          7.284275845647412
+        ],
+        "coincident_with_training": true
+      },
+      "MWB07-DH": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.965540954097856,
+          7.723148277761545,
+          12.359725440470948
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-079": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.7868249072904,
+          5.244966613358222,
+          7.130906057974384
+        ],
+        "coincident_with_training": true
+      },
+      "B1997-COPL1": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2553804522620766,
+          1.6731270584443372,
+          2.2303812788276836
+        ],
+        "coincident_with_training": true
+      },
+      "B1997-LBSL2": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3686966222633046,
+          1.7916586521976248,
+          2.3737183481370994
+        ],
+        "coincident_with_training": true
+      },
+      "B1997-LL1": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2187725280830708,
+          1.6359033078878626,
+          2.1889425878188185
+        ],
+        "coincident_with_training": true
+      },
+      "B1997-SIBL1": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2709653821218314,
+          1.691044068901295,
+          2.2658331139104
+        ],
+        "coincident_with_training": true
+      },
+      "B1997-SUML1": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.753542587164711,
+          2.197866129040096,
+          2.934048852989183
+        ],
+        "coincident_with_training": true
+      },
+      "B2019-BEGBIE": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3845554060070533,
+          2.008120889168711,
+          2.5901542213307103
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-106": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.1788414322492926,
+          2.7061125734442233,
+          3.6695167254909067
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-132": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4902340608304792,
+          2.128696704899073,
+          2.7250742506446297
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-133": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.3948707504909383,
+          2.970128941410175,
+          3.7208127470154713
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-136": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.3769976165876914,
+          2.946327148892335,
+          3.693636038900463
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-137": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.5057406438570142,
+          2.12469566763663,
+          2.7174240215480734
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-138": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.501089143507407,
+          2.118678927435061,
+          2.7109424551930736
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-140": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.504965314440648,
+          2.1212927517757323,
+          2.7135490828870155
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-217": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4079739726154983,
+          1.830136205063909,
+          2.425671932634984
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-245": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2501265062217246,
+          1.6703730355270832,
+          2.243949843764595
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-250": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2586495314140567,
+          1.6769835207374795,
+          2.2382922159713865
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-275": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9534861772715726,
+          1.366913677534884,
+          1.906885902869928
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-285": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.7029956612586008,
+          1.1095113982567804,
+          1.6347176298180088
+        ],
+        "coincident_with_training": true
+      },
+      "E1997-A12": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.073530672472525,
+          2.580779204356011,
+          3.1662797278335435
+        ],
+        "coincident_with_training": true
+      },
+      "E1997-B7B": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.076577509258771,
+          2.583567109440868,
+          3.1690952234061234
+        ],
+        "coincident_with_training": true
+      },
+      "E1997-C5": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.074105291802332,
+          2.581242150706944,
+          3.1674499865133696
+        ],
+        "coincident_with_training": true
+      },
+      "E1997-D8": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.0691562717544283,
+          2.577206572415387,
+          3.1627998850892682
+        ],
+        "coincident_with_training": true
+      },
+      "F2018-ELSMITH": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.695086006194293,
+          1.1012501332228368,
+          1.6296400615827698
+        ],
+        "coincident_with_training": true
+      },
+      "G1988-GOL": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9420282444116037,
+          1.3553176385878425,
+          1.891770614633721
+        ],
+        "coincident_with_training": true
+      },
+      "G1989-KOBAU": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.088199832384445,
+          2.599807013843296,
+          3.1845049564937735
+        ],
+        "coincident_with_training": true
+      },
+      "G1989-MICA": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.026248344305655,
+          1.4425214134979498,
+          1.9681747107482155
+        ],
+        "coincident_with_training": true
+      },
+      "H1973-CALGARY": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.223106401729212,
+          1.6433293524201815,
+          2.2278201089357177
+        ],
+        "coincident_with_training": true
+      },
+      "H1976-ELK": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.5310947736091534,
+          1.956153272644666,
+          2.5872899035490935
+        ],
+        "coincident_with_training": true
+      },
+      "H1999-KILPOOLA-2": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.144683069125584,
+          2.665665479166485,
+          3.264850002283381
+        ],
+        "coincident_with_training": true
+      },
+      "H2026-FROG": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4505217750185055,
+          2.078760037090605,
+          2.6666906944047613
+        ],
+        "coincident_with_training": true
+      },
+      "H2026-SWANSON": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3648216876314678,
+          1.9914070623103826,
+          2.5727823501905043
+        ],
+        "coincident_with_training": true
+      },
+      "H2026-WORLEY": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3300701056126623,
+          1.9595805018830483,
+          2.5393377995995943
+        ],
+        "coincident_with_training": true
+      },
+      "L2016-STOWELL": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          1.4065113646920324,
+          2.0007728545352297,
+          2.57830767583476
+        ],
+        "coincident_with_training": true
+      },
+      "L2024-JEN13-2E": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3386841867383903,
+          1.8316708244222968,
+          2.614516984929815
+        ],
+        "coincident_with_training": true
+      },
+      "L2024-JEN15-3A": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.338608868419511,
+          1.831947056880682,
+          2.6141605917846586
+        ],
+        "coincident_with_training": true
+      },
+      "L2024-JEN16-1A": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3386055152339187,
+          1.8317980968090521,
+          2.614374053364873
+        ],
+        "coincident_with_training": true
+      },
+      "L2024-JEN16-2": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3403196586486863,
+          1.8335818826829464,
+          2.6169179828189693
+        ],
+        "coincident_with_training": true
+      },
+      "M2012-ONOFF02": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.6726026785780551,
+          1.0718699492229395,
+          1.603432379575207
+        ],
+        "coincident_with_training": true
+      },
+      "M2013-NEL01": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.907197811152994,
+          2.39739283589524,
+          2.9985967832149805
+        ],
+        "coincident_with_training": true
+      },
+      "M2013-NEL03": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.8966196379964706,
+          2.3743582412459534,
+          3.001029095265793
+        ],
+        "coincident_with_training": true
+      },
+      "N2004-CASTOR": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.3829295200357548,
+          2.9604197365462617,
+          3.630129054509931
+        ],
+        "coincident_with_training": true
+      },
+      "S2009-FOY-A": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.0314446884974435,
+          2.5185869603734474,
+          3.352134517171853
+        ],
+        "coincident_with_training": true
+      },
+      "S2009-FOY-C": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.031347896930509,
+          2.5183533094480164,
+          3.3520033591310647
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-002": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.3118071412941846,
+          0.7110581482325102,
+          1.3225480792501585
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-003": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.2670100440837359,
+          1.021658775712862,
+          3.728984313808234
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-007": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9518489468446533,
+          1.4693093587441381,
+          2.134682463498196
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-022": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.76608160852335,
+          7.369805670299995,
+          12.025710038077428
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-034": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          5.573268734688968,
+          45.21626632778939,
+          204.83202795518622
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-050": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          5.9601203280424215,
+          8.72288771624432,
+          14.353133158500457
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-051": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0621494388764467,
+          1.553148907114782,
+          2.4745541312554
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-055": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          4.576205345691132,
+          6.98740064985911,
+          11.238166380870238
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-060": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.8866683600521776,
+          5.4473387693625615,
+          7.649221384970237
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-065": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.6967018880003835,
+          5.061399586235255,
+          6.941085194480532
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-101": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.2248203685840475,
+          4.200438809286598,
+          5.623532356946538
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-110": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          3.5183641073776866e-09,
+          0.017479472173262706,
+          0.5274120364041684
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-112": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4046376683890123,
+          1.8482125069930437,
+          2.6532752547229914
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-115": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.5121299857454606,
+          3.1794843734100953,
+          3.967070879079901
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-116": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.521477192610943,
+          3.1882092073033323,
+          3.9764325837191006
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-135": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4295635742783934,
+          1.869576373340068,
+          2.6290228763055294
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-139": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.5082050167085288,
+          2.1298823604575206,
+          2.7240148517921474
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-159": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          7.028841929864918e-28,
+          0.00015945276296632134,
+          0.06994690547871006
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-164": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4025374984468162,
+          1.9432820862742044,
+          2.508445120163356
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-168": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.01182788037207,
+          2.512415864415232,
+          3.1203392295310617
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-179": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.6616058765669544,
+          2.1465831517524316,
+          2.695394315178831
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-190": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0180402862253655,
+          1.4480270075678336,
+          2.1145699861224405
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-208": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3344733746807844,
+          1.782873572422254,
+          2.3383657739260286
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-212": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.373902329122846,
+          1.8031977054164132,
+          2.345522905924401
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-221": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4354795116481285,
+          1.8602221694450414,
+          2.438786388526488
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-246": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2694209465896862,
+          1.6884535478290528,
+          2.257800497144343
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-258": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2187725280830708,
+          1.6359033078878626,
+          2.1889425878188185
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-263": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0969998946713337,
+          1.5127190397984431,
+          2.062568106807443
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-274": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9420282444116037,
+          1.3553176385878425,
+          1.891770614633721
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-278": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.82168217325895,
+          1.2307787218888153,
+          1.7803799724715428
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-282": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.6711520027120796,
+          1.078219983860911,
+          1.5935482279737663
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-286": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.7051655557338177,
+          1.1127860219177623,
+          1.637316851955251
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-292": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          6.276900006410378e-32,
+          8.15823029635275e-05,
+          0.048025944919263264
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-293": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          7.303206364936953e-29,
+          0.00012943649213624026,
+          0.05961945656555684
+        ],
+        "coincident_with_training": false
+      },
+      "S2017-IR": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          1.5270663761343987e-08,
+          0.023661262195874895,
+          0.5560059153733942
+        ],
+        "coincident_with_training": false
+      },
+      "J2021-BB": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          7.205437028852808e-19,
+          0.0008616521894064426,
+          0.22840597627469267
+        ],
+        "coincident_with_training": false
+      },
+      "J2021-SB-C2": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          2.2963657358579155e-21,
+          0.0005059507337427865,
+          0.12460555467137785
+        ],
+        "coincident_with_training": false
+      },
+      "J2021-TI": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          7.060421132792747e-24,
+          0.00031349907262691584,
+          0.09770846173666566
+        ],
+        "coincident_with_training": false
+      },
+      "R2019-BCK284": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          9.437042304378824e-15,
+          0.002431976485355698,
+          0.3020121446483018
+        ],
+        "coincident_with_training": false
+      },
+      "D2024-NGRIP": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          1.033061570274258e-31,
+          8.437384490463657e-05,
+          0.048484198854258156
+        ],
+        "coincident_with_training": false
+      },
+      "M2023-10G195": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          3.1894140527589783e-28,
+          0.00015071893859351545,
+          0.06806044933424513
+        ],
+        "coincident_with_training": false
+      },
+      "J2025-RSP15B": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          0.7996306545841873,
+          1.3007510411553367,
+          1.9343608841379636
+        ],
+        "coincident_with_training": false
+      },
+      "J2025-NRS14A": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.8066661342010184,
+          1.309710060480165,
+          1.9442035393144832
+        ],
+        "coincident_with_training": false
+      },
+      "P2018-MORT12": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          3.2824935064676243e-46,
+          1.52506718175718e-05,
+          0.019775792655604602
+        ],
+        "coincident_with_training": false
+      },
+      "M2019-NUANGOLA": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          6.860178180286973e-20,
+          0.0006984152965759423,
+          0.14765064852646817
+        ],
+        "coincident_with_training": false
+      },
+      "M2019-POUND": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          7.143025093781442e-28,
+          0.00015956539278516084,
+          0.0699677890816064
+        ],
+        "coincident_with_training": false
+      },
+      "M2019-SOUTHWEST": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          8.108673940227744e-28,
+          0.00016088305937629252,
+          0.07024408693095394
+        ],
+        "coincident_with_training": false
+      },
+      "GNEHRP-BEAVER": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.264150279835441,
+          1.9815061816624415,
+          2.57583703917882
+        ],
+        "coincident_with_training": false
+      },
+      "GNEHRP-SAWYER": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.6736680420287873,
+          3.3616000577102803,
+          4.228377077616051
+        ],
+        "coincident_with_training": false
+      },
+      "GNEHRP-TARBOO": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.014633321756053,
+          2.631592147276251,
+          3.292717780111442
+        ],
+        "coincident_with_training": false
+      },
+      "GNEHRP-BULLRUN": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.9532936834393615,
+          5.562081679237533,
+          7.725854347932615
+        ],
+        "coincident_with_training": false
+      },
+      "G2011-FEL01": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.787907781617124,
+          1.2031428416119174,
+          1.7498259908844176
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D01": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.893133816299499,
+          5.465140952474982,
+          7.670551279452598
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D02": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.701989735640398,
+          5.069203241459471,
+          6.952952144549993
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D17": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3293533384052811,
+          1.7633857943917763,
+          2.5033581898612662
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D19": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4160971327767078,
+          1.8595201620452797,
+          2.664840907475751
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D20": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0634054249535108,
+          1.5562308120673967,
+          2.5068092003377256
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D21": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.9824376662696827,
+          1.5013978883366759,
+          2.1711766108862465
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D22": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.3735477114252755,
+          0.7544859654190331,
+          1.346085899111606
+        ],
+        "coincident_with_training": false
+      },
+      "Y1990-D25": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.24294164475202923,
+          0.948743781318746,
+          3.444094571940852
+        ],
+        "coincident_with_training": false
+      },
+      "C2014-DRY": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          99.17131341168026,
+          118.55471675022916,
+          143.87600126437673
+        ],
+        "coincident_with_training": false
+      },
+      "C2014-CROOK": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          101.53048316864215,
+          121.63154252049011,
+          146.5171105220097
+        ],
+        "coincident_with_training": false
+      },
+      "C2014-460": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          107.91542892057319,
+          129.92255376938115,
+          155.9865359360941
+        ],
+        "coincident_with_training": false
+      },
+      "C2014-JOHN": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          111.63299261527878,
+          134.84547043619312,
+          162.72996791693194
+        ],
+        "coincident_with_training": false
+      },
+      "C2014-JACK": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          117.2624601131924,
+          142.15467601814825,
+          171.01649140467615
+        ],
+        "coincident_with_training": false
+      },
+      "R1982-BCV3": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.1441245971619565,
+          2.669842696418991,
+          3.465589891297084
+        ],
+        "coincident_with_training": true
+      },
+      "R1982-KOOT-1020": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.1441245971619565,
+          2.669842696418991,
+          3.465589891297084
+        ],
+        "coincident_with_training": true
+      },
+      "M2013-NEL02": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.8415587491978405,
+          2.310869589686184,
+          2.9155691125268066
+        ],
+        "coincident_with_training": false
+      },
+      "M2012-ONOFF01": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.6727054347692224,
+          1.071985859467587,
+          1.6035372514228659
+        ],
+        "coincident_with_training": false
+      },
+      "M2012-ONOFF03": {
+        "reading": "attribution_uncertain",
+        "latent_cm": [
+          0.6727247017621212,
+          1.0720073204460334,
+          1.6035558304945834
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2704": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0180402862253655,
+          1.4480270075678336,
+          2.1145699861224405
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2820": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2694209465896862,
+          1.6884535478290528,
+          2.257800497144343
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2821": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.2694209465896862,
+          1.6884535478290528,
+          2.257800497144343
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2701": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0969998946713337,
+          1.5127190397984431,
+          2.062568106807443
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2702": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0969998946713337,
+          1.5127190397984431,
+          2.062568106807443
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2851": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0969998946713337,
+          1.5127190397984431,
+          2.062568106807443
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2854": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.0969998946713337,
+          1.5127190397984431,
+          2.062568106807443
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2927": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.735644431653088,
+          1.1445436151992732,
+          1.7024207209130886
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2928": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.7340240699474806,
+          1.1428802628247643,
+          1.7007312836271735
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2906": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.733306768924093,
+          1.14202580843922,
+          1.6600584025530207
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2930": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.7221498558326477,
+          1.1294450586827183,
+          1.6485470273234948
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2861": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.5756691931739516,
+          0.9681807559025697,
+          1.4881185411091014
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2858": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.569484848409027,
+          0.9617965407445118,
+          1.4811998706278002
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-UA2963": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.82168217325895,
+          1.2307787218888153,
+          1.7803799724715428
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R58": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.6730567137459139,
+          1.0723777885390633,
+          1.6038765415226204
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R59": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.8419729855597419,
+          1.2763441528957764,
+          1.9355100339824038
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R60": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.7746338994021272,
+          1.3548201351131355,
+          1.9496119398477167
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R61": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.4065642806244245,
+          2.000821339875023,
+          2.5783650962911935
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R62": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          1.3999579862219325,
+          1.8248196255938214,
+          2.396465136114668
+        ],
+        "coincident_with_training": false
+      },
+      "J2019-S1R63": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.6701960338819342,
+          1.0768153400554958,
+          1.592560818785309
+        ],
+        "coincident_with_training": false
+      },
+      "G1989-PONOKA": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          0.8592150523327658,
+          1.2696386825727053,
+          1.818856873032563
+        ],
+        "coincident_with_training": false
+      },
+      "B2020-048": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.670543816535394,
+          3.3820472091102807,
+          4.595428233106674
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-094": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          3.0291832189999504,
+          3.870096510874359,
+          5.286999420209722
+        ],
+        "coincident_with_training": true
+      },
+      "B2020-118": {
+        "reading": "occurrence_only",
+        "latent_cm": [
+          2.421792998284491,
+          3.0626998597134447,
+          3.799619911313595
+        ],
+        "coincident_with_training": true
+      }
+    },
+    "scenarios": {},
+    "usage": "Predictions only. Coincident bounds already contribute once to the accepted quantitative likelihood."
+  },
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "distal_budget": {
+    "donor_reference_tail_to_core_odds": {
+      "Santa Maria 1902": 0.12228980213463429,
+      "Quizapu 1932": 2.7009896692936874,
+      "Novarupta 1912": 2.420692312263672,
+      "Hudson 1991": 1.187524116429101
+    },
+    "predictive_df": 3,
+    "centre_log_odds": -0.012954807438836993,
+    "scale_log_odds": 1.609013260484478,
+    "reference_log_odds": [
+      0.8740674038690085,
+      1.899782003247695,
+      3.4074228038265777
+    ],
+    "physical_distal_volume_fraction": [
+      0.6617305948044072,
+      0.8220658192370631,
+      0.9037739045071139
+    ]
+  },
+  "terminal_continuation": {
+    "volume_fraction_beyond_last_sampled_rank": [
+      0.008392553046321282,
+      0.04915007043419861,
+      0.4065760628797521
+    ],
+    "sampling_rule": "Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit.",
+    "unrestricted_volume_interval95_km3": [
+      99.63882398948192,
+      513.6977660396677
+    ],
+    "transfer_multiplier_intervals95_km3": {
+      "0.25": [
+        84.16787339505417,
+        225.65588763397216
+      ],
+      "1.0": [
+        86.18811095532315,
+        267.32333191908305
+      ],
+      "4.0": [
+        92.38421927760454,
+        447.09719392291896
+      ]
+    }
+  },
+  "median_map_volume_km3": 105.39513429894478,
+  "estimate_source": "median-field.json#median_map_volume_km3",
+  "conditional_volume_interval95_km3": [
+    86.18811095532315,
+    267.32333191908305
+  ],
+  "slab_volume_intervals95_km3": [
+    [
+      0.5083672288891872,
+      21.315594586387924
+    ],
+    [
+      3.8145202890403493,
+      44.61200974545265
+    ],
+    [
+      27.913097653097264,
+      105.3153509089839
+    ],
+    [
+      29.735077697102852,
+      82.97373726465112
+    ],
+    [
+      8.567836808806764,
+      22.080170784555047
+    ],
+    [
+      2.4946844581635936,
+      13.552610455620556
+    ],
+    [
+      -0.0,
+      0.0
+    ]
+  ],
+  "volume_intervals95_by_tail_km3": {
+    "power": [
+      86.84730007427984,
+      286.68435414074537
+    ],
+    "exponential": [
+      84.7944146149463,
+      234.97558172724598
+    ]
+  }
+}
