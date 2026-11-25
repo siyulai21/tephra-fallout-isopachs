@@ -1,5 +1,9 @@
 # Release history
 
+## Pinatubo Layer C across five methods
+
+The directional and spherical fits complete the five-method comparison on 235 localities. The whole-Earth median-thickness maps integrate to 5.78 km³ for directional, 6.13 km³ for spherical and 7.37 km³ for nested footprints. The spherical baseline retains a chain-mixing warning. The case includes the integrated thickness quartiles, 705 global held-out predictions and the three 1 cm contours against 151 offshore survey entries. [Maps, volume estimates and diagnostics](eruptions/pinatubo-1991-layer-c/README.md)
+
 ## Pinatubo spherical fit on 235 localities
 
 The whole-Earth spherical median map integrates to 6.13 km³ with integrated thickness quartiles of 4.36–7.91 km³. Four of eight prior fits retain sampling warnings, including the three-fan baseline. [Map, geographic prediction and saved draws](eruptions/pinatubo-1991-layer-c/README.md#spherical-mixture-convergence)

@@ -42,6 +42,8 @@ Replay the contour screens directly from the published spherical fits with `pyth
 
 ## Verify a publication
 
+For the Pinatubo Layer C and total TBJ airfall editions, replay the geographic score of every observation against the buffered splits, the probabilities of the reported ranges and limits, and the archived sampler attempts. Run `python -m benchmarks.global_case_validation --case pinatubo-1991-layer-c` or `--case ilopango-tbj`. The case pages link the resulting site tables.
+
 | Command | Evidence checked |
 |---|---|
 | `python -m benchmarks.pinatubo_sensitivity --output results/pinatubo-source-tests` | Pinatubo marine holdout, map-reading holdout, two-sided marine ranges and upper-endpoint regional refits. [Checks and results](../archive/2026-11-24-case-editions/pinatubo-layer-c-208/source-checks/README.md) |
