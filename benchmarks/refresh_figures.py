@@ -39,7 +39,7 @@ def recorded_observations(record, home):
     current = current.subset([by_id[i] for i in data.row_ids])
     np.testing.assert_allclose(current.interval_log_upper, data.interval_log_upper, equal_nan=True)
     np.testing.assert_allclose(current.xy, data.xy, rtol=1e-12, atol=1e-7)
-    for key in ("censored", "lower_censored", "row_ids"):
+    for key in ("censored", "lower_censored", "reported_minimum", "row_ids"):
         np.testing.assert_array_equal(getattr(current, key), getattr(data, key))
     for key in ("log_value", "log_sd"):
         np.testing.assert_allclose(getattr(current, key), getattr(data, key), rtol=1e-13, atol=1e-14)
@@ -72,7 +72,8 @@ def same_description(actual, expected, where="model"):
         assert actual == expected, (where, actual, expected)
 
 
-def regional_models(data, report):
+def regional_fields(data, report):
+    """Refit the saved regional specifications on supplied observation arrays."""
     fitted = {}
     gp = report["methods"]["stacked"]["model"]
     components = [SpatialModel(Candidate(**c["model"]["candidate"])).fit(data) for c in gp["components"]]
@@ -81,6 +82,11 @@ def regional_models(data, report):
     spline = report["methods"]["spline"]["model"]
     fitted["spline"] = TrendRegularizedSpline(SplineCandidate(**spline["candidate"]),
         quadrature_order=spline["quadrature_order"]).fit(data, bounds=report["fit_bounds_km"])
+    return fitted
+
+
+def regional_models(data, report):
+    fitted = regional_fields(data, report)
     checks = {}
     region = SurveyRegion(data.xy)
     for key, model in fitted.items():

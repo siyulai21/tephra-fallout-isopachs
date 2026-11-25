@@ -83,18 +83,10 @@ This API requires justified evidence and covariance. Legacy pseudo rows are not 
 
 ## Geographic prediction and regional volume
 
-Four geographic folds test held-out predictions. Within each training fold, the component models refit their trends and covariance parameters, then the ensemble estimates its weights from inner predictions. Measurements contribute log densities and bounds contribute one-sided probabilities. The GP and spline share the same folds, buffer and observation hull. Each GP volume draw uses one component over the entire hull. [Ensemble weights and volume uncertainty](gp-ensemble.md) · [Matched validation](regional-comparison.md)
+Four geographic folds test held-out predictions. Within each training fold, the component models refit their trends and covariance parameters, then the ensemble estimates its weights from inner predictions. Measured thicknesses and reported minima contribute log densities. An upper limit contributes a cumulative probability, and a range uses both endpoints. The GP and spline share the same folds, buffer and observation hull. Each GP volume draw uses one component over the entire hull. [Ensemble weights and volume uncertainty](gp-ensemble.md) · [Matched validation](regional-comparison.md)
 
 ## Lower bounds and combined fallout
 
-A recovered layer that ends before the original base constrains thickness from below. For `Kind=lower_limit` with positive `Limit_cm=L`, the likelihood is
-
-\[
-P(Y>L\mid z)=\Phi\!\left(\frac{z-\log L}{\sqrt{\sigma^2+v}}\right).
-\]
-
-This is the survival counterpart of the existing upper-limit likelihood, evaluated with a stable log-normal-CDF function. Its negative log is convex in latent log thickness. The same conditional Laplace approximation applies, with the gradient sign reversed and the Hessian form preserved. Trend and covariance scales continue to be fitted to exact observations; bounds constrain the latent field conditional on those estimates. This remains a two-stage conditional method.
-
-All selection, stacking, discrepancy fitting and outer scores use the corresponding tail probability. Interval coverage and RMSE exclude censored rows. Mixing exact-density and censored-probability scores is useful for comparing candidates on the same observation records and censoring pattern; scores across differently censored datasets are not directly comparable evidence of superiority. [Censoring terminology](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.CensoredData.html).
+A section that ends before the deposit base can establish a geological minimum. Preserve that qualifier in the reported table. A positive minimum `L` enters the current GP as a point observation of log thickness `log(L)`, with the same error model, trend estimation and covariance fitting as any other measured point. An upper limit uses its cumulative probability and an interval uses the probability between its endpoints. The same observation rules apply to component selection, ensemble weighting, validation and map overlays. Point coverage and RMSE include the fitted minima. [Source and fitting fields](reported-minimum-fitting.md)
 
 For Minoan, the target is one total field `T_total(s)` for Plinian plus co-ignimbrite/dispersed fallout. At each site, use the reported total minus an identified turbidite, or a recovered-fallout lower bound. Fit and sample the combined field once. No phase boundary is fitted, no missing phase is assigned zero thickness, and no separately fitted fan volumes or interval endpoints are added. A single directional mean with spatial residuals can represent local departures but does not guarantee recovery of every unsampled lobe. [Audit and source decisions](../../data/audits/Minoan/README.md).

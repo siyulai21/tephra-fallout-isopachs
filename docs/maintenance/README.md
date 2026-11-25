@@ -13,6 +13,8 @@ The preceding map edition and its original complete-draw intervals remain availa
 
 ## Checking a map
 
+When refitting or replotting, use the registered fitting table. Every site reported only as a lower limit shares the measurement symbol and its point thickness at all distances. Verify the upper-limit and interval symbols against their respective likelihoods and retain the geological qualifiers in the source tables. Run `python -m benchmarks.minimum_fit_inputs` and `python -m benchmarks.minimum_fit_results` for the registered editions. [Observation policy](../methods/reported-minimum-fitting.md)
+
 Inspect the actual rendered full and near-vent panels. Check the outer contour, its enclosed row count and any shortfall at the 1 cm floor. Confirm that the innermost line encloses a modeled site, that qualifying contours cross the near panel, and that shoreline detail matches the scale. The local frame must resolve the vent and use the same limits for all methods on one input. Verify the median integral and the two quartile integrals on the same domain. Retain the full regional hull and all numerical flags. [Map and volume definitions](../OUTPUTS.md#read-the-map-and-its-volume)
 
 ### Replay a figure

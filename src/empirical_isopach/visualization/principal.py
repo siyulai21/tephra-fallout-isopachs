@@ -104,7 +104,10 @@ def case_section(home, prefix="", *, reports=None, regional_subdir="", name=None
                      f"| {number(row['thickness_q25_volume_km3'])}–{number(row['thickness_q75_volume_km3'])}{'' if ok else ' †'} "
                      f"| {'—' if s is None else f'{s:.3f}'}{'' if row['heldout_checks_passed'] else ' †'} "
                      f"| {'—' if c is None else f'{c:.1%}'} |")
-    lines += ["","Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.", "",
+    coverage = ("Coverage counts held-out measurements and reported minima fitted as points."
+                if regional and reg["input"].get("n_minima_fitted_as_measurements")
+                else "Coverage counts exact withheld measurements.")
+    lines += ["","Lower scores indicate better geographic prediction. "+coverage+" A dagger marks a fit, integration or validation warning.", "",
               "## Full deposits and near-vent detail", "",
               "Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. "
               "The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. "

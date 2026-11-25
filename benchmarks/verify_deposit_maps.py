@@ -188,8 +188,10 @@ def main():
     from src.empirical_isopach.core.catalog import datasets
     for record in datasets():
         home = result_home(record)
-        assert case_section(home,"results/") in (home.parent/"README.md").read_text()
-        if "published_methods" in record:
+        case = Path("eruptions") / record["slug"]
+        prefix = home.relative_to(case).as_posix() + "/"
+        assert case_section(home, prefix) in (case / "README.md").read_text()
+        if "published_methods" in record or record.get("reported_file"):
             data, meta = audited_data(record["path"])
             if {"stacked", "spline"} <= set(published_methods(record)):
                 verify_regional(record, home, meta)

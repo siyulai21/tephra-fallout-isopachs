@@ -1,5 +1,9 @@
 # Release history
 
+## Reported lower limits at all distances
+
+The registered fitting tables use each lower-only reading as a point at its threshold. The original source qualifiers remain recoverable for every locality. Upper-limit and interval rows retain their respective one-sided and two-sided probabilities. Seven of nine eruptions contain lower-only readings. [Comparison by eruption and distance](comparisons/reported-minima/README.md) · [Fitting and plotting convention](docs/methods/reported-minimum-fitting.md) · [Previous results and input identities](archive/2026-11-25-lower-limit-policy/README.md)
+
 ## Pinatubo Layer C across five methods
 
 The directional and spherical fits complete the five-method comparison on 235 localities. The whole-Earth median-thickness maps integrate to 5.78 km³ for directional, 6.13 km³ for spherical and 7.37 km³ for nested footprints. The spherical baseline retains a chain-mixing warning. The case includes the integrated thickness quartiles, 705 global held-out predictions and the three 1 cm contours against 151 offshore survey entries. [Maps, volume estimates and diagnostics](eruptions/pinatubo-1991-layer-c/README.md)

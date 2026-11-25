@@ -118,7 +118,8 @@ def observations(ax, data, size=18, *, meta=None):
 
 
 def observation_legend(fig, data, extra=(), *, meta=None, columns=None):
-    handles = [Line2D([], [], marker="o", color=INK, markerfacecolor="white", ls="", label="Exact thickness"),
+    point_label = "Point thickness (includes reported minima)" if data.reported_minimum.any() else "Exact thickness"
+    handles = [Line2D([], [], marker="o", color=INK, markerfacecolor="white", ls="", label=point_label),
                Line2D([], [], marker="*", color=SOURCE, ls="", markersize=9, label="Source")]
     for present, marker, label in ((np.any(data.lower_censored & ~data.interval), "^", "Lower bound"),
                                    (data.interval.any(), "s", "Thickness interval"),

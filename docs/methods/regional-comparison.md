@@ -6,7 +6,7 @@ The current workflow compares one **GP ensemble** and one **trend-regularized cu
 
 ## Region and volume estimand
 
-The matched comparison region is the convex hull of all accepted exact and upper/lower-bound locations in the source-centred WGS84 Lambert azimuthal equal-area projection. Pseudo-points are ignored, including their coordinates. The vent is not inserted into the hull. The region can bridge unsampled gaps and exclude unsampled proximal deposits: these are **regional bulk fallout volumes, not complete eruption volumes**. Version 0.9 adds a separate [local support and contour audit](supported-isopachs.md) to every comparison; the hull is not treated as evidence that its interior is adequately sampled.
+The matched comparison region is the convex hull of all accepted point, upper-limit and interval locations in the source-centred WGS84 Lambert azimuthal equal-area projection. Pseudo-points are ignored, including their coordinates. The vent is not inserted into the hull. The region can bridge unsampled gaps and exclude unsampled proximal deposits: these are **regional bulk fallout volumes, not complete eruption volumes**. Version 0.9 adds a separate [local support and contour audit](supported-isopachs.md) to every comparison; the hull is not treated as evidence that its interior is adequately sampled.
 
 The spline fitting rectangle is the coordinate bounding box plus 5% of each span. This geometry-only rule defines a numerical domain, not a deposit boundary. Both methods integrate the same hull. The spline refuses predictions beyond its rectangle. No global tails or artificially closed contours enter the comparison.
 
@@ -36,9 +36,11 @@ Every outer training model is also integrated on the original hull after complet
 
 Ten fixed seeds are used for each of four scenarios: smooth radial/directional thinning, a secondary lobe, a missing northeast sampling sector, and censored observations. None is generated from the fitted GP or spline distribution. Each run has 60 training locations, independent 0.25-log-unit observation noise and 400 independent test sites inside its training-site hull.
 
-For censoring, training values below log thickness 1 become upper limits at 1; values above 3 become lower bounds at 3. Test observations remain exact. Both methods see identical inputs, region and automatic buffer. Regional truth is integrated to a tighter 0.001% tolerance. Reports include prediction accuracy, latent coverage, volume errors and conditional volume-interval coverage.
+In the censored scenario, training values below log thickness 1 are upper limits at 1. Values above 3 are reported minima fitted as points at 3. Test observations retain their measured values. Both methods see identical inputs, region and automatic buffer. Regional truth is integrated to a tighter 0.001% tolerance. Reports include prediction accuracy, latent coverage, volume errors and conditional volume-interval coverage.
 
-Forty trials were attempted; 38 completed for both methods. Two heavily censored trials lacked enough exact measurements in nested geographic training subsets and remain explicit failures, not silently excluded successes. Metrics describe completed trials.
+Both methods completed all 40 current trials, including the ten censored scenarios. [Current matched trials](../../comparisons/reported-minima/regional-benchmark/README.md)
+
+The earlier lower-censored benchmark attempted 40 trials and completed 38 for both methods. Two heavily censored trials lacked enough exact measurements in nested geographic training subsets and remain explicit failures, not silently excluded successes. Metrics describe completed trials.
 
 These are small development stress tests, not an external calibration certificate. Unfavorable outcomes are retained without retuning rules after inspecting test outcomes.
 

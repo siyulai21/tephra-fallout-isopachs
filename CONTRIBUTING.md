@@ -1,5 +1,8 @@
 # Working on this repository
 
+Keep the original source qualifier in every audit. On the registered fitting input, every lower-only thickness is a point at the stated value, at every distance. Upper limits and two-sided ranges retain their respective likelihoods. Apply these rules to model training, validation and figure changes. [Observation and plotting contract](docs/methods/reported-minimum-fitting.md)
+
+
 [Project home](README.md) · [Source map](src/README.md) · [Regional protocol](docs/methods/regional-comparison.md)
 
 [Add an eruption](docs/NEW_ERUPTION.md) · [Add a method](docs/ADDING_METHOD.md)

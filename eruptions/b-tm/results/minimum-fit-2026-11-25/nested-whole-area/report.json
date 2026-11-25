@@ -1,0 +1,546 @@
+{
+  "protocol": "nested-observed-range-v3",
+  "name": "B-Tm",
+  "input": {
+    "source": "data/eruptions/B-Tm_cryptotephra_minimum_fit.csv",
+    "input_sha256": "c7698d6b6ecbe7d0fe18b5ccc4a6cb180f78bcb61f168dce3bda8e1a51ba928a",
+    "vent_lonlat": [
+      128.057,
+      42.006
+    ],
+    "projection": "+proj=laea +lat_0=42.006 +lon_0=128.057 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
+    "n_measurements": 67,
+    "n_upper_limits": 4,
+    "n_lower_limits": 0,
+    "ignored_pseudo_rows": [],
+    "ignored_extra_columns": [
+      "EvidenceID",
+      "Site"
+    ],
+    "fitting_policy": "lower-only-at-reported-minimum-v1",
+    "n_reported_measurements": 64,
+    "n_minima_fitted_as_measurements": 3,
+    "minimum_as_measurement_rows": [
+      2,
+      3,
+      65
+    ],
+    "reported_source": "data/eruptions/B-Tm_cryptotephra.csv",
+    "reported_source_sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+    "audit": {
+      "file": "audits/B-Tm/cryptotephra-principal.json",
+      "sha256": "7fd6ab677cdb3178f1f5794b2cf27aba92170f1d4ecbb79e47c435abe11a536e",
+      "case": "principal",
+      "definition": "Sixty-eight directly quantitative source rows plus three inferred upper limits on local bulk fallout. Lake bounds condition on a concentration-depth response at least as high as the published B-Tm reference at Suigetsu. The peat bound conditions on a three-slice mass budget and a bulk-density floor. Each interpreted site enters once."
+    },
+    "interpreted_upper_limits": [
+      {
+        "id": "longgang",
+        "name": "Lake Sihailongwan",
+        "row_id": 70,
+        "limit_cm": 0.06,
+        "latitude": 42.283333,
+        "longitude": 126.6
+      },
+      {
+        "id": "quanyang",
+        "name": "Quanyang peat",
+        "row_id": 71,
+        "limit_cm": 0.64,
+        "latitude": 42.35,
+        "longitude": 127.75
+      },
+      {
+        "id": "old-084",
+        "name": "Lake Kushu",
+        "row_id": 72,
+        "limit_cm": 0.45,
+        "latitude": 45.431944,
+        "longitude": 141.036944
+      }
+    ]
+  },
+  "thinning_source_sha256": "fa89b48de0bfeef6e67e9c2bf8ffa9d929bd7a09388f615f5ad8cdd7d8bd7ec7",
+  "posterior_sha256": "321cd34facb5d1e7acf10ab2f6d1cd6832da8c3ea869e5192e7f75b888d6ef03",
+  "draws": 49152,
+  "population_check_passed": true,
+  "area_check": [
+    {
+      "nodes_per_scramble": 8192,
+      "median_relative_error": 0.00019921331524286323,
+      "q95_relative_error": 0.001426093721710364,
+      "maximum_relative_error": 0.045813214508419575,
+      "passed": true
+    }
+  ],
+  "spatial_volume_budget": {
+    "parts": [
+      "retained_exact_site_triangles",
+      "unmeasured_proximal",
+      "beyond_farthest_exact_site",
+      "other_gaps"
+    ],
+    "sectors": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "fraction_by_part": [
+      [
+        0.005881966889884662,
+        0.05602751403005819,
+        0.09437278934357163
+      ],
+      [
+        1.4783042098690718e-05,
+        7.478314689094551e-05,
+        0.00022622875240075886
+      ],
+      [
+        0.003261749241590365,
+        0.21860481210613214,
+        0.8396021110280582
+      ],
+      [
+        0.15610766326755152,
+        0.7233989999196782,
+        0.9102135273329562
+      ]
+    ],
+    "fraction_by_sector": [
+      [
+        0.004514487633229994,
+        0.042432562674995164,
+        0.13874155708842156
+      ],
+      [
+        0.012342002151853937,
+        0.22848817260509008,
+        0.3950623435649521
+      ],
+      [
+        0.092127475112779,
+        0.4243598709583269,
+        0.4740096967274264
+      ],
+      [
+        0.09200658410148256,
+        0.20776401658930513,
+        0.4694657982515804
+      ],
+      [
+        0.008737649250551828,
+        0.031116737082673988,
+        0.3685286508217044
+      ],
+      [
+        0.004187810377517311,
+        0.00675352378912053,
+        0.19762725634214917
+      ],
+      [
+        0.004114174967726208,
+        0.004730814407884948,
+        0.07205898709678071
+      ],
+      [
+        0.0041160757778917435,
+        0.006588199818860593,
+        0.04886635877836872
+      ]
+    ],
+    "highest_5pct_by_total_median_fraction": [
+      0.005749369641719515,
+      1.350377274780167e-05,
+      0.8271918720831406,
+      0.16886635997391752
+    ],
+    "sampled_fields": 256,
+    "highest_5pct_fields": 13
+  },
+  "exact_site_coverage95": {
+    "exact_sites": 67,
+    "covered": 63,
+    "fraction": 0.9402985074626866
+  },
+  "prior_sensitivity": {
+    "baseline": {
+      "effective_draws": 49152.000000006534,
+      "relative_ess": 1.000000000000133,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        49.00921107671456,
+        770.9652697071928
+      ]
+    },
+    "weak_profile_transfer": {
+      "effective_draws": 14855.728093396552,
+      "relative_ess": 0.30224056179599107,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        48.592624538116546,
+        879.4414092766525
+      ]
+    },
+    "broader_peak_prior": {
+      "effective_draws": 49070.21037114905,
+      "relative_ess": 0.9983359857411509,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        48.592624538116546,
+        766.1911717569606
+      ]
+    },
+    "power_tail_prior_80pct": {
+      "effective_draws": 34082.23713368889,
+      "relative_ess": 0.6934048896014179,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        51.51510593318904,
+        740.6688369503843
+      ]
+    },
+    "exponential_tail_prior_80pct": {
+      "effective_draws": 38414.78005951713,
+      "relative_ess": 0.7815507010806707,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        46.7539839812972,
+        793.8084293204755
+      ]
+    },
+    "detached_prior_50pct": {
+      "effective_draws": 37269.93865031094,
+      "relative_ess": 0.7582588429832141,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        49.84295857601103,
+        818.7467868052323
+      ]
+    },
+    "more_distal_ash_prior": {
+      "effective_draws": 34961.382555110096,
+      "relative_ess": 0.7112911489890563,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        52.643661000819264,
+        999.2242394502807
+      ]
+    },
+    "less_distal_ash_prior": {
+      "effective_draws": 28083.28823588604,
+      "relative_ess": 0.5713559618303637,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        45.3237984423289,
+        491.1552769414124
+      ]
+    },
+    "distal_prior_without_Santa Maria 1902": {
+      "effective_draws": 21110.850063495604,
+      "relative_ess": 0.42950134406525886,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        54.742269639406025,
+        624.7718279394076
+      ]
+    },
+    "distal_prior_without_Quizapu 1932": {
+      "effective_draws": 43807.51431780328,
+      "relative_ess": 0.8912661604370785,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        46.14751941484431,
+        738.1610710249093
+      ]
+    },
+    "distal_prior_without_Novarupta 1912": {
+      "effective_draws": 43678.38902857962,
+      "relative_ess": 0.8886390997025476,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        46.14472258031568,
+        746.412626673797
+      ]
+    },
+    "distal_prior_without_Hudson 1991": {
+      "effective_draws": 43615.18190536649,
+      "relative_ess": 0.8873531474887387,
+      "weight_check_passed": true,
+      "volume_interval95_km3": [
+        46.42941841980475,
+        798.3918373930516
+      ]
+    }
+  },
+  "area_km2_at_cm": {
+    "0.01": [
+      1577458.6881576844,
+      22563704.0183665,
+      510065621.72408843
+    ],
+    "0.1": [
+      1443917.292942853,
+      6052073.230733309,
+      140816025.78768247
+    ],
+    "1.0": [
+      1018454.1832465044,
+      1430814.6028099586,
+      15350043.739439128
+    ],
+    "10.0": [
+      14566.664025357188,
+      122618.93104107672,
+      282851.1241679435
+    ],
+    "100.0": [
+      0.0,
+      0.0,
+      681.463303614896
+    ],
+    "1000.0": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "slab_edges_cm": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "power_tail_posterior_fraction": 0.4048665364583333,
+  "geographic_score": 1.6259628574136056,
+  "geographic_folds_passed": 4,
+  "support_status": "completed",
+  "supported_band_policies": [],
+  "fitted_bound_checks": [
+    {
+      "row_id": 70,
+      "name": "Lake Sihailongwan",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.06,
+      "latent_cm": [
+        0.06253472531725157,
+        0.9855494717047367,
+        8.87598739404543
+      ],
+      "latent_satisfies": 0.017659505208333332,
+      "predictive_probability_of_event": 0.04858294932195748
+    },
+    {
+      "row_id": 71,
+      "name": "Quanyang peat",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.64,
+      "latent_cm": [
+        4.495220054725443,
+        9.203244671980299,
+        25.20101373224546
+      ],
+      "latent_satisfies": 0.0,
+      "predictive_probability_of_event": 0.00888279954908707
+    },
+    {
+      "row_id": 59,
+      "name": null,
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.10000000000000002,
+      "latent_cm": [
+        3.7607690905694115e-06,
+        0.36726792226247784,
+        5.385972458076395
+      ],
+      "latent_satisfies": 0.2923990885416667,
+      "predictive_probability_of_event": 0.3053517209468613
+    },
+    {
+      "row_id": 72,
+      "name": "Lake Kushu",
+      "event": "upper",
+      "lower_cm": null,
+      "upper_cm": 0.45,
+      "latent_cm": [
+        0.3681421629822741,
+        1.0753729387072688,
+        2.356562456667973
+      ],
+      "latent_satisfies": 0.06650797526041667,
+      "predictive_probability_of_event": 0.2076119639829376
+    }
+  ],
+  "archive_predictions": {
+    "inventory_sha256": "e64db907e12d68df69604b5b2da6ce9035d649eff0e9a320b164213beb3cefbc",
+    "sites": {
+      "longgang": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          0.06253472531725157,
+          0.9855494717047367,
+          8.87598739404543
+        ],
+        "coincident_with_training": true
+      },
+      "quanyang": {
+        "reading": "dispersed_no_continuous_bed",
+        "latent_cm": [
+          4.495220054725443,
+          9.203244671980299,
+          25.20101373224546
+        ],
+        "coincident_with_training": true
+      },
+      "old-084": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          0.3681421629822741,
+          1.0753729387072688,
+          2.356562456667973
+        ],
+        "coincident_with_training": true
+      },
+      "old-085": {
+        "reading": "cryptotephra_only",
+        "latent_cm": [
+          3.0316187482528014e-06,
+          0.2898319735209956,
+          7.824114137969983
+        ],
+        "coincident_with_training": false
+      },
+      "old-045": {
+        "reading": "dispersed_no_continuous_bed",
+        "latent_cm": [
+          0.0970229667529775,
+          0.7960641170769176,
+          1.6864476042189085
+        ],
+        "coincident_with_training": false
+      },
+      "old-069": {
+        "reading": "dispersed_no_continuous_bed",
+        "latent_cm": [
+          0.031658117962922123,
+          0.7230564474251543,
+          1.9372593039350212
+        ],
+        "coincident_with_training": false
+      }
+    },
+    "scenarios": {},
+    "usage": "Predictions only. Coincident bounds already contribute once to the accepted quantitative likelihood."
+  },
+  "world_map": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "distal_budget": {
+    "donor_reference_tail_to_core_odds": {
+      "Santa Maria 1902": 0.12228980213463429,
+      "Quizapu 1932": 2.7009896692936874,
+      "Novarupta 1912": 2.420692312263672,
+      "Hudson 1991": 1.187524116429101
+    },
+    "predictive_df": 3,
+    "centre_log_odds": -0.012954807438836993,
+    "scale_log_odds": 1.609013260484478,
+    "reference_log_odds": [
+      -6.481770729521305,
+      1.1479768501167893,
+      4.440435471545586
+    ],
+    "physical_distal_volume_fraction": [
+      0.00268494787389828,
+      0.7323941726753607,
+      0.988118843668166
+    ]
+  },
+  "terminal_continuation": {
+    "volume_fraction_beyond_last_sampled_rank": [
+      1.0164015061203679e-05,
+      0.15047831774735826,
+      0.800664330815416
+    ],
+    "sampling_rule": "Matched donor remaining/interior mass ratio at the last training-site isopach rank, with one independent factor-two lognormal transfer per deposit.",
+    "unrestricted_volume_interval95_km3": [
+      48.76660807716876,
+      715.0542913583696
+    ],
+    "transfer_multiplier_intervals95_km3": {
+      "0.25": [
+        45.808822409254155,
+        510.9975260301093
+      ],
+      "1.0": [
+        49.00921107671456,
+        770.9652697071928
+      ],
+      "4.0": [
+        53.43866273940827,
+        1362.1301333540248
+      ]
+    }
+  },
+  "median_map_volume_km3": 68.13308838193947,
+  "estimate_source": "median-field.json#median_map_volume_km3",
+  "conditional_volume_interval95_km3": [
+    49.00921107671456,
+    770.9652697071928
+  ],
+  "slab_volume_intervals95_km3": [
+    [
+      0.1699216672256558,
+      51.00656217240885
+    ],
+    [
+      1.3394028480089588,
+      235.22246482711458
+    ],
+    [
+      11.332389020968378,
+      318.6988367339167
+    ],
+    [
+      25.142296466083387,
+      216.91396825110218
+    ],
+    [
+      1.4280895931731519,
+      24.741270539970284
+    ],
+    [
+      -0.0,
+      0.11361436478261822
+    ],
+    [
+      -0.0,
+      0.0
+    ]
+  ],
+  "volume_intervals95_by_tail_km3": {
+    "power": [
+      53.109065922859294,
+      699.9353361124265
+    ],
+    "exponential": [
+      45.92335689629094,
+      801.327647030972
+    ]
+  }
+}

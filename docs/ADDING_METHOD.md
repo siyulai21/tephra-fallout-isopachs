@@ -6,6 +6,9 @@ A new family joins the same eruption workflow as a peer. It must not silently ch
 
 The registry contract below applies to **regional** model families. The [directional ensemble](methods/directional-multiscale.md) and [spherical mixture](methods/spherical-bearings.md) have separate joint-posterior runners because their complete-field parameter uncertainty does not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
 
+
+Every new family must fit a lower-only site as a point at its reported minimum, fit an upper limit with a cumulative probability, and fit a range with the probability between its two endpoints. Use the matching fit identity in validation, caches and figures. [Observation and map contract](methods/reported-minimum-fitting.md)
+
 ## Regional implementation boundary
 
 Put the implementation in `src/empirical_isopach/models/<family>/`. Add an adapter and one entry in [registry.py](../src/empirical_isopach/models/registry.py) with a stable identifier, label, description, fitting function and optional diagnostic callback. The registry order only controls presentation. The comparison runner, geographic evaluation, report panels and benchmark summaries iterate registered methods; there is no preferred-method field.

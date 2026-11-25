@@ -125,7 +125,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
                       xlabel="Equal-region negative log predictive score ↓",
                       title="Matched geographic holdouts\nAll accepted measurements and likelihood bounds")
         axs[1, 1].axvline(95, color="#566C72", ls="--", lw=1)
-        axs[1, 1].set(xlim=(0, 103), xlabel="Exact-site observation interval coverage (%)",
+        axs[1, 1].set(xlim=(0, 103), xlabel="Fitted-point observation interval coverage (%)",
                       title="Coverage at withheld measurement sites\nDashed line marks nominal 95% coverage")
         for ax in axs.flat:
             ax.grid(axis="x", alpha=.18)
@@ -164,7 +164,7 @@ def all_case_scores(output, cases, *, homes=None, scores_by_case=None):
                    xlabel="Geographic prediction score ↓")
             ax.grid(axis="x", alpha=.18)
             ax.tick_params(labelsize=8)
-        fig.suptitle(f"{len(cases)} eruptions · geographically withheld fallout measurements\nLabels show score and exact-site 95% observation coverage; each case keeps its own score axis.", fontsize=14)
+        fig.suptitle(f"{len(cases)} eruptions · geographically withheld fallout measurements\nLabels show score and fitted-point 95% observation coverage. Each case keeps its own score axis.", fontsize=14)
         fig.legend(handles=[Line2D([], [], c="#4B6068", marker="o", ls="", label="Completed geographic fits"),
                             Line2D([], [], c="#4B6068", marker="x", ls="", label="At least one global geographic fit has a numerical warning")],
                    loc="outside lower center", ncols=2, frameon=False, fontsize=9)

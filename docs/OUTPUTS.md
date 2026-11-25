@@ -2,6 +2,9 @@
 
 Open the eruption page for its current maps, accepted input and field audit. The principal catalogue lists published fits on the registered input. Each row records the input hash, integration area and geographic holdout results. A family awaiting a rerun on a changed dataset has no current estimate. [Eruption catalogue](../eruptions/README.md) · [Numerical results](../comparisons/principal-volumes.csv)
 
+
+Model maps show each lower-only site as a measurement point at the reported minimum. Upper limits and intervals retain their own symbols. Source-audit figures use the original geological classifications. [Model-map observation symbols](methods/reported-minimum-fitting.md)
+
 ## Read the map and its volume
 
 For each fit let $T_p(x)$ denote the pointwise posterior $p$-quantile of latent thickness in cm. All three calculations use the same model, mixture weights, coordinates and physical domain $D$. The reported bulk volume in km³ is

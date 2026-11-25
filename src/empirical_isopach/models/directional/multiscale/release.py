@@ -9,6 +9,7 @@ import shutil
 import numpy as np
 
 from ....core.audit import audited_data
+from ....core.fitting import model_input
 from ....core.geometry import survey_bounds
 from ....contour_support import audit_contours
 from ..archive_readings import load_inventory, positions
@@ -63,6 +64,7 @@ def archive_probes(path, archives, data, meta, model):
 
 
 def assemble(path, folder, name, *, work=None, archives=None, render=True):
+    path = model_input(path, folder)
     data, meta = audited_data(path)
     latitude = meta["vent_lonlat"][1]
     dest = Path(folder) / "multiscale"

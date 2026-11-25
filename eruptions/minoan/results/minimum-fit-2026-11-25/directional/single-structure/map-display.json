@@ -1,0 +1,58 @@
+{
+  "protocol": "report-cartography-v1",
+  "input_sha256": "df65ec634a0edac60510853a5ca3f9e0fe9a3a35820714210874744413709bd1",
+  "posterior_sha256": "27a65af9fb6c806f2710d1d9e540199cbac5ec265507f238d3624c88abdd9590",
+  "coastline_sha256": "db8b8a451c11fa91b6cd36f457d238f204f1ade8f337ef2da9f6cd84a30e6f8e",
+  "coastline_scale": "1:10 million",
+  "central_statistic": "Geometric-mean thickness",
+  "posterior_fields": 512,
+  "posterior_flat_indices_sha256": "2e601144da4a4f551c56f22e9583ca3f06c12eed99f18c7eab70afb6964b9856",
+  "global_bounds_km": [
+    -648.8231393534645,
+    -1016.7983443822626,
+    2349.2731534653053,
+    960.9295377406834
+  ],
+  "local_bounds_km": [
+    -216.62805474791224,
+    -638.5301154325159,
+    1021.1121681878493,
+    878.1832441857615
+  ],
+  "global_grid_shape": [
+    213,
+    322
+  ],
+  "local_grid_shape": [
+    322,
+    263
+  ],
+  "extent_audit": {
+    "minimum_display_contour_cm": 0.1,
+    "search_points": 51840,
+    "edge_refinements": [
+      {
+        "bounds_km": [
+          -648.8231393534645,
+          -1016.7983443822626,
+          2349.2731534653053,
+          960.9295377406834
+        ],
+        "maximum_edge_log10_cm": -1.185263070279781
+      }
+    ],
+    "physical_rim_maximum_log10_cm": -7.525389133474143,
+    "lowest_contour_within_chart": true,
+    "scope": "Display-only finite-grid extent audit, not contour-support validation or an integration boundary."
+  },
+  "whole_earth_view": {
+    "projection": "Mollweide, source longitude at centre",
+    "grid_shape": [
+      181,
+      361
+    ],
+    "edge_note": "Longitude edges join; polar display rows stop at \u00b189.95\u00b0. This display raster is not used to integrate volume."
+  },
+  "volume_calculation_changed": false,
+  "note": "Finite plotting grids summarize saved fields. Thresholds and map windows do not enter inference or volume."
+}

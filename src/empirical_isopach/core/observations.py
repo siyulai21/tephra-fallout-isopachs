@@ -19,6 +19,8 @@ class Observations:
 
     interval_log_upper: np.ndarray | None = None  # NaN for one-sided bounds and exact observations
 
+    reported_minimum: np.ndarray | None = None  # reported lower bounds fitted at their thresholds
+
     def __post_init__(self):
         self.xy = np.asarray(self.xy, dtype=float)
         self.log_value = np.asarray(self.log_value, dtype=float)
@@ -30,11 +32,15 @@ class Observations:
                                else np.asarray(self.lower_censored, dtype=bool))
         self.interval_log_upper = (np.full(n, np.nan) if self.interval_log_upper is None
                                    else np.asarray(self.interval_log_upper, dtype=float))
+        self.reported_minimum = (np.zeros(n, dtype=bool) if self.reported_minimum is None
+                                 else np.asarray(self.reported_minimum, dtype=bool))
         if self.xy.shape != (n, 2) or any(a.shape != (n,) for a in
-                (self.log_value, self.censored, self.log_sd, self.row_ids, self.lower_censored, self.interval_log_upper)):
+                (self.log_value, self.censored, self.log_sd, self.row_ids, self.lower_censored, self.interval_log_upper, self.reported_minimum)):
             raise ValueError("Observation arrays must have matching lengths and xy shape (n, 2).")
         if not all(np.all(np.isfinite(a)) for a in (self.xy, self.log_value, self.log_sd)):
             raise ValueError("Coordinates, log thicknesses, and errors must be finite.")
+        if np.any(self.reported_minimum & self.censored):
+            raise ValueError("A minimum fitted as a point cannot also have a censored likelihood.")
         if np.any(self.log_sd < 0):
             raise ValueError("LogSD cannot be negative.")
         if np.any(self.lower_censored & ~self.censored):
@@ -48,9 +54,16 @@ class Observations:
     def interval(self):
         return np.isfinite(self.interval_log_upper)
 
+    def reported_bounds(self):
+        """Restore source qualifiers for an evidence audit or historical source figure only."""
+        if not np.any(self.reported_minimum):
+            return self
+        return replace(self, censored=self.censored | self.reported_minimum,
+                       lower_censored=self.lower_censored | self.reported_minimum, reported_minimum=None)
+
     def subset(self, indices):
         return replace(self, **{k: getattr(self, k)[indices] for k in
-                               ("xy", "log_value", "censored", "log_sd", "row_ids", "lower_censored", "interval_log_upper")})
+                               ("xy", "log_value", "censored", "log_sd", "row_ids", "lower_censored", "interval_log_upper", "reported_minimum")})
 
     def canonical(self):
         return self.subset(np.lexsort((self.interval_log_upper, self.lower_censored, self.log_sd, self.log_value, self.censored,
@@ -137,7 +150,14 @@ def read_observations(path, *, allow_intervals=True):
     bounds = np.full(len(real), np.nan)
     if interval.any():
         bounds[interval] = np.log(upper)
-    data = Observations(*args, interval_log_upper=bounds).canonical()
+    minimum = np.zeros(len(real), dtype=bool)
+    if "Reported_lower_limit_cm" in real:
+        supplied = real["Reported_lower_limit_cm"]
+        minimum = supplied.notna().to_numpy()
+        if (np.any(minimum & censored) or
+                not np.array_equal(supplied[minimum].to_numpy(dtype=float), value[minimum])):
+            raise ValueError("A fitted reported minimum must equal its positive point value.")
+    data = Observations(*args, interval_log_upper=bounds, reported_minimum=minimum).canonical()
     metadata = {"source": str(path), "input_sha256": sha256(path.read_bytes()).hexdigest(),
                 "vent_lonlat": vent.tolist(), "projection": crs.to_string(),
                 "n_measurements": int((~censored).sum()), "n_upper_limits": int((censored & ~lower_censored).sum()),
@@ -145,6 +165,12 @@ def read_observations(path, *, allow_intervals=True):
                 "ignored_pseudo_rows": (df.index[is_pseudo] + 2).tolist(),
                 "ignored_extra_columns": sorted(set(df) - required - {"Pseudo", "Kind", "Limit_cm", "LogSD"}),
                 "transform_inv": inv}
+    if minimum.any():
+        metadata["fitting_policy"] = "lower-only-at-reported-minimum-v1"
+        metadata["n_reported_measurements"] = int((~censored & ~minimum).sum())
+        metadata["n_minima_fitted_as_measurements"] = int(minimum.sum())
+        metadata["minimum_as_measurement_rows"] = (real.index[minimum] + 2).tolist()
+        metadata["ignored_extra_columns"] = sorted(set(metadata["ignored_extra_columns"]) - {"Reported_lower_limit_cm"})
     if interval.any():
         metadata["n_intervals"] = int(interval.sum())
         metadata["ignored_extra_columns"] = sorted(set(metadata["ignored_extra_columns"])-{"Lower_cm","Upper_cm"})

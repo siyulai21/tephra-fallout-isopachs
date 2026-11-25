@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 
 from .core.catalog import resolve_dataset
+from .core.fitting import model_input
 from .models.registry import REGISTRY
 from .models.nested.report import nested_dataset, whole_area_dataset
 from .reporting import compare_dataset
@@ -20,24 +21,25 @@ def compare(argv=None):
     parser.add_argument("--global-geometry", choices=("displaced", "source-fans", "source-envelope"), help="Override the catalogued spherical-mixture geometry; source-envelope remains experimental")
     parser.add_argument("--archives", type=Path, help="Audited archive inspections and named visibility sensitivities")
     args = parser.parse_args(argv)
+    path = model_input(resolve_dataset(args.csv), args.output)
     if args.regional_only and args.archives:
         parser.error("Archive continuation requires a full comparison or directional run")
-    compare_dataset(resolve_dataset(args.csv), args.output, name=args.name,
+    compare_dataset(path, args.output, name=args.name,
                     progress=lambda message: print(message, flush=True))
     if not args.regional_only:
         from .global_reporting import global_dataset
-        global_dataset(resolve_dataset(args.csv), args.output/"spherical-mixture", name=args.name,
+        global_dataset(path, args.output/"spherical-mixture", name=args.name,
                        geometry=args.global_geometry, archives=args.archives,
                        progress=lambda message: print(message, flush=True))
         from .models.directional.reporting import directional_dataset
-        directional_dataset(resolve_dataset(args.csv), args.output/"directional", name=args.name, archives=args.archives)
-        whole_area_dataset(resolve_dataset(args.csv), args.output/"nested-whole-area", name=args.name, archives=args.archives)
-        nested_dataset(resolve_dataset(args.csv), args.output/"nested-isopachs", name=args.name, archives=args.archives)
-        review_continuations(resolve_dataset(args.csv), args.output)
+        directional_dataset(path, args.output/"directional", name=args.name, archives=args.archives)
+        whole_area_dataset(path, args.output/"nested-whole-area", name=args.name, archives=args.archives)
+        nested_dataset(path, args.output/"nested-isopachs", name=args.name, archives=args.archives)
+        review_continuations(path, args.output)
         from .core.audit import audited_data
         from .visualization.deposit import align_near_views
         if any(args.output.glob("*/median-grid.npz")):
-            align_near_views(args.output,*audited_data(resolve_dataset(args.csv)))
+            align_near_views(args.output,*audited_data(path))
         saved_case_overview(args.output, args.name)
         add_comparison_to_run(args.output)
 
@@ -59,18 +61,19 @@ def global_analysis(argv=None):
     parser.add_argument("--geometry", choices=("directional", "nested-isopachs", "nested-reach", "nested-whole-area", "displaced", "source-fans", "source-envelope"), help="Select a complete-deposit method or a spherical mixture geometry")
     parser.add_argument("--archives", type=Path, help="Audited archive inventory for conditional global predictions")
     args = parser.parse_args(argv)
+    path = model_input(resolve_dataset(args.csv), args.output)
     if args.geometry == "nested-whole-area":
-        return whole_area_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume, archives=args.archives)
+        return whole_area_dataset(path, args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "nested-reach":
         from .models.nested.report import corridor_dataset
-        return corridor_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume, archives=args.archives)
+        return corridor_dataset(path, args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "nested-isopachs":
-        return nested_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume, archives=args.archives)
+        return nested_dataset(path, args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "directional":
         from .models.directional.reporting import directional_dataset
-        return directional_dataset(resolve_dataset(args.csv), args.output, args.name, args.resume, archives=args.archives)
+        return directional_dataset(path, args.output, args.name, args.resume, archives=args.archives)
     from .global_reporting import global_dataset
-    global_dataset(resolve_dataset(args.csv), args.output, name=args.name, resume=args.resume,
+    global_dataset(path, args.output, name=args.name, resume=args.resume,
                    geometry=args.geometry, archives=args.archives,
                    progress=lambda message: print(message, flush=True))
 

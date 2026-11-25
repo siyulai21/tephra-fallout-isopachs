@@ -10,7 +10,7 @@ Let the parent spherical mixture have thickness `T₀(s) = 10⁵ V₀ ∑ wⱼ K
 
 ## Directional reach from the training design
 
-Use finite source-centred authalic chord distances. For exact and lower-bound sites with radii `rᵢ` and bearings `θᵢ`, define the directional reach
+Use finite source-centred authalic chord distances. For point thicknesses, including those reported as minima, and positive intervals with radii `rᵢ` and bearings `θᵢ`, define the directional reach
 
 ```text
 R(θ) = maxᵢ rᵢ max(0, cos(θ − θᵢ))ᵇ
@@ -47,7 +47,7 @@ All accepted thicknesses and bound events see exactly the parent likelihood sinc
 
 The primary volume integrates the mapped pointwise median thickness over the entire Earth. The conditional range integrates the pointwise 25th and 75th thickness percentiles over the same Earth. Positive-weight integrations of coherent deposits separately check the posterior sampling and prior sensitivities. [Map integral and replay checks](../OUTPUTS.md#read-the-map-and-its-volume)
 
-All seven prior alternatives reuse their own checked posterior fits. Each of four buffered geographic folds uses only its training locations and its verified training posterior. Site scores integrate the narrow and contaminated observation distributions, with one-sided probabilities for bounds. The study reports both false extension and missed fallout on 24 existing known-volume fits, including cases with entire sectors missing, invisible proximal caps and diffuse global tails. Some experiments retain unresolved contour areas or failed numerical checks. The real geographic tests do not observe fallout in an entirely unvisited sector.
+All seven prior alternatives reuse their own checked posterior fits. Each of four buffered geographic folds uses only its training locations and its verified training posterior. Site scores integrate the narrow and contaminated observation distributions. Current fits score directly measured thicknesses and lower-only reports at their point values, upper limits by their cumulative probability, and ranges by the probability between both endpoints. The study reports both false extension and missed fallout on 24 existing known-volume fits, including cases with entire sectors missing, invisible proximal caps and diffuse global tails. Some experiments retain unresolved contour areas or failed numerical checks. The real geographic tests do not observe fallout in an entirely unvisited sector.
 
 ```sh
 tephra-isopachs global Aso-4 --output results/aso-spherical

@@ -18,7 +18,7 @@ The `spline` model fits a cubic surface to log thickness. Penalties control chan
 
 ## Directional ensemble
 
-The principal map integrates uncertain fan headings, broad thinning and local departures supported by neighboring sites. The fan can turn or split as distance increases. Each observation contributes its recorded measurement, upper or lower limit, or interval. Integrating the median-thickness surface over Earth gives the principal volume. An additional interval comes from coherent whole-deposit draws. [Field, likelihood and numerical checks](directional-multiscale.md) · [Three-scale maps and matched predictions](../../comparisons/directional/multiscale/README.md)
+The principal map integrates uncertain fan headings, broad thinning and local departures supported by neighboring sites. The fan can turn or split as distance increases. Measured values and reported minima enter as points. Upper limits and two-sided ranges contribute their respective probabilities. Integrating the median-thickness surface over Earth gives the principal volume. An additional interval comes from coherent whole-deposit draws. [Field, likelihood and numerical checks](directional-multiscale.md) · [Three-scale maps and matched predictions](../../comparisons/directional/multiscale/README.md)
 
 The measured-fan sensitivity follows sampled bearings. Earlier experiments isolate structure weighting, radial thinning and the proximal cap. [Measured fans and archive evidence](archive-evidence.md) · [Fixed-direction ensemble](directional-ensemble.md) · [Single-structure equations and sensitivities](directional-continuation.md)
 

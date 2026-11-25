@@ -186,7 +186,7 @@ def main():
     with TemporaryDirectory() as scratch:
         for slug in FIELD_CASES:
             home=survey/slug
-            train,test,meta,_=partition(slug,Path(scratch))
+            train,test,meta,_=partition(slug, Path(scratch), published=True)
             val=read(home/"validation.json")
             assert val["identity"]["training_rows"]==train.row_ids.tolist()
             assert val["identity"]["test_rows"]==test.row_ids.tolist()

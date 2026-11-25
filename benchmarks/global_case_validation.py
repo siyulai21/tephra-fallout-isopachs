@@ -9,9 +9,10 @@ from tempfile import TemporaryDirectory
 import numpy as np
 import pandas as pd
 
-from .publication import published_methods, result_home
+from .publication import published_methods, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
+from src.empirical_isopach.core.fitting import MARKER
 from src.empirical_isopach.visualization.deposit_field import digest
 
 
@@ -117,7 +118,7 @@ def field_validation(folder, input_path, slug, *, verify=True):
             source = raw[int(h["row_id"]) - 2]
             fold = int(h["fold"])
             assert h["row_id"] in partitions[fold][1]
-            kind = source["Kind"]
+            kind = (source.get("Kind") or "measurement").strip().lower()
             assert bool(h["exact"]) == (kind == "measurement")
             score = float(h[score_col])
             event = np.exp(score) if kind != "measurement" else None
@@ -132,26 +133,31 @@ def field_validation(folder, input_path, slug, *, verify=True):
                     for s, w in zip(cal["states"], cal["weights"])
                 )
                 np.testing.assert_allclose(cdf_diff, event, rtol=2e-6, atol=2e-10)
+            qualifier = {}
+            if MARKER in source:
+                lower = source[MARKER]
+                qualifier = dict(reported_kind="lower_limit" if lower else kind,
+                                 reported_lower_limit_cm=float(lower) if lower else np.nan)
             results.append(
                 dict(
                     method=family,
                     fold=fold,
-                    source_id=source["EvidenceID"],
-                    site=source["Site"],
+                    source_id=source.get("EvidenceID") or f"row-{int(h['row_id'])}",
+                    site=source.get("Site") or f"{source['Lat']}, {source['Lon']}",
                     kind=kind,
                     thickness_cm=source["Thickness"],
-                    limit_cm=source["Limit_cm"],
-                    lower_cm=source["Lower_cm"],
-                    upper_cm=source["Upper_cm"],
+                    limit_cm=source.get("Limit_cm", ""),
+                    lower_cm=source.get("Lower_cm", ""),
+                    upper_cm=source.get("Upper_cm", ""),
                     fold_passed=h["fit_passed"],
                     log_predictive_score=score,
-                    probability_of_reported_bound_or_range=event,
+                    probability_of_reported_bound_or_range=event, **qualifier,
                 )
             )
     table = pd.DataFrame(results).sort_values(["method", "fold", "source_id"]).reset_index(drop=True)
     filename = folder / "geographic-site-validation.csv"
     if verify:
-        numeric = ["thickness_cm", "limit_cm", "lower_cm", "upper_cm"]
+        numeric = ["thickness_cm", "limit_cm", "lower_cm", "upper_cm", "probability_of_reported_bound_or_range"]
         for col in numeric:
             table[col] = pd.to_numeric(table[col], errors="raise")
         pd.testing.assert_frame_equal(table, pd.read_csv(filename), check_dtype=False, rtol=2e-7, atol=1e-10)
@@ -254,12 +260,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     cases = {r["slug"]: r for r in datasets()}
     parser.add_argument("--case", required=True, choices=sorted(cases))
+    parser.add_argument("--reported-edition", action="store_true", help="Replay the previous lower-censored source edition")
     parser.add_argument("--folder", type=Path, help="Override the published results directory")
     parser.add_argument("--write-site-table", action="store_true")
     parser.add_argument("--collect-attempts", type=Path, metavar="PRODUCTION",
                         help="Collect verified directional/work and spherical-mixture/posteriors into the report")
     args = parser.parse_args()
-    case = cases[args.case]
+    case = reported_edition(cases[args.case]) if args.reported_edition else cases[args.case]
     if not set(METHODS).issubset(published_methods(case)):
         parser.error("All three global families must be published on the same input")
     folder = args.folder or result_home(case)

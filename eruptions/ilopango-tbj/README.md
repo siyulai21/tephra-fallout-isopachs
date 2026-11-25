@@ -1,6 +1,8 @@
-# Ilopango · total Tierra Blanca Joven airfall
+# Ilopango TBJ (total primary airfall)
 
-The current reconstruction combines primary fallout across eruption phases at **168 localities** in Central America and adjacent waters. The three global fits share 65 point thicknesses, 14 two-sided ranges, 84 lower limits and five upper limits. The regional GP and spline were last published for Unit G alone. [Accepted observations](../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Field logs and audit decisions](../../data/audits/Ilopango-TBJ/field-logs/README.md) · [Download the current estimates](results/principal-volumes.csv)
+The five reconstructions use the same 168 accepted fallout localities. Field reports give 65 measured thicknesses, 84 lower limits, 5 upper limits and 14 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 41 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Ilopango-TBJ/field-logs/README.md) · [Reported table](../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Fitting table](../../data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv)
+
+The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 ## Volumes and geographic prediction
 
@@ -8,28 +10,32 @@ Each estimate integrates the median thickness on its map. The conditional range 
 
 | Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---|---:|---:|---:|---:|
-| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **76.2** | 47.2–133 | 1.234 | 93.8% |
-| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **242** | 96.5–769 | 1.204 | 98.5% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **62.8** | 40.5–97.4 | 1.115 | 93.8% |
+| GP ensemble | observation hull | **17.3** | 10.2–30.1 | 1.799 | 97.3% |
+| Cubic spline | observation hull | **27.6** | 19.8–38.9 | 1.757 | 98.7% |
+| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **38.6** | 24.9–64.3 | 1.808 | 93.3% |
+| [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **90.4** | 51.1–175 | 1.793 | 90.6% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **35.2** | 25.4–58 | 1.761 | 90.6% |
 
-Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Ilopango TBJ (total primary airfall) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Ilopango TBJ (total primary airfall) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/directional/deposit.png)
 
-![Ilopango TBJ (total primary airfall) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Ilopango TBJ (total primary airfall) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/spherical-mixture/deposit.png)
 
-![Ilopango TBJ (total primary airfall) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Ilopango TBJ (total primary airfall) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/nested-isopachs/deposit.png)
 
-## What the field sites constrain
+## Inside the observation hull
 
-The four buffered geographic holdouts passed for each family. No complete contour band passed the shared geographic support screen. Two of the eight spherical prior settings retained numerical warnings. [Geographic predictions at all 168 localities](results/geographic-site-validation.csv) · [Prior checks and source sensitivities](results/README.md)
+![Ilopango TBJ (total primary airfall) · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
-The overview below includes the four Dull et al. core readings and the Osa Peninsula site about 819 km away. The ash correlation at Osa is uncertain. The published sensitivity fits show what changes when that reading or the historical T2 contributions are omitted. [Local evidence and omission fits](results/README.md#distal-and-historical-evidence)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
-![Three all-phase median maps showing every fitted locality and the four reviewed core readings](results/all-sites-map.png)
+## Evidence and checks
 
-Unit G is the widespread upper co-ignimbrite ash. Its two earlier editions cover a different deposit target. [Unit G inputs, maps and validation](../../archive/2026-11-24-case-editions/README.md#ilopango)
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
+
+[Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)

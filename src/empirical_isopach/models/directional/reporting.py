@@ -7,6 +7,7 @@ import shutil
 import numpy as np
 import pandas as pd
 
+from ...core.fitting import model_input
 from ...core.catalog import dataset_record
 from ..mass_mixture.study import audited_data
 from .estimate import estimate
@@ -191,6 +192,7 @@ def render(path, work, output, name=None):
 
 
 def directional_dataset(path, output, name=None, resume=False, *, archives=None):
+    path = model_input(path, output)
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh directional output directory or request resume.")

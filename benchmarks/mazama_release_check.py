@@ -15,7 +15,8 @@ from src.empirical_isopach.visualization.principal import volume_rows
 
 
 def check(home):
-    path = resolve_dataset("Mazama")
+    from .publication import reported_edition
+    path = reported_edition(dataset_record(resolve_dataset("Mazama")))["path"]
     record = dataset_record(path)
     data, meta = audited_data(path)
     identity = meta["input_sha256"]

@@ -182,9 +182,13 @@ def verify_case(record, pair):
 def main():
     from src.empirical_isopach.models.directional.multiscale import engine_sha256
 
-    records = datasets()
+    from .publication import reported_edition
+    records = [reported_edition(record) for record in datasets()]
     provenance = read_json(STUDY / "provenance.json")
-    assert provenance["protocol"] == SCHEMA and provenance["numerical_engine_sha256"] == engine_sha256()
+    original_reader = Path("archive/2026-11-25-lower-limit-policy/observations.py")
+    assert digest(original_reader) == "37dc55a1ca9af46998c21dbfe7d7b4f2f23304a9ec37b39ac7ab6956eb1b1424"
+    assert provenance["protocol"] == SCHEMA
+    assert provenance["numerical_engine_sha256"] == engine_sha256(observation_source=original_reader)
     cases = pd.read_csv(STUDY / "paired-results.csv").set_index("slug")
     geometry = pd.read_csv(STUDY / "geometry.csv.gz")
     assert set(cases.index) == {r["slug"] for r in records} == set(geometry.slug)

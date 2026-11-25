@@ -12,6 +12,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
 from scipy.interpolate import RegularGridInterpolator
 
+from ..core.fitting import map_observation_policy
 from .contour_limits import inner_contour
 
 from ..core.distributions import predictive_distribution
@@ -111,7 +112,7 @@ def regional_maps(output, name, data, metadata, region, models, report):
     contained = bool(np.all(region.vertices >= bounds[:2]) and np.all(region.vertices <= bounds[2:]))
     if not contained:
         raise AssertionError("The map must contain every hull vertex")
-    display = {"protocol":"regional-median-deposit-v3", "input_sha256":metadata["input_sha256"],
+    display = {**map_observation_policy(data, metadata), "protocol":"regional-median-deposit-v3", "input_sha256":metadata["input_sha256"],
         "display_bounds_km":bounds.tolist(), "unchanged_fit_bounds_km":fit_bounds.tolist(),
         "entire_observation_hull_in_frame":contained, "hull_raster_clip":"Exact polygon, not grid-centre mask",
         "all_accepted_locations_in_frame":bool(np.all(data.xy >= bounds[:2]) and np.all(data.xy <= bounds[2:])),

@@ -9,6 +9,7 @@ from scipy.special import ndtr
 from scipy.stats import t as student_t
 from scipy.stats import qmc
 
+from ...core.fitting import model_input
 from ...contour_support import audit_contours
 from ...core.audit import audited_data
 from ...core.catalog import dataset_record
@@ -189,6 +190,7 @@ def figures(folder,name,data,meta,model):
 
 
 def whole_area_dataset(path, output, name=None, *, archives=None, resume=False, budget=True, base_cache=None):
+    path = model_input(path, output)
     output = Path(output)
     if output.exists() and any(output.iterdir()) and not resume:
         raise ValueError("Use a fresh nested-isopach output or verified resume")
@@ -368,6 +370,7 @@ def edge_summary(sites):
 
 def nested_dataset(path, output, name=None, *, archives=None, resume=False, parent=None, budget=None, base_cache=None):
     """Fit the principal dispersal footprints; explicit parent options replay the named historical fit."""
+    path = model_input(path, output)
     if budget is not None or base_cache is not None:
         if parent is not None:
             raise ValueError("Specify a corridor parent or historical whole-area profile options.")
@@ -381,6 +384,7 @@ def nested_dataset(path, output, name=None, *, archives=None, resume=False, pare
 
 def corridor_dataset(path, output, name=None, *, archives=None, resume=False, parent=None):
     """Replay the station-corridor sensitivity and its finite-spread alternatives."""
+    path = model_input(path, output)
     from .reach_report import reach_dataset
     result = reach_dataset(path, output, name, archives=archives, resume=resume, parent=parent)
     from ...visualization.deposit import render_deposit

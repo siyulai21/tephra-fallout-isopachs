@@ -8,6 +8,7 @@ import platform
 import numpy as np
 
 from ...core.audit import audited_data
+from ...core.fitting import model_input
 from ...core.validation import spatial_folds, training_mask, interval_metrics
 from ...validation import automatic_buffer
 from .prior import BASELINE, SENSITIVITIES
@@ -181,6 +182,7 @@ def fit_checked(data, latitude, prior, directory, settings=Sampling(), attempts=
 
 def fit_study(path, output, settings=Sampling(), sensitivity=True, validation=True, progress=print,
               baseline_prior=BASELINE, sensitivity_priors=SENSITIVITIES):
+    path = model_input(path, output)
     data, meta = audited_data(path)
     if validation:
         automatic_buffer(data)  # Fail insufficient-data holdouts before lengthy fits.

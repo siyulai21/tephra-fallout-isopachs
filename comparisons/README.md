@@ -1,10 +1,12 @@
 # How well do the methods predict fallout?
 
-The catalogue contains 43 fits on the current inputs for nine eruptions. Eight eruptions have all five methods, including Pinatubo on 235 Layer C localities. Ilopango has three global fits on 168 all-phase airfall localities. Each row gives the input hash, map domain, median-map integral, integrated thickness quartiles and geographic validation. [Download the current results](principal-volumes.csv) · [Eruption maps and source audits](../eruptions/README.md)
+The catalogue contains 45 fits on the current inputs for nine eruptions. All five methods use the same accepted sites for each eruption, including the 168 all-phase airfall localities at Ilopango and the 235 Layer C localities at Pinatubo. Each row gives the input hash, map domain, median-map integral, integrated thickness quartiles and geographic validation. [Download the current results](principal-volumes.csv) · [Eruption maps and source audits](../eruptions/README.md)
 
-The figure uses the same inputs as the table. Lower scores indicate better prediction at geographically withheld sites. The percentages are coverage of 95% predictive intervals for exact thickness measurements. A cross marks a geographic fit with a numerical warning. The earlier five-method comparisons use their own observations and folds. [Matched study editions](../archive/2026-11-24-case-editions/README.md)
+The figure uses the same inputs as the table. Lower scores indicate better prediction at geographically withheld sites. The percentages are coverage of 95% predictive intervals for fitted point thicknesses, including lower-only reports at their stated minima. A cross marks a geographic fit with a numerical warning. The earlier five-method comparisons use their own observations and folds. [Matched study editions](../archive/2026-11-24-case-editions/README.md)
 
-![Geographic prediction scores and exact-site coverage for the methods fitted to each current input](method-scores.png)
+![Geographic prediction scores and fitted-point coverage for the methods fitted to each current input](method-scores.png)
+
+[Reported lower limits across all distances, including the change in near-vent thickness](reported-minima/README.md)
 
 | Question | Evidence |
 |---|---|

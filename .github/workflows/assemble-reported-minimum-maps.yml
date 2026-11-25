@@ -1,0 +1,73 @@
+name: Assemble verified spherical minimum-fit packets
+on:
+  push:
+    branches: ["codex/minima-assembly/*/*"]
+permissions:
+  actions: read
+  contents: write
+env:
+  MPLBACKEND: Agg
+  OPENBLAS_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            data
+            benchmarks
+            pyproject.toml
+      - name: Identify the sampling run and eruption
+        id: source
+        shell: bash
+        run: |
+          IFS=/ read -r prefix assembly run_id slug <<< "$GITHUB_REF_NAME"
+          [[ "$prefix" == codex && "$assembly" == minima-assembly && "$run_id" =~ ^[0-9]+$ && "$slug" =~ ^[a-z0-9-]+$ ]]
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ steps.source.outputs.run_id }}
+          pattern: posterior-${{ steps.source.outputs.slug }}-*
+          merge-multiple: true
+          path: results/spherical-mixture/posteriors
+      - name: Rebuild the global posterior, all eight prior intervals, validation and figure
+        env:
+          SLUG: ${{ steps.source.outputs.slug }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path("results/spherical-mixture/posteriors")
+          expected = {"baseline", "wide_geography", "volume_prior_shift", "diffuse_tail", "gaussian_errors",
+                      "one_fan", "five_fans", "diffuse_mixture_weights", *[f"validation/fold-{i}" for i in range(4)]}
+          actual = {p.name for p in root.iterdir() if p.is_dir() and p.name != "validation"}
+          actual.update(f"validation/{p.name}" for p in (root / "validation").iterdir() if p.is_dir())
+          assert all((root / key / "attempt-1.json").is_file() for key in expected)
+          if actual != expected:
+              raise ValueError(f"Unexpected sampling partitions: {actual ^ expected}")
+          PY
+          python -u -m benchmarks.lower_limit_spherical "$SLUG" assemble --out results/spherical-mixture
+      - uses: actions/upload-artifact@v4
+        with:
+          name: checked-spherical-${{ steps.source.outputs.slug }}
+          path: results/spherical-mixture
+          retention-days: 7
+      - name: Make the checked packet available for case publication
+        env:
+          SLUG: ${{ steps.source.outputs.slug }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --sparse --force -- results/spherical-mixture
+          git commit -m "Stage reviewed spherical draws and map for $SLUG"
+          git push origin "HEAD:refs/heads/codex/minima-results/$GITHUB_RUN_ID/$SLUG"

@@ -9,6 +9,10 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install '.[test]'
+      - name: Verify source minima, fitted points, bounds, ranges and map symbols
+        run: |
+          python -m benchmarks.minimum_fit_inputs
+          python -m pytest -q tests/test_minimum_fitting.py
       - name: Replay Satsuma field, excavation and marine thickness evidence
         run: |
           python -m benchmarks.sakurajima_satsuma
@@ -26,7 +30,7 @@ jobs:
           python -m benchmarks.pinatubo_offshore
           python -m benchmarks.pinatubo_archive_review
           python -m benchmarks.pinatubo_nested_review --verify
-          python -m benchmarks.global_case_validation --case pinatubo-1991-layer-c
+          python -m benchmarks.global_case_validation --case pinatubo-1991-layer-c --reported-edition
           python -m benchmarks.pinatubo_marine_map --station-table eruptions/pinatubo-1991-layer-c/results/marine-stations.csv --verify
           git diff --exit-code -- data/eruptions/Pinatubo_1991_layer_C_reviewed.csv data/audits/Pinatubo-1991/reaudit
       - name: Reproduce the Mazama source audit and the 300-locality input
@@ -47,7 +51,7 @@ jobs:
           python -c "from src.empirical_isopach.models.registry import active_methods; assert active_methods() == ('stacked', 'spline')"
           python -c "from importlib.util import find_spec; from src.probabilistic_isopach.global_volume import EarthDomain; assert 5.1e8 < EarthDomain.wgs84(36).describe()['surface_area_km2'] < 5.2e8; from src.probabilistic_isopach.catalog import datasets, data_directory; rows = datasets(); assert len({r['slug'] for r in rows}) == len(rows); assert {'aso-4', 'b-tm', 'ilopango-tbj', 'mazama', 'minoan', 'pinatubo-1991-layer-c', 'sakurajima-satsuma', 'tambora', 'ytt'} <= {r['slug'] for r in rows}; assert all(r['path'].is_file() for r in rows); assert (data_directory()/'audits/YTT/provenance.json').is_file(); assert (data_directory()/'audits/Minoan/provenance.json').is_file(); assert find_spec('src.probabilistic_isopach.workbench') is None; assert find_spec('src.probabilistic_isopach.atlas') is None"
           python -c "from src.empirical_isopach.core.catalog import datasets; from src.empirical_isopach.models.mass_mixture.source_protocol import protocol; assert next(r for r in datasets() if r['slug'] == 'b-tm')['global_geometry'] == 'source-fans'; assert protocol('source-fans')[0].source_anchored; assert protocol('source-envelope')[0].supported_basis; assert not protocol('displaced')[0].source_anchored"
-          python -c "from src.empirical_isopach.core.catalog import datasets, data_directory, resolve_dataset; from src.empirical_isopach.models.mass_mixture.study import audited_data; assert all((data_directory()/r['audit']).is_file() for r in datasets() if 'audit' in r); data, meta = audited_data(resolve_dataset('Aso-4')); assert len(data.xy) == 87 and data.censored.sum() == 4 and data.lower_censored.sum() == 3"
+          python -c "from src.empirical_isopach.core.catalog import datasets, data_directory, resolve_dataset; from src.empirical_isopach.models.mass_mixture.study import audited_data; assert all((data_directory()/r['audit']).is_file() for r in datasets() if 'audit' in r); data, meta = audited_data(resolve_dataset('Aso-4')); assert len(data.xy) == 87 and data.censored.sum() == 1 and data.lower_censored.sum() == 0 and data.reported_minimum.sum() == 3"
           python -c "from src.empirical_isopach.visualization.maps import ASSET, coast_rings; assert ASSET.is_file() and (ASSET.parent/'coastline-source.json').is_file(); assert len(coast_rings()) > 1000"
           python - <<'PYTHON'
           import json
@@ -61,14 +65,16 @@ jobs:
           root = data_directory()
           pinatubo = next(r for r in datasets() if r["slug"] == "pinatubo-1991-layer-c")
           data, meta = audited_data(pinatubo["path"])
-          assert (len(data.xy), int((~data.censored).sum())) == (235, 147)
+          assert (len(data.xy), int((~data.censored).sum())) == (235, 178)
+          assert meta["n_minima_fitted_as_measurements"] == 31
           principal = json.loads((root / pinatubo["audit"]).read_text())["cases"]["principal"]
-          assert meta["input_sha256"] == principal["sha256"]
+          assert meta["reported_source_sha256"] == principal["sha256"]
           archive, _ = load_inventory(pinatubo["path"])
           assert len(archive["sites"]) == 151 and not archive["scenarios"]
           ilopango = next(r for r in datasets() if r["slug"] == "ilopango-tbj")
           data, meta = audited_data(ilopango["path"])
-          assert (len(data.xy), int((~data.censored).sum()), int(data.interval.sum())) == (168, 65, 14)
+          assert (len(data.xy), int((~data.censored).sum()), int(data.interval.sum())) == (168, 149, 14)
+          assert meta["n_minima_fitted_as_measurements"] == 84
           archive, _ = load_inventory(ilopango["path"])
           assert len(archive["sites"]) == 5
           for case in (r for r in datasets() if r["slug"] in {"ilopango-tbj", "sakurajima-satsuma"}):
@@ -76,7 +82,7 @@ jobs:
               for source in audit["sources"]:
                   bundled = root / Path(source["file"]).relative_to("data")
                   assert sha256(bundled.read_bytes()).hexdigest() == source["sha256"]
-              assert sha256(case["path"].read_bytes()).hexdigest() == audit["cases"]["principal"]["sha256"]
+              assert sha256((root / case["reported_file"]).read_bytes()).hexdigest() == audit["cases"]["principal"]["sha256"]
           PYTHON
       - name: Verify B-Tm evidence, source sensitivities and thinning comparisons
         run: python -m benchmarks.verify_btm_audit
@@ -102,6 +108,10 @@ jobs:
         run: python -m benchmarks.verify_footprints
       - name: Replay finite-spread volume intervals and matched geographic predictions
         run: python -m benchmarks.verify_extent
+      - name: Replay current minimum-fit maps, all source rows and held-out categories
+        run: |
+          python -m benchmarks.minimum_fit_results
+          python -m benchmarks.minimum_fit_release --verify
       - name: Verify all five Mazama fits and the matched 300-locality holdouts
         run: python -m benchmarks.mazama_release_check
       - run: python -m pytest -q

@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
+from ..core.fitting import map_observation_policy
 from .deposit_field import FAMILIES, PolarField, digest, display_name, doubling_levels, open_field, review_path, sample_field
 from .deposit_integrals import independent_integral, within_cells
 from .deposit_field import write_map_grid
@@ -49,11 +50,13 @@ def deposit_page(old, family, name, receipt, report):
     volume=receipt["median_map_volume_km3"]
     volume_label=f"{volume:,.0f}" if volume>=1000 else f"{volume:,.3g}"
     label = display_name(family, receipt["sources_sha256"])
+    point_caption = ("Circles show point thicknesses, including reported lower limits fitted at their stated values."
+                     if receipt.get("observation_policy") else "Each circle shows a measurement.")
     first = [f"# {name} · {label}", "",
              f"The principal bulk volume is **{volume_label} km³**, the whole-Earth integral of the median-thickness map. "
              f"The conditional thickness-band range is **{lo:,.3g}–{hi:,.3g} km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.{warning}", "",
              f"![{name}, {label}. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)", "",
-             "Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
+             f"{point_caption} Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. "
              f"The {border['level_cm']:g} cm footprint includes {border['inside']} of {border['accepted_rows']} modeled locations. "
              f"The thickest displayed line is {receipt['inner_contour']['level_cm']:g} cm and encloses {receipt['inner_contour']['inside']} fitted locations. "
              "The volume includes fallout beyond the displayed contours. "
@@ -156,7 +159,7 @@ def checked_field(view,data,latitude):
     return field,checks
 
 
-def render_deposit(folder, family, data, meta, name, *, output=None, sampled=None, near_half=None):
+def render_deposit(folder, family, data, meta, name, *, output=None, sampled=None, near_half=None, write_page=True):
     """Integrate and draw the median thickness of the saved posterior."""
     folder=Path(folder)
     dest=Path(output) if output else folder
@@ -195,6 +198,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         writer.writeheader()
         writer.writerows(rows)
     write_map_grid(dest/"median-grid.npz",field,model,family,meta,sources)
+    receipt.update(map_observation_policy(data, meta))
     receipt["median_grid_sha256"]=digest(dest/"median-grid.npz")
     receipt["thickness_area_sha256"]=digest(dest/"thickness-area.csv")
     plate(dest/"deposit.png",name,family,field,data,meta,model,levels,rows,receipt,near_half)
@@ -203,6 +207,8 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         probability_plate(dest,field,model,data,meta,name,receipt)
     receipt["figure_sha256"]=digest(dest/"deposit.png")
     write_json(dest/"deposit.json",receipt)
+    if not write_page:
+        return receipt
     page=folder/"README.md"
     old_hash=digest(page) if page.exists() else None
     old = page.read_text() if page.exists() else ""
@@ -227,7 +233,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         write_json(dest/manifest,hashes)
     return receipt
 
-def align_near_views(home, data, meta, *, source_home=None):
+def align_near_views(home, data, meta, *, source_home=None, redraw=False):
     """Reframe saved maps on one input after all available peer fits have been rendered."""
     home = Path(home)
     source = Path(source_home or home)
@@ -245,13 +251,14 @@ def align_near_views(home, data, meta, *, source_home=None):
         return
     half = near_frame([f for f,_ in charts.values()],data)
     for family,(field,receipt) in charts.items():
-        if receipt["near_half_width_km"]==half:
+        if receipt["near_half_width_km"]==half and not redraw:
             continue
         _,model,sources = open_field(source/family,family,data,meta)
         if sources!=receipt["sources_sha256"]:
             raise ValueError("Near-vent window belongs to a different fitted posterior")
         folder=home/family
         rows=np.genfromtxt(folder/"thickness-area.csv",names=True,delimiter=",",dtype=None,encoding="utf-8",ndmin=1)
+        receipt.update(map_observation_policy(data, meta))
         receipt.pop("figure_sha256")
         plate(folder/"deposit.png",receipt["eruption"],family,field,data,meta,model,np.array(receipt["levels_cm"]),rows,receipt,half)
         receipt["figure_sha256"]=digest(folder/"deposit.png")

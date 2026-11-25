@@ -65,10 +65,10 @@ def calbuco(out):
     return data.subset(groups=="training"),data.subset(groups=="validation"),meta,path
 
 
-def partition(slug,out):
+def partition(slug, out, *, published=False):
     if slug=="calbuco-2015":
         return calbuco(out)
-    rec = next(r for r in records() if r["slug"]==slug)
+    rec = next(r for r in records(published=published) if r["slug"]==slug)
     path = rec["path"]
     data,meta = audited_data(path,allow_intervals=True)
     if slug=="b-tm":

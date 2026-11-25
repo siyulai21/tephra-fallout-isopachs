@@ -9,7 +9,7 @@ import pandas as pd
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.global_reporting import global_dataset
 from .spherical_bearing_summary import build_validation
-from .publication import published_methods
+from .publication import published_methods, result_home
 
 
 def summarize(output, regional_root=Path('eruptions'), published=False, trials=None):
@@ -21,13 +21,13 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
         available = published_methods(record)
         if published and 'spherical-mixture' not in available:
             continue
-        folder = Path('eruptions')/slug/'results'/'spherical-mixture' if published else output/slug
+        folder = result_home(record)/'spherical-mixture' if published else output/slug
         case_dirs[slug] = folder
         path = folder/'report.json'
         if not path.exists():
             raise ValueError(f'Missing completed global report: {path}')
         report = json.loads(path.read_text())
-        regional_path = regional_root/slug/'report.json'
+        regional_path = result_home(record)/'report.json' if published else regional_root/slug/'report.json'
         if not regional_path.exists():
             regional_path = regional_root/slug/'results/report.json'
         val = report['validation']
@@ -104,7 +104,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
         'Each estimate integrates the pointwise median thickness over Earth. The range integrates the pointwise Q25 and Q75 thickness maps. '
         'The separate prior sensitivity envelope summarizes total-volume draws under eight alternative assumptions. '
         '[Model and assumptions](../../docs/methods/spherical-bearings.md)','',
-        '| Eruption | Median map (km³) | Q25–Q75 thickness maps (km³) | Geographic score ↓ | Exact coverage |',
+        '| Eruption | Median map (km³) | Q25–Q75 thickness maps (km³) | Geographic score ↓ | Fitted-point coverage |',
         '|---|---:|---:|---:|---:|']
     for row in rows:
         case = f"[{row['eruption']}](../../eruptions/{row['slug']}/README.md)"

@@ -1,6 +1,8 @@
 # Directional isopachs from the vent to the distal deposit
 
-The multiscale directional ensemble is the principal directional reconstruction for all nine accepted eruptions. The same policy fits 1,091 quantitative locations, including lower limits, upper limits and ranges. It draws a coherent field with a direction that can change with distance, estimates local differences across neighboring sites and integrates the median-thickness surface over Earth. [Equations, assumptions and reproduction](../../../docs/methods/directional-multiscale.md) · [Previous maps and case reports](../../../archive/2026-11-25-directional-geography/README.md) · [Input and model identities, software versions and seeds](provenance.json)
+This method-development study compared the original directional field with the multiscale ensemble on 1,091 quantitative locations. It used the lower-censored inputs archived with the study. Current eruption maps fit lower-only reports as point measurements. [Current directional maps](../README.md) · [Current and previous thickness at each reported minimum](../../reported-minima/README.md)
+
+The multiscale ensemble is the principal directional reconstruction for all nine eruptions. It draws a coherent field with a direction that can change with distance, estimates local differences across neighboring sites and integrates the median-thickness surface over Earth. [Equations, assumptions and reproduction](../../../docs/methods/directional-multiscale.md) · [Previous maps and case reports](../../../archive/2026-11-25-directional-geography/README.md) · [Input and model identities, software versions and seeds](provenance.json)
 
 ## Maps and bulk volumes
 

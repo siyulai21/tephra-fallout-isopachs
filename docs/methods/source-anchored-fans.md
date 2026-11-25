@@ -46,7 +46,7 @@ dtheta/dE     = 1 / [C (1+e cos E)].
 
 The planar angular area weight simplifies to `L^2 (1+e cos E)`. The finite-Earth correction starts with 256 periodic nodes in `E`. Every saved posterior field is checked by doubling and quadrupling the angular resolution. If any component changes by more than `10^-6`, the entire posterior is refitted at twice the resolution, up to three doublings. Earlier resolutions remain recorded; draws are never corrected after fitting. This is a reproducible numerical refinement rule, not a change to physical priors or a geological confidence threshold. Refinement agreement is a numerical error estimate, not an analytical error bound.
 
-Normalizing each fan and mixing it with nonnegative mass weights keeps total volume as the fitted volume parameter. The published estimate integrates pointwise median thickness over Earth. The likelihood retains exact observations, upper/lower bounds, known errors and the broad-error sensitivity framework; residual scatter does not add physical deposit mass.
+Normalizing each fan and mixing it with nonnegative mass weights keeps total volume as the fitted volume parameter. The published estimate integrates pointwise median thickness over Earth. The likelihood uses point densities for measurements and reported minima, probabilities for upper limits and intervals, and the documented errors. Residual scatter enters the broad-error sensitivity and contributes no physical deposit mass.
 
 ## Development evidence and comparisons
 

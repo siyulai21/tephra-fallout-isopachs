@@ -6,7 +6,7 @@ The ensemble averages plausible thinning trends and spatial correlation structur
 
 Each component retains the existing constrained directional mean and Matérn spatial residual model. The candidate grid is fixed: two tail families, three correlation-length factors and three residual-noise ratios. All scale estimation and fitting happen again inside each training fold. Colocated observations stay in one geographic fold. A shared geographic buffer excludes nearby training locations.
 
-For observation \(i\), candidate \(k\) supplies an out-of-fold predictive density \(p_{ik}\). A documented upper limit contributes its predictive CDF instead; a documented lower bound contributes the survival probability. Retain the three lowest equal-region negative-log-score candidates per tail family, at most six total. Fit weights by
+For observation \(i\), candidate \(k\) supplies an out-of-fold predictive density \(p_{ik}\). A reported minimum uses the same point density as a measured thickness. An upper limit contributes its predictive CDF and a two-sided interval contributes the difference of predictive CDFs at its endpoints. Retain the three lowest equal-region negative-log-score candidates per tail family, at most six total. Fit weights by
 
 \[
 \widehat w=\arg\max_{w_k\geq0,\ \sum_k w_k=1}
