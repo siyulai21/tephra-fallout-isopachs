@@ -1,5 +1,7 @@
 # Ilopango Tierra Blanca Joven field audit
 
+This 116-site edition documents the earlier Unit G reconstruction. The current edition maps total primary TBJ airfall at 168 localities. [All-phase data and field logs](../field-logs/README.md)
+
 The principal input represents the upper widespread co-ignimbrite fallout, Unit G. The revision accepts **116 localities** with 74 measured or field-estimated thicknesses, 8 finite ranges, 7 lower limits and 27 upper limits. All thicknesses are local bulk centimetres. The sample includes original subaerial sections and qualified lake, marsh and marine equivalents. The 185-row ledger distinguishes observations, duplicate candidates, unresolved readings and occurrence-only records. Coordinates in the ledger retain the precision and limitations of the cited source. [Principal input](../../../eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Locality ledger](localities.csv) · [Original papers, locations within them and file hashes](source-manifest.csv) · [Principal nested result](../../../../eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24/README.md)
 
 ## What changed in the field evidence

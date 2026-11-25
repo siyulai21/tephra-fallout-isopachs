@@ -92,20 +92,29 @@
       "audit_case": "combined"
     },
     {
-      "name": "Ilopango TBJ (Unit G)",
+      "name": "Ilopango TBJ (total primary airfall)",
       "slug": "ilopango-tbj",
-      "file": "eruptions/Ilopango_TBJ_Unit_G_reviewed.csv",
-      "audit": "audits/Ilopango-TBJ/reaudit/provenance.json",
+      "file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+      "audit": "audits/Ilopango-TBJ/field-logs/provenance.json",
       "audit_case": "principal",
       "previous_inputs": [
         {
           "file": "eruptions/Ilopango_TBJ_Unit_G.csv",
           "audit": "audits/Ilopango-TBJ/provenance.json",
-          "audit_case": "principal"
+          "audit_case": "principal",
+          "name": "Ilopango TBJ (Unit G)"
+        },
+        {
+          "name": "Ilopango TBJ (Unit G)",
+          "file": "eruptions/Ilopango_TBJ_Unit_G_reviewed.csv",
+          "audit": "audits/Ilopango-TBJ/reaudit/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Ilopango-TBJ/reaudit/archive-probes.json",
+          "principal_nested_result": "eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24"
         }
       ],
-      "archive_evidence": "audits/Ilopango-TBJ/reaudit/archive-probes.json",
-      "principal_nested_result": "eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24"
+      "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
+      "principal_global_results": "eruptions/ilopango-tbj/results/total-airfall-2026-11-24"
     },
     {
       "name": "Sakurajima Satsuma (P14)",

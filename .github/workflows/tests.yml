@@ -18,6 +18,8 @@ jobs:
           python -m benchmarks.ilopango
           python -m benchmarks.ilopango_field_review --verify-workbook
           python -m benchmarks.ilopango_nested_review --verify
+          python -m benchmarks.ilopango_total_airfall
+          python -m benchmarks.ilopango_total_checks
       - name: Replay the Pinatubo Layer C source audit
         run: |
           python -m benchmarks.pinatubo
@@ -62,6 +64,11 @@ jobs:
           assert meta["input_sha256"] == principal["sha256"]
           archive, _ = load_inventory(pinatubo["path"])
           assert len(archive["sites"]) == 151 and not archive["scenarios"]
+          ilopango = next(r for r in datasets() if r["slug"] == "ilopango-tbj")
+          data, meta = audited_data(ilopango["path"])
+          assert (len(data.xy), int((~data.censored).sum()), int(data.interval.sum())) == (168, 65, 14)
+          archive, _ = load_inventory(ilopango["path"])
+          assert len(archive["sites"]) == 5
           for case in (r for r in datasets() if r["slug"] in {"ilopango-tbj", "sakurajima-satsuma"}):
               audit = json.loads((root / case["audit"]).read_text())
               for source in audit["sources"]:

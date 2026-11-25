@@ -1,6 +1,22 @@
-# Ilopango Tierra Blanca Joven, Unit G
+# Ilopango Tierra Blanca Joven
 
-The November 24 field review brings the principal Unit G input to **116 localities**. The nested median-thickness map integrates to **51.0 km³**. All four geographic holdouts passed their numerical checks. The full posterior retained a sampling warning, and the northeast prediction misses the thin Lake Yojoa ash. The 95% conditional interval across complete deposits is **34–684 km³**. [Revised principal result and map](results/nested-isopachs/2026-11-24/README.md) · [Current input](../../data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Site audit and primary sources](../../data/audits/Ilopango-TBJ/reaudit/README.md)
+The current reconstruction maps **total primary TBJ airfall across eruption phases** from 168 localities. The directional, spherical and nested methods share the measurements, lower and upper limits, two-sided ranges and buffered geographic holdouts. All four Dull readings enter the principal data, including the questioned Osa margin core. [Current results and three maps](results/total-airfall-2026-11-24/README.md) · [All-phase input](../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Field table, appendix and source decisions](../../data/audits/Ilopango-TBJ/field-logs/README.md)
+
+### Three methods on 168 sites
+
+| Method | Median-thickness map (km³) | Conditional 95% across complete deposits (km³) |
+|---|---:|---:|
+| [Directional](results/total-airfall-2026-11-24/directional/README.md) | 60.6 | 39.0–477.4 |
+| [Spherical mixture](results/total-airfall-2026-11-24/spherical-mixture/README.md) | 242.1 | 86.0–18,643 |
+| [Nested dispersal footprints](results/total-airfall-2026-11-24/nested-isopachs/README.md) | 62.8 | 40.2–316.5 |
+
+![All accepted sites on the three current TBJ fallout maps, with corrected inland readings and the Osa point](results/total-airfall-2026-11-24/all-sites-map.png)
+
+Geographic holdout scores, prior-sensitive extrapolations, numerical warnings and the result of removing only the Osa observation are reported with the current estimates. [Validation and source sensitivity](results/total-airfall-2026-11-24/README.md)
+
+## Earlier Unit G nested fit on 116 sites
+
+The November 24 field review brings the principal Unit G input to **116 localities**. The nested median-thickness map integrates to **51.0 km³**. All four geographic holdouts passed their numerical checks. The full posterior retained a sampling warning, and the northeast prediction misses the thin Lake Yojoa ash. The 95% conditional interval across complete deposits is **34–684 km³**. [Revised principal result and map](results/nested-isopachs/2026-11-24/README.md) · [116-site Unit G input](../../data/eruptions/Ilopango_TBJ_Unit_G_reviewed.csv) · [Site audit and primary sources](../../data/audits/Ilopango-TBJ/reaudit/README.md)
 
 ## Earlier matched five-method comparison on 56 sites
 
