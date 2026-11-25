@@ -4,7 +4,7 @@ The principal bulk volume is **43.1 km³**, the whole-Earth integral of the medi
 
 ![Minoan, Bayesian nested footprints. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 90 of 101 modeled locations. The thickest displayed line is 16 cm and encloses 8 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Circles show point thicknesses, including reported lower limits fitted at their stated values. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 90 of 101 modeled locations. The thickest displayed line is 16 cm and encloses 8 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
 The fitted model predicts the four buffered geographic groups with an equal-group negative log score of 1.711. 3 of four independent deletion fits passed their numerical checks.
 
