@@ -9,6 +9,7 @@ from .observations import read_observations
 
 
 def audited_data(path, *, allow_intervals=True):
+    """Read this exact edition. New fits on caller-supplied paths first use model_input."""
     data, meta = read_observations(path,allow_intervals=allow_intervals)
     record = dataset_record(path)
     meta["source"] = "data/"+record["file"] if record else Path(path).name

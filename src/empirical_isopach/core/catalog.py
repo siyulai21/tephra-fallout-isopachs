@@ -44,4 +44,12 @@ def dataset_record(path):
                 }
                 common = {k: v for k, v in row.items() if k not in edition_fields}
                 return {**common, **previous, "path": old_path}
+        # A newly registered source table may have no previous *modelled* edition.
+        if row.get("reported_file"):
+            source = data_directory() / row["reported_file"]
+            if source.resolve() == resolved:
+                source_record = {k:v for k,v in row.items() if k not in
+                                 ("reported_file", "results_directory", "release_receipt", "matched_results",
+                                  "principal_global_results", "principal_nested_result", "published_methods")}
+                return {**source_record, "path": source, "file": row["reported_file"]}
     return None

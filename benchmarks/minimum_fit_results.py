@@ -1,5 +1,6 @@
 """Replay the source classifications, geographic predictions, and before/after median maps."""
 import argparse
+from dataclasses import replace
 import json
 from pathlib import Path
 
@@ -7,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from benchmarks.minimum_fit_inputs import verify as verify_input
-from benchmarks.publication import reported_edition, result_home
+from benchmarks.publication import published_methods, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.core.fitting import map_observation_policy
@@ -78,6 +79,40 @@ def predictions(home, family, data):
     return held.fold.to_numpy(), scores.to_numpy(), above_min.to_numpy(), covered.to_numpy()
 
 
+def check_annotation_parity(home, families, data, meta):
+    """Erase the provenance marker and replay each field at all near and distal sites."""
+    from benchmarks.refresh_figures import regional_fields
+    from src.empirical_isopach.core.distributions import predictive_distribution
+    from src.empirical_isopach.contour_support import candidate_levels
+    from src.empirical_isopach.support import SupportMesh
+    from src.empirical_isopach.visualization.deposit_field import open_field
+
+    plain = replace(data, reported_minimum=None)
+    clean_meta = {key:value for key,value in meta.items() if key not in {
+        "fitting_policy", "reported_source", "reported_source_sha256", "n_reported_measurements",
+        "n_minima_fitted_as_measurements", "minimum_as_measurement_rows"}}
+    np.testing.assert_array_equal(candidate_levels(data), candidate_levels(plain))
+    np.testing.assert_array_equal(SupportMesh(data).triangles, SupportMesh(plain).triangles)
+    xy = np.vstack(([0., 0.], data.xy))
+    values = {}
+    if any(f in REGIONAL for f in families):
+        report = read(home/"report.json")
+        first, second = regional_fields(data, report), regional_fields(plain, report)
+        for family in set(REGIONAL).intersection(families):
+            left = predictive_distribution(first[family], xy).quantile(.5)
+            right = predictive_distribution(second[family], xy).quantile(.5)
+            values[family] = (left / np.log(10.), right / np.log(10.))
+    for family in set(GLOBAL).intersection(families):
+        left, _, _ = open_field(home/family, family, data, meta)
+        right, _, _ = open_field(home/family, family, plain, clean_meta)
+        values[family] = (left.central(xy), right.central(xy))
+    maximum = {}
+    for family, (left, right) in values.items():
+        np.testing.assert_array_equal(left, right)
+        maximum[family] = float(np.max(np.abs(left - right)))
+    return maximum
+
+
 def assess(record, write=False):
     verify_input(record)
     data, meta = audited_data(record["path"])
@@ -94,9 +129,12 @@ def assess(record, write=False):
     distances = np.hypot(*data.xy.T)
     points, stats = [], []
     policy = map_observation_policy(data, meta)["observation_policy"]
-    families = (*REGIONAL, *GLOBAL)
+    families = tuple(k for k in (*REGIONAL, *GLOBAL) if k in published_methods(record))
+    if not families:
+        return []
     pairs = volume_rows(home, input_sha256=meta["input_sha256"])
     assert {r["method"] for r in pairs} == set(families)
+    parity = check_annotation_parity(home, families, data, meta)
     common_folds = None
     for family in families:
         receipt = read(home / "map-display.json" if family in REGIONAL else home / family / "deposit.json")
@@ -109,7 +147,7 @@ def assess(record, write=False):
             common_folds = fold
         np.testing.assert_array_equal(fold, common_folds)
         near = data.reported_minimum & (distances <= 25.)
-        stats.append(dict(method=family, reported_measurements=int((~data.censored & ~data.reported_minimum).sum()),
+        stats.append(dict(method=family, max_annotation_effect_log10_cm=parity[family], reported_measurements=int((~data.censored & ~data.reported_minimum).sum()),
                           reported_minima=int(data.reported_minimum.sum()), minima_within_25_km=int(near.sum()),
                           old_vent_cm=old_vent, new_vent_cm=vent,
                           old_max_at_minima_within_25_km_cm=float(old[near].max()) if old is not None and near.any() else None,
@@ -144,4 +182,4 @@ if __name__ == "__main__":
     for r in datasets():
         if r.get("reported_file") and (not args.case or r["slug"] in args.case):
             assess(r, args.write)
-            print(r["name"], "five maps, all geographic holdouts and source categories verified")
+            print(r["name"], "published maps, geographic holdouts and source categories verified")

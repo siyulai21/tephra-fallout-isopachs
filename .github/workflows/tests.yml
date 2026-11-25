@@ -108,6 +108,8 @@ jobs:
         run: python -m benchmarks.verify_footprints
       - name: Replay finite-spread volume intervals and matched geographic predictions
         run: python -m benchmarks.verify_extent
+      - name: Replay current minimum-fit maps, all source rows and held-out categories
+        run: python -m benchmarks.minimum_fit_results
       - name: Verify all five Mazama fits and the matched 300-locality holdouts
         run: python -m benchmarks.mazama_release_check
       - run: python -m pytest -q

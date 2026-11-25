@@ -72,7 +72,8 @@ def same_description(actual, expected, where="model"):
         assert actual == expected, (where, actual, expected)
 
 
-def regional_models(data, report):
+def regional_fields(data, report):
+    """Refit the saved regional specifications on supplied observation arrays."""
     fitted = {}
     gp = report["methods"]["stacked"]["model"]
     components = [SpatialModel(Candidate(**c["model"]["candidate"])).fit(data) for c in gp["components"]]
@@ -81,6 +82,11 @@ def regional_models(data, report):
     spline = report["methods"]["spline"]["model"]
     fitted["spline"] = TrendRegularizedSpline(SplineCandidate(**spline["candidate"]),
         quadrature_order=spline["quadrature_order"]).fit(data, bounds=report["fit_bounds_km"])
+    return fitted
+
+
+def regional_models(data, report):
+    fitted = regional_fields(data, report)
     checks = {}
     region = SurveyRegion(data.xy)
     for key, model in fitted.items():
