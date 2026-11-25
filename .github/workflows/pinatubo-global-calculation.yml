@@ -1,0 +1,190 @@
+name: Audited Pinatubo global fits
+on:
+  push:
+    branches: ['compute/pinatubo235-global-20261124']
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  VECLIB_MAXIMUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  MPLBACKEND: Agg
+  PYTHONPATH: '.:src'
+  PYTHONUNBUFFERED: '1'
+jobs:
+  sphere_part:
+    name: sphere ${{ matrix.lane }}
+    runs-on: macos-15
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        lane: [five, primary, other, geographic]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            compute-support
+            src
+            benchmarks
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.4'
+      - name: Install the recorded sampler runtime
+        run: python -m pip install -e . -c requirements-tested.txt 'numpyro==0.22.0' 'jax==0.12.0.1' 'jaxlib==0.12.0.1' 'shapely==2.2.0' 'arviz==0.22.0'
+      - name: Run independent designs with reviewed settings
+        env:
+          LANE: ${{ matrix.lane }}
+        run: |
+          case "$LANE" in
+            five) keys="five_fans" ;;
+            primary) keys="baseline diffuse_tail wide_geography" ;;
+            other) keys="volume_prior_shift one_fan gaussian_errors diffuse_mixture_weights" ;;
+            geographic) keys="fold-0 fold-1 fold-2 fold-3" ;;
+          esac
+          for k in $keys; do python compute-support/pinatubo235/worker.py sphere "$k"; done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-sphere-${{ matrix.lane }}
+          path: results/pinatubo-hosted/
+          if-no-files-found: warn
+          retention-days: 14
+  directional_part:
+    name: directional ${{ matrix.lane }}
+    runs-on: macos-15
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        lane: [reference, '0', '2', '3', '4', '5']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            compute-support
+            src
+            benchmarks
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.4'
+      - name: Install the recorded sampler runtime
+        run: python -m pip install -e . -c requirements-tested.txt 'numpyro==0.22.0' 'jax==0.12.0.1' 'jaxlib==0.12.0.1' 'shapely==2.2.0' 'arviz==0.22.0'
+      - name: Run independent designs with reviewed settings
+        env:
+          LANE: ${{ matrix.lane }}
+        run: |
+          if [ "$LANE" = reference ]; then
+            n=$(python -c 'from src.empirical_isopach.models.directional.geometry import POLICIES; print(len(POLICIES))')
+            for ((i=0;i<n;i++)); do python compute-support/pinatubo235/worker.py directional policy "$i"; done
+            for kind in geographic quadrants; do
+              for i in 0 1 2 3; do python compute-support/pinatubo235/worker.py directional "$kind" -1 "$i"; done
+            done
+          else
+            python compute-support/pinatubo235/worker.py directional full "$LANE"
+            for kind in geographic quadrants; do
+              for i in 0 1 2 3; do python compute-support/pinatubo235/worker.py directional "$kind" "$LANE" "$i"; done
+            done
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-directional-${{ matrix.lane }}
+          path: results/pinatubo-hosted/
+          if-no-files-found: warn
+          retention-days: 14
+  sphere_report:
+    name: sphere median maps and validation
+    needs: sphere_part
+    runs-on: macos-15
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            compute-support
+            src
+            benchmarks
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.4'
+      - name: Install the recorded sampler runtime
+        run: python -m pip install -e . -c requirements-tested.txt 'numpyro==0.22.0' 'jax==0.12.0.1' 'jaxlib==0.12.0.1' 'shapely==2.2.0' 'arviz==0.22.0'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-sphere-*
+          path: results/pinatubo-hosted
+          merge-multiple: true
+      - name: Verify sampler caches and assemble the native report
+        run: python compute-support/pinatubo235/worker.py finish spherical-mixture
+      - name: Separate reviewed maps and diagnostics from raw replay files for transfer
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          home=Path("results/pinatubo-hosted/spherical-mixture")
+          if home.exists():
+              dest=Path("results/pinatubo-report/spherical-mixture")
+              shutil.copytree(home,dest,ignore=shutil.ignore_patterns("work","posteriors"))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-sphere-report
+          path: results/pinatubo-report/spherical-mixture/
+          if-no-files-found: warn
+          retention-days: 14
+  directional_report:
+    name: directional median maps and validation
+    needs: directional_part
+    runs-on: macos-15
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            compute-support
+            src
+            benchmarks
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.4'
+      - name: Install the recorded sampler runtime
+        run: python -m pip install -e . -c requirements-tested.txt 'numpyro==0.22.0' 'jax==0.12.0.1' 'jaxlib==0.12.0.1' 'shapely==2.2.0' 'arviz==0.22.0'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-directional-*
+          path: results/pinatubo-hosted
+          merge-multiple: true
+      - name: Verify sampler caches and assemble the native report
+        run: python compute-support/pinatubo235/worker.py finish directional
+      - name: Separate reviewed maps and diagnostics from raw replay files for transfer
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          home=Path("results/pinatubo-hosted/directional")
+          if home.exists():
+              dest=Path("results/pinatubo-report/directional")
+              shutil.copytree(home,dest,ignore=shutil.ignore_patterns("work","posteriors"))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-directional-report
+          path: results/pinatubo-report/directional/
+          if-no-files-found: warn
+          retention-days: 14
