@@ -23,3 +23,16 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 The full fit and the median and quartile map integrations passed. Three of four buffered geographic fits passed their numerical checks. The score includes all 235 held-out sites, and the 95% predictive intervals covered 87.1% of the point measurements. The shared support screen qualified no complete contour band. The southern sector has observations only to 42 km and accounts for about a quarter of the median-map volume. [Sampling, geographic support and offshore tests](results/nested-isopachs/README.md)
 
 The offshore audit reconciles 151 survey entries, including revisits, mixed ash and inspected cores without a visible bed. The audit also preserves the reviewed Koyaguchi and Paladio-Melosantos land readings. [Marine station map](results/nested-isopachs/marine-survey.png) · [Original pixels and land readings](../../data/audits/Pinatubo-1991/VISUAL-CHECK.md) · [Earlier five-method comparison and input history](../../archive/2026-11-24-case-editions/README.md#pinatubo)
+
+## Spherical-mixture convergence
+
+**Fitting stopped on 24 November 2026 for method review.** The displaced spherical mixture reached the sampling stage on the audited 235 localities. The run ended before it produced a median-thickness map, integrated volume or geographic prediction score.
+
+The three-fan baseline exhausted all three attempts. The final attempt retained 6,000 draws per chain. The median effective number of fans was **2.14, 2.13, 2.13 and 1.48** across the four chains. This quantity, $1/\sum_k w_k^2$, measures how evenly the fitted weights are distributed and is invariant to relabeling the fans. Its rank-normalized split R̂ was **1.524**. The parent log-volume parameter had R̂ **1.003**. Across all monitored quantities the maximum R̂ was **1.528** (target below 1.01) and the minimum bulk effective sample size was **7.1** (target at least 400). The saved chains allow these differences to be inspected without a refit. [Final baseline draws](diagnostics/spherical-mixture/baseline-attempt-3.npz)
+
+| Check | Outcome on the audited input |
+|---|---|
+| Eight full-data prior settings | Four passed, including the one-fan fit. The baseline, diffuse-tail and wide-geography settings finished with warnings. The five-fan fit had seven divergences and maximum R̂ 1.277 on its first attempt (14.2 minutes). Its second attempt was interrupted. |
+| Four buffered geographic refits | Folds 0, 1 and 3 passed. With the 59 sites in fold 2 withheld, the third attempt still had maximum R̂ 1.522 and one divergence. Six of those sites reported thickness ranges. |
+
+Spherical and directional workers ran concurrently on a 16 GB machine that experienced memory pressure. Per-process peak memory was unmeasured, so attribution to an individual model remains open. The diagnostic record gives settings, seeds, timings and posterior hashes for all 27 completed attempts, along with the withheld site IDs. [Attempt diagnostics](diagnostics/spherical-mixture/attempts.json) · [Sampling and convergence rules](../../docs/methods/probabilistic-global.md#numerical-and-empirical-checks)
