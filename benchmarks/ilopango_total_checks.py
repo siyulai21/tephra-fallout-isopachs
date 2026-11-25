@@ -124,8 +124,8 @@ def verify_maps(folder):
     totals = pd.read_csv(folder / "model-comparison.csv").set_index("family")
     for family in ("directional", "spherical-mixture", "nested-isopachs"):
         boxes.append(verify_global(folder / family, family, data, meta))
-        packet_name = "footprints" if family == "nested-isopachs" else "extent"
-        fit = json.loads((folder / family / packet_name / "report.json").read_text())
+        from src.empirical_isopach.visualization.deposit_field import review_path
+        fit = json.loads(review_path(folder / family, family).read_text())
         mapped = json.loads((folder / family / "deposit.json").read_text())
         summary = totals.loc[family]
         np.testing.assert_allclose(

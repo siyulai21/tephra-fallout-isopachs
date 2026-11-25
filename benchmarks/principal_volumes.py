@@ -55,7 +55,7 @@ def volume_plot(rows,path):
 
 def family_page(family, rows, records):
     introductions = {
-        "directional":("Directional ensemble","The ensemble averages over uncertain fan directions and thinning curves.",
+        "directional":("Directional ensemble","The ensemble fits direction, thinning and spatial departures across distances. [Three-scale maps and matched tests](multiscale/README.md) ·",
                        "[Paired continuations and validation](../global-extent/README.md) · [Training and fixed-direction controls](fixed-ensemble/README.md)"),
         "spherical-mixture":("Spherical mixture","A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior fits test sensitivity to unsampled directions.",
                             "[Prior and geometry diagnostics on their study inputs](comparison.csv) · [Known-deposit tests](bearings/known-volumes.csv)"),

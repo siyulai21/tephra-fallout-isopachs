@@ -10,7 +10,7 @@ $$ V_p=10^{-5}\int_D T_p(x)\,dA,\qquad p\in\{0.25,0.50,0.75\}, $$
 
 where area is in km². The map shows $T_{0.50}$ and the principal estimate is $V_{0.50}$. The conditional range runs from $V_{0.25}$ to $V_{0.75}$. The 50% probability applies at each location. Assigning a probability to total volume would also require the spatial dependence of the entire field. Sampling warnings, prior sensitivities, geographic deletion tests and 95% **observation** coverage each have separate columns or reports.
 
-The GP and spline integrate their latent thickness distributions over the observation hull. Positive-weight triangle quadrature tests successive refinements for all three surfaces. The global models integrate each quantile around the whole WGS84 Earth, including ash thinner than the figure shows. Each global report includes a compact median grid. It recovers the published contours, area curve and volume directly. The directional grid also preserves triangle connectivity and the mapping to posterior vertex IDs for replay across geometry-library versions. Polar interpolation is periodic in bearing and bilinear in log thickness. Two independent scrambled equal-area rules evaluate the posterior fields directly. Halving the mesh checks spatial resolution. [Support criteria and unsampled gaps](methods/supported-isopachs.md)
+The GP and spline integrate their latent thickness distributions over the observation hull. Positive-weight triangle quadrature tests successive refinements for all three surfaces. The global models integrate each quantile around the whole WGS84 Earth, including ash thinner than the figure shows. Each global report includes a compact median grid. It recovers the published contours, area curve and volume directly. The directional posterior evaluates thickness directly. The earlier triangulated directional control preserves its original connectivity in a separate replay file. Polar interpolation is periodic in bearing and bilinear in log thickness. Two independent scrambled equal-area rules evaluate the posterior fields directly. Halving the mesh checks spatial resolution. [Support criteria and unsampled gaps](methods/supported-isopachs.md)
 
 ### Full-deposit panel
 
@@ -31,8 +31,8 @@ Observation colours use the measured thickness or reported limit, starting below
 | `report.json`, `thickness-bands.json` | Regional fits and fold membership, plus all three thickness integrals and quadrature refinements |
 | `heldout_predictions.csv`, `selection/`, `support/` | Held-out observations, training-fold choices, unsupported holes and rejected contours |
 | `<global family>/deposit.png`, `deposit.json`, `median-grid.npz`, `thickness-area.csv` | Full and near-vent maps, quartile integrals, convergence, contour membership by row and cumulative areas |
-| `directional/azimuth/`, `spherical-mixture/` | Fitted directional and spherical posteriors |
-| `directional/extent/`, `spherical-mixture/extent/` | Continuation calibration, held-out predictions and support. The spherical packet includes eight fixed priors |
+| `directional/multiscale/`, `spherical-mixture/` | Current directional and spherical posteriors, with full diagnostics and conditional uncertainty |
+| `directional/extent/`, `spherical-mixture/extent/` | Earlier directional finite-spread control and current spherical continuation. The spherical packet includes eight fixed priors |
 | `nested-isopachs/footprints/` | Dispersal-footprint posteriors, geographic holdouts, sector contributions, support and prior sensitivities |
 
 Earlier corridor and whole-area fits, source-sensitivity trials and sampler diagnostics retain the estimands used in their original experiments. Use the principal table for current map-based estimates. [Method definitions](methods/README.md) · [Validation studies](../comparisons/README.md)

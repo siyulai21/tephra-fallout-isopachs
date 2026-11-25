@@ -48,22 +48,34 @@ def field_validation(folder, input_path, slug, *, verify=True):
     for family in METHODS:
         root = folder / family
         nested = family == "nested-isopachs"
-        packet = root / ("footprints" if nested else "extent")
+        from src.empirical_isopach.visualization.deposit_field import review_path
+        packet = review_path(root, family).parent
+        multiscale = packet.name == "multiscale"
         screen = json.loads(gzip.decompress((packet / "support.json.gz").read_bytes()))
-        assert screen["status"] != "completed" or set(screen["policies"]) == {
+        assert (not multiscale and screen["status"] != "completed") or set(screen["policies"]) == {
             "strict",
             "standard",
             "permissive",
         }
         receipt = json.loads((packet / "report.json").read_text())
         assert receipt["input_sha256"] == digest(input_path)
-        assert receipt["heldout_sha256"] == digest(packet / "heldout.csv.gz")
+        heldout_hash = receipt["artifacts_sha256"]["heldout.csv.gz"] if multiscale else receipt["heldout_sha256"]
+        assert heldout_hash == digest(packet / "heldout.csv.gz")
         held = pd.read_csv(packet / "heldout.csv.gz")
         if nested:
             for fold, rows in partitions.items():
                 fitted = receipt["fits"][f"fold-{fold}"]
                 assert (fitted["train"], fitted["test"]) == rows
             score_col = "log_score"
+        elif multiscale:
+            for f in receipt["folds"]:
+                if f["design"] == "geographic":
+                    assert (f["train_row_ids"], f["test_row_ids"]) == partitions[f["fold"]]
+            held = held.loc[held.design == "geographic"].copy()
+            held["exact"] = held.evidence == "exact"
+            score_col = "principal_log_score"
+            np.testing.assert_allclose(-held.groupby("fold")[score_col].mean().mean(),
+                                       receipt["validation"]["geographic"]["negative_log_score"])
         else:
             cal = receipt["calibration"]
             actual = calibration(family, meta["input_sha256"], exclude_slug=slug)
@@ -111,7 +123,10 @@ def field_validation(folder, input_path, slug, *, verify=True):
             event = np.exp(score) if kind != "measurement" else None
             if event is not None:
                 assert 0 <= event <= 1 + 1e-10
-            if kind == "interval" and not nested:
+            if kind == "interval" and multiscale:
+                np.testing.assert_allclose(h["upper_endpoint_cdf"] - h["principal_cdf"], event,
+                                           rtol=2e-6, atol=2e-10)
+            if kind == "interval" and not (nested or multiscale):
                 cdf_diff = sum(
                     w * (h[s + "_upper_endpoint_cdf"] - h[s + "_cdf"])
                     for s, w in zip(cal["states"], cal["weights"])

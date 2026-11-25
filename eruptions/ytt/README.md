@@ -12,7 +12,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **1,079** | 799–1,460 | 1.934 | 91.3% |
 | Cubic spline | observation hull | **944** | 686–1,357 | 2.153 | 82.6% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **900** | 605–1,481 | 1.534 † | 100.0% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **1,401** | 938–2,171 | 1.416 | 97.8% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **1,227** | 980–1,524 | 1.737 | 84.8% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **1,994** | 1,094–3,296 | 1.707 † | 93.5% |
 
@@ -22,7 +22,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![YTT · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![YTT · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![YTT · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
@@ -38,7 +38,7 @@ The current global fits use the same audited rows. [What changed in the maps, vo
 
 ## Evidence and limitations
 
-The principal selection includes the two qualified Maninjau beds and core U1445B at 8 cm. The audit records source qualifications and alternative selections. All six full-data directional fits passed their checks. Two buffered geographic folds carry sampling warnings.
+The principal selection includes the two qualified Maninjau beds and core U1445B at 8 cm. The audit records source qualifications and alternative selections. The directional full fit, four buffered refits and four quadrant refits passed. The ±100 km vent window contains no fitted locality. Its core thickness and the whole-deposit estimate are conditional on the geographic model. [Contours at three scales](../../comparisons/directional/multiscale/ytt.png)
 
 The standard local-support footprint covers 1,196,058 km². No complete isopach band passed the support and deletion checks. [Support map, partial volumes and rejected contours](results/support/README.md)
 

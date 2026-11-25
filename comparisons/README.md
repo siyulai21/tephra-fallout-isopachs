@@ -9,6 +9,7 @@ The figure uses the same inputs as the table. Lower scores indicate better predi
 | Question | Evidence |
 |---|---|
 | How do the GP ensemble and cubic spline compare inside the same observation hull? | [Regional fits and known-deposit tests](regional/README.md) |
+| How do directional isopachs change from the vent to the distal deposit, and what happens when a region or campaign is withheld? | [Three-scale visual review, site agreement, volume and deletion tests](directional/multiscale/README.md) |
 | How much does allowing a fan to turn change contour reach, volume and prediction across gaps? | [Directional ensemble, paired control and related studies](directional/README.md) |
 | How sensitive is whole-deposit volume to spherical fan geometry and priors? | [Spherical maps, prior sensitivity and known-volume tests](spherical-mixture/README.md) |
 | How do nested isopachs compare with the two other global volume estimates, and how much ash lies beyond the sampled range? | [Bulk volume, site scores, prior sensitivities and known-deposit tests](nested-isopachs/README.md) |

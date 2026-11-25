@@ -1,6 +1,6 @@
 # Directional ensemble and median isopachs
 
-This protocol describes the six underlying structures and the fixed-direction comparison. The principal directional reconstruction integrates the median map with uncertain fan direction. [Principal protocol](uncertain-azimuth.md)
+This protocol describes the six underlying structures and the fixed-direction comparison. The current directional reconstruction estimates changing fan headings within a continuous whole-deposit field. [Principal protocol](directional-multiscale.md) · [Earlier uncertain-azimuth control](uncertain-azimuth.md)
 
 The full directional run also evaluates continuation restricted to measured fan directions and the archive descriptions at their actual locations. The six-structure map provides the sensitivity to a hypothetical unseen fan. [Directional reach and archive evidence](archive-evidence.md)
 

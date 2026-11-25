@@ -2,9 +2,11 @@
 
 The nested reach study includes three actual survey or archive transfers and an external Calbuco campaign, with a separately published distal contour. The known-surface stress tests have their own results. [Field validation](../comparisons/nested-reach/field-surveys/README.md) · [Reproduction](../docs/methods/nested-reach.md)
 
-For a new case, run the four families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.
+For a new case, run the active families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.
 
 ## Current evaluations
+
+The directional study compares proximal, intermediate and whole-deposit contours across all registered cases. It includes actual geographic deletions, censored sites, known-volume surfaces and omitted surveys. Replay the published fields and mixture distributions with `python -m benchmarks.verify_directional_multiscale`. [Results and commands](../comparisons/directional/multiscale/README.md)
 
 The nested comparison refits the original whole-area geography and the dispersal footprints to matched observations and folds, and retains the finite-corridor control. The study lists commands for the known deposits, survey rotations, field campaigns, compass deletions and release verification. [Nested footprints across all eruptions](../comparisons/nested-isopachs/geography/README.md)
 

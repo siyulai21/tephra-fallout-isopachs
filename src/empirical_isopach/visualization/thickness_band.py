@@ -22,7 +22,8 @@ def field_quantiles(view, xy):
     from ..models.mass_mixture.bearings.maps import BearingView
     from ..models.nested.report import MapView as NestedView
 
-    if isinstance(view, DirectionalView):
+    from ..models.directional.multiscale.posterior import DirectionalField
+    if isinstance(view, (DirectionalView,DirectionalField)):
         return view.values(xy, PROBABILITIES)
     values = np.full((3, len(xy)), np.nan)
     inside = np.flatnonzero(view.domain.rho(xy) < view.domain.rho_max)

@@ -1,0 +1,3 @@
+# Held-out directional predictions
+
+Each file contains the conditional Gaussian-mixture distribution of observed log thickness at every site withheld in the buffered and quadrant experiments. The row IDs, component weights, means, variances and digest of the fitted training-only posterior are stored by design and fold. The variances include the recorded observation error and unresolved local variability. These one-location marginals reproduce the score for a measurement and the probability of any reported interval or limit. Cross-location dependence for integrated volumes is stored in each eruption's full posterior. [Replay script](../../../../benchmarks/verify_directional_multiscale.py) · [Geographic results](../README.md)

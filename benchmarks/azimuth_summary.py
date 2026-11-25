@@ -94,7 +94,12 @@ def case_table(cases=None, published_root=Path("eruptions")):
         if cases is None and (path.parent.parent/"extent/report.json").is_file():
             home=path.parent.parent
             current=json.loads((home/"extent/report.json").read_text())
-            deposit=json.loads((home/"deposit.json").read_text())
+            source = home/"deposit.json"
+            if (home/"multiscale/report.json").is_file():
+                from .directional_scale_maps import ARCHIVE
+                source = published_root.parent/ARCHIVE/slug/"deposit.json"
+            deposit=json.loads(source.read_text())
+            assert deposit["input_sha256"] == current["input_sha256"]
             row["uncertain_map_km3"]=deposit["median_map_volume_km3"]
             band=deposit["thickness_band"]["volumes_km3"]
             row["thickness_q25_volume_km3"],row["thickness_q75_volume_km3"]=band[0],band[2]

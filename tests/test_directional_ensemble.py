@@ -96,7 +96,7 @@ def test_reference_free_whole_earth_median_integral_against_radial_solution():
     np.testing.assert_allclose(np.sum(answer["parts_sectors_km3"],axis=0),expected/8,rtol=.012)
 
 
-def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_path, monkeypatch):
+def test_assistant_led_directional_run_publishes_multiscale_map_and_retains_azimuth_control(tmp_path, monkeypatch):
     import json
     from pathlib import Path
     import pytest
@@ -135,12 +135,24 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
         calls.append("principal uncertain fan direction")
         return primary
 
-    from src.empirical_isopach.visualization import deposit
-    def simulate_deposit_figure(folder,family,data,meta,name):
-        assert folder==tmp_path and family=="directional" and name==primary["dataset"]
-        assert (folder/"README.md").is_file()
-        calls.append("median deposit map")
-    monkeypatch.setattr(deposit,"render_deposit",simulate_deposit_figure)
+    from src.empirical_isopach.models.directional.multiscale import release
+    from shutil import copyfile
+    current = json.loads((published/"multiscale/report.json").read_text())
+    def simulate_multiscale(path, folder, name, *, archives):
+        assert folder==tmp_path and name==primary["dataset"]
+        control=(folder/"README.md").read_text()
+        assert "**28.8 km³ of bulk fallout**" in control and "(azimuth/isopachs.png)" in control
+        assert "Reach from the volcano" in control and "(single-structure/README.md)" in control
+        (folder/"multiscale").mkdir()
+        copyfile(published/"multiscale/report.json", folder/"multiscale/report.json")
+        copyfile(published/"README.md",folder/"README.md")
+        manifest=folder/"azimuth/artifacts.json"
+        hashes=json.loads(manifest.read_text())
+        hashes["../README.md"]=digest(folder/"README.md")
+        manifest.write_text(json.dumps(hashes))
+        calls.append("multiscale median deposit map")
+        return current
+    monkeypatch.setattr(release,"assemble",simulate_multiscale)
     from src.empirical_isopach.models import extent_release
     monkeypatch.setattr(extent_release,"review_dataset",lambda *args,**kwargs:calls.append("conditional extent"))
     monkeypatch.setattr(reporting,"run_fits",lambda *args:calls.append("reference fits"))
@@ -150,14 +162,13 @@ def test_assistant_led_directional_run_publishes_uncertain_azimuth_at_root(tmp_p
     monkeypatch.setattr(report,"render",simulate_fixed)
     monkeypatch.setattr(bearing_report,"run",lambda *args:calls.append("archive and bearing fits"))
     monkeypatch.setattr(azimuth,"run",simulate_primary)
-    assert reporting.directional_dataset(datasets()[0]["path"],tmp_path)==primary
+    assert reporting.directional_dataset(datasets()[0]["path"],tmp_path)==current
     assert calls==["reference fits","verified cache import","ensemble fits","archive and bearing fits",
-                   "principal uncertain fan direction","conditional extent","median deposit map"]
+                   "principal uncertain fan direction","conditional extent","multiscale median deposit map"]
     page = (tmp_path/"README.md").read_text()
-    assert "**28.8 km³ of bulk fallout**" in page and "(azimuth/isopachs.png)" in page
-    assert "Exact-site 95% coverage" in page and "Reach from the volcano" in page
+    assert "Multiscale directional ensemble" in page and "(deposit.png)" in page
     assert not (tmp_path/"azimuth/README.md").exists()
-    assert "(single-structure/README.md)" in page and not (tmp_path/"report.json").exists()
+    assert (tmp_path/"multiscale/report.json").is_file() and not (tmp_path/"report.json").exists()
     azimuth.attach_family_page(tmp_path)
     assert (tmp_path/"README.md").read_text() == page
     assert json.loads((tmp_path/"azimuth/artifacts.json").read_text())["../README.md"] == digest(tmp_path/"README.md")

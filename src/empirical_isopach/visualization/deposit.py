@@ -62,6 +62,18 @@ def deposit_page(old, family, name, receipt, report):
         first[2:2] = [f"**Historical comparison on {border['accepted_rows']} localities.** The eruption catalogue uses the latest audited input.", ""]
     if not receipt["integration_passed"] or not receipt["thickness_band"]["passed"]:
         first.extend(["**Map integration warning.** The independent or refinement check exceeded its tolerance. See the numerical record.", ""])
+    if "multiscale/report.json" in receipt["sources_sha256"]:
+        v=report["validation"]["geographic"]
+        first.extend([f"The equal-region negative log score was {v['negative_log_score']:.3f}. "
+                      f"The 95% predictive intervals covered {v['coverage95_exact']:.1%} of the withheld measurements. "
+                      f"{v['passed_folds']} of four buffered fits passed the numerical checks.", "",
+                      "The directional field allows fan headings and contrast to change with distance. Nearby stations can support local departures. "
+                      "Solid line fragments require exact measurements on both sides and at least 90% posterior probability of a crossing.", "",
+                      f"The conditional 95% interval for integrated whole-deposit draws is {report['conditional_interval95_km3'][0]:,.3g}–{report['conditional_interval95_km3'][1]:,.3g} km³. "
+                      f"{len(report['support_policies_with_band'])} support policies found a qualifying complete-contour band.", "",
+                      "[Fit, structural sensitivities and convergence](multiscale/report.json) · [All contour decisions](multiscale/support.json.gz) · "
+                      "[Measured sites](multiscale/measured-sites.csv.gz) · [Held-out predictions](multiscale/heldout.csv.gz) · [Archive locations](multiscale/archive-probes.json) · [Thickness exceedance at three scales](exceedance.png)"])
+        return "\n".join(first)+"\n"
     if "footprints/report.json" in receipt["sources_sha256"]:
         v = report["validation"]
         first.extend([f"The fitted model predicts the four buffered geographic groups with an equal-group negative log score of {v['negative_log_score']:.3f}. "
@@ -186,12 +198,17 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     receipt["median_grid_sha256"]=digest(dest/"median-grid.npz")
     receipt["thickness_area_sha256"]=digest(dest/"thickness-area.csv")
     plate(dest/"deposit.png",name,family,field,data,meta,model,levels,rows,receipt,near_half)
+    if "multiscale/report.json" in sources:
+        from .directional_probability import probability_plate
+        probability_plate(dest,field,model,data,meta,name,receipt)
     receipt["figure_sha256"]=digest(dest/"deposit.png")
     write_json(dest/"deposit.json",receipt)
     page=folder/"README.md"
-    old_hash=digest(page)
-    old = page.read_text()
+    old_hash=digest(page) if page.exists() else None
+    old = page.read_text() if page.exists() else ""
     body = deposit_page(old,family,name,receipt,report)
+    if "multiscale/report.json" in sources and "\n[Previous and revised isopachs at three scales]" in old:
+        body = body.rstrip()+"\n"+old[old.index("\n[Previous and revised isopachs at three scales]"):]
     if "footprints/report.json" in sources:
         split = old.find("\n[Footprint model and assumptions]")
         if split < 0:
@@ -200,7 +217,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
             body = body.rstrip()+"\n"+old[split:]
     (dest/"README.md").write_text(body)
     manifest={"directional":"azimuth/artifacts.json","spherical-mixture":"artifacts.json"}.get(family)
-    if manifest:
+    if manifest and (folder/manifest).is_file():
         hashes=read_json(folder/manifest)
         key="../README.md" if family=="directional" else "README.md"
         if hashes[key]!=old_hash:

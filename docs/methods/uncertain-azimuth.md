@@ -1,4 +1,6 @@
-# Directional isopachs in unsampled sectors
+# Earlier uncertain-azimuth directional control
+
+This page documents the previous uncertain-direction fit. The current ensemble models direction, thinning and local spatial variability jointly. [Current directional method](directional-multiscale.md)
 
 A short ray with a measured ash bed establishes fallout along that bearing at a particular distance. It provides limited evidence about fallout hundreds of kilometres farther away. An empty sector can contain either little ash or an undetected fan. These possibilities lead to different contours and global volumes.
 
