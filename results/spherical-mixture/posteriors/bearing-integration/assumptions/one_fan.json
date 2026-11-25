@@ -1,0 +1,136 @@
+{
+  "volume": {
+    "lower95": 4.2022119732523615,
+    "median": 5.97666136003299,
+    "upper95": 10.538311572468457,
+    "unit": "km3 bulk fallout",
+    "draws": 6144
+  },
+  "by_width": {
+    "0": {
+      "lower95": 5.118407915291871,
+      "median": 6.947999617525996,
+      "upper95": 12.308654588147368
+    },
+    "1": {
+      "lower95": 4.316347159953283,
+      "median": 5.826345203663361,
+      "upper95": 9.72397569068064
+    },
+    "4": {
+      "lower95": 3.9825036760181245,
+      "median": 5.2904335250047945,
+      "upper95": 8.488543289262374
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 4.776320285855773,
+    "median": 6.81154193316278,
+    "upper95": 12.937482331705253
+  },
+  "base_volume_all_draws": {
+    "lower95": 5.092331141149698,
+    "median": 6.9616210063972055,
+    "upper95": 12.364099833105497
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.0016708008260314575,
+        "max_relative_quantile_doubling_difference": 0.0009538618630824391,
+        "p99_absolute_draw_fraction_difference": 0.0072087844474440915,
+        "max_absolute_draw_fraction_difference": 0.011266872730174127,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.005120793094434584,
+    "draw_split_relative": [
+      0.0010533617250777542,
+      0.008433245924263333,
+      0.007755672904800624
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 512,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 4.24525350513028,
+        "median": 6.035924410543606,
+        "upper95": 10.480373906573947,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0022316293842553096,
+            "max_relative_quantile_doubling_difference": 0.0005482915003385269,
+            "p99_absolute_draw_fraction_difference": 0.007104052594445955,
+            "max_absolute_draw_fraction_difference": 0.013333864556246744,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0239977988376896,
+        "draw_split_relative": [
+          0.016210374228925628,
+          0.011058577848421687,
+          0.10426427577595161
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 4.2022119732523615,
+        "median": 5.97666136003299,
+        "upper95": 10.538311572468457,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0016708008260314575,
+            "max_relative_quantile_doubling_difference": 0.0009538618630824391,
+            "p99_absolute_draw_fraction_difference": 0.0072087844474440915,
+            "max_absolute_draw_fraction_difference": 0.011266872730174127,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.005120793094434584,
+        "draw_split_relative": [
+          0.0010533617250777542,
+          0.008433245924263333,
+          0.007755672904800624
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "83a2333b39acec78fe4a5f71261e6567a31d7e9102a1d2dabbf874cd57173f16",
+  "input_sha256": "05995867ad4e2cc3478724eda7120afa776ad728e9a04e68c03ef7cc9456a293",
+  "parent_sampler_passed": true,
+  "packet_sha256": "58c71b234794f811cde7c8439f27761ae682a4f977678bb2eaf5936a71c54164"
+}

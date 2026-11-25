@@ -1,0 +1,204 @@
+{
+  "volume": {
+    "lower95": 5.685163010674426,
+    "median": 13.386722946827343,
+    "upper95": 1470.191121238298,
+    "unit": "km3 bulk fallout",
+    "draws": 18000
+  },
+  "by_width": {
+    "0": {
+      "lower95": 6.849277739577894,
+      "median": 15.535100591769618,
+      "upper95": 1793.2855526236954
+    },
+    "1": {
+      "lower95": 5.7477630046009205,
+      "median": 12.698650486439178,
+      "upper95": 1365.9253560853792
+    },
+    "4": {
+      "lower95": 5.227081415586066,
+      "median": 11.387047338549603,
+      "upper95": 1147.9978212889337
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 6.5519658789644835,
+    "median": 15.54634007326143,
+    "upper95": 1787.7473022214078
+  },
+  "base_volume_all_draws": {
+    "lower95": 6.849277739577894,
+    "median": 15.535100591769618,
+    "upper95": 1793.2855526236954
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.0004818610574815714,
+        "max_relative_quantile_doubling_difference": 0.00048466833911486873,
+        "p99_absolute_draw_fraction_difference": 0.011784878387517137,
+        "max_absolute_draw_fraction_difference": 0.02560399286984727,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.0,
+    "draw_split_relative": [
+      0.02380910010545447,
+      0.052596320163335625,
+      0.375684423104599
+    ],
+    "draw_split_passed": false
+  },
+  "chain_count": 4,
+  "draws_per_chain": 1500,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 5.738214948531172,
+        "median": 13.607403713229978,
+        "upper95": 1118.2765354812905,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.004752299322082239,
+            "max_relative_quantile_doubling_difference": 0.002243961580430609,
+            "p99_absolute_draw_fraction_difference": 0.011852658786696436,
+            "max_absolute_draw_fraction_difference": 0.021491597543941365,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.1016756727760404,
+        "draw_split_relative": [
+          0.11848769099386118,
+          0.07766978641776728,
+          0.4977135337038016
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 5.69944966609326,
+        "median": 13.04315905825943,
+        "upper95": 1200.9523093937507,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.001210497297304055,
+            "max_relative_quantile_doubling_difference": 0.0008510190713790777,
+            "p99_absolute_draw_fraction_difference": 0.011989828981981126,
+            "max_absolute_draw_fraction_difference": 0.02417304381550589,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.18210443086358563,
+        "draw_split_relative": [
+          0.03569184927715541,
+          0.006632796051032944,
+          0.5600815062469793
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 1024,
+      "volume": {
+        "lower95": 5.641629201419815,
+        "median": 13.167506294082273,
+        "upper95": 1503.0085686224272,
+        "unit": "km3 bulk fallout",
+        "draws": 12288
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.005857009005450228,
+            "max_relative_quantile_doubling_difference": 0.0022573220495061275,
+            "p99_absolute_draw_fraction_difference": 0.011973735633517554,
+            "max_absolute_draw_fraction_difference": 0.02262484953106736,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.017139795418654624,
+        "draw_split_relative": [
+          0.027613156685113698,
+          0.008297061363426356,
+          0.4940842624033109
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 1500,
+      "volume": {
+        "lower95": 5.685163010674426,
+        "median": 13.386722946827343,
+        "upper95": 1470.191121238298,
+        "unit": "km3 bulk fallout",
+        "draws": 18000
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0004818610574815714,
+            "max_relative_quantile_doubling_difference": 0.00048466833911486873,
+            "p99_absolute_draw_fraction_difference": 0.011784878387517137,
+            "max_absolute_draw_fraction_difference": 0.02560399286984727,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0,
+        "draw_split_relative": [
+          0.02380910010545447,
+          0.052596320163335625,
+          0.375684423104599
+        ],
+        "draw_split_passed": false
+      }
+    }
+  ],
+  "posterior_sha256": "0c51b944912cf2ac53a1ac649de23b156dcaf14cb1f4bc43a4cee9a38f4803f8",
+  "input_sha256": "05995867ad4e2cc3478724eda7120afa776ad728e9a04e68c03ef7cc9456a293",
+  "parent_sampler_passed": true,
+  "packet_sha256": "20d93161d202aa8fda73e6efc715e77523334ef7511aec6f2c85da20c2fa8e2f"
+}
