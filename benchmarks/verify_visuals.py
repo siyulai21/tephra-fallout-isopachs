@@ -7,7 +7,8 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from .publication import published_datasets as datasets
+from .publication import published_datasets, published_methods, result_home
+from src.empirical_isopach.core.catalog import datasets
 from .azimuth_summary import case_table
 from .publication import read_hashes, verify_files
 
@@ -89,29 +90,34 @@ def verify_comparison_tables(root):
     spherical = pd.read_csv(summaries/"spherical-mixture/comparison.csv").set_index("slug")
     sources = read(summaries/"spherical-mixture/report.json")["cases"]
     registered = {r["slug"]: r for r in datasets()}
-    assert spherical.index.is_unique and set(spherical.index) == set(registered)
-    assert len(sources) == len(registered) and {s["slug"] for s in sources} == set(registered)
-    expected_rows = set()
+    spherical_slugs = {s for s,r in registered.items() if "spherical-mixture" in published_methods(r)}
+    assert spherical.index.is_unique and set(spherical.index) == spherical_slugs
+    assert len(sources) == len(spherical_slugs) and {s["slug"] for s in sources} == spherical_slugs
+    expected_rows = {(slug,k) for slug,r in registered.items()
+                     for k in ("stacked","spline") if k in published_methods(r)}
+    assert regional.index.is_unique and set(regional.index) == expected_rows
+    for (slug, method), row in regional.iterrows():
+        rec = registered[slug]
+        reg = read(root/result_home(rec)/"report.json")
+        assert row.input_sha256 == digest(rec["path"]) == reg["input"]["input_sha256"]
+        metric = reg["validation"]["methods"][method]["metrics"]
+        assert (row.n_exact, row.n_lower, row.n_upper) == tuple(
+            reg["input"][key] for key in ("n_measurements", "n_lower_limits", "n_upper_limits"))
+        assert row.n_intervals == reg["input"].get("n_intervals",0)
+        vol = reg["methods"][method]["regional_volume"]
+        np.testing.assert_allclose(
+            [row.median_surface_km3, row.equal_region_log_score, row.coverage95_observations],
+            [vol["median_surface_km3"], metric["equal_region_log_score"], metric["coverage95_observations"]],
+            rtol=1e-12)
+        assert row.volume_converged == vol["converged"]
     for source in sources:
         slug = source["slug"]
-        home = root/"eruptions"/slug/"results"
-        assert source["input_sha256"] == digest(registered[slug]["path"])
-        assert source["regional_report_sha256"] == digest(home/"report.json")
+        rec = registered[slug]
+        home = root/result_home(rec)
+        assert source["input_sha256"] == digest(rec["path"])
+        regional_sha = digest(home/"report.json") if any((slug,k) in expected_rows for k in ("stacked","spline")) else None
+        assert source["regional_report_sha256"] == regional_sha
         assert source["global_report_sha256"] == digest(home/"spherical-mixture/report.json")
-        reg = read(home/"report.json")
-        for method, fit in reg["methods"].items():
-            expected_rows.add((slug, method))
-            row = regional.loc[(slug, method)]
-            metric = reg["validation"]["methods"][method]["metrics"]
-            assert (row.n_exact, row.n_lower, row.n_upper) == tuple(
-                reg["input"][key] for key in ("n_measurements", "n_lower_limits", "n_upper_limits"))
-            assert row.n_intervals == reg["input"].get("n_intervals",0)
-            vol = fit["regional_volume"]
-            np.testing.assert_allclose(
-                [row.median_surface_km3, row.equal_region_log_score, row.coverage95_observations],
-                [vol["median_surface_km3"], metric["equal_region_log_score"], metric["coverage95_observations"]],
-                rtol=1e-12)
-            assert row.volume_converged == vol["converged"]
         sphere = read(home/"spherical-mixture/report.json")
         row = spherical.loc[slug]
         receipt = read(home/"spherical-mixture/deposit.json")
@@ -130,7 +136,6 @@ def verify_comparison_tables(root):
              row.global_equal_region_negative_log_score, row.global_observation_coverage95],
             [receipt["median_map_volume_km3"],*np.asarray(receipt["thickness_band"]["volumes_km3"])[[0,2]],*envelope,score,coverage],
             rtol=1e-12)
-    assert regional.index.is_unique and set(regional.index) == expected_rows
 
 
 def main():
@@ -146,8 +151,8 @@ def main():
     assert sorted(panels) == sorted(record["name"] for record in datasets())
     hashes = read_hashes()
     verify_files(hashes)
-    for record in datasets():
-        home = root/"eruptions"/record["slug"]/"results"
+    for record in published_datasets():
+        home = root/result_home(record)
         report = read(home/"report.json")
         replay = read(home/"figure-replay.json")
         for path, expected in replay["source_reports"].items():

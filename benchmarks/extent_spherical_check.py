@@ -3,6 +3,8 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
+from .publication import published_datasets, result_home
+
 import numpy as np
 from scipy.stats import qmc, spearmanr
 from scipy.spatial import cKDTree
@@ -22,7 +24,7 @@ def run(job):
     rec,out,review_home=job
     slug=rec["slug"]
     family="spherical-mixture"
-    home=Path("eruptions")/slug/"results"/family
+    home=result_home(rec)/family
     review=(review_home/slug/family if review_home else home)/"extent"
     if (out/(slug+".json")).is_file():
         return
@@ -94,4 +96,4 @@ if __name__=="__main__":
     a=p.parse_args()
     a.output.mkdir(parents=True,exist_ok=True)
     with ProcessPoolExecutor(a.workers) as pool:
-        list(pool.map(run,[(r,a.output,a.review_root) for r in datasets() if not a.case or r["slug"] in a.case]))
+        list(pool.map(run,[(r,a.output,a.review_root) for r in (datasets() if a.review_root else published_datasets()) if not a.case or r["slug"] in a.case]))

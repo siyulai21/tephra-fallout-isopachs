@@ -1,16 +1,10 @@
 # How well do the methods predict fallout?
 
-The principal table lists results fitted to the accepted edition shared across all five methods for each eruption. Each method reports the integral of its median map and the integrals of its pointwise Q25 and Q75 thickness maps. Scores and 95% observation coverage describe prediction in withheld regions. [Volumes, validation and source hashes](principal-volumes.csv)
+The catalogue contains 39 fits on the current inputs for nine eruptions. Seven eruptions have five methods. Ilopango has three global fits on 168 all-phase airfall localities. Pinatubo has one nested fit on 235 Layer C localities. Each row gives the input hash, map domain, median-map integral, integrated thickness quartiles and geographic validation. [Download the current results](principal-volumes.csv) · [Eruption maps and source audits](../eruptions/README.md)
 
-The nested family fits its footprint and area–thickness law jointly. Matched comparisons with the original whole-area and station-corridor models include real withheld surveys, known deposits and measurements of the actual unsmoothed contours. [Catalogue estimates](nested-isopachs/README.md) · [Map comparisons and validation](nested-isopachs/geography/README.md)
+The figure uses the same inputs as the table. Lower scores indicate better prediction at geographically withheld sites. The percentages are coverage of 95% predictive intervals for exact thickness measurements. A cross marks a geographic fit with a numerical warning. The earlier five-method comparisons use their own observations and folds. [Matched study editions](../archive/2026-11-24-case-editions/README.md)
 
-The five-family Ilopango comparison uses the 56-site Unit G edition. A later Unit G nested fit uses 116 sites. The current directional, spherical and nested maps share 168 localities and a broader target, total primary TBJ airfall. [Three-family all-phase comparison](../eruptions/ilopango-tbj/results/total-airfall-2026-11-24/README.md) · [116-site Unit G fit](../eruptions/ilopango-tbj/results/nested-isopachs/2026-11-24/README.md)
-
-The November 24 [standalone Pinatubo nested fit](../eruptions/pinatubo-1991-layer-c/results/nested-isopachs/2026-11-24/README.md) uses 235 sites. The matched five-method Pinatubo comparison uses 208 observations, including 34 offshore records. Its land measurements incorporate both the Koyaguchi and Paladio-Melosantos figure reviews. The earlier field-survey experiments keep their own fitted inputs and held-out predictions. [Audited Pinatubo case](../eruptions/pinatubo-1991-layer-c/README.md) · [Effect of the two land-map reviews](../eruptions/pinatubo-1991-layer-c/results/source-checks/figure7-review/README.md) · [Earlier survey tests](nested-isopachs/pinatubo-preview/README.md)
-
-The figure compares geographic predictions on the matched five-method inputs. All five Mazama fits use the same 300 localities and the same buffered geographic holdouts. B-Tm includes two interpreted lake bounds and one peat bound in every family. Each region receives equal weight. Lower scores mean better prediction. Percentages give the share of exact thicknesses inside a 95% predictive interval. A cross marks incomplete scoring or a numerical warning.
-
-![Geographic prediction scores and exact-site coverage for the five methods](method-scores.png)
+![Geographic prediction scores and exact-site coverage for the methods fitted to each current input](method-scores.png)
 
 | Question | Evidence |
 |---|---|

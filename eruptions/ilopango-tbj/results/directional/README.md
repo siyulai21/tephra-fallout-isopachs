@@ -1,10 +1,10 @@
-# Ilopango TBJ (Unit G) · Directional ensemble
+# Ilopango TBJ · total primary airfall · Directional ensemble
 
-The principal bulk volume is **41.9 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **25.4–77.4 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.
+The principal bulk volume is **60.6 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **33.5–124 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.
 
-![Ilopango TBJ (Unit G), Directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
+![Ilopango TBJ · total primary airfall, Directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 56 of 56 modeled locations. The thickest displayed line is 256 cm and encloses 1 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 4 cm footprint includes 162 of 168 modeled locations. The thickest displayed line is 512 cm and encloses 7 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
 The principal map uses the geographic continuation evaluated on all registered eruptions. [Geographic holdouts, structural alternatives and numerical checks](extent/report.json) · [Complete contour decisions](extent/support.json.gz) · [Predictions at withheld observations](extent/heldout.csv.gz)
 
@@ -20,14 +20,14 @@ Distances are great-circle kilometres to the first outward crossing on each comp
 
 | Bearing | Fixed 10 cm reach (km) | Uncertain 10 cm reach (km) | Fixed ≥10 cm area (km²) | Uncertain ≥10 cm area (km²) |
 |---|---:|---:|---:|---:|
-| N | 65.0 | 65.0 | 1,889 | 1,840 |
-| NE | 87.5 | 87.9 | 3,095 | 2,773 |
-| E | 139.3 | 115.6 | 11,383 | 8,473 |
-| SE | 231.7 | 216.5 | 22,506 | 18,953 |
-| S | 213.5 | 212.9 | 17,752 | 17,258 |
-| SW | 162.3 | 148.7 | 10,952 | 10,075 |
-| W | 140.8 | 129.2 | 8,568 | 8,158 |
-| NW | 131.7 | 121.2 | 6,963 | 6,430 |
+| N | 79.3 | 79.4 | 2,507 | 2,382 |
+| NE | 74.1 | 74.3 | 2,201 | 2,086 |
+| E | 86.3 | 82.1 | 4,028 | 3,836 |
+| SE | 279.3 | 279.3 | 28,195 | 27,156 |
+| S | 225.0 | 224.8 | 18,907 | 18,721 |
+| SW | 154.0 | 146.1 | 9,820 | 9,530 |
+| W | 131.2 | 126.8 | 8,425 | 8,065 |
+| NW | 118.7 | 111.1 | 5,864 | 5,420 |
 
 ![Probability that a deposit reaches ten centimetres](azimuth/exceedance.png)
 
@@ -39,16 +39,28 @@ Each row averages negative log predictive scores over equally weighted folds. Lo
 
 | Deletion | All estimable folds | Fixed | Uncertain | Passing folds | Fixed, passing | Uncertain, passing | Exact-site 95% coverage |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Geographic regions | 4 | 1.491 | 1.528 | 4 | 1.491 | 1.528 | 48/52 (92.3%) |
-| Source quadrants | 4 | 1.417 | 1.532 | 3 | 1.456 | 1.527 | 51/52 (98.1%) |
+| Geographic regions | 4 | 1.241 | 1.349 | 4 | 1.241 | 1.349 | 60/65 (92.3%) |
+| Source quadrants | 4 | 1.123 | 1.220 | 4 | 1.123 | 1.220 | 65/65 (100.0%) |
 
 [Predictions for every estimable held-out site](azimuth/heldout.csv). The numerical record includes all planned folds, row identities, unscorable directions, fit warnings and phase-integration checks.
+
+## Inspected archives
+
+The principal fit includes the interpreted upper limits below. Each core enters once. Other sites provide an occurrence check. The interval describes the modeled latent thickness at each site.
+
+| Site | Interpreted upper limit (cm) | Median thickness (cm) | Conditional 95% interval (cm) |
+|---|---:|---:|---:|
+| TUNU2013 | Occurrence only | 2.7e-09 | 8.17e-86–0.00451 |
+| DSDP 67-499-1R-CC | Occurrence only | 7.17 | 2.85–17.1 |
+| V15-26 | Occurrence only | 7.44 | 0.818–22.9 |
+| RC12-31 | Occurrence only | 1.53 | 0.0975–8.32 |
+| Los Flores (Las Flores) CH-2t | Occurrence only | 55.5 | 27.4–86.4 |
 
 ## Checks and reproducibility
 
 The shared contour audit found eligible bands under none of the screened support policies. Audit status is completed. [All contour decisions and deletion failures](azimuth/complete-contour-audit.json)
 
-The spatial integration check passed at 8,192 points per scramble. The map used up to 128 posterior draws per chain and structure. Resolved contour areas passed the split-packet check. The joint-volume quantiles passed the split check.
+The spatial integration check passed at 4,096 points per scramble. The map used up to 64 posterior draws per chain and structure. Resolved contour areas passed the split-packet check. The joint-volume quantiles passed the split check.
 
 All six full fits passed their sampling diagnostics.
 

@@ -9,6 +9,7 @@ import pandas as pd
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.global_reporting import global_dataset
 from .spherical_bearing_summary import build_validation
+from .publication import published_methods
 
 
 def summarize(output, regional_root=Path('eruptions'), published=False, trials=None):
@@ -17,6 +18,9 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
     case_dirs = {}
     for record in sorted(datasets(), key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
+        available = published_methods(record)
+        if published and 'spherical-mixture' not in available:
+            continue
         folder = Path('eruptions')/slug/'results'/'spherical-mixture' if published else output/slug
         case_dirs[slug] = folder
         path = folder/'report.json'
@@ -26,18 +30,23 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
         regional_path = regional_root/slug/'report.json'
         if not regional_path.exists():
             regional_path = regional_root/slug/'results/report.json'
-        regional = json.loads(regional_path.read_text())
         val = report['validation']
-        other = regional['validation']
-        assert report['input']['input_sha256'] == regional['input']['input_sha256']
+        regional_methods = {}
+        regional_hash = None
         if published and report['input']['input_sha256'] != sha256(record['path'].read_bytes()).hexdigest():
             raise ValueError(f'{slug}: published spherical fit and accepted input differ')
-        assert val['row_ids'] == other['row_ids'] and val['folds'] == other['folds']
-        assert val['buffer_km'] == other['buffer_km']
-        for model in other['methods'].values():
-            for a, b in zip(val['fits'], model['selections']):
-                assert a['training_row_ids'] == b['training_row_ids']
-                assert a['withheld_row_ids'] == b['withheld_row_ids']
+        if not published or {'stacked','spline'}.intersection(available):
+            regional = json.loads(regional_path.read_text())
+            regional_hash = sha256(regional_path.read_bytes()).hexdigest()
+            assert report['input']['input_sha256'] == regional['input']['input_sha256']
+            other = regional['validation']
+            assert val['row_ids'] == other['row_ids'] and val['folds'] == other['folds']
+            assert val['buffer_km'] == other['buffer_km']
+            regional_methods = other['methods']
+            for model in regional_methods.values():
+                for a, b in zip(val['fits'], model['selections'], strict=True):
+                    assert a['training_row_ids'] == b['training_row_ids']
+                    assert a['withheld_row_ids'] == b['withheld_row_ids']
         deposit_path = folder/'deposit.json'
         deposit = json.loads(deposit_path.read_text())
         if deposit['input_sha256'] != report['input']['input_sha256']:
@@ -56,8 +65,8 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             'median_fraction_outside_local_footprint': 1-report['mass_partition']['parts']['local_footprint']['fraction']['median'],
             'global_equal_region_negative_log_score': val['metrics']['equal_region_log_score'],
             'global_observation_coverage95': val['metrics']['coverage95_observations']}
-        for model in ('stacked', 'spline'):
-            row[model+'_equal_region_negative_log_score'] = other['methods'][model]['metrics']['equal_region_log_score']
+        for key, model in regional_methods.items():
+            row[key+'_equal_region_negative_log_score'] = model['metrics']['equal_region_log_score']
         metrics = dict(val['metrics'])
         extent_path = folder/'extent/report.json'
         sources = {'deposit_sha256': sha256(deposit_path.read_bytes()).hexdigest()}
@@ -77,11 +86,11 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             sources['extent_report_sha256'] = sha256(extent_path.read_bytes()).hexdigest()
         rows.append(row)
         validation_rows.append({'eruption':name,'global':metrics,
-            **{key:model['metrics'] for key,model in other['methods'].items()},
-            'matched_input_folds_buffer_and_training_rows':True,'global_outer_sampling_passed':row['all_outer_sampling_passed']})
+            **{key:model['metrics'] for key,model in regional_methods.items()},
+            'matched_input_folds_buffer_and_training_rows':True if regional_methods else None,'global_outer_sampling_passed':row['all_outer_sampling_passed']})
         cases.append({'name':name,'slug':slug,'input_sha256':report['input']['input_sha256'],
             'global_report_sha256':sha256(path.read_bytes()).hexdigest(),
-            'regional_report_sha256':sha256(regional_path.read_bytes()).hexdigest(),**sources})
+            'regional_report_sha256':regional_hash,**sources})
     output.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output/'comparison.csv', index=False)
     (output/'report.json').write_text(json.dumps({'protocol': 'spherical-median-thickness-and-finite-spread-v2',
@@ -118,6 +127,8 @@ def figures(output, rows):
             axes[0].scatter(row['median_map_volume_km3'], i, color='#157F88', marker='o' if row['baseline_sampling_passed'] else 'x', s=40)
             for offset, key, color, label in ((-.15, 'global', '#157F88', 'Global mixture'),
                     (0, 'stacked', '#C57B3D', 'GP ensemble'), (.15, 'spline', '#78639F', 'Cubic spline')):
+                if key+'_equal_region_negative_log_score' not in row:
+                    continue
                 axes[1].scatter(row[key+'_equal_region_negative_log_score'], i+offset,
                                 c=color, s=35, marker='x' if key == 'global' and not row['all_outer_sampling_passed'] else 'o',
                                 label=label if i == 0 else None)

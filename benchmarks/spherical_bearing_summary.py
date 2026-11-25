@@ -55,6 +55,8 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
     grouped.to_csv(output/"known-areas.csv",index=False)
     real=[]
     for rec in sorted(datasets(),key=lambda r:r["slug"]):
+        if rec["slug"] not in case_dirs:
+            continue
         home=case_dirs[rec["slug"]]
         r=read(home/"report.json")
         v=r["fits"]["baseline"]["volume"]
@@ -126,7 +128,9 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
 
 def summarize(trials, output, cases=Path("eruptions")):
     """Replay the paired validation files separately in a research output directory."""
-    case_dirs = {r["slug"]: cases / r["slug"] / "results/spherical-mixture" for r in datasets()}
+    from .publication import published_methods
+    case_dirs = {r["slug"]: cases / r["slug"] / "results/spherical-mixture" for r in datasets()
+                 if "spherical-mixture" in published_methods(r)}
     _, scores, maps, trials_text = build_validation(trials, output, case_dirs)
     (output / "README.md").write_text(f"# Spherical bearing validation\n\n{scores}\n\n{maps}\n{trials_text}")
 

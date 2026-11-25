@@ -11,8 +11,10 @@ from src.empirical_isopach.models.nested.footprints.release import fit_part
 from src.empirical_isopach.models.nested.study import write_json
 
 
-def cases():
-    return {rec["slug"]:rec for rec in datasets()}
+def cases(*, published=False):
+    from .publication import published_datasets
+    records = published_datasets() if published else datasets()
+    return {rec["slug"]: rec for rec in records}
 
 
 def job(args):

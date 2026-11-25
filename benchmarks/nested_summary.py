@@ -8,7 +8,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.nested.geometry import positions, DIAMETER
 from src.empirical_isopach.models.nested.study import digest
@@ -39,7 +39,7 @@ def three(volume):
 
 def case_results(record):
     slug = record["slug"]
-    home = ROOT/"eruptions"/slug/"results"
+    home = ROOT/result_home(record)
     from .footprint_study import controls
     whole = ROOT/controls(slug,record)[2]
     nested = read(whole/"report.json")
@@ -240,7 +240,7 @@ def main():
     evidence = a.output/"challenge-receipts.json.gz" if a.known else ROOT/"comparisons/nested-isopachs/challenge-receipts.json.gz"
     raw = corpus(evidence, a.known, a.spherical_known,a.initial_known,a.outer,a.recovery)
     rows, experiments, reports, compass = [], [], {}, []
-    for record in sorted(datasets(), key=lambda r:r["slug"]):
+    for record in sorted(published_datasets(), key=lambda r:r["slug"]):
         case, paired, nested = case_results(record)
         rows.extend(case)
         experiments.extend(paired)

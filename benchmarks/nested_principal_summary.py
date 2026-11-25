@@ -2,15 +2,15 @@
 import numpy as np
 
 from .nested_summary import ROOT, comparison_plot, read, table
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets, result_home
 from src.empirical_isopach.models.nested.reach import PROTOCOL
 
 
 def build(output, peer_rows):
     rows, reports = [], []
-    for record in sorted(datasets(), key=lambda item: item["slug"]):
+    for record in sorted(published_datasets(), key=lambda item: item["slug"]):
         slug = record["slug"]
-        home = ROOT/"eruptions"/slug/"results"
+        home = ROOT/result_home(record)
         corridor = read(home/"nested-isopachs/report.json")
         broad = read(home/"nested-whole-area/report.json")
         peers = [r for r in peer_rows if r["slug"] == slug and r["method"] in ("Directional", "Spherical")]
@@ -26,7 +26,7 @@ def build(output, peer_rows):
         rows.append(dict(eruption=record["name"], slug=slug, method="Nested corridor", lower95_km3=lo,
                          median_map_km3=read(home/"nested-isopachs/deposit.json")["median_map_volume_km3"], upper95_km3=hi, equal_region_log_score=corridor["geographic_score"],
                          input_sha256=corridor["input_sha256"]))
-        reports.append((slug, corridor, broad))
+        reports.append((result_home(record), corridor, broad))
     table(output/"cases.csv", rows)
     comparison_plot(rows, output/"volumes.png", nested_family="Nested corridor")
     lines = ["# Global fallout volume from nested dispersal corridors", "",
@@ -34,14 +34,14 @@ def build(output, peer_rows):
              "![Directional, spherical and principal nested median-map integrals with conditional 95% volume intervals](volumes.png)", "",
              "| Eruption | Median-thickness map (km³) | Conditional 95% interval (km³) | Whole-area median-map integral (km³) | Corridor geographic score ↓ | Withheld exact readings inside 95% | Full-data checks | Geographic fits passing |",
              "|---|---:|---:|---:|---:|---:|---|---:|"]
-    for slug, j, broad in reports:
+    for folder, j, broad in reports:
         lo, hi = j["conditional_volume_interval95_km3"]
-        mapped = read(ROOT/"eruptions"/slug/"results/nested-isopachs/deposit.json")
+        mapped = read(ROOT/folder/"nested-isopachs/deposit.json")
         c = j["exact_site_coverage95"]
         warnings = [name for name, passed in j["numerics"].items() if not passed]
         status = "passed" if not warnings else "**warning** ("+", ".join(warnings)+")"
-        lines.append(f"| [{j['name']}](../../eruptions/{slug}/results/nested-isopachs/README.md) | **{mapped['median_map_volume_km3']:,.3g}** | {lo:,.1f}–{hi:,.1f} | "
-                     f"{read(ROOT/'eruptions'/slug/'results/nested-whole-area/median-field.json')['median_map_volume_km3']:,.1f} | {j['geographic_score']:.3f} | {c['covered']}/{c['exact_sites']} | "
+        lines.append(f"| [{j['name']}](../../{folder}/nested-isopachs/README.md) | **{mapped['median_map_volume_km3']:,.3g}** | {lo:,.1f}–{hi:,.1f} | "
+                     f"{read(ROOT/folder/'nested-whole-area/median-field.json')['median_map_volume_km3']:,.1f} | {j['geographic_score']:.3f} | {c['covered']}/{c['exact_sites']} | "
                      f"{status} | {sum(f['passed'] for f in j['folds'])}/{len(j['folds'])} |")
     scored = [j for _, j, _ in reports]
     bands = sum(bool(j["supported_band_policies"]) for j in scored)

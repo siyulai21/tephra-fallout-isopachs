@@ -52,7 +52,7 @@ def legend(fig):
 
 
 def focus(slug, scratch, trial, output):
-    rec=cases()[slug]
+    rec=cases(published=True)[slug]
     data,meta=audited_data(rec["path"])
     folder=scratch/"morphology"/slug
     fields=[surface(folder/f"surface-{i}.npz") for i in (0,1)]
@@ -81,7 +81,7 @@ def focus(slug, scratch, trial, output):
 
 def gallery(scratch, output):
     fig,axes=plt.subplots(3,3,figsize=(12.7,13.5),layout="constrained")
-    for ax,(slug,rec) in zip(axes.flat,[(s,r) for s,r in cases().items() if s==r["slug"]],strict=True):
+    for ax,(slug,rec) in zip(axes.flat,[(s,r) for s,r in cases(published=True).items() if s==r["slug"]],strict=True):
         data,meta=audited_data(rec["path"])
         field=surface(scratch/"morphology"/slug/"surface-2.npz")
         draw(ax,field,data,meta,frames(field,data)[0],False)

@@ -5,6 +5,8 @@ import subprocess
 from zipfile import ZipFile
 from hashlib import sha256
 from pathlib import Path
+
+from .publication import result_home
 import json
 import numpy as np
 import pandas as pd
@@ -22,7 +24,7 @@ from src.empirical_isopach.models.mass_mixture.inference import flatten
 
 
 def verify_case(rec):
-    home=Path("eruptions")/rec["slug"]/"results/spherical-mixture"
+    home=result_home(rec)/"spherical-mixture"
     r=read(home/"report.json"); parent=read(home/"bearing/parent-report.json")
     data,meta=audited_data(rec["path"])
     assert r["protocol"]==PROTOCOL and r["parent_protocol"]==parent["protocol"]
@@ -137,8 +139,12 @@ def main():
     from PIL import Image
     with Image.open(base/"bearings/paired-isopachs.png") as plot:
         sources=json.loads(plot.info["Description"])
-    for rec in datasets():
-        folder=Path("eruptions")/rec["slug"]/"results/spherical-mixture"
+    from src.empirical_isopach.core.catalog import datasets as registered_datasets
+    from .publication import published_methods
+    mapped = [rec for rec in registered_datasets() if "spherical-mixture" in published_methods(rec)]
+    assert set(sources) == {rec["slug"] for rec in mapped}
+    for rec in mapped:
+        folder=result_home(rec)/"spherical-mixture"
         assert sources[rec["slug"]]["report_sha256"]==digest(folder/"report.json")
         assert sources[rec["slug"]]["parent_posterior_sha256"]==digest(folder/"posterior.npz")
     with gzip.open(base/"bearings/known-deposits.json.gz","rt") as stream:

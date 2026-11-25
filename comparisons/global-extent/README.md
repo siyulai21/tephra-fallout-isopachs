@@ -12,7 +12,9 @@ The directional, spherical and corridor pairs each share the same data, geograph
 
 The independent spherical-kernel integral passed. [Kernel checks](kernel-integrals.json)
 
-## Across the nine eruptions
+## Across the nine study inputs
+
+The finite-spread experiment uses the 208-site Pinatubo Layer C and 56-site Ilopango Unit G editions. [Matched inputs and results](../../archive/2026-11-24-case-editions/README.md)
 
 The paired study measures how limiting lateral spread away from observations changes isopach area, integrated volume and prediction in a withheld region. Each eruption contributes one geographic score to the average. Lower scores indicate better predictions. [All 27 pairs](paired-results.csv) · [Sector areas and volumes](sector-areas.csv.gz)
 

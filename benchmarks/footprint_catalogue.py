@@ -1,6 +1,8 @@
 """Install reviewed nested releases and rebuild matched five-family displays from their source reports."""
 import argparse
 from pathlib import Path
+
+from .publication import result_home
 import shutil
 
 
@@ -13,7 +15,7 @@ from src.empirical_isopach.visualization.summary import saved_case_overview
 def published_folder(case, record):
     if case != record["slug"]:
         raise ValueError(f"Expected the registered case {record['slug']}, received {case}")
-    return Path("eruptions")/case/"results/nested-isopachs"
+    return result_home(record)/"nested-isopachs"
 
 
 def install(case, record, source):

@@ -38,7 +38,10 @@ def dataset_record(path):
             old_path = data_directory() / previous["file"]
             if old_path.resolve() == resolved:
                 # Optional evidence and publication receipts belong to the edition that declares them.
-                edition_fields = {"archive_evidence", "principal_nested_result", "principal_global_results", "release_receipt"}
+                edition_fields = {
+                    "archive_evidence", "principal_nested_result", "principal_global_results",
+                    "release_receipt", "published_methods", "matched_results",
+                }
                 common = {k: v for k, v in row.items() if k not in edition_fields}
                 return {**common, **previous, "path": old_path}
     return None

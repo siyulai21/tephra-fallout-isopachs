@@ -1,4 +1,4 @@
-"""Replay published fits into fresh display-only figures, without retuning."""
+"""Replay the matched five-family study in fresh figures. Current global plates use benchmarks.deposit_maps."""
 import argparse
 from hashlib import sha256
 import json
@@ -8,7 +8,7 @@ import shutil
 import numpy as np
 import pandas as pd
 
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_datasets as datasets, result_home
 from src.empirical_isopach.visualization.comparison import draw_comparison, saved_observations, saved_regional_grid
 from src.empirical_isopach.visualization.regional import regional_grid
 from src.empirical_isopach.models.mass_mixture.study import audited_data
@@ -98,7 +98,7 @@ def regional_models(data, report):
 
 def refresh_case(record, output, scopes=("regional", "directional", "spherical", "comparison")):
     slug, name = record["slug"], record["name"]
-    home = ROOT/"eruptions"/slug/"results"
+    home = ROOT/result_home(record)
     target = Path(output)/slug
     target.mkdir(parents=True, exist_ok=True)
     data, meta = recorded_observations(record, home)
@@ -221,7 +221,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     cases = [refresh_case(r, args.output, args.scopes) for r in rows]
     if len(cases) == len(datasets()):
-        all_case_scores(args.output, cases,homes={r["name"]:Path("eruptions")/r["slug"]/"results" for r in rows})
+        all_case_scores(args.output, cases,homes={r["name"]:result_home(r) for r in rows})
 
 
 if __name__ == "__main__":

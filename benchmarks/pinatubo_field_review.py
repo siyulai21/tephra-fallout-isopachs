@@ -94,4 +94,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     previous_fields(args.output)
     if args.volume_output:
-        volume_changes(ROOT / "eruptions/pinatubo-1991-layer-c/results", args.volume_output)
+        volume_changes(ROOT / "archive/2026-11-24-case-editions/pinatubo-layer-c-208", args.volume_output)

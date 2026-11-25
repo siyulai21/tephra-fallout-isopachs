@@ -1,8 +1,10 @@
-# Ilopango TBJ Unit G thickness audit
+# Ilopango TBJ field evidence
 
-This 56-site audit accompanies the original matched comparison of Unit G. The current three-model release maps all-phase airfall at 168 localities. [Current source audit](field-logs/README.md)
+The 168-locality all-phase reconstruction uses the early field logs, the modern section workbook and distal cores. [Current audit and field decisions](field-logs/README.md) · [All-phase maps](../../../eruptions/ilopango-tbj/README.md)
 
-This page preserves the source and coverage audit for the 56-locality matched comparison. The November 24 review registers 116 localities and preserves the reconciliation with this edition. [Current site audit, bounds and original field reports](reaudit/README.md)
+## Original 56-locality Unit G workbook audit
+
+The following reconciliation underlies the original five-method Unit G comparison. A later review used 116 localities for the same phase. [116-site field audit](reaudit/README.md) · [Both Unit G result editions](../../../archive/2026-11-24-case-editions/README.md#ilopango)
 
 **52 measured thicknesses and four reported lower bounds** enter each fit. Each accepted row has a distinct published coordinate pair and an evidence ID. The primary observation is the widespread upper co-ignimbrite ash, Unit G. Earlier fallout units A and B have different dispersal axes. Other horizons include flow deposits. Keeping the unit identity fixed makes the thickness at different sites comparable. [Accepted observations](../../eruptions/Ilopango_TBJ_Unit_G.csv) · [Source material](../../sources/ilopango-tbj/README.md)
 

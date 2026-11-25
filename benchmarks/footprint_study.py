@@ -10,7 +10,7 @@ import pandas as pd
 from scipy.special import expit, logsumexp
 
 from .footprint_catalogue import published_folder
-from .nested_footprints import cases
+from .publication import published_datasets, result_home
 from src.empirical_isopach.models.nested.continuation import load_packet
 from src.empirical_isopach.models.nested.footprints.posterior import FootprintField
 from src.empirical_isopach.visualization.deposit import digest, read_json
@@ -20,7 +20,7 @@ STUDY = Path("comparisons/nested-isopachs/geography")
 
 
 def controls(slug, rec):
-    base = Path("eruptions")/rec["slug"]/"results"
+    base = result_home(rec)
     root = ARCHIVE/f"{slug}-300-controls"
     if (root/"whole/full.npz").is_file():
         if read_json(root/"corridor/extent/report.json")["input_sha256"] != digest(rec["path"]):
@@ -114,7 +114,8 @@ def paired(case, rec, path):
 def collect(scratch, regional, out):
     out.mkdir(parents=True,exist_ok=True)
     values, odds, sectors, morphs, rotations, receipt = [], [], [], [], [], {}
-    for case,rec in cases().items():
+    for rec in published_datasets():
+        case = rec["slug"]
         path=scratch/"release"/case
         values.extend(paired(case,rec,path))
         odds.extend(structural(case,controls(case,rec)[2],path))

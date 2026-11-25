@@ -47,5 +47,5 @@ if __name__ == "__main__":
     parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
     with ProcessPoolExecutor(args.workers) as pool:
-        for slug in pool.map(render, [(r, args.output) for r in records()]):
+        for slug in pool.map(render, [(r, args.output) for r in records(published=True)]):
             print(slug, flush=True)

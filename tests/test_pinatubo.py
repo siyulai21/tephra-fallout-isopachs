@@ -199,7 +199,7 @@ def test_two_map_reviews_compare_the_same_families_and_only_new_sites(tmp_path):
     from benchmarks.pinatubo import ROOT
     from benchmarks.pinatubo_field_review import ARCHIVE, volume_changes
 
-    home = ROOT / "eruptions/pinatubo-1991-layer-c/results"
+    home = ROOT / "archive/2026-11-24-case-editions/pinatubo-layer-c-208"
     release = home / "source-checks/figure7-review"
     old_rows = {r["EvidenceID"]: r for r in rows(ARCHIVE / "input.csv")}
     new_rows = {r["EvidenceID"]: r for r in rows(INPUT)}
@@ -221,7 +221,7 @@ def test_two_map_reviews_compare_the_same_families_and_only_new_sites(tmp_path):
 def test_reviewed_pinatubo_families_use_identical_geographic_holdouts():
     from benchmarks.pinatubo import ROOT
 
-    home = ROOT / "eruptions/pinatubo-1991-layer-c/results"
+    home = ROOT / "archive/2026-11-24-case-editions/pinatubo-layer-c-208"
 
     def read(relative):
         return json.loads((home / relative).read_text())

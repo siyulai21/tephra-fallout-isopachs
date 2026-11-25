@@ -19,7 +19,7 @@ from src.empirical_isopach.models.nested.inference import log_events
 from src.empirical_isopach.models.nested.profile import parameters
 from src.empirical_isopach.models.nested.study import digest
 
-OUT = ROOT/"eruptions/pinatubo-1991-layer-c/results/nested-isopachs/2026-11-24"
+OUT = ROOT/"eruptions/pinatubo-1991-layer-c/results/nested-isopachs"
 
 
 def reproduce(home, output):

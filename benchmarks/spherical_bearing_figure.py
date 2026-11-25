@@ -28,7 +28,7 @@ def grid(view, bounds, size):
 def draw(output, case_dirs):
     previous, current = "#a44926", "#075d72"
     sources = {}
-    records=sorted(datasets(),key=lambda r:r["slug"])
+    records=sorted((r for r in datasets() if r["slug"] in case_dirs),key=lambda r:r["slug"])
     archived=read_hashes(ROOT/SPHERICAL_REFERENCE/"previous-files.sha256")
     rows=(len(records)+1)//2
     with plt.rc_context(STYLE):

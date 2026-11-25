@@ -32,7 +32,7 @@ def build(output, cases, known, quadrants, regional):
     if known is not None:
         records_by_design = {"known":[read(p) for p in sorted(known.glob("*.json"))],
                              "quadrants":[read(p) for p in sorted(quadrants.glob("*.json"))]}
-        if len(records_by_design["known"]) != 18 or len(records_by_design["quadrants"]) != 4*len(records()):
+        if len(records_by_design["known"]) != 18 or len(records_by_design["quadrants"]) != 4*len(records(published=True)):
             raise ValueError("Expected all known-surface and compass holdouts, including empty sectors")
         receipts.write_bytes(gzip.compress(json.dumps(records_by_design, separators=(",",":")).encode(), mtime=0))
     else:
@@ -41,7 +41,7 @@ def build(output, cases, known, quadrants, regional):
             receipts.write_bytes((COMPARISON / receipts.name).read_bytes())
     quadrants = list(records_by_design["quadrants"])
     represented = {r["slug"] for r in quadrants}
-    for rec in records():
+    for rec in records(published=True):
         slug = rec["slug"]
         if slug in represented:
             continue
@@ -70,7 +70,7 @@ def build(output, cases, known, quadrants, regional):
                     "false_1cm_km2":a[0,0],"missed_1cm_km2":a[0,1],"false_west_1cm_km2":a[0,2],"missed_west_1cm_km2":a[0,3]})
     table(output / "known-surfaces.csv", known_rows)
     comparison, area_rows, links = [], [], {}
-    for rec in sorted(records(), key=lambda r:r["slug"]):
+    for rec in sorted(records(published=True), key=lambda r:r["slug"]):
         slug = rec["slug"]
         home = case_home(slug) / "nested-isopachs"
         folder = cases / slug if cases else home
