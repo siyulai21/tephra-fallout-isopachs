@@ -1,28 +1,21 @@
 # Fitting reported lower limits as point thicknesses
 
-The GP, spline, directional and nested median fields have been refitted for all seven affected eruptions. The spherical sensitivity and geographic fits are in progress. Each of the 264 source minima enters as a point at its stated thickness. The source tables retain the field qualifier. Among these minima, 188 lie beyond 25 km. [Fitting and plotting convention](../../docs/methods/reported-minimum-fitting.md)
+These 7 eruptions have accepted fallout sites with a numeric lower limit. Each fit uses that value as a point thickness at its actual location. Upper limits retain a one-sided probability and ranges use the probability between both endpoints. The source tables retain the original qualifiers. [Fitting and plotting convention](../../docs/methods/reported-minimum-fitting.md)
 
-| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Nested vent, previous → revised (cm) | Source and fit at each site |
-|---|---:|---:|---:|---:|---:|---|
-| [Mazama](../../eruptions/mazama/results/minimum-fit-2026-11-25/directional/README.md) | 129 | 8 | 121 | 5,815.9 → 803.5 | 11,707.7 → 539.2 | [Site table](../../eruptions/mazama/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [Ilopango TBJ](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/directional/README.md) | 84 | 43 | 41 | 868.7 → 160.4 | 2,696.3 → 385.6 | [Site table](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [Minoan](../../eruptions/minoan/results/minimum-fit-2026-11-25/directional/README.md) | 9 | 5 | 4 | 26.6 → 12.9 | 33.0 → 20.1 | [Site table](../../eruptions/minoan/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [Pinatubo Layer C](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/directional/README.md) | 31 | 17 | 14 | 35.6 → 14.4 | 39.8 → 30.1 | [Site table](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [Sakurajima–Satsuma](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/directional/README.md) | 5 | 2 | 3 | 69.8 → 66.5 | 72.7 → 72.7 | [Site table](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [Aso-4](../../eruptions/aso-4/results/minimum-fit-2026-11-25/directional/README.md) | 3 | 0 | 3 | 57.0 → 58.7 | 85.0 → 84.0 | [Site table](../../eruptions/aso-4/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
-| [B-Tm](../../eruptions/b-tm/results/minimum-fit-2026-11-25/directional/README.md) | 3 | 1 | 2 | 106.6 → 39.7 | 76.8 → 56.2 | [Site table](../../eruptions/b-tm/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
+![Ratio of revised to previous median thickness at reported minima versus distance from the vent](site-ratios.png)
 
-The vent values are median map predictions. An incomplete section can preserve less than the full fallout thickness. Removing the source annotation from the fitting arrays had zero effect on the four completed fields at the vent and every accepted locality. [Regional known-deposit benchmark](regional-benchmark/README.md)
+Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter the same likelihood. A blank comparison means the previous edition had no map on the same audited input. [Values by case and method](all-distances.csv)
 
-## Completed spherical maps
+| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |
+|---|---:|---:|---:|---:|---:|---:|
+| [Mazama](../../eruptions/mazama/README.md) | 129 | 8 | 121 | 5,815.9 → 803.5 | 7,186.0 → 72.6 | 11,707.7 → 539.2 |
+| [Ilopango TBJ](../../eruptions/ilopango-tbj/README.md) | 84 | 43 | 41 | 868.7 → 160.4 | 16,382.4 → 325.1 | 2,696.3 → 385.6 |
+| [Minoan](../../eruptions/minoan/README.md) | 9 | 5 | 4 | 26.6 → 12.9 | 25.2 → 9.3 | 33.0 → 20.1 |
+| [Pinatubo Layer C](../../eruptions/pinatubo-1991-layer-c/README.md) | 31 | 17 | 14 | 35.6 → 14.4 | 24.3 → 19.3 | 39.8 → 30.1 |
+| [Sakurajima–Satsuma](../../eruptions/sakurajima-satsuma/README.md) | 5 | 2 | 3 | 69.8 → 66.5 | 63.5 → 89.0 | 72.7 → 72.7 |
+| [Aso-4](../../eruptions/aso-4/README.md) | 3 | 0 | 3 | 57.0 → 58.7 | 43.3 → 44.1 | 85.0 → 84.0 |
+| [B-Tm](../../eruptions/b-tm/README.md) | 3 | 1 | 2 | 106.6 → 39.7 | 79.2 → 55.4 | 76.8 → 56.2 |
 
-These maps include eight fixed prior fits and four buffered geographic fits.
+Vent values in the table are modeled median thicknesses at the vent coordinates. A model can place its thickest deposit elsewhere. Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore underestimate total local fallout. The case pages link the original sources. The B-Tm spherical comparison uses its verified full-data map. Its remaining prior and geographic tables are being assembled. [B-Tm spherical baseline](https://github.com/siyulai21/tephra-fallout-isopachs/blob/fb09fcf7950a44c716cbcd68e4c15dc12886da4e/results/btm-baseline-preview/principal/README.md)
 
-| Eruption | Previous vent median (cm) | Revised vent median (cm) | Validation |
-|---|---:|---:|---|
-| [Mazama](../../eruptions/mazama/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 7,186.0 | 72.6 | [Matched geographic predictions](../../eruptions/mazama/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
-| [Aso-4](../../eruptions/aso-4/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 43.3 | 44.1 | [Matched geographic predictions](../../eruptions/aso-4/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
-| [Minoan](../../eruptions/minoan/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 25.2 | 9.3 | [Matched geographic predictions](../../eruptions/minoan/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
-| [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 16,382.4 | 325.1 | [Matched geographic predictions](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 63.5 | 89.0 | [Matched geographic predictions](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 24.3 | 19.3 | [Matched geographic predictions](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
+All five methods use the same accepted observations and four geographic holdouts within each case. An annotation-removal check compares the median field at the vent and every accepted site with and without the provenance marker. The case comparison tables record the maximum absolute difference. The global estimates include extrapolation into unsampled regions. Numerical warnings and unsupported contour bands are retained in the individual case reports. [Method scores and volumes](../principal-volumes.csv) · [Matched regional benchmark](regional-benchmark/README.md)
