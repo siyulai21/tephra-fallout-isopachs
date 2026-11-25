@@ -1,0 +1,170 @@
+{
+  "volume": {
+    "lower95": 397.4331084450927,
+    "median": 1038.3736004345167,
+    "upper95": 24024.112774706777,
+    "unit": "km3 bulk fallout",
+    "draws": 12288
+  },
+  "by_width": {
+    "0": {
+      "lower95": 503.549156828884,
+      "median": 1470.5183746704106,
+      "upper95": 35742.249591717184
+    },
+    "1": {
+      "lower95": 410.41947289770815,
+      "median": 984.3785550480557,
+      "upper95": 21483.76834172847
+    },
+    "4": {
+      "lower95": 370.0174150740583,
+      "median": 788.0527727157938,
+      "upper95": 16099.234887847924
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 440.47815476974375,
+    "median": 1187.8242725153273,
+    "upper95": 33520.1432011418
+  },
+  "base_volume_all_draws": {
+    "lower95": 495.38782177514594,
+    "median": 1436.2258181567543,
+    "upper95": 34524.698800931044
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.0014260876379427543,
+        "max_relative_quantile_doubling_difference": 0.0011163885099398918,
+        "p99_absolute_draw_fraction_difference": 0.009519036493832891,
+        "max_absolute_draw_fraction_difference": 0.019816528790684462,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.03526608002596987,
+    "draw_split_relative": [
+      0.009520284892871959,
+      0.01617681293739161,
+      0.07685923310197541
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 1024,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 403.8498470722569,
+        "median": 1049.1656476901044,
+        "upper95": 21425.23941058511,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0028862506997006506,
+            "max_relative_quantile_doubling_difference": 0.0026002518042708145,
+            "p99_absolute_draw_fraction_difference": 0.008899300736911956,
+            "max_absolute_draw_fraction_difference": 0.017383624961381017,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.07556799883659371,
+        "draw_split_relative": [
+          0.03644182689304351,
+          0.028570989507993527,
+          0.17481446596121075
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 392.46993441458534,
+        "median": 1020.5608568341304,
+        "upper95": 26918.09941598591,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0021092179542316195,
+            "max_relative_quantile_doubling_difference": 0.003661460625278279,
+            "p99_absolute_draw_fraction_difference": 0.009361428753102391,
+            "max_absolute_draw_fraction_difference": 0.01789829837773238,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.10211551807908337,
+        "draw_split_relative": [
+          0.03716858285910497,
+          0.03069167565347331,
+          0.10413611335947091
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 1024,
+      "volume": {
+        "lower95": 397.4331084450927,
+        "median": 1038.3736004345167,
+        "upper95": 24024.112774706777,
+        "unit": "km3 bulk fallout",
+        "draws": 12288
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0014260876379427543,
+            "max_relative_quantile_doubling_difference": 0.0011163885099398918,
+            "p99_absolute_draw_fraction_difference": 0.009519036493832891,
+            "max_absolute_draw_fraction_difference": 0.019816528790684462,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.03526608002596987,
+        "draw_split_relative": [
+          0.009520284892871959,
+          0.01617681293739161,
+          0.07685923310197541
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "3494eba341f8a83dff6d5bf447e0d02698ea7a1acb96fe770544315a9a076e45",
+  "input_sha256": "70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624",
+  "parent_sampler_passed": true,
+  "packet_sha256": "4ba2f757bbb7b7788bb65abf003f3fe6d8a96037920d4f5a70e5b646ed9b39a1"
+}
