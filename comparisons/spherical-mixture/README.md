@@ -9,6 +9,7 @@ A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior f
 | [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/spherical-mixture/README.md) | 168 | **242** | 96.5–769 | 1.204 | 98.5% |
 | [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | 300 | **418** | 248–795 † | 1.027 | 76.1% |
 | [Minoan](../../eruptions/minoan/results/spherical-mixture/README.md) | 101 | **26.9** | 20–42.9 | 1.586 | 95.7% |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/spherical-mixture/README.md) | 235 | **6.13** | 4.36–7.91 † | 0.895 † | 98.0% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/spherical-mixture/README.md) | 57 | **6.94** | 4.22–14.5 | 1.351 | 88.0% |
 | [Tambora](../../eruptions/tambora/results/spherical-mixture/README.md) | 26 | **117** | 82.3–176 | 1.590 | 100.0% |
 | [YTT](../../eruptions/ytt/results/spherical-mixture/README.md) | 46 | **1,227** | 980–1,524 | 1.737 | 84.8% |

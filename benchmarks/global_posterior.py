@@ -41,7 +41,8 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
             assert report['input']['input_sha256'] == regional['input']['input_sha256']
             other = regional['validation']
             assert val['row_ids'] == other['row_ids'] and val['folds'] == other['folds']
-            assert val['buffer_km'] == other['buffer_km']
+            # Projection libraries can differ below a micrometre across platforms.
+            np.testing.assert_allclose(val['buffer_km'], other['buffer_km'], atol=1e-9, rtol=0)
             regional_methods = other['methods']
             for model in regional_methods.values():
                 for a, b in zip(val['fits'], model['selections'], strict=True):

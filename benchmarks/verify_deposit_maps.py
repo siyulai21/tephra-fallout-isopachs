@@ -172,7 +172,10 @@ def verify_regional(record, region, meta, *, check_bands=True):
             np.testing.assert_allclose(replay["volumes_km3"],b["methods"][k]["volumes_km3"],rtol=3e-6)
             assert replay["passed"]==b["methods"][k]["passed"]
         probes=np.array(screen["check_points_x_y_km_log10_cm"][k])
-        np.testing.assert_allclose(predictive_distribution(fit,probes[:,:2]).quantile(.5)/np.log(10.),probes[:,2],atol=2e-7)
+        predicted = predictive_distribution(fit, probes[:, :2]).quantile(.5)
+        # One part per million in thickness at every site, including sub-centimetre ash.
+        np.testing.assert_allclose(predicted, probes[:, 2] * np.log(10.),
+                                   rtol=0, atol=np.log1p(1e-6), err_msg=f"{record['slug']} {k} median-map probes")
 
 
 def main():

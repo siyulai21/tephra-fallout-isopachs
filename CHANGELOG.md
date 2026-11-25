@@ -1,5 +1,9 @@
 # Release history
 
+## Pinatubo spherical fit on 235 localities
+
+The whole-Earth spherical median map integrates to 6.13 km³ with integrated thickness quartiles of 4.36–7.91 km³. Four of eight prior fits retain sampling warnings, including the three-fan baseline. [Map, geographic prediction and saved draws](eruptions/pinatubo-1991-layer-c/README.md#spherical-mixture-convergence)
+
 ## Pinatubo regional reconstruction on 235 localities
 
 The GP ensemble and cubic spline median maps integrate to 4.21 and 6.10 km³ over the same 614,065 km² observation hull. All four geographic holdouts retain the measured values and bounds. The spline's southwestern deletion records the overflow of its auxiliary expected volume alongside its finite median-map integral. [Maps, support and geographic prediction](eruptions/pinatubo-1991-layer-c/README.md)
