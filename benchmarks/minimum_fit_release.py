@@ -45,7 +45,7 @@ def publish(record):
     if computation.is_file():
         reports.append(computation)
     receipt = dict(input_sha256=meta["input_sha256"], reported_source_sha256=meta["reported_source_sha256"],
-                   previous_revision=previous["revision"], observation_policy=POLICY,
+                   previous_revision=previous.get("revision"), observation_policy=POLICY,
                    observations=len(sites), reported_site_types=dict(kinds), fitted_site_types=dict(Counter(sites.fit_kind)),
                    matched_geographic_folds=int(sites.geographic_fold.nunique()), spherical_prior_fits=8,
                    fixed_direction_control_km3=controls["median_surface"]["volume_km3"],
@@ -63,7 +63,7 @@ def write_case_page(record, sites):
     kinds = Counter(sites.reported_kind)
     history = case / "previous-minimum-treatment.md"
     old_page = case / "README.md"
-    if not history.exists():
+    if not history.exists() and previous.get("revision") and old_page.is_file():
         history.write_bytes(old_page.read_bytes())
     prefix = link(home, case) + "/"
     audit = data_directory() / Path(record["audit"]).parent / "README.md"
@@ -91,13 +91,47 @@ def write_case_page(record, sites):
              case_section(home, prefix=prefix, name=record["name"]).strip(), "",
              "## Evidence and checks", "",
              checks, "",
-             "[Previous maps and geological assessment](previous-minimum-treatment.md) · "
-             "[Change at all distances across eruptions](../../comparisons/reported-minima/README.md)", ""]
+             ("[Previous maps and geological assessment](previous-minimum-treatment.md) · " if history.is_file() else "")
+             + "[Change at all distances across eruptions](../../comparisons/reported-minima/README.md)", ""]
     old_page.write_text("\n".join(lines))
 
 
+def verify_release(record):
+    """Check the published files, fitted site counts, prior fits and actual holdouts."""
+    home = result_home(record)
+    release = json.loads((home / record["release_receipt"]).read_text())
+    data, meta = audited_data(record["path"])
+    assert release["input_sha256"] == meta["input_sha256"]
+    assert release["reported_source_sha256"] == meta["reported_source_sha256"]
+    assert release["observation_policy"] == POLICY
+    assert release["observations"] == len(data.xy)
+    assert release["reported_site_types"]["lower_limit"] == int(data.reported_minimum.sum())
+    assert release["fitted_site_types"]["measurement"] == int((~data.censored).sum())
+    assert not release["fitted_site_types"].get("lower_limit", 0)
+    assert release["methods"] == volume_rows(home, input_sha256=meta["input_sha256"])
+    for filename, expected in release["files"].items():
+        assert digest(Path(filename)) == expected, filename
+    sphere = json.loads((home / "spherical-mixture/report.json").read_text())
+    assert len(sphere["fits"]) == release["spherical_prior_fits"] == 8
+    assert len(sphere["validation"]["fits"]) == release["matched_geographic_folds"] == 4
+    field_validation(home, record["path"], record["slug"])
+    verify_sampling(home)
+
+
 if __name__ == "__main__":
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("case")
-    slug = p.parse_args().case
-    publish(next(r for r in datasets() if r["slug"] == slug and r.get("reported_file")))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("case", nargs="?", help="Registered eruption slug")
+    parser.add_argument("--verify", action="store_true", help="Check a completed case or all registered minimum-fit releases")
+    args = parser.parse_args()
+    if not args.verify and not args.case:
+        parser.error("Specify a case to publish, or --verify to check published cases")
+    cases = [r for r in datasets() if r.get("reported_file") and (not args.verify or r.get("release_receipt"))
+             and (not args.case or r["slug"] == args.case)]
+    if not cases:
+        parser.error("No matching registered source and fitting tables")
+    for record in cases:
+        if args.verify:
+            verify_release(record)
+            print(record["name"], "release files, sampling attempts and geographic holdouts verified")
+        else:
+            publish(record)
