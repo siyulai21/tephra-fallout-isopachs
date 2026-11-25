@@ -59,6 +59,11 @@ def test_all_registered_fitting_rows_recover_the_original_field_evidence():
 def test_geometry_uses_the_same_points_as_independently_reported_measurements():
     mazama = next(r for r in datasets() if r["slug"] == "mazama")
     fit, _ = audited_data(mazama["path"])
+    from benchmarks.publication import result_home
+    from src.empirical_isopach.visualization.comparison import saved_observations
+    replay = saved_observations(result_home(mazama) / "accepted_observations.csv")
+    np.testing.assert_array_equal(replay.reported_minimum, fit.reported_minimum)
+    np.testing.assert_array_equal(replay.censored, fit.censored)
     equivalent = replace(fit, reported_minimum=None)
     np.testing.assert_array_equal(SupportMesh(fit).xy, SupportMesh(equivalent).xy)
     # Both the interpolation footprint and the candidate contour levels use all fitted points.

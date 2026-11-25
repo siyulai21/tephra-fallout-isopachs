@@ -39,7 +39,7 @@ def recorded_observations(record, home):
     current = current.subset([by_id[i] for i in data.row_ids])
     np.testing.assert_allclose(current.interval_log_upper, data.interval_log_upper, equal_nan=True)
     np.testing.assert_allclose(current.xy, data.xy, rtol=1e-12, atol=1e-7)
-    for key in ("censored", "lower_censored", "row_ids"):
+    for key in ("censored", "lower_censored", "reported_minimum", "row_ids"):
         np.testing.assert_array_equal(getattr(current, key), getattr(data, key))
     for key in ("log_value", "log_sd"):
         np.testing.assert_allclose(getattr(current, key), getattr(data, key), rtol=1e-13, atol=1e-14)

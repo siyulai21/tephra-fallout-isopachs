@@ -13,3 +13,11 @@ The GP, spline, directional and nested median fields have been refitted for all 
 | [B-Tm](../../eruptions/b-tm/results/minimum-fit-2026-11-25/directional/README.md) | 3 | 1 | 2 | 106.6 → 39.7 | 76.8 → 56.2 | [Site table](../../eruptions/b-tm/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) |
 
 The vent values are median map predictions. An incomplete section can preserve less than the full fallout thickness. Removing the source annotation from the fitting arrays had zero effect on the four completed fields at the vent and every accepted locality. [Regional known-deposit benchmark](regional-benchmark/README.md)
+
+## Completed spherical maps
+
+These maps include eight fixed prior fits and four buffered geographic fits.
+
+| Eruption | Previous vent median (cm) | Revised vent median (cm) | Validation |
+|---|---:|---:|---|
+| [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 16,382.4 | 325.1 | [Matched geographic predictions](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |

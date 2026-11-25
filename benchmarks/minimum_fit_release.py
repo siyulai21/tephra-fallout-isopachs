@@ -42,6 +42,9 @@ def publish(record):
         reports.extend(home / family / f for f in ("deposit.json", "deposit.png", "median-grid.npz"))
     reports += [home / "directional/ensemble/report.json", home / "directional/single-structure/report.json",
                 record["path"], previous["path"], data_directory() / record["audit"]]
+    computation = home / "spherical-mixture/workflow-provenance.json"
+    if computation.is_file():
+        reports.append(computation)
     receipt = dict(input_sha256=meta["input_sha256"], reported_source_sha256=meta["reported_source_sha256"],
                    previous_revision=previous["revision"], observation_policy=POLICY,
                    observations=len(sites), reported_site_types=dict(kinds), fitted_site_types=dict(Counter(sites.fit_kind)),
@@ -66,7 +69,8 @@ def publish(record):
              f"and two-sided probabilities. [Source audit]({link(audit,case)}) · [Reported table]({link(previous['path'],case)}) "
              f"· [Fitting table]({link(record['path'],case)})", "",
              "The site table pairs each source classification with its fitting value, geographic fold, mapped thickness "
-             "and held-out score. A fitted minimum can underestimate total fallout at an incomplete section. "
+             "and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. "
+             "A fitted minimum can underestimate total fallout at an incomplete section. "
              f"[Reported and fitted sites]({prefix}reported-and-fitted-sites.csv) · "
              f"[Changes by method and coverage by source type]({prefix}minimum-fit-comparison.csv) · "
              "[Fitting convention](../../docs/methods/reported-minimum-fitting.md)", "",

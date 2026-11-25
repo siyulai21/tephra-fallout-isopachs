@@ -151,7 +151,7 @@ def field_validation(folder, input_path, slug, *, verify=True):
     table = pd.DataFrame(results).sort_values(["method", "fold", "source_id"]).reset_index(drop=True)
     filename = folder / "geographic-site-validation.csv"
     if verify:
-        numeric = ["thickness_cm", "limit_cm", "lower_cm", "upper_cm"]
+        numeric = ["thickness_cm", "limit_cm", "lower_cm", "upper_cm", "probability_of_reported_bound_or_range"]
         for col in numeric:
             table[col] = pd.to_numeric(table[col], errors="raise")
         pd.testing.assert_frame_equal(table, pd.read_csv(filename), check_dtype=False, rtol=2e-7, atol=1e-10)

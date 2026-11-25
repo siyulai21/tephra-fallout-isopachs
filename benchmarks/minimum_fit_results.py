@@ -63,6 +63,8 @@ def predictions(home, family, data):
     if family in REGIONAL:
         held = pd.read_csv(home / "heldout_predictions.csv").set_index("row_id").loc[data.row_ids]
         scores = held[family + "_log_score"]
+        median_cm = np.exp(held[family + "_median"].to_numpy())
+        cdf_at_value = np.full(len(held), np.nan)
         above_min = held[family + "_median"] >= data.log_value
         covered = (held[family + "_lower"] <= data.log_value) & (data.log_value <= held[family + "_upper"])
     else:
@@ -78,9 +80,11 @@ def predictions(home, family, data):
             np.testing.assert_array_equal(held.exact, ~data.censored)
         scores = held["log_score" if family == "nested-isopachs" else "principal_log_score"]
         cdf = held["cdf" if family == "nested-isopachs" else "principal_cdf"]
+        cdf_at_value = cdf.to_numpy()
+        median_cm = np.exp(held.median_log_cm.to_numpy()) if "median_log_cm" in held else np.full(len(held), np.nan)
         above_min, covered = cdf <= .5, cdf.between(.025, .975)
     assert held.index.is_unique and len(held) == len(data.xy)
-    return held.fold.to_numpy(), scores.to_numpy(), above_min.to_numpy(), covered.to_numpy()
+    return held.fold.to_numpy(), scores.to_numpy(), above_min.to_numpy(), covered.to_numpy(), median_cm, cdf_at_value
 
 
 def check_annotation_parity(home, families, data, meta):
@@ -147,7 +151,7 @@ def assess(record, write=False):
         new, vent = map_at_sites(home, family, data, meta["input_sha256"])
         old, old_vent = map_at_sites(old_home, family, data, source_hash)
         assert new is not None
-        fold, score, above, covered = predictions(home, family, data)
+        fold, score, above, covered, held_median, held_cdf = predictions(home, family, data)
         if common_folds is None:
             common_folds = fold
         np.testing.assert_array_equal(fold, common_folds)
@@ -173,7 +177,8 @@ def assess(record, write=False):
                                fitted_point_cm=np.exp(data.log_value[j]) if not data.censored[j] else None,
                                interval_upper_cm=np.exp(data.interval_log_upper[j]) if data.interval[j] else None,
                                previous_map_cm=old[j] if old is not None else None, current_map_cm=new[j],
-                               geographic_fold=int(fold[j]), heldout_log_score=score[j],
+                               geographic_fold=int(fold[j]), heldout_median_cm=held_median[j],
+                               heldout_cdf_at_value_or_lower_endpoint=held_cdf[j], heldout_log_score=score[j],
                                heldout_probability_of_upper_limit_or_interval=np.exp(score[j]) if data.censored[j] else None))
     compare_frame(pd.DataFrame(points), home / "reported-and-fitted-sites.csv", write)
     compare_frame(pd.DataFrame(stats), home / "minimum-fit-comparison.csv", write)
