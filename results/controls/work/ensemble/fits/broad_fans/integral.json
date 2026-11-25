@@ -1,0 +1,592 @@
+{
+  "signature": {
+    "integration_source_sha256": {
+      "estimate.py": "56bda75c25e34397a10b70cc59f8ef59f46280f376362ba75e3c46738de1574c",
+      "integration.py": "62782f6940dce41e2497248e0ddbee0a9471f3f73242b944d8d96cd292bd5ce5"
+    },
+    "posterior_sha256": "13197ab3467d9c12534bd3ccf94b3fed5652ce94be8562cfcc061867f580d8a9",
+    "design_sha256": "0638f4b019f1f5c6a5e3fac332eb69c10f45e2d4b7026c1b1daa7c65ae27cc7c"
+  },
+  "mass_sha256": "44d2b94e35175e5932a5dc218972c2f22dbd0b2df8aaba37c5ea9d2f0aa49f90",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 20261123,
+      "diagnostics": {
+        "rhat_max": 1.0030325144548515,
+        "bulk_ess_min": 1914.7945351065707,
+        "tail_ess_min": 1496.5706756559148,
+        "divergences": 0,
+        "bfmi_min": 0.9087831319907875,
+        "max_depth_fraction": 0.0,
+        "passed": true
+      },
+      "chains": 4,
+      "warmup": 600,
+      "draws_per_chain": 1000,
+      "posterior_sha256": "13197ab3467d9c12534bd3ccf94b3fed5652ce94be8562cfcc061867f580d8a9",
+      "file": "attempt-1.npz"
+    }
+  ],
+  "posterior_diagnostics_passed": true,
+  "volume_diagnostics": {
+    "rhat": 0.9997889193808334,
+    "bulk_ess": 3513.127133134263,
+    "tail_ess": 2867.1076281819755,
+    "log_quantile_mcse": [
+      0.004385874711820836,
+      0.0019914765953763514,
+      0.01233978457654672
+    ],
+    "passed": true
+  },
+  "quadrature": {
+    "passed": true,
+    "history": [
+      {
+        "angular_order": 1,
+        "radial_order": 3,
+        "area_relative_error": 0.0009622214686087567,
+        "ray_count": 202
+      },
+      {
+        "angular_order": 2,
+        "radial_order": 5,
+        "area_relative_error": 1.4716039488333384e-05,
+        "ray_count": 404,
+        "max_partition_L1_change_over_total": 0.0036506848013651777
+      }
+    ],
+    "area_by_compass_km2": [
+      [
+        0.007751279493873915,
+        162.1461613322336,
+        96108.08889743712,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        431.82721272703833,
+        712.3594568712502,
+        71978.8208314441,
+        4237.407177486323,
+        71.66299323839594,
+        9.560534851371896,
+        10.845673560673578,
+        118.60203195150739
+      ]
+    ],
+    "volume_draws_per_chain": 1000
+  },
+  "passed": true,
+  "volume_km3": {
+    "lower95": 33.77721047158743,
+    "median": 42.522857585918544,
+    "upper95": 55.660009332059374
+  },
+  "part_names": [
+    "footprint",
+    "transition",
+    "proximal_background",
+    "gap_background",
+    "distal_background"
+  ],
+  "compass": {
+    "N": {
+      "exact": 1,
+      "bounds": 0,
+      "exact_row_ids": [
+        2
+      ],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": 2.345044750734897,
+      "footprint_km2": 0.007751279493873915,
+      "volume": {
+        "lower95": 0.01522926599614663,
+        "median": 0.06514702483661379,
+        "upper95": 0.4470935050780952
+      },
+      "fraction": {
+        "lower95": 0.0003669751909271409,
+        "median": 0.00153573268485867,
+        "upper95": 0.009976956335051497
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 1.3567226417251192e-06,
+          "median": 3.3961495275630264e-06,
+          "upper95": 8.866871645521063e-06
+        },
+        "transition": {
+          "lower95": 0.015052373699752573,
+          "median": 0.05422195467110008,
+          "upper95": 0.12072400711214161
+        },
+        "proximal_background": {
+          "lower95": 2.4526447912134477e-21,
+          "median": 6.969652451361205e-20,
+          "upper95": 3.1100895919367026e-19
+        },
+        "gap_background": {
+          "lower95": 4.306596080074776e-06,
+          "median": 0.008521169167385566,
+          "upper95": 0.34155468071120065
+        },
+        "distal_background": {
+          "lower95": 2.8392887700522526e-82,
+          "median": 5.4701233901078594e-18,
+          "upper95": 0.00023138623123654885
+        }
+      }
+    },
+    "NE": {
+      "exact": 2,
+      "bounds": 1,
+      "exact_row_ids": [
+        3,
+        65
+      ],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": 29.911635664547493,
+      "footprint_km2": 162.1461613322336,
+      "volume": {
+        "lower95": 6.272174505933465,
+        "median": 8.032051690520566,
+        "upper95": 11.230830699655924
+      },
+      "fraction": {
+        "lower95": 0.15626011940538326,
+        "median": 0.19100243685052581,
+        "upper95": 0.22967077351496312
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0337186876671257,
+          "median": 0.05612456690016865,
+          "upper95": 0.09438189145071427
+        },
+        "transition": {
+          "lower95": 0.10799646993593691,
+          "median": 0.17075027155258682,
+          "upper95": 0.27424368160006934
+        },
+        "proximal_background": {
+          "lower95": 5.5002930495257435e-19,
+          "median": 2.6484914660759744e-18,
+          "upper95": 6.6953836103142075e-18
+        },
+        "gap_background": {
+          "lower95": 5.6311640813433765,
+          "median": 7.244261523049772,
+          "upper95": 9.805638621264508
+        },
+        "distal_background": {
+          "lower95": 0.17734544277815006,
+          "median": 0.43715865361966955,
+          "upper95": 2.1511759131449404
+        }
+      }
+    },
+    "E": {
+      "exact": 64,
+      "bounds": 0,
+      "exact_row_ids": [
+        60,
+        64,
+        63,
+        62,
+        61,
+        6,
+        15,
+        7,
+        31,
+        9,
+        16,
+        42,
+        14,
+        13,
+        8,
+        28,
+        35,
+        29,
+        43,
+        11,
+        4,
+        30,
+        10,
+        12,
+        21,
+        38,
+        33,
+        5,
+        27,
+        17,
+        67,
+        66,
+        58,
+        23,
+        26,
+        40,
+        39,
+        48,
+        49,
+        18,
+        36,
+        32,
+        24,
+        41,
+        50,
+        44,
+        22,
+        51,
+        52,
+        19,
+        25,
+        53,
+        45,
+        68,
+        69,
+        37,
+        54,
+        34,
+        20,
+        55,
+        56,
+        47,
+        46,
+        57
+      ],
+      "distal_half_exact": 34,
+      "farthest_exact_chord_km": 1310.0835466984065,
+      "footprint_km2": 96108.08889743712,
+      "volume": {
+        "lower95": 24.5016453205241,
+        "median": 30.223874384057133,
+        "upper95": 38.27969481794181
+      },
+      "fraction": {
+        "lower95": 0.6343821686562752,
+        "median": 0.7169114783423647,
+        "upper95": 0.7653465375012151
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 3.8206092479140645,
+          "median": 4.833767932104445,
+          "upper95": 6.190226343486267
+        },
+        "transition": {
+          "lower95": 2.505542266204046,
+          "median": 3.061514798723325,
+          "upper95": 3.7759950173320034
+        },
+        "proximal_background": {
+          "lower95": 1.4693018511860962e-18,
+          "median": 4.816760217423072e-18,
+          "upper95": 1.1099842716190416e-17
+        },
+        "gap_background": {
+          "lower95": 14.195905161765399,
+          "median": 18.362020120892133,
+          "upper95": 24.026880566916073
+        },
+        "distal_background": {
+          "lower95": 1.7354288905638997,
+          "median": 3.3298789084305733,
+          "upper95": 10.942456966318193
+        }
+      }
+    },
+    "SE": {
+      "exact": 0,
+      "bounds": 1,
+      "exact_row_ids": [],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": null,
+      "footprint_km2": 0.0,
+      "volume": {
+        "lower95": 0.8093643402574631,
+        "median": 3.455111542328694,
+        "upper95": 9.165276374979495
+      },
+      "fraction": {
+        "lower95": 0.020196454978233504,
+        "median": 0.08064245344075886,
+        "upper95": 0.18601597876459075
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "transition": {
+          "lower95": 0.23985972976019196,
+          "median": 0.3871177725648482,
+          "upper95": 0.5816697729835352
+        },
+        "proximal_background": {
+          "lower95": 2.362430937731008e-19,
+          "median": 1.483361214362695e-18,
+          "upper95": 4.602955609161728e-18
+        },
+        "gap_background": {
+          "lower95": 0.5496948646834497,
+          "median": 3.014756007096294,
+          "upper95": 8.366446653796322
+        },
+        "distal_background": {
+          "lower95": 0.0002333982176626449,
+          "median": 0.014245461679805943,
+          "upper95": 0.4816981544207933
+        }
+      }
+    },
+    "S": {
+      "exact": 0,
+      "bounds": 0,
+      "exact_row_ids": [],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": null,
+      "footprint_km2": 0.0,
+      "volume": {
+        "lower95": 0.038375232175742506,
+        "median": 0.23799293246465342,
+        "upper95": 0.664882610290933
+      },
+      "fraction": {
+        "lower95": 0.0009421464626834673,
+        "median": 0.0056462402323647215,
+        "upper95": 0.013751861712481122
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "transition": {
+          "lower95": 0.012814027385713609,
+          "median": 0.023983092703126478,
+          "upper95": 0.04703221314748969
+        },
+        "proximal_background": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "gap_background": {
+          "lower95": 0.020680998599472797,
+          "median": 0.2115380909383906,
+          "upper95": 0.636010278317281
+        },
+        "distal_background": {
+          "lower95": 9.119840490180324e-23,
+          "median": 6.522269368796042e-08,
+          "upper95": 0.0036273756347955993
+        }
+      }
+    },
+    "SW": {
+      "exact": 0,
+      "bounds": 0,
+      "exact_row_ids": [],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": null,
+      "footprint_km2": 0.0,
+      "volume": {
+        "lower95": 0.0006182551323985438,
+        "median": 0.013754297875212415,
+        "upper95": 0.08519392764528673
+      },
+      "fraction": {
+        "lower95": 1.5327942916483226e-05,
+        "median": 0.0003202227778641907,
+        "upper95": 0.001992973321487417
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "transition": {
+          "lower95": 0.0005991400432968102,
+          "median": 0.003375366545312003,
+          "upper95": 0.009940894997997959
+        },
+        "proximal_background": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "gap_background": {
+          "lower95": 9.346200065483633e-06,
+          "median": 0.009787149234728003,
+          "upper95": 0.07727599519153866
+        },
+        "distal_background": {
+          "lower95": 1.4368751819761353e-242,
+          "median": 2.9159529096479473e-31,
+          "upper95": 9.901830335425145e-07
+        }
+      }
+    },
+    "W": {
+      "exact": 0,
+      "bounds": 1,
+      "exact_row_ids": [],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": null,
+      "footprint_km2": 0.0,
+      "volume": {
+        "lower95": 0.0006407802121689379,
+        "median": 0.013778896623168585,
+        "upper95": 0.0847949523122747
+      },
+      "fraction": {
+        "lower95": 1.5799748091121797e-05,
+        "median": 0.000320245750719962,
+        "upper95": 0.001993773639677826
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "transition": {
+          "lower95": 0.0006170664662438713,
+          "median": 0.0036839920422413585,
+          "upper95": 0.010897936076693314
+        },
+        "proximal_background": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "gap_background": {
+          "lower95": 7.813996336233273e-06,
+          "median": 0.009484217881297793,
+          "upper95": 0.07634368165145729
+        },
+        "distal_background": {
+          "lower95": 1.4368751819761378e-242,
+          "median": 2.915952909647952e-31,
+          "upper95": 9.901830335425162e-07
+        }
+      }
+    },
+    "NW": {
+      "exact": 0,
+      "bounds": 1,
+      "exact_row_ids": [],
+      "distal_half_exact": 0,
+      "farthest_exact_chord_km": null,
+      "footprint_km2": 0.0,
+      "volume": {
+        "lower95": 0.0021030383266030877,
+        "median": 0.02024918258006953,
+        "upper95": 0.09143774131937323
+      },
+      "fraction": {
+        "lower95": 5.0019978721774656e-05,
+        "median": 0.00047265145960167924,
+        "upper95": 0.0021840562742046813
+      },
+      "parts": {
+        "footprint": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "transition": {
+          "lower95": 0.0020982727209812504,
+          "median": 0.015389494316238435,
+          "upper95": 0.04527092233528109
+        },
+        "proximal_background": {
+          "lower95": 0.0,
+          "median": 0.0,
+          "upper95": 0.0
+        },
+        "gap_background": {
+          "lower95": 6.798709414653327e-07,
+          "median": 0.004034665429495548,
+          "upper95": 0.0511071177474879
+        },
+        "distal_background": {
+          "lower95": 4.200638835054749e-166,
+          "median": 1.6705241646224638e-28,
+          "upper95": 1.633379306561267e-06
+        }
+      }
+    }
+  },
+  "vertex_at_source_rows": [],
+  "parts": {
+    "footprint": {
+      "volume_km3": {
+        "lower95": 3.8678612779775654,
+        "median": 4.888020319430627,
+        "upper95": 6.259363491811509
+      },
+      "fraction": {
+        "lower95": 0.0866048126047796,
+        "median": 0.11517630362811418,
+        "upper95": 0.14377791516011476
+      }
+    },
+    "transition": {
+      "volume_km3": {
+        "lower95": 2.9953993661406964,
+        "median": 3.7331998398120185,
+        "upper95": 4.6772906628233315
+      },
+      "fraction": {
+        "lower95": 0.06942981092771451,
+        "median": 0.08881857521023756,
+        "upper95": 0.09884318346236783
+      }
+    },
+    "proximal_background": {
+      "volume_km3": {
+        "lower95": 3.259051605905835e-18,
+        "median": 9.359253773130694e-18,
+        "upper95": 1.9859934504660168e-17
+      },
+      "fraction": {
+        "lower95": 7.964256932341902e-20,
+        "median": 2.183326816081425e-19,
+        "upper95": 4.154609724731883e-19
+      }
+    },
+    "gap_background": {
+      "volume_km3": {
+        "lower95": 22.223154983193215,
+        "median": 29.355851491553707,
+        "upper95": 39.25729372826311
+      },
+      "fraction": {
+        "lower95": 0.5590207019943526,
+        "median": 0.6987236845940814,
+        "upper95": 0.7597706067710992
+      }
+    },
+    "distal_background": {
+      "volume_km3": {
+        "lower95": 1.928201194409336,
+        "median": 3.799609427162798,
+        "upper95": 13.709288716582442
+      },
+      "fraction": {
+        "lower95": 0.04349022098815711,
+        "median": 0.09187855385795539,
+        "upper95": 0.27793714918600243
+      }
+    }
+  }
+}
