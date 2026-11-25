@@ -1,6 +1,6 @@
 {
   "protocol": "spherical-median-thickness-and-finite-spread-v2",
-  "summary_source_sha256": "858ed8745612ca66ff69d100e6f18a9495c1a572a8fb85a04e14912a0f0c81f5",
+  "summary_source_sha256": "2e5a75dc54aff3ade68533c2e585f28465cfa9e13fbd8e4abdabad612616f105",
   "cases": [
     {
       "name": "Aso-4",
@@ -46,6 +46,15 @@
       "regional_report_sha256": "ff69f50a807d6a59253b0e4023689caed5d8193a944f3690edd2dc094e6b5579",
       "deposit_sha256": "4d0b47e056eac2281a44387533d3fd9adf1c4483fb5ca6cf0f005b3e6b8a619a",
       "extent_report_sha256": "bd55c38783543710487bc9e3861fe8d9a9e9fb6b4ad0ca2634477477f8c33b97"
+    },
+    {
+      "name": "Pinatubo 1991 (Layer C)",
+      "slug": "pinatubo-1991-layer-c",
+      "input_sha256": "2f895e0a143a0097a651cd25458059eff7c1b4e939ac70193b2b64a53ef4e8e8",
+      "global_report_sha256": "ea5f7b0943c899716d7a07aeb459546af6b98ca8882a4db90a96e795e1b05957",
+      "regional_report_sha256": "911c0d999526d86eeefe08d4b01831ffdb1fbd237714c8f26230349085d50923",
+      "deposit_sha256": "861e75ba3ccc002c9be7474afc08ed5af5d0ce090dd1d0e5270618cde953a430",
+      "extent_report_sha256": "bc2c48fdf421933ac04b7ebb1f8ab4508c6c737bd83ce93562d1ef48b1ee6e63"
     },
     {
       "name": "Sakurajima Satsuma (P14)",
@@ -168,6 +177,25 @@
       "global_observation_coverage95": 0.9565217391304348,
       "stacked_equal_region_negative_log_score": 1.450521534669888,
       "spline_equal_region_negative_log_score": 1.600616075530494
+    },
+    {
+      "eruption": "Pinatubo 1991 (Layer C)",
+      "slug": "pinatubo-1991-layer-c",
+      "geometry": "displaced",
+      "review_status": "conditional",
+      "median_map_volume_km3": 6.128039870203795,
+      "thickness_q25_volume_km3": 4.355830213930115,
+      "thickness_q75_volume_km3": 7.911916034485387,
+      "sensitivity_lower": 4.281265635562837,
+      "sensitivity_upper": 52.05225006032779,
+      "baseline_sampling_passed": false,
+      "all_sensitivity_sampling_passed": false,
+      "all_outer_sampling_passed": false,
+      "median_fraction_outside_local_footprint": 0.8532305723592888,
+      "global_equal_region_negative_log_score": 0.8951337469972525,
+      "global_observation_coverage95": 0.9795918367346939,
+      "stacked_equal_region_negative_log_score": 0.9551504402707143,
+      "spline_equal_region_negative_log_score": 1.4207221144794409
     },
     {
       "eruption": "Sakurajima Satsuma (P14)",
@@ -406,6 +434,47 @@
       },
       "matched_input_folds_buffer_and_training_rows": true,
       "global_outer_sampling_passed": true
+    },
+    {
+      "eruption": "Pinatubo 1991 (Layer C)",
+      "global": {
+        "equal_region_log_score": 0.8951337469972525,
+        "coverage95_observations": 0.9795918367346939,
+        "fold_log_scores": [
+          1.070250267297165,
+          0.5252864962800425,
+          0.7906693839031255,
+          1.1943288405086767
+        ]
+      },
+      "stacked": {
+        "mean_log_score": 0.952877393625388,
+        "rmse_log": 0.5681733472510305,
+        "coverage95_observations": 0.9727891156462585,
+        "mean_interval_width_log": 2.6312119028777654,
+        "equal_region_log_score": 0.9551504402707143,
+        "fold_log_scores": [
+          1.4893164019224012,
+          0.4826573451928147,
+          1.0246245215023568,
+          0.8240034924652841
+        ]
+      },
+      "spline": {
+        "mean_log_score": 1.4142362591042574,
+        "rmse_log": 4.270753015540392,
+        "coverage95_observations": 0.9047619047619048,
+        "mean_interval_width_log": 6.3198748814031935,
+        "equal_region_log_score": 1.4207221144794409,
+        "fold_log_scores": [
+          2.944898127647551,
+          0.9070762413830914,
+          0.9128665625807559,
+          0.9180475263063653
+        ]
+      },
+      "matched_input_folds_buffer_and_training_rows": true,
+      "global_outer_sampling_passed": false
     },
     {
       "eruption": "Sakurajima Satsuma (P14)",
