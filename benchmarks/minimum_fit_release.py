@@ -24,9 +24,8 @@ def link(target, directory):
 def publish(record):
     slug = record["slug"]
     previous = reported_edition(record)
-    data, meta = audited_data(record["path"])
+    _, meta = audited_data(record["path"])
     home = result_home(record)
-    case = Path("eruptions") / slug
     verify_sampling(home)
     field_validation(home, record["path"], slug, verify=False)
     field_validation(home, record["path"], slug)
@@ -53,6 +52,15 @@ def publish(record):
                    directional_median_map_km3=next(r["median_map_volume_km3"] for r in methods if r["method"]=="directional"),
                    methods=methods, files={link(f, Path.cwd()):digest(f) for f in reports})
     (home / "release.json").write_text(json.dumps(receipt, indent=2, allow_nan=False)+"\n")
+    write_case_page(record, sites)
+
+
+def write_case_page(record, sites):
+    """Link the checked principal deposits and their available numerical evidence."""
+    home = result_home(record)
+    case = Path("eruptions") / record["slug"]
+    previous = reported_edition(record)
+    kinds = Counter(sites.reported_kind)
     history = case / "previous-minimum-treatment.md"
     old_page = case / "README.md"
     if not history.exists():
@@ -61,6 +69,12 @@ def publish(record):
     audit = data_directory() / Path(record["audit"]).parent / "README.md"
     lower = kinds["lower_limit"]
     distal = int((sites.reported_kind.eq("lower_limit") & sites.projected_distance_km.gt(25)).sum())
+    evidence = (("Matched predictions by locality", "geographic-site-validation.csv"),
+                ("Sampling attempts and diagnostics", "sampling/attempts.csv"),
+                ("Numerical checks and file identities", "release.json"),
+                ("Spherical fits and computing revisions", "spherical-mixture/workflow-provenance.json"),
+                ("Regional support", "support/README.md"), ("Whole-area sensitivity", "nested-whole-area/README.md"))
+    checks = " · ".join(f"[{label}]({prefix}{path})" for label, path in evidence if (home / path).is_file())
     lines = [f"# {record['name']}", "",
              f"The five reconstructions use the same {len(sites)} accepted fallout localities. Field reports give "
              f"{kinds['measurement']} measured thicknesses, {lower} lower limits, {kinds['upper_limit']} upper limits "
@@ -76,11 +90,7 @@ def publish(record):
              "[Fitting convention](../../docs/methods/reported-minimum-fitting.md)", "",
              case_section(home, prefix=prefix, name=record["name"]).strip(), "",
              "## Evidence and checks", "",
-             f"[Matched predictions by locality]({prefix}geographic-site-validation.csv) · "
-             f"[Sampling attempts and diagnostics]({prefix}sampling/attempts.csv) · "
-             f"[Numerical checks and file identities]({prefix}release.json) · "
-             f"[Regional support]({prefix}support/README.md) · "
-             f"[Whole-area sensitivity]({prefix}nested-whole-area/README.md)", "",
+             checks, "",
              "[Previous maps and geological assessment](previous-minimum-treatment.md) · "
              "[Change at all distances across eruptions](../../comparisons/reported-minima/README.md)", ""]
     old_page.write_text("\n".join(lines))

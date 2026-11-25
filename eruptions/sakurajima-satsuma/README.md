@@ -1,6 +1,8 @@
-# Sakurajima Satsuma fallout, southern Japan
+# Sakurajima Satsuma (P14)
 
-The 12.8 ka Satsuma eruption (P14, Sz-S) deposited ash and pumice east and west of Sakurajima. The reconstruction combines primary fallout from its eruptive phases. **50 measured thicknesses, five lower bounds and two upper bounds** come from field sections, written excavation records, an island outcrop and a seafloor core. Each location and thickness comes from a numeric source record. [Accepted data](../../data/eruptions/Sakurajima_Satsuma.csv) · [Published sources](../../data/sources/sakurajima-satsuma/README.md) · [202-row selection audit](../../data/audits/Sakurajima-Satsuma/README.md)
+The five reconstructions use the same 57 accepted fallout localities. Field reports give 50 measured thicknesses, 5 lower limits, 2 upper limits and 0 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 3 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Sakurajima-Satsuma/README.md) · [Reported table](../../data/eruptions/Sakurajima_Satsuma.csv) · [Fitting table](../../data/eruptions/Sakurajima_Satsuma_minimum_fit.csv)
+
+The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 ## Volumes and geographic prediction
 
@@ -8,56 +10,32 @@ Each estimate integrates the median thickness on its map. The conditional range 
 
 | Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---|---:|---:|---:|---:|
-| GP ensemble | observation hull | **3.08** | 2.4–3.96 | 1.264 | 94.0% |
-| Cubic spline | observation hull | **9.12** | 5.81–15.2 | 1.371 | 90.0% |
-| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **7.49** | 5.18–12.8 | 1.022 | 98.0% |
-| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **6.94** | 4.22–14.5 | 1.351 | 88.0% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **12.7** | 6.85–26.4 | 1.063 † | 94.0% |
+| GP ensemble | observation hull | **3.03** | 2.43–3.81 | 1.097 | 96.4% |
+| Cubic spline | observation hull | **2.97** | 2.5–3.52 | 1.103 | 94.5% |
+| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **6.97** | 4.76–12 | 1.052 | 100.0% |
+| [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **6.32** | 3.95–11.7 † | 1.358 | 89.1% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **9.57** | 5.5–21.3 | 1.092 † | 100.0% |
 
-Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Sakurajima Satsuma (P14) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Sakurajima Satsuma (P14) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/directional/deposit.png)
 
-![Sakurajima Satsuma (P14) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Sakurajima Satsuma (P14) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/spherical-mixture/deposit.png)
 
-![Sakurajima Satsuma (P14) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Sakurajima Satsuma (P14) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
-![Sakurajima Satsuma (P14) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
+![Sakurajima Satsuma (P14) · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
-The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
-The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
+## Evidence and checks
 
-## Where the thicknesses constrain the deposit
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
 
-At least two measured beds fall in each 45° compass sector around the Kitadake summit reference. Measured thicknesses range from 0.8 to 95 cm at 9–163 km. Both northwest readings are within 12 km. The largest gap between measured bearings increases from 44° across all sites to 107° beyond 50 km and 251° beyond 100 km. Three western measurements cover 18, 32 and 163 km. Their reported thicknesses are 70, 15 and 0.8 cm. The excavation report describes the 70 cm bed as a persistent primary deposit. [Counts and distances by sector](../../data/audits/Sakurajima-Satsuma/coverage.csv) · [Original excavation report, printed p. 11](https://www.jomon-no-mori.jp/old/pdf_data/H46001-2-0110-1.pdf)
-
-Glass chemistry also correlates HGY1026 in Lake Huguangyan, southern China, with Satsuma, about 2,330 km from the summit reference. This records much farther ash transport. The reported shard counts and sediment sampling intervals supply no measured primary bed thickness at that distance. [Lake-core study](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2020GL090582)
-
-![Measured Satsuma thickness and radial coverage by compass sector](../../data/audits/Sakurajima-Satsuma/coverage.png)
-
-The GP and cubic spline integrate a common 24,004 km² hull. Within the 635 km² of well-connected measurement triangles both regional median-thickness maps integrate to 0.18 km³. The directional report gives the distribution of the fraction of whole-deposit draw volume inside these triangles. [Volume allocation](results/directional/multiscale/report.json) The common standard support screen accepts no complete isopach band for any family. Values outside that footprint depend on extrapolation across the proximal gap, between sampled directions and beyond measured distances. [Support geometry and partial volumes](results/support/README.md)
-
-The largest cubic-spline median on the in-hull prediction grid is 447 cm, about 42 km west and 44 km north of the source. The nearest measured site is 49 km away. The GP predicts 5.5 cm at the same point, and the peak lies outside the standard interpolation triangles. The spline peak helps explain why the two regional hull volumes diverge even though their estimates agree inside the well-sampled footprint. The accepted beds reach 95 cm. [Grid values and nearest measurement](results/source-audit/regional-map-peak.csv)
-
-## Global estimates and sensitivity
-
-In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the uncertain-direction median map integrates to **7.1 km³**. The conditional 95% volume interval is **3.8–70.6 km³**. All six full-data model fits passed their sampler checks. All four geographic folds were scored, with one fold retaining a sampling warning. All four quadrant folds passed. For the geographic holdouts, uncertain directions gave a mean negative log score of 1.164 compared with 1.028 for fixed directions. Lower is better. [Directional estimates, withheld-site results and maps](results/directional/README.md)
-
-In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), the spherical baseline passed its sampler, integration and draw-split checks. The shifted-volume prior retained a draw-split warning. With the western lenticular marine bed removed, the directional median-map integral rises to **9.6 km³**. The full refits and predictions for the withheld core quantify how strongly that one observation constrains distal fallout. [Marine-core sensitivity](results/source-audit/README.md) · [Spherical estimates and validation](results/spherical-mixture/README.md)
-
-In the [preceding reconstruction](../../archive/2026-11-22-global-extent/README.md), at Kuwanoki, the directional median is 12.6 cm and the spherical median is about 11 cm. The excavation report identifies minerals and glass in terrace sediment and gives no preserved Satsuma bed thickness. This discrepancy is a reason to look for nearby undisturbed sections. Kuwanoki and four other occurrence records carry zero additional likelihood weight. [Archive site checks](results/spherical-mixture/archive-evidence/README.md) · [Original Kuwanoki report](https://doi.org/10.24484/sitereports.3454)
-
-Nishihara et al. report 11.1 km³ of bulk P14 fallout. Their isopachs use overlapping thickness observations. The published volume provides context and played no part in selecting priors or fitting these estimates. [Published volumes, Table 4](https://doi.org/10.3389/feart.2022.988373)
-
-## Reproduce the case
-
-The source replay verifies the two original workbooks, site identifiers, source-row decisions and coverage. The intake workflow reproduces the five registered fits, their matched geographic tests and the conditional global volume estimates. [Source replay](../../data/audits/Sakurajima-Satsuma/README.md) · [Run instructions](../../docs/NEW_ERUPTION.md) · [Directional verification receipt](results/source-audit/release.json)
-
-In the [earlier fitted comparison](../../archive/2026-11-22-global-extent/README.md), both sets of held-out thicknesses favor the broader continuation. The full-data proposal retained a numerical warning. [Whole-area continuation sensitivity](results/nested-whole-area/README.md)
+[Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)
