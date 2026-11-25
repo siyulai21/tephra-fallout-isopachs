@@ -4,6 +4,9 @@ Users submit eruption data in chat. Follow the [intake workflow](docs/NEW_ERUPTI
 
 Publish the directional and spherical continuation packets under `extent/` and the principal nested dispersal footprint packet under `footprints/`. Include the fit, held-out predictions and contour support with each median-thickness map. Publish all eight spherical intervals in `extent/prior-sensitivity.json`. The family-specific fit reports preserve the underlying posterior and earlier continuation. [Current continuation rules](docs/methods/finite-spread.md)
 
+
+For data intake, method changes, validation, new fits and replots, fit every lower-only thickness at every distance as a measurement at its reported minimum and draw it with the measurement symbol. The source qualifier is provenance only. It must leave model geometry, weighting, contour support and integrated results numerically identical to the same explicitly measured values. Keep upper limits upper-censored and fit a two-sided range over both endpoints. Preserve the original geological qualifier and row identity. Verify the same policy in new families and figures with the four-kind regression tests. [Lower limits, upper limits and ranges](docs/methods/reported-minimum-fitting.md)
+
 ## Sources of truth
 
 - Use a figure for a site value or position only after documenting a search for the original tables and field records. Digitize only the missing field. Preserve the source pixels, registration, stable IDs and selection decisions, and publish a numbered full map and linked close-ups for every candidate. Isopachs and empty map areas supply no site observations. [Map digitization audit](docs/methods/map-digitization.md)

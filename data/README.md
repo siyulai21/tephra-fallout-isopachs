@@ -4,6 +4,9 @@ The dataset catalogue pairs each accepted CSV with its source audit and model se
 
 The source audits explain how published observations became model inputs. An evidence ID identifies a source row, its reported units, any conversion and its use as a thickness measurement, a bound or a contextual record. Aso-4 and B-Tm each retain the original CSV alongside the reviewed version. The Mazama audit covers 872 locality and evidence records and documents 300 accepted localities. Tambora uses the supplied inclusion flags. [Source audits](audits/README.md) · [Source material](sources/README.md)
 
+
+For eruptions with one-sided reported minima, `reported_file` identifies the geological table and `file` identifies the fitting table. Both retain the source row order. [Preparing source and fitting tables](../docs/methods/reported-minimum-fitting.md)
+
 ## CSV schema
 
 The required columns are `Lon`, `Lat`, `Thickness`, `Vent Lon` and `Vent Lat`.

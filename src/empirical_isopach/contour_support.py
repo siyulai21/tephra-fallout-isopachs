@@ -227,7 +227,6 @@ contour sampling as more independent evidence. No outer distance cutoff.
 
 
 def audit_contours(model, data, bounds, deletion_models, meshes=None, resolution=257, level_count=25):
-    data = data.reported_bounds()
     meshes = meshes or {p.name: SupportMesh(data, p) for p in POLICIES}
     dense_levels = candidate_levels(data, 2*level_count-1)
     grid = median_grid(model, bounds, resolution)

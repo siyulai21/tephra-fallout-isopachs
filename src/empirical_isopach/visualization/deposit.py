@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
+from ..core.fitting import map_observation_policy
 from .deposit_field import FAMILIES, PolarField, digest, display_name, doubling_levels, open_field, review_path, sample_field
 from .deposit_integrals import independent_integral, within_cells
 from .deposit_field import write_map_grid
@@ -195,6 +196,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         writer.writeheader()
         writer.writerows(rows)
     write_map_grid(dest/"median-grid.npz",field,model,family,meta,sources)
+    receipt.update(map_observation_policy(data, meta))
     receipt["median_grid_sha256"]=digest(dest/"median-grid.npz")
     receipt["thickness_area_sha256"]=digest(dest/"thickness-area.csv")
     plate(dest/"deposit.png",name,family,field,data,meta,model,levels,rows,receipt,near_half)
@@ -227,7 +229,7 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         write_json(dest/manifest,hashes)
     return receipt
 
-def align_near_views(home, data, meta, *, source_home=None):
+def align_near_views(home, data, meta, *, source_home=None, redraw=False):
     """Reframe saved maps on one input after all available peer fits have been rendered."""
     home = Path(home)
     source = Path(source_home or home)
@@ -245,13 +247,14 @@ def align_near_views(home, data, meta, *, source_home=None):
         return
     half = near_frame([f for f,_ in charts.values()],data)
     for family,(field,receipt) in charts.items():
-        if receipt["near_half_width_km"]==half:
+        if receipt["near_half_width_km"]==half and not redraw:
             continue
         _,model,sources = open_field(source/family,family,data,meta)
         if sources!=receipt["sources_sha256"]:
             raise ValueError("Near-vent window belongs to a different fitted posterior")
         folder=home/family
         rows=np.genfromtxt(folder/"thickness-area.csv",names=True,delimiter=",",dtype=None,encoding="utf-8",ndmin=1)
+        receipt.update(map_observation_policy(data, meta))
         receipt.pop("figure_sha256")
         plate(folder/"deposit.png",receipt["eruption"],family,field,data,meta,model,np.array(receipt["levels_cm"]),rows,receipt,half)
         receipt["figure_sha256"]=digest(folder/"deposit.png")

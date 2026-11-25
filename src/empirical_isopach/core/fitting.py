@@ -67,3 +67,17 @@ def model_input(path, output):
             tmp.write(effective)
         Path(tmp.name).replace(target)
     return target
+
+
+def map_observation_policy(data, meta):
+    """Record the counts and source IDs needed to replay the plotted symbols."""
+    if not data.reported_minimum.any():
+        return {}
+    return {"observation_policy": {
+        "name": POLICY,
+        "fitted_points": int((~data.censored).sum()),
+        "reported_minima_shown_as_points": sorted(data.row_ids[data.reported_minimum].tolist()),
+        "upper_limits": int((data.censored & ~data.lower_censored).sum()),
+        "intervals": int(data.interval.sum()),
+        "reported_source_sha256": meta.get("reported_source_sha256"),
+    }}

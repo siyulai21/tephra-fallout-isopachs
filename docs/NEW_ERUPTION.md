@@ -12,6 +12,9 @@ The default full run writes the principal footprint fit and geographic holdouts 
 
 The directional model saves its principal fit and support results under `multiscale/`. The spherical model uses `extent/`. The nested family saves its matching results under `footprints/`. Each principal map and volume are in `deposit.png` and `deposit.json`. [Directional and spherical continuation](methods/finite-spread.md)
 
+
+Preserve original lower-only records in the source CSV and generate point-at-minimum rows in the registered fitting input. Apply the same events in training, held-out evaluation and every model map. [Fitting and replotting reported limits](methods/reported-minimum-fitting.md)
+
 ## Auditing compilations and field records
 
 **Reconcile the full catalogue.** A paper may publish a locality supplement, a shorter isopach table and a list of dated samples. Recover the legend and scope of each. For every locality row, preserve the original deposit code and link it to the principal observation, a duplicate's accepted ID, or a specific reason it cannot enter. Count source rows by class and decision, then count unique fitted sites separately. On re-audit, include earlier omissions and reassess inherited measurements and bounds against newly recovered evidence. [Mazama primary-classification crosswalk](../data/audits/Mazama/principal-ranges/buckland-primary.csv)

@@ -50,11 +50,13 @@
           "audit_case": "principal",
           "release_receipt": "release.json",
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
-          "sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a"
+          "sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a",
+          "matched_results": "eruptions/mazama/results"
         }
       ],
       "release_receipt": "release.json",
-      "reported_file": "eruptions/Mazama_primary_ranges.csv"
+      "reported_file": "eruptions/Mazama_primary_ranges.csv",
+      "results_directory": "eruptions/mazama/results/minimum-fit-2026-11-25"
     },
     {
       "name": "Tambora",
@@ -75,10 +77,13 @@
           "audit": "audits/Aso-4/provenance.json",
           "audit_case": "principal",
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
-          "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9"
+          "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+          "matched_results": "eruptions/aso-4/results"
         }
       ],
-      "reported_file": "eruptions/Aso-4_reviewed.csv"
+      "reported_file": "eruptions/Aso-4_reviewed.csv",
+      "results_directory": "eruptions/aso-4/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
     },
     {
       "name": "B-Tm",
@@ -88,7 +93,7 @@
       "audit": "audits/B-Tm/cryptotephra-principal.json",
       "audit_case": "principal",
       "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
-      "release_receipt": "cryptotephra/release.json",
+      "release_receipt": "release.json",
       "previous_inputs": [
         {
           "file": "eruptions/B-Tm_reviewed.csv",
@@ -104,10 +109,12 @@
           "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
           "release_receipt": "cryptotephra/release.json",
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
-          "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0"
+          "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+          "matched_results": "eruptions/b-tm/results"
         }
       ],
-      "reported_file": "eruptions/B-Tm_cryptotephra.csv"
+      "reported_file": "eruptions/B-Tm_cryptotephra.csv",
+      "results_directory": "eruptions/b-tm/results/minimum-fit-2026-11-25"
     },
     {
       "name": "YTT",
@@ -128,10 +135,13 @@
           "audit": "audits/Minoan/provenance.json",
           "audit_case": "combined",
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
-          "sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1"
+          "sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+          "matched_results": "eruptions/minoan/results"
         }
       ],
-      "reported_file": "eruptions/Minoan_tephra.csv"
+      "reported_file": "eruptions/Minoan_tephra.csv",
+      "results_directory": "eruptions/minoan/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
     },
     {
       "name": "Ilopango TBJ (total primary airfall)",
@@ -171,13 +181,9 @@
         }
       ],
       "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
-      "principal_global_results": "eruptions/ilopango-tbj/results",
-      "published_methods": [
-        "directional",
-        "spherical-mixture",
-        "nested-isopachs"
-      ],
-      "reported_file": "eruptions/Ilopango_TBJ_total_airfall.csv"
+      "reported_file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+      "results_directory": "eruptions/ilopango-tbj/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
     },
     {
       "name": "Sakurajima Satsuma (P14)",
@@ -193,10 +199,13 @@
           "audit_case": "principal",
           "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json",
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
-          "sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1"
+          "sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1",
+          "matched_results": "eruptions/sakurajima-satsuma/results"
         }
       ],
-      "reported_file": "eruptions/Sakurajima_Satsuma.csv"
+      "reported_file": "eruptions/Sakurajima_Satsuma.csv",
+      "results_directory": "eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
     },
     {
       "name": "Pinatubo 1991 (Layer C)",
@@ -231,16 +240,9 @@
           "sha256": "2f895e0a143a0097a651cd25458059eff7c1b4e939ac70193b2b64a53ef4e8e8"
         }
       ],
-      "principal_nested_result": "eruptions/pinatubo-1991-layer-c/results/nested-isopachs",
-      "principal_global_results": "eruptions/pinatubo-1991-layer-c/results",
-      "published_methods": [
-        "stacked",
-        "spline",
-        "directional",
-        "spherical-mixture",
-        "nested-isopachs"
-      ],
-      "reported_file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv"
+      "reported_file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+      "results_directory": "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
     }
   ]
 }

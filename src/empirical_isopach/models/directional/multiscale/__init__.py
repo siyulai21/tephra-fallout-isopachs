@@ -5,8 +5,8 @@ from hashlib import sha256
 from pathlib import Path
 
 
-@lru_cache(maxsize=1)
-def engine_sha256():
+@lru_cache(maxsize=2)
+def engine_sha256(*, observation_source=None):
     """Identify the numerical field, likelihood, projection and common partition rules."""
     here = Path(__file__).resolve().parent
     framework = here.parents[2]
@@ -28,5 +28,7 @@ def engine_sha256():
             "models/mass_mixture/geometry.py",
         )
     ]
+    if observation_source is not None:
+        files[files.index(framework / "core/observations.py")] = Path(observation_source)
     files += [framework.parent / "probabilistic_isopach/global_volume.py"]
     return sha256(b"".join(sha256(file.read_bytes()).digest() for file in files)).hexdigest()

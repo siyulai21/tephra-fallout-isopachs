@@ -55,7 +55,7 @@ class Observations:
         return np.isfinite(self.interval_log_upper)
 
     def reported_bounds(self):
-        """Restore geological evidence for contour support and observation symbols."""
+        """Restore source qualifiers for an evidence audit or historical source figure only."""
         if not np.any(self.reported_minimum):
             return self
         return replace(self, censored=self.censored | self.reported_minimum,

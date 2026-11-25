@@ -72,7 +72,6 @@ class SupportMesh(TriangleRegion):
     def __init__(self, data, policy=SupportPolicy()):
         # Bounds inform the likelihood, but are not two-sided thickness samples.
         # Duplicate records cannot increase geometric support.
-        data = data.reported_bounds()
         self.xy = xy = np.unique(data.xy[~data.censored], axis=0)
         if len(xy) < 4 or np.linalg.matrix_rank(xy-xy.mean(axis=0)) < 2:
             raise ValueError("Local support needs four distinct non-collinear exact sites.")

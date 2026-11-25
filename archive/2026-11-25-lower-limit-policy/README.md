@@ -1,0 +1,3 @@
+# Previous maps using lower-censored fits
+
+The preceding nine-eruption catalogue and its five model families are available at the immutable revision below. The seven revised cases retain their source CSVs, previous map packets and registered associations with the historical comparison studies. The original observation reader is stored here so that the earlier directional benchmark can also verify its exact numerical engine identity in a shallow checkout. [Previous GitHub revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/bf5e9accf61fe791926da219c4c7698c29d3045f) · [Current observation policy](../../docs/methods/reported-minimum-fitting.md)

@@ -33,7 +33,14 @@ def published_reach_engine():
 
 def result_home(record):
     """Results root for a current case or its matched five-family study edition."""
-    return Path(record.get("matched_results", f"eruptions/{record['slug']}/results"))
+    return Path(record.get("results_directory") or record.get("matched_results") or f"eruptions/{record['slug']}/results")
+
+
+def reported_edition(record):
+    """Input and results for the most recent edition using geological censoring."""
+    from src.empirical_isopach.core.catalog import data_directory, dataset_record
+    source = record.get("reported_file")
+    return dataset_record(data_directory() / source) if source else record
 
 
 def published_methods(record):
