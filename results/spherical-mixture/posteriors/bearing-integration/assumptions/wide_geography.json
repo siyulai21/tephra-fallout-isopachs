@@ -1,0 +1,170 @@
+{
+  "volume": {
+    "lower95": 61.015043492106265,
+    "median": 266.490218945274,
+    "upper95": 7791.3200108755,
+    "unit": "km3 bulk fallout",
+    "draws": 12288
+  },
+  "by_width": {
+    "0": {
+      "lower95": 79.01068297365967,
+      "median": 398.635405345306,
+      "upper95": 11368.288180907302
+    },
+    "1": {
+      "lower95": 62.0598477435795,
+      "median": 252.35167310750916,
+      "upper95": 7350.320594584867
+    },
+    "4": {
+      "lower95": 54.57762234853799,
+      "median": 194.30532286153223,
+      "upper95": 5276.592940456287
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 72.97892009722759,
+    "median": 315.9238213142153,
+    "upper95": 10934.354521196148
+  },
+  "base_volume_all_draws": {
+    "lower95": 80.45374449314575,
+    "median": 405.59486857070027,
+    "upper95": 12438.130851645576
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.0013127250228333997,
+        "max_relative_quantile_doubling_difference": 0.0010997477658489796,
+        "p99_absolute_draw_fraction_difference": 0.008226432388058225,
+        "max_absolute_draw_fraction_difference": 0.0173624287641424,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.08601313842881242,
+    "draw_split_relative": [
+      0.00697879623452504,
+      0.035885563304947736,
+      0.034631140995020494
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 1024,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 59.925767710276865,
+        "median": 272.7651993270607,
+        "upper95": 9389.384588658986,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.004288677730479459,
+            "max_relative_quantile_doubling_difference": 0.0016865217352446393,
+            "p99_absolute_draw_fraction_difference": 0.008541094669442579,
+            "max_absolute_draw_fraction_difference": 0.017590206097807926,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.10581616715706721,
+        "draw_split_relative": [
+          0.016167768953369466,
+          0.08409464821522579,
+          0.4597428641844939
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 59.98187585275698,
+        "median": 271.8196211053346,
+        "upper95": 8103.387476695194,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0029783406382047424,
+            "max_relative_quantile_doubling_difference": 0.001229360320544215,
+            "p99_absolute_draw_fraction_difference": 0.008109245437417542,
+            "max_absolute_draw_fraction_difference": 0.012445473456953793,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.04338707738704917,
+        "draw_split_relative": [
+          0.012326727260672523,
+          0.00669157075065596,
+          0.1233418724279159
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 1024,
+      "volume": {
+        "lower95": 61.015043492106265,
+        "median": 266.490218945274,
+        "upper95": 7791.3200108755,
+        "unit": "km3 bulk fallout",
+        "draws": 12288
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0013127250228333997,
+            "max_relative_quantile_doubling_difference": 0.0010997477658489796,
+            "p99_absolute_draw_fraction_difference": 0.008226432388058225,
+            "max_absolute_draw_fraction_difference": 0.0173624287641424,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.08601313842881242,
+        "draw_split_relative": [
+          0.00697879623452504,
+          0.035885563304947736,
+          0.034631140995020494
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "eb82d3ab1370fab6843e2e6a1b77c1b93450aa787afdb707fa186ffefa5a5f39",
+  "input_sha256": "5a7c65dd2db00796bbb1107aad165f077452c067e9a6ef3863bd5667aecd2665",
+  "parent_sampler_passed": true,
+  "packet_sha256": "a476a03b5b927023949bfeda1edd23c5ef0027eb06d6cda0cd4cba9436db4948"
+}

@@ -1,0 +1,170 @@
+{
+  "volume": {
+    "lower95": 75.31708823499278,
+    "median": 408.39293991331385,
+    "upper95": 3119.625737172536,
+    "unit": "km3 bulk fallout",
+    "draws": 12288
+  },
+  "by_width": {
+    "0": {
+      "lower95": 100.76774007925655,
+      "median": 598.7349613722477,
+      "upper95": 4044.667794429442
+    },
+    "1": {
+      "lower95": 75.10701456776806,
+      "median": 394.3340416001558,
+      "upper95": 2740.2059875962173
+    },
+    "4": {
+      "lower95": 64.80014393496927,
+      "median": 301.79384248375175,
+      "upper95": 2048.892710136309
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 87.51273607126491,
+    "median": 594.4484792828337,
+    "upper95": 4068.760119183618
+  },
+  "base_volume_all_draws": {
+    "lower95": 101.03547165529093,
+    "median": 596.3081568122723,
+    "upper95": 3742.361388292992
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.004151252382658241,
+        "max_relative_quantile_doubling_difference": 0.0021115145766670285,
+        "p99_absolute_draw_fraction_difference": 0.008348225312442507,
+        "max_absolute_draw_fraction_difference": 0.01983304697221222,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.08077958667544438,
+    "draw_split_relative": [
+      0.05425167224314785,
+      0.0065144762832831295,
+      0.004198592172811002
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 1024,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 77.67390801981661,
+        "median": 415.1801885279835,
+        "upper95": 3631.575803740365,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0032920310272426256,
+            "max_relative_quantile_doubling_difference": 0.001114821904027341,
+            "p99_absolute_draw_fraction_difference": 0.0077325849711529036,
+            "max_absolute_draw_fraction_difference": 0.01476611827881591,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.3429294007862502,
+        "draw_split_relative": [
+          0.09588761459257196,
+          0.0065996496769038845,
+          0.6608999224894193
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 74.80828964519131,
+        "median": 400.0915573630722,
+        "upper95": 2778.942865893494,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.003112809177887095,
+            "max_relative_quantile_doubling_difference": 0.0017915592030138816,
+            "p99_absolute_draw_fraction_difference": 0.008195140044873473,
+            "max_absolute_draw_fraction_difference": 0.01922177814736692,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.04245309379915474,
+        "draw_split_relative": [
+          0.009815169440008301,
+          0.006667404779817916,
+          0.12484489629844042
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 1024,
+      "volume": {
+        "lower95": 75.31708823499278,
+        "median": 408.39293991331385,
+        "upper95": 3119.625737172536,
+        "unit": "km3 bulk fallout",
+        "draws": 12288
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.004151252382658241,
+            "max_relative_quantile_doubling_difference": 0.0021115145766670285,
+            "p99_absolute_draw_fraction_difference": 0.008348225312442507,
+            "max_absolute_draw_fraction_difference": 0.01983304697221222,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.08077958667544438,
+        "draw_split_relative": [
+          0.05425167224314785,
+          0.0065144762832831295,
+          0.004198592172811002
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "5afb1dd78156d9124b25fb3d911d87d3a67435486a4ac353a3d0b99b0d1c9a0a",
+  "input_sha256": "5a7c65dd2db00796bbb1107aad165f077452c067e9a6ef3863bd5667aecd2665",
+  "parent_sampler_passed": true,
+  "packet_sha256": "b838a5f3205f82b7775684f430ecbd9c29570873ba100851757708f054652ab1"
+}
