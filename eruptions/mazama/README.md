@@ -10,7 +10,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **299** | 179–473 | 1.399 | 71.7% |
 | Cubic spline | observation hull | **1,537** | 729–3,527 | 1.231 | 89.1% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **277** | 188–430 † | 0.739 † | 89.1% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **250** | 165–400 | 0.788 | 76.1% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **418** | 248–795 † | 1.027 | 76.1% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **291** | 228–400 | 0.697 | 95.7% |
 
@@ -20,7 +20,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Mazama · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Mazama · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![Mazama · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
@@ -34,7 +34,7 @@ The GP and spline integrate over the dashed hull. Gaps inside it can still be po
 
 ## Field evidence and validation
 
-Numerical warnings remain for Directional ensemble (posterior diagnostics, geographic validation), Spherical mixture (posterior diagnostics). The nested footprint support audit qualifies no complete contour band. The global estimates depend on the continuation into unsampled areas. [Fold and fit checks](results/release.json) · [Nested sector volumes and extrapolation](results/nested-isopachs/README.md#geographic-support-and-extrapolation) · [Matched footprint experiments](../../comparisons/nested-isopachs/geography/README.md)
+The directional full fit and all four buffered fits passed. All three estimable compass-quadrant fits passed. The fourth quadrant contains no accepted site to withhold. The spherical mixture retains a posterior warning. The nested footprint support audit qualifies no complete contour band. The global estimates depend on the continuation into unsampled areas. [Fold and fit checks](results/release.json) · [Nested sector volumes and extrapolation](results/nested-isopachs/README.md#geographic-support-and-extrapolation) · [Matched footprint experiments](../../comparisons/nested-isopachs/geography/README.md)
 
 ![Mazama observations and source coverage](../../data/audits/Mazama/evidence-map.png)
 

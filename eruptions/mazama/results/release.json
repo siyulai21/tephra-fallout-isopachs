@@ -41,15 +41,15 @@
     {
       "method": "directional",
       "domain": "whole Earth",
-      "median_map_volume_km3": 277.49654306277597,
-      "thickness_q25_volume_km3": 188.037415145554,
-      "thickness_q75_volume_km3": 429.8899601443966,
+      "median_map_volume_km3": 250.20523873115977,
+      "thickness_q25_volume_km3": 164.8895435772996,
+      "thickness_q75_volume_km3": 400.4193363397479,
       "map_integration_passed": true,
       "thickness_band_integration_passed": true,
-      "posterior_checks_passed": false,
-      "heldout_log_score": 0.7394909805330574,
-      "heldout_coverage95": 0.8913043478260869,
-      "heldout_checks_passed": false,
+      "posterior_checks_passed": true,
+      "heldout_log_score": 0.7880389697080741,
+      "heldout_coverage95": 0.7608695652173914,
+      "heldout_checks_passed": true,
       "input_sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a"
     },
     {
@@ -87,10 +87,11 @@
     "eruptions/mazama/results/directional/single-structure/report.json": "8496bcc49ba36a7615c3812392e6c1a111e946c4f8df934a9c24cddb09d5e53f",
     "eruptions/mazama/results/directional/ensemble/report.json": "22a5ed87fd6413a1bd59a261db1db4e5b3ca0867be64dbfa8d7bcf891e74a1a4",
     "eruptions/mazama/results/directional/azimuth/report.json": "f8aef3ebf328081827647960e7231d56c62b3a8fc32f0111b75b258bd6cefdfb",
+    "eruptions/mazama/results/directional/multiscale/report.json": "a1d608a64cc09d476063b124f0224b13e6f4e53a6082991840d213d5b41ac11b",
     "eruptions/mazama/results/spherical-mixture/report.json": "d7a5433eb3605e978296b9d2c5ffc17c4f613771a20b6cf7fe5e1554052cef26",
     "eruptions/mazama/results/nested-isopachs/footprints/report.json": "aec62ca89111f91d2d88aa4e9a73ce8d54ab2c979024011bcf2fb55b1e0e2c2f",
-    "eruptions/mazama/results/directional/deposit.json": "b75dbcb7f526e71f67e71a4ccfaab7958e96f7e5f95cf4577dc5e89c17f7ef89",
-    "eruptions/mazama/results/directional/median-grid.npz": "127f86a992611ec3e93a73a6760de5eb2a227e355fb40b4b76864acc4fb751b8",
+    "eruptions/mazama/results/directional/deposit.json": "c404d8c03fbb1c2f2ee52f79d890f2c34984bc6f8fe7992ecbe2130059e97153",
+    "eruptions/mazama/results/directional/median-grid.npz": "3e3b1c396b7973c38be51477b3dfde4f23981ecd126ff397e70c9e2985f72346",
     "eruptions/mazama/results/spherical-mixture/deposit.json": "f87a6a40fa216a43a50d101ca7d734609918b3d41da2b77bf65faab07372a9c7",
     "eruptions/mazama/results/spherical-mixture/median-grid.npz": "8fd2c5b6d8e655231f52495bfa28b9c465168a51c5ad8c0ef366f5c0300a223f",
     "eruptions/mazama/results/nested-isopachs/deposit.json": "99907d221114acabfea5470a5c109c9b5df6c54b840857d22db69331d7d47f46",
@@ -99,7 +100,8 @@
     "data/audits/Mazama/principal-ranges/provenance.json": "e416555eb6d14f2b2753f937e95ae98cf0796154497b6c341f67ba8465e7ef97"
   },
   "independent_regional_benchmark_sha256": "02f12dc36705c7546d8095f5e1bb0504a407b5943c44b0887ee94873c3839cc0",
-  "directional_median_map_km3": 306.78895423486364,
+  "directional_median_map_km3": 250.20523873115977,
+  "fixed_direction_control_km3": 306.78895423486364,
   "octant_extremes": [
     {
       "slug": "mazama",

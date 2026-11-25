@@ -49,7 +49,9 @@ def parent_view(folder, family, data, meta):
         if report["protocol"] != "uncertain-azimuth-v1":
             raise ValueError("Expected the quantitative uncertain-azimuth field")
         model = read_field(folder/"azimuth", data, report)
-        packet = folder/"median-grid.npz"
+        packet = folder/"azimuth/interpolation-mesh.npz"
+        if not packet.is_file() and not (folder/"multiscale/report.json").is_file():
+            packet=folder/"median-grid.npz"
         if packet.is_file():
             restore_directional_mesh(packet,model,meta["input_sha256"],identity["azimuth/fields.npz"])
         view = MapView(model, lat)
@@ -68,6 +70,9 @@ def parent_view(folder, family, data, meta):
 
 
 def review_path(folder, family):
+    smooth = Path(folder)/"multiscale/report.json"
+    if family == "directional" and smooth.is_file():
+        return smooth
     footprints = Path(folder)/"footprints/report.json"
     if family == "nested-isopachs" and footprints.is_file():
         return footprints
@@ -75,12 +80,24 @@ def review_path(folder, family):
 
 
 def display_name(family, sources):
+    if "multiscale/report.json" in sources:
+        return "Multiscale directional ensemble"
     return "Bayesian nested footprints" if "footprints/report.json" in sources else FAMILIES[family]
 
 
 def open_field(folder, family, data, meta, *, review=None):
     """Prefer the current complete-deposit model when a reviewed continuation exists."""
     path = Path(review) if review is not None else review_path(folder,family)
+    if family == "directional" and path.parent.name == "multiscale" and path.is_file():
+        from ..models.directional.multiscale.geometry import SCHEMA
+        from ..models.directional.multiscale.posterior import DirectionalField
+        report=json.loads(path.read_text())
+        packet=path.parent/"posterior.npz"
+        if (report["protocol"]!=SCHEMA or report["input_sha256"]!=meta["input_sha256"]
+                or digest(packet)!=report["artifacts_sha256"]["posterior.npz"]):
+            raise ValueError("Directional data or posterior identity differs")
+        model=DirectionalField.load(packet)
+        return model,model,{"multiscale/report.json":digest(path),"multiscale/posterior.npz":digest(packet)}
     if family == "nested-isopachs" and path.parent.name == "footprints" and path.is_file():
         from ..models.nested.footprints.posterior import FootprintField, PROTOCOL as FOOTPRINTS
         from ..models.nested.report import MapView
@@ -168,7 +185,7 @@ def write_map_grid(path,field,model,family,meta,sources):
     """Preserve the actual chart and the directional mesh used to interpolate posterior nodes."""
     arrays = dict(radii_km=field.radii, log10_cm=field.log10_cm, axis=field.axis,
                   input_sha256=meta["input_sha256"], sources_json=json.dumps(sources,sort_keys=True))
-    if family=="directional":
+    if family=="directional" and "multiscale/report.json" not in sources:
         g = model.members[0].geometry
         arrays.update(triangles_km=g.triangles, local_vertex_ids=g.node_ids, vertices_km=g.vertices,
                       inside_observation_mesh=g.inside)

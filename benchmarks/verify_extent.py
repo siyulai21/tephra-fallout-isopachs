@@ -70,7 +70,11 @@ def main():
             shape=angular[(angular.slug==slug) & (angular.family==family)]
             if not shape.empty:
                 assert set(shape.input_sha256)=={pair.input_sha256}
+            if family == "directional" and (folder/"multiscale/report.json").is_file():
+                from .directional_scale_maps import ARCHIVE
+                map_home = ARCHIVE/slug
             receipt = read_json(map_home/"deposit.json")
+            assert receipt["input_sha256"] == pair.input_sha256
             np.testing.assert_allclose([pair.principal_km3,pair.lower95,pair.upper95,pair.principal_negative_log_score],
                                        [receipt["median_map_volume_km3"],*r["conditional_interval95_km3"],
                                         r["validation"]["geographic"]["negative_log_score"]])

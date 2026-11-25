@@ -45,7 +45,7 @@ def volume_rows(home, reports=None, *, regional_home=None, input_sha256=None):
         receipt = read_json(folder/"deposit.json")
         if receipt["family"] != key:
             raise ValueError(f"Wrong deposit family at {folder}")
-        path = folder/("footprints" if "footprints/report.json" in receipt["sources_sha256"] else "extent")/"report.json"
+        path = next((folder/k for k in receipt["sources_sha256"] if k in ("multiscale/report.json","footprints/report.json","extent/report.json")),folder/"extent/report.json")
         if path.is_file():
             valid = read_json(path)["validation"]
             v = valid.get("geographic",valid)

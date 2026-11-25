@@ -10,7 +10,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **3.08** | 2.4–3.96 | 1.264 | 94.0% |
 | Cubic spline | observation hull | **9.12** | 5.81–15.2 | 1.371 | 90.0% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **7.21** | 3.58–15.7 | 1.156 † | 96.0% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **7.49** | 5.18–12.8 | 1.022 | 98.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **6.94** | 4.22–14.5 | 1.351 | 88.0% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **12.7** | 6.85–26.4 | 1.063 † | 94.0% |
 
@@ -20,7 +20,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Sakurajima Satsuma (P14) · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Sakurajima Satsuma (P14) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![Sakurajima Satsuma (P14) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
@@ -42,7 +42,7 @@ Glass chemistry also correlates HGY1026 in Lake Huguangyan, southern China, with
 
 ![Measured Satsuma thickness and radial coverage by compass sector](../../data/audits/Sakurajima-Satsuma/coverage.png)
 
-The GP and cubic spline integrate a common 24,004 km² hull. Within the 635 km² of well-connected measurement triangles both regional median-thickness maps integrate to 0.18 km³. These triangles contain 2.6% of the directional median-map volume. The common standard support screen accepts no complete isopach band for any family. Values outside that footprint depend on extrapolation across the proximal gap, between sampled directions and beyond measured distances. [Support geometry and partial volumes](results/support/README.md)
+The GP and cubic spline integrate a common 24,004 km² hull. Within the 635 km² of well-connected measurement triangles both regional median-thickness maps integrate to 0.18 km³. The directional report gives the distribution of the fraction of whole-deposit draw volume inside these triangles. [Volume allocation](results/directional/multiscale/report.json) The common standard support screen accepts no complete isopach band for any family. Values outside that footprint depend on extrapolation across the proximal gap, between sampled directions and beyond measured distances. [Support geometry and partial volumes](results/support/README.md)
 
 The largest cubic-spline median on the in-hull prediction grid is 447 cm, about 42 km west and 44 km north of the source. The nearest measured site is 49 km away. The GP predicts 5.5 cm at the same point, and the peak lies outside the standard interpolation triangles. The spline peak helps explain why the two regional hull volumes diverge even though their estimates agree inside the well-sampled footprint. The accepted beds reach 95 cm. [Grid values and nearest measurement](results/source-audit/regional-map-peak.csv)
 

@@ -116,7 +116,7 @@ def main():
         else:
             release = read(home/rec.get("release_receipt", "source-audit/release.json"))
             expected_input = release["files"][rec["path"].relative_to(Path.cwd()).as_posix()]
-            median_map = release["directional_median_map_km3"]
+            median_map = release.get("fixed_direction_control_km3",release["directional_median_map_km3"])
             expected_report = release["files"][f"eruptions/{slug}/results/directional/ensemble/report.json"]
         assert digest(home/"directional/ensemble/report.json") == expected_report
         verify_case(rec, expected_input, median_map)

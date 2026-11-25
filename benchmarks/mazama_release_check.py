@@ -78,6 +78,13 @@ def check(home):
             for name, expected in report["posterior_sha256"].items():
                 assert digest(detail/name) == expected
             partitions = [report["fits"][f"fold-{i}"] for i in range(4)]
+        elif key == "directional" and (family/"multiscale/report.json").is_file():
+            detail = family/"multiscale"
+            report = read_json(detail/"report.json")
+            for name, checksum in report["artifacts_sha256"].items():
+                assert digest(detail/name) == checksum
+            partitions = [dict(train=f["train_row_ids"], test=f["test_row_ids"]) for f in report["folds"]
+                          if f["design"] == "geographic"]
         else:
             detail = family/"extent"
             report = read_json(detail/"report.json")
@@ -85,7 +92,8 @@ def check(home):
             assert record["slug"] not in report["calibration"]["donors"]
             partitions = sorted((p for p in report["folds"] if p["design"] == "geographic"),key=lambda p:p["fold"])
         assert report["input_sha256"] == identity
-        assert digest(detail/"heldout.csv.gz") == report["heldout_sha256"]
+        expected = report["artifacts_sha256"]["heldout.csv.gz"] if detail.name == "multiscale" else report["heldout_sha256"]
+        assert digest(detail/"heldout.csv.gz") == expected
         heldout = pd.read_csv(detail/"heldout.csv.gz")
         if "design" in heldout:
             heldout = heldout[heldout.design == "geographic"]
@@ -113,7 +121,8 @@ def check(home):
     from benchmarks.directional_comparison import case_extremes
     fixed = read_json(home/"directional/ensemble/report.json")
     stages = ["report.json","thickness-bands.json","directional/single-structure/report.json",
-              "directional/ensemble/report.json","directional/azimuth/report.json","spherical-mixture/report.json",
+              "directional/ensemble/report.json","directional/azimuth/report.json","directional/multiscale/report.json",
+              "spherical-mixture/report.json",
               "nested-isopachs/footprints/report.json"]
     for k in ("directional","spherical-mixture","nested-isopachs"):
         stages.extend([f"{k}/deposit.json",f"{k}/median-grid.npz"])
@@ -123,7 +132,8 @@ def check(home):
     return dict(input_sha256=identity, observations=len(raw), site_types=counts, matched_geographic_folds=len(folds),
                 spherical_prior_fits=len(priors), methods=rows,files=files,
                 independent_regional_benchmark_sha256=digest(study/"regional-benchmark.csv"),
-                directional_median_map_km3=fixed["median_surface"]["volume_km3"],
+                directional_median_map_km3=next(r["median_map_volume_km3"] for r in rows if r["method"]=="directional"),
+                fixed_direction_control_km3=fixed["median_surface"]["volume_km3"],
                 octant_extremes=case_extremes(record,read_json(home/"directional/single-structure/report.json"),by_octant=True))
 
 

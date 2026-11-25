@@ -10,7 +10,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **91.1** | 71.4–117 | 1.620 | 96.2% |
 | Cubic spline | observation hull | **93.5** | 73.5–123 | 1.548 | 96.2% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **95.7** | 62–146 † | 2.029 † | 84.6% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **129** | 90.2–195 | 1.500 | 100.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **117** | 82.3–176 | 1.590 | 100.0% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **133** | 94.3–204 | 1.382 † | 100.0% |
 
@@ -20,7 +20,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Tambora · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Tambora · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![Tambora · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 

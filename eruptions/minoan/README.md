@@ -10,7 +10,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **22** | 15.2–32.9 | 1.451 | 96.7% |
 | Cubic spline | observation hull | **24.8** | 24.7–24.9 | 1.601 | 96.7% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **29.2** | 18.6–48.4 | 1.716 | 94.6% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **30.3** | 21.4–44.2 | 1.538 | 95.7% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **26.9** | 20–42.9 | 1.586 | 95.7% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **38.5** | 25.4–62 | 1.578 | 91.3% |
 
@@ -20,7 +20,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Minoan · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Minoan · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![Minoan · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 

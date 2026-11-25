@@ -33,7 +33,10 @@ def verify_global(folder, family, data, meta):
     median,model,src=open_field(folder,family,data,meta)
     assert src==r["sources_sha256"]
     fit=read_json(folder/next(iter(src)))
-    if family == "directional":
+    if "multiscale/report.json" in src:
+        assert fit["independent_draw_integration"] and fit["fit"]["retained_mass"]>=.9995-1e-10
+        assert digest(folder/"multiscale/posterior.npz")==fit["artifacts_sha256"]["posterior.npz"]
+    elif family == "directional":
         assert "median" not in fit["volume"]["coherent_volume_km3"]
     elif family == "spherical-mixture":
         assert all({"median","mean"}.isdisjoint(item["volume"]) for item in fit["fits"].values())

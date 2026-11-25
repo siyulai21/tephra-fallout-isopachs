@@ -4,7 +4,7 @@
 
 A new family joins the same eruption workflow as a peer. It must not silently change the accepted data, the target region or another method's results.
 
-The registry contract below applies to **regional** model families. The [directional ensemble](methods/uncertain-azimuth.md) and [spherical mixture](methods/spherical-bearings.md) have separate joint-posterior runners because their complete-field parameter uncertainty does not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
+The registry contract below applies to **regional** model families. The [directional ensemble](methods/directional-multiscale.md) and [spherical mixture](methods/spherical-bearings.md) have separate joint-posterior runners because their complete-field parameter uncertainty does not fit the fixed-parameter regional interface. A global extension must preserve the same accepted observations, bounds, outer folds, buffer and heldout scoring; it must also supply complete-field draws, exact or independently verified mass normalization, explicit prior sensitivity and numerical sampling diagnostics. It must never compare its global total directly with a regional partial volume as if they estimated the same quantity.
 
 ## Regional implementation boundary
 

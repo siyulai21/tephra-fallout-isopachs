@@ -237,4 +237,6 @@ def attach_family_page(folder):
     """Refresh the family landing page from its principal quantitative report."""
     from .primary import family_page
     folder = Path(folder)
+    if (folder / "multiscale/report.json").is_file():
+        return
     family_page(folder)

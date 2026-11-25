@@ -1,15 +1,14 @@
 # Directional fallout implementation
 
-Start with `directional_dataset` in [reporting.py](reporting.py). It runs the common field fits, the six-structure ensemble, the measured-fan sensitivity and the principal uncertain-direction reconstruction. The normal case command publishes one family report in `results/directional/README.md`.
+The assistant-led eruption command fits the multiscale directional ensemble and writes its median isopachs and whole-Earth integral at the family entry point. The older directional fits supply matched sensitivity controls. [Entry point](reporting.py) · [Equations, limits and numerical checks](../../../../docs/methods/directional-multiscale.md)
 
-| Work on | Start here |
+| Calculation | Implementation |
 |---|---|
-| Principal field, leave-one-eruption-out weights and whole-Earth integrals | [Azimuth field](azimuth/field.py) · [Calibration](azimuth/calibration.py) · [Integrals](azimuth/integrals.py) |
-| Principal fit, held-out predictions, maps and family report | [Run and validate](azimuth/report.py) · [Replay the median field](azimuth/primary.py) · [Write the narrative](azimuth/narrative.py) |
-| The six base structures and their earlier fixed-direction calibration | [Ensemble members](ensemble/members.py) · [Weight calibration](ensemble/weights.py) · [Fixed-direction report](ensemble/report.py) |
-| Measured-fan reach and evidence from inspected sites | [Measured-fan runs](bearing_report.py) · [Inventory and visibility assumptions](archive_readings.py) · [Condition the principal field](azimuth/archive.py) |
-| Underlying field and single-structure assumptions | [Geometry](geometry.py) · [Inference](inference.py) · [Fits and retries](study.py) · [Whole-Earth integration](integration.py) · [Unobserved proximal cap](source_cap.py) |
+| Evolving fan headings, thinning and physical correlation lengths | [Field geometry](multiscale/geometry.py) · [Training-only directional reach](multiscale/spread.py) |
+| Measurements, bounds, posterior weights and coherent draws | [Censored likelihood correction](multiscale/conditioning.py) · [Inference and checks](multiscale/fit.py) · [Field replay](multiscale/posterior.py) |
+| Spatial holdouts, integration, archive probes and support | [Deleted regions](multiscale/validation.py) · [Whole-deposit volumes](multiscale/integrals.py) · [Publication](multiscale/release.py) |
+| Earlier uncertain-azimuth and finite-spread controls | [Azimuth field](azimuth/field.py) · [Calibration](azimuth/calibration.py) · [Integration](azimuth/integrals.py) |
+| Six-structure fixed-direction and measured-fan controls | [Ensemble members](ensemble/members.py) · [Calibration](ensemble/weights.py) · [Measured-fan runs](bearing_report.py) · [Archive evidence](archive_readings.py) |
+| Earlier single-structure model | [Geometry](geometry.py) · [Inference](inference.py) · [Fits and retries](study.py) · [Proximal cap](source_cap.py) |
 
-The local field interpolates log thickness on retained measurement triangles. Each base structure continues fallout across gaps and beyond the sampled area. The principal fit varies the direction of extra fallout across coherent simulated deposits. Its paired control holds directions fixed under the same weights. The older fixed-direction ensemble uses its separately fitted weights. [Method and map interpretation](../../../../docs/methods/README.md#directional-ensemble)
-
-Run `python -m benchmarks.verify_azimuth_continuation` for the principal reconstruction. The study index links the paired results, the earlier calibrations and the known-deposit trials. [Directional studies](../../../../comparisons/directional/README.md) · [Verification commands](../../../../benchmarks/README.md)
+Run `python -m benchmarks.verify_directional_multiscale` to replay current fits, held-out event probabilities, whole-Earth volumes and support decisions. Run `python -m benchmarks.verify_azimuth_continuation` for the earlier comparison. [Visual review and known-deposit tests](../../../../comparisons/directional/multiscale/README.md)

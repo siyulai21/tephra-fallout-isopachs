@@ -111,10 +111,11 @@ def plot_observations(ax, data, meta, levels, palette, bounds):
 
 
 def support_lines(ax,family,data,model,x,y,z,levels):
-    if family=="directional":
+    from ..models.directional.multiscale.posterior import DirectionalField
+    if family=="directional" and not isinstance(model,DirectionalField):
         from ..models.directional.azimuth.maps import supported_lines
         supported_lines(ax,data,model,x,y,z,levels,[INK]*len(levels))
-    elif family=="nested-isopachs":
+    elif family=="nested-isopachs" or isinstance(model,DirectionalField):
         import contourpy
         from ..support import SupportMesh
         from ..models.nested.reach_report import bracketed_regions, line_parts

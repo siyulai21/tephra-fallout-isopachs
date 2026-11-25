@@ -8,7 +8,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 
 | Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---|---:|---:|---:|---:|
-| [Directional ensemble](results/directional/README.md) | whole Earth | **60.6** | 33.5–124 | 1.336 | 90.8% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **76.2** | 47.2–133 | 1.234 | 93.8% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **242** | 96.5–769 | 1.204 | 98.5% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **62.8** | 40.5–97.4 | 1.115 | 93.8% |
 
@@ -18,11 +18,11 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Ilopango TBJ · total primary airfall · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Ilopango TBJ (total primary airfall) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
-![Ilopango TBJ · total primary airfall · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Ilopango TBJ (total primary airfall) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Ilopango TBJ · total primary airfall · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Ilopango TBJ (total primary airfall) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## What the field sites constrain
 

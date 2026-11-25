@@ -63,7 +63,8 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
                             all(f["passed"] for f in nested["folds"])))
     if home is not None:
         for i,family in enumerate(("directional","spherical-mixture","nested-isopachs"),2):
-            path = Path(home)/family/"extent/report.json"
+            from .deposit_field import review_path
+            path = review_path(Path(home)/family,family)
             if i<len(records) and records[i][0] != "Nested footprints" and path.is_file():
                 val = json.loads(path.read_text())["validation"]["geographic"]
                 records[i] = (records[i][0],val["negative_log_score"],val["coverage95_exact"],val["all_folds_passed"])

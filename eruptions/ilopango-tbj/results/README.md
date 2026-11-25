@@ -8,7 +8,7 @@ Dull L08 contributes one 25–60 cm interval, L10 a >60 cm lower bound, and L12 
 
 | Model | Median map at M12 | P(>1 cm) with geographic group withheld |
 |---|---:|---:|
-| Directional | 1.63 cm | 5.5% |
+| Multiscale directional | 1.49 cm | 20.0% |
 | Spherical mixture | 5.73 cm | 40.9% |
 | Nested dispersal footprints | 1.37 cm | 9.8% |
 
@@ -22,9 +22,9 @@ An independent nested fit omitting only M12 gives 0.016 cm median latent thickne
 | Spherical mixture | Passed | Passed | Passed | None |
 | Nested dispersal footprints | Passed | Passed | Passed | None |
 
-The support screen tests local observations around complete contours, including where evidence is absent. A whole-Earth integral includes assumptions beyond those observations. The complete decisions and rejected segments are available for each method. [Directional screen](directional/extent/support.json.gz) · [Spherical screen](spherical-mixture/extent/support.json.gz) · [Nested screen](nested-isopachs/footprints/support.json.gz)
+The support screen tests local observations around complete contours, including where evidence is absent. A whole-Earth integral includes assumptions beyond those observations. The complete decisions and rejected segments are available for each method. [Directional screen](directional/multiscale/support.json.gz) · [Spherical screen](spherical-mixture/extent/support.json.gz) · [Nested screen](nested-isopachs/footprints/support.json.gz)
 
-The spherical model uses eight fixed prior settings. The smallest lower endpoint is 38.0 km³ and the largest upper endpoint is 69,680 km³ across these separate conditional intervals. Six of eight settings passed both their required sampling and continuation checks. The diffuse-tail setting retained a warning for the parent field’s bearing, and the one-fan setting retained a warning for instability in volume quantiles between draw subsets. The nested fitter emitted floating-point warnings while evaluating very small interval probabilities for some trial particles. The published held-out probabilities and posterior integrals were checked separately. [Eight spherical intervals and checks](spherical-priors.csv) · [Full spherical prior diagnostics](spherical-mixture/extent/prior-sensitivity.json) · [Nested fits and integration](nested-isopachs/footprints/report.json) · [Directional folds and continuation](directional/extent/report.json)
+The spherical model uses eight fixed prior settings. The smallest lower endpoint is 38.0 km³ and the largest upper endpoint is 69,680 km³ across these separate conditional intervals. Six of eight settings passed both their required sampling and continuation checks. The diffuse-tail setting retained a warning for the parent field’s bearing, and the one-fan setting retained a warning for instability in volume quantiles between draw subsets. The nested fitter emitted floating-point warnings while evaluating very small interval probabilities for some trial particles. The published held-out probabilities and posterior integrals were checked separately. [Eight spherical intervals and checks](spherical-priors.csv) · [Full spherical prior diagnostics](spherical-mixture/extent/prior-sensitivity.json) · [Nested fits and integration](nested-isopachs/footprints/report.json) · [Directional folds and continuation](directional/multiscale/report.json)
 
 ## Reproduction
 

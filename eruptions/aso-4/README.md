@@ -18,7 +18,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **171** | 118–249 | 1.514 | 94.0% |
 | Cubic spline | observation hull | **201** | 146–289 | 1.662 | 90.4% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **661** | 343–1,313 | 1.482 | 90.4% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **478** | 309–839 | 1.330 | 95.2% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **473** | 282–942 | 1.636 | 94.0% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **1,924** | 802–5,577 | 1.352 | 92.8% |
 
@@ -28,7 +28,7 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Aso-4 · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Aso-4 · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
 ![Aso-4 · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 

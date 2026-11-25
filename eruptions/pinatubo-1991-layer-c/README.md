@@ -10,7 +10,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **4.21** | 3.22–5.57 | 0.955 | 97.3% |
 | Cubic spline | observation hull | **6.1** | 4.17–10.9 | 1.421 | 90.5% |
-| [Directional ensemble](results/directional/README.md) | whole Earth | **5.78** | 4.65–7.26 † | 1.072 † | 99.3% |
+| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **5.87** | 4.9–7.18 | 0.936 | 94.6% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **6.13** | 4.36–7.91 † | 0.895 † | 98.0% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **7.37** | 4.83–13.7 | 1.234 † | 87.1% |
 
@@ -20,15 +20,15 @@ Lower scores indicate better geographic prediction. Coverage counts exact withhe
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Pinatubo 1991 · climactic Layer C · Directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Pinatubo 1991 (Layer C) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
 
-![Pinatubo 1991 · climactic Layer C · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
 
-![Pinatubo 1991 · climactic Layer C · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Pinatubo 1991 (Layer C) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
-![Pinatubo 1991 · climactic Layer C · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
+![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
 
@@ -36,9 +36,9 @@ The GP and spline integrate over the dashed hull. Gaps inside it can still be po
 
 The regional models use the same 614,065 km² hull and predict all 235 sites in four buffered geographic holdouts. The GP covered 143 of 147 withheld point measurements at 95%, and the spline covered 133. In the southwestern deletion (fold 0), the spline's secondary expected volume exceeded the numerical range. Its median-map integral remained finite. The full-data median and quartile integrations passed for both regional models. Neither regional support screen qualified a complete contour band. [Regional fits and warnings](results/README.md) · [Regional contour support](results/support/README.md)
 
-Five of the six directional structures passed on the full dataset. The narrow-fan structure retained a sampling warning and stayed in the ensemble. The directional, spherical and nested models passed their geographic-fit checks in **1/4, 3/4 and 3/4** regions, respectively. Scores use every withheld point thickness and bound. The spherical warning occurred with the northwestern group withheld (59 localities, six ranges). The nested warning occurred with the southwestern group withheld (58 localities, 12 ranges). [705 global predictions with evidence IDs and fit flags](results/geographic-site-validation.csv)
+The multiscale directional full fit and all four buffered geographic refits passed. The spherical and nested fits each passed in three of four regions. The spherical warning occurred with the northwestern group withheld (59 localities, six ranges). The nested warning occurred with the southwestern group withheld (58 localities, 12 ranges). Scores include every withheld point thickness and bound. [705 global predictions with evidence IDs and fit flags](results/geographic-site-validation.csv)
 
-None of the three global maps qualified a complete contour band under the strict, standard or permissive screen. The whole-Earth estimates depend on the assumed continuation into unsampled areas. The nested map assigns about a quarter of its median volume to the southern sector, where sampling ends 42 km from the vent. [Directional support](results/directional/extent/support.json.gz) · [Spherical support](results/spherical-mixture/extent/support.json.gz) · [Nested footprints and sector checks](results/nested-isopachs/README.md)
+None of the three global maps qualified a complete contour band under the strict, standard or permissive screen. The whole-Earth estimates depend on the assumed continuation into unsampled areas. The nested map assigns about a quarter of its median volume to the southern sector, where sampling ends 42 km from the vent. [Directional support](results/directional/multiscale/support.json.gz) · [Spherical support](results/spherical-mixture/extent/support.json.gz) · [Nested footprints and sector checks](results/nested-isopachs/README.md)
 
 ## Spherical-mixture convergence
 
@@ -50,7 +50,7 @@ The first local run stopped under memory pressure. Its diagnostic record preserv
 
 ## Offshore survey
 
-The directional 1 cm median isopach contains **56 of 151** marine survey positions. The spherical map contains **61** and nested footprints **51**. The audit gives an explicit quantitative role to 8 survey entries. Other entries retain their reported meaning, including inspected cores without a visible bed. [Station readings and mapped thicknesses](results/marine-stations.csv) · [Original pixels and land readings](../../data/audits/Pinatubo-1991/VISUAL-CHECK.md)
+The directional 1 cm median isopach contains **57 of 151** marine survey positions. The spherical map contains **61** and nested footprints **51**. The audit gives an explicit quantitative role to 8 survey entries. Other entries retain their reported meaning, including inspected cores without a visible bed. [Station readings and mapped thicknesses](results/marine-stations.csv) · [Original pixels and land readings](../../data/audits/Pinatubo-1991/VISUAL-CHECK.md)
 
 ![The three 1 cm isopachs and all 151 marine survey positions, with a closer view of the deposit](results/marine-comparison.png)
 
