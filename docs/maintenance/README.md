@@ -17,6 +17,8 @@ When refitting or replotting, use the registered fitting table. Every site repor
 
 Inspect the actual rendered full and near-vent panels. Check the outer contour, its enclosed row count and any shortfall at the 1 cm floor. Confirm that the innermost line encloses a modeled site, that qualifying contours cross the near panel, and that shoreline detail matches the scale. The local frame must resolve the vent and use the same limits for all methods on one input. Verify the median integral and the two quartile integrals on the same domain. Retain the full regional hull and all numerical flags. [Map and volume definitions](../OUTPUTS.md#read-the-map-and-its-volume)
 
+For a new or revised method, follow the proximal contours through the intermediate distances and locate them again in the full view. Record which features the site evidence supports and which depend on extrapolation. [Visual and geological review criteria](../ADDING_METHOD.md#visual-and-geological-review-of-isopachs)
+
 ### Replay a figure
 
 From the repository root, choose a fresh output directory. For example, to render the B-Tm comparison and verify the published figures, run
