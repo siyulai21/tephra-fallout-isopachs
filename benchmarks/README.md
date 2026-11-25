@@ -1,5 +1,7 @@
 # Reproduce workflows and studies
 
+Use `python -m benchmarks.minimum_fit_inputs` to check every registered source-to-fit translation. Use `python -m benchmarks.minimum_fit_results` to replay the matched geographic scores, site medians and zero effect of source annotations in the published revised fits. [Fitting and plotting contract](../docs/methods/reported-minimum-fitting.md)
+
 The nested reach study includes three actual survey or archive transfers and an external Calbuco campaign, with a separately published distal contour. The known-surface stress tests have their own results. [Field validation](../comparisons/nested-reach/field-surveys/README.md) · [Reproduction](../docs/methods/nested-reach.md)
 
 For a new case, run the active families with the [intake workflow](../docs/NEW_ERUPTION.md). The commands here replay published evidence or reproduce method studies. Write new fits to a fresh directory under `results/`.

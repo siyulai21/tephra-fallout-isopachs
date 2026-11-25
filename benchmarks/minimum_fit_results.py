@@ -128,7 +128,8 @@ def assess(record, write=False):
     reported = rows.loc[data.row_ids]
     kind = np.where(data.reported_minimum, "lower_limit",
                     np.where(data.interval, "interval", np.where(data.censored, "upper_limit", "measurement")))
-    tags = pd.Series(reported.get("Kind","measurement"), index=reported.index).replace("", "measurement")
+    tags = pd.Series(reported.get("Kind", "measurement"), index=reported.index)
+    tags = tags.str.strip().str.lower().replace("", "measurement")
     np.testing.assert_array_equal(tags, kind)
     distances = np.hypot(*data.xy.T)
     points, stats = [], []

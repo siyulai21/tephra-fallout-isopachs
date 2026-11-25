@@ -74,3 +74,27 @@ def test_matched_synthetic_benchmark_uses_the_current_observation_rule():
     assert not np.any(data.lower_censored)
     np.testing.assert_array_equal(data.log_value[data.reported_minimum], 3.)
     np.testing.assert_array_equal(data.log_value[data.censored], 1.)
+
+
+def test_global_training_uses_only_the_effective_point_or_censored_value():
+    from src.empirical_isopach.core.observations import Observations
+    from src.empirical_isopach.models.directional.multiscale.fit import fit
+    from src.empirical_isopach.models.mass_mixture.inference import packed_data
+    from src.empirical_isopach.models.nested.footprints.posterior import fit_field
+
+    xy = np.array([[1, 2], [4, -1], [20, 10], [45, 25], [80, 4], [-30, 15]], float)
+    values = np.log([12., 8., 5., 2., .6, 1.])
+    reported = Observations(xy, values, [False, False, False, False, True, True],
+                            np.zeros(6), np.arange(6), [False, False, False, False, False, True],
+                            [np.nan] * 5 + [np.log(3.)], reported_minimum=[True, False, False, True, False, False])
+    plain = replace(reported, reported_minimum=None)
+    # Compare the arrays passed to the actual spherical sampler, including both interval endpoints.
+    for marked, unmarked in zip(packed_data(reported, 15.), packed_data(plain, 15.), strict=True):
+        np.testing.assert_array_equal(marked, unmarked)
+    first, _ = fit(reported, 15., seed=57, power=6)
+    second, _ = fit(plain, 15., seed=57, power=6)
+    np.testing.assert_array_equal(first.central(xy), second.central(xy))
+    first, _ = fit_field(reported, 15., initial=128, ceiling=128, seed=57)
+    second, _ = fit_field(plain, 15., initial=128, ceiling=128, seed=57)
+    for key, draws in vars(first).items():
+        np.testing.assert_array_equal(draws, getattr(second, key))

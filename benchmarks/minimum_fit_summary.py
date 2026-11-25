@@ -59,7 +59,7 @@ def summarize(output):
     pd.DataFrame(rows).to_csv(output/"all-distances.csv", index=False)
 
     lines = ["# Fitting reported lower limits as point thicknesses", "",
-             "These seven eruptions have accepted fallout sites with a numeric lower limit. Each fit uses that value "
+             f"These {len(cases)} eruptions have accepted fallout sites with a numeric lower limit. Each fit uses that value "
              "as a point thickness at its actual location. Upper limits retain a one-sided probability and ranges "
              "use the probability between both endpoints. The source tables retain the original qualifiers. "
              "[Fitting and plotting convention](../../docs/methods/reported-minimum-fitting.md)", "",
@@ -77,6 +77,8 @@ def summarize(output):
         near = int(stats.minima_within_25_km.iloc[0])
         name = names.get(slug, records[slug]["name"])
         def vent(method):
+            if method not in stats.index:
+                return "—"
             pair = stats.loc[method, ["old_vent_cm", "new_vent_cm"]]
             return " → ".join("—" if pd.isna(x) else f"{x:,.1f}" for x in pair)
         lines.append(f"| [{name}](../../eruptions/{slug}/README.md) | {n} | {near} | {n-near} | "
