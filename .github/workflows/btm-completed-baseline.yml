@@ -1,0 +1,94 @@
+name: Render the completed B-Tm spherical baseline
+on:
+  push:
+    branches: [codex/btm-checked-minimum-baseline]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: 1
+      OPENBLAS_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            data
+            benchmarks
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 45669570647
+          name: posterior-b-tm-baseline
+          path: results/btm-baseline-preview
+      - name: Check all numeric inputs and render the baseline map
+        run: |
+          python - <<'PY'
+          """Render the completed, verified B-Tm baseline while independent prior fits finish."""
+          from pathlib import Path
+          import json
+          import hashlib
+          import shutil
+          import numpy as np
+          from src.empirical_isopach.core.catalog import datasets
+          from src.empirical_isopach.core.audit import audited_data
+          from src.empirical_isopach.models.mass_mixture.study import assess_posterior
+          from src.empirical_isopach.models.mass_mixture.bearings.maps import select_extent
+          from src.empirical_isopach.models.mass_mixture.bearings.field import PROTOCOL
+          from src.empirical_isopach.visualization.deposit import render_deposit, write_json
+          from src.empirical_isopach.visualization.deposit_field import digest
+          from src.empirical_isopach.visualization.contour_limits import local_half_width
+          
+          home=Path("results/btm-baseline-preview")
+          row=next(r for r in datasets() if r['slug']=='b-tm')
+          data,meta=audited_data(row['path'])
+          sample=data.canonical()
+          h=hashlib.sha256()
+          for v in (sample.xy,sample.log_value,sample.log_sd,sample.censored,sample.lower_censored,sample.row_ids):
+              h.update(np.asarray(v).tobytes())
+          if sample.interval.any():h.update(sample.interval_log_upper.tobytes())
+          last=home/'baseline/attempt-3.npz'
+          for p in sorted((home/'baseline').glob('*.json')):
+              a=json.loads(p.read_text())
+              assert digest(p.with_suffix('.npz'))==a['posterior_sha256']
+              print(p.name,a['signature']['sampling']['draws'],a['diagnostics']['passed'],flush=True)
+          print('Canonical fitted array SHA',h.hexdigest(),'receipt',a['signature']['input_array_sha256'],flush=True)
+          assert abs(a['signature']['latitude']-meta['vent_lonlat'][1])<1e-12
+          # The signed Linux job identifies the dataset by its actual input blob on the exact sampling revision.
+          # Require exact numeric equivalence with the original sampler.
+          assert a['signature']['input_array_sha256']==h.hexdigest()
+          with np.load(last) as packet:samples=dict(packet)
+          assert 'angular' in samples or 'core_log_scale' in samples
+          assessment=assess_posterior(a['diagnostics'],samples)
+          assert assessment['passed']
+          view,scope,checked=select_extent(samples,data,meta['vent_lonlat'][1])
+          report={'name':row['name'],'protocol':PROTOCOL,'input':meta,'fits':{'baseline':{
+                  'posterior_sha256':digest(last),'volume':a['volume'],'diagnostics':assessment}},
+                  'bearing':{'map_draw_check':checked},'status':'Actual full-data baseline. Alternative priors are being evaluated separately.'}
+          out=home/'principal'
+          out.mkdir(exist_ok=True)
+          shutil.copyfile(last,out/'posterior.npz')
+          write_json(out/'report.json',report)
+          receipt=render_deposit(out,'spherical-mixture',data,meta,row['name'],near_half=local_half_width(data),write_page=False)
+          print('B-Tm principal spherical map',receipt['median_map_volume_km3'],'km3',receipt['observation_policy'],flush=True)
+          (out/'README.md').write_text('# B-Tm spherical median thickness\n\nThis map uses the completed four-chain full-data fit. All three field-reported lower limits enter as point measurements. The final attempt passed the baseline sampling checks. The complete model comparison also includes eight fixed prior fits and four geographic holdouts. [Underlying posterior and validation run](https://github.com/siyulai21/tephra-fallout-isopachs/actions/runs/45669570647)\n\n![B-Tm spherical median thickness and field observations](deposit.png)\n\n[Thickness grid and source identities](deposit.json) · [Thickness and area](thickness-area.csv)\n')
+          
+          PY
+      - name: Publish the reviewed baseline map
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse -f -- results/btm-baseline-preview/principal
+          git commit -m 'Publish the B-Tm spherical baseline and verified thickness grid'
+          git push origin HEAD:refs/heads/codex/btm-reviewed-baseline-map
