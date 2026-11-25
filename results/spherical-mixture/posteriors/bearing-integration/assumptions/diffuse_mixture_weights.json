@@ -1,0 +1,136 @@
+{
+  "volume": {
+    "lower95": 26.050284496430994,
+    "median": 52.84904410240465,
+    "upper95": 366.0473054498062,
+    "unit": "km3 bulk fallout",
+    "draws": 6144
+  },
+  "by_width": {
+    "0": {
+      "lower95": 30.595898462411295,
+      "median": 68.5730491867086,
+      "upper95": 486.8315133294648
+    },
+    "1": {
+      "lower95": 26.28218632409433,
+      "median": 50.28502145503374,
+      "upper95": 335.2273827188347
+    },
+    "4": {
+      "lower95": 24.113766246179214,
+      "median": 42.8050555427125,
+      "upper95": 245.97519243150353
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 28.93136861517599,
+    "median": 61.023266416255495,
+    "upper95": 546.7956303812858
+  },
+  "base_volume_all_draws": {
+    "lower95": 30.579369627167207,
+    "median": 68.76994816706849,
+    "upper95": 487.8267185234949
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.0014029872911516812,
+        "max_relative_quantile_doubling_difference": 0.0007016905396699524,
+        "p99_absolute_draw_fraction_difference": 0.012749401163828063,
+        "max_absolute_draw_fraction_difference": 0.028700280101943254,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.0028631544098527417,
+    "draw_split_relative": [
+      0.02906056482871986,
+      0.002664144072405932,
+      0.07356663826871485
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 512,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 26.07802700133654,
+        "median": 54.257602615690324,
+        "upper95": 386.0527557133164,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.00223332077317087,
+            "max_relative_quantile_doubling_difference": 0.0023805697223275857,
+            "p99_absolute_draw_fraction_difference": 0.012679752330887133,
+            "max_absolute_draw_fraction_difference": 0.019725981704280526,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.10952528331296851,
+        "draw_split_relative": [
+          0.0018005866138529189,
+          0.04405723799899915,
+          0.08465255044242223
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 26.050284496430994,
+        "median": 52.84904410240465,
+        "upper95": 366.0473054498062,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0014029872911516812,
+            "max_relative_quantile_doubling_difference": 0.0007016905396699524,
+            "p99_absolute_draw_fraction_difference": 0.012749401163828063,
+            "max_absolute_draw_fraction_difference": 0.028700280101943254,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0028631544098527417,
+        "draw_split_relative": [
+          0.02906056482871986,
+          0.002664144072405932,
+          0.07356663826871485
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "790a32d583a6701a3bd5af1b660f4847a575ba59cf4a24bbeabf3150ba411993",
+  "input_sha256": "df65ec634a0edac60510853a5ca3f9e0fe9a3a35820714210874744413709bd1",
+  "parent_sampler_passed": true,
+  "packet_sha256": "c4599c9826b58c5741cb1cb865312ed3af31c769e4bae81831cadf22b8d90199"
+}
