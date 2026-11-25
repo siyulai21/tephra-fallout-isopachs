@@ -12,6 +12,7 @@ import pandas as pd
 from .publication import published_methods, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
+from src.empirical_isopach.core.fitting import MARKER
 from src.empirical_isopach.visualization.deposit_field import digest
 
 
@@ -132,6 +133,11 @@ def field_validation(folder, input_path, slug, *, verify=True):
                     for s, w in zip(cal["states"], cal["weights"])
                 )
                 np.testing.assert_allclose(cdf_diff, event, rtol=2e-6, atol=2e-10)
+            qualifier = {}
+            if MARKER in source:
+                lower = source[MARKER]
+                qualifier = dict(reported_kind="lower_limit" if lower else kind,
+                                 reported_lower_limit_cm=float(lower) if lower else np.nan)
             results.append(
                 dict(
                     method=family,
@@ -145,7 +151,7 @@ def field_validation(folder, input_path, slug, *, verify=True):
                     upper_cm=source.get("Upper_cm", ""),
                     fold_passed=h["fit_passed"],
                     log_predictive_score=score,
-                    probability_of_reported_bound_or_range=event,
+                    probability_of_reported_bound_or_range=event, **qualifier,
                 )
             )
     table = pd.DataFrame(results).sort_values(["method", "fold", "source_id"]).reset_index(drop=True)

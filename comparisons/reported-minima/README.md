@@ -20,7 +20,9 @@ These maps include eight fixed prior fits and four buffered geographic fits.
 
 | Eruption | Previous vent median (cm) | Revised vent median (cm) | Validation |
 |---|---:|---:|---|
+| [Mazama](../../eruptions/mazama/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 7,186.0 | 72.6 | [Matched geographic predictions](../../eruptions/mazama/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
 | [Aso-4](../../eruptions/aso-4/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 43.3 | 44.1 | [Matched geographic predictions](../../eruptions/aso-4/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
 | [Minoan](../../eruptions/minoan/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 25.2 | 9.3 | [Matched geographic predictions](../../eruptions/minoan/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
 | [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 16,382.4 | 325.1 | [Matched geographic predictions](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 63.5 | 89.0 | [Matched geographic predictions](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 24.3 | 19.3 | [Matched geographic predictions](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/geographic-site-validation.csv) |

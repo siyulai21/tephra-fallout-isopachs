@@ -1,6 +1,8 @@
-# Mazama climactic fallout
+# Mazama
 
-All five methods use **300 audited localities** for primary airborne fallout from the climactic eruption, including co-ignimbrite ash. The input contains 46 point measurements, 29 two-sided thickness ranges, 129 lower limits and 96 upper limits. Each geographic holdout uses the same test sites and buffered training sites across methods. [Model input](../../data/eruptions/Mazama_primary_ranges.csv) · [Field classifications and measured ranges](../../data/audits/Mazama/principal-ranges/README.md) · [Numerical results](results/principal-volumes.csv)
+The five reconstructions use the same 300 accepted fallout localities. Field reports give 46 measured thicknesses, 129 lower limits, 96 upper limits and 29 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 121 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Mazama/principal-ranges/README.md) · [Reported table](../../data/eruptions/Mazama_primary_ranges.csv) · [Fitting table](../../data/eruptions/Mazama_primary_ranges_minimum_fit.csv)
+
+The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 ## Volumes and geographic prediction
 
@@ -8,34 +10,32 @@ Each estimate integrates the median thickness on its map. The conditional range 
 
 | Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---|---:|---:|---:|---:|
-| GP ensemble | observation hull | **299** | 179–473 | 1.399 | 71.7% |
-| Cubic spline | observation hull | **1,537** | 729–3,527 | 1.231 | 89.1% |
-| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **250** | 165–400 | 0.788 | 76.1% |
-| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **418** | 248–795 † | 1.027 | 76.1% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **291** | 228–400 | 0.697 | 95.7% |
+| GP ensemble | observation hull | **60.3** | 34.9–105 | 1.410 | 94.3% |
+| Cubic spline | observation hull | **98.7** | 52.6–263 | 1.776 | 92.0% |
+| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **110** | 83.7–145 | 1.339 | 87.4% |
+| [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **78.1** | 66–92.3 | 1.361 † | 90.3% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **159** | 141–182 | 1.182 | 92.6% |
 
-Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Mazama · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Mazama · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/directional/deposit.png)
 
-![Mazama · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Mazama · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/spherical-mixture/deposit.png)
 
-![Mazama · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Mazama · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
-![Mazama · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
+![Mazama · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
-The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
-## Field evidence and validation
+## Evidence and checks
 
-The directional full fit and all four buffered fits passed. All three estimable compass-quadrant fits passed. The fourth quadrant contains no accepted site to withhold. The spherical mixture retains a posterior warning. The nested footprint support audit qualifies no complete contour band. The global estimates depend on the continuation into unsampled areas. [Fold and fit checks](results/release.json) · [Nested sector volumes and extrapolation](results/nested-isopachs/README.md#geographic-support-and-extrapolation) · [Matched footprint experiments](../../comparisons/nested-isopachs/geography/README.md)
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
 
-![Mazama observations and source coverage](../../data/audits/Mazama/evidence-map.png)
-
-The field audit distinguishes primary beds, enclosing packages and reworked deposits. Two Yellowstone core pairs share positions, and core YL16-6A lies at a slump toe. [Locality ledger](../../data/audits/Mazama/LOCALITIES.md) · [Original distal field evidence](../../data/audits/Mazama/distal-review/FIELD_EVIDENCE.md) · [Yellowstone cores](../../data/audits/Mazama/YELLOWSTONE.md)
+[Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)

@@ -1,6 +1,8 @@
-# Pinatubo 1991 · climactic Layer C fallout
+# Pinatubo 1991 (Layer C)
 
-Five methods reconstruct the C1 and C2 pumice and ash falls on Luzon and their marine equivalents, including co-ignimbrite ash. All five use the same **235 localities** from the 15 June 1991 deposit with 147 point thicknesses, 18 two-sided ranges, 31 lower limits and 39 upper limits. [Accepted observations](../../data/eruptions/Pinatubo_1991_layer_C_reviewed.csv) · [Land and marine source audit](../../data/audits/Pinatubo-1991/reaudit/README.md) · [Download all five estimates](results/principal-volumes.csv)
+The five reconstructions use the same 235 accepted fallout localities. Field reports give 147 measured thicknesses, 31 lower limits, 39 upper limits and 18 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 14 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Pinatubo-1991/reaudit/README.md) · [Reported table](../../data/eruptions/Pinatubo_1991_layer_C_reviewed.csv) · [Fitting table](../../data/eruptions/Pinatubo_1991_layer_C_reviewed_minimum_fit.csv)
+
+The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 ## Volumes and geographic prediction
 
@@ -8,50 +10,32 @@ Each estimate integrates the median thickness on its map. The conditional range 
 
 | Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---|---:|---:|---:|---:|
-| GP ensemble | observation hull | **4.21** | 3.22–5.57 | 0.955 | 97.3% |
-| Cubic spline | observation hull | **6.1** | 4.17–10.9 | 1.421 | 90.5% |
-| [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **5.87** | 4.9–7.18 | 0.936 | 94.6% |
-| [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **6.13** | 4.36–7.91 † | 0.895 † | 98.0% |
-| [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **7.37** | 4.83–13.7 | 1.234 † | 87.1% |
+| GP ensemble | observation hull | **4.17** | 3.2–5.54 | 1.037 | 98.9% |
+| Cubic spline | observation hull | **5.57** | 3.81–10.2 | 0.929 | 95.5% |
+| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **5.53** | 4.64–6.72 | 0.949 | 97.2% |
+| [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **6.04** | 5.04–7.28 | 0.901 † | 96.6% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **6.68** | 4.89–10.1 † | 1.419 † | 85.4% |
 
-Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
 ## Full deposits and near-vent detail
 
 Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
 
-![Pinatubo 1991 (Layer C) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/directional/deposit.png)
+![Pinatubo 1991 (Layer C) · Multiscale directional ensemble. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/directional/deposit.png)
 
-![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/spherical-mixture/deposit.png)
+![Pinatubo 1991 (Layer C) · Spherical mixture. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/spherical-mixture/deposit.png)
 
-![Pinatubo 1991 (Layer C) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
+![Pinatubo 1991 (Layer C) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/nested-isopachs/deposit.png)
 
 ## Inside the observation hull
 
-![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
+![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
-The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
-## What the field sites constrain
+## Evidence and checks
 
-The regional models use the same 614,065 km² hull and predict all 235 sites in four buffered geographic holdouts. The GP covered 143 of 147 withheld point measurements at 95%, and the spline covered 133. In the southwestern deletion (fold 0), the spline's secondary expected volume exceeded the numerical range. Its median-map integral remained finite. The full-data median and quartile integrations passed for both regional models. Neither regional support screen qualified a complete contour band. [Regional fits and warnings](results/README.md) · [Regional contour support](results/support/README.md)
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
 
-The multiscale directional full fit and all four buffered geographic refits passed. The spherical and nested fits each passed in three of four regions. The spherical warning occurred with the northwestern group withheld (59 localities, six ranges). The nested warning occurred with the southwestern group withheld (58 localities, 12 ranges). Scores include every withheld point thickness and bound. [705 global predictions with evidence IDs and fit flags](results/geographic-site-validation.csv)
-
-None of the three global maps qualified a complete contour band under the strict, standard or permissive screen. The whole-Earth estimates depend on the assumed continuation into unsampled areas. The nested map assigns about a quarter of its median volume to the southern sector, where sampling ends 42 km from the vent. [Directional support](results/directional/multiscale/support.json.gz) · [Spherical support](results/spherical-mixture/extent/support.json.gz) · [Nested footprints and sector checks](results/nested-isopachs/README.md)
-
-## Spherical-mixture convergence
-
-**The spherical map and volume are provisional.** The hosted run completed all eight full-data prior settings and four geographic refits. 4 of the eight full-data fits retained sampling warnings. The five-fan fit retained a sampling warning after its final retry (maximum R̂ 1.040, minimum bulk effective sample size 69.5, 0 divergences). [All prior settings](results/spherical-mixture/extent/prior-sensitivity.json) · [Draws, seeds and retry histories](results/sampling/README.md)
-
-The three-fan baseline exhausted all three attempts. The final attempt retained 6,000 draws per chain. The median effective number of fans was **2.14, 2.13, 2.13 and 1.48** across the four chains. This quantity, $1/\sum_k w_k^2$, measures how evenly the fitted weights are distributed and is invariant to relabeling the fans. Its rank-normalized split R̂ was **1.524**. The parent log-volume parameter had R̂ **1.003**. Across all monitored quantities the maximum R̂ was **1.528** (target below 1.01) and the minimum bulk effective sample size was **7.1** (target at least 400). The saved chains allow these differences to be inspected without a refit. [Final baseline draws](diagnostics/spherical-mixture/baseline-attempt-3.npz)
-
-The first local run stopped under memory pressure. Its diagnostic record preserves the 27 attempts completed up to that point and the source IDs in the affected holdout. [First-run diagnostics](diagnostics/spherical-mixture/attempts.json)
-
-## Offshore survey
-
-The directional 1 cm median isopach contains **57 of 151** marine survey positions. The spherical map contains **61** and nested footprints **51**. The audit gives an explicit quantitative role to 8 survey entries. Other entries retain their reported meaning, including inspected cores without a visible bed. [Station readings and mapped thicknesses](results/marine-stations.csv) · [Original pixels and land readings](../../data/audits/Pinatubo-1991/VISUAL-CHECK.md)
-
-![The three 1 cm isopachs and all 151 marine survey positions, with a closer view of the deposit](results/marine-comparison.png)
-
-The earlier comparison used 208 localities. Its maps, source table and geographic folds remain together. [Earlier Layer C edition](../../archive/2026-11-24-case-editions/README.md#pinatubo)
+[Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)
