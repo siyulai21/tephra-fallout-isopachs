@@ -1,0 +1,57 @@
+name: Complete Aso-4 and B-Tm directional controls
+on:
+  push:
+    branches: ["codex/minima-directional-controls-20261125"]
+    paths: [".github/workflows/complete-minimum-controls.yml"]
+permissions:
+  contents: write
+env:
+  MPLBACKEND: Agg
+  OPENBLAS_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+jobs:
+  controls:
+    name: Directional controls for ${{ matrix.slug }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        slug: [aso-4, b-tm]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            data
+            benchmarks
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install -e .
+      - name: Fit and validate the matched directional controls
+        env:
+          SLUG: ${{ matrix.slug }}
+        run: |
+          python -u - <<'PY'
+          import os
+          from pathlib import Path
+          from src.empirical_isopach.core.catalog import datasets
+          from src.empirical_isopach.models.directional.reporting import directional_dataset
+          from src.empirical_isopach.models.continuation_review import directional_review
+          r = next(r for r in datasets() if r["slug"] == os.environ["SLUG"])
+          home = Path("results/controls")
+          directional_dataset(r["path"], home, name=r["name"])
+          directional_review(r["path"], home, home/"sensitivity-study", home/"work/ensemble")
+          PY
+      - name: Save the checked controls and original sampling attempts
+        env:
+          SLUG: ${{ matrix.slug }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --sparse --force -- results/controls
+          git commit -m "Retain the directional control fits and checks for $SLUG"
+          git push origin "HEAD:refs/heads/codex/minima-control-results/$GITHUB_RUN_ID/$SLUG"
