@@ -73,7 +73,7 @@ jobs:
           assessment=assess_posterior(a['diagnostics'],samples)
           assert assessment['passed']
           view,scope,checked=select_extent(samples,data,meta['vent_lonlat'][1])
-          report={'name':row['name'],'protocol':PROTOCOL,'input':meta,'fits':{'baseline':{
+          report={'name':row['name'],'protocol':PROTOCOL,'input':{k:v for k,v in meta.items() if k!='transform_inv'},'fits':{'baseline':{
                   'posterior_sha256':digest(last),'volume':a['volume'],'diagnostics':assessment}},
                   'bearing':{'map_draw_check':checked},'status':'Actual full-data baseline. Alternative priors are being evaluated separately.'}
           out=home/'principal'
