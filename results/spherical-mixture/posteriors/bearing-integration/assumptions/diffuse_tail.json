@@ -1,0 +1,136 @@
+{
+  "volume": {
+    "lower95": 5.884695943181127,
+    "median": 7.45608751550383,
+    "upper95": 44.22337071411501,
+    "unit": "km3 bulk fallout",
+    "draws": 6144
+  },
+  "by_width": {
+    "0": {
+      "lower95": 6.457964395009181,
+      "median": 8.21683725005342,
+      "upper95": 59.39548337443108
+    },
+    "1": {
+      "lower95": 5.919718252165429,
+      "median": 7.30381284287635,
+      "upper95": 41.6962793727963
+    },
+    "4": {
+      "lower95": 5.738321971219994,
+      "median": 6.9030352663444985,
+      "upper95": 32.11990756983816
+    }
+  },
+  "enhanced_hidden_fan": {
+    "lower95": 5.970271784278076,
+    "median": 7.800585769771912,
+    "upper95": 61.06779305737878
+  },
+  "base_volume_all_draws": {
+    "lower95": 6.452938680360183,
+    "median": 8.243927784484267,
+    "upper95": 60.156875361872544
+  },
+  "checks": {
+    "spatial_passed": true,
+    "history": [
+      {
+        "nodes_per_scramble": 512,
+        "scrambles": [
+          39103,
+          75227
+        ],
+        "max_relative_quantile_scramble_difference": 0.000796497248441509,
+        "max_relative_quantile_doubling_difference": 0.002867667849855815,
+        "p99_absolute_draw_fraction_difference": 0.007774778796216488,
+        "max_absolute_draw_fraction_difference": 0.01222459170106771,
+        "max_parent_mass_error": 0.0
+      }
+    ],
+    "parent_subset_quantile_error": 0.012656774190170639,
+    "draw_split_relative": [
+      0.0029335325203091083,
+      0.0054488993174999145,
+      0.07390126242470331
+    ],
+    "draw_split_passed": true
+  },
+  "chain_count": 4,
+  "draws_per_chain": 512,
+  "draw_refinements": [
+    {
+      "draws_per_chain": 256,
+      "volume": {
+        "lower95": 5.91981060438293,
+        "median": 7.516593123061863,
+        "upper95": 44.441327394895055,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.002051547081769304,
+            "max_relative_quantile_doubling_difference": 0.003057428092724024,
+            "p99_absolute_draw_fraction_difference": 0.007978694397764585,
+            "max_absolute_draw_fraction_difference": 0.014233533057630421,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.10917673973539199,
+        "draw_split_relative": [
+          0.003347791550273401,
+          0.009583388134423368,
+          0.08657323304207337
+        ],
+        "draw_split_passed": false
+      }
+    },
+    {
+      "draws_per_chain": 512,
+      "volume": {
+        "lower95": 5.884695943181127,
+        "median": 7.45608751550383,
+        "upper95": 44.22337071411501,
+        "unit": "km3 bulk fallout",
+        "draws": 6144
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.000796497248441509,
+            "max_relative_quantile_doubling_difference": 0.002867667849855815,
+            "p99_absolute_draw_fraction_difference": 0.007774778796216488,
+            "max_absolute_draw_fraction_difference": 0.01222459170106771,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.012656774190170639,
+        "draw_split_relative": [
+          0.0029335325203091083,
+          0.0054488993174999145,
+          0.07390126242470331
+        ],
+        "draw_split_passed": true
+      }
+    }
+  ],
+  "posterior_sha256": "e4508e7394ff5403e996b9e85e06c4126a909ce8825fa89be78f4c50d843ceb0",
+  "input_sha256": "f2726bad82f67bfc76cb74c83e6fa2499b36d9a25cfcc04e7cb9626a1d292aed",
+  "parent_sampler_passed": true,
+  "packet_sha256": "3898f6f8cc11bf8199668082175cc593d1bb602cb8a797d2450842501b07b35b"
+}
