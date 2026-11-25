@@ -1,0 +1,74 @@
+{
+  "input_sha256": "1cd60d207a3ddbb7393775683664a92be06fada73479dabaa55351e0ec3f9bb1",
+  "posterior_sha256": "bac871135e42cc7c5332c2e0c3127604b0cab42012e385dc76fcd35d2a9f40c0",
+  "results": {
+    "11.25": {
+      "volume": {
+        "lower95": 66.3960406271801,
+        "median": 83.186622512698,
+        "upper95": 102.53905965324115,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.00297226048317192,
+            "max_relative_quantile_doubling_difference": 0.002778080300384067,
+            "p99_absolute_draw_fraction_difference": 0.01389745978916802,
+            "max_absolute_draw_fraction_difference": 0.021206353485157536,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0058452953873049385,
+        "draw_split_relative": [
+          0.016791829326094732,
+          0.006671738537250831,
+          0.0062159316592729375
+        ],
+        "draw_split_passed": true
+      },
+      "draws_per_chain": 256
+    },
+    "45.0": {
+      "volume": {
+        "lower95": 72.58811261053903,
+        "median": 87.64196325001011,
+        "upper95": 105.22483402318905,
+        "unit": "km3 bulk fallout",
+        "draws": 3072
+      },
+      "checks": {
+        "spatial_passed": true,
+        "history": [
+          {
+            "nodes_per_scramble": 512,
+            "scrambles": [
+              39103,
+              75227
+            ],
+            "max_relative_quantile_scramble_difference": 0.0005847551741046808,
+            "max_relative_quantile_doubling_difference": 0.00021690336280100198,
+            "p99_absolute_draw_fraction_difference": 0.004095625669029571,
+            "max_absolute_draw_fraction_difference": 0.006583477057312992,
+            "max_parent_mass_error": 0.0
+          }
+        ],
+        "parent_subset_quantile_error": 0.0058452953873049385,
+        "draw_split_relative": [
+          0.00796155809058406,
+          0.0031932855557104487,
+          0.008801960751546477
+        ],
+        "draw_split_passed": true
+      },
+      "draws_per_chain": 256
+    }
+  }
+}
