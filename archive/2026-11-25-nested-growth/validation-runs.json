@@ -1,0 +1,81 @@
+{
+  "45731858647": {
+    "commit": "4a63df0c020973eee7f95e31f3c33a9e93553d12",
+    "purpose": "All quadrant, known-deposit and actual-survey partitions",
+    "excluded_artifacts": {
+      "nested-surveys-pinatubo-1991": "Historical preview CSV had 13 unconverted lower-only rows. Retain as ineligible; use the corrected transfer run."
+    },
+    "only_artifacts": [
+      "nested-quadrants-mazama",
+      "nested-quadrants-tambora",
+      "nested-quadrants-aso-4",
+      "nested-quadrants-b-tm",
+      "nested-quadrants-ytt",
+      "nested-quadrants-minoan",
+      "nested-quadrants-ilopango-tbj",
+      "nested-quadrants-sakurajima-satsuma",
+      "nested-quadrants-pinatubo-1991-layer-c",
+      "nested-known-0",
+      "nested-known-1",
+      "nested-known-2",
+      "nested-known-3",
+      "nested-known-4",
+      "nested-surveys-calbuco-2015",
+      "nested-surveys-aso-4",
+      "nested-surveys-b-tm",
+      "nested-surveys-pinatubo-1991",
+      "nested-surveys-pinatubo-all-offshore"
+    ]
+  },
+  "45735741226": {
+    "commit": "0d0e5a1cac6f0a2eb22dd667b55558836aab1d98",
+    "purpose": "Uniform second-stage refinements of all four remaining geographic failures at 12288 particles",
+    "only_artifacts": [
+      "nested-refinement-mazama-fold-1-24576",
+      "nested-refinement-b-tm-fold-3-24576",
+      "nested-refinement-pinatubo-1991-layer-c-fold-0-24576",
+      "nested-refinement-pinatubo-1991-layer-c-fold-1-24576"
+    ]
+  },
+  "45735071906": {
+    "commit": "fcd31f8e35b2a625be15aa62871bca6343d3f47f",
+    "purpose": "Uniform second-stage full Pinatubo refinement after the 12288-particle intrinsic-volume failure",
+    "only_artifacts": [
+      "nested-refinement-pinatubo-1991-layer-c-full-24576"
+    ]
+  },
+  "45734762914": {
+    "commit": "d344a82b11cb9344c4e7ac3b312054eb96953a18",
+    "purpose": "Uniform B-Tm geographic refinement and second-stage YTT refinement after recorded failures",
+    "only_artifacts": [
+      "nested-refinement-b-tm-fold-3-12288",
+      "nested-refinement-ytt-fold-2-24576"
+    ]
+  },
+  "45733472287": {
+    "commit": "0d9328c8378acc21b5fa7ed838ef99b58bdb6b19",
+    "purpose": "Uniform 12288-particle refinements of four recorded failed geographic partitions",
+    "only_artifacts": [
+      "nested-refinement-mazama-fold-1",
+      "nested-refinement-pinatubo-1991-layer-c-fold-0",
+      "nested-refinement-pinatubo-1991-layer-c-fold-1",
+      "nested-refinement-ytt-fold-2"
+    ]
+  },
+  "45732783722": {
+    "commit": "b4a48d5ae515df4e23cb00e0cd379167e45999a7",
+    "purpose": "Historical Pinatubo transfer with all 13 minima fitted as points",
+    "only_artifacts": [
+      "nested-surveys-pinatubo-1991"
+    ]
+  },
+  "45740980138": {
+    "commit": "0f53b815145cf10b96da80e611bdc444af1808f2",
+    "branch": "codex/nested-growth-refine/pinatubo-final-geographic-20261126",
+    "only_artifacts": [
+      "nested-refinement-pinatubo-1991-layer-c-fold-3-24576"
+    ],
+    "purpose": "Precompute the remaining uniform geographic particle refinement while the preceding particle budget runs; select it only if that budget fails.",
+    "selection": "Not selected: the preceding 12,288-particle attempt passed. Both outcomes are retained; principal selection follows the first passing budget."
+  }
+}

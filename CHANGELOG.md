@@ -1,5 +1,9 @@
 # Release history
 
+## 26 November 2026 · Nested contours with changing dispersal directions
+
+Positive angular area growth and a smooth, area-preserving change of direction replace rigid expanding footprints as the principal nested method. The nine-eruption study inspects proximal, intermediate and complete deposits, evaluates measured thicknesses and bounds separately, and retains geographic deletions, quadrant tests, known deposits and independent survey transfers. Joint posterior proposals and checks of both quartile surfaces address numerical instability without smoothing contours. Earlier whole-area estimates, previous principal fits and unsuccessful trials remain available. [Method and limitations](docs/methods/nested-footprints.md) · [Matched results and visual review](comparisons/nested-isopachs/adaptive-growth/README.md) · [Retained evidence](archive/2026-11-25-nested-growth/README.md)
+
 ## Reported lower limits at all distances
 
 The registered fitting tables use each lower-only reading as a point at its threshold. The original source qualifiers remain recoverable for every locality. Upper-limit and interval rows retain their respective one-sided and two-sided probabilities. Seven of nine eruptions contain lower-only readings. [Comparison by eruption and distance](comparisons/reported-minima/README.md) · [Fitting and plotting convention](docs/methods/reported-minimum-fitting.md) · [Previous results and input identities](archive/2026-11-25-lower-limit-policy/README.md)

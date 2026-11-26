@@ -15,17 +15,62 @@ from ...directional.ensemble.members import splits
 from ...extent_support import save_screen
 from ..study import digest, write_json
 from . import diagnostics
-from .posterior import FootprintField, PROTOCOL, write_fit
+from . import map_convergence
+from . import rejuvenation
+from .continuous import FlowField as FootprintField, PROTOCOL, write_fit
 
 
 def fit_part(folder, key, train, test, meta):
-    initial = write_fit(folder,key,train,test,meta)
+    folder=Path(folder)
+    map_checks=[]
+    quantile_checks=[]
+    def checked(parent,receipt):
+        if key!="full":
+            return receipt
+        packet=parent/(key+".npz")
+        path=parent/(key+"-field-convergence.json")
+        identity=dict(input_sha256=meta["input_sha256"],posterior_sha256=receipt["posterior_sha256"],
+                      diagnostic_sha256=digest(diagnostics.__file__))
+        if path.exists():
+            saved=json.loads(path.read_text())
+            if saved["identity"]!=identity:
+                raise ValueError(f"Spatial convergence identity differs at {path}")
+            check=saved["check"]
+        else:
+            check=diagnostics.population_field_check(FootprintField.load(packet),train)
+            write_json(path,dict(identity=identity,check=check))
+        map_checks.append(dict(identity=identity,check=check))
+        quantiles_passed=True
+        if receipt['numerics']['passed'] and check['passed']:
+            path=parent/(key+'-mapped-quantiles.json')
+            quantile_identity={**identity,'diagnostic_sha256':digest(map_convergence.__file__)}
+            if path.exists():
+                saved=json.loads(path.read_text())
+                if saved['identity']!=quantile_identity:
+                    raise ValueError(f'Mapped quantile convergence identity differs at {path}')
+                trials=saved['checks']
+            else:
+                trials=map_convergence.map_draws(FootprintField.load(packet))
+                write_json(path,dict(identity=quantile_identity,checks=trials))
+            quantile_checks.append(dict(identity=quantile_identity,checks=trials))
+            quantiles_passed=trials[-1]['passed']
+        return {**receipt,"raw_fit_passed":receipt["numerics"]["passed"],"field_population_checks":list(map_checks),
+                'mapped_quantile_checks':list(quantile_checks),
+                "numerics":{**receipt["numerics"],"passed":bool(receipt["numerics"]["passed"] and check["passed"] and quantiles_passed)}}
+    initial = checked(folder,write_fit(folder,key,train,test,meta))
     if initial["numerics"]["passed"]:
         return initial
     # Inspect the continued-volume functional too. Every unsuccessful production
     # partition receives the same larger four-population attempt.
-    dest = folder/"refinement"
-    return write_fit(dest,key,train,test,meta,initial=12288,ceiling=12288)
+    for particles in (12288,24576):
+        dest = folder/("refinement" if particles==12288 else "refinement-24576")
+        result = checked(dest,write_fit(dest,key,train,test,meta,initial=particles,ceiling=particles))
+        if result["numerics"]["passed"]:
+            return result
+    dest=folder/'rejuvenation'
+    result=rejuvenation.write_fit(dest,key,train,test,meta,
+                                  folder/'refinement-24576'/(key+'.npz'),result)
+    return checked(dest,result)
 
 
 def sector_checks(folder, data, model, report):
@@ -87,8 +132,10 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         key = "full" if i is None else f"fold-{i}"
         rec = fit_part(source,key,train,test,meta)
         start = json.loads((source/(key+".json")).read_text())
-        refined = not start["numerics"]["passed"]
-        origin = source/"refinement" if refined else source
+        selected_particles = rec["identity"]["initial"]
+        moved = rec['identity'].get('sampler')==rejuvenation.SAMPLER
+        refined = selected_particles>=12288 or moved
+        origin = source/'rejuvenation' if moved else (source/("refinement" if selected_particles==12288 else "refinement-24576")) if refined else source
         packet = origin/(key+".npz")
         # Presentation packets are distinct from scratch so both raw fit attempts stay reproducible.
         target = fits/(key+"-selected.npz")
@@ -98,11 +145,38 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
             shutil.copyfile(packet,target)
         hashes[target.name] = rec["posterior_sha256"]
         history = [{"identity":start["identity"],"posterior_sha256":start["posterior_sha256"],"numerics":start["numerics"]}]
+        attempts=[(source,start)]
         if refined:
-            history.append({"identity":rec["identity"],"posterior_sha256":rec["posterior_sha256"],"numerics":rec["numerics"]})
+            for particles in (12288,24576):
+                if not moved and particles>selected_particles: break
+                parent=source/("refinement" if particles==12288 else "refinement-24576")
+                attempt=rec if parent==origin else json.loads((parent/(key+".json")).read_text())
+                attempts.append((parent,attempt))
+                history.append({"identity":attempt["identity"],"posterior_sha256":attempt["posterior_sha256"],"numerics":attempt["numerics"]})
+        if moved:
+            attempts.append((origin,rec))
+            history.append({'identity':rec['identity'],'posterior_sha256':rec['posterior_sha256'],'numerics':rec['numerics']})
+        checkpoint_records=[]
+        for parent,attempt in attempts:
+            for checkpoint in attempt.get("checkpoints",[]):
+                relative=parent.relative_to(source)/checkpoint["packet"]
+                if digest(parent/checkpoint["packet"])!=checkpoint["posterior_sha256"]:
+                    raise ValueError(f"Refinement posterior differs at {parent/checkpoint['packet']}")
+                if checkpoint["posterior_sha256"]==rec["posterior_sha256"]:
+                    # The selected field is also the final checkpoint. Keep
+                    # one canonical packet while preserving both identities.
+                    relative=Path(target.name)
+                else:
+                    dest=fits/relative
+                    dest.parent.mkdir(parents=True,exist_ok=True)
+                    shutil.copyfile(parent/checkpoint["packet"],dest)
+                checkpoint_records.append({**checkpoint,"packet":relative.as_posix(),"identity":attempt["identity"]})
         receipts[key] = {"posterior_sha256":rec["posterior_sha256"],"attempts":history,"passed":rec["numerics"]["passed"],
                          "train":rec["identity"]["train"],"test":rec["identity"]["test"],
-                         "draws":rec["draws"],"volume_quantiles_km3":rec["volume_quantiles_km3"]}
+                         "draws":rec["draws"],"volume_quantiles_km3":rec["volume_quantiles_km3"],
+                         "checkpoints":checkpoint_records,
+                         "field_population_checks":rec.get("field_population_checks",[]),
+                         'mapped_quantile_checks':rec.get('mapped_quantile_checks',[])}
         m = FootprintField.load(target)
         models.append((m,rec["numerics"]["passed"]))
         if i is None:
@@ -118,7 +192,9 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                       coverage95_exact=float(exact.cdf.between(.025,.975).mean()) if len(exact) else None,
                       scored_rows=len(frame),exact_rows=len(exact))
     histories = diagnostics.integral_check(full)
-    maps = diagnostics.map_draws(full)
+    checked=info.get('mapped_quantile_checks',[])
+    maps = (checked[-1]['checks'] if checked and checked[-1]['identity']['posterior_sha256']==info['posterior_sha256']
+            else map_convergence.map_draws(full))
     save_screen(fits/"support.json.gz",diagnostics.support(data,meta,full,models[1:]))
     report = dict(protocol=PROTOCOL, family="nested-isopachs",name=name,input_sha256=meta["input_sha256"],
                   accepted_rows=len(data.xy),source_latitude=full.latitude,posterior_sha256=hashes,
@@ -128,6 +204,7 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                   draw_checks_passed=bool(info["numerics"]["passed"] and histories[-1]["passed"]),
                   validation=validation,posterior_family=info["posterior_family"],sensitivities=diagnostics.sensitivity(full,data),
                   independent_draw_integration=histories,median_draw_refinements=maps,
+                  map_draw_diagnostic_sha256=digest(map_convergence.__file__),
                   map_draws=maps[-1]["draws"],heldout_sha256=digest(fits/"heldout.csv.gz"),support_sha256=digest(fits/"support.json.gz"))
     sector_checks(folder,data,full,report)
     archive_checks(path,folder,data,meta,full,archives)

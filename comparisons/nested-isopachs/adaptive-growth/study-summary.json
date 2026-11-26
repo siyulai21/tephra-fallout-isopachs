@@ -1,0 +1,195 @@
+{
+  "weighting": "Eruptions have equal weight. Known designs average scrambles and compatible hidden truths within each input before averaging across the 20 inputs. No failed fit is excluded.",
+  "eruptions": {
+    "Continuous area growth": {
+      "cases": 9,
+      "geographic_mean_negative_log_score": 1.463087143689983,
+      "geographic_passed_folds": 36,
+      "full_passed": 9,
+      "map_draws_passed": 9,
+      "map_integration_passed": 9
+    },
+    "Previous footprints": {
+      "cases": 9,
+      "geographic_mean_negative_log_score": 1.4414149470602347,
+      "geographic_passed_folds": 28,
+      "full_passed": 8,
+      "map_draws_passed": 8,
+      "map_integration_passed": 9
+    }
+  },
+  "measured_and_bounded": {
+    "measured_log_rmse": {
+      "cases": 9,
+      "improved": 7,
+      "previous_case_mean": 0.7046623451573302,
+      "current_case_mean": 0.6904536533006863
+    },
+    "measured_median_abs_log_error": {
+      "cases": 9,
+      "improved": 5,
+      "previous_case_mean": 0.4097075096055436,
+      "current_case_mean": 0.38955746168997935
+    },
+    "bounded_negative_log_probability": {
+      "cases": 6,
+      "improved": 5,
+      "previous_case_mean": 0.9371695927080116,
+      "current_case_mean": 0.6537207405475193
+    }
+  },
+  "known_deposits": {
+    "area growth": {
+      "inputs": 20,
+      "compatible_truths": 22,
+      "passed_inputs": 18,
+      "mean_absolute_log_volume_error": 0.31608665109809564,
+      "median_absolute_log_volume_error": 0.12298454148759103,
+      "median_area_errors_km2": {
+        "0.5": {
+          "false_km2": 747767.9390838679,
+          "missed_km2": 0.0,
+          "west_false_km2": 329697.5861264829,
+          "west_missed_km2": 0.0
+        },
+        "1.0": {
+          "false_km2": 388321.6121214342,
+          "missed_km2": 0.0,
+          "west_false_km2": 179044.31897174803,
+          "west_missed_km2": 0.0
+        },
+        "10.0": {
+          "false_km2": 0.0,
+          "missed_km2": 1733.5932267429487,
+          "west_false_km2": 0.0,
+          "west_missed_km2": 363.2870052036915
+        },
+        "100.0": {
+          "false_km2": 0.029750643063585692,
+          "missed_km2": 1324.7759850927607,
+          "west_false_km2": 0.0,
+          "west_missed_km2": 0.0
+        }
+      }
+    },
+    "previous footprints": {
+      "inputs": 20,
+      "compatible_truths": 22,
+      "passed_inputs": 8,
+      "mean_absolute_log_volume_error": 0.4234574715469613,
+      "median_absolute_log_volume_error": 0.23185746308199953,
+      "median_area_errors_km2": {
+        "0.5": {
+          "false_km2": 576305.179253611,
+          "missed_km2": 0.0,
+          "west_false_km2": 126191.23133748403,
+          "west_missed_km2": 0.0
+        },
+        "1.0": {
+          "false_km2": 265976.0698796831,
+          "missed_km2": 0.0,
+          "west_false_km2": 72362.2647846282,
+          "west_missed_km2": 0.0
+        },
+        "10.0": {
+          "false_km2": 146.77400790822114,
+          "missed_km2": 1562.4000293105682,
+          "west_false_km2": 36.616666000364035,
+          "west_missed_km2": 452.6991620749772
+        },
+        "100.0": {
+          "false_km2": 0.0,
+          "missed_km2": 1344.526110028665,
+          "west_false_km2": 0.0,
+          "west_missed_km2": 0.0
+        }
+      }
+    }
+  },
+  "surveys": [
+    {
+      "survey": "aso-4",
+      "method": "area growth",
+      "rows": 28,
+      "negative_log_score": 1.7366013930722801,
+      "fit_passed": true
+    },
+    {
+      "survey": "aso-4",
+      "method": "previous footprints",
+      "rows": 28,
+      "negative_log_score": 1.524171949669699,
+      "fit_passed": true
+    },
+    {
+      "survey": "b-tm",
+      "method": "area growth",
+      "rows": 3,
+      "negative_log_score": 2.638076364540338,
+      "fit_passed": false
+    },
+    {
+      "survey": "b-tm",
+      "method": "previous footprints",
+      "rows": 3,
+      "negative_log_score": 3.2981321628183866,
+      "fit_passed": true
+    },
+    {
+      "survey": "calbuco-2015",
+      "method": "area growth",
+      "rows": 43,
+      "negative_log_score": 1.801808911920966,
+      "fit_passed": true
+    },
+    {
+      "survey": "calbuco-2015",
+      "method": "previous footprints",
+      "rows": 43,
+      "negative_log_score": 1.968211182948056,
+      "fit_passed": true
+    },
+    {
+      "survey": "pinatubo-1991",
+      "method": "area growth",
+      "rows": 10,
+      "negative_log_score": 3.1042620372493985,
+      "fit_passed": false
+    },
+    {
+      "survey": "pinatubo-1991",
+      "method": "previous footprints",
+      "rows": 10,
+      "negative_log_score": 3.4934680127401507,
+      "fit_passed": false
+    },
+    {
+      "survey": "pinatubo-all-offshore",
+      "method": "area growth",
+      "rows": 35,
+      "negative_log_score": 2.1402701344285835,
+      "fit_passed": false
+    },
+    {
+      "survey": "pinatubo-all-offshore",
+      "method": "previous footprints",
+      "rows": 35,
+      "negative_log_score": 2.889376974989781,
+      "fit_passed": false
+    }
+  ],
+  "quadrants": {
+    "requested": 36,
+    "estimated": 33,
+    "passed": 28,
+    "insufficient": 3
+  },
+  "matched_full_field_checks": {
+    "previous": 4,
+    "current": 9
+  },
+  "matched_map_draw_checks": {
+    "previous": 8,
+    "current": 9
+  }
+}

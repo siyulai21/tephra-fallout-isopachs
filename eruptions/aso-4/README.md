@@ -14,7 +14,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | Cubic spline | observation hull | **198** | 144–285 | 1.694 | 90.7% |
 | [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **541** | 333–1,049 | 1.225 | 97.7% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **449** | 267–916 | 1.600 | 94.2% |
-| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **2,068** | 834–5,646 | 1.364 † | 93.0% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **2,201** | 1,099–5,647 | 1.372 | 93.0% |
 
 Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
@@ -34,8 +34,16 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
+## Nested geometry and field agreement
+
+This is the weakest geometric change. The 64 cm proximal contour remains nearly circular, with a small southward offset, and the 32–8 cm contours retain a broadly concentric relationship. They connect smoothly to the outer field without crossings or detached rings. The outer 1–2 cm contours become somewhat less southward, but still extend thousands of kilometres into poorly sampled western and southern directions. Their broad curvature is a conditional model result, not a mapped deposit edge. The actual deposit plate starts at 2 cm; the matched review also shows the 1 cm continuation. Neither justifies a precise western cutoff.
+
+Northern rows 85 and 88 improve slightly, while row 49 (1 cm, 436 km north) remains substantially overpredicted. Southeastern row 37 (15 cm at 709 km) remains underpredicted. These contrasting observations help explain why a simple narrow northeastern fan is inadequate, but do not establish the opposite side of a full perimeter. Measured log RMSE changes from 0.677 to 0.678 and median absolute log error from 0.401 to 0.407. The sole upper limit, row 43, receives a slightly higher event probability. Geographic score changes from 1.364 to 1.372, and the independent survey transfer worsens. The larger full fit passes the site, field-population and mapped-quartile checks; numerical stability does not remove this geological uncertainty.
+
+[Three-scale comparison, site identities and contour diagnostics](../../comparisons/nested-isopachs/adaptive-growth/visual-review.md#aso-4)
+
 ## Evidence and checks
 
-[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Numerical checks and file identities](results/minimum-fit-2026-11-25/release.json) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
 
 [Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)

@@ -100,7 +100,7 @@ def main(argv=None):
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume with bearing-dependent continuation, fixed prior sensitivities and matched geographic holdouts.")
         print("directional: Whole-Earth continuation from locally supported isopachs\n  Uncertain fan direction across six structures. The principal bulk volume integrates the pointwise median isopachs.")
-        print("nested-isopachs: Bayesian nested dispersal footprints\n  Whole-area median isopachs and volume posterior. Use nested-whole-area and nested-reach for the original whole-area and corridor sensitivities.")
+        print("nested-isopachs: Bayesian nested dispersal footprints\n  Positive angular area growth with changing dispersal directions; joint thickness and geographic posterior. Use nested-whole-area and nested-reach for the original whole-area and corridor sensitivities.")
     else:
         parser.print_help()
 

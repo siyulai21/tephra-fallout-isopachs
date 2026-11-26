@@ -1,45 +1,95 @@
 # Bayesian nested dispersal footprints
 
-The model fits a declining thickness profile against the square root of deposit area. Each draw explains where that area lies using a round, elongated, turning, two-phase or detached footprint. All eruptions share the same geographic prior. Thicknesses, bounds and locations determine the posterior. The Minoan Plinian and co-ignimbrite observations enter a single combined deposit. [Catalogue and paired tests](../../comparisons/nested-isopachs/geography/README.md)
+The principal nested method jointly fits a declining thickness–area profile and the geographic distribution of that area. Positive angular area increments let successive contours change eccentricity and direction while remaining nested. A smooth, area-preserving angular flow supplies continuously varying dispersal directions. The model uses the same prior for every eruption, without station-centred ridges, invented absences or volume targets. [Matched comparison and three-scale review](../../comparisons/nested-isopachs/adaptive-growth/README.md)
 
 ## Why the geography changed
 
-In the corridor model each positive station generated a full-strength segment between itself and the source, even for a very thin bed. The strongest of the overlapping segments determined the thickness multiplier. Moving a survey line could thus move a ridge between otherwise identical field draws. The finite-spread revision narrowed individual corridors. The original whole-area alternative avoided this sampling imprint, but taking the larger of two directional reaches could still produce a sharp concave junction. A trial with two equally persistent moving footprints also failed at Mazama, where a distal extension of the secondary lobe followed from its assigned reach. [Corridor rules](nested-reach.md) · [Original whole-area geometry](nested-isopachs.md) · [Archived trials](../../archive/2026-11-23-nested-geography/README.md)
+The preceding footprint model allocated a common disk to every growing contour. Its squared radius grew approximately in proportion to contour scale even at large distances. That created an expanding contribution on the source-opposite side, irrespective of the directional evidence. The common disk also imposed nearly circular proximal contours; ellipse eccentricity and displacement were coupled. Turning components moved their centres but retained fixed ellipse axes. These restrictions could obscure proximal asymmetry and changes in dispersal direction.
 
-An ellipse is an empirical representation of dispersal with a preferred direction. The circular proximal limit, scale-dependent migration, allocation between phases and discrete priors below are modeling choices introduced here. An eruption with strong proximal asymmetry, more phases or a long unseen lobe can violate those choices. Iso-area surfaces give a practical way to distinguish assumptions about the shape of an isopach from assumptions about thinning. [Sulpizio et al. (2024)](https://doi.org/10.1007/s00445-024-01753-5) · [Yang and Jenkins (2023)](https://doi.org/10.1007/s00445-023-01652-1)
+The earlier station-corridor model had another limitation: each positive station generated a full-strength segment to the source. Moving a survey line could move a modeled ridge. None of the new shapes is constructed from station rays. Locations enter only through the observational likelihood. The original whole-area sensitivity remains in `nested-whole-area/`; earlier corridors and footprints retain their identities and source bytes. [Corridor rules](nested-reach.md) · [Whole-area model](nested-isopachs.md) · [Preceding footprint protocol](https://github.com/siyulai21/tephra-fallout-isopachs/blob/514572583423c861d5cb5a43e4e6bbd963f42cf8/docs/methods/nested-footprints.md)
 
-## A nested deposit from every draw
+Elliptical increments are empirical descriptions of preferential dispersal, not a reconstruction of atmospheric transport or an identification of eruption phases. Multiple phases, topography, aggregation and preservation can produce departures from this representation. No lack of sampling is interpreted as non-deposition. [Sulpizio et al. (2024)](https://doi.org/10.1007/s00445-024-01753-5) · [Yang and Jenkins (2023)](https://doi.org/10.1007/s00445-023-01652-1)
 
-Use the source-centred WGS84 equal-area chart. At positive scale $t$, let $s$ be the migration length and $g=t^2/(t+s)$. A common disk contributes squared radius $t^2-g^2$. The primary dispersal ellipse has semiaxes $ag,g/a$ with $a=(1-e^2)^{-1/4}$. In the unit-aspect coordinates of the ellipse its centre, before rotation by the main bearing, is
+## Positive area growth
 
-$$
-c(g)=e\left[\frac{g^2}{g+s}(1,0)+\frac{g^2}{g+4s}\big((\cos\phi,\sin\phi)-(1,0)\big)\right].
-$$
+Work in the source-centred WGS84 equal-area chart. Let $K(\theta;a,f)$ be the squared ray radius of an ellipse with semiaxes $a,1/a$ and centre $(af,0)$, where $0\leq f<1$. Its mean over bearing is one. Aspect and source displacement are independent, so an elongated contour need not have a predetermined upwind reach.
 
-The derivative of $g^2/(g+s)$ lies between zero and one and decreases as $s$ increases. The centre's velocity is therefore a weighted sum of the initial and final unit directions with total coefficient below one. Each ellipse strictly contains its smaller predecessors. It contains the source. Its area is $\pi g^2$. The shared disk dominates at small $t$, where the ratio of radii in any two directions tends to one. At larger scales the ellipse elongates and drifts.
-
-For a two-phase draw the second ellipse grows at scale $h=f g+(.8-f)4s g/(4s+g)$. The large-distance fraction $f$ takes values 0, 0.3 or 0.8 with equal conditional prior probability. A secondary lobe can approach a finite reach or continue to expand. With $\rho_1,\rho_2$ the radii of the two ellipses on a bearing, the boundary of the combined deposit is
+At scale $t$ and common transition length $c$, split squared radius into
 
 $$
-\rho(t,\theta)=\sqrt{t^2-g^2+\rho_1(g,\theta)^2+\rho_2(h,\theta)^2}.
+C(t)=\frac{c^2t^2}{c^2+t^2},\qquad D(t)=t^2-C(t).
 $$
 
-Set $\rho_2=0$ for a single phase. Each angular sector receives the sum of the component areas assigned to it. All summands increase with $t$. Enclosed regions are therefore nested, and a crossing between contributions from two lobes has a continuous tangent. This is a model of the **combined thickness contours**. A phase's assigned area does not identify a separate erupted volume. A detached alternative adds a growing circular patch using the geometric union and permits the thickest bed away from the vent. The implementation counts disjoint patches and clips the union at the physical equal-area disk edge.
+Both are increasing. The common proximal component approaches a finite area instead of expanding indefinitely. Its kernel is $K_0(\theta)=K(\theta;\sqrt a,0.35f)$, so proximal symmetry is permitted but not imposed. For an increment at scale $u$, define
 
-The prior masses are 0.20 round, 0.40 single, 0.15 turning, 0.20 two-phase and 0.05 detached. Each class divides its probability evenly across its shapes and 48 orientations. Single-phase elongations use $e=0.55,0.82,0.96$. Turning phases bend by ±70° at $e=0.91$. Two-phase bearings differ by ±75° or ±145° at $e=0.92$. The three shared migration lengths are 8, 40 and 200 km. Detached offsets are 50, 250 or 1,250 km. These choices describe a finite set of plausible deposits. Each case reports sensitivity to the class odds, migration lengths, secondary reach and outer transfer. Effective draw counts accompany each importance reweighting. [Geographic implementation](../../src/empirical_isopach/models/nested/footprints/geometry.py)
+$$
+a(u)=\sqrt a+(a-\sqrt a)\frac{u}{u+c},\quad
+f(u)=f\left(0.35+0.65\frac{u}{u+c}\right),\quad
+\phi(u)=\phi_\infty\frac{u}{u+4c}.
+$$
 
-## From a contour to volume
+Before the additional angular flow, the primary contour has squared radius
 
-For each point, find the first scale whose region includes it. Assign $q=\sqrt{A(t)/\pi}$ from the area of the entire clipped region. A draw has thickness $T(q)$ at that point. With distance in kilometres and thickness in centimetres, its bulk volume in km³ is $2\pi\,10^{-5}\int q\,T(q)\,dq$. Reassigning the same area to different bearings preserves this integral at fixed thinning. Fitting a different geography changes the inferred ranks of the actual measurements and can change the estimated volume substantially. The proximal decay, distal tail mixture, original robust log-thickness likelihood and transfer at the outer positive rank remain explicit. The equation also applies at geographic latitudes far from the vent through the equal-area chart. [Thinning and transfer equations](nested-isopachs.md)
+$$
+R^2(t,\theta)=C(t)K_0(\theta)+
+\int_0^t K\big(\theta-\phi(u);a(u),f(u)\big)\,dD(u).
+$$
 
-The principal volume integrates the **pointwise posterior median thickness across Earth**. The conditional map-based range integrates the pointwise 25th and 75th thickness percentiles across Earth. Complete-draw integrations are retained as sampler and sensitivity checks. Each report gives the volume inside the first measured rank, between the first measured and last positive ranks, and outside that last rank as posterior fractions. Sites constrain only parts of those perimeters. The full shared support screen retains unsupported holes, discarded contours and all rejection reasons. [Support protocol](supported-isopachs.md)
+Each sector receives positive area increments even when their preferred direction changes. Therefore $R(t,\theta)$ increases with $t$. All levels belong to one nested field; their shapes are not separately fitted or subsequently smoothed. Before physical-domain clipping, the primary area is exactly $\pi t^2$.
 
-## Reproduction and evidence
+For a two-phase shape, add $h(t)^2K(\theta-\psi;a,f)$, with
 
-Use the ordinary chat intake or run the following command in a fresh destination.
+$$
+g(t)=\sqrt{D(t)},\qquad
+h(t)=\eta g(t)+(0.8-\eta)\frac{4c\,g(t)}{4c+g(t)}.
+$$
+
+The secondary increment can approach a finite reach ($\eta=0$) or remain persistent ($\eta=0.3,0.8$). Its positive area contribution preserves nesting through overlapping lobes. This is a model of combined isopachs, not separate phase volumes. The detached alternative retains a geometric union with a growing remote patch, including draws whose maximum lies away from the source. Clipping and union areas include all patches. [Area-growth implementation](../../src/empirical_isopach/models/nested/footprints/growth.py)
+
+## Continuous directions without changing area
+
+Apply the same smooth coordinate transformation to every level in a draw:
+
+$$
+F(r,\theta)=\left(r,\theta+\delta+b\frac{r}{r+4c}\right).
+$$
+
+Here $\delta$ completes a continuous uniform bearing prior within a catalogue orientation bin, and $b=120^\circ\tanh(z_b/2)$ with $z_b\sim N(0,1)$. Evaluate the field using $F^{-1}$. The determinant of this transformation in equal-area polar coordinates $(r^2/2,\theta)$ is one. It preserves the physical disk, every contour area, containment and topology. It can represent a smoothly bending lobe without requiring its final outline to be star-convex. This transformation is part of the fitted geography, not a modification of plotted contours. [Implementation and inverse](../../src/empirical_isopach/models/nested/footprints/flow.py)
+
+The family prior remains 0.20 round, 0.40 single, 0.15 turning, 0.20 two-phase and 0.05 detached. Each family divides its mass evenly over its catalogue and bearings. The common transition scales are 2, 8, 32, 128 and 512 km. Single shapes use $a=1,1.8,3$ and $f=0.2,0.55,0.85,0.97$; turning shapes use $a=1.4,2.4$, $f=0.55,0.92$ and $\phi_\infty=\pm50^\circ,\pm100^\circ$. Two-phase shapes use $a=1.8$, $f=0.65,0.92$, $\psi=\pm75^\circ,\pm145^\circ$ and the three secondary persistence values above. Detached offsets remain 50, 250 and 1,250 km. Forty-eight orientation bins plus uniform within-bin displacement cover the full circle continuously.
+
+This prior allows concentrated and broad fallout. Weakly observed bearings remain conditional extrapolation; a narrower posterior lobe does not establish absence outside it. Every release reports sensitivity to family odds, transition scales, secondary persistence, bending and outer transfer, with effective sample sizes for importance reweighting. Sparse data may still favor a rounded deposit or leave several directions plausible.
+
+## Thickness, bounds and volume
+
+For a point, find the first nested region containing its inverse-transformed position. Its whole-area rank is $q=\sqrt{A/\pi}$, where $A$ is the complete region's area clipped to the physical Earth. The draw assigns thickness $T(q)$. Its bulk volume is
+
+$$
+V=2\pi\,10^{-5}\int_0^{2R_\mathrm{authalic}}q\,T(q)\,dq
+$$
+
+for kilometres and centimetres. Area redistribution at fixed thinning preserves this integral. Fitting a different geography changes the ranks of observations and can therefore change the inferred thinning and volume. The existing profile, robust observation distribution, exponential/power tail mixture and independently derived outer transfer remain explicit. The continuation joins beyond all training ranks, so it cannot change a fitted observation. [Thinning and transfer equations](nested-isopachs.md)
+
+Each reported lower-only thickness enters as a measurement at its stated minimum, at every distance. Its qualifier has no numerical effect. Upper limits contribute cumulative probabilities; two-sided ranges contribute the probability between both endpoints. The fused likelihood retains the 95% ordinary and 5% broad normal components in log thickness. It forms interval widths before subtracting the predicted mean and uses stable tail probabilities, including narrow intervals. There are no added observations, detection limits or error estimates. [Observation policy](reported-minimum-fitting.md)
+
+The principal estimate integrates the **pointwise posterior median thickness over Earth**. The conditional band separately integrates pointwise 25th and 75th thickness percentiles on the same domain. Complete-draw volumes serve as sampler and independent-integration checks; their quantiles are not substituted for the thickness-map band. Sector tables and fractions inside the first measured rank and outside the last positive rank identify extrapolation. The shared support audit retains holes, rejected contours and every rejection reason. [Support protocol](supported-isopachs.md)
+
+## Sampling, replay and limitations
+
+Four independent populations fit both distal laws using tempered sequential Monte Carlo. Thinning and direction receive separate symmetric Metropolis updates, with proposal scales adapted between tempering stages. Reversible geometry proposals jointly transport profile scale and height; their acceptance uses the exact prior and likelihood ratios. All likelihood calculations use only the current training rows. Held-out observations do not select geometry or sampling settings.
+
+Convergence requires agreement between populations on intrinsic and continued volume quantiles **and** median predicted log thickness at training sites. The median and 95th percentile of the between-population site ranges must be below 0.15 and 0.40 natural-log units. Full fits also check the mapped geography on 1,536 physical points, including unsampled bearings. Volume criteria retain the preceding median ratio of 1.35 and tail ratio of 2. Failed production fits receive the same refinement policy across eruptions: 768 particles per population, doubling through 6,144, then separate 12,288- and 24,576-particle attempts when required. The fixed auxiliary comparison uses a 12,288-particle ceiling for both nested methods. Checkpoints save each completed population attempt, its posterior hash, input, seed and engine identity; verified interrupted runs resume at the next particle count.
+
+If the larger production attempt still fails, a fixed-target Metropolis stage evolves 3,072 particles from each of the four populations. A fixed pilot proposal draws the geometry and thinning law together with all eight continuous coordinates. Conditional multivariate Student-t proposals have five degrees of freedom; their complete discrete and continuous proposal densities enter the Hastings ratio. The pilot changes only proposal efficiency. Local geometry, profile and angular moves retain access to states absent from that pilot. An additional thinning-law flip transports the peak thickness with an exactly reversible, unit-Jacobian amplitude shift. Neither move changes the likelihood, geological priors or continuation law.
+
+The populations retain separate states and random moves, conditional on the common fixed proposal; they are never pooled and resampled to manufacture agreement. Local proposal covariance adapts only during the first 256 moves. Checkpoints at 256, 512, 1,024, 2,048 and 4,096 moves retain all states and diagnostics. Selection requires at least 1,024 moves, two successive passing population checks, and less than 10% change in each pooled complete-volume quantile since the previous checkpoint. The same rules apply to every unsuccessful production partition. The separately signed sampler source and pilot posterior are part of the fit identity. Unresolved warnings remain visible at the ceiling. [Implementation](../../src/empirical_isopach/models/nested/footprints/rejuvenation.py)
+
+Area increments use midpoint integration in area on a fixed logarithmic scale grid, with angular normalization independent of observations. Grid-refinement tests check ranks, nesting and clipping. Two independently scrambled geographic quadratures compare coherent draw volumes against the profile integral. Posterior draw count, mapped geometry and physical-grid resolution receive separate refinement checks. The draw check evaluates the 25th, 50th and 75th thickness percentiles on two independent geographic grids. It requires at least 2,048 draws, less than 1.5% change in every integrated quantile, and a 95th-percentile visible-field change below 0.035 log10 cm for every surface. It doubles the display sample up to 16,384 draws or the available posterior, retaining a warning if these criteria fail. Finite posterior quantiles can retain small sampling fluctuations; no contour smoothing is applied to hide them.
+
+Use a fresh destination for fitting:
 
 ~~~sh
 tephra-isopachs global Mazama --geometry nested-isopachs --output results/mazama-footprints
 ~~~
 
-The main fit and four buffered geographic refits use four independent populations and both distal laws. Failed partitions receive a higher-resolution attempt with up to 12,288 particles per population. The released packets identify the input and train/test rows, random seed, engine digest and all refinement attempts. Independent geographic quadrature checks coherent volumes against the analytic integral. Median-map sample size, polar-grid checks and two scrambled spatial integrals are assessed separately. Numerical convergence measures repeatability under this model. The catalogue study compares these conditional results with preserved corridors and the original whole-area model, repeats predictions after geographic deletions and evaluates known deposits. The named failure cases influenced development, so their improved figures constitute development evidence. [Reproduce the comparison](../../comparisons/nested-isopachs/geography/README.md)
+The comparison includes four buffered geographic refits, quadrant omissions, known deposits, actual withheld campaigns, source-bound checks and proximal/intermediate/full-scale plates for every registered eruption. These eruptions and several known-deposit scenarios informed development. Better development scores alone do not establish universal predictive calibration. Unsurveyed lobes, unobserved proximal thickness, preservation and missed phases remain structural uncertainties even when numerical checks pass. [Reproduction and released evidence](../../comparisons/nested-isopachs/adaptive-growth/README.md)

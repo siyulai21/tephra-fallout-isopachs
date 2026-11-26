@@ -8,6 +8,8 @@ For a new case, run the active families with the [intake workflow](../docs/NEW_E
 
 ## Current evaluations
 
+The area-growth nested study reviews every registered eruption at three spatial scales, fits matched geographic and quadrant omissions, and tests known deposits and actual withheld campaigns. Use `nested_continuous`, `nested_growth_challenges`, `nested_growth_release`, `nested_growth_review` and `nested_growth_study` in the [reproduction sequence](../comparisons/nested-isopachs/adaptive-growth/README.md#reproduce). Replay the resulting fields, observations, attempts and maps with `python -m benchmarks.verify_nested_growth`.
+
 The directional study compares proximal, intermediate and whole-deposit contours across all registered cases. It includes actual geographic deletions, bounded sites, known-volume surfaces and omitted surveys. Replay the principal v6 fields and mixture distributions with `python -m benchmarks.verify_directional_geography`; `python -m benchmarks.verify_directional_multiscale` independently replays the historical v5 study. [Current results](../comparisons/directional/geographic-regularity/README.md) · [Equations and reproduction commands](../docs/methods/directional-multiscale.md)
 
 The nested comparison refits the original whole-area geography and the dispersal footprints to matched observations and folds, and retains the finite-corridor control. The study lists commands for the known deposits, survey rotations, field campaigns, compass deletions and release verification. [Nested footprints across all eruptions](../comparisons/nested-isopachs/geography/README.md)
@@ -90,6 +92,8 @@ Run `python -m benchmarks.ilopango` to verify Unit G thicknesses, bounds, the so
 Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the published inputs against their workbooks. Both commands check the principal selection and four alternatives. Add `--prepare-only` to rebuild the reviewed tables and provenance. Fit either eruption with the ordinary `tephra-isopachs compare` command. [Minoan audit](../data/audits/Minoan/README.md) · [YTT audit](../data/audits/YTT/README.md)
 
 ## Bayesian nested isopach volumes
+
+The principal continuous-growth study and its complete commands are in [adaptive growth](../comparisons/nested-isopachs/adaptive-growth/README.md). Use `python -m benchmarks.nested_growth_production CASE PART --fits FOLDER` to complete a full or geographic partition with the shared particle and fixed-target Metropolis fallbacks. `python -m benchmarks.verify_nested_growth` replays the selected fields, checkpoints, held-out events and archived validation identities. The auxiliary known-deposit, quadrant and survey matrix retains a common 12,288-particle ceiling for both compared methods.
 
 The dispersal-footprint model is the current nested method. [Model and fitting commands](../docs/methods/nested-footprints.md)
 

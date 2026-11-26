@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from benchmarks.publication import result_home
+from benchmarks.publication import result_home, published_methods
 from src.empirical_isopach.core.catalog import datasets
 
 
@@ -34,6 +34,8 @@ def summarize(output):
         sites = minima.drop_duplicates("row_id")
         ax.axhline(1, color="#495056", linewidth=.85)
         for method, (_, color, marker) in styles.items():
+            if method not in published_methods(record):
+                continue
             x = minima[(minima.method == method) & minima.previous_map_cm.notna()]
             ratio = x.current_map_cm/x.previous_map_cm
             ax.scatter(x.projected_distance_km, ratio, color=color, marker=marker, alpha=.65, s=16, linewidths=.65)
@@ -66,9 +68,11 @@ def summarize(output):
              "![Ratio of revised to previous median thickness at reported minima versus distance from the vent](site-ratios.png)", "",
              "Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a "
              "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
-             "the same likelihood. A blank comparison means a matched map is unavailable. "
-             "The current directional maps also include the v6 model revision, so those ratios do not isolate "
-             "the observation-policy effect. [Directional model comparison](../directional/geographic-regularity/README.md) · "
+             "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
+             "The current nested maps use continuous area growth, and the directional maps include the v6 revision. "
+             "Their ratios therefore include model changes as well as the fitting convention. "
+             "[Nested comparison](../nested-isopachs/adaptive-growth/README.md) · "
+             "[Directional comparison](../directional/geographic-regularity/README.md) · "
              "[Values by case and method](all-distances.csv)", "",
              "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
              "|---|---:|---:|---:|---:|---:|---:|"]

@@ -14,7 +14,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | Cubic spline | observation hull | **27.6** | 19.8–38.9 | 1.757 | 98.7% |
 | [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **40.3** | 24.3–75.5 | 1.734 | 93.3% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **90.4** | 51.1–175 | 1.793 | 90.6% |
-| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **35.2** | 25.4–58 | 1.761 | 90.6% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **47.1** | 31.7–76.9 | 1.788 | 89.9% |
 
 Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
@@ -34,8 +34,16 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
 
+## Nested geometry and field agreement
+
+The nearly concentric proximal circles become eccentric, approximately north–south contours. Their orientation changes continuously toward the northwest–southeast outer envelope. The 256 cm summit and successive 128, 64 and 32 cm contours stay connected and smoothly spaced; the full view no longer attaches a round core abruptly to an oblique outer shape. The northwestern 1 cm continuation becomes substantially longer, however. It is a remaining extrapolation weakness, not a newly established deposit boundary.
+
+Eastern records SM1-P38 and SM1-P30 improve, and the two-sided SM1-P63 interval receives a less extreme prediction. The thin northern SM1-P118 measurement and northeastern SM1-P116 interval worsen. The latter remains a strong conflict between the fitted field and bounded evidence. Measured log RMSE improves from 1.021 to 1.011, while median absolute log error worsens from 0.537 to 0.596 and the bounded negative log probability worsens from 1.522 to 1.572. Median interval violations fall from 11 to 10. Geographic score changes from 1.761 to 1.788. Centered-core, circular-core, altered-focus and prior-reweighting trials did not establish a general solution and remain in the archive; no case-specific cutoff was imposed.
+
+[Three-scale comparison, site identities and contour diagnostics](../../comparisons/nested-isopachs/adaptive-growth/visual-review.md#ilopango-tbj)
+
 ## Evidence and checks
 
-[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
+[Matched predictions by locality](results/minimum-fit-2026-11-25/geographic-site-validation.csv) · [Numerical checks and file identities](results/minimum-fit-2026-11-25/release.json) · [Spherical fits and computing revisions](results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json) · [Regional support](results/minimum-fit-2026-11-25/support/README.md) · [Whole-area sensitivity](results/minimum-fit-2026-11-25/nested-whole-area/README.md)
 
 [Previous maps and geological assessment](previous-minimum-treatment.md) · [Change at all distances across eruptions](../../comparisons/reported-minima/README.md)

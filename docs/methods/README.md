@@ -28,7 +28,7 @@ The principal spherical field integrates the retained kernel mass along measured
 
 ## Bayesian nested isopachs
 
-The nested model infers the direction, elongation and reach of source-connected phases, with an alternative for a detached maximum. A common proximal deposit can feed a shorter or longer secondary lobe. The principal volume integrates pointwise median thickness over Earth. Each case retains the original whole-area sensitivity. [Dispersal footprints and limits](nested-footprints.md) · [Underlying thinning model](nested-isopachs.md) · [Matched geography and volume tests](../../comparisons/nested-isopachs/geography/README.md)
+The nested model infers changing direction, elongation and reach through positive angular area growth, with an alternative for a detached maximum. A bounded proximal component connects coherently to turning and overlapping lobes. The principal volume integrates pointwise median thickness over Earth. Each case retains the original whole-area sensitivity. [Dispersal footprints and limits](nested-footprints.md) · [Underlying thinning model](nested-isopachs.md) · [Three-scale review and matched validation](../../comparisons/nested-isopachs/adaptive-growth/README.md)
 
 ## Interpreting the maps
 

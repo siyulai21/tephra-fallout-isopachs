@@ -27,7 +27,7 @@ def principal_report(home):
         path = folder/"report.json"
     if path.is_file():
         result = json.loads(path.read_text())
-        if result.get("protocol") in ("nested-corridor-reach-v4","nested-dispersal-footprints-v2"):
+        if result.get("protocol") in ("nested-corridor-reach-v4","nested-dispersal-footprints-v2","nested-area-growth-v3","nested-continuous-area-growth-v4"):
             return result
     return None
 
@@ -39,8 +39,8 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
         records.append((label, m["equal_region_log_score"], m["coverage95_observations"], True))
     for label, val in (("Directional", directional["validation"]["geographic"]),
                        ("Spherical mixture", spherical["validation"])):
-        if label=="Directional" and directional.get("protocol", "").startswith("directional-multiscale-"):
-            records.append((label,val["negative_log_score"],val["coverage95_exact"],val["all_folds_passed"]))
+        if 'negative_log_score' in val:
+            records.append((label,val['negative_log_score'],val['coverage95_exact'],val['all_folds_passed']))
             continue
         if label=="Directional" and directional.get("protocol")=="uncertain-azimuth-v1":
             scored = val["all_estimated"]
@@ -57,7 +57,7 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
     if nested is not None:
         if nested["input_sha256"] != regional["input"]["input_sha256"]:
             raise ValueError("Corridor and regional inputs differ")
-        if nested["protocol"] == "nested-dispersal-footprints-v2":
+        if nested["protocol"] in ("nested-dispersal-footprints-v2","nested-area-growth-v3","nested-continuous-area-growth-v4"):
             v = nested["validation"]
             records.append(("Nested footprints",v["negative_log_score"],v["coverage95_exact"],v["all_folds_passed"]))
         else:
@@ -90,7 +90,7 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
                       xscale="log", xlabel="Hull bulk volume (km³)", title="Inside the observation hull")
         families = [("Directional", "directional"), ("Spherical mixture", "spherical-mixture")]
         if nested is not None:
-            families.append(("Nested footprints" if nested.get("protocol")=="nested-dispersal-footprints-v2" else "Nested corridor", "nested-isopachs"))
+            families.append(("Nested footprints" if nested.get("protocol") in ("nested-dispersal-footprints-v2","nested-area-growth-v3","nested-continuous-area-growth-v4") else "Nested corridor", "nested-isopachs"))
         for i, (label, family) in enumerate(families):
             receipt = folder/family/"deposit.json"
             if receipt.is_file():

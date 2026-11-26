@@ -1,0 +1,102 @@
+name: Validate continuous nested geography
+on:
+  push:
+    branches: ["codex/nested-growth-compute/*", "codex/nested-growth-survey/*", "codex/nested-growth-refine/*"]
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  MPLBACKEND: Agg
+  OPENBLAS_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+jobs:
+  partitions:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: benchmarks
+      - name: Select the requested independent validation partitions
+        id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          surveys=['calbuco-2015','aso-4','b-tm','pinatubo-1991','pinatubo-all-offshore']
+          branch=os.environ['GITHUB_REF_NAME']
+          if branch.startswith('codex/nested-growth-refine/'):
+              parts=[dict(design='refinement',case=p['case'],part=p['part'],particles=p['refinement_particles_per_population']) for p in json.loads(Path('benchmarks/nested_growth_refinement_plan.json').read_text())]
+          elif branch.startswith('codex/nested-growth-survey/'):
+              case=branch.rsplit('/',1)[-1]
+              assert case in surveys
+              parts=[dict(design='surveys',case=case)]
+          else:
+              cases=['mazama','tambora','aso-4','b-tm','ytt','minoan','ilopango-tbj','sakurajima-satsuma','pinatubo-1991-layer-c']
+              parts=[dict(design='quadrants',case=c) for c in cases]
+              parts += [dict(design='known',case=str(k)) for k in range(5)]
+              parts += [dict(design='surveys',case=c) for c in surveys]
+          with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
+              stream.write('matrix='+json.dumps(dict(include=parts))+'\n')
+          PY
+  validation:
+    needs: partitions
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.partitions.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            data
+            benchmarks
+            comparisons/nested-isopachs/pinatubo-preview
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install the recorded numerical environment
+        run: python -m pip install -e '.[test]' numpy==2.4.6 scipy==1.18.1 numba==0.64.0 pandas==3.1.1 pyproj==3.8.0
+      - name: Record source and runtime identities
+        run: |
+          mkdir -p packet
+          python - <<'PY'
+          import json,os,sys,platform,importlib.metadata as m
+          from pathlib import Path
+          from src.empirical_isopach.models.nested.footprints.continuous import engine
+          Path('packet/provenance.json').write_text(json.dumps(dict(
+              commit=os.environ['GITHUB_SHA'],run_id=os.environ['GITHUB_RUN_ID'],
+              python=sys.version,platform=platform.platform(),engine_sha256=engine(),
+              packages={p:m.version(p) for p in ('numpy','scipy','numba','pandas','pyproj')}),indent=2))
+          PY
+      - name: Fit every assigned partition and retain all attempts
+        env:
+          DESIGN: ${{ matrix.design }}
+          CASE: ${{ matrix.case }}
+          PART: ${{ matrix.part }}
+        shell: bash
+        run: |
+          set -o pipefail
+          if [[ "$DESIGN" == refinement ]]; then
+            python -u -m benchmarks.nested_growth_refine "$CASE" "$PART" --output packet/continuous | tee packet/fitting.log
+          elif [[ "$DESIGN" == quadrants ]]; then
+            python -u -m benchmarks.nested_continuous --design quadrants --case "$CASE" --workers 2 --output packet/quadrants | tee packet/fitting.log
+          elif [[ "$DESIGN" == known ]]; then
+            python -u -m benchmarks.nested_growth_challenges --design known --previous-only --shard-index "$CASE" --shard-count 5 --workers 2 --output packet/known | tee packet/previous.log
+            python -u -m benchmarks.nested_growth_challenges --design known --shard-index "$CASE" --shard-count 5 --workers 2 --output packet/known | tee packet/fitting.log
+          else
+            python -u -m benchmarks.nested_growth_challenges --design surveys --case "$CASE" --workers 2 --output packet/surveys | tee packet/fitting.log
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nested-${{ matrix.design }}-${{ matrix.case }}${{ matrix.part && format('-{0}', matrix.part) || '' }}${{ matrix.particles && format('-{0}', matrix.particles) || '' }}
+          path: packet
+          if-no-files-found: error
+          retention-days: 14

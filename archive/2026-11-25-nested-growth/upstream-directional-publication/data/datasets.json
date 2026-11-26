@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "thickness_unit": "cm",
+  "coordinate_system": "WGS84 longitude, latitude in decimal degrees",
+  "observation_fitting_policy": {
+    "id": "lower-only-at-reported-minimum-v1",
+    "applies_to": "all accepted localities, at every distance and bearing",
+    "measurement": "point at Thickness",
+    "lower_limit": "point at Limit_cm",
+    "upper_limit": "upper-censored at Limit_cm",
+    "interval": "interval-censored between Lower_cm and Upper_cm",
+    "source_qualifier": "provenance only"
+  },
+  "datasets": [
+    {
+      "name": "Mazama",
+      "slug": "mazama",
+      "file": "eruptions/Mazama_primary_ranges_minimum_fit.csv",
+      "audit": "audits/Mazama/principal-ranges/provenance.json",
+      "archive_evidence": "audits/Mazama/principal-ranges/archive-sites.json",
+      "audit_case": "principal",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Mazama_tephra.csv",
+          "audit": null,
+          "audit_case": null,
+          "revision": "0a53d02"
+        },
+        {
+          "file": "audits/Mazama/history/2026-11-23-before-distal-review/input.csv",
+          "audit": "audits/Mazama/history/2026-11-23-before-distal-review/provenance.json",
+          "audit_case": "principal",
+          "revision": "d00f7f0d3e0a634020d2898f2c63ef9d225fdb0c"
+        },
+        {
+          "file": "audits/Mazama/history/2026-11-24-before-field-logs/input.csv",
+          "audit": "audits/Mazama/history/2026-11-24-before-field-logs/provenance.json",
+          "audit_case": "principal",
+          "revision": "99df999524798420f8ff4bf54ecdb736e018e83d"
+        },
+        {
+          "file": "audits/Mazama/history/2026-11-24-before-gsc-return/input.csv",
+          "audit": "audits/Mazama/history/2026-11-24-before-gsc-return/provenance.json",
+          "audit_case": "principal",
+          "revision": "2e443d339108e6f324e69fd75ef2f8c5b45ffb8d"
+        },
+        {
+          "file": "eruptions/Mazama_reviewed.csv",
+          "audit": "audits/Mazama/provenance.json",
+          "archive_evidence": "audits/Mazama/archive-sites.json",
+          "audit_case": "principal",
+          "revision": "6ba3b2333415e2ce5ad2fa32fac329a165aab46e",
+          "sha256": "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29"
+        },
+        {
+          "file": "eruptions/Mazama_primary_ranges.csv",
+          "audit": "audits/Mazama/principal-ranges/provenance.json",
+          "archive_evidence": "audits/Mazama/principal-ranges/archive-sites.json",
+          "audit_case": "principal",
+          "release_receipt": "release.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a",
+          "matched_results": "eruptions/mazama/results"
+        }
+      ],
+      "reported_file": "eruptions/Mazama_primary_ranges.csv",
+      "results_directory": "eruptions/mazama/results/minimum-fit-2026-11-25"
+    },
+    {
+      "name": "Tambora",
+      "slug": "tambora",
+      "file": "eruptions/Tambora_tephra.csv"
+    },
+    {
+      "name": "Aso-4",
+      "slug": "aso-4",
+      "global_review_status": "questioned",
+      "file": "eruptions/Aso-4_reviewed_minimum_fit.csv",
+      "audit": "audits/Aso-4/provenance.json",
+      "audit_case": "principal",
+      "previous_inputs": [
+        {
+          "global_review_status": "questioned",
+          "file": "eruptions/Aso-4_reviewed.csv",
+          "audit": "audits/Aso-4/provenance.json",
+          "audit_case": "principal",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+          "matched_results": "eruptions/aso-4/results"
+        }
+      ],
+      "reported_file": "eruptions/Aso-4_reviewed.csv",
+      "results_directory": "eruptions/aso-4/results/minimum-fit-2026-11-25"
+    },
+    {
+      "name": "B-Tm",
+      "slug": "b-tm",
+      "global_geometry": "source-fans",
+      "file": "eruptions/B-Tm_cryptotephra_minimum_fit.csv",
+      "audit": "audits/B-Tm/cryptotephra-principal.json",
+      "audit_case": "principal",
+      "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "nested-isopachs"
+      ],
+      "previous_inputs": [
+        {
+          "file": "eruptions/B-Tm_reviewed.csv",
+          "audit": "audits/B-Tm/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/B-Tm/archive-observations.json"
+        },
+        {
+          "global_geometry": "source-fans",
+          "file": "eruptions/B-Tm_cryptotephra.csv",
+          "audit": "audits/B-Tm/cryptotephra-principal.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+          "release_receipt": "cryptotephra/release.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
+          "matched_results": "eruptions/b-tm/results"
+        }
+      ],
+      "reported_file": "eruptions/B-Tm_cryptotephra.csv",
+      "results_directory": "eruptions/b-tm/results/minimum-fit-2026-11-25"
+    },
+    {
+      "name": "YTT",
+      "slug": "ytt",
+      "file": "eruptions/YTT_tephra.csv",
+      "audit": "audits/YTT/provenance.json",
+      "audit_case": "principal"
+    },
+    {
+      "name": "Minoan",
+      "slug": "minoan",
+      "file": "eruptions/Minoan_tephra_minimum_fit.csv",
+      "audit": "audits/Minoan/provenance.json",
+      "audit_case": "combined",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Minoan_tephra.csv",
+          "audit": "audits/Minoan/provenance.json",
+          "audit_case": "combined",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fe2a2e70cecbbfee8ea6a410ba282449e020c21598f6ecf7f9b6e51f15d7d1a1",
+          "matched_results": "eruptions/minoan/results"
+        }
+      ],
+      "reported_file": "eruptions/Minoan_tephra.csv",
+      "results_directory": "eruptions/minoan/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
+    },
+    {
+      "name": "Ilopango TBJ (total primary airfall)",
+      "slug": "ilopango-tbj",
+      "file": "eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv",
+      "audit": "audits/Ilopango-TBJ/field-logs/provenance.json",
+      "audit_case": "principal",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Ilopango_TBJ_Unit_G.csv",
+          "audit": "audits/Ilopango-TBJ/provenance.json",
+          "audit_case": "principal",
+          "name": "Ilopango TBJ (Unit G)",
+          "matched_results": "archive/2026-11-24-case-editions/ilopango-unit-g-56"
+        },
+        {
+          "name": "Ilopango TBJ (Unit G)",
+          "file": "eruptions/Ilopango_TBJ_Unit_G_reviewed.csv",
+          "audit": "audits/Ilopango-TBJ/reaudit/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Ilopango-TBJ/reaudit/archive-probes.json",
+          "principal_nested_result": "archive/2026-11-24-case-editions/ilopango-unit-g-116"
+        },
+        {
+          "file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+          "audit": "audits/Ilopango-TBJ/field-logs/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
+          "principal_global_results": "eruptions/ilopango-tbj/results",
+          "published_methods": [
+            "directional",
+            "spherical-mixture",
+            "nested-isopachs"
+          ],
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867"
+        }
+      ],
+      "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
+      "reported_file": "eruptions/Ilopango_TBJ_total_airfall.csv",
+      "results_directory": "eruptions/ilopango-tbj/results/minimum-fit-2026-11-25"
+    },
+    {
+      "name": "Sakurajima Satsuma (P14)",
+      "slug": "sakurajima-satsuma",
+      "file": "eruptions/Sakurajima_Satsuma_minimum_fit.csv",
+      "audit": "audits/Sakurajima-Satsuma/provenance.json",
+      "audit_case": "principal",
+      "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Sakurajima_Satsuma.csv",
+          "audit": "audits/Sakurajima-Satsuma/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Sakurajima-Satsuma/archive-probes.json",
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "fed3c4c04c5a39262da7c103a7f20a1399cad53ef1c39464db5af1e9d707a4d1",
+          "matched_results": "eruptions/sakurajima-satsuma/results"
+        }
+      ],
+      "reported_file": "eruptions/Sakurajima_Satsuma.csv",
+      "results_directory": "eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25",
+      "release_receipt": "release.json"
+    },
+    {
+      "name": "Pinatubo 1991 (Layer C)",
+      "slug": "pinatubo-1991-layer-c",
+      "file": "eruptions/Pinatubo_1991_layer_C_reviewed_minimum_fit.csv",
+      "audit": "audits/Pinatubo-1991/reaudit/provenance.json",
+      "audit_case": "principal",
+      "archive_evidence": "audits/Pinatubo-1991/reaudit/archive-probes.json",
+      "previous_inputs": [
+        {
+          "file": "eruptions/Pinatubo_1991_layer_C.csv",
+          "audit": "audits/Pinatubo-1991/provenance.json",
+          "archive_evidence": "audits/Pinatubo-1991/archive-probes.json",
+          "audit_case": "principal",
+          "matched_results": "archive/2026-11-24-case-editions/pinatubo-layer-c-208"
+        },
+        {
+          "file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+          "audit": "audits/Pinatubo-1991/reaudit/provenance.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/Pinatubo-1991/reaudit/archive-probes.json",
+          "principal_nested_result": "eruptions/pinatubo-1991-layer-c/results/nested-isopachs",
+          "principal_global_results": "eruptions/pinatubo-1991-layer-c/results",
+          "published_methods": [
+            "stacked",
+            "spline",
+            "directional",
+            "spherical-mixture",
+            "nested-isopachs"
+          ],
+          "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
+          "sha256": "2f895e0a143a0097a651cd25458059eff7c1b4e939ac70193b2b64a53ef4e8e8"
+        }
+      ],
+      "reported_file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
+      "results_directory": "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25"
+    }
+  ]
+}

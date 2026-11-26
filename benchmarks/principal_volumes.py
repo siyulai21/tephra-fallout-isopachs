@@ -59,8 +59,8 @@ def family_page(family, rows, records):
                        "[Paired continuations and validation](../global-extent/README.md) · [Training and fixed-direction controls](fixed-ensemble/README.md)"),
         "spherical-mixture":("Spherical mixture","A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior fits test sensitivity to unsampled directions.",
                             "[Prior and geometry diagnostics on their study inputs](comparison.csv) · [Paired maps and known-deposit tests](bearings/README.md)"),
-        "nested-isopachs":("Bayesian nested dispersal footprints","The deposit footprint expands as thickness decreases. The fit estimates footprint geometry and the thickness–area law jointly.",
-                          "[Geographic experiments and independent surveys](geography/README.md) · [Original whole-area sensitivity](whole-area-study.md)")}
+        "nested-isopachs":("Bayesian nested dispersal footprints","Positive angular area growth allows the dispersal direction and eccentricity to change across nested contours. The fit estimates geography and the thickness–area law jointly.",
+                          "[Three-scale review and matched validation](adaptive-growth/README.md) · [Preceding geographic experiments](geography/README.md) · [Original whole-area sensitivity](whole-area-study.md)")}
     title,intro,links = introductions[family]
     lines = [f"# {title}", "", intro+" "+links,"",
              "| Eruption | Localities | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |",

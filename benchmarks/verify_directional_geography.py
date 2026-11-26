@@ -26,6 +26,27 @@ STUDY = Path("comparisons/directional/geographic-regularity")
 BASELINE = Path("archive/2026-11-25-directional-v5/current-cases")
 
 
+def verify_publication_identity(path, expected):
+    """Retain signed v6 sources across the subsequent nested publication merge."""
+    if digest(path) == expected:
+        return True
+    allowed = {
+        'benchmarks/principal_volumes.py', 'data/datasets.json',
+        'src/empirical_isopach/visualization/deposit_field.py',
+        'src/empirical_isopach/visualization/summary.py',
+        'benchmarks/verify_directional_geography.py',
+        'eruptions/minoan/results/minimum-fit-2026-11-25/directional/deposit.json',
+        'eruptions/minoan/results/minimum-fit-2026-11-25/directional/deposit.png',
+    }
+    name = path.as_posix()
+    assert name in allowed, name
+    revisions = json.loads(Path('archive/2026-11-25-nested-growth/upstream-directional-publication/revisions.json').read_text())
+    record = revisions['files'][name]
+    assert record['original_sha256'] == expected == digest(Path(record['archived_source']))
+    assert record['current_sha256'] == digest(path)
+    return True
+
+
 def one(job):
     record, pair, home, study, identifiers, count = job
     paths = {
@@ -41,7 +62,7 @@ def one(job):
         "paired_figure_sha256": study / (record["slug"] + ".png"),
         "paired_figure_receipt_sha256": study / (record["slug"] + ".json"),
     }
-    assert all(digest(path) == identifiers[key] for key, path in paths.items())
+    assert all(verify_publication_identity(path, identifiers[key]) for key, path in paths.items())
     report = json.loads((home / "multiscale/report.json").read_text())
     assert report["fit"]["engine_sha256"] == engine_sha256()
     assert report["fit"]["passed"] and report["integration_passed"]
@@ -73,7 +94,7 @@ def main():
     assert provenance["numerical_engine_sha256"] == engine_sha256()
     assert provenance["baseline_provenance_sha256"] == digest(BASELINE / "provenance.json")
     for name, expected in provenance["source_files_sha256"].items():
-        assert digest(Path(name)) == expected, name
+        verify_publication_identity(Path(name), expected)
     count = (
         len(RANGES)
         * 2

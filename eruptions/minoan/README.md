@@ -14,7 +14,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | Cubic spline | observation hull | **24.1** | 23.1–25.1 | 1.928 | 92.1% |
 | [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **33.2** | 20.9–60.9 | 1.597 | 95.0% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **26.5** | 20.2–38.5 | 1.594 | 95.0% |
-| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **43.1** | 30–72.9 | 1.711 † | 91.1% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **60.9** | 34.6–116 | 1.675 | 90.1% |
 
 Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
@@ -33,6 +33,14 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 ![Minoan · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
+
+## Nested geometry and field agreement
+
+The 16 cm contour now tilts southeast near the vent before the lower contours turn toward an approximately eastward distal axis. The joint geometry remains connected, with orderly widening and no artificial lobe junction. The proximal contour is visibly part of that turning field in the full map. North–south spreading contracts, but the eastward 1 cm continuation becomes longer and the westward thin contours also extend. These unsampled margins remain conditional; this case does not demonstrate a universal reduction in upwind reach.
+
+The 2 cm northern locality at row 63 and the 0.2 cm southeastern locality at row 94 improve. Conversely, the 1 cm western observation at row 5 (104 km) is overpredicted more strongly, while the nearby 10 cm western observation at row 4 (82 km) improves. The field still misses that sharp local thickness contrast. Measured log RMSE changes from 0.989 to 0.984, median absolute log error worsens from 0.519 to 0.531, and geographic score improves from 1.711 to 1.675. The observations contain no upper limits or intervals.
+
+[Three-scale comparison, site identities and contour diagnostics](../../comparisons/nested-isopachs/adaptive-growth/visual-review.md#minoan)
 
 ## Evidence and checks
 

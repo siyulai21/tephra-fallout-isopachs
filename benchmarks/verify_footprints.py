@@ -11,7 +11,7 @@ from .publication import published_datasets
 from .verify_deposit_maps import verify_global
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.directional.ensemble.members import splits
-from src.empirical_isopach.models.nested.footprints.posterior import FootprintField, PROTOCOL, engine, predictions
+from src.empirical_isopach.models.nested.footprints.legacy_posterior import FootprintField, PROTOCOL, engine, predictions
 from src.empirical_isopach.visualization.deposit import digest, read_json
 
 
@@ -20,7 +20,7 @@ def main():
     quadrants = json.loads(gzip.decompress((STUDY/"quadrant-fits.json.gz").read_bytes()))
     for rec in published_datasets():
         case = rec["slug"]
-        home=published_folder(case,rec)
+        home=published_folder(case,rec,historical=True)
         packet=home/"footprints"
         report=read_json(packet/"report.json")
         data,meta=audited_data(rec["path"])
@@ -84,6 +84,8 @@ def main():
     assert scores.groupby("survey").row_id.nunique().to_dict()=={
         "aso-4":28,"b-tm":3,"calbuco-2015":43,"pinatubo-1991":10,"pinatubo-all-offshore":34}
     print("Verified the data identity, full and withheld deposits, three geographic laws, quadrants, known deposits and campaigns.")
+    from .verify_nested_growth import main as verify_current_growth
+    verify_current_growth()
 
 
 if __name__=="__main__":
