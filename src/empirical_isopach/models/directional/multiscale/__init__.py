@@ -5,15 +5,18 @@ from hashlib import sha256
 from pathlib import Path
 
 
-@lru_cache(maxsize=2)
-def engine_sha256(*, observation_source=None):
+@lru_cache(maxsize=4)
+def engine_sha256(*, observation_source=None, legacy_source=None):
     """Identify the numerical field, likelihood, projection and common partition rules."""
     here = Path(__file__).resolve().parent
     framework = here.parents[2]
+    source = Path(legacy_source) if legacy_source is not None else here
     files = [
-        here / (name + ".py")
+        source / (name + ".py")
         for name in ("geometry", "spread", "conditioning", "fit", "posterior", "integrals", "validation")
     ]
+    if legacy_source is None:
+        files.append(here / "compression.py")
     files += [
         framework / name
         for name in (

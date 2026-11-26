@@ -8,7 +8,7 @@ from scipy.stats import qmc
 
 from src.probabilistic_isopach.global_volume import EarthDomain
 from ....core.distributions import LogMixture
-from .geometry import SCHEMA, LocalBasis, trend
+from .geometry import SCHEMA, LEGACY_SCHEMA, LOCAL_SD, LocalBasis, trend, log_mean
 from .spread import attenuation
 
 
@@ -50,12 +50,14 @@ class Marginals(LogMixture):
 
 
 class DirectionalField:
-    def __init__(self, latitude, local, components, reach):
+    def __init__(self, latitude, local, components, reach, *, protocol=SCHEMA):
+        self.protocol = protocol
         self.reach = np.asarray(reach)
         self.latitude = float(latitude)
         self.domain = EarthDomain.wgs84(latitude)
         self.local = local
         self.components = components
+        self.subspaces = {}
         self.weights = np.array([c.weight for c in components])
         self.weights /= self.weights.sum()
 
@@ -67,14 +69,21 @@ class DirectionalField:
             if key in design:
                 continue
             if key[:2] not in radial:
-                radial[key[:2]] = trend(xy, self.domain.axis_scale, *key[:2])
+                radial[key[:2]] = trend(
+                    xy, self.domain.axis_scale, *key[:2], legacy=self.protocol == LEGACY_SCHEMA
+                )
             columns, d, rim = radial[key[:2]]
             if c.length not in spatial:
                 spatial[c.length] = (
-                    1.15 * rim[:, None] ** 2 * self.local[c.length].features(xy, self.domain.axis_scale)
+                    LOCAL_SD * rim[:, None] ** 2 * self.local[c.length].features(xy, self.domain.axis_scale)
                 )
             design[key] = (np.column_stack((columns, spatial[c.length])), d)
-        return design, attenuation(xy, self.domain.axis_scale, self.reach)
+        loss = (
+            attenuation(xy, self.domain.axis_scale, self.reach)
+            if self.protocol == LEGACY_SCHEMA
+            else np.zeros(len(xy))
+        )
+        return design, loss
 
     def distribution(self, xy, observation=False, log_sd=None, calibrated=False):
         design, loss = self.matrices(xy)
@@ -82,7 +91,12 @@ class DirectionalField:
         remainder = {}
         for c in self.components:
             B, d = design[(c.scale, c.evolving, c.length)]
-            means.append(np.log(100.0) - c.tail * d - c.spread * loss + B @ c.mean)
+            offset = (
+                np.log(100.0) - c.tail * d - c.spread * loss
+                if self.protocol == LEGACY_SCHEMA
+                else log_mean(d, c.tail, c.spread)
+            )
+            means.append(offset + B @ c.mean)
             factor = B @ c.chol
             variance = np.sum(factor * factor, axis=1)
             if observation:
@@ -91,7 +105,7 @@ class DirectionalField:
                     rim2 = np.maximum(0.0, 1.0 - (r / self.domain.rho_max) ** 2)
                     n = self.local[c.length].averaging.shape[0]
                     resolved = np.sum(B[:, -n:] ** 2, axis=1) if n else 0.0
-                    remainder[c.length] = np.maximum(0.0, (1.15 * rim2) ** 2 - resolved)
+                    remainder[c.length] = np.maximum(0.0, (LOCAL_SD * rim2) ** 2 - resolved)
                 variance += c.noise**2 + remainder[c.length]
             variances.append(variance)
         values = np.asarray(variances)
@@ -139,12 +153,17 @@ class DirectionalField:
         for i, ix, beta in parameters:
             c = self.components[i]
             B, d = matrices[(c.scale, c.evolving, c.length)]
-            vals[ix] = np.log(100.0) - c.tail * d - c.spread * loss + beta @ B.T
+            offset = (
+                np.log(100.0) - c.tail * d - c.spread * loss
+                if self.protocol == LEGACY_SCHEMA
+                else log_mean(d, c.tail, c.spread)
+            )
+            vals[ix] = offset + beta @ B.T
         return vals
 
     def save(self, path):
         arrays = dict(
-            protocol=SCHEMA,
+            protocol=self.protocol,
             latitude=self.latitude,
             reach=self.reach,
             members=np.array(
@@ -157,25 +176,83 @@ class DirectionalField:
         for k, local in self.local.items():
             arrays[f"locations_{k}"] = local.centers
             arrays[f"averages_{k}"] = local.averaging
-        for i, c in enumerate(self.components):
-            arrays[f"m{i}"] = c.mean
-            arrays[f"l{i}"] = c.chol
+            arrays[f"kernel_{k}"] = local.kernel
+        arrays.update(pack_gaussians(self.components, self.subspaces))
         np.savez_compressed(path, **arrays)
 
     @classmethod
     def load(cls, path):
         with np.load(path, allow_pickle=False) as z:
-            if str(z["protocol"]) != SCHEMA:
+            if str(z["protocol"]) not in (SCHEMA, LEGACY_SCHEMA):
                 raise ValueError("Unrecognized directional posterior")
             parts = [
-                Component(w, s, int(e), l, t, n, loss, z[f"m{i}"], z[f"l{i}"])
+                Component(w, s, int(e), l, t, n, loss, *unpack_gaussian(z, i))
                 for i, (w, s, e, l, t, n, loss) in enumerate(z["members"])
             ]
             local = {
-                c.length: LocalBasis(z[f"locations_{c.length}"], c.length, z[f"averages_{c.length}"])
+                c.length: LocalBasis(
+                    z[f"locations_{c.length}"],
+                    c.length,
+                    z[f"averages_{c.length}"],
+                    str(z[f"kernel_{c.length}"]) if f"kernel_{c.length}" in z else "matern-v5",
+                )
                 for c in parts
             }
-            return cls(float(z["latitude"]), local, parts, z["reach"])
+            field = cls(float(z["latitude"]), local, parts, z["reach"], protocol=str(z["protocol"]))
+            field.subspaces = {
+                (c.scale, c.evolving, c.length): z[f"subspace_{int(z[f'subspace_id_{i}'])}"]
+                for i, c in enumerate(parts)
+                if f"subspace_id_{i}" in z
+            }
+            return field
+
+
+def pack_gaussians(parts, subspaces):
+    """Store unchanged prior directions once, with an explicit reconstruction check.
+
+    A fit constrains at most one coefficient direction per distinct observed
+    location. Separate broad and local processes can have many more coefficients.
+    Their untouched orthogonal complement is exactly a standard normal, not a
+    zero-variance truncation. No posterior direction is discarded to save space.
+    """
+    groups = {}
+    for i, c in enumerate(parts):
+        groups.setdefault((c.scale, c.evolving, c.length), []).append(i)
+    arrays = {}
+    for group, (key, ids) in enumerate(groups.items()):
+        dim = len(parts[ids[0]].mean)
+        Q = subspaces.get(key, np.eye(dim))
+        use = (
+            Q.shape[1] < 0.8 * dim
+            and dim * Q.shape[1] + len(ids) * Q.shape[1] ** 2 / 2 < len(ids) * dim**2 / 2
+        )
+        projected = []
+        if use:
+            for i in ids:
+                cov = parts[i].chol @ parts[i].chol.T
+                m = Q.T @ parts[i].mean
+                C = Q.T @ cov @ Q
+                restored = np.eye(dim) + Q @ (C - np.eye(len(C))) @ Q.T
+                if np.max(abs(restored - cov)) > 2e-10 or np.max(abs(Q @ m - parts[i].mean)) > 2e-10:
+                    use = False
+                    break
+                projected.append((m, np.linalg.cholesky((C + C.T) / 2)))
+        if use:
+            arrays[f"subspace_{group}"] = Q
+        for j, i in enumerate(ids):
+            arrays[f"m{i}"], arrays[f"l{i}"] = projected[j] if use else (parts[i].mean, parts[i].chol)
+            if use:
+                arrays[f"subspace_id_{i}"] = group
+    return arrays
+
+
+def unpack_gaussian(packet, i):
+    mean, chol = packet[f"m{i}"], packet[f"l{i}"]
+    if f"subspace_id_{i}" not in packet:
+        return mean, chol
+    Q = packet[f"subspace_{int(packet[f'subspace_id_{i}'])}"]
+    covariance = np.eye(len(Q)) + Q @ (chol @ chol.T - np.eye(len(chol))) @ Q.T
+    return Q @ mean, np.linalg.cholesky((covariance + covariance.T) / 2)
 
 
 @dataclass

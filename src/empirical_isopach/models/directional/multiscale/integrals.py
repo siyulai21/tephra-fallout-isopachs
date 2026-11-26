@@ -5,6 +5,7 @@ from scipy.stats import qmc
 
 from ....support import SupportMesh
 from ..ensemble.integrals import polar_nodes
+from .geometry import LEGACY_SCHEMA
 
 
 def trials(model, data, parameter_seed, point_seed, draws, order):
@@ -34,7 +35,9 @@ def trials(model, data, parameter_seed, point_seed, draws, order):
 def integrate(model, data, path):
     history = []
     previous = None
-    for n, order in ((512, 11), (1024, 12), (2048, 13), (4096, 14), (8192, 15)):
+    legacy = getattr(model, "protocol", LEGACY_SCHEMA) == LEGACY_SCHEMA
+    order = 11
+    for n in (512, 1024, 2048, 4096, 8192, 16384, 32768):
         first, regions, ids = trials(model, data, 34141, 51071, n, order)
         same, same_regions, _ = trials(model, data, 34141, 68389, n, order)
         other, region2, ids2 = trials(model, data, 79031, 68389, n, order)
@@ -59,6 +62,16 @@ def integrate(model, data, path):
         if passed:
             break
         previous = q
+        if legacy:
+            if n == 8192:
+                break
+            order += 1
+        else:
+            # Spatial and parameter uncertainty need different effort. Once
+            # the two spatial rules agree to 1%, refine the parameter tail
+            # without also doubling a converged spatial grid. Recheck both
+            # spatial scrambles on every enlarged parameter population.
+            order = min(16, max(12, order + int(geo >= 0.01)))
     masses = np.concatenate(((first + same) / 2, other))
     regions = np.concatenate(((regions + same_regions) / 2, region2))
     ids = np.r_[ids, ids2]

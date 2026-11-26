@@ -66,7 +66,9 @@ def summarize(output):
              "![Ratio of revised to previous median thickness at reported minima versus distance from the vent](site-ratios.png)", "",
              "Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a "
              "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
-             "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
+             "the same likelihood. A blank comparison means a matched map is unavailable. "
+             "The current directional maps also include the v6 model revision, so those ratios do not isolate "
+             "the observation-policy effect. [Directional model comparison](../directional/geographic-regularity/README.md) · "
              "[Values by case and method](all-distances.csv)", "",
              "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
              "|---|---:|---:|---:|---:|---:|---:|"]
@@ -87,7 +89,8 @@ def summarize(output):
               "Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore "
               "underestimate total local fallout. Each case links its original sources and separate validation coverage "
               "for directly measured thicknesses and minima fitted as points.", "",
-              "All five methods use the same accepted observations and four geographic holdouts within each case. "
+              "Each published method uses the same accepted observations and four geographic holdouts within its case. "
+              "B-Tm currently has four local method packets; its separate spherical preview remains linked from the case home. "
               "An annotation-removal check compares the median field at the vent and every accepted site with and without "
               "the provenance marker. The case comparison tables record the maximum absolute difference. "
               "The global estimates include extrapolation into unsampled regions. Numerical warnings and unsupported "

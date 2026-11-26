@@ -60,7 +60,7 @@ def verify_global(folder, family, data, meta):
         replayed,areas = within_cells(grid,r["levels_cm"])
         np.testing.assert_allclose(replayed,r["median_map_volume_km3"],rtol=1e-12)
         np.testing.assert_allclose(areas,pd.read_csv(folder/"thickness-area.csv").area_km2,rtol=1e-10,atol=1e-10)
-        border = outer_contour(grid,data)
+        border = outer_contour(model if r.get("contour_evaluation") else grid,data)
         for key in border:
             np.testing.assert_allclose(border[key],r["outer_contour"][key],rtol=1e-11,atol=1e-10)
         inner = inner_contour(border)
@@ -102,7 +102,8 @@ def verify_band_and_extent(r,view,data,meta):
     relative = abs(volumes/np.mean(t["km3"],axis=0)-1.)
     np.testing.assert_allclose(relative,band["relative_difference"])
     assert band["passed"]==bool(max(relative)<.015 and max(abs(band["coarse_volumes_km3"]/volumes-1))<.02 and max(t["relative_change"])<.01)
-    # Evaluate the four original posterior grid nodes around every accepted site.
+    # Historical plates used the polar interpolant at sites; v6 displays the
+    # actual posterior median, including at the rows selecting its levels.
     radii,_,axis = polar_nodes(data,meta["vent_lonlat"][1],*r["grid_shape"])
     xy = data.xy
     n = r["grid_shape"][1]
@@ -120,6 +121,8 @@ def verify_band_and_extent(r,view,data,meta):
             rr[i+di==len(radii)-1] *= 1.-1e-8
             original = view.central(np.column_stack((rr*np.sin(a)*axis,rr*np.cos(a)/axis)))
             mapped += radial*angular_weight*original
+    if r.get("contour_evaluation"):
+        mapped = view.central(xy)
     border = r["outer_contour"]
     np.testing.assert_array_equal(border["row_ids"],data.row_ids)
     np.testing.assert_allclose(mapped,border["mapped_log10_cm"],rtol=1e-7,atol=1e-7)

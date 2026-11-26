@@ -5,7 +5,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.special import logsumexp
 
 from .directional_scale_maps import preceding_control
 from .publication import result_home
@@ -25,7 +24,7 @@ def save(frame, path):
     )
 
 
-def evaluation(release, output):
+def evaluation(release, output, baseline=None):
     output.mkdir(parents=True, exist_ok=True)
     cases = []
     events = []
@@ -35,29 +34,29 @@ def evaluation(release, output):
         slug = rec["slug"]
         data, meta = audited_data(rec["path"])
         folder = result_home(rec) / "directional"
-        prior = read_json(folder / "extent/report.json")
-        old = read_json(preceding_control(rec, release) / "deposit.json")
+        previous = baseline / slug if baseline else preceding_control(rec, release)
+        prior = read_json((previous / "multiscale" if baseline else folder / "extent") / "report.json")
+        old = read_json(previous / "deposit.json")
         new = read_json(release / slug / "deposit.json")
         assert prior["input_sha256"] == old["input_sha256"] == new["input_sha256"] == meta["input_sha256"]
-        baseline, model, _ = open_field(
-            folder, "directional", data, meta, review=folder / "extent/report.json"
-        )
-        # The previous continuation is identical at the fitted locations in all
-        # its variants. Evaluate the signed observation distribution and check it.
-        pred = pd.DataFrame(predictions(model, data, "full", "", old["posterior_checks_passed"])).set_index(
-            "row_id"
-        )
-        central = baseline.central(data.xy) * np.log(10.0)
-        np.testing.assert_allclose(central, pred.median_log_cm, atol=2e-6)
+        if baseline:
+            pred = pd.read_csv(previous / "multiscale/measured-sites.csv.gz").set_index("row_id")
+        else:
+            view, model, _ = open_field(folder, "directional", data, meta, review=folder / "extent/report.json")
+            pred = pd.DataFrame(predictions(model, data, "full", "", old["posterior_checks_passed"])).set_index("row_id")
+            np.testing.assert_allclose(view.central(data.xy)*np.log(10.0), pred.median_log_cm, atol=2e-6)
         current = release / slug / "multiscale"
         now = read_json(current / "report.json")
         trained = pd.read_csv(current / "measured-sites.csv.gz").set_index("row_id").loc[pred.index]
-        historic = pd.read_csv(folder / "extent/heldout.csv.gz")
+        historic = pd.read_csv((previous / "multiscale" if baseline else folder / "extent") / "heldout.csv.gz")
         newtest = pd.read_csv(current / "heldout.csv.gz")
         pair = historic.merge(
             newtest, on=["design", "fold", "row_id"], suffixes=("_previous", "_new"), validate="one_to_one"
         )
         pair["slug"] = slug
+        if "evidence_previous" in pair:
+            assert (pair.evidence_previous == pair.evidence_new).all()
+            pair["evidence"] = pair.evidence_new
         pairings.append(
             pair[
                 [
@@ -153,5 +152,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--release", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--baseline", type=Path, help="Archived matched multiscale release; otherwise compare the extent control")
     a = p.parse_args()
-    evaluation(a.release, a.output)
+    evaluation(a.release, a.output, a.baseline)

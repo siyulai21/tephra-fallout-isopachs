@@ -1,0 +1,39 @@
+...............F........................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 71%]
+........................................................................ [ 95%]
+..............                                                           [100%]
+=================================== FAILURES ===================================
+___________________ test_registered_btm_cryptotephra_release ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6424ff06e0>
+
+    def test_registered_btm_cryptotephra_release(monkeypatch):
+        from benchmarks.verify_btm_cryptotephra import verify_inputs as verify_core_evidence, verify_release
+    
+        monkeypatch.chdir(Path(__file__).resolve().parents[1])
+>       verify_release(verify_core_evidence())
+
+tests/test_btm_publication.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/verify_btm_cryptotephra.py:95: in verify_release
+    unavailable = [name for name, expected in release["files"].items() if not signed_file(name, expected, current)]
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+benchmarks/publication.py:153: in signed_file
+    verify_files({name: current[name]})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hashes = {'eruptions/b-tm/README.md': '015c9508b13b1d4e5584d8c1a00e50d86af40028d2e19f4babc7862506f077af'}
+root = PosixPath('/workspace/tephra-fallout-isopachs')
+
+    def verify_files(hashes, root=ROOT):
+        for name, expected in hashes.items():
+            path = root / name
+            if not path.is_file() or sha256(path.read_bytes()).hexdigest() != expected:
+>               raise ValueError(f"Published evidence is missing or changed: {name}")
+E               ValueError: Published evidence is missing or changed: eruptions/b-tm/README.md
+
+benchmarks/publication.py:133: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_btm_publication.py::test_registered_btm_cryptotephra_release
+1 failed, 301 passed in 73.25s (0:01:13)
