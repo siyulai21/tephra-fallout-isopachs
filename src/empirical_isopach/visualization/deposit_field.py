@@ -89,11 +89,11 @@ def open_field(folder, family, data, meta, *, review=None):
     """Prefer the current complete-deposit model when a reviewed continuation exists."""
     path = Path(review) if review is not None else review_path(folder,family)
     if family == "directional" and path.parent.name == "multiscale" and path.is_file():
-        from ..models.directional.multiscale.geometry import SCHEMA
+        from ..models.directional.multiscale.geometry import SCHEMA, LEGACY_SCHEMA
         from ..models.directional.multiscale.posterior import DirectionalField
         report=json.loads(path.read_text())
         packet=path.parent/"posterior.npz"
-        if (report["protocol"]!=SCHEMA or report["input_sha256"]!=meta["input_sha256"]
+        if (report["protocol"] not in (SCHEMA, LEGACY_SCHEMA) or report["input_sha256"]!=meta["input_sha256"]
                 or digest(packet)!=report["artifacts_sha256"]["posterior.npz"]):
             raise ValueError("Directional data or posterior identity differs")
         model=DirectionalField.load(packet)

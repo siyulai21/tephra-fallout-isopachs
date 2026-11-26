@@ -12,7 +12,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 |---|---|---:|---:|---:|---:|
 | GP ensemble | observation hull | **171** | 119–244 | 1.531 | 93.0% |
 | Cubic spline | observation hull | **198** | 144–285 | 1.694 | 90.7% |
-| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **485** | 317–845 | 1.321 | 94.2% |
+| [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **541** | 333–1,049 | 1.225 | 97.7% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **449** | 267–916 | 1.600 | 94.2% |
 | [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **2,201** | 1,099–5,647 | 1.372 | 93.0% |
 

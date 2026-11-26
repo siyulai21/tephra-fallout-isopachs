@@ -69,8 +69,10 @@ def summarize(output):
              "Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a "
              "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
              "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
-             "The current nested maps also use the continuous-area-growth method, so their ratios include that "
-             "methodological revision as well as the fitting convention. [Matched nested-method comparison](../nested-isopachs/adaptive-growth/README.md). "
+             "The current nested maps use continuous area growth, and the directional maps include the v6 revision. "
+             "Their ratios therefore include model changes as well as the fitting convention. "
+             "[Nested comparison](../nested-isopachs/adaptive-growth/README.md) · "
+             "[Directional comparison](../directional/geographic-regularity/README.md) · "
              "[Values by case and method](all-distances.csv)", "",
              "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
              "|---|---:|---:|---:|---:|---:|---:|"]
@@ -91,7 +93,8 @@ def summarize(output):
               "Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore "
               "underestimate total local fallout. Each case links its original sources and separate validation coverage "
               "for directly measured thicknesses and minima fitted as points.", "",
-              "The methods published on each input use the same accepted observations and four geographic holdouts. "
+              "Each published method uses the same accepted observations and four geographic holdouts within its case. "
+              "B-Tm currently has four local method packets; its separate spherical preview remains linked from the case home. "
               "An annotation-removal check compares the median field at the vent and every accepted site with and without "
               "the provenance marker. The case comparison tables record the maximum absolute difference. "
               "The global estimates include extrapolation into unsampled regions. Numerical warnings and unsupported "

@@ -3,6 +3,9 @@ on: [push, pull_request]
 jobs:
   numerical-tests:
     runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -92,6 +95,8 @@ jobs:
         run: python -m benchmarks.verify_directional
       - name: Replay multiscale directional fits, censored events, geographic deletions and whole-field volumes
         run: python -m benchmarks.verify_directional_multiscale
+      - name: Replay principal directional geography, matched bounds, probabilities and volume refinements
+        run: python -m benchmarks.verify_directional_geography --jobs 2
       - name: Verify ensemble medians, joint fields and geographic calibration
         run: python -m benchmarks.verify_directional_ensemble
       - name: Verify spherical bearing continuation, mass and missing-fan tests

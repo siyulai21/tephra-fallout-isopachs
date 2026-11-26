@@ -1,17 +1,17 @@
 # YTT · Multiscale directional ensemble
 
-The principal bulk volume is **1,401 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **938–2.17e+03 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.
+The principal bulk volume is **1,423 km³**, the whole-Earth integral of the median-thickness map. The conditional thickness-band range is **946–2.2e+03 km³**. Its endpoints integrate the pointwise 25th and 75th percentiles of latent thickness over Earth.
 
 ![YTT, Multiscale directional ensemble. Full deposit, near the vent and thickness versus square root of cumulative area](deposit.png)
 
-Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 42 of 46 modeled locations. The thickest displayed line is 16 cm and encloses 8 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
+Each circle shows a measurement. Bounded sites take the colour of their stated limit. The curve counts every patch at or above each thickness. The 1 cm footprint includes 42 of 46 modeled locations. The thickest displayed line is 32 cm and encloses 1 fitted locations. The volume includes fallout beyond the displayed contours. [Median thickness grid](median-grid.npz) · [Thickness and cumulative area](thickness-area.csv) · [Map integral, resolution and source hashes](deposit.json)
 
-The equal-region negative log score was 1.416. The 95% predictive intervals covered 97.8% of the withheld measurements. 4 of four buffered fits passed the numerical checks.
+The equal-region negative log score was 1.515. The 95% predictive intervals covered 93.5% of the withheld measurements. 4 of four buffered fits passed the numerical checks.
 
 The directional field allows fan headings and contrast to change with distance. Nearby stations can support local departures. Solid line fragments require exact measurements on both sides and at least 90% posterior probability of a crossing.
 
-The conditional 95% interval for integrated whole-deposit draws is 1.02e+03–3.78e+03 km³. 0 support policies found a qualifying complete-contour band.
+The conditional 95% interval for integrated whole-deposit draws is 1.07e+03–3.86e+03 km³. 0 support policies found a qualifying complete-contour band.
 
 [Fit, structural sensitivities and convergence](multiscale/report.json) · [All contour decisions](multiscale/support.json.gz) · [Measured sites](multiscale/measured-sites.csv.gz) · [Held-out predictions](multiscale/heldout.csv.gz) · [Archive locations](multiscale/archive-probes.json) · [Thickness exceedance at three scales](exceedance.png)
 
-[Previous and revised isopachs at three scales](../../../../comparisons/directional/multiscale/ytt.png) · [Matched geographic tests](../../../../comparisons/directional/multiscale/README.md) · [Equations and assumptions](../../../../docs/methods/directional-multiscale.md) · [Previous maps](../../../../archive/2026-11-25-directional-geography/README.md)
+[Previous and revised isopachs at three scales](../../../../comparisons/directional/geographic-regularity/ytt.png) · [Matched geographic tests](../../../../comparisons/directional/geographic-regularity/README.md) · [Equations and assumptions](../../../../docs/methods/directional-multiscale.md) · [Previous maps](../../../../archive/2026-11-25-directional-v5/README.md)

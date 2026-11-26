@@ -2,7 +2,7 @@
 
 This method-development study compared the original directional field with the multiscale ensemble on 1,091 quantitative locations. It used the lower-censored inputs archived with the study. Current eruption maps fit lower-only reports as point measurements. [Current directional maps](../README.md) · [Current and previous thickness at each reported minimum](../../reported-minima/README.md)
 
-The multiscale ensemble is the principal directional reconstruction for all nine eruptions. It draws a coherent field with a direction that can change with distance, estimates local differences across neighboring sites and integrates the median-thickness surface over Earth. [Equations, assumptions and reproduction](../../../docs/methods/directional-multiscale.md) · [Previous maps and case reports](../../../archive/2026-11-25-directional-geography/README.md) · [Input and model identities, software versions and seeds](provenance.json)
+This historical v5 ensemble has been superseded by the [v6 geography study](../geographic-regularity/README.md). It draws a coherent field with a direction that can change with distance, estimates local differences across neighboring sites and integrates the median-thickness surface over Earth. Its original numerical sources remain in the [v5 archive](../../../archive/2026-11-25-directional-v5/README.md); the living [method document](../../../docs/methods/directional-multiscale.md) describes v6. [Previous maps and case reports](../../../archive/2026-11-25-directional-geography/README.md) · [Original input and model identities, software versions and seeds](provenance.json)
 
 ## Maps and bulk volumes
 

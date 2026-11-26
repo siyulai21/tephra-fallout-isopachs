@@ -1,6 +1,6 @@
 # Spherical mixture
 
-A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior fits test sensitivity to unsampled directions. [Prior and geometry diagnostics on their study inputs](comparison.csv) · [Known-deposit tests](bearings/known-volumes.csv)
+A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior fits test sensitivity to unsampled directions. [Prior and geometry diagnostics on their study inputs](comparison.csv) · [Paired maps and known-deposit tests](bearings/README.md)
 
 | Eruption | Localities | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---:|---:|---:|---:|---:|

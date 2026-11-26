@@ -24,7 +24,7 @@ def read_rows(path):
         return list(csv.DictReader(stream))
 
 
-def field_validation(folder, input_path, slug, *, verify=True):
+def field_validation(folder, input_path, slug, *, verify=True, families=METHODS):
     """Match each observation, buffered fold and predictive event across the three maps."""
     import gzip
     from src.empirical_isopach.models.directional.ensemble.members import splits
@@ -48,7 +48,11 @@ def field_validation(folder, input_path, slug, *, verify=True):
     results = []
     record = dataset_record(input_path)
     declared = published_methods(record) if record is not None else METHODS
-    for family in (f for f in METHODS if f in declared):
+    for family in families:
+        if family not in METHODS:
+            raise ValueError(f"Not a global field family: {family}")
+        if family not in declared:
+            continue
         root = folder / family
         nested = family == "nested-isopachs"
         from src.empirical_isopach.visualization.deposit_field import review_path

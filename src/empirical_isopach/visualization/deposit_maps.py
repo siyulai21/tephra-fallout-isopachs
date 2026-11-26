@@ -14,7 +14,7 @@ import shapely
 
 from src.Laea import make_laea_transform
 from .deposit_field import FIRST_CM
-from .contour_limits import local_half_width, outer_contour, near_frame, near_levels, visible_levels
+from .contour_limits import local_half_width, outer_contour as outer_contour, near_frame, near_levels, visible_levels
 from .maps import frame_bounds
 from .shorelines import detail, local_mask
 
@@ -139,6 +139,16 @@ def draw_land(ax,bounds,vent,resolution,*,shoreline=None):
 def panel(ax, field, data, meta, family, model, bounds, levels, palette, large, outer_cm=FIRST_CM, inner_cm=np.inf):
     x,y = regular_axes(bounds,470 if large else 301)
     z = field.on_grid(x,y)
+    from ..models.directional.multiscale.geometry import SCHEMA
+    if getattr(model, "protocol", None) == SCHEMA:
+        # A fixed physical local process can be finer than the whole-Earth
+        # polar integration mesh. Draw its actual median at display nodes;
+        # interpolation of the integration mesh is not a new fitted field.
+        xy = np.column_stack([v.ravel() for v in np.meshgrid(x,y)])
+        valid = model.domain.rho(xy) <= model.domain.rho_max
+        direct = np.full(len(xy), np.nan)
+        direct[valid] = model.central(xy[valid])
+        z = direct.reshape(len(y),len(x))
     shoreline = None if large else detail(bounds)
     draw_land(ax,bounds,meta["vent_lonlat"],shoreline["raster_long_side"] if shoreline else 890,shoreline=shoreline)
     show = (levels >= outer_cm) & (levels <= inner_cm)
@@ -178,6 +188,9 @@ def panel(ax, field, data, meta, family, model, bounds, levels, palette, large, 
 
 def plate(path, name, family, field, data, meta, model, levels, rows, receipt, near_half=None):
     from .deposit_field import display_name
+    from ..models.directional.multiscale.geometry import SCHEMA
+    if getattr(model, "protocol", None) == SCHEMA:
+        receipt["contour_evaluation"] = "direct posterior median at Cartesian display nodes"
     selection = receipt["outer_contour"]
     outer_cm = selection["level_cm"]
     inner_cm = receipt["inner_contour"]["level_cm"]

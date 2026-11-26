@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+from concurrent.futures import ProcessPoolExecutor
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -57,14 +58,21 @@ def windows(receipts):
     return (near, np.array([-h, -h, h, h]), full)
 
 
-def panel(ax, field, data, meta, box, inner=()):
+def panel(ax, field, data, meta, box, inner=(), model=None):
     x, y = regular_axes(box, 425)
     draw_land(ax, box, meta["vent_lonlat"], 220)
     z = field.on_grid(x, y)
+    if model is not None:
+        xy = np.column_stack([v.ravel() for v in np.meshgrid(x, y)])
+        valid = model.domain.rho(xy) <= model.domain.rho_max
+        z = np.full(len(xy), np.nan)
+        z[valid] = model.central(xy[valid])
+        z = z.reshape(len(y), len(x))
     levels = LEVELS[(np.log10(LEVELS) > np.nanmin(z)) & (np.log10(LEVELS) < np.nanmax(z))]
     if len(levels):
         colors = ["#12678c" if v <= 2 else "#4f7466" if v < 32 else "#ad4e26" for v in levels]
-        c = ax.contour(x, y, z, levels=np.log10(levels), colors=colors, linewidths=0.85)
+        c = ax.contour(x, y, z, levels=np.log10(levels), colors=colors, linewidths=0.85,
+                       linestyles="dashed")
         ax.clabel(
             c, c.levels[:: max(1, len(levels) // 3)], fmt=lambda l: f"{10**l:g}", fontsize=6, inline_spacing=2
         )
@@ -108,9 +116,11 @@ def plate(items, output, title):
     fig, axes = plt.subplots(
         len(items), 3, figsize=(12.6, 3.95 * len(items) + 0.9), layout="constrained", squeeze=False
     )
-    for row, (name, field, d, m, boxes) in enumerate(items):
+    for row, item in enumerate(items):
+        name, field, d, m, boxes = item[:5]
+        model = item[5] if len(item) > 5 else None
         for col, (ax, box) in enumerate(zip(axes[row], boxes, strict=True)):
-            panel(ax, field, d, m, box, boxes[:col])
+            panel(ax, field, d, m, box, boxes[:col], model)
             if not row:
                 ax.set_title(("Proximal", "Intermediate", "Full deposit")[col], fontsize=12)
             if col == 0:
@@ -131,7 +141,8 @@ def plate(items, output, title):
     fig.legend(
         handles=[Line2D([], [], ls="", marker=marker, color="#48555a", label=label, ms=5)
                  for marker, label in symbols]
-        + [Line2D([], [], ls=":", color="#785e83", label="Geographic windows enlarged at left")],
+        + [Line2D([], [], ls=":", color="#785e83", label="Windows enlarged at left"),
+           Line2D([], [], ls="--", color="#4f7466", label="Median field; support shown on case plates")],
         loc="outside lower center",
         ncol=6,
         fontsize=8,
@@ -141,12 +152,12 @@ def plate(items, output, title):
     plt.close(fig)
 
 
-def figures(scratch, out, initial=False):
+def figures(scratch, out, initial=False, baseline=None):
     out.mkdir(exist_ok=True, parents=True)
     gallery = []
     for r in datasets():
         slug = r["slug"]
-        old = preceding_control(r, scratch)
+        old = baseline / slug if baseline else preceding_control(r, scratch)
         rec = json.loads((old / "deposit.json").read_text())
         data, meta = audited_data(r["path"])
         assert rec["input_sha256"] == meta["input_sha256"]
@@ -169,15 +180,61 @@ def figures(scratch, out, initial=False):
             ("Previous directional fit", oldfield, data, meta, bounds),
             ("Revised directional fit", newfield, data, meta, bounds),
         ]
+        if baseline:
+            from src.empirical_isopach.models.directional.multiscale.posterior import DirectionalField
+            items = [(*item, DirectionalField.load(home / "multiscale/posterior.npz"))
+                     for item, home in zip(items, (old, new), strict=True)]
         plate(items, out / (slug + ".png"), r["name"] + " · identical observations and scale in each column")
+        if baseline:
+            review_receipt(out, slug, meta, new / "multiscale/posterior.npz", old, bounds)
     if gallery:
         plate(gallery, out / "remaining.png", "Published directional isopachs · thickness in cm")
 
 
+def review_receipt(output, slug, meta, current, old, boxes):
+    receipt = dict(input_sha256=meta["input_sha256"], posterior_sha256=digest(current),
+                   previous_posterior_sha256=digest(old / "multiscale/posterior.npz"),
+                   windows_km=[b.tolist() for b in boxes], cartesian_long_side=425,
+                   contour_evaluation="direct posterior median", figure_sha256=digest(output / (slug + ".png")))
+    (output / (slug + ".json")).write_text(json.dumps(receipt, indent=2) + "\n")
+
+
+def fitted_figure(job):
+    """A direct three-scale review can precede costly whole-volume integration."""
+    record, work, output, baseline = job
+    from src.empirical_isopach.models.directional.multiscale.posterior import DirectionalField
+    from src.empirical_isopach.visualization.deposit_field import sample_field
+
+    slug = record["slug"]
+    data, meta = audited_data(record["path"])
+    current = work / slug / "full/field.npz"
+    old = baseline / slug
+    models = [DirectionalField.load(old / "multiscale/posterior.npz"), DirectionalField.load(current)]
+    fields = [read_grid(old / "median-grid.npz"), sample_field(models[1], data, meta["vent_lonlat"][1])]
+    near = local_half_width(data) * np.array([-1., -1., 1., 1.])
+    boxes = windows([dict(full_bounds_km=frames(f, data, .5)[0], near_bounds_km=near) for f in fields])
+    items = [(label, f, data, meta, boxes, m) for label, f, m in
+             zip(("Previous v5 directional", "Revised v6 directional"), fields, models, strict=True)]
+    plate(items, output / (slug + ".png"), record["name"] + " · direct posterior medians on identical windows")
+    review_receipt(output, slug, meta, current, old, boxes)
+    print(slug, flush=True)
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--release", "--scratch", dest="scratch", type=Path, required=True)
+    inputs = p.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--release", "--scratch", dest="scratch", type=Path)
+    inputs.add_argument("--work", type=Path, help="Plot completed full-fit packets directly")
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--initial", action="store_true")
+    p.add_argument("--baseline", type=Path, help="Archived matched multiscale release")
+    p.add_argument("--jobs", type=int, default=2)
     a = p.parse_args()
-    figures(a.scratch, a.output, a.initial)
+    if a.work:
+        if a.baseline is None:
+            p.error("--work requires a matched --baseline")
+        a.output.mkdir(parents=True, exist_ok=True)
+        with ProcessPoolExecutor(a.jobs) as pool:
+            list(pool.map(fitted_figure, [(r, a.work, a.output, a.baseline) for r in datasets()]))
+    else:
+        figures(a.scratch, a.output, a.initial, a.baseline)

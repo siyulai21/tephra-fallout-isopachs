@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/tephra-fallout-isopachs/benchmarks/verify_spherical_bearings.py", line 165, in <module>
+    main()
+  File "/workspace/tephra-fallout-isopachs/benchmarks/verify_spherical_bearings.py", line 145, in main
+    assert set(sources) == {rec["slug"] for rec in mapped}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+Verified 62 historical inputs used by the maps and source audits.
+Verified 115 spherical and 149 B-Tm original files against Git commit 843a2eef0fc669e38d95e4153ac8d7464f4d4a98.

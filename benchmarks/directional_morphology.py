@@ -104,20 +104,20 @@ def level_metrics(field, level, size):
     )
 
 
-def fields(record, release):
+def fields(record, release, baseline=None):
     slug = record["slug"]
-    previous = preceding_control(record, release)
+    previous = baseline / slug if baseline else preceding_control(record, release)
     return {
         "previous": read_grid(previous / "median-grid.npz"),
         "multiscale": read_grid(release / slug / "median-grid.npz"),
     }
 
 
-def study(release, output):
+def study(release, output, baseline=None):
     rows = []
     for rec in datasets():
         slug = rec["slug"]
-        for method, field in fields(rec, release).items():
+        for method, field in fields(rec, release, baseline).items():
             levels = doubling_levels(10 ** field.log10_cm.max())
             for size in (193, 385):
                 previous = None
@@ -161,5 +161,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--release", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--baseline", type=Path, help="Archived matched multiscale release")
     a = p.parse_args()
-    study(a.release, a.output)
+    study(a.release, a.output, a.baseline)

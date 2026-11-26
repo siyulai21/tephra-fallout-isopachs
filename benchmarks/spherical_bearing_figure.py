@@ -96,8 +96,8 @@ def draw(output, case_dirs):
                            "bounds_km":bounds.tolist(),"maximum_edge_cm":float(np.exp(edge_max)) if edge_max is not None else None}
         handles=[Patch(facecolor="#e1bba6",edgecolor=previous,linestyle=":",label="Earlier estimate only"),
                  Patch(facecolor="#bde2e5",edgecolor=current,linestyle="--",label="Principal estimate ≥10 cm"),
-                 Line2D([],[],ls="",marker="o",ms=5,mec="#183843",mfc="white",label="Exact thickness"),
-                 Line2D([],[],ls="",marker="^",ms=6,mec="#183843",mfc="white",label="Lower bound"),
+                 Line2D([],[],ls="",marker="o",ms=5,mec="#183843",mfc="white",label="Point (includes reported minima)"),
+                 Line2D([],[],ls="",marker="s",ms=6,mec="#183843",mfc="white",label="Two-sided range"),
                  Line2D([],[],ls="",marker="v",ms=6,mec="#183843",mfc="white",label="Upper bound"),
                  Line2D([],[],ls="",marker="D",ms=6,mec="#332807",mfc="#f5be45",label="Interpreted bound"),
                  Line2D([],[],ls="",marker="*",ms=10,color="#c34e32",label="Source")]

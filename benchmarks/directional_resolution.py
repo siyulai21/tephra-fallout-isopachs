@@ -15,20 +15,31 @@ from src.empirical_isopach.models.directional.multiscale.posterior import Direct
 
 
 def assess(job):
-    record, fraction, release = job
+    record, fraction, release, output, work = job
     data, meta = audited_data(record["path"])
     latitude = meta["vent_lonlat"][1]
     if fraction == 0.5:
         import json
 
-        root = release / record["slug"] / "multiscale"
-        field = DirectionalField.load(root / "posterior.npz")
-        receipt = json.loads((root / "report.json").read_text())["fit"]
+        if work:
+            root = work / record["slug"] / "full"
+            field = DirectionalField.load(root / "field.npz")
+            receipt = json.loads((root / "fit.json").read_text())
+        else:
+            root = release / record["slug"] / "multiscale"
+            field = DirectionalField.load(root / "posterior.npz")
+            receipt = json.loads((root / "report.json").read_text())["fit"]
     else:
+        attempts = []
         for power in (8, 10, 11):
             field, receipt = fit(data, latitude, shared_fraction=fraction, power=power)
+            attempts.append(dict(power=power, **receipt))
             if receipt["passed"]:
                 break
+        from src.empirical_isopach.models.directional.multiscale.validation import write_json
+        folder = output.parent / "resolution-attempts"
+        folder.mkdir(parents=True, exist_ok=True)
+        write_json(folder / f"{record['slug']}-{fraction:g}.json", attempts)
     exact = ~data.censored
     errors = abs(field.central(data.xy[exact]) * np.log(10) - data.log_value[exact])
     volumes = []
@@ -49,11 +60,13 @@ def assess(job):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--release", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--release", type=Path)
+    source.add_argument("--work", type=Path, help="Use the completed full-fit packets before plotting")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--jobs", type=int, default=3)
     args = parser.parse_args()
-    jobs = [(r, v, args.release) for r in datasets() for v in (0.0, 0.5, 1.0)]
+    jobs = [(r, v, args.release, args.output, args.work) for r in datasets() for v in (0.0, 0.5, 1.0)]
     with ProcessPoolExecutor(args.jobs) as pool:
         rows = list(pool.map(assess, jobs))
     pd.DataFrame(rows).to_csv(args.output, index=False)

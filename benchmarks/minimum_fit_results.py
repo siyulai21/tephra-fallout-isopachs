@@ -2,7 +2,6 @@
 import argparse
 from dataclasses import replace
 import json
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -54,6 +53,10 @@ def map_at_sites(home, family, data, identity):
     grid = home / family / "median-grid.npz"
     assert digest(grid) == display["median_grid_sha256"]
     assert digest(home / family / "deposit.png") == display["figure_sha256"]
+    if display.get("contour_evaluation"):
+        from src.empirical_isopach.models.directional.multiscale.posterior import DirectionalField
+        model = DirectionalField.load(home / family / "multiscale/posterior.npz")
+        return 10. ** model.central(data.xy), float(10. ** model.central(np.zeros((1, 2)))[0])
     with np.load(grid) as a:
         field = PolarField(a["radii_km"], a["log10_cm"], float(a["axis"]))
     return 10. ** field.at_xy(*data.xy.T), float(10. ** field.at_xy(0., 0.))

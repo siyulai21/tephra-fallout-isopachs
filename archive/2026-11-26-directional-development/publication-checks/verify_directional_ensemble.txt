@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/tephra-fallout-isopachs/benchmarks/verify_directional_ensemble.py", line 144, in <module>
+    main()
+  File "/workspace/tephra-fallout-isopachs/benchmarks/verify_directional_ensemble.py", line 130, in main
+    verify_files({name: read_hashes()[name]})
+  File "/workspace/tephra-fallout-isopachs/benchmarks/publication.py", line 133, in verify_files
+    raise ValueError(f"Published evidence is missing or changed: {name}")
+ValueError: Published evidence is missing or changed: comparisons/directional/fixed-ensemble/README.md

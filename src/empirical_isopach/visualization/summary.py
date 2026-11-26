@@ -1,7 +1,6 @@
 """Reader-facing comparisons from recorded estimates, never new inference."""
 import json
 from pathlib import Path
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
 from src.empirical_isopach.visualization.style import STYLE
