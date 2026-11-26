@@ -1,7 +1,7 @@
 name: Validate continuous nested geography
 on:
   push:
-    branches: ["codex/nested-growth-compute/*"]
+    branches: ["codex/nested-growth-compute/*", "codex/nested-growth-survey/*"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,33 +10,38 @@ env:
   OPENBLAS_NUM_THREADS: 1
   OMP_NUM_THREADS: 1
 jobs:
+  partitions:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - name: Select the requested independent validation partitions
+        id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          surveys=['calbuco-2015','aso-4','b-tm','pinatubo-1991','pinatubo-all-offshore']
+          branch=os.environ['GITHUB_REF_NAME']
+          if branch.startswith('codex/nested-growth-survey/'):
+              case=branch.rsplit('/',1)[-1]
+              assert case in surveys
+              parts=[dict(design='surveys',case=case)]
+          else:
+              cases=['mazama','tambora','aso-4','b-tm','ytt','minoan','ilopango-tbj','sakurajima-satsuma','pinatubo-1991-layer-c']
+              parts=[dict(design='quadrants',case=c) for c in cases]
+              parts += [dict(design='known',case=str(k)) for k in range(5)]
+              parts += [dict(design='surveys',case=c) for c in surveys]
+          with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
+              stream.write('matrix='+json.dumps(dict(include=parts))+'\n')
+          PY
   validation:
+    needs: partitions
     runs-on: ubuntu-latest
     timeout-minutes: 345
     strategy:
       fail-fast: false
       max-parallel: 6
-      matrix:
-        include:
-          - {design: quadrants, case: mazama}
-          - {design: quadrants, case: tambora}
-          - {design: quadrants, case: aso-4}
-          - {design: quadrants, case: b-tm}
-          - {design: quadrants, case: ytt}
-          - {design: quadrants, case: minoan}
-          - {design: quadrants, case: ilopango-tbj}
-          - {design: quadrants, case: sakurajima-satsuma}
-          - {design: quadrants, case: pinatubo-1991-layer-c}
-          - {design: known, case: "0"}
-          - {design: known, case: "1"}
-          - {design: known, case: "2"}
-          - {design: known, case: "3"}
-          - {design: known, case: "4"}
-          - {design: surveys, case: calbuco-2015}
-          - {design: surveys, case: aso-4}
-          - {design: surveys, case: b-tm}
-          - {design: surveys, case: pinatubo-1991}
-          - {design: surveys, case: pinatubo-all-offshore}
+      matrix: ${{ fromJSON(needs.partitions.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
         with:

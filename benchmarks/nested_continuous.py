@@ -14,6 +14,7 @@ from src.empirical_isopach.models.nested.study import write_json
 def job(args):
     slug,rec,index,output,design=args
     data,meta=audited_data(rec['path'])
+    assert not (data.lower_censored & ~data.interval).any(), 'Use the registered minimum-fitting edition'
     key,train,test='full',data,None
     if index is not None:
         key=('fold-' if design=='geographic' else 'quadrant-')+str(index)

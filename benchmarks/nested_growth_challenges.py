@@ -13,6 +13,7 @@ from .nested_reach_challenge import ONE_SIDE, known_design
 from .nested_reach_field import partition, FIELD_CASES
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import resolve_dataset
+from src.empirical_isopach.core.fitting import model_input
 from src.empirical_isopach.models.nested.footprints import legacy_posterior
 from src.empirical_isopach.models.nested.footprints.continuous import FlowField as FootprintField
 from src.empirical_isopach.models.nested.footprints.release import fit_part
@@ -30,6 +31,7 @@ def known(job):
     folder=output/f'{name}-{seed}'
     folder.mkdir(parents=True,exist_ok=True)
     data,truths=rotated_spokes(name) if name.startswith('survey_rotation') else known_design(name,seed)
+    assert not (data.lower_censored & ~data.interval).any(), 'Translate lower-only observations before fitting'
     meta=dict(input_sha256=synthetic_id(data),vent_lonlat=[0.,0.])
     if previous_only:
         receipt=legacy_posterior.write_fit(folder,'previous',data,None,meta)
@@ -83,7 +85,22 @@ def survey(job):
                    train=train.row_ids.tolist(),test=test.row_ids.tolist(),
                    held_evidence_ids=registered.iloc[test.row_ids-2].EvidenceID.tolist()))
     else:
-        train,test,meta,_=partition(name,folder)
+        train,test,meta,path=partition(name,folder)
+        if (train.lower_censored & ~train.interval).any() or (test.lower_censored & ~test.interval).any():
+            # Historical/external campaigns are not necessarily registered
+            # fitting editions. Preserve their CSV and stable row IDs while
+            # applying exactly the same minimum-as-point policy as new cases.
+            fitted=model_input(path,folder/'fitting')
+            data,meta=audited_data(fitted)
+            train_ids,test_ids=train.row_ids,test.row_ids
+            train=data.subset(np.isin(data.row_ids,train_ids))
+            test=data.subset(np.isin(data.row_ids,test_ids))
+            write_json(folder/'partition.json',dict(input_sha256=meta['input_sha256'],
+                       reported_source_sha256=digest(path),fitting_table=fitted.relative_to(folder).as_posix(),
+                       train=train.row_ids.tolist(),test=test.row_ids.tolist(),
+                       reported_minima_fitted_as_points=int(data.reported_minimum.sum())))
+    assert not (train.lower_censored & ~train.interval).any()
+    assert not (test.lower_censored & ~test.interval).any()
     # The preceding model is actually refitted to the current training rows;
     # older source editions cannot stand in for this matched comparison.
     old=legacy_posterior.write_fit(folder,'previous',train,test,meta)
