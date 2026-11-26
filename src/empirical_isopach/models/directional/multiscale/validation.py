@@ -14,7 +14,6 @@ from ..ensemble.members import splits
 from . import engine_sha256
 from .fit import fit, SEED
 from .geometry import SCHEMA
-from .posterior import DirectionalField
 
 
 def write_json(path, obj):

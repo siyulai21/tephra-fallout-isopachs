@@ -13,7 +13,7 @@ from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.ensemble.members import splits
 from src.empirical_isopach.models.directional.multiscale.fit import KEEP_MASS
-from src.empirical_isopach.models.directional.multiscale.geometry import SCHEMA
+from src.empirical_isopach.models.directional.multiscale.geometry import LEGACY_SCHEMA as SCHEMA
 from src.empirical_isopach.models.directional.multiscale.posterior import DirectionalField, Marginals
 from src.empirical_isopach.models.directional.multiscale.release import archive_probes, digest
 from src.empirical_isopach.visualization.deposit import read_json
@@ -37,14 +37,15 @@ def matched_events(distribution, data, rows):
         np.testing.assert_allclose(cdf[data.interval], rows.upper_endpoint_cdf[data.interval], atol=2e-7)
 
 
-def verify_case(record, pair):
-    home = result_home(record) / "directional"
+def verify_case(record, pair, *, home=None, study=STUDY, previous=ARCHIVE,
+                protocol=SCHEMA, state_count=576):
+    home = Path(home) if home is not None else result_home(record) / "directional"
     folder = home / "multiscale"
     data, meta = audited_data(record["path"])
     data = data.canonical()
     slug = record["slug"]
     report = read_json(folder / "report.json")
-    assert report["protocol"] == SCHEMA
+    assert report["protocol"] == protocol
     assert report["input_sha256"] == pair.input_sha256 == meta["input_sha256"] == digest(record["path"])
     assert len(data.xy) == report["accepted_rows"] == pair.accepted_rows
     for filename, checksum in report["artifacts_sha256"].items():
@@ -100,7 +101,7 @@ def verify_case(record, pair):
         if receipt["status"] == "empty":
             continue
         states = receipt["states"]
-        assert len(states) == 576
+        assert len(states) == state_count
         mass = np.array([s["probability"] for s in states])
         np.testing.assert_allclose(mass.sum(), 1)
         retained = sum(s["probability"] for s in states if s["retained"])
@@ -114,10 +115,13 @@ def verify_case(record, pair):
             and receipt["weighted_relative_ess"] > 0.14
             and receipt["proposal_residual"] < 1e-4
         )
+        if protocol != SCHEMA:
+            passed = passed and all(s.get("minimum_corrected_covariance_ratio", 1.) > 0
+                                    for s in states if s["retained"])
         assert receipt["passed"] == passed
         assert receipt["attempts"][-1]["passed"] == passed
     held = pd.read_csv(folder / "heldout.csv.gz")
-    with np.load(STUDY / "fold-marginals" / (slug + ".npz"), allow_pickle=False) as packet:
+    with np.load(study / "fold-marginals" / (slug + ".npz"), allow_pickle=False) as packet:
         assert str(packet["input_sha256"]) == meta["input_sha256"]
         for design in ("geographic", "quadrants"):
             rows = held[held.design == design]
@@ -169,7 +173,7 @@ def verify_case(record, pair):
     )
     for row in support["levels"] + support["refined_levels"]:
         assert all(v["eligible"] == (not v["reasons"]) for v in row["policies"].values())
-    for where, value in ((home, pair.median_map_km3), (ARCHIVE / slug, pair.previous_km3)):
+    for where, value in ((home, pair.median_map_km3), (previous / slug, pair.previous_km3)):
         dep = read_json(where / "deposit.json")
         assert (
             dep["input_sha256"] == meta["input_sha256"]
@@ -188,7 +192,9 @@ def main():
     original_reader = Path("archive/2026-11-25-lower-limit-policy/observations.py")
     assert digest(original_reader) == "37dc55a1ca9af46998c21dbfe7d7b4f2f23304a9ec37b39ac7ab6956eb1b1424"
     assert provenance["protocol"] == SCHEMA
-    assert provenance["numerical_engine_sha256"] == engine_sha256(observation_source=original_reader)
+    original_engine = Path("archive/2026-11-25-directional-v5")
+    assert provenance["numerical_engine_sha256"] == engine_sha256(
+        observation_source=original_reader, legacy_source=original_engine)
     cases = pd.read_csv(STUDY / "paired-results.csv").set_index("slug")
     geometry = pd.read_csv(STUDY / "geometry.csv.gz")
     assert set(cases.index) == {r["slug"] for r in records} == set(geometry.slug)
@@ -196,6 +202,8 @@ def main():
         slug = record["slug"]
         home = result_home(record) / "directional"
         identifiers = provenance["cases"][slug]
+        if digest(home / "multiscale/report.json") != identifiers["fit_report_sha256"]:
+            home = original_engine / "current-cases" / slug
         for key, path in (
             ("input_sha256", record["path"]),
             ("fit_report_sha256", home / "multiscale/report.json"),
@@ -204,7 +212,7 @@ def main():
             ("fold_marginals_sha256", STUDY / "fold-marginals" / (slug + ".npz")),
         ):
             assert digest(path) == identifiers[key]
-        verify_case(record, cases.loc[slug])
+        verify_case(record, cases.loc[slug], home=home)
     assert set(geometry.cartesian_long_side) == {193, 385} and set(geometry.method) == {
         "previous",
         "multiscale",

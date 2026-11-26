@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/tephra-fallout-isopachs/benchmarks/directional_catalogue.py", line 131, in <module>
+    install(rec, args.release, args.study, args.previous_archive)
+  File "/workspace/tephra-fallout-isopachs/benchmarks/directional_catalogue.py", line 121, in install
+    case_home(home, root)
+  File "/workspace/tephra-fallout-isopachs/benchmarks/directional_catalogue.py", line 38, in case_home
+    saved_case_overview(home)
+  File "/workspace/tephra-fallout-isopachs/src/empirical_isopach/visualization/summary.py", line 20, in saved_case_overview
+    reports = [json.loads((output/p).read_text()) for p in ("report.json",directional,"spherical-mixture/report.json")]
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'eruptions/mazama/results/minimum-fit-2026-11-25/directional/azimuth/report.json'

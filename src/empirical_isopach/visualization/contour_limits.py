@@ -5,7 +5,7 @@ import numpy as np
 
 def outer_contour(field, data):
     """Select the thickest doubling level enclosing at least 95% of accepted rows."""
-    predicted = field.at_xy(*data.xy.T)
+    predicted = field.central(data.xy) if hasattr(field, "central") else field.at_xy(*data.xy.T)
     if not len(predicted) or not np.isfinite(predicted).all():
         raise ValueError("Every modeled observation must have a finite median on the map")
     required = (95*len(predicted)+99)//100

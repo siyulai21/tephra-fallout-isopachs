@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import pandas as pd
 
-from .publication import published_methods, result_home
+from .publication import published_methods, reported_edition, result_home
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.study import digest, write_json
 
@@ -14,19 +14,30 @@ from src.empirical_isopach.models.directional.study import digest, write_json
 PUBLISHED = Path("comparisons/directional")
 
 
+def control_edition(record, packet, root=Path(".")):
+    """Use a preceding control only under its own explicit input identity."""
+    if (root / result_home(record) / "directional" / packet).is_file():
+        return record, "current"
+    previous = reported_edition(record)
+    if (root / result_home(previous) / "directional" / packet).is_file():
+        return previous, "preceding reported-input edition"
+    raise FileNotFoundError(f"No published {packet} control for {record['slug']}")
+
+
 def current_control_summary(output, records):
-    """Summarize the directional controls on the same registered inputs as the case pages."""
+    """Summarize available controls and declare each control's actual input edition."""
     import matplotlib.pyplot as plt
 
     output.mkdir(exist_ok=True,parents=True)
     rows = []
     for rec in sorted(records,key=lambda r:r["name"]):
-        home = result_home(rec)/"directional"
         if "directional" not in published_methods(rec):
             continue
+        source, edition = control_edition(rec, "ensemble/report.json")
+        home = result_home(source)/"directional"
         ensemble = json.loads((home/"ensemble/report.json").read_text())
         single = json.loads((home/"single-structure/report.json").read_text())
-        identity = digest(rec["path"])
+        identity = digest(source["path"])
         assert single["input"]["input_sha256"] == ensemble["input"]["input_sha256"] == identity
         geo = ensemble["validation"]["geographic"]
         assert geo["row_ids"] == single["validation"]["geographic"]["row_ids"]
@@ -38,19 +49,20 @@ def current_control_summary(output, records):
                 assert observed["withheld_row_ids"] == base["withheld_row_ids"]
                 assert observed["training_row_ids"] == base["training_row_ids"]
             score = validation["equal_region_negative_log_score"]
-        rows.append(dict(name=rec["name"],slug=rec["slug"],n=len(geo["row_ids"]),
+        rows.append(dict(name=rec["name"],slug=rec["slug"],n=len(geo["row_ids"]),home=home,
+                         edition=edition,input_sha256=identity,
                          single=single["validation"]["geographic"]["equal_region_log_score"],
                          fixed=geo["equal_region_log_score"],measured=score,passed=geo["all_estimable_passed"],
                          median=ensemble["median_surface"]["volume_km3"],median_passed=ensemble["median_surface"]["passed"]))
-    lines = ["# Directional controls on the current eruption data","",
-             "Each row uses the same input and buffered geographic holdouts as its eruption page. The single-structure fit uses the reference fan geometry. The fixed-direction ensemble averages six structures. The measured-fan column gives the quantitative-only bearing fit where that diagnostic was published. Lower scores indicate better predictions. [Principal uncertain-direction fits](../README.md) · [Model definitions](../../../docs/methods/directional-ensemble.md)","",
-             "| Eruption | Sites | Single-structure score | Fixed-direction score | Measured-fan score | Fixed median map (km³) |",
-             "|---|---:|---:|---:|---:|---:|"]
+    lines = ["# Directional reference controls","",
+             "Each row declares the input edition of its saved controls. Where the current edition has no fixed-direction packet, the preceding reported-input edition remains a historical reference; it is not a matched comparison with the current principal fit. The single-structure fit uses the reference fan geometry. The fixed-direction ensemble averages six structures. The measured-fan column gives the quantitative-only bearing fit where published. Lower scores indicate better predictions. [Principal directional fits](../README.md) · [Matched v5/v6 comparison](../geographic-regularity/README.md) · [Control definitions](../../../docs/methods/directional-ensemble.md)","",
+             "| Eruption | Input edition | Sites | Single-structure score | Fixed-direction score | Measured-fan score | Fixed median map (km³) |",
+             "|---|---|---:|---:|---:|---:|---:|"]
     for r in rows:
-        link=f"../../../{result_home(next(rec for rec in records if rec['slug'] == r['slug']))}/directional/ensemble/README.md"
+        link=f"../../../{r['home']}/ensemble/README.md"
         score="—" if r["measured"] is None else f"{r['measured']:.3f}"
-        lines.append(f"| [{r['name']}]({link}) | {r['n']} | {r['single']:.3f} | {r['fixed']:.3f}{'' if r['passed'] else ' †'} | {score} | {r['median']:,.2f}{'' if r['median_passed'] else ' †'} |")
-    lines += ["","A dagger marks a numerical warning on the fixed ensemble’s geographic fits or its median-map integral. Each case links the individual policies, holdouts and sampling diagnostics.","",
+        lines.append(f"| [{r['name']}]({link}) | {r['edition']} | {r['n']} | {r['single']:.3f} | {r['fixed']:.3f}{'' if r['passed'] else ' †'} | {score} | {r['median']:,.2f}{'' if r['median_passed'] else ' †'} |")
+    lines += ["","A dagger marks a numerical warning on the fixed ensemble’s geographic fits or its median-map integral. Each case links the individual policies, holdouts and sampling diagnostics. The [uncertain-azimuth control table](../case-comparison.csv) likewise reads each paired report at its declared input edition; it does not substitute the later finite-spread or principal multiscale estimates.","",
               "![Whole-Earth volumes of the fixed-direction median maps](volumes.png)","",
               "## Known deposits and calibration","",
               "The 14 fixed-design trials compare fitted isopach area with known deposits at 1, 10 and 100 cm. Two trials have identical observed thicknesses under two different hidden deposits. Their fitted intervals covered the larger hidden deposit in neither trial. [Known volumes](known-volumes.csv) · [Contour overlap](contour-accuracy.csv) · [Simulation details](simulation-records.json.gz)","",
@@ -77,13 +89,16 @@ def case_table(cases=None, published_root=Path("eruptions")):
         if cases is None and "directional" not in published_methods(rec):
             continue
         slug = rec["slug"]
+        edition = "provided study"
+        if cases is None:
+            rec, edition = control_edition(rec, "azimuth/report.json", published_root.parent)
         path = (cases/slug/"report.json" if cases is not None else
                 published_root.parent/result_home(rec)/"directional/azimuth/report.json")
         r = json.loads(path.read_text())
         if cases is None and r["input"]["input_sha256"] != digest(rec["path"]):
             raise ValueError(f"{slug}: published directional fit and accepted input differ")
         v = r["volume"]
-        row = dict(eruption=r["dataset"],slug=slug,input_sha256=r["input"]["input_sha256"],accepted=len(r["data_rows"]),
+        row = dict(eruption=r["dataset"],slug=slug,input_sha256=r["input"]["input_sha256"],input_edition=edition,accepted=len(r["data_rows"]),
                    fixed_map_km3=v["matched_control_map_km3"],uncertain_map_km3=v["median_map_km3"],
                    **{"joint_"+k:v["coherent_volume_km3"][k] for k in ("lower95","upper95")})
         for design in ("geographic","quadrants"):
@@ -91,22 +106,9 @@ def case_table(cases=None, published_root=Path("eruptions")):
                 score = r["validation"][design][subset]
                 for key in ("folds","rows","control_score","revised_score"):
                     row[design+"_"+subset+"_"+key] = score[key] if score else None
-        if cases is None and (path.parent.parent/"extent/report.json").is_file():
-            home=path.parent.parent
-            current=json.loads((home/"extent/report.json").read_text())
-            source = home/"deposit.json"
-            if (home/"multiscale/report.json").is_file():
-                from .directional_scale_maps import ARCHIVE
-                source = published_root.parent/ARCHIVE/slug/"deposit.json"
-            deposit=json.loads(source.read_text())
-            assert deposit["input_sha256"] == current["input_sha256"]
-            row["uncertain_map_km3"]=deposit["median_map_volume_km3"]
-            band=deposit["thickness_band"]["volumes_km3"]
-            row["thickness_q25_volume_km3"],row["thickness_q75_volume_km3"]=band[0],band[2]
-            row["joint_lower95"],row["joint_upper95"]=current["conditional_interval95_km3"]
-            for kind,detail in current["validation"].items():
-                row[kind+"_all_estimated_revised_score"]=detail["negative_log_score"]
-                row[kind+"_passed_only_revised_score"]=detail["passed_only_score"]
+        # These are the paired uncertain-azimuth controls, all from this report.
+        # The principal multiscale maps and finite-spread sensitivities have their
+        # own tables; borrowing a newer deposit receipt mixes model/input editions.
         records.append(row)
     return pd.DataFrame(records).sort_values("slug").reset_index(drop=True)
 

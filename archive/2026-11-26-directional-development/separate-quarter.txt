@@ -1,0 +1,18 @@
+('solid_separate_micro_quarter_free', 'tambora', 'full', None, 1.5, True)
+('solid_separate_micro_quarter_free', 'aso-4', 'full', None, 6.9, True)
+('solid_separate_micro_quarter_free', 'b-tm', 'full', None, 8.8, True)
+('solid_separate_micro_quarter_free', 'ytt', 'full', None, 0.7, True)
+('solid_separate_micro_quarter_free', 'minoan', 'full', None, 3.2, True)
+('solid_separate_micro_quarter_free', 'ilopango-tbj', 'full', None, 19.5, True)
+('solid_separate_micro_quarter_free', 'sakurajima-satsuma', 'full', None, 4.4, True)
+('solid_separate_micro_quarter_free', 'pinatubo-1991-layer-c', 'full', None, 31.1, True)
+Traceback (most recent call last):
+  File "/workspace/tephra-fallout-isopachs/results/directional-geography-v6/explore.py", line 280, in <module>
+    for fut in as_completed([pool.submit(job,j) for j in jobs]):print(fut.result(),flush=True)
+                                                                      ^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.

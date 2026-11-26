@@ -2,20 +2,27 @@
 
 from dataclasses import dataclass
 import numpy as np
-from scipy.linalg import solve_triangular
+from scipy.linalg import block_diag, solve_triangular
 from scipy.spatial.distance import cdist
 
 from ..geometry import polar
 from ...mass_mixture.geometry import RADIUS
 
-SCHEMA = "directional-multiscale-v5"
+SCHEMA = "directional-multiscale-v6"
+LEGACY_SCHEMA = "directional-multiscale-v5"
 RANGES = (8.0, 32.0, 128.0, 512.0)
 TAILS = (2.75, 4.5, 7.0)
 NOISE = (0.26, 0.48, 0.8, 1.2)
 LENGTHS = (0.20, 0.50, 1.1)
-SPREAD = (0.20, 0.85)
+SPREAD = (0.0, 0.20, 0.85)
 WARP_KM = 35.0
-LOCAL_CAP = 96
+LOCAL_SD = 1.15
+LOCAL_KM = WARP_KM / 3.0
+
+
+def log_mean(distance, tail, tempering):
+    """Power-law and exponentially tempered thinning, independent of survey reach."""
+    return np.log(100.0) - tail * distance - tempering * np.expm1(distance)
 
 
 def chart(xy, axis):
@@ -23,8 +30,7 @@ def chart(xy, axis):
 
 
 def matern(a, b, length):
-    # Nonstationary isotropic Matern convolution covariance in two dimensions.
-    # At large distance its local scale grows equally along and across the radius.
+    """Original v5 covariance, retained only for exact historical field replay."""
     ra = np.hypot(WARP_KM, np.linalg.norm(a, axis=1))[:, None]
     rb = np.hypot(WARP_KM, np.linalg.norm(b, axis=1))[None, :]
     square = (ra * ra + rb * rb) / 2
@@ -35,6 +41,27 @@ def matern(a, b, length):
     return (ra * rb / square) * (
         0.80 * (1.0 + d + d * d / 3.0) * np.exp(-d)
         + 0.20 * (1.0 + short + short * short / 3.0) * np.exp(-short)
+    )
+
+
+def separated_covariance(centers, points, length):
+    """Independent broad dispersal and fixed physical-scale local processes.
+
+    The two blocks have separate coefficient priors. Broad fluctuations grow
+    with dispersal distance; local exposure-scale variation does not spread
+    across hundreds of kilometres merely because a station is distal.
+    """
+    n = len(centers) // 2
+    ra = np.hypot(WARP_KM, np.linalg.norm(centers[:n], axis=1))[:, None]
+    rb = np.hypot(WARP_KM, np.linalg.norm(points, axis=1))[None, :]
+    square = (ra * ra + rb * rb) / 2
+    broad = cdist(centers[:n], points) * np.sqrt(5.0 / square) / length
+    fine = cdist(centers[n:], points) * np.sqrt(5.0) / (LOCAL_KM * length)
+    return np.vstack(
+        (
+            0.8 * ra * rb / square * (1 + broad + broad * broad / 3) * np.exp(-broad),
+            0.2 * (1 + fine + fine * fine / 3) * np.exp(-fine),
+        )
     )
 
 
@@ -63,32 +90,40 @@ class LocalBasis:
     centers: np.ndarray
     length: float
     averaging: np.ndarray
+    kernel: str = "separated-matern-v6"
 
     @classmethod
     def fit(cls, xy, axis, length, shared_fraction=0.5):
+        if not 0 <= shared_fraction <= 1:
+            raise ValueError("Expected a coherent fraction between zero and one")
         points = np.unique(chart(xy, axis), axis=0)
-        kernel = matern(points, points, length)
         n = len(points)
-        groups = np.argsort(-kernel, axis=1, kind="stable")[:, :3]
-        eligible = (kernel[np.arange(n), groups[:, -1]] >= 0.20) & (groups.shape[1] == 3)
+        centers = np.vstack((points, points))
+        covariance = separated_covariance(centers, points, length)
+        broad, fine = covariance[:n], covariance[n:]
+        # There is no station-count cap. The remaining variance controls rank,
+        # so a densely surveyed eruption cannot exhaust all contrast capacity.
+        ids = independent_modes(broad, points, n)
+        factor = np.linalg.cholesky(broad[np.ix_(ids, ids)] + 1e-10 * np.eye(len(ids)))
+        broad_projector = solve_triangular(factor, np.eye(n)[ids], lower=True, check_finite=False)
+        groups = np.argsort(-fine, axis=1, kind="stable")[:, :3]
+        eligible = (fine[np.arange(n), groups[:, -1]] >= 0.20 * 0.2) & (groups.shape[1] == 3)
         groups = np.unique(np.sort(groups[eligible], axis=1), axis=0)
         averaging = np.zeros((len(groups), n))
         averaging[np.arange(len(groups))[:, None], groups] = 1.0 / 3.0
-        averaged = averaging @ kernel @ averaging.T
-        chosen = independent_modes(averaged, averaging @ points, min(n // 3, LOCAL_CAP))
+        averaged = averaging @ fine @ averaging.T
+        chosen = independent_modes(averaged, averaging @ points, n // 3)
         a = averaging[chosen]
         at = averaged[np.ix_(chosen, chosen)]
         factor = np.linalg.cholesky(at + 1e-10 * np.eye(len(a)))
-        regional = solve_triangular(factor, a, lower=True, check_finite=False) if len(a) else np.empty((0, n))
+        regional = (
+            solve_triangular(factor, a, lower=True, check_finite=False) if len(a) else np.empty((0, n))
+        )
         # The finer conditional process is orthogonal to the regional averages.
         # Split its variance between the coherent deposit and site heterogeneity.
-        z = kernel @ regional.T
-        remainder = kernel - z @ z.T
-        ids = (
-            independent_modes(remainder, points, LOCAL_CAP - len(regional))
-            if shared_fraction
-            else np.array([], int)
-        )
+        z = fine @ regional.T
+        remainder = fine - z @ z.T
+        ids = independent_modes(remainder, points, n) if shared_fraction else np.array([], int)
         if len(ids):
             precision = np.linalg.cholesky(remainder[np.ix_(ids, ids)] + 1e-10 * np.eye(len(ids)))
             contrast = np.eye(n)[ids] - z[ids] @ regional
@@ -96,13 +131,26 @@ class LocalBasis:
             projector = np.vstack((regional, np.sqrt(shared_fraction) * residual))
         else:
             projector = regional
-        return cls(points, length, projector)
+        return cls(centers, length, block_diag(broad_projector, projector))
+
+    def cross_covariance(self, xy, axis):
+        if self.kernel == "matern-v5":
+            covariance = matern
+        elif self.kernel == "separated-matern-v6":
+            covariance = separated_covariance
+        else:
+            raise ValueError("Unrecognized directional covariance")
+        return covariance(self.centers, chart(xy, axis), self.length)
 
     def features(self, xy, axis):
-        return (self.averaging @ matern(self.centers, chart(xy, axis), self.length)).T
+        return (self.averaging @ self.cross_covariance(xy, axis)).T
+
+    def unresolved(self, xy, axis):
+        columns = self.features(xy, axis)
+        return np.maximum(0.0, 1.0 - np.sum(columns * columns, axis=1))
 
 
-def trend(xy, axis, scale, complexity):
+def trend(xy, axis, scale, complexity, *, legacy=False):
     r, theta = polar(xy, axis)
     x = r / scale
     # The finite core has a differentiable summit. At large range thinning is a power law.
@@ -113,7 +161,9 @@ def trend(xy, axis, scale, complexity):
     columns = [np.full(len(x), 2.8), 1.2 * h * h, 1.1 * h * h * (1.0 - turn)]
     amplitudes = (2.7, 1.25, 0.60) if complexity else (2.7, 0.65)
     for k, a in enumerate(amplitudes, 1):
-        gate = (h * rim) ** k * h
+        # r**(k+2) times a harmonic is smooth in Cartesian coordinates at the
+        # source. The old r**(k+1) gate had direction-dependent curvature there.
+        gate = (h * rim) ** k * (h if legacy else h * h)
         for func in (np.cos, np.sin):
             angular = a * gate * func(k * theta)
             columns.append(angular)
@@ -125,4 +175,4 @@ def trend(xy, axis, scale, complexity):
 def design(xy, axis, scale, complexity, local):
     columns, distance, rim = trend(xy, axis, scale, complexity)
     local_part = local.features(xy, axis) * rim[:, None] ** 2
-    return np.column_stack((columns, 1.15 * local_part)), distance
+    return np.column_stack((columns, LOCAL_SD * local_part)), distance

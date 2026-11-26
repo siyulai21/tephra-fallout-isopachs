@@ -179,7 +179,9 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
     _,fit_ok=volume_interval(family,report,read_json(review) if review.exists() else None)
     maximum=max(field.log10_cm.max(),data.log_value.max()/np.log(10.))
     levels=doubling_levels(10.**maximum)
-    border=outer_contour(field,data)
+    from ..models.directional.multiscale.geometry import SCHEMA
+    direct = getattr(model, "protocol", None) == SCHEMA
+    border=outer_contour(model if direct else field,data)
     bounds,_,_=frames(field,data,border["level_cm"])
     volume,area,coarse_area,checks_record=describe_surface(field,levels,median_trials(band),bounds,border["level_cm"])
     np.testing.assert_allclose(volume,band["volumes_km3"][1],rtol=1e-12)

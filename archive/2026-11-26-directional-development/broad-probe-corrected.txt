@@ -1,0 +1,29 @@
+design,seed,truth,input_sha256,truth_volume_km3,lower95_km3,upper95_km3,covers_truth,fit_passed,integration_passed
+smooth,90,specified,b4398d45ea3056f98016527ca65f1bd79cbded9ffabd6341c90def456505d76f,33.570265703954966,33.532595905092826,69.2249887422505,True,True,True
+
+minoan 0.5615195402280463 True
+Traceback (most recent call last):
+  File "/workspace/tephra-fallout-isopachs/results/directional-geography-v6/broad_probe.py", line 23, in <module>
+    print(rec['slug'],pred.median_absolute_log_error.mean(),receipt['passed'],flush=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/util/_decorators.py", line 335, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 9691, in mean
+    return NDFrame.mean(
+           ^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/generic.py", line 12028, in mean
+    return self._stat_function(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/generic.py", line 11982, in _stat_function
+    return self._reduce(
+           ^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 9057, in _reduce
+    result = op(delegate, skipna=skipna, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/nanops.py", line 643, in new_func
+    return func(_ensure_numeric(values), **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tephra-fallout-isopachs/.venv/lib/python3.12/site-packages/pandas/core/nanops.py", line 552, in _ensure_numeric
+    raise TypeError(f"Could not convert {non_numeric!r} to numeric")
+TypeError: Could not convert '' to numeric

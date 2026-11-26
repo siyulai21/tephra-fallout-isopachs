@@ -42,6 +42,33 @@ SURVEYS = (
 )
 
 
+def checked_fit(data, latitude, out):
+    attempts = []
+    for power in (8, 10, 11):
+        model, receipt = fit(data, latitude, power=power)
+        attempts.append(dict(power=power, **receipt))
+        if receipt["passed"]:
+            break
+    write_json(out / "fit-attempts.json", attempts)
+    return model, receipt
+
+
+def select_engine(previous=False):
+    """Run the preserved v5 engine on today's identical synthetic observations."""
+    if not previous:
+        return
+    import importlib
+    import sys
+    import types
+
+    name = "src.empirical_isopach.models.directional._v5_control"
+    package = types.ModuleType(name)
+    package.__path__ = [str(Path("archive/2026-11-25-directional-v5").resolve())]
+    sys.modules[name] = package
+    global fit
+    fit = importlib.import_module(name + ".fit").fit
+
+
 def turning(seed):
     axis = EarthDomain.wgs84(0.0).axis_scale
 
@@ -68,7 +95,7 @@ def known(design, seed, out):
         data, truths = turning(seed)
     else:
         data, truths = known_design(design, seed)
-    model, fit_info = fit(data, 0.0)
+    model, fit_info = checked_fit(data, 0.0, out)
     rows = []
     for scramble in (51071, 68389):
         xy, w, *_ = nodes(13, scramble, 0.0)
@@ -152,7 +179,8 @@ def campaign(slug, out):
         data, meta = audited_data(rec["path"])
         if slug == "sihailongwan":
             select = np.isin(
-                data.row_ids, [v["row_id"] for v in meta["interpreted_upper_limits"] if v["id"] == "longgang"]
+                data.row_ids,
+                [v["row_id"] for v in meta["interpreted_upper_limits"] if v["id"] == "longgang"],
             )
         elif slug in ("mazama", "ilopango-tbj", "pinatubo-interpreted"):
             select = np.isin(data.row_ids, [v["row_id"] for v in meta["interpreted_upper_limits"]])
@@ -161,9 +189,7 @@ def campaign(slug, out):
             ids = pd.read_csv(rec["path"]).iloc[data.row_ids - 2].EvidenceID.str.split("-").str[0]
             select = ids.isin(("H01", "WW", "W04", "SO95", "W09", "S99", "W08")).to_numpy()
         train, test = data.subset(~select), data.subset(select)
-    model, receipt = fit(train, meta["vent_lonlat"][1])
-    if not receipt["passed"]:
-        model, receipt = fit(train, meta["vent_lonlat"][1], power=10)
+    model, receipt = checked_fit(train, meta["vent_lonlat"][1], out)
     rows = predictions(model, test, "survey", 0, receipt["passed"])
     pd.DataFrame(rows).assign(
         survey=slug, input_sha256=meta["input_sha256"], training_rows=len(train.xy)
@@ -199,6 +225,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--jobs", type=int, default=3)
+    p.add_argument("--previous", action="store_true", help="Use the archived v5 model on these same inputs")
     selected = p.add_mutually_exclusive_group()
     selected.add_argument("--surveys-only", action="store_true")
     selected.add_argument("--known-only", action="store_true")
@@ -210,6 +237,6 @@ if __name__ == "__main__":
         jobs = [j for j in jobs if not j[1]]
     if a.known_only:
         jobs = [j for j in jobs if j[1]]
-    with ProcessPoolExecutor(a.jobs) as pool:
+    with ProcessPoolExecutor(a.jobs, initializer=select_engine, initargs=(a.previous,)) as pool:
         for s in pool.map(run, jobs):
             print(s, flush=True)

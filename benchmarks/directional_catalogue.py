@@ -34,11 +34,14 @@ def archive(source, destination):
 def case_home(home, root):
     rows = volume_rows(home)
     write_rows(home / "principal-volumes.csv", rows)
-    if (home / "report.json").is_file():
+    if (home / "report.json").is_file() and (home / "spherical-mixture/report.json").is_file():
         saved_case_overview(home)
     page = root / "README.md"
     prefix = home.relative_to(root).as_posix() + "/"
     body = page.read_text()
+    if "## Volumes and geographic prediction" not in body:
+        page.write_text(body.rstrip() + "\n\n" + case_section(home, prefix))
+        return
     start = body.index("## Volumes and geographic prediction")
     if (home / "report.json").is_file():
         last = body.index("poorly constrained.", body.index("## Inside the observation hull", start))
@@ -49,7 +52,7 @@ def case_home(home, root):
     page.write_text(body[:start] + case_section(home, prefix).rstrip() + "\n\n" + tail)
 
 
-def install(record, release):
+def install(record, release, study=Path("comparisons/directional/multiscale"), previous_archive=ARCHIVE):
     slug = record["slug"]
     root = Path("eruptions") / slug
     home = result_home(record)
@@ -101,19 +104,19 @@ def install(record, release):
     for name in MAPS:
         shutil.copyfile(source / name, target / name)
     rel = lambda p: os.path.relpath(p, target)
-    study = Path("comparisons/directional/multiscale")
     page = target / "README.md"
     with page.open("a") as stream:
         stream.write(
             f"\n[Previous and revised isopachs at three scales]({rel(study / (slug+'.png'))}) · "
             f"[Matched geographic tests]({rel(study/'README.md')}) · "
             f"[Equations and assumptions]({rel('docs/methods/directional-multiscale.md')}) · "
-            f"[Previous maps]({rel(ARCHIVE/'README.md')})\n"
+            f"[Previous maps]({rel(previous_archive/'README.md')})\n"
         )
     manifest = target / "azimuth/artifacts.json"
-    hashes = read_json(manifest)
-    hashes["../README.md"] = digest(page)
-    write_json(manifest, hashes)
+    if manifest.is_file():
+        hashes = read_json(manifest)
+        hashes["../README.md"] = digest(page)
+        write_json(manifest, hashes)
     align_near_views(home, data, meta)
     case_home(home, root)
 
@@ -121,9 +124,11 @@ def install(record, release):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--release", required=True, type=Path)
+    parser.add_argument("--study", type=Path, default=Path("comparisons/directional/multiscale"))
+    parser.add_argument("--previous-archive", type=Path, default=ARCHIVE)
     args = parser.parse_args()
     for rec in datasets():
-        install(rec, args.release)
+        install(rec, args.release, args.study, args.previous_archive)
         print(rec["slug"], flush=True)
     from .principal_volumes import refresh_catalogue
 
