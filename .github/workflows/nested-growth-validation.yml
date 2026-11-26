@@ -1,7 +1,7 @@
 name: Validate continuous nested geography
 on:
   push:
-    branches: ["codex/nested-growth-compute/*", "codex/nested-growth-survey/*"]
+    branches: ["codex/nested-growth-compute/*", "codex/nested-growth-survey/*", "codex/nested-growth-refine/*"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,14 +15,20 @@ jobs:
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: benchmarks
       - name: Select the requested independent validation partitions
         id: plan
         run: |
           python - <<'PY'
           import json,os
+          from pathlib import Path
           surveys=['calbuco-2015','aso-4','b-tm','pinatubo-1991','pinatubo-all-offshore']
           branch=os.environ['GITHUB_REF_NAME']
-          if branch.startswith('codex/nested-growth-survey/'):
+          if branch.startswith('codex/nested-growth-refine/'):
+              parts=[dict(design='refinement',case=p['case'],part=p['part']) for p in json.loads(Path('benchmarks/nested_growth_refinement_plan.json').read_text())]
+          elif branch.startswith('codex/nested-growth-survey/'):
               case=branch.rsplit('/',1)[-1]
               assert case in surveys
               parts=[dict(design='surveys',case=case)]
@@ -73,10 +79,13 @@ jobs:
         env:
           DESIGN: ${{ matrix.design }}
           CASE: ${{ matrix.case }}
+          PART: ${{ matrix.part }}
         shell: bash
         run: |
           set -o pipefail
-          if [[ "$DESIGN" == quadrants ]]; then
+          if [[ "$DESIGN" == refinement ]]; then
+            python -u -m benchmarks.nested_growth_refine "$CASE" "$PART" --output packet/continuous | tee packet/fitting.log
+          elif [[ "$DESIGN" == quadrants ]]; then
             python -u -m benchmarks.nested_continuous --design quadrants --case "$CASE" --workers 2 --output packet/quadrants | tee packet/fitting.log
           elif [[ "$DESIGN" == known ]]; then
             python -u -m benchmarks.nested_growth_challenges --design known --previous-only --shard-index "$CASE" --shard-count 5 --workers 2 --output packet/known | tee packet/previous.log
@@ -87,7 +96,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: nested-${{ matrix.design }}-${{ matrix.case }}
+          name: nested-${{ matrix.design }}-${{ matrix.case }}${{ matrix.part && format('-{0}', matrix.part) || '' }}
           path: packet
           if-no-files-found: error
           retention-days: 14
