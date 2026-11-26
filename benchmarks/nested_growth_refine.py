@@ -23,10 +23,12 @@ def refine(slug,key,output,plan):
     identity=source['source_identity']
     assert identity['input_sha256']==meta['input_sha256'] and identity['engine_sha256']==engine()
     assert identity['train']==train.row_ids.tolist() and identity['test']==([] if test is None else test.row_ids.tolist())
-    folder=output/slug/'refinement'
-    result=write_fit(folder,key,train,test,meta,initial=12288,ceiling=12288)
+    particles=source['refinement_particles_per_population']
+    assert particles in (12288,24576)
+    folder=output/slug/('refinement' if particles==12288 else 'refinement-24576')
+    result=write_fit(folder,key,train,test,meta,initial=particles,ceiling=particles)
     write_json(folder/(key+'-refinement-source.json'),source)
-    print(slug,key,'uniform 12288-particle refinement',result['numerics']['passed'],flush=True)
+    print(slug,key,'uniform refinement',particles,result['numerics']['passed'],flush=True)
 
 
 if __name__=='__main__':

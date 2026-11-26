@@ -15,6 +15,7 @@ from ...directional.ensemble.members import splits
 from ...extent_support import save_screen
 from ..study import digest, write_json
 from . import diagnostics
+from . import map_convergence
 from .continuous import FlowField as FootprintField, PROTOCOL, write_fit
 
 
@@ -44,8 +45,12 @@ def fit_part(folder, key, train, test, meta):
         return initial
     # Inspect the continued-volume functional too. Every unsuccessful production
     # partition receives the same larger four-population attempt.
-    dest = folder/"refinement"
-    return checked(dest,write_fit(dest,key,train,test,meta,initial=12288,ceiling=12288))
+    for particles in (12288,24576):
+        dest = folder/("refinement" if particles==12288 else "refinement-24576")
+        result = checked(dest,write_fit(dest,key,train,test,meta,initial=particles,ceiling=particles))
+        if result["numerics"]["passed"]:
+            return result
+    return result
 
 
 def sector_checks(folder, data, model, report):
@@ -107,8 +112,9 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         key = "full" if i is None else f"fold-{i}"
         rec = fit_part(source,key,train,test,meta)
         start = json.loads((source/(key+".json")).read_text())
-        refined = rec["identity"]["initial"]==12288
-        origin = source/"refinement" if refined else source
+        selected_particles = rec["identity"]["initial"]
+        refined = selected_particles>=12288
+        origin = (source/("refinement" if selected_particles==12288 else "refinement-24576")) if refined else source
         packet = origin/(key+".npz")
         # Presentation packets are distinct from scratch so both raw fit attempts stay reproducible.
         target = fits/(key+"-selected.npz")
@@ -118,12 +124,18 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
             shutil.copyfile(packet,target)
         hashes[target.name] = rec["posterior_sha256"]
         history = [{"identity":start["identity"],"posterior_sha256":start["posterior_sha256"],"numerics":start["numerics"]}]
+        attempts=[(source,start)]
         if refined:
-            history.append({"identity":rec["identity"],"posterior_sha256":rec["posterior_sha256"],"numerics":rec["numerics"]})
+            for particles in (12288,24576):
+                if particles>selected_particles: break
+                parent=source/("refinement" if particles==12288 else "refinement-24576")
+                attempt=rec if parent==origin else json.loads((parent/(key+".json")).read_text())
+                attempts.append((parent,attempt))
+                history.append({"identity":attempt["identity"],"posterior_sha256":attempt["posterior_sha256"],"numerics":attempt["numerics"]})
         checkpoint_records=[]
-        for parent,attempt in ((source,start),(origin,rec)) if refined else ((source,start),):
+        for parent,attempt in attempts:
             for checkpoint in attempt.get("checkpoints",[]):
-                relative=(Path("refinement")/checkpoint["packet"] if parent!=source else Path(checkpoint["packet"]))
+                relative=parent.relative_to(source)/checkpoint["packet"]
                 if digest(parent/checkpoint["packet"])!=checkpoint["posterior_sha256"]:
                     raise ValueError(f"Refinement posterior differs at {parent/checkpoint['packet']}")
                 if checkpoint["posterior_sha256"]==rec["posterior_sha256"]:
@@ -155,7 +167,7 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                       coverage95_exact=float(exact.cdf.between(.025,.975).mean()) if len(exact) else None,
                       scored_rows=len(frame),exact_rows=len(exact))
     histories = diagnostics.integral_check(full)
-    maps = diagnostics.map_draws(full)
+    maps = map_convergence.map_draws(full)
     save_screen(fits/"support.json.gz",diagnostics.support(data,meta,full,models[1:]))
     report = dict(protocol=PROTOCOL, family="nested-isopachs",name=name,input_sha256=meta["input_sha256"],
                   accepted_rows=len(data.xy),source_latitude=full.latitude,posterior_sha256=hashes,
@@ -165,6 +177,7 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                   draw_checks_passed=bool(info["numerics"]["passed"] and histories[-1]["passed"]),
                   validation=validation,posterior_family=info["posterior_family"],sensitivities=diagnostics.sensitivity(full,data),
                   independent_draw_integration=histories,median_draw_refinements=maps,
+                  map_draw_diagnostic_sha256=digest(map_convergence.__file__),
                   map_draws=maps[-1]["draws"],heldout_sha256=digest(fits/"heldout.csv.gz"),support_sha256=digest(fits/"support.json.gz"))
     sector_checks(folder,data,full,report)
     archive_checks(path,folder,data,meta,full,archives)

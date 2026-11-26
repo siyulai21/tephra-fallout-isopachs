@@ -27,7 +27,7 @@ jobs:
           surveys=['calbuco-2015','aso-4','b-tm','pinatubo-1991','pinatubo-all-offshore']
           branch=os.environ['GITHUB_REF_NAME']
           if branch.startswith('codex/nested-growth-refine/'):
-              parts=[dict(design='refinement',case=p['case'],part=p['part']) for p in json.loads(Path('benchmarks/nested_growth_refinement_plan.json').read_text())]
+              parts=[dict(design='refinement',case=p['case'],part=p['part'],particles=p['refinement_particles_per_population']) for p in json.loads(Path('benchmarks/nested_growth_refinement_plan.json').read_text())]
           elif branch.startswith('codex/nested-growth-survey/'):
               case=branch.rsplit('/',1)[-1]
               assert case in surveys
@@ -96,7 +96,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: nested-${{ matrix.design }}-${{ matrix.case }}${{ matrix.part && format('-{0}', matrix.part) || '' }}
+          name: nested-${{ matrix.design }}-${{ matrix.case }}${{ matrix.part && format('-{0}', matrix.part) || '' }}${{ matrix.particles && format('-{0}', matrix.particles) || '' }}
           path: packet
           if-no-files-found: error
           retention-days: 14
