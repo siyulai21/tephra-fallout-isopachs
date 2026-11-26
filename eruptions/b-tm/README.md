@@ -1,6 +1,6 @@
 # B-Tm fallout reconstruction
 
-All five current models use the 71 accepted localities for the combined 946 CE Millennium eruption fallout. The field evidence includes 64 measured thicknesses, three reported minima and four upper limits. Each minimum enters the fit at its reported thickness, including the two beyond 25 km. Three of the upper limits are interpreted from site evidence. [Source audit](../../data/audits/B-Tm/README.md) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
+The four locally published models use the 71 accepted localities for the combined 946 CE Millennium eruption fallout. The field evidence includes 64 measured thicknesses, three reported minima and four upper limits. Each minimum enters the fit at its reported thickness, including the two beyond 25 km. Three of the upper limits are interpreted from site evidence. [Source audit](../../data/audits/B-Tm/README.md) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 | Method | Published map |
 |---|---|

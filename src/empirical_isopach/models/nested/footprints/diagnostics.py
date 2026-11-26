@@ -11,6 +11,35 @@ from . import geometry
 from src.probabilistic_isopach.global_volume import EarthDomain
 
 
+def population_field_check(model,data):
+    """Compare independent posterior medians between and beyond the field sites.
+
+    This is sampling repeatability of the same posterior, not a claim that an
+    unobserved direction is geologically identified. Fixed annuli and bearings
+    include the proximal transition and the complete physical chart.
+    """
+    radius,_=positions(data.xy,model.latitude)
+    positive=radius[radius>0]
+    first=max(.01,float(positive.min())/4.) if len(positive) else .01
+    domain=EarthDomain.wgs84(model.latitude)
+    r=np.geomspace(first,domain.rho_max*(1.-1e-8),32)
+    theta=np.arange(48)*2*np.pi/48
+    xy=np.column_stack((np.outer(r,np.sin(theta)).ravel()*domain.axis_scale,
+                        np.outer(r,np.cos(theta)).ravel()/domain.axis_scale))
+    median=[]
+    for indices in np.array_split(np.arange(len(model.z)),4):
+        part=model.subset(indices)
+        median.append(np.concatenate([np.median(part.field(xy[i:i+64]),axis=0)
+                                      for i in range(0,len(xy),64)]))
+    median=np.array(median)
+    visible=median.max(axis=0)>=np.log(.5)
+    spread=np.ptp(median[:,visible],axis=0)
+    middle,high=np.quantile(spread,[.5,.95]) if len(spread) else (0.,0.)
+    return dict(points=len(xy),visible_points=int(visible.sum()),minimum_cm=.5,
+                median_log_cm=float(middle),p95_log_cm=float(high),
+                passed=bool(middle<.15 and high<.4))
+
+
 def integral_check(model):
     sample = model.reduced(192)
     reference = sample.volume()
@@ -68,6 +97,7 @@ def weight_check(volumes, ratios):
 
 
 def sensitivity(model, data):
+    geometry = model.geography
     indices = model.geometry//ANGLES
     family = np.array([s.family for s in geometry.SHAPES])[indices]
     core = np.array([s.core_km for s in geometry.SHAPES])[indices]
@@ -75,26 +105,37 @@ def sensitivity(model, data):
     cases = {"equal_family_odds":np.array([.2/geometry.FAMILY_PRIOR[s] for s in family]),
              "fourfold_complex_phase_odds":np.where(np.isin(family,["two phases","turning","detached"]),4.,1.),
              "quarter_complex_phase_odds":np.where(np.isin(family,["two phases","turning","detached"]),.25,1.)}
-    # Tilt the three core scales within their original family, leaving each family's mass fixed.
+    # Tilt the core scales within their original family, leaving each family's mass fixed.
     varied = np.isin(family,["single","turning","two phases"])
     for sign,label in ((-1,"shorter_migration_scale"),(1,"longer_migration_scale")):
-        factors = (np.array(geometry.CORES)/40.)**sign
-        cases[label] = np.where(varied,(core/40.)**sign/factors.mean(),1.)
+        factors = (np.array(geometry.CORES)/32.)**sign
+        cases[label] = np.where(varied,(core/32.)**sign/factors.mean(),1.)
     secondary = np.array([s.distal_ratio for s in geometry.SHAPES])[indices]
     two = family == "two phases"
     for factor in (.25,4.):
         normalizer = (2.+factor)/3.
         cases[f"persistent_second_phase_prior_x{factor:g}"] = np.where(two,np.where(secondary==.8,factor,1.)/normalizer,1.)
     result = {key:weight_check(v,w) for key,w in cases.items()}
+    if getattr(model,"geography_version",2) == 4:
+        # The second normal latent controls physical bending. Orientation jitter
+        # completes the uniform bearing prior and is not a curvature parameter.
+        for scale in (.5,2.):
+            ratio=np.exp(.5*model.warp[:,1]**2*(1.-1./scale**2))/scale
+            result[f"bend_latent_prior_sd_x{scale:g}"]=weight_check(v,ratio)
     result["second_phase"] = {"probability":float(two.mean()),
         "conditional_distal_ratio_probabilities":{str(f):float(np.mean(secondary[two]==f)) for f in (0.,.3,.8)} if two.any() else {},
         "conditional_volume_quantiles_km3":{str(f):np.quantile(v[two & (secondary==f)],[.025,.5,.975]).tolist()
                                           for f in (0.,.3,.8) if np.any(two & (secondary==f))}}
     for factor in (.25,4.):
-        moved = join(model,data,donor=model.donor,transfer=model.transfer,tilt=factor,ranker=geometry.ranks)
+        moved = (model.recontinue(data,tilt=factor) if hasattr(model,"recontinue") else
+                 join(model,data,donor=model.donor,transfer=model.transfer,tilt=factor,ranker=geometry.ranks))
         result[f"outer_transfer_x{factor:g}"] = {"complete_draw_quantiles_km3":np.quantile(moved.volume(),[.025,.5,.975]).tolist()}
-    unique, inv = np.unique(model.geometry,return_inverse=True)
-    rank = geometry.ranks(*positions(data.xy,model.latitude),unique)
+    if hasattr(model,"ranks_at"):
+        rank = model.ranks_at(data.xy)
+        inv = np.arange(len(model.z))
+    else:
+        unique, inv = np.unique(model.geometry,return_inverse=True)
+        rank = geometry.ranks(*positions(data.xy,model.latitude),unique)
     exact = ~data.censored
     positive = exact | data.lower_censored
     lo = rank[:,exact].min(axis=1)[inv]

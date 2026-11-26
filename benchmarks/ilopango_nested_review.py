@@ -14,7 +14,7 @@ from .verify_deposit_maps import verify_global
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.directional.archive_readings import positions
 from src.empirical_isopach.models.directional.ensemble.members import splits
-from src.empirical_isopach.models.nested.footprints.posterior import FootprintField, engine, predictions
+from src.empirical_isopach.models.nested.footprints.legacy_posterior import FootprintField, engine, predictions
 from src.empirical_isopach.models.nested.inference import log_events
 from src.empirical_isopach.models.nested.profile import parameters
 from src.empirical_isopach.models.nested.study import digest

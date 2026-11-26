@@ -85,7 +85,7 @@ def test_global_training_uses_only_the_effective_point_or_censored_value():
     from src.empirical_isopach.core.observations import Observations
     from src.empirical_isopach.models.directional.multiscale.fit import fit
     from src.empirical_isopach.models.mass_mixture.inference import packed_data
-    from src.empirical_isopach.models.nested.footprints.posterior import fit_field
+    from src.empirical_isopach.models.nested.footprints.continuous import fit_field
 
     xy = np.array([[1, 2], [4, -1], [20, 10], [45, 25], [80, 4], [-30, 15]], float)
     values = np.log([12., 8., 5., 2., .6, 1.])

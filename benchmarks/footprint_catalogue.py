@@ -12,9 +12,15 @@ from src.empirical_isopach.visualization.principal import case_section, volume_r
 from src.empirical_isopach.visualization.summary import saved_case_overview
 
 
-def published_folder(case, record):
+def published_folder(case, record, *, historical=False):
     if case != record["slug"]:
         raise ValueError(f"Expected the registered case {record['slug']}, received {case}")
+    if historical:
+        from src.empirical_isopach.models.nested.study import digest
+        previous=Path("archive/2026-11-25-nested-growth/previous")/case
+        report=previous/"footprints/report.json"
+        if report.is_file() and read_json(report)["input_sha256"]==digest(record["path"]):
+            return previous
     return result_home(record)/"nested-isopachs"
 
 
@@ -35,7 +41,7 @@ def install(case, record, source):
     import os
     def link(path):
         return os.path.relpath(path, target)
-    study = link("comparisons/nested-isopachs/geography/README.md")
+    study = link("comparisons/nested-isopachs/adaptive-growth/README.md")
     protocol = link("docs/methods/nested-footprints.md")
     old = link("archive/2026-11-23-nested-geography/README.md")
     page = target/"README.md"
@@ -58,12 +64,15 @@ def install(case, record, source):
     align_near_views(home,*audited_data(record["path"]))
     rows = volume_rows(home)
     write_rows(home/"principal-volumes.csv", rows)
-    if (home/"report.json").is_file():
+    if (home/"report.json").is_file() and (home/"spherical-mixture/report.json").is_file():
         saved_case_overview(home)
     root = Path("eruptions")/record["slug"]
     page = root/"README.md"
     prefix = home.relative_to(root).as_posix()+"/"
     body = page.read_text()
+    if "## Volumes and geographic prediction" not in body:
+        page.write_text(body.rstrip()+"\n\n"+case_section(home,prefix).rstrip()+"\n")
+        return
     start = body.index("## Volumes and geographic prediction")
     if (home/"report.json").exists():
         last = body.index("## Inside the observation hull",start)

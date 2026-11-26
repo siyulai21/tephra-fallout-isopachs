@@ -99,15 +99,16 @@ def open_field(folder, family, data, meta, *, review=None):
         model=DirectionalField.load(packet)
         return model,model,{"multiscale/report.json":digest(path),"multiscale/posterior.npz":digest(packet)}
     if family == "nested-isopachs" and path.parent.name == "footprints" and path.is_file():
-        from ..models.nested.footprints.posterior import FootprintField, PROTOCOL as FOOTPRINTS
+        from ..models.nested.footprints.posterior import FootprintField, PROTOCOL as FOOTPRINTS, LEGACY_PROTOCOL, GROWTH_PROTOCOL
+        from ..models.nested.footprints.continuous import FlowField, PROTOCOL as CONTINUOUS
         from ..models.nested.report import MapView
         report = json.loads(path.read_text())
         packet = path.parent/"full-selected.npz"
         key = "footprints/full-selected.npz"
-        if (report["protocol"] != FOOTPRINTS or report["input_sha256"] != meta["input_sha256"] or
+        if (report["protocol"] not in (FOOTPRINTS, LEGACY_PROTOCOL, GROWTH_PROTOCOL, CONTINUOUS) or report["input_sha256"] != meta["input_sha256"] or
                 digest(packet) != report["posterior_sha256"][packet.name]):
             raise ValueError("Nested footprints belong to different data or posterior samples")
-        model = FootprintField.load(packet)
+        model = (FlowField if report["protocol"]==CONTINUOUS else FootprintField).load(packet)
         return MapView(model.reduced(report["map_draws"])), model, {"footprints/report.json":digest(path), key:digest(packet)}
     view, model, sources = parent_view(folder, family, data, meta)
     if not path.is_file():

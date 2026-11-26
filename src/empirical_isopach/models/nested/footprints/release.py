@@ -15,17 +15,37 @@ from ...directional.ensemble.members import splits
 from ...extent_support import save_screen
 from ..study import digest, write_json
 from . import diagnostics
-from .posterior import FootprintField, PROTOCOL, write_fit
+from .continuous import FlowField as FootprintField, PROTOCOL, write_fit
 
 
 def fit_part(folder, key, train, test, meta):
-    initial = write_fit(folder,key,train,test,meta)
+    folder=Path(folder)
+    map_checks=[]
+    def checked(parent,receipt):
+        if key!="full":
+            return receipt
+        packet=parent/(key+".npz")
+        path=parent/(key+"-field-convergence.json")
+        identity=dict(input_sha256=meta["input_sha256"],posterior_sha256=receipt["posterior_sha256"],
+                      diagnostic_sha256=digest(diagnostics.__file__))
+        if path.exists():
+            saved=json.loads(path.read_text())
+            if saved["identity"]!=identity:
+                raise ValueError(f"Spatial convergence identity differs at {path}")
+            check=saved["check"]
+        else:
+            check=diagnostics.population_field_check(FootprintField.load(packet),train)
+            write_json(path,dict(identity=identity,check=check))
+        map_checks.append(dict(identity=identity,check=check))
+        return {**receipt,"raw_fit_passed":receipt["numerics"]["passed"],"field_population_checks":list(map_checks),
+                "numerics":{**receipt["numerics"],"passed":bool(receipt["numerics"]["passed"] and check["passed"])}}
+    initial = checked(folder,write_fit(folder,key,train,test,meta))
     if initial["numerics"]["passed"]:
         return initial
     # Inspect the continued-volume functional too. Every unsuccessful production
     # partition receives the same larger four-population attempt.
     dest = folder/"refinement"
-    return write_fit(dest,key,train,test,meta,initial=12288,ceiling=12288)
+    return checked(dest,write_fit(dest,key,train,test,meta,initial=12288,ceiling=12288))
 
 
 def sector_checks(folder, data, model, report):
@@ -87,7 +107,7 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         key = "full" if i is None else f"fold-{i}"
         rec = fit_part(source,key,train,test,meta)
         start = json.loads((source/(key+".json")).read_text())
-        refined = not start["numerics"]["passed"]
+        refined = rec["identity"]["initial"]==12288
         origin = source/"refinement" if refined else source
         packet = origin/(key+".npz")
         # Presentation packets are distinct from scratch so both raw fit attempts stay reproducible.
@@ -100,9 +120,26 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         history = [{"identity":start["identity"],"posterior_sha256":start["posterior_sha256"],"numerics":start["numerics"]}]
         if refined:
             history.append({"identity":rec["identity"],"posterior_sha256":rec["posterior_sha256"],"numerics":rec["numerics"]})
+        checkpoint_records=[]
+        for parent,attempt in ((source,start),(origin,rec)) if refined else ((source,start),):
+            for checkpoint in attempt.get("checkpoints",[]):
+                relative=(Path("refinement")/checkpoint["packet"] if parent!=source else Path(checkpoint["packet"]))
+                if digest(parent/checkpoint["packet"])!=checkpoint["posterior_sha256"]:
+                    raise ValueError(f"Refinement posterior differs at {parent/checkpoint['packet']}")
+                if checkpoint["posterior_sha256"]==rec["posterior_sha256"]:
+                    # The selected field is also the final checkpoint. Keep
+                    # one canonical packet while preserving both identities.
+                    relative=Path(target.name)
+                else:
+                    dest=fits/relative
+                    dest.parent.mkdir(parents=True,exist_ok=True)
+                    shutil.copyfile(parent/checkpoint["packet"],dest)
+                checkpoint_records.append({**checkpoint,"packet":relative.as_posix(),"identity":attempt["identity"]})
         receipts[key] = {"posterior_sha256":rec["posterior_sha256"],"attempts":history,"passed":rec["numerics"]["passed"],
                          "train":rec["identity"]["train"],"test":rec["identity"]["test"],
-                         "draws":rec["draws"],"volume_quantiles_km3":rec["volume_quantiles_km3"]}
+                         "draws":rec["draws"],"volume_quantiles_km3":rec["volume_quantiles_km3"],
+                         "checkpoints":checkpoint_records,
+                         "field_population_checks":rec.get("field_population_checks",[])}
         m = FootprintField.load(target)
         models.append((m,rec["numerics"]["passed"]))
         if i is None:

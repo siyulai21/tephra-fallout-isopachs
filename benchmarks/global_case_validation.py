@@ -11,7 +11,7 @@ import pandas as pd
 
 from .publication import published_methods, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
+from src.empirical_isopach.core.catalog import datasets, dataset_record
 from src.empirical_isopach.core.fitting import MARKER
 from src.empirical_isopach.visualization.deposit_field import digest
 
@@ -46,7 +46,9 @@ def field_validation(folder, input_path, slug, *, verify=True):
                         for f in method["selections"]}
             assert recorded == partitions
     results = []
-    for family in METHODS:
+    record = dataset_record(input_path)
+    declared = published_methods(record) if record is not None else METHODS
+    for family in (f for f in METHODS if f in declared):
         root = folder / family
         nested = family == "nested-isopachs"
         from src.empirical_isopach.visualization.deposit_field import review_path
