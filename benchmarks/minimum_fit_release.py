@@ -9,7 +9,7 @@ import pandas as pd
 
 from benchmarks.global_case_validation import field_validation, verify_sampling
 from benchmarks.minimum_fit_results import assess
-from benchmarks.publication import reported_edition, result_home, published_methods
+from benchmarks.publication import published_methods, released_datasets, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import data_directory, datasets
 from src.empirical_isopach.core.fitting import POLICY
@@ -197,7 +197,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if not args.verify and not args.case:
         parser.error("Specify a case to publish, or --verify to check published cases")
-    cases = [r for r in datasets() if r.get("reported_file") and (not args.verify or r.get("release_receipt"))
+    editions = released_datasets() if args.verify else datasets()
+    cases = [r for r in editions if r.get("reported_file") and (not args.verify or r.get("release_receipt"))
              and (not args.case or r["slug"] == args.case)]
     if not cases:
         parser.error("No matching registered source and fitting tables")

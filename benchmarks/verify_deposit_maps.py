@@ -187,9 +187,8 @@ def verify_regional(record, region, meta, *, check_bands=True):
 def main():
     for r in records(published=True):
         verify_case(r)
-    from .publication import published_methods, result_home
-    from src.empirical_isopach.core.catalog import datasets
-    for record in datasets():
+    from .publication import published_methods, released_datasets, result_home
+    for record in released_datasets():
         home = result_home(record)
         case = Path("eruptions") / record["slug"]
         prefix = home.relative_to(case).as_posix() + "/"

@@ -1,11 +1,11 @@
 # Eruption results
 
-Each case shows the maps and geographic validation for its current audited input. The volumes below integrate whole-Earth median thickness, including the thin distal tail. A dash means that family has no published fit on that edition. The case pages also give regional GP and spline volumes wherever those fits are available.
+Each case identifies its current audited input and the edition behind its published maps and geographic validation. The volumes below integrate whole-Earth median thickness, including the thin distal tail. A dash means that family has no published fit on that edition. The case pages also give regional GP and spline volumes wherever those fits are available.
 
 | Eruption | Directional (km³) | Spherical mixture (km³) | Nested footprints (km³) | Source-reported thickness evidence | Field or numerical qualification |
 |---|---:|---:|---:|---|---|
 | [Aso-4](aso-4/README.md) | 541 | 449 | 2,201 | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. |
-| [B-Tm](b-tm/README.md) | 31.7 | — | 34.3 | 64 measurements, 3 reported lower bounds, 1 reported and 3 interpreted upper bounds | Combined fallout. Lake shard profiles and a peat mass budget constrain the contours. |
+| [B-Tm](b-tm/README.md) | — | — | — | 150 localities, 75 measurements, 34 minima, 28 ranges, 13 upper bounds | The second audit combines both fallout phases. The case home retains the preceding 71-locality maps. |
 | [Ilopango TBJ, total primary airfall](ilopango-tbj/README.md) | 40.3 | 90.4 | 47.1 | 168 sites, including 14 thickness ranges | All four geographic fits passed for each global family. The Osa ash correlation remains uncertain. The shifted-volume spherical prior carries a sampling warning. |
 | [Mazama](mazama/README.md) | 100 | 78.1 | 144 | 300 localities with 46 measurements, 29 ranges, 129 lower and 96 upper limits. | Unsampled sectors and the treatment of thick distal sites affect whole-Earth estimates. |
 | [Minoan](minoan/README.md) | 33.2 | 26.5 | 60.9 | 92 exact, 9 lower bounds | All accepted Plinian and co-ignimbrite fallout fans form one deposit. |

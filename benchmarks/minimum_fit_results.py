@@ -7,9 +7,8 @@ import numpy as np
 import pandas as pd
 
 from benchmarks.minimum_fit_inputs import verify as verify_input
-from benchmarks.publication import published_methods, reported_edition, result_home
+from benchmarks.publication import published_methods, released_datasets, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.core.fitting import map_observation_policy
 from src.empirical_isopach.visualization.deposit_field import PolarField, digest
 from src.empirical_isopach.visualization.principal import volume_rows
@@ -193,7 +192,7 @@ if __name__ == "__main__":
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--case", action="append", default=[])
     args = parser.parse_args()
-    for r in datasets():
+    for r in released_datasets():
         if r.get("reported_file") and (not args.case or r["slug"] in args.case):
             assess(r, args.write)
             print(r["name"], "published maps, geographic holdouts and source categories verified")
