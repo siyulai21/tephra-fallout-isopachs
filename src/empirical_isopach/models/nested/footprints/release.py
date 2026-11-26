@@ -22,6 +22,7 @@ from .continuous import FlowField as FootprintField, PROTOCOL, write_fit
 def fit_part(folder, key, train, test, meta):
     folder=Path(folder)
     map_checks=[]
+    quantile_checks=[]
     def checked(parent,receipt):
         if key!="full":
             return receipt
@@ -38,8 +39,23 @@ def fit_part(folder, key, train, test, meta):
             check=diagnostics.population_field_check(FootprintField.load(packet),train)
             write_json(path,dict(identity=identity,check=check))
         map_checks.append(dict(identity=identity,check=check))
+        quantiles_passed=True
+        if receipt['numerics']['passed'] and check['passed']:
+            path=parent/(key+'-mapped-quantiles.json')
+            quantile_identity={**identity,'diagnostic_sha256':digest(map_convergence.__file__)}
+            if path.exists():
+                saved=json.loads(path.read_text())
+                if saved['identity']!=quantile_identity:
+                    raise ValueError(f'Mapped quantile convergence identity differs at {path}')
+                trials=saved['checks']
+            else:
+                trials=map_convergence.map_draws(FootprintField.load(packet))
+                write_json(path,dict(identity=quantile_identity,checks=trials))
+            quantile_checks.append(dict(identity=quantile_identity,checks=trials))
+            quantiles_passed=trials[-1]['passed']
         return {**receipt,"raw_fit_passed":receipt["numerics"]["passed"],"field_population_checks":list(map_checks),
-                "numerics":{**receipt["numerics"],"passed":bool(receipt["numerics"]["passed"] and check["passed"])}}
+                'mapped_quantile_checks':list(quantile_checks),
+                "numerics":{**receipt["numerics"],"passed":bool(receipt["numerics"]["passed"] and check["passed"] and quantiles_passed)}}
     initial = checked(folder,write_fit(folder,key,train,test,meta))
     if initial["numerics"]["passed"]:
         return initial
@@ -151,7 +167,8 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                          "train":rec["identity"]["train"],"test":rec["identity"]["test"],
                          "draws":rec["draws"],"volume_quantiles_km3":rec["volume_quantiles_km3"],
                          "checkpoints":checkpoint_records,
-                         "field_population_checks":rec.get("field_population_checks",[])}
+                         "field_population_checks":rec.get("field_population_checks",[]),
+                         'mapped_quantile_checks':rec.get('mapped_quantile_checks',[])}
         m = FootprintField.load(target)
         models.append((m,rec["numerics"]["passed"]))
         if i is None:
@@ -167,7 +184,9 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
                       coverage95_exact=float(exact.cdf.between(.025,.975).mean()) if len(exact) else None,
                       scored_rows=len(frame),exact_rows=len(exact))
     histories = diagnostics.integral_check(full)
-    maps = map_convergence.map_draws(full)
+    checked=info.get('mapped_quantile_checks',[])
+    maps = (checked[-1]['checks'] if checked and checked[-1]['identity']['posterior_sha256']==info['posterior_sha256']
+            else map_convergence.map_draws(full))
     save_screen(fits/"support.json.gz",diagnostics.support(data,meta,full,models[1:]))
     report = dict(protocol=PROTOCOL, family="nested-isopachs",name=name,input_sha256=meta["input_sha256"],
                   accepted_rows=len(data.xy),source_latitude=full.latitude,posterior_sha256=hashes,
