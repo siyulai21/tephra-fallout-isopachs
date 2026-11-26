@@ -4,13 +4,12 @@ A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior f
 
 | Eruption | Localities | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---:|---:|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/spherical-mixture/README.md) | 87 | **473** | 282–942 | 1.636 | 94.0% |
-| [B-Tm](../../eruptions/b-tm/results/spherical-mixture/README.md) | 71 | **37.1** | 26–58 | 1.496 † | 93.8% |
-| [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/spherical-mixture/README.md) | 168 | **242** | 96.5–769 | 1.204 | 98.5% |
-| [Mazama](../../eruptions/mazama/results/spherical-mixture/README.md) | 300 | **418** | 248–795 † | 1.027 | 76.1% |
-| [Minoan](../../eruptions/minoan/results/spherical-mixture/README.md) | 101 | **26.9** | 20–42.9 | 1.586 | 95.7% |
-| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/spherical-mixture/README.md) | 235 | **6.13** | 4.36–7.91 † | 0.895 † | 98.0% |
-| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/spherical-mixture/README.md) | 57 | **6.94** | 4.22–14.5 | 1.351 | 88.0% |
+| [Aso-4](../../eruptions/aso-4/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 87 | **449** | 267–916 | 1.600 | 94.2% |
+| [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 168 | **90.4** | 51.1–175 | 1.793 | 90.6% |
+| [Mazama](../../eruptions/mazama/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 300 | **78.1** | 66–92.3 | 1.361 † | 90.3% |
+| [Minoan](../../eruptions/minoan/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 101 | **26.5** | 20.2–38.5 | 1.594 | 95.0% |
+| [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 235 | **6.04** | 5.04–7.28 | 0.901 † | 96.6% |
+| [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/spherical-mixture/README.md) | 57 | **6.32** | 3.95–11.7 † | 1.358 | 89.1% |
 | [Tambora](../../eruptions/tambora/results/spherical-mixture/README.md) | 26 | **117** | 82.3–176 | 1.590 | 100.0% |
 | [YTT](../../eruptions/ytt/results/spherical-mixture/README.md) | 46 | **1,227** | 980–1,524 | 1.737 | 84.8% |
 

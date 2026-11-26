@@ -7,7 +7,7 @@ from .nested_footprints import cases
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.models.directional.ensemble.members import splits
 from src.empirical_isopach.models.nested.footprints.continuous import write_fit
-from src.empirical_isopach.models.nested.footprints.release import fit_part
+from .nested_growth_validation import fit_part
 from src.empirical_isopach.models.nested.study import write_json
 
 

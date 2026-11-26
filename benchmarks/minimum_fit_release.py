@@ -9,7 +9,7 @@ import pandas as pd
 
 from benchmarks.global_case_validation import field_validation, verify_sampling
 from benchmarks.minimum_fit_results import assess
-from benchmarks.publication import reported_edition, result_home
+from benchmarks.publication import reported_edition, result_home, published_methods
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import data_directory, datasets
 from src.empirical_isopach.core.fitting import POLICY
@@ -26,6 +26,8 @@ def publish(record):
     previous = reported_edition(record)
     _, meta = audited_data(record["path"])
     home = result_home(record)
+    if not (home/'sampling/attempts.csv').is_file() or not (home/'directional/ensemble/report.json').is_file():
+        return publish_current(record)
     verify_sampling(home)
     field_validation(home, record["path"], slug, verify=False)
     field_validation(home, record["path"], slug)
@@ -55,6 +57,45 @@ def publish(record):
     write_case_page(record, sites)
 
 
+def publish_current(record):
+    """Authenticate current principal packets without claiming absent older controls.
+
+    Several registered minimum-fit editions contain the newer directional
+    partitions and spherical workflow provenance, but no unified legacy
+    sampling ledger or fixed-direction control. Preserve that distinction.
+    """
+    home=result_home(record)
+    data,meta=audited_data(record['path'])
+    previous=reported_edition(record)
+    field_validation(home,record['path'],record['slug'],verify=False)
+    assess(record,write=True)
+    sites=pd.read_csv(home/'reported-and-fitted-sites.csv').drop_duplicates('row_id')
+    methods=volume_rows(home,input_sha256=meta['input_sha256'])
+    assert {r['method'] for r in methods}==set(published_methods(record))
+    files=[record['path'],previous['path'],data_directory()/record['audit']]
+    for name in ('report.json','thickness-bands.json','accepted_observations.csv','heldout_predictions.csv',
+                 'geographic-site-validation.csv','reported-and-fitted-sites.csv','minimum-fit-comparison.csv',
+                 'map-display.json','isopachs.png','principal-volumes.csv'):
+        if (home/name).is_file():files.append(home/name)
+    for family in ('directional','spherical-mixture','nested-isopachs'):
+        if family not in published_methods(record):continue
+        files.extend(p for p in (home/family).rglob('*') if p.is_file() and p.suffix in ('.json','.npz','.gz','.csv','.png'))
+    sphere=home/'spherical-mixture/report.json'
+    missing=[name for name in ('sampling/attempts.csv','directional/ensemble/report.json','directional/single-structure/report.json')
+             if not (home/name).is_file()]
+    receipt=dict(protocol='current-principal-release-v2',input_sha256=meta['input_sha256'],
+                 reported_source_sha256=meta['reported_source_sha256'],previous_revision=previous.get('revision'),
+                 observation_policy=POLICY,observations=len(data.xy),published_methods=list(published_methods(record)),
+                 reported_site_types=dict(Counter(sites.reported_kind)),fitted_site_types=dict(Counter(sites.fit_kind)),
+                 matched_geographic_folds=int(sites.geographic_fold.nunique()),
+                 spherical_prior_fits=len(json.loads(sphere.read_text())['fits']) if sphere.is_file() else 0,
+                 methods=methods,unavailable_legacy_controls=missing,
+                 retention_note='Current principal packets and their saved attempts are authenticated here. Missing older controls are not represented as new fits; existing external computing provenance is retained.',
+                 files={link(f,Path.cwd()):digest(f) for f in sorted(set(files))})
+    (home/'release.json').write_text(json.dumps(receipt,indent=2,allow_nan=False)+'\n')
+    write_case_page(record,sites)
+
+
 def write_case_page(record, sites):
     """Link the checked principal deposits and their available numerical evidence."""
     home = result_home(record)
@@ -75,8 +116,25 @@ def write_case_page(record, sites):
                 ("Spherical fits and computing revisions", "spherical-mixture/workflow-provenance.json"),
                 ("Regional support", "support/README.md"), ("Whole-area sensitivity", "nested-whole-area/README.md"))
     checks = " · ".join(f"[{label}]({prefix}{path})" for label, path in evidence if (home / path).is_file())
+    nested_review = Path('comparisons/nested-isopachs/adaptive-growth/visual-review.md')
+    assessment = []
+    if nested_review.is_file():
+        headings={'aso-4':'Aso-4','b-tm':'B-Tm','mazama':'Mazama','ytt':'YTT',
+                  'minoan':'Minoan','ilopango-tbj':'Ilopango TBJ','sakurajima-satsuma':'Sakurajima Satsuma',
+                  'pinatubo-1991-layer-c':'Pinatubo Layer C','tambora':'Tambora'}
+        heading=headings[record['slug']]
+        body=nested_review.read_text()
+        marker='\n## '+heading+'\n'
+        if marker in body:
+            text=body.split(marker,1)[1].split('\n## ',1)[0].strip().split('\n\n')
+            # Keep the case-specific geological and predictive qualifications
+            # beside the current maps, with the full three-scale review linked.
+            assessment=['## Nested geometry and field agreement','',*[line for p in text[1:] for line in (p,'')],
+                        f"[Three-scale comparison, site identities and contour diagnostics]({link(nested_review,case)}#{heading.lower().replace(' ','-')})",'']
+    count=len(published_methods(record))
+    number={4:'four',5:'five'}.get(count,str(count))
     lines = [f"# {record['name']}", "",
-             f"The five reconstructions use the same {len(sites)} accepted fallout localities. Field reports give "
+             f"The {number} reconstructions use the same {len(sites)} accepted fallout localities. Field reports give "
              f"{kinds['measurement']} measured thicknesses, {lower} lower limits, {kinds['upper_limit']} upper limits "
              f"and {kinds['interval']} two-sided ranges. Each lower limit enters the fit as a point at its reported "
              f"value, including the {distal} beyond 25 km. Upper limits and ranges retain their respective one-sided "
@@ -88,7 +146,7 @@ def write_case_page(record, sites):
              f"[Reported and fitted sites]({prefix}reported-and-fitted-sites.csv) · "
              f"[Changes by method and coverage by source type]({prefix}minimum-fit-comparison.csv) · "
              "[Fitting convention](../../docs/methods/reported-minimum-fitting.md)", "",
-             case_section(home, prefix=prefix, name=record["name"]).strip(), "",
+             case_section(home, prefix=prefix, name=record["name"]).strip(), "", *assessment,
              "## Evidence and checks", "",
              checks, "",
              ("[Previous maps and geological assessment](previous-minimum-treatment.md) · " if history.is_file() else "")
@@ -111,11 +169,25 @@ def verify_release(record):
     assert release["methods"] == volume_rows(home, input_sha256=meta["input_sha256"])
     for filename, expected in release["files"].items():
         assert digest(Path(filename)) == expected, filename
-    sphere = json.loads((home / "spherical-mixture/report.json").read_text())
-    assert len(sphere["fits"]) == release["spherical_prior_fits"] == 8
-    assert len(sphere["validation"]["fits"]) == release["matched_geographic_folds"] == 4
+    if 'spherical-mixture' in published_methods(record):
+        sphere = json.loads((home / "spherical-mixture/report.json").read_text())
+        assert len(sphere["fits"]) == release["spherical_prior_fits"] == 8
+        assert len(sphere["validation"]["fits"]) == release["matched_geographic_folds"] == 4
     field_validation(home, record["path"], record["slug"])
-    verify_sampling(home)
+    if release.get('protocol')=='current-principal-release-v2':
+        assert release['published_methods']==list(published_methods(record))
+        assert all(not (home/p).exists() for p in release['unavailable_legacy_controls'])
+        from src.empirical_isopach.models.nested.footprints.continuous import engine,PROTOCOL
+        folder=home/'nested-isopachs/footprints'
+        nested=json.loads((folder/'report.json').read_text())
+        assert nested['protocol']==PROTOCOL and nested['engine_sha256']==engine()
+        assert nested['input_sha256']==meta['input_sha256']
+        assert nested['fits']['full']['train']==data.row_ids.tolist()
+        assert all(digest(folder/p)==h for p,h in nested['posterior_sha256'].items())
+        for fit in nested['fits'].values():
+            assert all(digest(folder/c['packet'])==c['posterior_sha256'] for c in fit['checkpoints'])
+    else:
+        verify_sampling(home)
 
 
 if __name__ == "__main__":

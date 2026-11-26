@@ -93,6 +93,8 @@ Run `python -m benchmarks.minoan` or `python -m benchmarks.ytt` to verify the pu
 
 ## Bayesian nested isopach volumes
 
+The principal continuous-growth study and its complete commands are in [adaptive growth](../comparisons/nested-isopachs/adaptive-growth/README.md). Use `python -m benchmarks.nested_growth_production CASE PART --fits FOLDER` to complete a full or geographic partition with the shared particle and fixed-target Metropolis fallbacks. `python -m benchmarks.verify_nested_growth` replays the selected fields, checkpoints, held-out events and archived validation identities. The auxiliary known-deposit, quadrant and survey matrix retains a common 12,288-particle ceiling for both compared methods.
+
 The dispersal-footprint model is the current nested method. [Model and fitting commands](../docs/methods/nested-footprints.md)
 
 Fit the earlier corridor model with `python -m benchmarks.nested_catalogue --output results/nested-cases`. Pass `--whole-area` for the historical control. Replay its maps and exact-site coverage with `python -m benchmarks.nested_principal_maps --output results/corridor-display`. Run `python -m benchmarks.nested_known --output results/nested-known --with-directional` and `python -m benchmarks.nested_spherical_known --output results/nested-spherical-known` for matched known deposits. Replay the published tables with `python -m benchmarks.nested_summary --output results/nested-comparison` and verify the published packets with `python -m benchmarks.verify_nested_reach` and `python -m benchmarks.verify_nested`. [Results](../comparisons/nested-isopachs/README.md)

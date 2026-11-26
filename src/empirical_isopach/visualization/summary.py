@@ -15,7 +15,7 @@ def saved_case_overview(output, name=None):
     import json
     output = Path(output)
     # Old standalone archives can still reproduce their own historical overview.
-    directional = next((p for p in ("directional/azimuth/report.json","directional/ensemble/report.json",
+    directional = next((p for p in ("directional/multiscale/report.json","directional/azimuth/report.json","directional/ensemble/report.json",
                                     "directional/single-structure/report.json","directional/report.json") if (output/p).is_file()),"directional/azimuth/report.json")
     reports = [json.loads((output/p).read_text()) for p in ("report.json",directional,"spherical-mixture/report.json")]
     case_overview(output, name or reports[0]["dataset"], *reports, nested=principal_report(output))
@@ -40,6 +40,9 @@ def metrics(regional, directional, spherical, nested=None, *, home=None):
         records.append((label, m["equal_region_log_score"], m["coverage95_observations"], True))
     for label, val in (("Directional", directional["validation"]["geographic"]),
                        ("Spherical mixture", spherical["validation"])):
+        if 'negative_log_score' in val:
+            records.append((label,val['negative_log_score'],val['coverage95_exact'],val['all_folds_passed']))
+            continue
         if label=="Directional" and directional.get("protocol")=="uncertain-azimuth-v1":
             scored = val["all_estimated"]
             passed = bool(scored and scored["rows"]==len(directional["data_rows"]) and

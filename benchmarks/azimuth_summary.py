@@ -19,10 +19,13 @@ def current_control_summary(output, records):
     import matplotlib.pyplot as plt
 
     output.mkdir(exist_ok=True,parents=True)
-    rows = []
+    rows, unavailable = [], []
     for rec in sorted(records,key=lambda r:r["name"]):
         home = result_home(rec)/"directional"
         if "directional" not in published_methods(rec):
+            continue
+        if not all((home/p).is_file() for p in ('ensemble/report.json','single-structure/report.json')):
+            unavailable.append(rec['name'])
             continue
         ensemble = json.loads((home/"ensemble/report.json").read_text())
         single = json.loads((home/"single-structure/report.json").read_text())
@@ -55,6 +58,8 @@ def current_control_summary(output, records):
               "## Known deposits and calibration","",
               "The 14 fixed-design trials compare fitted isopach area with known deposits at 1, 10 and 100 cm. Two trials have identical observed thicknesses under two different hidden deposits. Their fitted intervals covered the larger hidden deposit in neither trial. [Known volumes](known-volumes.csv) · [Contour overlap](contour-accuracy.csv) · [Simulation details](simulation-records.json.gz)","",
               "The original six-eruption training packet fixes the structure weights for these experiments. A target eruption contributes no scores to its own calibration. [Training inputs and weights](../../../src/empirical_isopach/assets/directional-calibration.json) · [Independent numerical checks](verification.json)",""]
+    if unavailable:
+        lines += ['The current principal packets for '+', '.join(unavailable)+' do not contain these older fixed and single-structure controls. They are omitted from this matched control table; their current directional reconstructions remain in the principal comparison. Earlier study controls retain their original input identities.','']
     (output/"README.md").write_text("\n".join(lines))
     fig,ax=plt.subplots(figsize=(8.4,4.8),layout="constrained")
     for i,r in enumerate(rows):
@@ -79,6 +84,37 @@ def case_table(cases=None, published_root=Path("eruptions")):
         slug = rec["slug"]
         path = (cases/slug/"report.json" if cases is not None else
                 published_root.parent/result_home(rec)/"directional/azimuth/report.json")
+        if cases is None and (path.parent.parent/'multiscale/report.json').is_file():
+            home=path.parent.parent
+            r=json.loads((home/'multiscale/report.json').read_text())
+            deposit=json.loads((home/'deposit.json').read_text())
+            assert r['input_sha256']==deposit['input_sha256']==digest(rec['path'])
+            band=deposit['thickness_band']['volumes_km3']
+            row=dict(eruption=r['dataset'],slug=slug,input_sha256=r['input_sha256'],accepted=r['accepted_rows'],
+                     fixed_map_km3=None,uncertain_map_km3=deposit['median_map_volume_km3'],
+                     joint_lower95=r['conditional_interval95_km3'][0],joint_upper95=r['conditional_interval95_km3'][1],
+                     thickness_q25_volume_km3=band[0],thickness_q75_volume_km3=band[2])
+            for design in ('geographic','quadrants'):
+                score=r['validation'].get(design,{})
+                for subset in ('all_estimated','passed_only'):
+                    available=subset=='all_estimated' or score.get('all_folds_passed')
+                    for key,value in dict(folds=len(score.get('fold_scores',[])),rows=score.get('scored_rows'),
+                                          control_score=None,revised_score=score.get('negative_log_score')).items():
+                        row[design+'_'+subset+'_'+key]=value if available else None
+            if path.is_file():
+                control=json.loads(path.read_text())
+                assert control['input']['input_sha256']==r['input_sha256']
+                row['fixed_map_km3']=control['volume']['matched_control_map_km3']
+                for design in ('geographic','quadrants'):
+                    previous=control['validation'][design]['all_estimated']
+                    current=r['validation'].get(design,{})
+                    if previous and previous['rows']==current.get('scored_rows') and previous['folds']==len(current.get('fold_scores',[])):
+                        row[design+'_all_estimated_control_score']=previous['control_score']
+                        passing=control['validation'][design]['passed_only']
+                        if current.get('all_folds_passed') and passing and passing['rows']==previous['rows']:
+                            row[design+'_passed_only_control_score']=passing['control_score']
+            records.append(row)
+            continue
         r = json.loads(path.read_text())
         if cases is None and r["input"]["input_sha256"] != digest(rec["path"]):
             raise ValueError(f"{slug}: published directional fit and accepted input differ")
@@ -145,7 +181,9 @@ def summarize(cases, synthetic, output):
         current = result_home(next(r for r in datasets() if r["slug"] == a.slug))
         path = current/"directional/deposit.json"
         mapped = json.loads(path.read_text())
-        rows.append(f"| [{a.eruption}](../../{current}/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {a.fixed_map_km3:,.1f} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
+        fixed='—' if pd.isna(a.fixed_map_km3) else f'{a.fixed_map_km3:,.1f}'
+        rows.append(f"| [{a.eruption}](../../{current}/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {fixed} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
+    rows += ['', 'A blank fixed control means that the current edition publishes the multiscale principal fit without the older matched control. Such cases contribute to the principal table but not to paired control scores. Historical controls retain their original input identities.']
     rows += ["", "At B-Tm the source review adds two lake limits and one peat limit to the directly measured thicknesses and bounds. "
         "The before-and-after study isolates how those interpretations move the western contours. Each eruption report above gives "
         "all eight compass bearings, supported contour fragments and numerical warnings. "

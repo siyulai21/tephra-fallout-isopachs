@@ -16,6 +16,7 @@ from ...extent_support import save_screen
 from ..study import digest, write_json
 from . import diagnostics
 from . import map_convergence
+from . import rejuvenation
 from .continuous import FlowField as FootprintField, PROTOCOL, write_fit
 
 
@@ -66,7 +67,10 @@ def fit_part(folder, key, train, test, meta):
         result = checked(dest,write_fit(dest,key,train,test,meta,initial=particles,ceiling=particles))
         if result["numerics"]["passed"]:
             return result
-    return result
+    dest=folder/'rejuvenation'
+    result=rejuvenation.write_fit(dest,key,train,test,meta,
+                                  folder/'refinement-24576'/(key+'.npz'),result)
+    return checked(dest,result)
 
 
 def sector_checks(folder, data, model, report):
@@ -129,8 +133,9 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         rec = fit_part(source,key,train,test,meta)
         start = json.loads((source/(key+".json")).read_text())
         selected_particles = rec["identity"]["initial"]
-        refined = selected_particles>=12288
-        origin = (source/("refinement" if selected_particles==12288 else "refinement-24576")) if refined else source
+        moved = rec['identity'].get('sampler')==rejuvenation.SAMPLER
+        refined = selected_particles>=12288 or moved
+        origin = source/'rejuvenation' if moved else (source/("refinement" if selected_particles==12288 else "refinement-24576")) if refined else source
         packet = origin/(key+".npz")
         # Presentation packets are distinct from scratch so both raw fit attempts stay reproducible.
         target = fits/(key+"-selected.npz")
@@ -143,11 +148,14 @@ def assemble(path, folder, name, *, upstream=None, archives=None):
         attempts=[(source,start)]
         if refined:
             for particles in (12288,24576):
-                if particles>selected_particles: break
+                if not moved and particles>selected_particles: break
                 parent=source/("refinement" if particles==12288 else "refinement-24576")
                 attempt=rec if parent==origin else json.loads((parent/(key+".json")).read_text())
                 attempts.append((parent,attempt))
                 history.append({"identity":attempt["identity"],"posterior_sha256":attempt["posterior_sha256"],"numerics":attempt["numerics"]})
+        if moved:
+            attempts.append((origin,rec))
+            history.append({'identity':rec['identity'],'posterior_sha256':rec['posterior_sha256'],'numerics':rec['numerics']})
         checkpoint_records=[]
         for parent,attempt in attempts:
             for checkpoint in attempt.get("checkpoints",[]):

@@ -14,7 +14,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | Cubic spline | observation hull | **2.97** | 2.5–3.52 | 1.103 | 94.5% |
 | [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **6.97** | 4.76–12 | 1.052 | 100.0% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **6.32** | 3.95–11.7 † | 1.358 | 89.1% |
-| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **9.57** | 5.5–21.3 | 1.092 † | 100.0% |
+| [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **7.41** | 4.99–13.5 | 0.963 | 100.0% |
 
 Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
@@ -33,6 +33,14 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 ![Sakurajima Satsuma (P14) · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
+
+## Nested geometry and field agreement
+
+The small 64 cm proximal contour becomes eccentric and aligns gradually with the larger northwestern–southeastern envelope. The 32, 16 and 8 cm contours have smooth, unequal spacing rather than one rigidly expanding oval. In the full picture the southern 1 cm reach contracts from roughly 500 to 350 km, while the northwestern reach expands. The near contours remain geometrically coherent within that full field; the method does not reproduce every east–west local thickness contrast.
+
+Northern GSJ-1F-02 and southeastern S2-T41 improve; northern GSJ-1B-03 and southwestern GSJ-1B-33 worsen. Both upper limits, GSJ-1B-31 and GSJ-1D-26, receive higher event probabilities. Measured log RMSE improves from 0.497 to 0.483, bounded negative log probability from 0.258 to 0.220, and geographic score from 1.092 to 0.963. Median absolute log error increases from 0.330 to 0.374. The final map check uses 4,096 draws.
+
+[Three-scale comparison, site identities and contour diagnostics](../../comparisons/nested-isopachs/adaptive-growth/visual-review.md#sakurajima-satsuma)
 
 ## Evidence and checks
 

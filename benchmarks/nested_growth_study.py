@@ -9,7 +9,10 @@ import numpy as np
 import pandas as pd
 
 from .footprint_study import write_csv
+from .publication import result_home
 from src.empirical_isopach.core.catalog import datasets
+from src.empirical_isopach.core.audit import audited_data
+from src.empirical_isopach.models.directional.ensemble.members import splits
 from src.empirical_isopach.models.nested.study import digest
 
 
@@ -21,9 +24,65 @@ def packed(path, value):
     path.write_bytes(gzip.compress(json.dumps(value, separators=(",", ":"), allow_nan=False).encode(), mtime=0))
 
 
+def summary(paired, measured, known, surveys, quadrants, numerical):
+    """Equal-case and equal-input summaries, retaining every numerical failure."""
+    result = {'weighting': 'Eruptions have equal weight. Known designs average scrambles and compatible hidden truths within each input before averaging across the 20 inputs. No failed fit is excluded.'}
+    result['eruptions'] = {method: dict(cases=len(block),
+        geographic_mean_negative_log_score=float(block.geographic_negative_log_score.mean()),
+        geographic_passed_folds=int(block.passed_folds.sum()), full_passed=int(block.full_passed.sum()),
+        map_draws_passed=int(block.map_draws_passed.sum()), map_integration_passed=int(block.map_integration_passed.sum()))
+        for method, block in paired.groupby('method')}
+    metrics = measured.pivot(index='case', columns='method')
+    result['measured_and_bounded'] = {}
+    for key in ('measured_log_rmse', 'measured_median_abs_log_error', 'bounded_negative_log_probability'):
+        a, b = metrics[key]['Previous footprints'], metrics[key]['Continuous area growth']
+        valid = a.notna() & b.notna()
+        result['measured_and_bounded'][key] = dict(cases=int(valid.sum()), improved=int((b[valid]<a[valid]).sum()),
+            previous_case_mean=float(a[valid].mean()), current_case_mean=float(b[valid].mean()))
+    result['known_deposits'] = {}
+    for method, block in known.groupby('method'):
+        distinct = block.drop_duplicates(['input_sha256','truth','scramble'])
+        errors = distinct.assign(error=np.abs(np.log(distinct.median_map_km3/distinct.true_km3)))
+        by_input = errors.groupby('input_sha256').error.mean()
+        assert len(by_input) == 20
+        levels = {}
+        for level, rows in block.groupby('level_cm'):
+            balanced = rows.groupby('input_sha256')[['false_km2','missed_km2','west_false_km2','west_missed_km2']].mean()
+            levels[str(level)] = {name: float(balanced[name].median()) for name in balanced}
+        result['known_deposits'][method] = dict(inputs=len(by_input),
+            compatible_truths=len(distinct[['input_sha256','truth']].drop_duplicates()),
+            passed_inputs=int(block.groupby('input_sha256').fit_passed.all().sum()),
+            mean_absolute_log_volume_error=float(by_input.mean()), median_absolute_log_volume_error=float(by_input.median()),
+            median_area_errors_km2=levels)
+    result['surveys'] = [dict(survey=survey, method=method, rows=len(block),
+        negative_log_score=float(-block.log_score.mean()), fit_passed=bool(block.fit_passed.all()))
+        for (survey, method), block in surveys.groupby(['survey','method'])]
+    estimated = quadrants[quadrants.status == 'estimated']
+    result['quadrants'] = dict(requested=len(quadrants), estimated=len(estimated),
+        passed=int(estimated.fit_passed.sum()), insufficient=len(quadrants)-len(estimated))
+    result['matched_full_field_checks'] = {method:sum(bool(r[method]['field_population_check']['passed']
+        if method=='previous' else r[method]['field_population_check']['check']['passed']) for r in numerical.values())
+        for method in ('previous','current')}
+    result['matched_map_draw_checks'] = {method:sum(bool(r[method]['mapped_quantile_checks'][-1]['passed'])
+        for r in numerical.values()) for method in ('previous','current')}
+    return result
+
+
 def collect(scratch, output):
     output.mkdir(parents=True, exist_ok=True)
     paired, predicted, measured, morphology, sectors = [], [], [], [], []
+    numerical_comparison={}
+    inspection=read(scratch/'visual-inspection.json')
+    assert set(inspection)=={r['slug'] for r in datasets()}
+    for rec in datasets():
+        slug=rec['slug']
+        assert inspection[slug]['scales']==['proximal','intermediate','full-deposit','proximal-in-full-context']
+        for filename,expected in inspection[slug]['files'].items():
+            assert digest(scratch/filename)==expected, filename
+        current=result_home(rec)/'nested-isopachs'
+        assert digest(current/'deposit.png')==inspection[slug]['files'][f'release/{slug}/deposit.png']
+        assert digest(current/'median-grid.npz')==inspection[slug]['files'][f'release/{slug}/median-grid.npz']
+    shutil.copyfile(scratch/'visual-inspection.json',output/'visual-inspection.json')
     quadrant_rows, quadrant_receipts = [], {}
     for rec in datasets():
         slug, identity = rec["slug"], digest(rec["path"])
@@ -31,6 +90,12 @@ def collect(scratch, output):
         new = scratch/"release"/slug
         reports = [read(p/"footprints/report.json") for p in (old,new)]
         assert all(r["input_sha256"] == identity for r in reports), slug
+        previous_check=read(scratch/'baseline-numerics'/(slug+'.json'))
+        assert previous_check['identity']['input_sha256']==identity
+        assert previous_check['identity']['posterior_sha256']==reports[0]['posterior_sha256']['full-selected.npz']
+        numerical_comparison[slug]=dict(previous=previous_check,
+            current=dict(field_population_check=reports[1]['fits']['full']['field_population_checks'][-1],
+                         mapped_quantile_checks=reports[1]['median_draw_refinements']))
         regional_report=read(scratch/"regional"/slug/"report.json")
         assert regional_report["input"]["input_sha256"]==identity
         regional_folds=dict(zip(regional_report["validation"]["row_ids"],regional_report["validation"]["folds"],strict=True))
@@ -65,12 +130,23 @@ def collect(scratch, output):
             if "case" not in frame: frame.insert(0,"case",slug)
             frames.append(frame)
         shutil.copytree(review,output/"review"/slug,dirs_exist_ok=True)
-        for i in range(4):
+        data,meta=audited_data(rec['path'])
+        for i,train,test in splits(data,meta['vent_lonlat'][1],'quadrants'):
             r=read(scratch/"quadrants"/slug/f"quadrant-{i}-outcome.json")
             quadrant_receipts[f"{slug}/{i}"]=r
             valid=r["status"]=="estimated"
             assert (r["identity"] if valid else r)["input_sha256"] == identity
+            partition=r['identity'] if valid else r
+            assert partition['train']==([] if train is None else train.row_ids.tolist())
+            assert partition['test']==test.row_ids.tolist()
+            assert not set(partition['train']) & set(partition['test'])
+            if valid:
+                parent=scratch/'quadrants'/slug
+                if partition['initial']>=12288:
+                    parent/='refinement' if partition['initial']==12288 else 'refinement-24576'
+                assert digest(parent/f'quadrant-{i}.npz')==r['posterior_sha256']
             held=r["heldout"] if valid else []
+            assert not valid or [v['row_id'] for v in held]==test.row_ids.tolist()
             quadrant_rows.append(dict(case=slug,quadrant=i,status=r["status"],input_sha256=identity,
                                       rows=len(held) if valid else len(r["test"]),
                                       negative_log_score=-np.mean([v["log_score"] for v in held]) if held else None,
@@ -81,6 +157,7 @@ def collect(scratch, output):
     write_csv(pd.DataFrame(paired),output/"paired-results.csv")
     write_csv(pd.DataFrame(quadrant_rows),output/"quadrants.csv")
     packed(output/"quadrant-fit-receipts.json.gz",quadrant_receipts)
+    packed(output/'matched-numerical-checks.json.gz',numerical_comparison)
     known_files=sorted((scratch/"known").glob("*/recovery.csv"))
     assert len(known_files)==20, f"Expected all 20 known-deposit designs, found {len(known_files)}"
     new_known=pd.concat([pd.read_csv(p) for p in known_files],ignore_index=True)
@@ -109,6 +186,13 @@ def collect(scratch, output):
     regional["input_sha256"]=regional.slug.map(identities)
     write_csv(regional,output/"regional-benchmark.csv")
     shutil.copyfile(scratch/"regional/synthetic/comparison.csv",output/"regional-known-deposits.csv")
+    totals=summary(pd.DataFrame(paired),pd.concat(measured,ignore_index=True),
+                   pd.concat([old_known,new_known],ignore_index=True),survey_frame,
+                   pd.DataFrame(quadrant_rows),numerical_comparison)
+    (output/'study-summary.json').write_text(json.dumps(totals,indent=2,allow_nan=False)+'\n')
+    files={p.relative_to(output).as_posix():digest(p) for p in sorted(output.rglob('*'))
+           if p.is_file() and p.name not in ('README.md','study-files.json')}
+    (output/'study-files.json').write_text(json.dumps(files,indent=2)+'\n')
 
 
 if __name__=="__main__":

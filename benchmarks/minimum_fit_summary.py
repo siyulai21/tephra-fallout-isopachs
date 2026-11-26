@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from benchmarks.publication import result_home
+from benchmarks.publication import result_home, published_methods
 from src.empirical_isopach.core.catalog import datasets
 
 
@@ -34,6 +34,8 @@ def summarize(output):
         sites = minima.drop_duplicates("row_id")
         ax.axhline(1, color="#495056", linewidth=.85)
         for method, (_, color, marker) in styles.items():
+            if method not in published_methods(record):
+                continue
             x = minima[(minima.method == method) & minima.previous_map_cm.notna()]
             ratio = x.current_map_cm/x.previous_map_cm
             ax.scatter(x.projected_distance_km, ratio, color=color, marker=marker, alpha=.65, s=16, linewidths=.65)
@@ -67,6 +69,8 @@ def summarize(output):
              "Each symbol compares two map estimates at the same reported minimum. A ratio below one indicates a "
              "thinner revised estimate. The 25 km division below describes where the sites lie. All distances enter "
              "the same likelihood. A blank comparison means the previous edition had no map on the same audited input. "
+             "The current nested maps also use the continuous-area-growth method, so their ratios include that "
+             "methodological revision as well as the fitting convention. [Matched nested-method comparison](../nested-isopachs/adaptive-growth/README.md). "
              "[Values by case and method](all-distances.csv)", "",
              "| Eruption | Source minima | Within 25 km | Beyond 25 km | Directional vent, previous → revised (cm) | Spherical vent, previous → revised (cm) | Nested vent, previous → revised (cm) |",
              "|---|---:|---:|---:|---:|---:|---:|"]
@@ -87,7 +91,7 @@ def summarize(output):
               "Observed sections can preserve only part of the deposit. Fitting their minima as points can therefore "
               "underestimate total local fallout. Each case links its original sources and separate validation coverage "
               "for directly measured thicknesses and minima fitted as points.", "",
-              "All five methods use the same accepted observations and four geographic holdouts within each case. "
+              "The methods published on each input use the same accepted observations and four geographic holdouts. "
               "An annotation-removal check compares the median field at the vent and every accepted site with and without "
               "the provenance marker. The case comparison tables record the maximum absolute difference. "
               "The global estimates include extrapolation into unsampled regions. Numerical warnings and unsupported "

@@ -16,7 +16,7 @@ from src.empirical_isopach.core.catalog import resolve_dataset
 from src.empirical_isopach.core.fitting import model_input
 from src.empirical_isopach.models.nested.footprints import legacy_posterior
 from src.empirical_isopach.models.nested.footprints.continuous import FlowField as FootprintField
-from src.empirical_isopach.models.nested.footprints.release import fit_part
+from .nested_growth_validation import fit_part
 from src.empirical_isopach.models.nested.reach_integrals import nodes
 from src.empirical_isopach.models.nested.report import MapView
 from src.empirical_isopach.models.nested.study import digest, write_json
