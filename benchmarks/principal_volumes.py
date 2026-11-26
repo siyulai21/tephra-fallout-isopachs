@@ -6,8 +6,7 @@ import re
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .publication import published_methods, result_home as principal_home
-from src.empirical_isopach.core.catalog import datasets
+from .publication import published_methods, released_datasets, result_home as principal_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.visualization.deposit_field import digest
 from src.empirical_isopach.visualization.principal import FAMILIES, number, volume_rows, write_rows
@@ -16,7 +15,7 @@ from src.empirical_isopach.visualization.summary import COLORS, all_case_scores
 
 def catalogue_rows():
     rows = []
-    for record in sorted(datasets(), key=lambda r:r["slug"]):
+    for record in sorted(released_datasets(), key=lambda r:r["slug"]):
         slug = record["slug"]
         home = principal_home(record)
         accepted = len(audited_data(record["path"])[0].xy)
@@ -86,7 +85,7 @@ def family_page(family, rows, records):
 
 def refresh_catalogue(output):
     output = Path(output)
-    records = {r["slug"]:r for r in datasets()}
+    records = {r["slug"]:r for r in released_datasets()}
     rows = catalogue_rows()
     dest = output/"comparisons"
     dest.mkdir(parents=True,exist_ok=True)

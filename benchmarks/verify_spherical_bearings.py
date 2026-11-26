@@ -139,9 +139,8 @@ def main():
     from PIL import Image
     with Image.open(base/"bearings/paired-isopachs.png") as plot:
         sources=json.loads(plot.info["Description"])
-    from src.empirical_isopach.core.catalog import datasets as registered_datasets
-    from .publication import published_methods
-    mapped = [rec for rec in registered_datasets() if "spherical-mixture" in published_methods(rec)]
+    from .publication import published_methods, released_datasets
+    mapped = [rec for rec in released_datasets() if "spherical-mixture" in published_methods(rec)]
     assert set(sources) == {rec["slug"] for rec in mapped}
     for rec in mapped:
         folder=result_home(rec)/"spherical-mixture"

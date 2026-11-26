@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .publication import result_home
+from .publication import released_datasets, result_home
 from .verify_directional_multiscale import verify_case
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.multiscale import engine_sha256
@@ -27,8 +27,17 @@ BASELINE = Path("archive/2026-11-25-directional-v5/current-cases")
 
 
 def verify_publication_identity(path, expected):
-    """Retain signed v6 sources across the subsequent nested publication merge."""
-    if digest(path) == expected:
+    """Verify study sources at their signed revisions and verify reviewed replacements."""
+    current = digest(path)
+    if current == expected:
+        return True
+    name = path.as_posix()
+    input_revision = Path('archive/2026-11-25-aso-4-u1429/directional-study-sources.json')
+    revision = json.loads(input_revision.read_text()) if input_revision.is_file() else {}
+    if name in revision:
+        record = revision[name]
+        assert record['original_sha256'] == expected == digest(Path(record['archived_source']))
+        assert record['current_sha256'] == current
         return True
     allowed = {
         'benchmarks/principal_volumes.py', 'data/datasets.json',
@@ -38,12 +47,11 @@ def verify_publication_identity(path, expected):
         'eruptions/minoan/results/minimum-fit-2026-11-25/directional/deposit.json',
         'eruptions/minoan/results/minimum-fit-2026-11-25/directional/deposit.png',
     }
-    name = path.as_posix()
     assert name in allowed, name
     revisions = json.loads(Path('archive/2026-11-25-nested-growth/upstream-directional-publication/revisions.json').read_text())
     record = revisions['files'][name]
     assert record['original_sha256'] == expected == digest(Path(record['archived_source']))
-    assert record['current_sha256'] == digest(path)
+    assert record['current_sha256'] == current
     return True
 
 
@@ -104,7 +112,8 @@ def main():
     )
     assert provenance["states_per_partition"] == count
     cases = pd.read_csv(a.study / "paired-results.csv").set_index("slug")
-    assert set(cases.index) == {r["slug"] for r in datasets()}
+    editions = datasets() if a.release else released_datasets()
+    assert set(cases.index) == {r["slug"] for r in editions}
     jobs = [
         (
             r,
@@ -114,7 +123,7 @@ def main():
             provenance["cases"][r["slug"]],
             count,
         )
-        for r in datasets()
+        for r in editions
     ]
     with ProcessPoolExecutor(a.jobs) as pool:
         for slug in pool.map(one, jobs):

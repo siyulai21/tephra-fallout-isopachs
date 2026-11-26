@@ -1,10 +1,10 @@
 # Eruption results
 
-Each case shows the maps and geographic validation for its current audited input. The volumes below integrate whole-Earth median thickness, including the thin distal tail. A dash means that family has no published fit on that edition. The case pages also give regional GP and spline volumes wherever those fits are available.
+Each case shows the maps and geographic validation for its latest published fit. The case page identifies the fitted input where a newer dataset is available. The volumes below integrate whole-Earth median thickness, including the thin distal tail. A dash means that family has no published fit on that edition. The case pages also give regional GP and spline volumes wherever those fits are available.
 
 | Eruption | Directional (km³) | Spherical mixture (km³) | Nested footprints (km³) | Source-reported thickness evidence | Field or numerical qualification |
 |---|---:|---:|---:|---|---|
-| [Aso-4](aso-4/README.md) | 541 | 449 | 2,201 | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. |
+| [Aso-4](aso-4/README.md) | 541 | 449 | 2,201 | 84 measurements, 3 lower bounds, 1 upper bound | The principal input adds the 27 cm U1429B bed. Published volumes use the preceding 87 localities. |
 | [B-Tm](b-tm/README.md) | 31.7 | — | 34.3 | 64 measurements, 3 reported lower bounds, 1 reported and 3 interpreted upper bounds | Combined fallout. Lake shard profiles and a peat mass budget constrain the contours. |
 | [Ilopango TBJ, total primary airfall](ilopango-tbj/README.md) | 40.3 | 90.4 | 47.1 | 168 sites, including 14 thickness ranges | All four geographic fits passed for each global family. The Osa ash correlation remains uncertain. The shifted-volume spherical prior carries a sampling warning. |
 | [Mazama](mazama/README.md) | 100 | 78.1 | 144 | 300 localities with 46 measurements, 29 ranges, 129 lower and 96 upper limits. | Unsampled sectors and the treatment of thick distal sites affect whole-Earth estimates. |
@@ -16,4 +16,4 @@ Each case shows the maps and geographic validation for its current audited input
 
 The earlier Unit G, Layer C and Pinatubo intake editions retain their original evidence and fit identities. Calbuco supplies an independent survey in the nested-method validation. [Earlier case editions](../archive/2026-11-24-case-editions/README.md) · [Calbuco survey](../comparisons/nested-reach/field-surveys/README.md)
 
-The machine-readable table includes median-map volumes, integrated Q25–Q75 thickness bands, geographic scores and warnings for each family published on the current input. [Download the numerical comparison](../comparisons/principal-volumes.csv) · [Methods and validation](../comparisons/README.md)
+The machine-readable table includes median-map volumes, integrated Q25–Q75 thickness bands, geographic scores and warnings for each published fit and its input hash. [Download the numerical comparison](../comparisons/principal-volumes.csv) · [Methods and validation](../comparisons/README.md)

@@ -117,11 +117,11 @@ def summarize(output, published=False):
     output.mkdir(parents=True, exist_ok=True)
     rows = []
     if published:
-        records = {r["slug"]: r for r in datasets()}
-        accepted = {slug:r["path"] for slug,r in records.items()}
         from .principal_volumes import principal_home
-        from .publication import published_methods
-        sources = [(r["slug"], principal_home(r) / "report.json") for r in datasets()
+        from .publication import published_methods, released_datasets
+        records = {r["slug"]: r for r in released_datasets()}
+        accepted = {slug:r["path"] for slug,r in records.items()}
+        sources = [(r["slug"], principal_home(r) / "report.json") for r in records.values()
                    if set(active_methods()).intersection(published_methods(r))]
     else:
         sources = [(p.parent.name, p) for p in output.glob("*/report.json")]

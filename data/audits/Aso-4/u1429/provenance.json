@@ -1,0 +1,105 @@
+{
+  "audit_date": "2026-11-25",
+  "scope": "Append one measured Aso-4 thickness from IODP Site U1429 Hole B to the registered source and fitting tables.",
+  "preceding_release": {
+    "revision": "d115f2a699870c826752fd26b0b4d86ff42130f8",
+    "reported_file": "data/eruptions/Aso-4_reviewed.csv",
+    "reported_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
+    "fitting_file": "data/eruptions/Aso-4_reviewed_minimum_fit.csv",
+    "fitting_sha256": "70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624",
+    "results_directory": "eruptions/aso-4/results/minimum-fit-2026-11-25",
+    "previous_audit": "data/audits/Aso-4/provenance.json",
+    "previous_audit_sha256": "51ffcadaa7b21340f7489447689e932b64b88dd79158f496814f75ca76a148cb"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Aso-4_reviewed_u1429.csv",
+      "sha256": "d4bd4aa50bba7b8d08056cd9879f4ffe89d0299a4091fc8e28179af7ec0ba2d0",
+      "fitting_file": "data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv",
+      "fitting_sha256": "a46542ca6fc1edaee44596732eb5d04c1dcb268df5d531d5cec12851dae1a544",
+      "n_measurements": 84,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "n_intervals": 0,
+      "definition": "Append IODP U1429B-6H-3, NK224, as a 27 cm measured recovered ash bed. Fit its thickness as an ordinary point measurement. Preserve source classifications and original row identities for the 87 earlier observations and six excluded pseudo rows."
+    }
+  },
+  "new_observation": {
+    "id": "IODP-346-U1429B-6H-3-NK224",
+    "csv_row": 95,
+    "setting": "marine core, northern East China Sea",
+    "kind": "measurement",
+    "thickness_cm": 27,
+    "original_top_cm": 100,
+    "original_base_cm": 127,
+    "bed_csf_a_m": [
+      44.9,
+      45.17
+    ],
+    "bed_ccsf_d_m": [
+      48.0,
+      48.27
+    ],
+    "site": "IODP U1429B",
+    "position_original": {
+      "latitude": "31°37.0469′N",
+      "longitude": "128°59.8512′E"
+    },
+    "latitude_deg": 31.61744833,
+    "longitude_deg": 128.99752,
+    "water_depth_m": 731.64,
+    "vent_geodesic_distance_km": 243.18,
+    "vent_initial_bearing_deg": 235.27,
+    "sample": "NK224",
+    "sample_ccsf_d_m": 48.26,
+    "core_splice_ccsf_d_m": [
+      46.52,
+      49.99
+    ],
+    "core_offset_m": 3.1,
+    "sample_csf_a_m": 45.16,
+    "sample_section_cm": 126,
+    "eruption": "Aso-4",
+    "adopted_eruption_age_ka": 87.0,
+    "age_basis": "Sagawa et al. adopt the Aso-4 eruption age as a tie point in the local age model.",
+    "identity_confidence": "high",
+    "deposition": "Probable primary fallout. Marine focusing, reworking, bioturbation and compaction can affect the thickness.",
+    "preservation": "Logged bioturbated contact. Severe suck-in occurs in deeper sections of core 6H, outside the measured interval. The original uncompacted fallout thickness remains unresolved.",
+    "duplicate_decision": "Same-site candidates in holes A and C are excluded as independent observations. Treat the deeper disturbed ash in Hole B section 5 separately from NK224."
+  },
+  "sources": {
+    "site_coordinates": {
+      "citation": "Tada et al. (2015), Table T2",
+      "url": "https://publications.iodp.org/proceedings/346/109/109_t2.htm"
+    },
+    "core_log": {
+      "citation": "IODP Expedition 346 Visual core description, Hole U1429B, Tephra layer!A4:J4 and Core summary!A7:G7",
+      "doi": "https://doi.org/10.5281/zenodo.15271918",
+      "file": "346_description_U1429B.XLSX",
+      "sha256": "122b194b7a94e45a27d2602d08ed69456d3d8f3a484abff5136eee6d18d91db6",
+      "license": "CC BY 4.0",
+      "archive": "data_by_hole.zip",
+      "archive_sha256": "2c2a5b521087a92f2ba9eda5c36c4a116c87e54eebf87999260f8cea3eccbfb0"
+    },
+    "disturbance": {
+      "citation": "Tada et al. (2015), Table T19",
+      "url": "https://publications.iodp.org/proceedings/346/109/109_t19.htm"
+    },
+    "affine_offset": {
+      "citation": "Tada et al. (2015), Table T25",
+      "url": "https://publications.iodp.org/proceedings/346/109/109_t25.htm"
+    },
+    "splice": {
+      "citation": "Tada et al. (2015), Table T26",
+      "url": "https://publications.iodp.org/proceedings/346/109/109_t26.htm"
+    },
+    "correlation": {
+      "citation": "Sagawa et al. (2018), Table 1, Fig. 6 and Table 2",
+      "doi": "https://doi.org/10.1186/s40645-018-0168-7"
+    },
+    "submitted_audit_note": {
+      "title": "A 27 cm Aso-4 tephra deposit at IODP Site U1429",
+      "sha256": "65e68833fd143adfc76f8bf679fb3e182287e44e611632bf9928a3d8456ec9e1"
+    }
+  }
+}

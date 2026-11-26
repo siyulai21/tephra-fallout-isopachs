@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from .publication import published_datasets, published_methods, result_home
+from .publication import published_datasets, published_methods, released_datasets, result_home
 from src.empirical_isopach.core.catalog import datasets
 from .azimuth_summary import case_table
 from .publication import read_hashes, verify_files
@@ -89,7 +89,7 @@ def verify_comparison_tables(root):
     regional = pd.read_csv(summaries/"regional/comparison.csv").set_index(["slug", "method"])
     spherical = pd.read_csv(summaries/"spherical-mixture/comparison.csv").set_index("slug")
     sources = read(summaries/"spherical-mixture/report.json")["cases"]
-    registered = {r["slug"]: r for r in datasets()}
+    registered = {r["slug"]: r for r in released_datasets()}
     spherical_slugs = {s for s,r in registered.items() if "spherical-mixture" in published_methods(r)}
     assert spherical.index.is_unique and set(spherical.index) == spherical_slugs
     assert len(sources) == len(spherical_slugs) and {s["slug"] for s in sources} == spherical_slugs
