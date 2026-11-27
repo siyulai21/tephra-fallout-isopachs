@@ -14,7 +14,7 @@ from benchmarks.observation_relief import terrain_rgb
 from src.Laea import make_laea_transform
 from src.empirical_isopach.visualization.deposit_maps import regular_axes
 from src.empirical_isopach.visualization.shorelines import ASSETS as SHORELINE_ASSETS
-from src.empirical_isopach.visualization.shorelines import detail, index, local_mask
+from src.empirical_isopach.visualization.shorelines import TIERS, index, local_mask
 
 ROOT = Path(__file__).resolve().parents[1]
 PLACES = ROOT / "src/empirical_isopach/assets/ne_10m_places.csv.gz"
@@ -22,6 +22,12 @@ MUTED = "#436473"
 ACCENT = "#912c55"
 MAP_RESOLUTION = 960
 LOCATOR_RESOLUTION = 440
+SHORELINE_LIMITS = {"f": .3, "h": 1.5}
+
+
+def shoreline_tier(bounds, resolution):
+    spacing = max(bounds[2:] - bounds[:2]) / resolution
+    return next((tier for tier, limit in SHORELINE_LIMITS.items() if spacing <= limit), "i")
 
 
 def shoreline_provenance():
@@ -33,7 +39,7 @@ def shoreline_provenance():
         "pack_index_sha256": sha256(pack_index.read_bytes()).hexdigest(),
         "map_samples_long_side": MAP_RESOLUTION,
         "locator_samples_long_side": LOCATOR_RESOLUTION,
-        "km_per_sample_max_by_tier": {"full": .3, "high": 1.5},
+        "km_per_sample_max_by_tier": {TIERS[tier]: limit for tier, limit in SHORELINE_LIMITS.items()},
     }
 
 
@@ -43,7 +49,7 @@ def base(ax, bounds, vent, resolution=MAP_RESOLUTION):
     x, y = regular_axes(bounds, resolution)
     _, inverse, _ = make_laea_transform(*vent)
     lon, lat = inverse.transform(*np.meshgrid(x, y))
-    tier = detail(bounds, display_pixels=resolution)["tier"]
+    tier = shoreline_tier(bounds, resolution)
     mask = local_mask(x, y, vent, tier)
     rgb = terrain_rgb(lon, lat, mask, x, y)
     dx, dy = (x[1] - x[0]) / 2, (y[1] - y[0]) / 2

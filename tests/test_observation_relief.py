@@ -4,10 +4,10 @@ from matplotlib import pyplot as plt
 
 from benchmarks.observation_relief import elevation, grid, inventory, sample, terrain_rgb
 from benchmarks.principal_input_figures import packet
-from benchmarks.principal_input_geography import base
+from benchmarks.principal_input_geography import base, shoreline_tier
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.visualization.deposit_maps import regular_axes
-from src.empirical_isopach.visualization.shorelines import detail, local_mask
+from src.empirical_isopach.visualization.shorelines import local_mask
 
 
 def test_relief_chooses_the_resolution_for_the_frame_span():
@@ -65,7 +65,7 @@ def test_atlas_land_relief_and_shoreline_share_the_full_lake_mask():
     x, y = regular_axes(bounds, 241)
     expected = local_mask(x, y, vent, "f")
     assert expected[120, 120] == 0 and expected[0, 0] == 1
-    assert detail(np.array([-100., -100., 100., 100.]), display_pixels=960)["tier"] == "f"
+    assert shoreline_tier(np.array([-100., -100., 100., 100.]), 960) == "f"
     figure, ax = plt.subplots()
     try:
         base(ax, bounds, vent, resolution=241)
