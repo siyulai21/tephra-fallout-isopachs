@@ -19,7 +19,7 @@ MUTED = "#436473"
 ACCENT = "#912c55"
 
 
-def base(ax, bounds, vent, resolution=420):
+def base(ax, bounds, vent, resolution=960):
     ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal")
     x, y = regular_axes(np.asarray(bounds), resolution)
     _, inverse, _ = make_laea_transform(*vent)
@@ -117,7 +117,7 @@ def places(ax, bounds, vent, *, obstacles=(), count=3):
             return
 
 
-def locator(fig, bounds, vent):
+def locator_extent(bounds, vent):
     points, _, _, _ = projected_places(vent)
     low, high = np.reshape(bounds, (2, 2))
     center = (low + high) / 2
@@ -125,9 +125,15 @@ def locator(fig, bounds, vent):
     nearest = nearest[np.isfinite(nearest)]
     # Include nearby geography even on a completely offshore detail.
     half = max(67., 1.07 * (high - low).max(), 1.46 * nearest.min())
-    extent = np.r_[center - [half * 1.40, half], center + [half * 1.40, half]]
+    return np.r_[center - [half * 1.40, half], center + [half * 1.40, half]]
+
+
+def locator(fig, bounds, vent):
+    low, high = np.reshape(bounds, (2, 2))
+    center = (low + high) / 2
+    extent = locator_extent(bounds, vent)
     ax = fig.add_axes([.070, .088, .218, .190])
-    base(ax, extent, vent, resolution=220)
+    base(ax, extent, vent, resolution=440)
     ax.set(xticks=[], yticks=[])
     ax.set_title("Regional locator", loc="left", fontsize=9, color=MUTED, pad=5)
     ax.add_patch(Rectangle(low, *(high - low), fill=False, edgecolor=ACCENT,

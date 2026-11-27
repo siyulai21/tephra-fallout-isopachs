@@ -26,10 +26,11 @@
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
   "basemap_relief": {
-    "source": "NOAA NCEI ETOPO 2022",
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
     "doi": "https://doi.org/10.25921/fd45-gt74",
-    "style": "land elevation and northwest hillshade",
-    "assets_sha256": "6f7f919060979035d4d49bdad72505db9d8c7b03a5bcd1f79f6823e9dfcde8fe"
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
   },
   "observations_without_evidence_id": 0,
   "details": [
@@ -500,6 +501,34 @@
       ]
     }
   ],
+  "regional_index": {
+    "label": "A",
+    "title": "Mount Pinatubo area",
+    "file": "near-vent.png",
+    "bounds_km": [
+      -42.0,
+      -48.0,
+      52.0,
+      45.0
+    ],
+    "detail_numbers": [
+      4,
+      5,
+      6,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "observations": 190
+  },
   "row_sources": "data/audits/Pinatubo-1991/reaudit/localities.csv",
   "row_sources_sha256": "d3dc623544a82bc23d614d0f7cf41f05eef0863e60c0b5781270170a908472c8",
   "reported_input": "data/eruptions/Pinatubo_1991_layer_C_reviewed.csv",
@@ -507,29 +536,30 @@
   "audit": "data/audits/Pinatubo-1991/reaudit/provenance.json",
   "audit_sha256": "1bb5783b5dbf3d02db1230daf33a175c07ce022a56d1b2f8a36e6932d770891f",
   "files_sha256": {
-    "overview.png": "a78041f4ebb28d53e27c1b804d149ebd32871f3d36ade203adee36307358abbb",
-    "detail-01.png": "1702640a2ea8c588eabcc2cce16d4f1122763b94844f131bdc763e7f1b8045c2",
-    "detail-02.png": "966448498cd0ffc3d576dc1676c9e1f9611a528ce3ca57e542e7bfac965f2df5",
-    "detail-03.png": "a86989acc1807684bf61b6f5d6417214c8ab4feab39b9271721bc37d1f7f6bc8",
-    "detail-04.png": "f993be930270478b749b5f8cf03ec9970d2d1b8f17510c4f1d257967f565bf9f",
-    "detail-05.png": "2740c93337b0eb573946f4e5489655c0c4734616dc76e5a66d354453a6d45cd2",
-    "detail-06.png": "89de5bd5b077995e2f4255d8e9523f2c9ef6b442494958c938c9ed86366ed232",
-    "detail-07.png": "dfddf768a00e42e2c3af4700eeb2230e97aee9757d8a49956a5fc20b9d68f3bd",
-    "detail-08.png": "4a56ee986d15649189373cfc4f4392d1fc2e6c066ba2de33335daafd754c3efc",
-    "detail-09.png": "e2e843a785a1c53e66ba060744ad2bda13459b3f69e1016c30326b2466041ae9",
-    "detail-10.png": "6fc711d393e38fc2aa9d31bb1d4d41217ef5f322c5ede600d4c24c1e853b9948",
-    "detail-11.png": "9808330c0c514042562e1252c499e0ba3ab99aa59e7a45422f7a01fbc30bf1bb",
-    "detail-12.png": "71d21be30a5fd7f2815fef37fbd7e128858752e80004dcc18f086b408bb762a6",
-    "detail-13.png": "508e804ebcf24e87e5f1962c56e67df7b60c45e7d10d2720594a7038b4b3c0dc",
-    "detail-14.png": "47eb75cc0c028c8170a423d2f61d7a621533f5a721be7da073c91c2e3c607581",
-    "detail-15.png": "68b8dc1a4300d43be96284dfa97dbb4d6f03100944f1c7e57abac175390f4601",
-    "detail-16.png": "53155f9a4b6e6fb35a52fd00b56db3ae201b1d5d48a6e86d0bf33716a2c6ba38",
-    "detail-17.png": "81d0342b57f2b3e7639dfc64a25410788dd14d1a13d76e047c87f68948cc2744",
-    "detail-18.png": "47c2662768443b1dc93c352f6cfb4c0ee58c6a407a4ef277a2203c11d3c579c4",
-    "detail-19.png": "d81c81df11f5ec656961cf8565c11781f7e6d7fc1978ee4fe1407cd821e20e33",
-    "detail-20.png": "32c04a848026a2e24ef2678596148c696b4527a03d261cc00134136ae0d9bcb0",
-    "detail-21.png": "ea807110ab18337b16f88debfd3479a994a54eca5b6b40cb314235b24c624ba6",
+    "overview.png": "0f1d9d6b4dd2a1a19d9f886a1ee5ecd5e94a72f54dfe7dee25d22937adc4d166",
+    "detail-01.png": "8805b19fb2a44d0b68fa6c3c2d217e003ffd5f694ce2223c91af528c003c4644",
+    "detail-02.png": "62a983a66be5db99787d77ede0096c3ffe4be715bc0dadac7ba4405cdc8e7d26",
+    "detail-03.png": "2e3cf7564ecc7b69e361b26799d610fad937a0d6c6c02f0ac6ce58621fbdc43e",
+    "detail-04.png": "1b5705998288b94768fedf5ccfd9758f035135873e94aaf4b754f257b78a05a3",
+    "detail-05.png": "d6857cfdb4fabbeb23022f78b0853dc4a74d7f5767316e8b528ed5e744709d1d",
+    "detail-06.png": "1d7fa9c58e0007dd8a0b1a064e6011331b6cbcd532e1f849d0869dba044f0fda",
+    "detail-07.png": "2bfeb0c000552a7fc2bdb639c1966281e3b1060f03b266d385dac4a01621f210",
+    "detail-08.png": "42c8ea150c8e9b3a07f305a5661fae5f5cbc0ef5f234b955eddc2b5fc80c1cb7",
+    "detail-09.png": "f920a9c7fd5ed08be9c820ed0d6759d82799fa44ba0aa802d13188e66cce4583",
+    "detail-10.png": "32d119c600e6e2ae6fea7703fbf1ff52859dd86b584d599373f5c81222436883",
+    "detail-11.png": "3c540185424fb5683fb8b3fbaea275266837b57dcd9f57ca493d1385490a8cfa",
+    "detail-12.png": "c7e23c72f29892970bcfed18942a887a2327c1bdeb186c174bf6e6553e37d80f",
+    "detail-13.png": "3491959854d6b3eb0f0534b8a15371101a83f04c13d4e62b0e081625dd2a5f86",
+    "detail-14.png": "b6bc3d291dedda8449222d9cfa28c8f2a35a69391b50e29e29f6affabed5ceb5",
+    "detail-15.png": "e8f05718ef831c5d3b61377b43c19adb7d55e425049453cfb2e7b56afadb38e1",
+    "detail-16.png": "a60d96a487332c6ba9a86345ac84183c1cf9b11db8f9039aaae63fc76b3d6736",
+    "detail-17.png": "71240cdc5ce4a22f9f97af8a84fb90fcdc5069ee3996588821f7e7c2855f6568",
+    "detail-18.png": "ac69207d950feffbbdc8979a43ca3a228bac850a6b63f4b99a15adc69e31f0b5",
+    "detail-19.png": "f8699e735671541dbbc2b90993fa99965fff05cbbf796486fdd65ef802b730c6",
+    "detail-20.png": "fda3e3333ef131aace7296fe9edbefc578b2327109f4b2921652ae3d66a8a215",
+    "detail-21.png": "e1fa494c6737dafb14f6356ea89308fb78f3625aa4c1cad5918e64a9d46a570b",
+    "near-vent.png": "2a7820ce40b30670fd3f1693b51756534b453429e64302afd15d54dfd725accb",
     "sites.csv": "0df9f9a4e0413b2028df96517d20e4fba853278498774192a11dbb087351cfe5",
-    "README.md": "ba27e49437ae91ad7bce5e43e15a77a0629c5a0e79e374b86fdffa8b221cd0a2"
+    "README.md": "b5a7af59b729d42d11ecb0a4e07c7e1b61b715916623f2e90e0a9a18776ab1fb"
   }
 }

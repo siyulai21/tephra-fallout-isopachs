@@ -31,7 +31,8 @@ def rebuild(source_dir):
         if digest(path) != source["sha256"]:
             raise ValueError(f"Wrong ETOPO source bytes: {path.name}")
     global_source = source_dir / receipt["geotiffs"][0]["file"]
-    fine_sources = [source_dir / item["file"] for item in receipt["geotiffs"][1:]]
+    noaa_sources = [source_dir / item["file"] for item in receipt["geotiffs"] if item["arcseconds"] == 15]
+    copernicus_sources = [source_dir / item["file"] for item in receipt["geotiffs"] if item["arcseconds"] == 3]
     products = defaultdict(dict)
     with TemporaryDirectory() as temporary:
         folder = Path(temporary)
@@ -40,20 +41,32 @@ def rebuild(source_dir):
                         global_source, coarse], check=True)
         globe = raster(coarse)
         fine = folder / "fine.vrt"
-        subprocess.run(["gdalbuildvrt", "-q", fine, *fine_sources], check=True)
+        subprocess.run(["gdalbuildvrt", "-q", fine, *noaa_sources], check=True)
         for tile in receipt["tiles"]:
             west, south, east, north = tile["bounds"]
+            spacing = tile["arcseconds"] / 3600
+            nx, ny = round((east-west)/spacing), round((north-south)/spacing)
             if tile["arcseconds"] == 120:
                 top, bottom = round((90 - north)*30), round((90 - south)*30)
                 columns = np.arange(round((west+180)*30), round((east+180)*30)) % globe.shape[1]
                 values = globe[top:bottom, columns]
             else:
                 crop = folder / "crop.tif"
-                box = [str(value) for value in (west, north, east, south)]
-                subprocess.run(["gdal_translate", "-q", "-projwin", *box, fine, crop], check=True)
+                if tile["arcseconds"] == 60:
+                    sources = [global_source]
+                elif tile["arcseconds"] == 15:
+                    sources = [fine]
+                else:
+                    # Start with the NOAA crop where a Copernicus tile has no coverage.
+                    sources = [fine, *(p for p in copernicus_sources
+                                       if any(f"{label[:3]}_00_{label[3:]}_00" in p.name
+                                              for label in tile["source_granules"]))]
+                subprocess.run(["gdalwarp", "-q", "-overwrite", "-s_srs", "EPSG:4326",
+                                "-t_srs", "EPSG:4326", "-novshift", "-r", "bilinear",
+                                "-te", *map(str, (west, south, east, north)),
+                                "-ts", str(nx), str(ny), "-dstnodata", "0", *sources, crop], check=True)
                 values = raster(crop)
-            spacing = tile["arcseconds"] / 3600
-            assert values.shape == (round((north-south)/spacing), round((east-west)/spacing))
+            assert values.shape == (ny, nx)
             products[tile["file"]][tile["key"]] = values
     for name, arrays in products.items():
         np.savez_compressed(ASSETS / name, **arrays)

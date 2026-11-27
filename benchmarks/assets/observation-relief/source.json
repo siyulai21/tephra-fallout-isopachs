@@ -1,82 +1,359 @@
 {
-  "dataset": "NOAA NCEI ETOPO 2022 v1 ice-surface elevation",
+  "dataset": "NOAA NCEI ETOPO 2022 v1 ice surface and Copernicus GLO-90",
   "doi": "https://doi.org/10.25921/fd45-gt74",
-  "license": "CC0-1.0",
+  "license": "See README.md for NOAA CC0-1.0 and the Copernicus GLO-90 licence",
   "horizontal_crs": "WGS84",
   "vertical_datum": "EGM2008",
   "registration": "pixel centres, rows north to south",
-  "storage": "whole metres rounded from GDAL-averaged 120\u2033 global cells and native 15\u2033 crops, floored at zero for shading",
-  "fine_detail_max_km": 120,
+  "storage": "Whole metres. Worldwide 120 arc-second averages. Regional/close crops at 60, 15 and nominal 3 arc-seconds. The Copernicus source lacks N14E119, where the fine crop falls back to ETOPO.",
   "geotiffs": [
     {
       "file": "ETOPO_2022_v1_60s_N90W180_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/60s/60s_surface_elev_gtif/ETOPO_2022_v1_60s_N90W180_surface.tif",
-      "sha256": "9d27d4b8ea8e76977e2988bca667d7c8fa68b927355feffcddd6b4875a7fd08e"
+      "sha256": "9d27d4b8ea8e76977e2988bca667d7c8fa68b927355feffcddd6b4875a7fd08e",
+      "arcseconds": 60
     },
     {
-      "file": "ETOPO_2022_v1_15s_N00E105_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00E105_surface.tif",
-      "sha256": "8b01f462384e4792205affd3415edce8c615dc2b071fd80df0295f91cb3822b8"
+      "file": "Copernicus_DSM_COG_30_N13_00_W088_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N13_00_W088_00_DEM/Copernicus_DSM_COG_30_N13_00_W088_00_DEM.tif",
+      "sha256": "e669a6c1ff852f696c43ea341ca06c8cba0e99da955446b7c63cb5b1d5386df0",
+      "arcseconds": 3
     },
     {
-      "file": "ETOPO_2022_v1_15s_N00E120_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00E120_surface.tif",
-      "sha256": "e3a867f603e09fc491b90e9172b79d58393bf6f6a0fe9c30bf2cda7266b8f2fd"
+      "file": "Copernicus_DSM_COG_30_N13_00_W089_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N13_00_W089_00_DEM/Copernicus_DSM_COG_30_N13_00_W089_00_DEM.tif",
+      "sha256": "504ff606cf1dbadd0a09e277bc34778f7db11d6f2f060e83f738387d2955108a",
+      "arcseconds": 3
     },
     {
-      "file": "ETOPO_2022_v1_15s_N00W090_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00W090_surface.tif",
-      "sha256": "2ccc323904068cf42d36be32d19cd68f8d47579dc4d502b8ed7955af8ffb5fd4"
+      "file": "Copernicus_DSM_COG_30_N13_00_W090_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N13_00_W090_00_DEM/Copernicus_DSM_COG_30_N13_00_W090_00_DEM.tif",
+      "sha256": "ed6142f5fb40a17227b4ffeea50d03c0ff59e74f50446e50a0fd8a624fc4b177",
+      "arcseconds": 3
     },
     {
-      "file": "ETOPO_2022_v1_15s_N00W105_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00W105_surface.tif",
-      "sha256": "d41f5a570ae8d397a3cbcb04c23d1231cec5333e0ba499aee2d85f3a317705f8"
+      "file": "Copernicus_DSM_COG_30_N13_00_W091_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N13_00_W091_00_DEM/Copernicus_DSM_COG_30_N13_00_W091_00_DEM.tif",
+      "sha256": "e57a0693db94b1960929ce25b938830e0e3c99e5ccb5b3e779b805c2d08fd78c",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N14_00_E120_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N14_00_E120_00_DEM/Copernicus_DSM_COG_30_N14_00_E120_00_DEM.tif",
+      "sha256": "a1487c85183471f4b46081a4daf673bf8f0fd123561d93af98cab201d39c3504",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N14_00_E121_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N14_00_E121_00_DEM/Copernicus_DSM_COG_30_N14_00_E121_00_DEM.tif",
+      "sha256": "dec23fa34ff3d11c665dc67813684831001234102342b9b9f89a343bd20756a7",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N14_00_W090_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N14_00_W090_00_DEM/Copernicus_DSM_COG_30_N14_00_W090_00_DEM.tif",
+      "sha256": "9b13eeadff1c743ed586320cd502123ea2583444b2d004acddc1d68f5119c7eb",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N14_00_W091_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N14_00_W091_00_DEM/Copernicus_DSM_COG_30_N14_00_W091_00_DEM.tif",
+      "sha256": "2d784b26b039cfcf1403c91d8b382b42b9a8478224a3f61df132b4f7e2f279d8",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N14_00_W093_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N14_00_W093_00_DEM/Copernicus_DSM_COG_30_N14_00_W093_00_DEM.tif",
+      "sha256": "b2aa9fd4d024b7248f52be6e9b204c78b604830434b60f4f738965c5f208bdc8",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N15_00_E119_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N15_00_E119_00_DEM/Copernicus_DSM_COG_30_N15_00_E119_00_DEM.tif",
+      "sha256": "4d423fea1b6b4dc7500808aa271e18a492301cb923eeaefb335bbb353fdd24fb",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N15_00_E120_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N15_00_E120_00_DEM/Copernicus_DSM_COG_30_N15_00_E120_00_DEM.tif",
+      "sha256": "cffa955ecf5c35ceaaabcd20011a965469641b2e01dda092f4941010768eb613",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N30_00_E130_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N30_00_E130_00_DEM/Copernicus_DSM_COG_30_N30_00_E130_00_DEM.tif",
+      "sha256": "1048f6d485da103be54290bee10af8e0b542b6922fa742ccee08a5f2bd1e9ca2",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N30_00_E131_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N30_00_E131_00_DEM/Copernicus_DSM_COG_30_N30_00_E131_00_DEM.tif",
+      "sha256": "c81b43b9a1e305c7a1b2c6d84a64a1f47ce53f2959ea7072b609c92072b0fb53",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N32_00_E130_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N32_00_E130_00_DEM/Copernicus_DSM_COG_30_N32_00_E130_00_DEM.tif",
+      "sha256": "13e53915f3ad481a5b85fa88d9fa1bb8f9462e1b96ffb1fe68ce213dcd83fc7a",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N35_00_E135_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N35_00_E135_00_DEM/Copernicus_DSM_COG_30_N35_00_E135_00_DEM.tif",
+      "sha256": "e5c996cd1506112552cd0c79a87852b0a585af3f15d3f48a4e44218b5d7c9363",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N35_00_E136_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N35_00_E136_00_DEM/Copernicus_DSM_COG_30_N35_00_E136_00_DEM.tif",
+      "sha256": "29515ee934a4a15bb9c05eeca02c60676869cd58c5c43ba851950ea2e06966de",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N41_00_E128_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N41_00_E128_00_DEM/Copernicus_DSM_COG_30_N41_00_E128_00_DEM.tif",
+      "sha256": "9587b109cdc5c7d32c9746764c703a27438054c50b9706e233b104732ad16253",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N41_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N41_00_W122_00_DEM/Copernicus_DSM_COG_30_N41_00_W122_00_DEM.tif",
+      "sha256": "38941826ca8ec8482d56228e8a61d70f7df84837af7be84de48e0154fb508540",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N41_00_W124_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N41_00_W124_00_DEM/Copernicus_DSM_COG_30_N41_00_W124_00_DEM.tif",
+      "sha256": "fa944d217aefa428f0b335776c0b78d968d18537125321a5d17bbdf39c1af040",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_E126_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_E126_00_DEM/Copernicus_DSM_COG_30_N42_00_E126_00_DEM.tif",
+      "sha256": "8d22909104323c410953bd9082bdbdd5572162df2aacf1f10e46c6374923e175",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_E127_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_E127_00_DEM/Copernicus_DSM_COG_30_N42_00_E127_00_DEM.tif",
+      "sha256": "da5ef789eaf01ea3883bb9183281b7d65ad2ef30e05430e8f3684a3a554bb261",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_E128_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_E128_00_DEM/Copernicus_DSM_COG_30_N42_00_E128_00_DEM.tif",
+      "sha256": "abde02574ff229c238e222f473747b6e1ab091c89dd5923229a1e516c35b7dd7",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_W121_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_W121_00_DEM/Copernicus_DSM_COG_30_N42_00_W121_00_DEM.tif",
+      "sha256": "80f126efd90fbedf6b0ce0118d79514582522ecfa98d8168e99120fe560072b2",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_W122_00_DEM/Copernicus_DSM_COG_30_N42_00_W122_00_DEM.tif",
+      "sha256": "3552c49681449eb5a8f3e746c7ec36b15576d478499435c0fb61420565363c72",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_W123_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_W123_00_DEM/Copernicus_DSM_COG_30_N42_00_W123_00_DEM.tif",
+      "sha256": "b14dab042003cecb3cd825cb77f5bd38483436f1da46751fbceb70984d56c5e6",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N42_00_W124_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N42_00_W124_00_DEM/Copernicus_DSM_COG_30_N42_00_W124_00_DEM.tif",
+      "sha256": "b61ac225fe8f8699483d109ee96ff53242111f49759443dfc5e6fdb13e48dfcb",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N43_00_W111_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N43_00_W111_00_DEM/Copernicus_DSM_COG_30_N43_00_W111_00_DEM.tif",
+      "sha256": "7b0ff431d6d22512913f5573352281ea324c06d6e21c136c36a35ca15a9fec46",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N43_00_W115_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N43_00_W115_00_DEM/Copernicus_DSM_COG_30_N43_00_W115_00_DEM.tif",
+      "sha256": "72b82baf5adfba860b6b121e9def62a928e922f37d82626eca34d45cf0df5e9a",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N43_00_W121_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N43_00_W121_00_DEM/Copernicus_DSM_COG_30_N43_00_W121_00_DEM.tif",
+      "sha256": "b91c07d003b659a1e5dc244bca286d731a03edd453ce721b4af8aaae04bdcd94",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N43_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N43_00_W122_00_DEM/Copernicus_DSM_COG_30_N43_00_W122_00_DEM.tif",
+      "sha256": "339179c7397539c5bf3668778c5c1940b320b6f5e25b27f3ba9e17a480f6935e",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N43_00_W123_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N43_00_W123_00_DEM/Copernicus_DSM_COG_30_N43_00_W123_00_DEM.tif",
+      "sha256": "5e3696ed1dc6f493d69a40154103013ea1f3f6ba4a1034af53c03e5002e0620a",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N44_00_W115_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N44_00_W115_00_DEM/Copernicus_DSM_COG_30_N44_00_W115_00_DEM.tif",
+      "sha256": "0edff71f861719a84c04a135d855ff32ec069e8bb4406dbef6995c90205becc0",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N44_00_W121_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N44_00_W121_00_DEM/Copernicus_DSM_COG_30_N44_00_W121_00_DEM.tif",
+      "sha256": "5525cb856d0ee4cecb0cb3c8e3a8d63b519c27ff8715c1101de2ed860d3c15de",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N45_00_E140_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N45_00_E140_00_DEM/Copernicus_DSM_COG_30_N45_00_E140_00_DEM.tif",
+      "sha256": "2a8386e33962b68417dd8bb2a6a8469e40e826922599d5099f0669356b6965c9",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N45_00_E141_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N45_00_E141_00_DEM/Copernicus_DSM_COG_30_N45_00_E141_00_DEM.tif",
+      "sha256": "855f83d04125c20c45594593a7db1724164ccb7f5af3513eeae7f7d831b773e2",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N48_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N48_00_W122_00_DEM/Copernicus_DSM_COG_30_N48_00_W122_00_DEM.tif",
+      "sha256": "0436c93aefd03734c93d9ca21ea36f9b91bd9665f6b38e8ae183011eedabe799",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N50_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N50_00_W122_00_DEM/Copernicus_DSM_COG_30_N50_00_W122_00_DEM.tif",
+      "sha256": "e8a243f9e795c3a22087aefbd05e7784b4507d9648bedb371a43003356834974",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N50_00_W123_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N50_00_W123_00_DEM/Copernicus_DSM_COG_30_N50_00_W123_00_DEM.tif",
+      "sha256": "377c3208dcdb66ade6fba7827a47de8e9a3e6c613b413bf1d257588d3af29b23",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N51_00_W122_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N51_00_W122_00_DEM/Copernicus_DSM_COG_30_N51_00_W122_00_DEM.tif",
+      "sha256": "d66d52aff7e63ec14c050f8235d2a2ff9b4e59acdc043ada8407c877666547a1",
+      "arcseconds": 3
+    },
+    {
+      "file": "Copernicus_DSM_COG_30_N51_00_W123_00_DEM.tif",
+      "url": "https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N51_00_W123_00_DEM/Copernicus_DSM_COG_30_N51_00_W123_00_DEM.tif",
+      "sha256": "ba5627d54e60c468e97e042e33bc763ee8a3048759ea63ff1910be2e39796076",
+      "arcseconds": 3
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N00E030_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00E030_surface.tif",
+      "sha256": "975c87680ad0dffb759cfa6c85385323b5dc94ab23e9dffc95483a5f1d944bb7",
+      "arcseconds": 15
     },
     {
       "file": "ETOPO_2022_v1_15s_N15E105_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15E105_surface.tif",
-      "sha256": "d2cb7e439d3d85805ea9f55f5c873286e73c63dcb8de6e2b3e16fb6e8882cbd0"
+      "sha256": "d2cb7e439d3d85805ea9f55f5c873286e73c63dcb8de6e2b3e16fb6e8882cbd0",
+      "arcseconds": 15
     },
     {
       "file": "ETOPO_2022_v1_15s_N15E120_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15E120_surface.tif",
-      "sha256": "219d5232373f911caac573fa82c1f39f7277041ad89cc547ab5cba193aa5b495"
+      "sha256": "219d5232373f911caac573fa82c1f39f7277041ad89cc547ab5cba193aa5b495",
+      "arcseconds": 15
     },
     {
-      "file": "ETOPO_2022_v1_15s_N30E015_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30E015_surface.tif",
-      "sha256": "1ee225cb379eb7c95d446337004f413a2eb270a4682383afb6930270ec04515c"
+      "file": "ETOPO_2022_v1_15s_N15W090_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15W090_surface.tif",
+      "sha256": "2e0f33efebcbe6cc50f3a6dc7c13c78f46e04f648b5f6f3a5ca180c8a5c2f35c",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N15W105_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N15W105_surface.tif",
+      "sha256": "cf28314cd9f8a16d8f00d56db18af8b73ef0757c23eb83e791b52db383a0e6c3",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N30E105_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30E105_surface.tif",
+      "sha256": "00c261fe202e85fa20946c40f113024101784d3c555a2112774d54b404d5f0ea",
+      "arcseconds": 15
     },
     {
       "file": "ETOPO_2022_v1_15s_N30E120_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30E120_surface.tif",
-      "sha256": "5b46d290694fb0b5019b800334c6eb42157fe4fea0bc0b253c54424db924bb70"
+      "sha256": "5b46d290694fb0b5019b800334c6eb42157fe4fea0bc0b253c54424db924bb70",
+      "arcseconds": 15
     },
     {
-      "file": "ETOPO_2022_v1_15s_N30E135_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30E135_surface.tif",
-      "sha256": "8df93492a06905657dc8041e73aa8c26422b0fbc957ea99e36168056cabbbd0d"
+      "file": "ETOPO_2022_v1_15s_N30W090_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30W090_surface.tif",
+      "sha256": "7dec8b97564d9cb940c864843f87b7ec364987a6bf9b0315cf575ad8f55c5925",
+      "arcseconds": 15
     },
     {
-      "file": "ETOPO_2022_v1_15s_N30W120_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30W120_surface.tif",
-      "sha256": "a721d683f987ea7c210138a33523983c38c526a9abbfbe34ad332a5e15222a58"
+      "file": "ETOPO_2022_v1_15s_N30W105_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30W105_surface.tif",
+      "sha256": "0f56a422be03cfb55b3629c72f373a6d2da858f1e3a4954afe7d17cfa298fff7",
+      "arcseconds": 15
     },
     {
-      "file": "ETOPO_2022_v1_15s_N30W135_surface.tif",
-      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N30W135_surface.tif",
-      "sha256": "0c8426a7ad059649277b4aadfbb4dc8b6897044152fec9682bbf7e31f7d39234"
+      "file": "ETOPO_2022_v1_15s_N45E015_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N45E015_surface.tif",
+      "sha256": "b4983c653eeb75a5a88d0dd5887192f3416aefa211e147e17a0298404cf2d5ea",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N45E120_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N45E120_surface.tif",
+      "sha256": "6468864758e6eab87a6d5349280d5eab1764a1e239d8e944159b6eeb2396bf9a",
+      "arcseconds": 15
     },
     {
       "file": "ETOPO_2022_v1_15s_N45E135_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N45E135_surface.tif",
-      "sha256": "3bc9f9dd2d6403b20e8d2b9e0142ef41c6d0c8ed2c79bdbac4531bb09862308e"
+      "sha256": "3bc9f9dd2d6403b20e8d2b9e0142ef41c6d0c8ed2c79bdbac4531bb09862308e",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N45W120_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N45W120_surface.tif",
+      "sha256": "806d5dbc40838e1b89c6afb7836fd62c92c47485bfc9a3aa453c3efa05b01a43",
+      "arcseconds": 15
     },
     {
       "file": "ETOPO_2022_v1_15s_N45W135_surface.tif",
       "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N45W135_surface.tif",
-      "sha256": "4ff26df2ad67546a8c6d94e54c31f7080c80f87f1bf16f2f07e64624ec373432"
+      "sha256": "4ff26df2ad67546a8c6d94e54c31f7080c80f87f1bf16f2f07e64624ec373432",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N60E135_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N60E135_surface.tif",
+      "sha256": "53730a0d400bad3b09f5210874a1364f82086a6324db597de4d094fe9ab9e6b6",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N60W120_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N60W120_surface.tif",
+      "sha256": "69dd0125ca26daa71b4a067cfb65d2042606b940f25fe715309cf02daf71e3ae",
+      "arcseconds": 15
+    },
+    {
+      "file": "ETOPO_2022_v1_15s_N60W135_surface.tif",
+      "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N60W135_surface.tif",
+      "sha256": "e0eec4056fac1c612cd35fb729f91f535b6e8f50f017d7b9337b976086a8ccb9",
+      "arcseconds": 15
     }
   ],
   "tiles": [
@@ -731,570 +1008,511 @@
     {
       "file": "fine-0.npz",
       "key": "crop_00",
-      "arcseconds": 15,
+      "arcseconds": 3,
       "bounds": [
-        -124.8875,
-        45.666666666666664,
-        -123.40416666666667,
-        46.6375
-      ],
-      "plates": [
-        "mazama:detail-19.png"
-      ],
-      "source_granules": [
-        "N45W135"
-      ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
-    },
-    {
-      "file": "fine-0.npz",
-      "key": "crop_01",
-      "arcseconds": 15,
-      "bounds": [
-        -123.72916666666667,
-        41.8125,
-        -123.1875,
-        42.2375
+        -123.70166666666667,
+        41.839166666666664,
+        -123.21666666666667,
+        42.21
       ],
       "plates": [
         "mazama:detail-01.png"
       ],
       "source_granules": [
-        "N30W135"
+        "N41W124",
+        "N42W124"
       ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
+      "sha256": "2d8161da9dc00f10cfdfaa9445f61ddab90509ff4965d2b8658482ce7fedccb0"
     },
     {
       "file": "fine-0.npz",
-      "key": "crop_02",
-      "arcseconds": 15,
+      "key": "crop_01",
+      "arcseconds": 3,
       "bounds": [
-        -122.33333333333333,
-        42.8875,
-        -120.74583333333334,
-        43.74166666666667
+        -122.30583333333334,
+        42.920833333333334,
+        -121.93666666666667,
+        43.346666666666664
       ],
       "plates": [
-        "mazama:detail-06.png",
-        "mazama:detail-07.png",
-        "mazama:detail-08.png",
-        "mazama:detail-09.png",
+        "mazama:detail-06.png"
+      ],
+      "source_granules": [
+        "N42W123",
+        "N42W122",
+        "N43W123",
+        "N43W122"
+      ],
+      "sha256": "2d8161da9dc00f10cfdfaa9445f61ddab90509ff4965d2b8658482ce7fedccb0"
+    },
+    {
+      "file": "fine-1.npz",
+      "key": "crop_02",
+      "arcseconds": 3,
+      "bounds": [
+        -122.19833333333334,
+        43.30416666666667,
+        -120.9875,
+        43.71333333333333
+      ],
+      "plates": [
         "mazama:detail-10.png",
         "mazama:detail-11.png",
         "mazama:detail-12.png"
       ],
       "source_granules": [
-        "N30W135"
+        "N43W123",
+        "N43W122",
+        "N43W121"
       ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
+      "sha256": "062d3ad36be854b5c7f981052c89a33f6f7d0c868566734c1ba01e3088b55237"
     },
     {
-      "file": "fine-0.npz",
+      "file": "fine-2.npz",
       "key": "crop_03",
-      "arcseconds": 15,
+      "arcseconds": 3,
       "bounds": [
-        -122.16666666666667,
-        42.483333333333334,
-        -121.42083333333333,
-        42.9875
-      ],
-      "plates": [
-        "mazama:detail-03.png"
-      ],
-      "source_granules": [
-        "N30W135"
-      ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
-    },
-    {
-      "file": "fine-0.npz",
-      "key": "crop_04",
-      "arcseconds": 15,
-      "bounds": [
-        -122.12916666666666,
-        50.87083333333333,
-        -121.675,
-        51.295833333333334
+        -122.10083333333333,
+        50.9,
+        -121.70333333333333,
+        51.266666666666666
       ],
       "plates": [
         "mazama:detail-24.png"
       ],
       "source_granules": [
-        "N45W135"
+        "N50W123",
+        "N50W122",
+        "N51W123",
+        "N51W122"
       ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
     },
     {
-      "file": "fine-0.npz",
-      "key": "crop_05",
-      "arcseconds": 15,
+      "file": "fine-2.npz",
+      "key": "crop_04",
+      "arcseconds": 3,
       "bounds": [
-        -122.02916666666667,
-        46.775,
-        -121.4875,
-        47.829166666666666
-      ],
-      "plates": [
-        "mazama:detail-22.png"
-      ],
-      "source_granules": [
-        "N45W135"
-      ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
-    },
-    {
-      "file": "fine-0.npz",
-      "key": "crop_06",
-      "arcseconds": 15,
-      "bounds": [
-        -121.975,
-        43.645833333333336,
-        -121.08333333333333,
-        44.104166666666664
-      ],
-      "plates": [
-        "mazama:detail-13.png"
-      ],
-      "source_granules": [
-        "N30W135"
-      ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
-    },
-    {
-      "file": "fine-0.npz",
-      "key": "crop_07",
-      "arcseconds": 15,
-      "bounds": [
-        -121.92083333333333,
-        48.65416666666667,
-        -121.75416666666666,
-        48.78333333333333
+        -121.89166666666667,
+        48.6825,
+        -121.78416666666666,
+        48.75416666666667
       ],
       "plates": [
         "mazama:detail-23.png"
       ],
       "source_granules": [
-        "N45W135"
+        "N48W122"
       ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
     },
     {
-      "file": "fine-0.npz",
-      "key": "crop_08",
-      "arcseconds": 15,
+      "file": "fine-2.npz",
+      "key": "crop_05",
+      "arcseconds": 3,
       "bounds": [
-        -121.86666666666666,
-        41.37083333333333,
-        -121.43333333333334,
-        41.795833333333334
+        -121.8375,
+        41.39833333333333,
+        -121.46083333333333,
+        41.76583333333333
       ],
       "plates": [
         "mazama:detail-02.png"
       ],
       "source_granules": [
-        "N30W135"
+        "N41W122"
       ],
-      "sha256": "1b9fd71ae6fc7f7fcf940faf4ceb3c6e3c550940b1f9f2326a860d385e97df7a"
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_09",
-      "arcseconds": 15,
+      "file": "fine-2.npz",
+      "key": "crop_06",
+      "arcseconds": 3,
       "bounds": [
-        -121.51666666666667,
-        52.92916666666667,
-        -120.1875,
-        54.06666666666667
+        -121.805,
+        42.91833333333334,
+        -121.27916666666667,
+        43.19833333333333
       ],
       "plates": [
-        "mazama:detail-26.png"
+        "mazama:detail-07.png"
       ],
       "source_granules": [
-        "N45W135"
+        "N42W122",
+        "N43W122"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_10",
-      "arcseconds": 15,
+      "file": "fine-2.npz",
+      "key": "crop_07",
+      "arcseconds": 3,
       "bounds": [
-        -120.34166666666667,
-        43.9,
-        -120.19583333333334,
-        44.03333333333333
+        -121.2025,
+        42.9725,
+        -120.77583333333334,
+        43.195
+      ],
+      "plates": [
+        "mazama:detail-08.png"
+      ],
+      "source_granules": [
+        "N42W122",
+        "N42W121",
+        "N43W122",
+        "N43W121"
+      ],
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
+    },
+    {
+      "file": "fine-2.npz",
+      "key": "crop_08",
+      "arcseconds": 3,
+      "bounds": [
+        -120.31416666666667,
+        43.93,
+        -120.22583333333333,
+        44.00333333333333
       ],
       "plates": [
         "mazama:detail-14.png"
       ],
       "source_granules": [
-        "N30W135"
+        "N43W121",
+        "N44W121"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "c7d1a35a4ab4ce4453445fbfeca0b1ebff03867e43ed46a78850c8dd5d51badc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_11",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_09",
+      "arcseconds": 3,
       "bounds": [
-        -115.025,
-        43.90833333333333,
-        -114.78333333333333,
-        44.233333333333334
+        -114.995,
+        43.939166666666665,
+        -114.8125,
+        44.2025
       ],
       "plates": [
         "mazama:detail-16.png"
       ],
       "source_granules": [
-        "N30W120"
+        "N43W115",
+        "N44W115"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_12",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_10",
+      "arcseconds": 3,
       "bounds": [
-        -110.97916666666667,
-        44.2875,
-        -110.18333333333334,
-        44.67916666666667
-      ],
-      "plates": [
-        "mazama:detail-18.png"
-      ],
-      "source_granules": [
-        "N30W120"
-      ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
-    },
-    {
-      "file": "fine-1.npz",
-      "key": "crop_13",
-      "arcseconds": 15,
-      "bounds": [
-        -110.79166666666667,
-        43.7,
-        -110.675,
-        43.82083333333333
+        -110.7625,
+        43.729166666666664,
+        -110.70333333333333,
+        43.79416666666667
       ],
       "plates": [
         "mazama:detail-17.png"
       ],
       "source_granules": [
-        "N30W120"
+        "N43W111"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_14",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_11",
+      "arcseconds": 3,
       "bounds": [
-        -92.22083333333333,
-        14.420833333333333,
-        -92.08333333333333,
-        14.595833333333333
+        -92.19,
+        14.451666666666666,
+        -92.11,
+        14.565
       ],
       "plates": [
         "ilopango-tbj:detail-03.png"
       ],
       "source_granules": [
-        "N00W105"
+        "N14W093"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_15",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_12",
+      "arcseconds": 3,
       "bounds": [
-        -90.6875,
-        13.808333333333334,
-        -90.36666666666666,
-        14.554166666666667
-      ],
-      "plates": [
-        "ilopango-tbj:detail-04.png"
-      ],
-      "source_granules": [
-        "N00W105"
-      ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
-    },
-    {
-      "file": "fine-1.npz",
-      "key": "crop_16",
-      "arcseconds": 15,
-      "bounds": [
-        -90.06666666666666,
-        13.766666666666667,
-        -89.76666666666667,
-        14.066666666666666
+        -90.03916666666667,
+        13.795,
+        -89.795,
+        14.0375
       ],
       "plates": [
         "ilopango-tbj:detail-05.png"
       ],
       "source_granules": [
-        "N00W105",
-        "N00W090"
+        "N13W091",
+        "N13W090",
+        "N14W091",
+        "N14W090"
       ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-1.npz",
-      "key": "crop_17",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_13",
+      "arcseconds": 3,
       "bounds": [
-        -89.8375,
-        13.383333333333333,
-        -89.13333333333334,
-        13.975
-      ],
-      "plates": [
-        "ilopango-tbj:detail-02.png",
-        "ilopango-tbj:detail-06.png",
-        "ilopango-tbj:detail-08.png",
-        "ilopango-tbj:detail-20.png"
-      ],
-      "source_granules": [
-        "N00W090"
-      ],
-      "sha256": "7fb4751dbc8756691b997ba4acf0d7bc945ca48adfc63b25f484986b7585d02c"
-    },
-    {
-      "file": "fine-2.npz",
-      "key": "crop_18",
-      "arcseconds": 15,
-      "bounds": [
-        -89.725,
-        13.9125,
-        -89.6,
-        14.045833333333333
+        -89.69583333333334,
+        13.940833333333334,
+        -89.6275,
+        14.018333333333333
       ],
       "plates": [
         "ilopango-tbj:detail-07.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W090",
+        "N14W090"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_19",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_14",
+      "arcseconds": 3,
       "bounds": [
-        -89.6125,
-        13.933333333333334,
-        -89.37916666666666,
-        14.183333333333334
+        -89.68666666666667,
+        13.79,
+        -89.59916666666666,
+        13.8625
+      ],
+      "plates": [
+        "ilopango-tbj:detail-06.png"
+      ],
+      "source_granules": [
+        "N13W090"
+      ],
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
+    },
+    {
+      "file": "fine-3.npz",
+      "key": "crop_15",
+      "arcseconds": 3,
+      "bounds": [
+        -89.5825,
+        13.9625,
+        -89.40583333333333,
+        14.155833333333334
       ],
       "plates": [
         "ilopango-tbj:detail-09.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W090",
+        "N14W090"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_20",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_16",
+      "arcseconds": 3,
       "bounds": [
-        -89.55,
-        14.25,
-        -89.40416666666667,
-        14.383333333333333
+        -89.52333333333333,
+        14.279166666666667,
+        -89.43333333333334,
+        14.356666666666667
       ],
       "plates": [
         "ilopango-tbj:detail-10.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N14W090"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_21",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_17",
+      "arcseconds": 3,
       "bounds": [
-        -89.22916666666667,
-        13.554166666666667,
-        -88.93333333333334,
-        14.183333333333334
+        -89.50333333333333,
+        13.746666666666666,
+        -89.16166666666666,
+        13.945
       ],
       "plates": [
-        "ilopango-tbj:detail-15.png"
+        "ilopango-tbj:detail-08.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W090"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_22",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_18",
+      "arcseconds": 3,
       "bounds": [
-        -89.225,
-        13.229166666666666,
-        -88.57916666666667,
-        13.65
-      ],
-      "plates": [
-        "ilopango-tbj:detail-12.png"
-      ],
-      "source_granules": [
-        "N00W090"
-      ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
-    },
-    {
-      "file": "fine-2.npz",
-      "key": "crop_23",
-      "arcseconds": 15,
-      "bounds": [
-        -89.02916666666667,
-        13.554166666666667,
-        -88.625,
-        13.958333333333334
+        -89.0,
+        13.583333333333334,
+        -88.65416666666667,
+        13.929166666666667
       ],
       "plates": [
         "ilopango-tbj:detail-16.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W089"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_24",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_19",
+      "arcseconds": 3,
       "bounds": [
-        -88.6125,
-        13.2625,
-        -88.15,
-        13.570833333333333
+        -88.58583333333333,
+        13.293333333333333,
+        -88.18,
+        13.540833333333333
       ],
       "plates": [
         "ilopango-tbj:detail-13.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W089"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_25",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_20",
+      "arcseconds": 3,
       "bounds": [
-        -88.39166666666667,
-        13.708333333333334,
-        -88.13333333333334,
-        13.9625
+        -88.36166666666666,
+        13.739166666666666,
+        -88.16416666666667,
+        13.9325
       ],
       "plates": [
         "ilopango-tbj:detail-17.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W089"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-2.npz",
-      "key": "crop_26",
-      "arcseconds": 15,
+      "file": "fine-3.npz",
+      "key": "crop_21",
+      "arcseconds": 3,
       "bounds": [
-        -87.95416666666667,
-        13.220833333333333,
-        -87.85833333333333,
-        13.316666666666666
+        -87.92666666666666,
+        13.250833333333333,
+        -87.88833333333334,
+        13.29
       ],
       "plates": [
         "ilopango-tbj:detail-14.png"
       ],
       "source_granules": [
-        "N00W090"
+        "N13W088"
       ],
-      "sha256": "4ee40aa7e63d543ad39c2009dc76b75751b15b6b6b643011d76e8fe57728dec9"
+      "sha256": "09f931d0a54f17e70ccd42b57271923442dfcc591d6bf0d59f210bb1a7dd3dfc"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_27",
-      "arcseconds": 15,
+      "file": "fine-4.npz",
+      "key": "crop_22",
+      "arcseconds": 3,
       "bounds": [
-        24.0625,
-        36.11666666666667,
-        25.433333333333334,
-        36.90833333333333
+        119.96583333333334,
+        14.986666666666666,
+        120.3525,
+        15.3625
       ],
       "plates": [
-        "minoan:detail-03.png"
-      ],
-      "source_granules": [
-        "N30E015"
-      ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
-    },
-    {
-      "file": "fine-3.npz",
-      "key": "crop_28",
-      "arcseconds": 15,
-      "bounds": [
-        26.595833333333335,
-        35.32083333333333,
-        27.679166666666667,
-        36.2
-      ],
-      "plates": [
-        "minoan:detail-06.png"
-      ],
-      "source_granules": [
-        "N30E015"
-      ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
-    },
-    {
-      "file": "fine-3.npz",
-      "key": "crop_29",
-      "arcseconds": 15,
-      "bounds": [
-        114.425,
-        4.229166666666667,
-        115.0375,
-        4.85
-      ],
-      "plates": [
-        "tambora:detail-03.png"
-      ],
-      "source_granules": [
-        "N00E105"
-      ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
-    },
-    {
-      "file": "fine-3.npz",
-      "key": "crop_30",
-      "arcseconds": 15,
-      "bounds": [
-        119.9375,
-        14.691666666666666,
-        120.84166666666667,
-        15.391666666666667
-      ],
-      "plates": [
-        "pinatubo-1991-layer-c:detail-04.png",
-        "pinatubo-1991-layer-c:detail-05.png",
-        "pinatubo-1991-layer-c:detail-06.png",
         "pinatubo-1991-layer-c:detail-10.png",
         "pinatubo-1991-layer-c:detail-11.png",
-        "pinatubo-1991-layer-c:detail-12.png",
+        "pinatubo-1991-layer-c:detail-12.png"
+      ],
+      "source_granules": [
+        "N14E119",
+        "N14E120",
+        "N15E119",
+        "N15E120"
+      ],
+      "sha256": "dbb9f9d23e4d013d356b51f5086c803aff08143655baddec417c3f5d6fceeb1d"
+    },
+    {
+      "file": "fine-4.npz",
+      "key": "crop_23",
+      "arcseconds": 3,
+      "bounds": [
+        120.0225,
+        14.895,
+        120.19583333333334,
+        15.023333333333333
+      ],
+      "plates": [
+        "pinatubo-1991-layer-c:detail-05.png"
+      ],
+      "source_granules": [
+        "N14E120",
+        "N15E120"
+      ],
+      "sha256": "dbb9f9d23e4d013d356b51f5086c803aff08143655baddec417c3f5d6fceeb1d"
+    },
+    {
+      "file": "fine-4.npz",
+      "key": "crop_24",
+      "arcseconds": 3,
+      "bounds": [
+        120.09916666666666,
+        14.746666666666666,
+        120.15333333333334,
+        14.798333333333334
+      ],
+      "plates": [
+        "pinatubo-1991-layer-c:detail-04.png"
+      ],
+      "source_granules": [
+        "N14E120"
+      ],
+      "sha256": "dbb9f9d23e4d013d356b51f5086c803aff08143655baddec417c3f5d6fceeb1d"
+    },
+    {
+      "file": "fine-4.npz",
+      "key": "crop_25",
+      "arcseconds": 3,
+      "bounds": [
+        120.15916666666666,
+        14.775,
+        120.3525,
+        15.024166666666666
+      ],
+      "plates": [
+        "pinatubo-1991-layer-c:detail-06.png"
+      ],
+      "source_granules": [
+        "N14E120",
+        "N15E120"
+      ],
+      "sha256": "dbb9f9d23e4d013d356b51f5086c803aff08143655baddec417c3f5d6fceeb1d"
+    },
+    {
+      "file": "fine-4.npz",
+      "key": "crop_26",
+      "arcseconds": 3,
+      "bounds": [
+        120.31583333333333,
+        14.72,
+        120.8125,
+        15.335833333333333
+      ],
+      "plates": [
         "pinatubo-1991-layer-c:detail-14.png",
         "pinatubo-1991-layer-c:detail-15.png",
         "pinatubo-1991-layer-c:detail-16.png",
@@ -1304,22 +1522,20 @@
         "pinatubo-1991-layer-c:detail-20.png"
       ],
       "source_granules": [
-        "N00E105",
-        "N00E120",
-        "N15E105",
+        "N14E120",
         "N15E120"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "dbb9f9d23e4d013d356b51f5086c803aff08143655baddec417c3f5d6fceeb1d"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_31",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_27",
+      "arcseconds": 3,
       "bounds": [
-        120.375,
-        15.270833333333334,
-        120.73333333333333,
-        15.5625
+        120.4025,
+        15.298333333333334,
+        120.70666666666666,
+        15.5325
       ],
       "plates": [
         "pinatubo-1991-layer-c:detail-21.png"
@@ -1327,244 +1543,1107 @@
       "source_granules": [
         "N15E120"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_32",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_28",
+      "arcseconds": 3,
       "bounds": [
-        120.84166666666667,
-        14.433333333333334,
-        121.07916666666667,
-        14.570833333333333
+        120.8725,
+        14.46,
+        121.05166666666666,
+        14.544166666666667
       ],
       "plates": [
         "pinatubo-1991-layer-c:detail-13.png"
       ],
       "source_granules": [
-        "N00E120"
+        "N14E120",
+        "N14E121"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_33",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_29",
+      "arcseconds": 3,
       "bounds": [
-        126.3875,
-        42.1125,
-        126.8125,
-        42.454166666666666
+        126.41666666666667,
+        42.1425,
+        126.7825,
+        42.42333333333333
       ],
       "plates": [
         "b-tm:detail-01.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N42E126"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_34",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_30",
+      "arcseconds": 3,
       "bounds": [
-        127.54166666666667,
-        42.18333333333333,
-        127.94583333333334,
-        42.516666666666666
+        127.56916666666666,
+        42.21083333333333,
+        127.91666666666667,
+        42.48833333333334
       ],
       "plates": [
         "b-tm:detail-02.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N42E127"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-3.npz",
-      "key": "crop_35",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_31",
+      "arcseconds": 3,
       "bounds": [
-        127.9375,
-        41.84166666666667,
-        128.22916666666666,
-        42.416666666666664
+        128.16416666666666,
+        41.990833333333335,
+        128.39,
+        42.276666666666664
       ],
       "plates": [
-        "b-tm:detail-03.png"
+        "b-tm:detail-04.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N41E128",
+        "N42E128"
       ],
-      "sha256": "ea32db182c937a6615bfb249cdd8cb6dc7c61b62e8a96366ca8b4d6afb45e23b"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_36",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_32",
+      "arcseconds": 3,
       "bounds": [
-        128.1375,
-        41.916666666666664,
-        128.51666666666668,
-        42.30416666666667
+        128.35166666666666,
+        41.946666666666665,
+        128.48916666666668,
+        42.1525
       ],
       "plates": [
-        "b-tm:detail-04.png",
         "b-tm:detail-05.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N41E128",
+        "N42E128"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_37",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_33",
+      "arcseconds": 3,
       "bounds": [
-        128.42083333333332,
-        41.920833333333334,
-        128.86666666666667,
-        42.11666666666667
+        128.45166666666665,
+        41.94833333333333,
+        128.8375,
+        42.086666666666666
       ],
       "plates": [
         "b-tm:detail-06.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N41E128",
+        "N42E128"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_38",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_34",
+      "arcseconds": 3,
       "bounds": [
-        130.15416666666667,
-        31.125,
-        131.475,
-        32.09166666666667
-      ],
-      "plates": [
-        "sakurajima-satsuma:detail-03.png",
-        "sakurajima-satsuma:detail-04.png",
-        "sakurajima-satsuma:detail-05.png"
-      ],
-      "source_granules": [
-        "N30E120"
-      ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
-    },
-    {
-      "file": "fine-4.npz",
-      "key": "crop_39",
-      "arcseconds": 15,
-      "bounds": [
-        130.75833333333333,
-        32.333333333333336,
-        130.89583333333334,
-        32.46666666666667
+        130.78583333333333,
+        32.361666666666665,
+        130.86833333333334,
+        32.4375
       ],
       "plates": [
         "sakurajima-satsuma:detail-06.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N32E130"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_40",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_35",
+      "arcseconds": 3,
       "bounds": [
-        130.89583333333334,
-        30.504166666666666,
-        131.07083333333333,
-        30.7
+        130.92333333333335,
+        30.5325,
+        131.04416666666665,
+        30.671666666666667
       ],
       "plates": [
         "sakurajima-satsuma:detail-02.png"
       ],
       "source_granules": [
-        "N30E120"
+        "N30E130",
+        "N30E131"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_41",
-      "arcseconds": 15,
+      "file": "fine-5.npz",
+      "key": "crop_36",
+      "arcseconds": 3,
       "bounds": [
-        135.67916666666667,
-        35.40416666666667,
-        136.09166666666667,
-        35.7625
+        135.70666666666668,
+        35.435,
+        136.06083333333333,
+        35.7325
       ],
       "plates": [
         "b-tm:detail-07.png"
       ],
       "source_granules": [
-        "N30E135"
+        "N35E135",
+        "N35E136"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b6b3f4db23849441b0dac0d71493e472df6978785b19bae07ccf301cdbe87154"
     },
     {
-      "file": "fine-4.npz",
-      "key": "crop_42",
-      "arcseconds": 15,
+      "file": "fine-6.npz",
+      "key": "crop_37",
+      "arcseconds": 3,
       "bounds": [
-        140.02083333333334,
-        41.84583333333333,
-        141.5375,
-        42.825
-      ],
-      "plates": [
-        "b-tm:detail-11.png"
-      ],
-      "source_granules": [
-        "N30E135"
-      ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
-    },
-    {
-      "file": "fine-4.npz",
-      "key": "crop_43",
-      "arcseconds": 15,
-      "bounds": [
-        140.79583333333332,
-        45.25,
-        141.27916666666667,
-        45.61666666666667
+        140.82333333333332,
+        45.276666666666664,
+        141.25166666666667,
+        45.586666666666666
       ],
       "plates": [
         "b-tm:detail-12.png"
       ],
       "source_granules": [
-        "N45E135"
+        "N45E140",
+        "N45E141"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "b50abfcc344f954ca1dd36c0a543efdd88ef36dd56c182640c046edeafd4f947"
     },
     {
-      "file": "fine-4.npz",
+      "file": "fine-6.npz",
+      "key": "crop_38",
+      "arcseconds": 15,
+      "bounds": [
+        -126.26666666666667,
+        45.075,
+        -122.08333333333333,
+        47.204166666666666
+      ],
+      "plates": [
+        "mazama:detail-19.png",
+        "mazama:locator-detail-19.png"
+      ],
+      "source_granules": [
+        "N60W135"
+      ],
+      "sha256": "b50abfcc344f954ca1dd36c0a543efdd88ef36dd56c182640c046edeafd4f947"
+    },
+    {
+      "file": "fine-7.npz",
+      "key": "crop_39",
+      "arcseconds": 15,
+      "bounds": [
+        -125.4,
+        48.166666666666664,
+        -123.10416666666667,
+        49.266666666666666
+      ],
+      "plates": [
+        "mazama:detail-20.png"
+      ],
+      "source_granules": [
+        "N60W135"
+      ],
+      "sha256": "ac20723bceb20f3e6e20f3657640dd49f6d1eebed08c2feb0e5b0a2dd44b7dc0"
+    },
+    {
+      "file": "fine-8.npz",
+      "key": "crop_40",
+      "arcseconds": 15,
+      "bounds": [
+        -124.67083333333333,
+        40.72083333333333,
+        -118.04166666666667,
+        45.104166666666664
+      ],
+      "plates": [
+        "mazama:detail-01.png",
+        "mazama:detail-02.png",
+        "mazama:detail-03.png",
+        "mazama:detail-04.png",
+        "mazama:detail-06.png",
+        "mazama:detail-07.png",
+        "mazama:detail-08.png",
+        "mazama:detail-09.png",
+        "mazama:detail-10.png",
+        "mazama:detail-11.png",
+        "mazama:detail-12.png",
+        "mazama:detail-13.png",
+        "mazama:detail-14.png",
+        "mazama:locator-detail-01.png",
+        "mazama:locator-detail-02.png",
+        "mazama:locator-detail-03.png",
+        "mazama:locator-detail-10.png",
+        "mazama:locator-detail-11.png",
+        "mazama:locator-detail-12.png",
+        "mazama:locator-detail-13.png",
+        "mazama:locator-detail-14.png",
+        "mazama:near-vent.png"
+      ],
+      "source_granules": [
+        "N45W135",
+        "N45W120",
+        "N60W135",
+        "N60W120"
+      ],
+      "sha256": "8e02bfcb0aa24d72d017c9f4cb366d772f30c5f79b32560521f8969fa1994d84"
+    },
+    {
+      "file": "fine-9.npz",
+      "key": "crop_41",
+      "arcseconds": 15,
+      "bounds": [
+        -123.92916666666666,
+        46.229166666666664,
+        -119.57916666666667,
+        48.35
+      ],
+      "plates": [
+        "mazama:detail-22.png",
+        "mazama:locator-detail-22.png"
+      ],
+      "source_granules": [
+        "N60W135",
+        "N60W120"
+      ],
+      "sha256": "925226cea70e77f6c31bd9d594551779bdd81da34abb01ba98f2dba43e7692a2"
+    },
+    {
+      "file": "fine-9.npz",
+      "key": "crop_42",
+      "arcseconds": 15,
+      "bounds": [
+        -123.27083333333333,
+        50.45,
+        -120.52916666666667,
+        51.708333333333336
+      ],
+      "plates": [
+        "mazama:detail-24.png",
+        "mazama:locator-detail-24.png"
+      ],
+      "source_granules": [
+        "N60W135"
+      ],
+      "sha256": "925226cea70e77f6c31bd9d594551779bdd81da34abb01ba98f2dba43e7692a2"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_43",
+      "arcseconds": 15,
+      "bounds": [
+        -123.20416666666667,
+        48.05833333333333,
+        -120.46666666666667,
+        49.37083333333333
+      ],
+      "plates": [
+        "mazama:detail-23.png",
+        "mazama:locator-detail-23.png"
+      ],
+      "source_granules": [
+        "N60W135"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
       "key": "crop_44",
       "arcseconds": 15,
       "bounds": [
-        141.125,
-        40.291666666666664,
-        141.6875,
-        40.916666666666664
+        -121.49166666666666,
+        52.954166666666666,
+        -120.21666666666667,
+        54.0375
       ],
       "plates": [
-        "b-tm:detail-13.png"
+        "mazama:detail-26.png"
       ],
       "source_granules": [
-        "N30E135"
+        "N60W135"
       ],
-      "sha256": "872b098ead6e1cdea3e8f662dda8a036b04af4f5ff1e24b25cb3dbcf8a8efce9"
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_45",
+      "arcseconds": 15,
+      "bounds": [
+        -114.99583333333334,
+        43.9375,
+        -114.8125,
+        44.204166666666666
+      ],
+      "plates": [
+        "mazama:detail-16.png"
+      ],
+      "source_granules": [
+        "N45W120"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_46",
+      "arcseconds": 15,
+      "bounds": [
+        -110.95416666666667,
+        44.31666666666667,
+        -110.20833333333333,
+        44.65416666666667
+      ],
+      "plates": [
+        "mazama:detail-18.png"
+      ],
+      "source_granules": [
+        "N45W120"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_47",
+      "arcseconds": 15,
+      "bounds": [
+        -110.7625,
+        43.729166666666664,
+        -110.7,
+        43.795833333333334
+      ],
+      "plates": [
+        "mazama:detail-17.png"
+      ],
+      "source_granules": [
+        "N45W120"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_48",
+      "arcseconds": 15,
+      "bounds": [
+        -110.60416666666667,
+        49.45,
+        -109.425,
+        51.045833333333334
+      ],
+      "plates": [
+        "mazama:detail-30.png"
+      ],
+      "source_granules": [
+        "N60W120"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-10.npz",
+      "key": "crop_49",
+      "arcseconds": 15,
+      "bounds": [
+        -93.05,
+        13.870833333333334,
+        -91.25416666666666,
+        15.141666666666667
+      ],
+      "plates": [
+        "ilopango-tbj:detail-03.png",
+        "ilopango-tbj:locator-detail-03.png"
+      ],
+      "source_granules": [
+        "N15W105",
+        "N30W105"
+      ],
+      "sha256": "96a6002385465657d8d779f18d147560462b0553c4e0603555192dd28b3f16fd"
+    },
+    {
+      "file": "fine-11.npz",
+      "key": "crop_50",
+      "arcseconds": 15,
+      "bounds": [
+        -91.55416666666666,
+        12.6375,
+        -87.01666666666667,
+        15.120833333333334
+      ],
+      "plates": [
+        "ilopango-tbj:detail-02.png",
+        "ilopango-tbj:detail-04.png",
+        "ilopango-tbj:detail-05.png",
+        "ilopango-tbj:detail-06.png",
+        "ilopango-tbj:detail-07.png",
+        "ilopango-tbj:detail-08.png",
+        "ilopango-tbj:detail-09.png",
+        "ilopango-tbj:detail-10.png",
+        "ilopango-tbj:detail-12.png",
+        "ilopango-tbj:detail-13.png",
+        "ilopango-tbj:detail-14.png",
+        "ilopango-tbj:detail-15.png",
+        "ilopango-tbj:detail-16.png",
+        "ilopango-tbj:detail-17.png",
+        "ilopango-tbj:detail-18.png",
+        "ilopango-tbj:detail-20.png",
+        "ilopango-tbj:locator-detail-02.png",
+        "ilopango-tbj:locator-detail-04.png",
+        "ilopango-tbj:locator-detail-05.png",
+        "ilopango-tbj:locator-detail-06.png",
+        "ilopango-tbj:locator-detail-07.png",
+        "ilopango-tbj:locator-detail-08.png",
+        "ilopango-tbj:locator-detail-09.png",
+        "ilopango-tbj:locator-detail-10.png",
+        "ilopango-tbj:locator-detail-12.png",
+        "ilopango-tbj:locator-detail-13.png",
+        "ilopango-tbj:locator-detail-14.png",
+        "ilopango-tbj:locator-detail-15.png",
+        "ilopango-tbj:locator-detail-16.png",
+        "ilopango-tbj:locator-detail-17.png",
+        "ilopango-tbj:locator-detail-20.png",
+        "ilopango-tbj:near-vent.png"
+      ],
+      "source_granules": [
+        "N15W105",
+        "N15W090",
+        "N30W105",
+        "N30W090"
+      ],
+      "sha256": "109afdffbf346f75f2604e84a061e4001e5d1527e136d9146f51b4a8c1bfb7b9"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_51",
+      "arcseconds": 15,
+      "bounds": [
+        -85.0,
+        7.516666666666667,
+        -82.52083333333333,
+        9.320833333333333
+      ],
+      "plates": [
+        "ilopango-tbj:locator-detail-19.png"
+      ],
+      "source_granules": [
+        "N15W090"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_52",
+      "arcseconds": 15,
+      "bounds": [
+        23.833333333333332,
+        35.2125,
+        25.833333333333332,
+        36.13333333333333
+      ],
+      "plates": [
+        "minoan:detail-01.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_53",
+      "arcseconds": 15,
+      "bounds": [
+        24.091666666666665,
+        36.145833333333336,
+        25.404166666666665,
+        36.87916666666667
+      ],
+      "plates": [
+        "minoan:detail-03.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_54",
+      "arcseconds": 15,
+      "bounds": [
+        25.420833333333334,
+        36.125,
+        26.695833333333333,
+        37.30416666666667
+      ],
+      "plates": [
+        "minoan:detail-04.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_55",
+      "arcseconds": 15,
+      "bounds": [
+        25.841666666666665,
+        34.666666666666664,
+        26.675,
+        36.07083333333333
+      ],
+      "plates": [
+        "minoan:detail-02.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_56",
+      "arcseconds": 15,
+      "bounds": [
+        26.625,
+        35.35,
+        27.654166666666665,
+        36.175
+      ],
+      "plates": [
+        "minoan:detail-06.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_57",
+      "arcseconds": 15,
+      "bounds": [
+        26.6375,
+        36.15,
+        27.779166666666665,
+        37.541666666666664
+      ],
+      "plates": [
+        "minoan:detail-07.png"
+      ],
+      "source_granules": [
+        "N45E015"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-12.npz",
+      "key": "crop_58",
+      "arcseconds": 15,
+      "bounds": [
+        36.854166666666664,
+        -3.9458333333333333,
+        38.53333333333333,
+        -2.691666666666667
+      ],
+      "plates": [
+        "ytt:detail-01.png"
+      ],
+      "source_granules": [
+        "N00E030"
+      ],
+      "sha256": "b791cb9df0ec8f1bee7f0bd7ab3b4b2db00dd4c58af5483d5782f58a7188e463"
+    },
+    {
+      "file": "fine-13.npz",
+      "key": "crop_59",
+      "arcseconds": 15,
+      "bounds": [
+        113.86666666666666,
+        3.908333333333333,
+        115.59166666666667,
+        5.175
+      ],
+      "plates": [
+        "tambora:detail-03.png",
+        "tambora:locator-detail-03.png"
+      ],
+      "source_granules": [
+        "N15E105"
+      ],
+      "sha256": "750387bdff794239e9d6b4052bacaf277d9e0928b0c21aca44f151f28262f6f1"
+    },
+    {
+      "file": "fine-13.npz",
+      "key": "crop_60",
+      "arcseconds": 15,
+      "bounds": [
+        119.0875,
+        13.870833333333334,
+        121.85833333333333,
+        16.041666666666668
+      ],
+      "plates": [
+        "pinatubo-1991-layer-c:detail-04.png",
+        "pinatubo-1991-layer-c:detail-05.png",
+        "pinatubo-1991-layer-c:detail-06.png",
+        "pinatubo-1991-layer-c:detail-10.png",
+        "pinatubo-1991-layer-c:detail-11.png",
+        "pinatubo-1991-layer-c:detail-12.png",
+        "pinatubo-1991-layer-c:detail-13.png",
+        "pinatubo-1991-layer-c:detail-14.png",
+        "pinatubo-1991-layer-c:detail-15.png",
+        "pinatubo-1991-layer-c:detail-16.png",
+        "pinatubo-1991-layer-c:detail-17.png",
+        "pinatubo-1991-layer-c:detail-18.png",
+        "pinatubo-1991-layer-c:detail-19.png",
+        "pinatubo-1991-layer-c:detail-20.png",
+        "pinatubo-1991-layer-c:detail-21.png",
+        "pinatubo-1991-layer-c:locator-detail-04.png",
+        "pinatubo-1991-layer-c:locator-detail-05.png",
+        "pinatubo-1991-layer-c:locator-detail-06.png",
+        "pinatubo-1991-layer-c:locator-detail-10.png",
+        "pinatubo-1991-layer-c:locator-detail-11.png",
+        "pinatubo-1991-layer-c:locator-detail-12.png",
+        "pinatubo-1991-layer-c:locator-detail-13.png",
+        "pinatubo-1991-layer-c:locator-detail-14.png",
+        "pinatubo-1991-layer-c:locator-detail-15.png",
+        "pinatubo-1991-layer-c:locator-detail-16.png",
+        "pinatubo-1991-layer-c:locator-detail-17.png",
+        "pinatubo-1991-layer-c:locator-detail-18.png",
+        "pinatubo-1991-layer-c:locator-detail-19.png",
+        "pinatubo-1991-layer-c:locator-detail-20.png",
+        "pinatubo-1991-layer-c:locator-detail-21.png",
+        "pinatubo-1991-layer-c:near-vent.png"
+      ],
+      "source_granules": [
+        "N15E105",
+        "N15E120",
+        "N30E105",
+        "N30E120"
+      ],
+      "sha256": "750387bdff794239e9d6b4052bacaf277d9e0928b0c21aca44f151f28262f6f1"
+    },
+    {
+      "file": "fine-14.npz",
+      "key": "crop_61",
+      "arcseconds": 15,
+      "bounds": [
+        125.41666666666667,
+        41.00833333333333,
+        130.19583333333333,
+        43.525
+      ],
+      "plates": [
+        "b-tm:detail-01.png",
+        "b-tm:detail-02.png",
+        "b-tm:detail-03.png",
+        "b-tm:detail-04.png",
+        "b-tm:detail-05.png",
+        "b-tm:detail-06.png",
+        "b-tm:locator-detail-01.png",
+        "b-tm:locator-detail-02.png",
+        "b-tm:locator-detail-03.png",
+        "b-tm:locator-detail-04.png",
+        "b-tm:locator-detail-05.png",
+        "b-tm:locator-detail-06.png",
+        "b-tm:near-vent.png"
+      ],
+      "source_granules": [
+        "N45E120"
+      ],
+      "sha256": "105848ef6c2725ff5a2dac4ab3549f36e6b2435ca3c2850a180abe1220c1c740"
+    },
+    {
+      "file": "fine-15.npz",
+      "key": "crop_62",
+      "arcseconds": 15,
+      "bounds": [
+        128.6875,
+        29.4125,
+        132.89583333333334,
+        33.025
+      ],
+      "plates": [
+        "sakurajima-satsuma:detail-02.png",
+        "sakurajima-satsuma:detail-03.png",
+        "sakurajima-satsuma:detail-04.png",
+        "sakurajima-satsuma:detail-05.png",
+        "sakurajima-satsuma:detail-06.png",
+        "sakurajima-satsuma:locator-detail-02.png",
+        "sakurajima-satsuma:locator-detail-03.png",
+        "sakurajima-satsuma:locator-detail-04.png",
+        "sakurajima-satsuma:locator-detail-05.png",
+        "sakurajima-satsuma:locator-detail-06.png",
+        "sakurajima-satsuma:overview.png"
+      ],
+      "source_granules": [
+        "N30E120",
+        "N45E120"
+      ],
+      "sha256": "978e3000a91da0f386d31c5ceb6da3643e596178695b76bf151238c26924baf1"
+    },
+    {
+      "file": "fine-16.npz",
+      "key": "crop_63",
+      "arcseconds": 15,
+      "bounds": [
+        134.63333333333333,
+        34.7875,
+        137.15416666666667,
+        36.36666666666667
+      ],
+      "plates": [
+        "b-tm:detail-07.png",
+        "b-tm:locator-detail-07.png"
+      ],
+      "source_granules": [
+        "N45E120",
+        "N45E135"
+      ],
+      "sha256": "7baf1ec95597ba26192e8b1a463b75fbbe8b3adae11f26afb26249581a154073"
+    },
+    {
+      "file": "fine-16.npz",
+      "key": "crop_64",
+      "arcseconds": 15,
+      "bounds": [
+        137.64166666666668,
+        34.983333333333334,
+        139.52916666666667,
+        37.2875
+      ],
+      "plates": [
+        "aso-4:detail-04.png"
+      ],
+      "source_granules": [
+        "N45E135"
+      ],
+      "sha256": "7baf1ec95597ba26192e8b1a463b75fbbe8b3adae11f26afb26249581a154073"
+    },
+    {
+      "file": "fine-17.npz",
+      "key": "crop_65",
+      "arcseconds": 15,
+      "bounds": [
+        138.67083333333332,
+        39.55833333333333,
+        144.33333333333334,
+        43.5625
+      ],
+      "plates": [
+        "b-tm:detail-10.png",
+        "b-tm:detail-11.png",
+        "b-tm:detail-13.png",
+        "b-tm:detail-14.png",
+        "b-tm:locator-detail-11.png",
+        "b-tm:locator-detail-13.png"
+      ],
+      "source_granules": [
+        "N45E135"
+      ],
+      "sha256": "ca759113f0aa758c9b1ea6f5b475899e0e9d6cd0cb25018778f2497162b378b7"
+    },
+    {
+      "file": "fine-18.npz",
+      "key": "crop_66",
+      "arcseconds": 15,
+      "bounds": [
+        140.82083333333333,
+        45.275,
+        141.25416666666666,
+        45.5875
+      ],
+      "plates": [
+        "b-tm:detail-12.png"
+      ],
+      "source_granules": [
+        "N60E135"
+      ],
+      "sha256": "de928386357b54ae34918242e3cb675e2e5841a0d6ce41479a57649185e48a62"
+    },
+    {
+      "file": "fine-18.npz",
+      "key": "crop_67",
+      "arcseconds": 60,
+      "bounds": [
+        -127.78333333333333,
+        45.15,
+        -106.0,
+        55.55
+      ],
+      "plates": [
+        "mazama:detail-21.png",
+        "mazama:detail-25.png",
+        "mazama:detail-27.png",
+        "mazama:detail-28.png",
+        "mazama:detail-29.png",
+        "mazama:detail-31.png",
+        "mazama:locator-detail-20.png",
+        "mazama:locator-detail-26.png",
+        "mazama:locator-detail-29.png",
+        "mazama:locator-detail-30.png"
+      ],
+      "source_granules": [],
+      "sha256": "de928386357b54ae34918242e3cb675e2e5841a0d6ce41479a57649185e48a62"
+    },
+    {
+      "file": "fine-19.npz",
+      "key": "crop_68",
+      "arcseconds": 60,
+      "bounds": [
+        -124.76666666666667,
+        40.1,
+        -117.1,
+        45.5
+      ],
+      "plates": [
+        "mazama:detail-15.png",
+        "mazama:locator-detail-04.png",
+        "mazama:locator-detail-06.png",
+        "mazama:locator-detail-07.png",
+        "mazama:locator-detail-08.png",
+        "mazama:locator-detail-09.png"
+      ],
+      "source_granules": [],
+      "sha256": "49c5b335a8041b42fba4069e3884ae1a011fc095ef880ca3f43cc16bd9d568fb"
+    },
+    {
+      "file": "fine-19.npz",
+      "key": "crop_69",
+      "arcseconds": 60,
+      "bounds": [
+        -119.85,
+        36.55,
+        -111.5,
+        42.96666666666667
+      ],
+      "plates": [
+        "mazama:detail-05.png"
+      ],
+      "source_granules": [],
+      "sha256": "49c5b335a8041b42fba4069e3884ae1a011fc095ef880ca3f43cc16bd9d568fb"
+    },
+    {
+      "file": "fine-19.npz",
+      "key": "crop_70",
+      "arcseconds": 60,
+      "bounds": [
+        -118.08333333333333,
+        41.983333333333334,
+        -107.05,
+        46.38333333333333
+      ],
+      "plates": [
+        "mazama:locator-detail-16.png",
+        "mazama:locator-detail-17.png",
+        "mazama:locator-detail-18.png"
+      ],
+      "source_granules": [],
+      "sha256": "49c5b335a8041b42fba4069e3884ae1a011fc095ef880ca3f43cc16bd9d568fb"
+    },
+    {
+      "file": "fine-20.npz",
+      "key": "crop_71",
+      "arcseconds": 60,
+      "bounds": [
+        -95.2,
+        7.6,
+        -82.78333333333333,
+        16.316666666666666
+      ],
+      "plates": [
+        "ilopango-tbj:locator-detail-01.png",
+        "ilopango-tbj:locator-detail-11.png",
+        "ilopango-tbj:locator-detail-18.png",
+        "ilopango-tbj:overview.png"
+      ],
+      "source_granules": [],
+      "sha256": "1222340efcb6ced20f605d18dbaa0382c6d20a4c43f8f97e239bb0c9e1013a23"
+    },
+    {
+      "file": "fine-20.npz",
+      "key": "crop_72",
+      "arcseconds": 60,
+      "bounds": [
+        21.783333333333335,
+        33.81666666666667,
+        29.833333333333332,
+        40.666666666666664
+      ],
+      "plates": [
+        "minoan:locator-detail-01.png",
+        "minoan:locator-detail-02.png",
+        "minoan:locator-detail-03.png",
+        "minoan:locator-detail-04.png",
+        "minoan:locator-detail-05.png",
+        "minoan:locator-detail-06.png",
+        "minoan:locator-detail-07.png"
+      ],
+      "source_granules": [],
+      "sha256": "1222340efcb6ced20f605d18dbaa0382c6d20a4c43f8f97e239bb0c9e1013a23"
+    },
+    {
+      "file": "fine-20.npz",
+      "key": "crop_73",
+      "arcseconds": 60,
+      "bounds": [
+        35.18333333333333,
+        -4.666666666666667,
+        40.166666666666664,
+        -1.9333333333333333
+      ],
+      "plates": [
+        "ytt:locator-detail-01.png"
+      ],
+      "source_granules": [],
+      "sha256": "1222340efcb6ced20f605d18dbaa0382c6d20a4c43f8f97e239bb0c9e1013a23"
+    },
+    {
+      "file": "fine-21.npz",
+      "key": "crop_74",
+      "arcseconds": 60,
+      "bounds": [
+        61.38333333333333,
+        19.866666666666667,
+        71.48333333333333,
+        26.216666666666665
+      ],
+      "plates": [
+        "ytt:locator-detail-03.png"
+      ],
+      "source_granules": [],
+      "sha256": "aeaf55664bd2647f979401411a375139552ac79813c9d7daac558accba50e11a"
+    },
+    {
+      "file": "fine-21.npz",
+      "key": "crop_75",
+      "arcseconds": 60,
+      "bounds": [
+        101.58333333333333,
+        -6.816666666666666,
+        107.5,
+        -3.2
+      ],
+      "plates": [
+        "tambora:detail-01.png"
+      ],
+      "source_granules": [],
+      "sha256": "aeaf55664bd2647f979401411a375139552ac79813c9d7daac558accba50e11a"
+    },
+    {
+      "file": "fine-22.npz",
+      "key": "crop_76",
+      "arcseconds": 60,
+      "bounds": [
+        110.36666666666666,
+        6.166666666666667,
+        122.81666666666666,
+        18.366666666666667
+      ],
+      "plates": [
+        "pinatubo-1991-layer-c:locator-detail-03.png",
+        "pinatubo-1991-layer-c:locator-detail-08.png",
+        "pinatubo-1991-layer-c:locator-detail-09.png",
+        "pinatubo-1991-layer-c:overview.png"
+      ],
+      "source_granules": [],
+      "sha256": "4f09076318a5b69bcc474f919fddeb575cacd92e669b5415dedc45dab45382b1"
+    },
+    {
+      "file": "fine-22.npz",
+      "key": "crop_77",
+      "arcseconds": 60,
+      "bounds": [
+        112.66666666666667,
+        -11.266666666666667,
+        116.85,
+        -6.516666666666667
+      ],
+      "plates": [
+        "tambora:detail-02.png"
+      ],
+      "source_granules": [],
+      "sha256": "4f09076318a5b69bcc474f919fddeb575cacd92e669b5415dedc45dab45382b1"
+    },
+    {
+      "file": "fine-23.npz",
+      "key": "crop_78",
+      "arcseconds": 60,
+      "bounds": [
+        123.18333333333334,
+        36.63333333333333,
+        154.2,
+        49.81666666666667
+      ],
+      "plates": [
+        "aso-4:detail-07.png",
+        "aso-4:locator-detail-05.png",
+        "b-tm:detail-08.png",
+        "b-tm:detail-09.png",
+        "b-tm:locator-detail-08.png",
+        "b-tm:locator-detail-09.png",
+        "b-tm:locator-detail-10.png",
+        "b-tm:locator-detail-12.png",
+        "b-tm:locator-detail-14.png"
+      ],
+      "source_granules": [],
+      "sha256": "79c5e7bd155320e1f8b4d3004f66c0eec2f0c3d27cf472613500e5d1e7640ed8"
+    },
+    {
+      "file": "fine-24.npz",
+      "key": "crop_79",
+      "arcseconds": 60,
+      "bounds": [
+        125.46666666666667,
+        29.483333333333334,
+        134.93333333333334,
+        38.35
+      ],
+      "plates": [
+        "aso-4:detail-01.png",
+        "sakurajima-satsuma:locator-detail-01.png"
+      ],
+      "source_granules": [],
+      "sha256": "3eddbe609042b6eedbb47cb25904b90c10f0f3169d7c6db8c8cfe33e1a0c5f18"
+    },
+    {
+      "file": "fine-24.npz",
+      "key": "crop_80",
+      "arcseconds": 60,
+      "bounds": [
+        134.4,
+        33.483333333333334,
+        142.98333333333332,
+        41.583333333333336
+      ],
+      "plates": [
+        "aso-4:detail-03.png",
+        "aso-4:locator-detail-04.png"
+      ],
+      "source_granules": [],
+      "sha256": "3eddbe609042b6eedbb47cb25904b90c10f0f3169d7c6db8c8cfe33e1a0c5f18"
     }
   ]
 }

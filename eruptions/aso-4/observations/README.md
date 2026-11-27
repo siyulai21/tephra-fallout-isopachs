@@ -1,6 +1,6 @@
 # Aso-4 · principal input observations
 
-All 92 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. Water and coastlines use Natural Earth. [Elevation source](https://doi.org/10.25921/fd45-gt74)
+All 92 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. Water and coastlines use Natural Earth. [NOAA ETOPO](https://doi.org/10.25921/fd45-gt74) · [Copernicus GLO-90](https://registry.opendata.aws/copernicus-dem/)
 
 [Accepted input CSV](../../../data/eruptions/Aso-4_ulleung_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Aso-4_ulleung.csv) · [Audit provenance](../../../data/audits/Aso-4/ulleung/provenance.json) · [Source ledger](../../../data/audits/Aso-4/record-review.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 

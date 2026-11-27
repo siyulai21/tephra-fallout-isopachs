@@ -26,10 +26,11 @@
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
   "basemap_relief": {
-    "source": "NOAA NCEI ETOPO 2022",
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
     "doi": "https://doi.org/10.25921/fd45-gt74",
-    "style": "land elevation and northwest hillshade",
-    "assets_sha256": "6f7f919060979035d4d49bdad72505db9d8c7b03a5bcd1f79f6823e9dfcde8fe"
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
   },
   "observations_without_evidence_id": 0,
   "details": [
@@ -364,23 +365,23 @@
   "audit": "data/audits/B-Tm/two-phase/provenance.json",
   "audit_sha256": "ff7ab438cf22c85ff6714d525e7e50499fc12b84f3e12369d7904ab861c09fe2",
   "files_sha256": {
-    "overview.png": "4078be6d78865fe7f9fd3bd6945e07e99cf5c30bd954950a3bfa3e70ac61e53b",
-    "detail-01.png": "bf739f46ba6279c7be02b7a34078e7ba302f205d40815dbaf4768f33d75cd207",
-    "detail-02.png": "bdd797df61825f20caadb1876470421bddf8576af8e09a1f489e9ecc989bb9bd",
-    "detail-03.png": "a1623fd10a61cbd7aec9176d242f9dc80425f8befdbfed0b9985d11b9d7d045e",
-    "detail-04.png": "6198c61f0aaee8abc11a1974af6680e59e9c6cc185c0b663576d23d3b96318bb",
-    "detail-05.png": "a0bafecc579c7eaeb5c6458b368c403346f23c403ae05d35bfb55371623aa612",
-    "detail-06.png": "6106610bbcfa97c8d2fc0040d88cae44745f6f3d9fdc5942752acef6f3ae1707",
-    "detail-07.png": "7d6b653241fb1f65c6f08a98fdf2b47700b0c6a7123a251c11b65d1e24e0d4f7",
-    "detail-08.png": "143f38f515526d6bf31cf62c20f5089f650f2e803a458a1e18fccd1fa68e2451",
-    "detail-09.png": "d946dd0b591dc46970eac18e042f486b15fc596855b242b4beda51e837559340",
-    "detail-10.png": "c6cde7d8c9957f4fa2a84c6f99b09a11a0803c290bdfd8c6a18d4ebf668b16d1",
-    "detail-11.png": "350e62031f10ae638bae40cb875d2d2c9bac7a8359c6319982f9ca1992781bbe",
-    "detail-12.png": "430c4b06e2a527cbbd40e9276adcb65443912f374dd431210b7d5cb85ea6602e",
-    "detail-13.png": "ee93809c1c24528fc3e37f296485019f4ba64d5d8fb407ab03de105396181b21",
-    "detail-14.png": "977544acee2b9031af46ad5efa34f31bd5333fd26c117294204909d49a71449b",
-    "near-vent.png": "ce62fca7778aa62f1cba5817b2c0daa01b0b95d2f5b9ed771346d11c4188c0c7",
+    "overview.png": "5d11c393add320af77874dbbbe6335fa09096b1bf80b37cb742f6115712868b2",
+    "detail-01.png": "06a77c1fe2f3c32e98b9fe2a42d67910dfcf0ff2e40d26bde8cdf22ee273363b",
+    "detail-02.png": "0f6652181e7969ebe30bf3b6fad07b50a2bb66257821bf5e2946502dcab3d42f",
+    "detail-03.png": "bd6c340047d783ed17aa0b0b0556e4e320e7195d8b68da278caf581da8f964f1",
+    "detail-04.png": "da02441fcea4d5b1b6f37ba8ab70d416102eab151ba48ee6aaae7594daf7b9bc",
+    "detail-05.png": "7800b52eed014069e6e3f22d1314af0d8774042dd8d7817de87102591859274e",
+    "detail-06.png": "92a131edd43325442e41e2dae0d3807c358c63af4098421b6185d078d8941da9",
+    "detail-07.png": "8e3bd441b92d075ad55121c63c40a9733bdf6e202cdc63b46f78a1c754618342",
+    "detail-08.png": "cc0a1f1911798324ef048271d873a6057f56b753de70dd21f727ba61f608702b",
+    "detail-09.png": "9cb0475534c1be8d4d05e847ca147be3ff34b0ce41afd18e72ec72183088cb21",
+    "detail-10.png": "1b8664fdd73630d431fef7fde008ce23aafe5b46bc128116eb5343b00833d8e1",
+    "detail-11.png": "0bb322034a3c18aa2dfd2ed79ec8e105af37055a7ec566ea10a6e48df7939762",
+    "detail-12.png": "2a5a6f9d70dd34e097527ac0167a771c38dd9147d58c850acbad8f66d6d972f4",
+    "detail-13.png": "10dcf1830c7ab3a9ddcc0329e5c462a971c1e9c4abbea2be15ba1accdd79d73b",
+    "detail-14.png": "cdc1584d6096bf1118aad3b5dafda9c06fc3512b2db4a0268a77067e0371e5fd",
+    "near-vent.png": "ae611f6f251c8755b7140cc86f9ea92fafe81668a9a360f22cb9ff31b9a20924",
     "sites.csv": "07c0d8ff461965780d4b95bc550f905eb6baad7b40262d69dbd14dfd14fe0a75",
-    "README.md": "433635bf61ed6b2c56a3a2dd2bf48b9e3f0cf6fe3288b28f659d411c26b26ab0"
+    "README.md": "63c9c133c4453e37afff4099d127087b2f1bc0b4b18e1464409dd16d40907e00"
   }
 }

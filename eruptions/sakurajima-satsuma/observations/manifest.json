@@ -25,10 +25,11 @@
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
   "basemap_relief": {
-    "source": "NOAA NCEI ETOPO 2022",
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
     "doi": "https://doi.org/10.25921/fd45-gt74",
-    "style": "land elevation and northwest hillshade",
-    "assets_sha256": "6f7f919060979035d4d49bdad72505db9d8c7b03a5bcd1f79f6823e9dfcde8fe"
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
   },
   "observations_without_evidence_id": 0,
   "details": [
@@ -163,14 +164,14 @@
   "audit": "data/audits/Sakurajima-Satsuma/provenance.json",
   "audit_sha256": "4de54347ec793fc2de6232a60e7b10b8cb1094d19bc5699398ab1b490dde9871",
   "files_sha256": {
-    "overview.png": "4e673c78331e908452f34fb763ba562c3f47ce3c619add0a10a69ea704520f9e",
-    "detail-01.png": "6b219d074b264102241bbbcd533cd8bbe9afca5da54af298f6d5cdeed9183c12",
-    "detail-02.png": "0d4ae56da50f74f0200007449899b9e0f811fdc90d5e7bcb5dd2371f6a915829",
-    "detail-03.png": "4208ce3b01d016f7406f96c9e2db4c5634f869f57ce089a4f43c2861b4b098da",
-    "detail-04.png": "63bbef0ae3ee4beb5176d2efea26c43aac1cf4b9a1f425a3fe190916fee289e1",
-    "detail-05.png": "9fba498d350a6cef9ceeeba08c673097011668901af7a095eb8b2b6a5b876ebe",
-    "detail-06.png": "f7bcd8443df7a9a1005fd48624050cccf736ed1bc5ce9bd1cd225afd3edd329b",
+    "overview.png": "d3acb598ac2e44f7a2605c3bef417cbcc5c401cedb63e2fd48dc2fb2797359b6",
+    "detail-01.png": "bc697928e45ab825ae2be16affe6321b33c71a9ec82bbf2269a4514ebe3f3557",
+    "detail-02.png": "831316d8fcd51bf8a224a331e6de6e73b97350febccaa9c70394e1d9d2211c6c",
+    "detail-03.png": "03c1d5d6cb092d1bfed051db3d8a2e79a18086bc3cab4d1f77f2bcf0d2093c6b",
+    "detail-04.png": "ed5795cd00695b8884b2182388d49a92a6bc55f4a9ba49244f80094e28688d3e",
+    "detail-05.png": "0595a546f42f14cc9ff2fc6ae5c53cfc4352198798dab997c2bcccb047d79722",
+    "detail-06.png": "02d6d2b3cbf27aac65d833493c94c7f6c0b99ad70365ee8042159d523bd97c50",
     "sites.csv": "095f27db6b935c61c874fae8f6aa2ed3ab91c5e399fb825cb4281a97678081bd",
-    "README.md": "04d3a0e4379c1d6dcdcbc5fe69b88d9e54c42896339c32e49982f3b1997e2701"
+    "README.md": "1ce2f49e294d78c577d176bf310885b7cfd43c096d82b82b13ab629cee38c848"
   }
 }

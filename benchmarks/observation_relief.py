@@ -9,8 +9,18 @@ from scipy.ndimage import gaussian_filter, map_coordinates
 
 ASSETS = Path(__file__).resolve().parent / "assets/observation-relief"
 RECEIPT = ASSETS / "source.json"
-SOURCE = "NOAA NCEI ETOPO 2022"
+SOURCE = "NOAA ETOPO 2022 / Copernicus GLO-90"
 DOI = "https://doi.org/10.25921/fd45-gt74"
+COPERNICUS = "https://registry.opendata.aws/copernicus-dem/"
+COPERNICUS_CREDIT = (
+    "Produced using Copernicus WorldDEM™-90 © DLR e.V. 2010-2014 and © Airbus Defence "
+    "and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; "
+    "all rights reserved."
+)
+TINTS = np.array([[245, 238, 215], [209, 222, 174], [161, 184, 136],
+                  [200, 183, 143], [173, 137, 103], [146, 112, 95],
+                  [200, 184, 176], [248, 244, 239]]) / 255
+ELEVATION_STOPS = [0, 100, 450, 1000, 1800, 3200, 4600, 6500]
 
 
 @lru_cache(maxsize=1)
@@ -22,7 +32,8 @@ def relief_provenance():
     return {
         "source": SOURCE,
         "doi": DOI,
-        "style": "land elevation and northwest hillshade",
+        "copernicus": COPERNICUS,
+        "style": "hypsometric tint and northwest hillshade",
         "assets_sha256": sha256(RECEIPT.read_bytes()).hexdigest(),
     }
 
@@ -58,11 +69,13 @@ def elevation(lon, lat, valid, span):
     if not valid.any():
         return z
     longitude, latitude = lon[valid], lat[valid]
-    if span <= inventory()["fine_detail_max_km"]:
-        lon_min, lon_max = longitude.min(), longitude.max()
-        lat_min, lat_max = latitude.min(), latitude.max()
+    lon_min, lon_max = longitude.min(), longitude.max()
+    lat_min, lat_max = latitude.min(), latitude.max()
+    for arcseconds, maximum in ((3, 45), (15, 365), (60, 1450)):
+        if span > maximum:
+            continue
         for tile in tiles:
-            if tile["arcseconds"] != 15:
+            if tile["arcseconds"] != arcseconds:
                 continue
             west, south, east, north = tile["bounds"]
             padding = .5 * tile["arcseconds"] / 3600
@@ -72,7 +85,7 @@ def elevation(lon, lat, valid, span):
                 return z
     covered = np.zeros_like(valid)
     for tile in tiles:
-        if tile["arcseconds"] == 15:
+        if "coverage" not in tile:
             continue
         west, south, east, north = tile["coverage"]
         inside = valid & (lat >= south) & ((lat < north) | ((north == 90) & (lat == 90)))
@@ -96,12 +109,12 @@ def terrain_rgb(lon, lat, mask, x, y):
     z = elevation(lon, lat, valid, max(np.ptp(x), np.ptp(y)))
     z = gaussian_filter(z, .65)
     north, east = np.gradient(z, (y[1] - y[0]) * 1000, (x[1] - x[0]) * 1000)
-    # Light from 315° at 45° altitude. Keep the pale terrain subordinate to markers.
-    exaggeration = 2.1
+    # Light from 315° at 45° altitude, with shadow fill for dark terrain.
+    exaggeration = 1.8
     light = (.7071 + .5 * exaggeration * (east - north)) / np.sqrt(
         1 + exaggeration**2 * (east**2 + north**2)
     )
-    altitude = np.sqrt(np.clip(z / 3700, 0, 1))
-    lightness = np.clip(.93 + .21 * (light - .7071) - .17 * altitude, .67, .973)
-    canvas[land] = lightness[land, None] * np.array([1., .988, .952])
+    tint = np.column_stack([np.interp(z[land], ELEVATION_STOPS, channel) for channel in TINTS.T])
+    illumination = np.clip(1 + .43 * (light[land] - .7071), .63, 1.13)
+    canvas[land] = np.clip(tint * illumination[:, None], 0, 1)
     return canvas

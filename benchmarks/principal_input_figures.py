@@ -21,7 +21,9 @@ import numpy as np
 
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
-from benchmarks.observation_relief import DOI, SOURCE, relief_provenance, verify_assets
+from benchmarks.observation_relief import (
+    COPERNICUS, COPERNICUS_CREDIT, DOI, SOURCE, relief_provenance, verify_assets,
+)
 from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places
 from benchmarks.principal_input_sources import provenance_reader
 
@@ -37,6 +39,7 @@ NEAR_VENT = {
     "mazama": ("Crater Lake area", (-27., -202., 186., 125.)),
     "b-tm": ("Changbaishan–Tianchi area", (-47., -21., 71., 62.)),
     "ilopango-tbj": ("Lake Ilopango area", (-109., -48., 99., 80.)),
+    "pinatubo-1991-layer-c": ("Mount Pinatubo area", (-42., -48., 52., 45.)),
 }
 STYLES = {
     "Measured": ("o", ""),
@@ -329,7 +332,7 @@ def draw_index_boxes(ax, boxes, obstacles, *, regional):
         lettered = box.label.isalpha()
         if regional or lettered:
             ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, facecolor=box.color,
-                                   edgecolor="none", alpha=.12, zorder=3.3))
+                                   edgecolor="none", alpha=.08, zorder=3.3))
         ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
                                edgecolor="white", linewidth=2.7 if lettered else 2.4))
         ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
@@ -430,7 +433,8 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
                    frameon=False, fontsize=9, labelcolor=INK, handletextpad=.27)
         fig.text(.975, .022 if overview else .069, f"Land relief · {SOURCE}",
                  ha="right", fontsize=8, color=MUTED)
-        fig.savefig(path, dpi=160, facecolor="white")
+        fig.savefig(path, dpi=160, facecolor="white",
+                    metadata={"Copyright": COPERNICUS_CREDIT, "Elevation": SOURCE})
     finally:
         plt.close(fig)
 
@@ -523,7 +527,7 @@ def case_page(record, manifest, directory):
              "and a labelled reading on one numbered detail plate. " + box_description +
              "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. "
              "Land shading shows elevation and slope. Water and coastlines use Natural Earth. "
-             f"[Elevation source]({DOI})", "",
+             f"[NOAA ETOPO]({DOI}) · [Copernicus GLO-90]({COPERNICUS})", "",
              " · ".join(source_links), "",
              "The table shows the evidence ID and source citation alongside the reported or interpreted reading. "
              "A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. "

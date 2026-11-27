@@ -1,15 +1,41 @@
 """Check that terrain sampling and water masking match the cartography."""
 import numpy as np
 
-from benchmarks.observation_relief import elevation, inventory, sample, terrain_rgb
+from benchmarks.observation_relief import elevation, grid, inventory, sample, terrain_rgb
+from benchmarks.principal_input_figures import packet
+from src.empirical_isopach.core.catalog import datasets
 
 
-def test_fine_grid_covers_crater_lake_details():
-    lon, lat = np.array([-122.15, -122.1]), np.array([42.9, 42.95])
-    tile = next(tile for tile in inventory()["tiles"] if "mazama:detail-06.png" in tile.get("plates", []))
-    control = sample(tile, lon, lat)
-    assert np.all(control > 1500)
-    np.testing.assert_array_equal(elevation(lon, lat, np.ones(2, dtype=bool), 20), control)
+def test_relief_chooses_the_resolution_for_the_frame_span():
+    available = inventory()["tiles"]
+    for arcseconds, span in ((3, 20), (15, 90), (60, 500)):
+        tile = next(tile for tile in available if tile["arcseconds"] == arcseconds
+                    and any(p.startswith("pinatubo") for p in tile.get("plates", [])))
+        west, south, east, north = tile["bounds"]
+        margin = arcseconds / 3600
+        lon = np.linspace(west + margin, east - margin, 4)
+        lat = np.linspace(south + margin, north - margin, 4)
+        valid = np.ones(4, dtype=bool)
+        np.testing.assert_allclose(elevation(lon, lat, valid, span), sample(tile, lon, lat), atol=.01)
+
+
+def test_pinatubo_box_a_groups_the_near_vent_detail_plates():
+    record = next(item for item in datasets() if item["slug"] == "pinatubo-1991-layer-c")
+    xy, _, panels, manifest, _ = packet(record)
+    region = manifest["regional_index"]
+    assert region["file"] == "near-vent.png" and region["label"] == "A"
+    west, south, east, north = region["bounds_km"]
+    inside = ((xy >= [west, south]) & (xy <= [east, north])).all(axis=1)
+    children = np.concatenate([panels[i-1].indices for i in region["detail_numbers"]])
+    assert 100 < region["observations"] < manifest["n_rows"]
+    np.testing.assert_array_equal(np.sort(children), np.flatnonzero(inside))
+
+
+def test_etopo_crops_capture_land_in_the_source_tiles():
+    for plate, minimum_peak in (("b-tm:near-vent.png", 2000), ("minoan:detail-04.png", 100)):
+        tile = next(item for item in inventory()["tiles"] if plate in item.get("plates", []))
+        assert tile["arcseconds"] == 15
+        assert grid(tile["file"], tile["key"]).max() > minimum_peak
 
 
 def test_global_grid_wraps_and_rendered_water_stays_blue():
