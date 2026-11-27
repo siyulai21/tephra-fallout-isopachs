@@ -32,6 +32,18 @@
     "style": "hypsometric tint and northwest hillshade",
     "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
   },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 0,
   "details": [
     {
@@ -463,29 +475,29 @@
   "audit": "data/audits/Ilopango-TBJ/petapilla/provenance.json",
   "audit_sha256": "b62f851847fc2481d49ed98ab4fceef89e4eb58ed647301ff9204450eca87bc5",
   "files_sha256": {
-    "overview.png": "e67e7b81afe9c5ef4c294806d4f193ab359d74cb0e0bfc8e085d9a90d078044a",
-    "detail-01.png": "9c398552168f50308fcc50406b315146289d63eab96d1b9a06774902e763a9e8",
-    "detail-02.png": "8fb5956effcf5ef635445afb6a0c7e5e8d4dc75939a266b397872898df303390",
-    "detail-03.png": "239aab612840e908eee25908202e4eb50e757dd55b61f41c68e19a9a5d6cc059",
-    "detail-04.png": "4fdde8a2dea6a8b2f7f635901382d6ef622e03ca9a9e7fb6a9d26d9fce2b971b",
-    "detail-05.png": "84e8f5aa12db9e27c822e1b5bc57021904bcd0ced7ef49df5074ebc418ea80c3",
-    "detail-06.png": "1879cd596771d4ea574a4b092db3f59a9d892a4b5f36486346a4112665f34980",
-    "detail-07.png": "e9190b0d959c5535496c07f65bbcb044d37a77297f293a7451e8d1d263a8073e",
-    "detail-08.png": "d52e0472a6ec3c279967dbcd2592a34e3eb0a12dd50ed04f2c8e2724e0c61fd1",
-    "detail-09.png": "6bed612e8fae3151770e3bc7d6a1895a19ce71c605e92d968ea8cfc83dc2280d",
-    "detail-10.png": "8b81b66a2fab375ebaef581bdc06789e83fffabff97bad8d710b6ffcd873eda2",
-    "detail-11.png": "81f824deb54c3168df43d2f81a2e0f9359a011c3d0804fa165962501f8ee2a7c",
-    "detail-12.png": "72adb0529321ce65728a9f62922c482810253201f4bda7ebc81e4033a733ea3f",
-    "detail-13.png": "07be9d46d041c0137a86c1640119ece6215c12656b8a396dded876b33c6c82db",
-    "detail-14.png": "a06115e5e1f578feb3e37b62bfc5abc4a729ca9a7946fbfef0b8d6dc2bb9fc56",
-    "detail-15.png": "41d4c6e6acc4dc1236804a8a5938659126fad987bb960f2104195de6dda538ac",
-    "detail-16.png": "c19369cf0fb8d84cefdd132f64843836a31c937ae06ea6eea1439c79e45e7c51",
-    "detail-17.png": "df20573848981308070907c98420ed38bfd0d318043cd876a833ba0fd127f94d",
-    "detail-18.png": "6f1576e623ed5797dc697fb28ab38d10168f4d0ab72bce2a973ee98089a32713",
-    "detail-19.png": "3a7b1c81515d1ccab756c17e35b36a2eff67d238e9229a41889c94574da6c29f",
-    "detail-20.png": "bf99a6d46d4454d5724465805e0c67d1a1d9787f6af5e621b6d13fe6f07cacdf",
-    "near-vent.png": "ed33cf212f654894f96934f5de6eb1215734052b3bb728533d8cbfbb7b4a0664",
+    "overview.png": "6afbbda8d93c553cfddbd355e0e30ec774fc991fca54abbb02f79833bfda4362",
+    "detail-01.png": "fd69e07e0865e04f742c4fe3ff3b59c5a3f32087572f8618b48531d27bff19d2",
+    "detail-02.png": "d3e4ff4ec9766bf32bbb1113e5877e2693210580f183e0a09735fd9e11f49500",
+    "detail-03.png": "96ef4e68938d95c61f26523bcdc65c28a3612c2290b8901ee48de516bad86790",
+    "detail-04.png": "56fa33c333b25b988b68feeee8202f84ee9147b63fd94f83cce3d4069eb004d7",
+    "detail-05.png": "9cdc7c94e9dbe5043e7827d994e860d776f1c5a2a2e2c53703e96bb5c68a8d76",
+    "detail-06.png": "8b8f4c6406c2ec7f1463614d88d17c18bd4ecd7d8b5ca06c4cba039606c5f73a",
+    "detail-07.png": "233b7507317031e6e9b3a0d89e875374d2fdd0be9a9d61c0e9f2d397a11205a3",
+    "detail-08.png": "c79af0750ea073ab853b8f4d7ee37e8ce452655952caa7506948da7e01993228",
+    "detail-09.png": "d151301c21b3a6756d7b398f0658881599e818970287c6b41b6e855600bc404e",
+    "detail-10.png": "2eddadc03dd695c437befbdf1cd1e17b7935a48c5c9277099810cf42c92619bf",
+    "detail-11.png": "6be59848a54639b2abf92a1eb41d0573e1bec630196a770c15084a1f67fba5db",
+    "detail-12.png": "7c4a9faf344aa5cb5ca48a0a01e3a52a0758b0eabb5b5d86cf7a484a63d19e46",
+    "detail-13.png": "38258645d4e407e81fb19fdd923a509444a53ea64b6d35d0a9bf124fb335b3c6",
+    "detail-14.png": "1c4dadbd8f6cc8788fe610448d32744c9e6f0337a8f87b931827ed62480d4c62",
+    "detail-15.png": "7745f13ee3d22a4ba2dd047309babaa799e7849af57f6dba8ea600d344adf1ce",
+    "detail-16.png": "0cdaebecdc6094e1504a9e8990654212615088fde78b513e0dc0787fc09ca7c6",
+    "detail-17.png": "946c2defab0709624b9f9d0f3c1081bb690661aa15225d38a17e31419ad7fb78",
+    "detail-18.png": "2cfc099cda605c2d02ec5b524abd81b1848d9fa1692fe65260c228fa33e1fc70",
+    "detail-19.png": "91f37b51039e21326a059132b3ec58a9dc97756e01633ebb76488673e6d0ed64",
+    "detail-20.png": "ae703f70138c0bc1da1a237639de72ef25f3d5693cd0b27b43551b78c1403bd2",
+    "near-vent.png": "4fcd2c04e325fdc589d8747fa9e24a4bd69cc599040432131adba69dbf5a0882",
     "sites.csv": "b2265a4eac8de1ea9d77f1953ab5a876c887bbb327cee35fe1fcd6c68719dc4a",
-    "README.md": "15a82991ed01da74fe68a782217e2a418a20104947d8d52c9a9d3035f2fc1cb1"
+    "README.md": "3612bb9a33fd35989fa68d1f9e702af94368510725c0f8c33e6b6a42c03cc7f3"
   }
 }

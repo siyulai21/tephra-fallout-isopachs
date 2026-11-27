@@ -24,7 +24,7 @@ from src.empirical_isopach.core.catalog import datasets
 from benchmarks.observation_relief import (
     COPERNICUS, COPERNICUS_CREDIT, DOI, SOURCE, relief_provenance, verify_assets,
 )
-from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places
+from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places, shoreline_provenance
 from benchmarks.principal_input_sources import provenance_reader
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -431,7 +431,7 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
         legend_position = (.084, .014) if overview else (.52, .018)
         fig.legend(handles=handles, loc="lower left", bbox_to_anchor=legend_position, ncols=len(handles),
                    frameon=False, fontsize=9, labelcolor=INK, handletextpad=.27)
-        fig.text(.975, .022 if overview else .069, f"Land relief · {SOURCE}",
+        fig.text(.975, .022 if overview else .069, f"Relief · {SOURCE}   |   Shores · GSHHG",
                  ha="right", fontsize=8, color=MUTED)
         fig.savefig(path, dpi=160, facecolor="white",
                     metadata={"Copyright": COPERNICUS_CREDIT, "Elevation": SOURCE})
@@ -478,6 +478,7 @@ def packet(record):
         "colour_limits_cm": [low, high],
         "basemap_places_sha256": digest(PLACES),
         "basemap_relief": relief_provenance(),
+        "basemap_shoreline": shoreline_provenance(),
         "observations_without_evidence_id": sum(not row["evidence_id"] for row in rows),
         "details": [{"file": f"detail-{number:02}.png", "bounds_km": list(panel.bounds),
                      "input_rows": [rows[i]["input_row"] for i in panel.indices]}
@@ -526,8 +527,8 @@ def case_page(record, manifest, directory):
              f'All {manifest["n_rows"]} accepted rows have a symbol at their registered coordinates on the overview '
              "and a labelled reading on one numbered detail plate. " + box_description +
              "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. "
-             "Land shading shows elevation and slope. Water and coastlines use Natural Earth. "
-             f"[NOAA ETOPO]({DOI}) · [Copernicus GLO-90]({COPERNICUS})", "",
+             "Land shading shows elevation and slope. GSHHG supplies the coastline and inland water at the map’s scale. "
+             f"[NOAA ETOPO]({DOI}) · [Copernicus GLO-90]({COPERNICUS}) · [GSHHG](https://doi.org/10.5281/zenodo.7007502)", "",
              " · ".join(source_links), "",
              "The table shows the evidence ID and source citation alongside the reported or interpreted reading. "
              "A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. "

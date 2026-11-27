@@ -1,6 +1,6 @@
 # Elevation for the principal observation atlas
 
-The map generator reprojects surface elevation into each vent-centred equal-area frame. Green lowlands, tan uplands and brown ridges combine with northwest hillshade. Natural Earth supplies the coastline and the land and inland-water masks. The thickness legend refers to the site markers.
+The map generator reprojects surface elevation into each vent-centred equal-area frame. Green lowlands, tan uplands and brown ridges combine with northwest hillshade. One GSHHG 2.3.7 mask supplies the land, ocean and lake fill and the shoreline outline. The atlas uses full-resolution GSHHG up to 0.3 km per projected map sample, high resolution up to 1.5 km, and intermediate resolution at broader scales. Natural Earth supplies place names. The thickness legend refers to the site markers. [GSHHG assets and licence](../../../src/empirical_isopach/assets/shorelines/README.md)
 
 | Frame span | Preferred elevation grid |
 |---|---|
@@ -24,3 +24,5 @@ python -m benchmarks.build_observation_relief /path/to/geotiffs
 python -m benchmarks.principal_input_figures
 python -m benchmarks.principal_input_figures --verify
 ```
+
+For a new frame outside the packaged crops, project its perimeter back to WGS84 and round the bounding box outward to the target grid with interpolation padding. Add the source GeoTIFF filenames, URLs and digests to `geotiffs` in the receipt. NOAA’s 15-arc-second filenames identify the tile’s **northwest** corner. Add the new window to `tiles` using the desired arc-second spacing, a unique array key and the affected plate names. Rebuild from the pinned sources, then check the actual output against the coastline, insets and site symbols. Keep the global fallback for frames that extend beyond the regional crops.

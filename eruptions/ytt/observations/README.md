@@ -1,6 +1,6 @@
 # YTT · principal input observations
 
-All 46 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. Water and coastlines use Natural Earth. [NOAA ETOPO](https://doi.org/10.25921/fd45-gt74) · [Copernicus GLO-90](https://registry.opendata.aws/copernicus-dem/)
+All 46 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. GSHHG supplies the coastline and inland water at the map’s scale. [NOAA ETOPO](https://doi.org/10.25921/fd45-gt74) · [Copernicus GLO-90](https://registry.opendata.aws/copernicus-dem/) · [GSHHG](https://doi.org/10.5281/zenodo.7007502)
 
 [Accepted input CSV](../../../data/eruptions/YTT_tephra.csv) · [Audit provenance](../../../data/audits/YTT/provenance.json) · [Source ledger](../../../data/audits/YTT/selection_manifest.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 

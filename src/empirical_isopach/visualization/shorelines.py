@@ -42,10 +42,10 @@ def geometry(key):
     return result
 
 
-def detail(bounds):
-    # A local panel occupies approximately 500 printed pixels in the GitHub figure.
+def detail(bounds, *, display_pixels=500):
+    # A model close-up occupies approximately 500 pixels. The atlas supplies its own grid width.
     width = float(max(bounds[2:]-bounds[:2]))
-    pixel = width/500.
+    pixel = width/display_pixels
     tier = "f" if pixel<=.3 else "h" if pixel<=1.5 else "i"
     return dict(source=index()["version"],archive_sha256=index()["source_sha256"],
                 tier=tier,resolution=TIERS[tier],km_per_display_pixel=pixel,raster_long_side=901)

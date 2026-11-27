@@ -32,6 +32,18 @@
     "style": "hypsometric tint and northwest hillshade",
     "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
   },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 0,
   "details": [
     {
@@ -536,30 +548,30 @@
   "audit": "data/audits/Pinatubo-1991/reaudit/provenance.json",
   "audit_sha256": "1bb5783b5dbf3d02db1230daf33a175c07ce022a56d1b2f8a36e6932d770891f",
   "files_sha256": {
-    "overview.png": "0f1d9d6b4dd2a1a19d9f886a1ee5ecd5e94a72f54dfe7dee25d22937adc4d166",
-    "detail-01.png": "8805b19fb2a44d0b68fa6c3c2d217e003ffd5f694ce2223c91af528c003c4644",
-    "detail-02.png": "62a983a66be5db99787d77ede0096c3ffe4be715bc0dadac7ba4405cdc8e7d26",
-    "detail-03.png": "2e3cf7564ecc7b69e361b26799d610fad937a0d6c6c02f0ac6ce58621fbdc43e",
-    "detail-04.png": "1b5705998288b94768fedf5ccfd9758f035135873e94aaf4b754f257b78a05a3",
-    "detail-05.png": "d6857cfdb4fabbeb23022f78b0853dc4a74d7f5767316e8b528ed5e744709d1d",
-    "detail-06.png": "1d7fa9c58e0007dd8a0b1a064e6011331b6cbcd532e1f849d0869dba044f0fda",
-    "detail-07.png": "2bfeb0c000552a7fc2bdb639c1966281e3b1060f03b266d385dac4a01621f210",
-    "detail-08.png": "42c8ea150c8e9b3a07f305a5661fae5f5cbc0ef5f234b955eddc2b5fc80c1cb7",
-    "detail-09.png": "f920a9c7fd5ed08be9c820ed0d6759d82799fa44ba0aa802d13188e66cce4583",
-    "detail-10.png": "32d119c600e6e2ae6fea7703fbf1ff52859dd86b584d599373f5c81222436883",
-    "detail-11.png": "3c540185424fb5683fb8b3fbaea275266837b57dcd9f57ca493d1385490a8cfa",
-    "detail-12.png": "c7e23c72f29892970bcfed18942a887a2327c1bdeb186c174bf6e6553e37d80f",
-    "detail-13.png": "3491959854d6b3eb0f0534b8a15371101a83f04c13d4e62b0e081625dd2a5f86",
-    "detail-14.png": "b6bc3d291dedda8449222d9cfa28c8f2a35a69391b50e29e29f6affabed5ceb5",
-    "detail-15.png": "e8f05718ef831c5d3b61377b43c19adb7d55e425049453cfb2e7b56afadb38e1",
-    "detail-16.png": "a60d96a487332c6ba9a86345ac84183c1cf9b11db8f9039aaae63fc76b3d6736",
-    "detail-17.png": "71240cdc5ce4a22f9f97af8a84fb90fcdc5069ee3996588821f7e7c2855f6568",
-    "detail-18.png": "ac69207d950feffbbdc8979a43ca3a228bac850a6b63f4b99a15adc69e31f0b5",
-    "detail-19.png": "f8699e735671541dbbc2b90993fa99965fff05cbbf796486fdd65ef802b730c6",
-    "detail-20.png": "fda3e3333ef131aace7296fe9edbefc578b2327109f4b2921652ae3d66a8a215",
-    "detail-21.png": "e1fa494c6737dafb14f6356ea89308fb78f3625aa4c1cad5918e64a9d46a570b",
-    "near-vent.png": "2a7820ce40b30670fd3f1693b51756534b453429e64302afd15d54dfd725accb",
+    "overview.png": "c466509611f3d72885d271f2c0c41898716d322f6a2134e0137846f8ab976312",
+    "detail-01.png": "b96856e426725b8bf6b0ca6e758421710565ed2d98fafcac62e43899e1d28746",
+    "detail-02.png": "e2b932f65e98f356e7741d5f2dc642d76fbce6af8ae2301b4694f4a0483263b2",
+    "detail-03.png": "bd377880e9a96c9c08565e1961a486e2abc0eef202fed7c4f1037c8e6819cf02",
+    "detail-04.png": "b40cd6eabf686a57a1a182287ed053ac0a1df880fb4728be3f1777e1d3553ee0",
+    "detail-05.png": "8b3f641451b671aa6142f24798b7b5432d794bb2f5da151ee8ae4d084eaabd28",
+    "detail-06.png": "0f2462d7ce9fdfd232c96b6c98fa6853a30a4e1f92fe2f818f0cf60748b69bdf",
+    "detail-07.png": "f3c485987f2df8563e6e440eef9c87383f5c62cbe500e6cf5b74fe5af04c159c",
+    "detail-08.png": "689c07a5eb99fe2e9ff79d7c8ac6a3f358fafe07f5fa0d7aa30c680af67c8b15",
+    "detail-09.png": "1fec9047d42416e1af495d01908c38529b367360e8dcfd9ae86e627cb4939943",
+    "detail-10.png": "188845dcd5bfb0a65a1b20a6e5a990f513c230eec6a1a61a019a577717161939",
+    "detail-11.png": "34c325b81739baf59188251b46cc34841c35040f623a3e9e1b2d8564b9080ab3",
+    "detail-12.png": "c8bdb915be31d3294ec2c62717c00df72b8ed252f5f39a3545806c7180733709",
+    "detail-13.png": "1691dd1cc8730069c3b813113f08c81617d2258d60d1499854324037dc69be67",
+    "detail-14.png": "5cbe6573c4da205412d0e455cee2f242d2a325a16b64b6ff2d36a60cf94d18e2",
+    "detail-15.png": "a246c92d8cac562639089015b4b0bcad78e30eecef32c256ba0a09ef8b1fc03a",
+    "detail-16.png": "dfedae4e8c6d6e6dc14e8f32d0779427f056d90725c3f1774a0ad86f7920023f",
+    "detail-17.png": "b50dbd2fff0cf41d1538c3fd5690f3d51613091fef1dd1b95711c9e261a11a70",
+    "detail-18.png": "9b07d032a1e164e5a6b5259599cd2827f915d8f0b26bab64202f445f3135a00d",
+    "detail-19.png": "df0f1ba7251dd646f03131c096af2103fd9cd98a17e7cf969d4c1693e6f208b7",
+    "detail-20.png": "557da75aaae5b3bd40e61fab199b66400f6a393bf2d53d03edc16e1771b72ca6",
+    "detail-21.png": "021d92a046269cf5e3b76615bb93123261888a171fe590b4a01fa528bfee7d3a",
+    "near-vent.png": "91be7c4522b1849a97cbf0cc471ac76f7771462e4ea86ff6d5709814f82301c5",
     "sites.csv": "0df9f9a4e0413b2028df96517d20e4fba853278498774192a11dbb087351cfe5",
-    "README.md": "b5a7af59b729d42d11ecb0a4e07c7e1b61b715916623f2e90e0a9a18776ab1fb"
+    "README.md": "ee78697a76eb85158b73782ca3fac0d0179dedd7bf46dfc463fdb90ef9fe2de2"
   }
 }
