@@ -1,6 +1,6 @@
 # Ilopango TBJ field evidence
 
-The 168-locality all-phase reconstruction uses the early field logs, the modern section workbook and distal cores. [Current audit and field decisions](field-logs/README.md) · [All-phase maps](../../../eruptions/ilopango-tbj/README.md)
+The current 168-locality all-phase input uses McNeil’s field position for Petapilla 2. It combines the early field logs, modern section workbook and distal cores. [Petapilla correction and revised ledger](petapilla/README.md) · [All-phase field decisions](field-logs/README.md) · [Eruption and published maps](../../../eruptions/ilopango-tbj/README.md)
 
 ## Original 56-locality Unit G workbook audit
 

@@ -10,7 +10,7 @@ AUDITS = ROOT / "data/audits"
 LEDGERS = {
     "aso-4": "Aso-4/record-review.csv",
     "b-tm": "B-Tm/two-phase/sites.csv",
-    "ilopango-tbj": "Ilopango-TBJ/field-logs/localities.csv",
+    "ilopango-tbj": "Ilopango-TBJ/petapilla/localities.csv",
     "minoan": "Minoan/selection_manifest.csv",
     "pinatubo-1991-layer-c": "Pinatubo-1991/reaudit/localities.csv",
     "sakurajima-satsuma": "Sakurajima-Satsuma/selection.csv",

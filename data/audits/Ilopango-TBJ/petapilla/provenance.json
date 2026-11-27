@@ -1,0 +1,130 @@
+{
+  "audit_date": "2026-11-27",
+  "preceding_edition": {
+    "revision": "4e53210521f39135d133921a8b58ab9c3fc476c7",
+    "reported": {
+      "file": "data/eruptions/Ilopango_TBJ_total_airfall.csv",
+      "sha256": "fafffcdf423f6b258aebb9b2a953d8206f14a12db57acc5c342b9326b142f867"
+    },
+    "fitting": {
+      "file": "data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv",
+      "sha256": "5a7c65dd2db00796bbb1107aad165f077452c067e9a6ef3863bd5667aecd2665"
+    },
+    "audit": {
+      "file": "data/audits/Ilopango-TBJ/field-logs/provenance.json",
+      "sha256": "d65023b502de9947b4c49cdd52b55d5bf2cff49d51846f1329654f62d5f17952"
+    }
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Ilopango_TBJ_petapilla.csv",
+      "sha256": "80a7c222d031ada7a60b933e9974a05864f8a869280fae06ce22ee7631d27bfe",
+      "definition": "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout.",
+      "counts": {
+        "lower_limit": 84,
+        "interval": 14,
+        "upper_limit": 5,
+        "measurement": 65
+      },
+      "fitting_file": "data/eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv",
+      "fitting_sha256": "1d3b95d5ac6fcb1551754c25519674ec4aa4eded572b03fbacda22d688f56356"
+    }
+  },
+  "target": "Local bulk thickness in cm of all primary airborne TBJ fallout, including co-ignimbrite fallout.",
+  "localities": {
+    "file": "data/audits/Ilopango-TBJ/petapilla/localities.csv",
+    "sha256": "144c08cf1feed8791df6190a88d9c0d0321c8aa517d2e74d8f8783edebad2369"
+  },
+  "previous_localities": {
+    "file": "data/audits/Ilopango-TBJ/field-logs/localities.csv",
+    "sha256": "840b95b84b74fc0a9ff1ebcb47176982a58a307cbe27fe8d250ac0bbc23a5d56"
+  },
+  "sources": [
+    {
+      "file": "data/sources/ilopango-tbj/pedrazzi-supplement-1.xls",
+      "sha256": "0b9cf7846ed313bfb0383edae7088c97ab6df9f7390d24ddce588b79f8db6403",
+      "article": "https://doi.org/10.1016/j.jvolgeores.2019.03.006",
+      "download": "https://ars.els-cdn.com/content/image/1-s2.0-S0377027318303706-mmc1.xls",
+      "sheet": "Hoja1",
+      "thickness": "H is the full package, I–P are A0 through G in centimetres. J, K and P supply A, B and G, with N (mixed E) used only in qualified bounds. G and Q document pre- and post-TBJ material.",
+      "site_rows": 107
+    },
+    {
+      "file": "data/sources/ilopango-tbj/smith-2020-cores.csv",
+      "sha256": "5797f79c2b837e8ada812e64796e13530f86351f1a67f24973f0db53054037d2",
+      "article": "https://doi.org/10.1073/pnas.2003008117",
+      "location": "Methods, Ash Dispersal Modeling",
+      "sites": 2
+    }
+  ],
+  "principal_limits": [
+    {
+      "evidence_id": "SM1-P26",
+      "interpreted_upper_cm": 350.0
+    },
+    {
+      "evidence_id": "SM1-P66",
+      "interpreted_upper_cm": 700.0
+    },
+    {
+      "evidence_id": "I21-SAN",
+      "interpreted_upper_cm": 52.0
+    },
+    {
+      "evidence_id": "R10-108",
+      "interpreted_upper_cm": 150.0
+    },
+    {
+      "evidence_id": "I18-TRAP",
+      "interpreted_upper_cm": 25.0
+    }
+  ],
+  "field_sources": [
+    {
+      "citation": "McNeil, C. L. (2003). Paleobotanical Research at Copán, Honduras. FAMSI project 01087.",
+      "location": "p. 6 pond coordinates, p. 7 western core, pp. 8–10 primary TBJ identification",
+      "url": "https://www.famsi.org/reports/01087/01087McNeil01.pdf",
+      "downloaded_copy": "https://www.ancientamericas.org/sites/default/files/01087McNeil01.pdf",
+      "downloaded_copy_sha256": "750fae946d8c25a5f50779f47374ab127b76c51a1bd1118cdcf7e805975fe626"
+    },
+    {
+      "citation": "McNeil, C. L., Burney, D. A. and Burney, L. P. (2010). Evidence disputing deforestation as the cause for the collapse of the ancient Maya polity of Copan, Honduras.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2824285/",
+      "doi": "10.1073/pnas.0904760107",
+      "location": "Results, TBJ paragraph and Fig. 4"
+    }
+  ],
+  "corrected_site": {
+    "evidence_id": "SM1-P118",
+    "site": "PP / Petapilla 2",
+    "principal_csv_row": 72,
+    "field_latitude": "14°52.154′ N",
+    "field_longitude": "89°06.979′ W",
+    "latitude_deg": 14.86923333,
+    "longitude_deg": -89.11631667,
+    "position_scope": "McNeil (2003), La Laguna de Petapilla p. 6, field position for the pond. Petapilla 2 was recovered in the western sector (p. 7). Individual core coordinates and horizontal datum are unreported.",
+    "previous_coordinates": {
+      "source": "Pedrazzi et al. (2019) supplement 1, Hoja1 C118:D118",
+      "latitude_text": "14°50.100′ N",
+      "longitude_text": "89°05.000′ W",
+      "latitude_deg": 14.835,
+      "longitude_deg": -89.08333333
+    },
+    "wgs84_shift_km": 5.191,
+    "wgs84_initial_bearing_deg": 316.862,
+    "vent_distance_km": 132.64,
+    "vent_initial_bearing_deg": 357.055,
+    "ash_top_cm": 320.75,
+    "ash_base_cm": 321.1,
+    "reported_measurement_cm": 0.35,
+    "workbook_rounded_cm": 0.4,
+    "identity": "TBJ, solid white glass-rich bed in Petapilla 2, glass composition compared with an El Salvador reference. Distal integrated fallout with unresolved individual phases.",
+    "age": "Twig against upper contact, Beta-167234, 1540 ± 40 radiocarbon years BP, reported calibrated 420–620 CE at 2σ.",
+    "duplicate": "Dull Fig. 9 symbol L02 is an approximate map position for the same pond. The earlier digitization retains its published map pixels. The other Petapilla cores contribute no second quantified TBJ bed.",
+    "dull_fig9_symbol": "L02",
+    "dull_map_longitude_deg": -89.068,
+    "dull_map_latitude_deg": 14.854,
+    "dull_map_to_field_km": 5.466
+  },
+  "published_methods": []
+}

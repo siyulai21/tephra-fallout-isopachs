@@ -1,0 +1,13 @@
+# Petapilla 2 field coordinates
+
+The 0.35 cm Tierra Blanca Joven bed belongs to **Petapilla 2**, recovered in 2001 from the western part of La Laguna de Petapilla, Honduras. McNeil’s field report gives the pond position as **14°52.154′ N, 89°06.979′ W** (14.86923333°, −89.11631667°). The report identifies the sector within the pond, and supplies only a pond-level coordinate. The western core preserved the ash horizon below the disturbance in its first metre. [McNeil (2003), pp. 6–8](https://www.famsi.org/reports/01087/01087McNeil01.pdf#page=6)
+
+| Record | Latitude, longitude | How it enters the audit |
+|---|---|---|
+| McNeil’s field report, p. 6 | 14.86923333°, −89.11631667° | Current position for the single accepted pond observation, evidence ID `SM1-P118`, principal CSV row 72. |
+| Pedrazzi et al. (2019), supplement 1, C118/D118 | 14.83500000°, −89.08333333° | Workbook position used by the preceding fit. The field position is 5.191 km northwest (initial azimuth 316.9°, WGS84). |
+| Dull et al. (2019), Fig. 9, symbol L02 | 14.854°, −89.068° | Regional map reading for the same pond, 5.466 km from the field position. Its 0.4 cm label rounds the core measurement. |
+
+McNeil, Burney and Burney measured the bed between 320.75 and 321.10 cm below the sediment surface, giving **0.35 cm**. McNeil (2003) describes a discrete white, glass-rich layer and reports an approximate depth of 321.75 cm. Comparison with Salvadoran reference glass supports its TBJ identity. A twig against the upper contact dated to 1,540 ± 40 radiocarbon yr BP (Beta-167234), reported as calibrated 420–620 CE at 2σ. The pond records the distal deposit across the mapped eruption, with individual fallout phases unresolved. The other coring attempts supply no independent thickness. [Measured contacts, date and Fig. 4](https://pmc.ncbi.nlm.nih.gov/articles/PMC2824285/) · [Primary identification, pp. 8–10](https://www.famsi.org/reports/01087/01087McNeil01.pdf#page=8)
+
+The revised reported and fitting tables each carry the new position on the existing row. The field ledger preserves the workbook’s raw 0.4 cm value beside the 0.35 cm measurement. The accepted count stays at **168 localities**. Published fits used the workbook position. [Revised locality ledger](localities.csv) · [Source and coordinate audit](provenance.json) · [Archived map reading](../reaudit/dull-figure9.csv) · [Original workbook](../../../sources/ilopango-tbj/pedrazzi-supplement-1.xls) · [Reported table](../../../eruptions/Ilopango_TBJ_petapilla.csv) · [Fitting input](../../../eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv) · [Observation maps](../../../../eruptions/ilopango-tbj/observations/README.md)

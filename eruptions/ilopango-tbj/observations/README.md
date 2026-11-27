@@ -2,7 +2,7 @@
 
 All 168 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. Box A on the overview marks the area shown in the near-vent detail index. Other numbered boxes lead directly to detail plates. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
 
-[Go to the near-vent map](#near-vent-detail-index) · [Accepted input CSV](../../../data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Audit provenance](../../../data/audits/Ilopango-TBJ/field-logs/provenance.json) · [Source ledger](../../../data/audits/Ilopango-TBJ/field-logs/localities.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
+[Go to the near-vent map](#near-vent-detail-index) · [Accepted input CSV](../../../data/eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Ilopango_TBJ_petapilla.csv) · [Audit provenance](../../../data/audits/Ilopango-TBJ/petapilla/provenance.json) · [Source ledger](../../../data/audits/Ilopango-TBJ/petapilla/localities.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 
 The table shows the evidence ID and source citation alongside the reported or interpreted reading. A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. A reported lower limit appears as ≥ on these evidence figures and as a point at that value in the fit. Upper limits and ranges retain their respective events. Marker colour represents the displayed thickness or limit, using the lower endpoint for ranges. Where rows share coordinates, a single diamond uses the first CSV row as its map key and the adjacent table lists each row.
 
@@ -37,6 +37,6 @@ Sites previously grouped in [Detail 01](detail-01.png) now have a separate [Deta
 | [15](detail-15.png) · A | 19 | 21.5 × 59 km |
 | [16](detail-16.png) · A | 21 | 33.4 × 34.2 km |
 | [17](detail-17.png) · A | 1 | 17.3 × 17.3 km |
-| [18](detail-18.png) | 2 | 143 × 48.5 km |
+| [18](detail-18.png) | 2 | 143 × 50 km |
 | [19](detail-19.png) | 1 | 17.3 × 17.3 km |
 | [20](detail-20.png) · A | 13 | 65.5 × 26.3 km |
