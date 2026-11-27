@@ -4,7 +4,7 @@ Each case identifies its current audited input and the edition behind its publis
 
 | Eruption | Directional (km³) | Spherical mixture (km³) | Nested footprints (km³) | Source-reported thickness evidence | Field or numerical qualification | Accepted observations |
 |---|---:|---:|---:|---|---|---|
-| [Aso-4](aso-4/README.md) | 541 | 449 | 2,201 | 83 exact, 3 lower bounds, 1 upper bound | Reviewed cruise positions and bounds. Marine sampling leaves the source region and several bearings poorly constrained. | [Maps](aso-4/observations/README.md) |
+| [Aso-4](aso-4/README.md) | — | — | — | 88 localities, 84 measurements, 3 lower limits and 1 upper limit. | The current input adds the 27 cm U1429B bed. The case home retains the 87-locality fits. | [Maps](aso-4/observations/README.md) |
 | [B-Tm](b-tm/README.md) | — | — | — | 150 localities, 75 measurements, 34 minima, 28 ranges, 13 upper bounds | The second audit combines both fallout phases. The case home retains the preceding 71-locality maps. | [Maps](b-tm/observations/README.md) |
 | [Ilopango TBJ, total primary airfall](ilopango-tbj/README.md) | 40.3 | 90.4 | 47.1 | 168 sites, including 14 thickness ranges | All four geographic fits passed for each global family. The Osa ash correlation remains uncertain. The shifted-volume spherical prior carries a sampling warning. | [Maps](ilopango-tbj/observations/README.md) |
 | [Mazama](mazama/README.md) | — | — | — | 304 localities with 47 measurements, 29 ranges, 132 lower and 96 upper limits. | Includes Bolan Lake and Young’s separated sections. The case home retains the 300-locality fits. | [Maps](mazama/observations/README.md) |

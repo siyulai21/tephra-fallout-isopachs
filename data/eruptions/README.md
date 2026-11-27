@@ -6,7 +6,7 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 
 | Eruption | Accepted CSV | Source decisions |
 |---|---|---|
-| Aso-4 | [Fitting CSV](Aso-4_reviewed_minimum_fit.csv) · [Reported values](Aso-4_reviewed.csv) | [Cruise coordinates and thickness bounds](../audits/Aso-4/README.md) |
+| Aso-4 | [Fitting CSV](Aso-4_reviewed_u1429_minimum_fit.csv) · [Reported values](Aso-4_reviewed_u1429.csv) | [U1429 measurement](../audits/Aso-4/u1429/README.md) · [Earlier cruise coordinates and bounds](../audits/Aso-4/README.md) |
 | B-Tm | [Fitting CSV](B-Tm_two_phase_minimum_fit.csv) · [Reported values](B-Tm_two_phase.csv) | [Two-phase field audit, 150 localities](../audits/B-Tm/two-phase/README.md) |
 | Ilopango TBJ, all-phase airfall | [Fitting CSV](Ilopango_TBJ_total_airfall_minimum_fit.csv) · [Reported values](Ilopango_TBJ_total_airfall.csv) | [Field logs, phase sums, bounds and map readings](../audits/Ilopango-TBJ/field-logs/README.md) · [116-site Unit G edition](Ilopango_TBJ_Unit_G_reviewed.csv) |
 | Sakurajima Satsuma (P14) | [Fitting CSV](Sakurajima_Satsuma_minimum_fit.csv) · [Reported values](Sakurajima_Satsuma.csv) | [Field and excavation thicknesses, core measurements, bounds and exclusions](../audits/Sakurajima-Satsuma/README.md) |

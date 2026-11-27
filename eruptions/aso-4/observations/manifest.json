@@ -1,6 +1,6 @@
 {
-  "input": "data/eruptions/Aso-4_reviewed_minimum_fit.csv",
-  "input_sha256": "70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624",
+  "input": "data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv",
+  "input_sha256": "a46542ca6fc1edaee44596732eb5d04c1dcb268df5d531d5cec12851dae1a544",
   "projection": "+proj=laea +lat_0=32.884444 +lon_0=131.103889 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
   "vent_lonlat": [
     131.103889,
@@ -8,10 +8,10 @@
   ],
   "reported_counts": {
     "Lower limit": 3,
-    "Measured": 83,
+    "Measured": 84,
     "Upper limit": 1
   },
-  "n_rows": 87,
+  "n_rows": 88,
   "pseudo_rows_omitted": [
     89,
     90,
@@ -21,42 +21,36 @@
     94
   ],
   "overview_bounds_km": [
-    -289.04243412534356,
-    -616.9898834348146,
-    2965.7704324085103,
-    2044.0321470727515
+    -462.409433752454,
+    -631.3045898260439,
+    2980.0851387997395,
+    2058.3468534639806
   ],
   "colour_limits_cm": [
     0.7,
     75.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
-  "observations_without_evidence_id": 35,
+  "observations_without_evidence_id": 36,
   "details": [
     {
       "file": "detail-01.png",
       "bounds_km": [
-        20.744808737181735,
-        -96.88691281080241,
-        41.466499515090355,
-        -76.99211010344487
+        -275.90652706834396,
+        -214.5893955471911,
+        330.9614716404002,
+        598.9244616393266
       ],
       "input_rows": [
         4,
         6,
-        20
-      ]
-    },
-    {
-      "file": "detail-02.png",
-      "bounds_km": [
-        -75.11331092917783,
-        22.09541656529578,
-        291.9541534656837,
-        207.94916914924875
-      ],
-      "input_rows": [
         14,
+        20,
+        24,
+        25,
+        26,
+        32,
+        49,
         62,
         65,
         66,
@@ -65,39 +59,24 @@
         85,
         86,
         87,
-        88
+        88,
+        95
       ]
     },
     {
-      "file": "detail-03.png",
+      "file": "detail-02.png",
       "bounds_km": [
-        -1.6102099967545165,
-        406.31195884124,
-        309.86611278631966,
-        551.9859929755901
-      ],
-      "input_rows": [
-        24,
-        25,
-        26,
-        32,
-        49
-      ]
-    },
-    {
-      "file": "detail-04.png",
-      "bounds_km": [
-        579.6238693575202,
-        -394.7799473941643,
-        631.7008752220619,
-        -342.70294152962265
+        578.1224157093735,
+        -396.281401042311,
+        633.2023288702086,
+        -341.20148788147594
       ],
       "input_rows": [
         37
       ]
     },
     {
-      "file": "detail-05.png",
+      "file": "detail-03.png",
       "bounds_km": [
         330.9614716404002,
         118.76770065093038,
@@ -118,7 +97,7 @@
       ]
     },
     {
-      "file": "detail-06.png",
+      "file": "detail-04.png",
       "bounds_km": [
         597.6008525653001,
         264.3476769935568,
@@ -142,7 +121,7 @@
       ]
     },
     {
-      "file": "detail-07.png",
+      "file": "detail-05.png",
       "bounds_km": [
         657.7047690332809,
         968.3955812922051,
@@ -155,7 +134,7 @@
       ]
     },
     {
-      "file": "detail-08.png",
+      "file": "detail-06.png",
       "bounds_km": [
         745.594382632788,
         -221.80485964772953,
@@ -186,7 +165,7 @@
       ]
     },
     {
-      "file": "detail-09.png",
+      "file": "detail-07.png",
       "bounds_km": [
         745.594382632788,
         790.1948067776166,
@@ -219,12 +198,12 @@
       ]
     },
     {
-      "file": "detail-10.png",
+      "file": "detail-08.png",
       "bounds_km": [
-        2691.4834905033185,
-        943.0601275548215,
-        2743.5604963678597,
-        995.1371334193632
+        2689.9820368551714,
+        941.5586739066748,
+        2745.061950016007,
+        996.6385870675099
       ],
       "input_rows": [
         48
@@ -233,23 +212,21 @@
   ],
   "row_sources": "data/audits/Aso-4/record-review.csv",
   "row_sources_sha256": "3be4218155ad378a0b4861dfd8a35b311d6db0f4a131972aa7771b6e67b7db1a",
-  "reported_input": "data/eruptions/Aso-4_reviewed.csv",
-  "reported_input_sha256": "20ff78ad97ea6c3c427d2866b4134a93cc39081897ea4afa8ec50ad1b6d864b9",
-  "audit": "data/audits/Aso-4/provenance.json",
-  "audit_sha256": "51ffcadaa7b21340f7489447689e932b64b88dd79158f496814f75ca76a148cb",
+  "reported_input": "data/eruptions/Aso-4_reviewed_u1429.csv",
+  "reported_input_sha256": "d4bd4aa50bba7b8d08056cd9879f4ffe89d0299a4091fc8e28179af7ec0ba2d0",
+  "audit": "data/audits/Aso-4/u1429/provenance.json",
+  "audit_sha256": "aa5b317a2e8cbb6766c83e09db872fa14fc5b0dd9c5303038d62cec267e2445c",
   "files_sha256": {
-    "overview.png": "7f7c0a19918641413043d785648d8e4e31e7eb1944b7cabb9d156cdb29d33e78",
-    "detail-01.png": "269931b974911de52d76fd489fd03e7d76e9d770717ca34661d8c14213e02cba",
-    "detail-02.png": "5bcbac554c958b684b86f83cc3a31e1c52fd9c0d1083f49a30e2957d3d52ea52",
-    "detail-03.png": "32f14bb013c3d3025dfd3c51931863c870d1618a1391f62d9e527716216b31fa",
-    "detail-04.png": "ad81d7d7c86fc565454523a4f9c0d3c44117a4d4308afcb1df3f731e3ac53868",
-    "detail-05.png": "0fcbc666d25ea264c090c88d86d4a483635f29192157e4aa664f8179345bde57",
-    "detail-06.png": "d27bdc70c6fd890c7b4f01646600439524b2fd1304d49345504e3fe936859e64",
-    "detail-07.png": "7bbf364cc8c8c1f31bf1213352f039dd67f2112e0c24ecc6dd10a7fd98abf8d2",
-    "detail-08.png": "ae1273ab84a919ee8088ac5ad276935add7229fdf2610c230d3299b17002ae29",
-    "detail-09.png": "a84ba1a6be2993c7c21a67923c922257ff7ab7212b96f17ad89245cac4169e0c",
-    "detail-10.png": "6c532a5524c460033904a81c98d205fbb135a7f56575a61b4d13ff5888868416",
-    "sites.csv": "1959b980f1591a60595ab8b4d8256a99e7a06024fa0bfdeb34ad004598ee5ea4",
-    "README.md": "0a598e7b596c8473276d9f253c93399a4b8dba6d3f7aa2299c5ccc30e622e5e6"
+    "overview.png": "f609d70e92aa5f269e2e14472b9b312b76c43e55d35c282e1724b6c8e7754c0d",
+    "detail-01.png": "58875b9b3556cd2368ddcd459284722ebec6e259361ffa60b0a679f36b68f57d",
+    "detail-02.png": "0a9002179abbc01a6873db2902a9fd1f31ec2d1eab3fc1cb0ef46d09b4ceb4bf",
+    "detail-03.png": "af0a722a4c452257e3495f1934e243081f7454151ea3d2faeb6cca060429f40e",
+    "detail-04.png": "ad9444397f34114f2a123f31cbb0b777031c0257c84744700cb12db523dbf1c6",
+    "detail-05.png": "49b625aeb868d734313b5aecd1a73e2410dea5e0d55a648100c237f8201b572c",
+    "detail-06.png": "4807faa1327939903d9cd5e89b8a8065333575e61e3273a0a30d30658e7399ee",
+    "detail-07.png": "f935057567b2ed5650d32e3db96440c6ec8040f0520e218300713d2414b99db3",
+    "detail-08.png": "859e8439312fdd7b23a51c7d483cd3251d34f5c17d2e2002e7409d931ed1c57b",
+    "sites.csv": "cbc932ce11ad945285871b237a90d07cab937df5e216a33f6cfd74dee9c107ba",
+    "README.md": "b18d1629fb75aef78be8a5fee4a8734fc064b873baca1cb0db2acdeca1318825"
   }
 }

@@ -2,9 +2,15 @@
 
 [Principal input maps and numbered detail plates](observations/README.md)
 
-The five reconstructions use the same 87 accepted fallout localities. Field reports give 83 measured thicknesses, 3 lower limits, 1 upper limits and 0 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 3 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Aso-4/README.md) · [Reported table](../../data/eruptions/Aso-4_reviewed.csv) · [Fitting table](../../data/eruptions/Aso-4_reviewed_minimum_fit.csv)
+## Principal thickness dataset
 
-The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
+The principal input contains **88 localities**, including 84 measured thicknesses, 3 reported lower limits and 1 upper limit. The new observation is **27 cm** of Aso-4 ash at IODP Hole U1429B in the East China Sea, about 243 km southwest of the vent. The fitting table encodes the recovered thickness as a measured point. The core log and tephra correlation identify the bed, with marine redistribution and compaction remaining sources of geological uncertainty. [Reported table](../../data/eruptions/Aso-4_reviewed_u1429.csv) · [Fitting table](../../data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv) · [U1429 source audit](../../data/audits/Aso-4/u1429/README.md)
+
+## Published fits on the preceding input
+
+The maps, volumes and validation below use the preceding **87-locality** input with 83 measured thicknesses, 3 lower limits fitted at their reported minima and 1 upper limit. Its fitting CSV has SHA-256 `70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624`. [Preceding published case](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d115f2a699870c826752fd26b0b4d86ff42130f8/eruptions/aso-4) · [Fitting CSV for the maps](../../data/eruptions/Aso-4_reviewed_minimum_fit.csv)
+
+The preceding fit’s site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 
 ## Volumes and geographic prediction
 
