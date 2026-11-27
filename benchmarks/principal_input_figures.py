@@ -8,11 +8,12 @@ import io
 import json
 import os
 from pathlib import Path
+import textwrap
 
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
-from matplotlib.colors import ListedColormap, LogNorm
+from matplotlib.colors import LogNorm
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from matplotlib.ticker import MaxNLocator, NullLocator
@@ -20,8 +21,8 @@ import numpy as np
 
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
-from src.empirical_isopach.visualization.deposit_maps import geography_mask, regular_axes
-from src.empirical_isopach.visualization.maps import coastlines
+from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places
+from benchmarks.principal_input_sources import provenance_reader
 
 ROOT = Path(__file__).resolve().parents[1]
 PANEL_ROWS = 24
@@ -35,7 +36,7 @@ STYLES = {
 }
 TABLE_COLUMNS = (
     "panel", "map_key", "input_row", "evidence_id", "site", "longitude", "latitude",
-    "reported_kind", "reported_value_cm", "range_upper_cm", "fit_event",
+    "reported_kind", "reported_value_cm", "range_upper_cm", "fit_event", "source",
 )
 
 
@@ -51,6 +52,7 @@ def digest(path):
 
 def audited_rows(record):
     data, meta = audited_data(record["path"])
+    ledger, provenance = provenance_reader(record["slug"])
     with record["path"].open(newline="", encoding="utf-8-sig") as stream:
         raw = dict(enumerate(csv.DictReader(stream), 2))
     order = np.argsort(data.row_ids)
@@ -68,11 +70,12 @@ def audited_rows(record):
         else:
             kind, value, upper = "Measured", row["Thickness"], ""
         event = "Point" if not data.censored[i] else kind
-        rows.append(dict(input_row=number, evidence_id=row.get("EvidenceID", ""),
+        identity, source_reference, source_label = provenance(row, number)
+        rows.append(dict(input_row=number, evidence_id=identity,
                          site=row.get("Site", ""), longitude=row["Lon"], latitude=row["Lat"],
                          reported_kind=kind, reported_value_cm=value, range_upper_cm=upper,
-                         fit_event=event))
-    return data.xy[order], rows, meta
+                         fit_event=event, source=source_reference, source_label=source_label))
+    return data.xy[order], rows, meta, ledger
 
 
 def padded_bounds(points, fraction):
@@ -125,20 +128,16 @@ def panel_keys(panel, xy, rows):
         yield i, keys[int(group)]
 
 
-def axis_map(ax, bounds, vent):
-    ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal",
-           xlabel="Easting from vent (km)", ylabel="Northing from vent (km)", facecolor="#f8faf9")
+def axis_map(ax, bounds, vent, *, detail):
+    base(ax, bounds, vent)
+    ax.set(xlabel="Easting from vent (km)", ylabel="Northing from vent (km)")
     for axis in (ax.xaxis, ax.yaxis):
         axis.set_major_locator(MaxNLocator(6))
     ax.tick_params(labelsize=8, colors=MUTED, length=3)
-    x, y = regular_axes(np.asarray(bounds), 420)
-    ax.pcolormesh(x, y, geography_mask(x, y, vent), shading="nearest",
-                  cmap=ListedColormap(["white", "#e5eff3", "#fbfaf4"]), vmin=-1, vmax=1, zorder=0)
-    ax.grid(color="#c8d8db", alpha=.65, linewidth=.55)
-    for spine in ax.spines.values():
-        spine.set_color("#b0bec2")
-    coastlines(ax, vent, bounds)
-
+    if detail:
+        graticule(ax, bounds, vent)
+    else:
+        ax.grid(color="#c8d8db", alpha=.65, linewidth=.55)
 
 def draw_points(ax, xy, rows, norm, *, overview):
     points, groups = np.unique(xy, axis=0, return_inverse=True)
@@ -205,13 +204,14 @@ def reading(row):
 
 
 def table(fig, rows):
-    ax = fig.add_axes([.730, .19, .235, .625])
+    ax = fig.add_axes([.525, .171, .451, .695])
     ax.set(xlim=(0, 1), ylim=(0, 1))
     ax.axis("off")
-    columns = [(.03, "Row"), (.55, "Value (cm)"), (.96, "Fit event")]
-    for (x, heading), align in zip(columns, ("left", "right", "right")):
+    columns = [(.018, "Row", "left"), (.102, "EvidenceID", "left"),
+               (.380, "Value (cm)", "right"), (.405, "Fit event", "left"), (.575, "Source", "left")]
+    for x, heading, align in columns:
         ax.text(x, 1, heading, va="top", ha=align, weight="bold", color=INK, fontsize=9)
-    step = min(.064, .944 / len(rows))
+    step = min(.061, .944 / len(rows))
     for j, row in enumerate(rows):
         top = .943 - j * step
         if j % 2 == 0:
@@ -219,20 +219,24 @@ def table(fig, rows):
         key = str(row["map_key"])
         if row["map_key"] != row["input_row"]:
             key += f' / {row["input_row"]}'
-        for (x, _), label, align in zip(columns, (key, reading(row), row["fit_event"]),
-                                        ("left", "right", "right")):
-            ax.text(x, top - step / 2, label, va="center", ha=align, fontsize=9, color=INK)
-
+        citation = "\n".join(textwrap.wrap(row["source_label"] or row["source"], width=45,
+                                              max_lines=2, placeholder="…"))
+        labels = (key, row["evidence_id"] or "—", reading(row), row["fit_event"], citation)
+        for (x, heading, align), label in zip(columns, labels, strict=True):
+            ax.text(x, top - step / 2, label, va="center", ha=align, color=INK,
+                    fontsize=8.2 if heading == "Source" else 9, linespacing=1.07)
+    fig.text(.532, .131, "Full citations and coordinates are in sites.csv.  —  Evidence ID unavailable.",
+             fontsize=8.5, color=MUTED)
 
 def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=None,
            coincident=False):
     overview = boxes is not None
-    fig = plt.figure(figsize=(11.6, 8), facecolor="white", dpi=160)
+    fig = plt.figure(figsize=(11.6, 8) if overview else (15, 9.5), facecolor="white", dpi=160)
     try:
         fig.text(.073, .946, title, fontsize=21, weight="bold", color=INK)
         fig.text(.074, .902, subtitle, fontsize=11, color=MUTED)
-        ax = fig.add_axes([.095, .232, .81 if overview else .59, .622])
-        axis_map(ax, bounds, vent)
+        ax = fig.add_axes([.095, .232, .81, .622] if overview else [.073, .323, .423, .544])
+        axis_map(ax, bounds, vent, detail=not overview)
         draw_points(ax, xy, rows, norm, overview=overview)
         if overview:
             corners = []
@@ -249,6 +253,8 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
             _, first = np.unique([r["map_key"] for r in rows], return_index=True)
             label_positions(ax, xy[first], [str(rows[i]["map_key"]) for i in first],
                             np.vstack((xy, [0, 0])))
+            places(ax, bounds, vent, obstacles=np.vstack((xy, [0, 0])))
+            locator(fig, bounds, vent)
             table(fig, rows)
         handles = [Line2D([], [], marker=m, markersize=7, ls="", color=INK,
                           markerfacecolor="white", label=k)
@@ -258,7 +264,7 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
                                   label="Shared coordinates"))
         handles.append(Line2D([], [], marker="*", markersize=10, color=ACCENT, markerfacecolor="none", ls="", label="Vent"))
         bar = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=CMAP),
-                           cax=fig.add_axes([.096, .101, .48, .018]), orientation="horizontal",
+                           cax=fig.add_axes([.096, .101, .48, .018] if overview else [.075, .045, .38, .013]), orientation="horizontal",
                            ticks=colour_ticks(norm))
         bar.ax.xaxis.set_minor_locator(NullLocator())
         bar.ax.set_xticklabels([f"{x:,.0f}" if x >= 1 and float(x).is_integer() else f"{x:.3g}" for x in bar.get_ticks()])
@@ -267,8 +273,10 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
         scale_label = "Marker colour · reported thickness or limit (cm)"
         if "Range" in kinds:
             scale_label += " · lower endpoint for ranges"
-        fig.text(.096, .133, scale_label, fontsize=9, color=MUTED)
-        fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(.084, .014), ncols=len(handles),
+        text_x, text_y = (.096, .133) if overview else (.075, .069)
+        fig.text(text_x, text_y, scale_label, fontsize=9, color=MUTED)
+        legend_position = (.084, .014) if overview else (.52, .018)
+        fig.legend(handles=handles, loc="lower left", bbox_to_anchor=legend_position, ncols=len(handles),
                    frameon=False, fontsize=9, labelcolor=INK, handletextpad=.27)
         fig.savefig(path, dpi=160, facecolor="white")
     finally:
@@ -283,7 +291,7 @@ def colour_ticks(norm):
 
 
 def packet(record):
-    xy, rows, meta = audited_rows(record)
+    xy, rows, meta, ledger = audited_rows(record)
     bounds = padded_bounds(np.vstack((xy, [0, 0])), .09)
     panels = detail_panels(xy, bounds)
     assigned = np.zeros(len(xy), dtype=int)
@@ -312,10 +320,15 @@ def packet(record):
         "pseudo_rows_omitted": meta["ignored_pseudo_rows"],
         "overview_bounds_km": bounds.tolist(),
         "colour_limits_cm": [low, high],
+        "basemap_places_sha256": digest(PLACES),
+        "observations_without_evidence_id": sum(not row["evidence_id"] for row in rows),
         "details": [{"file": f"detail-{number:02}.png", "bounds_km": list(panel.bounds),
                      "input_rows": [rows[i]["input_row"] for i in panel.indices]}
                     for number, panel in enumerate(panels, 1)],
     }
+    if ledger:
+        manifest["row_sources"] = ledger.relative_to(ROOT).as_posix()
+        manifest["row_sources_sha256"] = digest(ledger)
     if "reported_source" in meta:
         manifest["reported_input"] = meta["reported_source"]
         manifest["reported_input_sha256"] = meta["reported_source_sha256"]
@@ -323,7 +336,7 @@ def packet(record):
         manifest["audit"] = f'data/{meta["audit"]["file"]}'
         manifest["audit_sha256"] = meta["audit"]["sha256"]
     index = io.StringIO(newline="")
-    writer = csv.DictWriter(index, fieldnames=TABLE_COLUMNS, lineterminator="\n")
+    writer = csv.DictWriter(index, fieldnames=TABLE_COLUMNS, extrasaction="ignore", lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     return xy, rows, panels, manifest, index.getvalue()
@@ -333,9 +346,12 @@ def case_page(record, manifest, directory):
     title = record["name"]
     link = os.path.relpath(record["path"], directory)
     source_links = [f"[Accepted input CSV]({link})"]
-    for field, label in (("reported_input", "Reported CSV"), ("audit", "Audit provenance")):
+    for field, label in (("reported_input", "Reported CSV"), ("audit", "Audit provenance"), ("row_sources", "Source ledger")):
         if field in manifest:
             source_links.append(f"[{label}]({os.path.relpath(ROOT / manifest[field], directory)})")
+    if record["slug"] == "b-tm":
+        bibliography = ROOT / "data/audits/B-Tm/two-phase/sources.json"
+        source_links.append(f"[Audit citation keys]({os.path.relpath(bibliography, directory)})")
     source_links += ["[Site index with coordinates and full input precision](sites.csv)",
                      "[Input hashes and panel bounds](manifest.json)"]
     lines = [f"# {title} · principal input observations", "",
@@ -343,7 +359,8 @@ def case_page(record, manifest, directory):
              "and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. "
              "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.", "",
              " · ".join(source_links), "",
-             "The reading column shows the reported value or interpreted field bound in centimetres. "
+             "The table shows the evidence ID and source citation alongside the reported or interpreted reading. "
+             "A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. "
              "A reported lower limit appears as ≥ on these evidence figures and as a point at that value "
              "in the fit. Upper limits and ranges retain their respective events. Marker colour represents "
              "the displayed thickness or limit, using the lower endpoint for ranges. Where rows share "

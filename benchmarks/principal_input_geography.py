@@ -1,0 +1,141 @@
+"""Place labels, true geographic grid and regional locator for observation plates."""
+import csv
+from functools import lru_cache
+import gzip
+from pathlib import Path
+
+from matplotlib.colors import ListedColormap
+from matplotlib.patches import Rectangle
+from matplotlib.ticker import MaxNLocator
+from matplotlib.transforms import Bbox
+import numpy as np
+
+from src.Laea import make_laea_transform
+from src.empirical_isopach.visualization.deposit_maps import geography_mask, regular_axes
+from src.empirical_isopach.visualization.maps import coastlines
+
+PLACES = Path(__file__).resolve().parents[1] / "src/empirical_isopach/assets/ne_10m_places.csv.gz"
+GROUND = ListedColormap(["white", "#e5eff3", "#fbfaf4"])
+MUTED = "#436473"
+ACCENT = "#912c55"
+
+
+def base(ax, bounds, vent, resolution=420):
+    ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal")
+    x, y = regular_axes(np.asarray(bounds), resolution)
+    ax.pcolormesh(x, y, geography_mask(x, y, vent), shading="nearest",
+                  cmap=GROUND, vmin=-1, vmax=1, zorder=0)
+    for spine in ax.spines.values():
+        spine.set_color("#a3b5bb")
+    coastlines(ax, vent, bounds)
+
+
+def degree(value, positive, negative, precision):
+    if negative == "W":
+        value = (value + 180) % 360 - 180
+    number = f"{abs(value):.{precision}f}"
+    return f"{number}°{positive if value >= 0 else negative}"
+
+
+def graticule(ax, bounds, vent):
+    """Draw real WGS84 meridians and parallels through the vent-centred projection."""
+    _, inverse, _ = make_laea_transform(*vent)
+    xx, yy = np.meshgrid(*regular_axes(np.asarray(bounds), 95))
+    lon, lat = inverse.transform(xx, yy)
+    lon = vent[0] + (lon - vent[0] + 180) % 360 - 180
+    for coordinates, hemispheres in ((lon, ("E", "W")), (lat, ("N", "S"))):
+        finite = coordinates[np.isfinite(coordinates)]
+        lo, hi = min(finite), max(finite)
+        ticks = MaxNLocator(4, steps=[1, 2, 2.5, 5, 10]).tick_values(lo, hi)
+        levels = ticks[(ticks > lo) & (ticks < hi)]
+        if not len(levels):
+            continue
+        step = float(ticks[1] - ticks[0])
+        precision = max(0, -int(np.floor(np.log10(step))))
+        scaled_step = step * 10. ** precision
+        if not np.isclose(scaled_step, round(scaled_step)):
+            precision += 1
+        lines = ax.contour(xx, yy, coordinates, levels=levels, colors="#73959e", alpha=.72,
+                           linestyles="dotted", linewidths=.75, zorder=2)
+        labels = ax.clabel(lines, fmt=lambda value: degree(value, *hemispheres, precision),
+                           fontsize=7, colors=MUTED, inline=True, inline_spacing=3, zorder=3)
+        to_frame = ax.transData + ax.transAxes.inverted()
+        for label in labels:
+            position = to_frame.transform(label.get_position())
+            if not ((position > .025) & (position < .975)).all():
+                label.remove()
+
+
+@lru_cache(maxsize=12)
+def projected_places(vent):
+    with gzip.open(PLACES, "rt", encoding="utf-8", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    names = [r["name"] for r in rows]
+    rank = np.array([int(r["scale_rank"]) for r in rows])
+    population = np.array([int(r["population"]) for r in rows])
+    coordinates = np.array([(float(r["longitude"]), float(r["latitude"])) for r in rows])
+    forward, _, _ = make_laea_transform(*vent)
+    xy = np.column_stack(forward.transform(*coordinates.T))
+    return xy, names, rank, population
+
+
+def places(ax, bounds, vent, *, obstacles=(), count=3):
+    xy, names, rank, population = projected_places(vent)
+    limits = np.reshape(bounds, (2, 2))
+    visible = np.flatnonzero(((xy >= limits[0]) & (xy <= limits[1])).all(axis=1))
+    if not len(visible):
+        return
+    ranked = sorted(visible, key=lambda i: (rank[i], -population[i], names[i]))
+    transform = ax.transData
+    ax.figure.canvas.draw()
+    renderer = ax.figure.canvas.get_renderer()
+    used = [artist.get_window_extent(renderer).expanded(1.14, 1.22) for artist in ax.texts]
+    reserved = transform.transform(np.asarray(obstacles).reshape(-1, 2))
+    for i in ranked:
+        point = xy[i]
+        x, y = transform.transform(point)
+        if any(box.contains(x, y) for box in used):
+            continue
+        if len(reserved) and np.linalg.norm(reserved - [x, y], axis=1).min() < 10:
+            continue
+        for dx, dy, ha in ((5, 3, "left"), (-5, 3, "right"), (5, -8, "left"), (-5, -8, "right")):
+            label = ax.annotate(names[i], point, xytext=(dx, dy), textcoords="offset points",
+                                ha=ha, va="center", fontsize=7.5, style="italic", color=MUTED, zorder=4)
+            size = label.get_window_extent(renderer).expanded(1.05, 1.13)
+            if (ax.bbox.contains(size.x0, size.y0) and ax.bbox.contains(size.x1, size.y1)
+                    and not any(size.overlaps(box) for box in used)
+                    and not any(size.overlaps(Bbox.from_bounds(px-5, py-5, 10, 10)) for px, py in reserved)):
+                ax.plot(*point, marker="+", markersize=4.5, color=MUTED, mew=.95, ls="", zorder=4)
+                used.append(size)
+                count -= 1
+                break
+            label.remove()
+        if count == 0:
+            return
+
+
+def locator(fig, bounds, vent):
+    points, _, _, _ = projected_places(vent)
+    low, high = np.reshape(bounds, (2, 2))
+    center = (low + high) / 2
+    nearest = np.linalg.norm(points - center, axis=1)
+    nearest = nearest[np.isfinite(nearest)]
+    # Include nearby geography even on a completely offshore detail.
+    half = max(67., 1.07 * (high - low).max(), 1.46 * nearest.min())
+    extent = np.r_[center - [half * 1.40, half], center + [half * 1.40, half]]
+    ax = fig.add_axes([.070, .088, .218, .190])
+    base(ax, extent, vent, resolution=220)
+    ax.set(xticks=[], yticks=[])
+    ax.set_title("Regional locator", loc="left", fontsize=9, color=MUTED, pad=5)
+    ax.add_patch(Rectangle(low, *(high - low), fill=False, edgecolor=ACCENT,
+                           linestyle=(0, (3, 1.5)), linewidth=1.25, zorder=5))
+    ax.plot(*center, marker="+", markersize=8, mew=1.3, color=ACCENT, ls="", zorder=5)
+    ax.plot(0, 0, marker="*", markersize=8, color=ACCENT, markerfacecolor="none", ls="", zorder=5)
+    places(ax, extent, vent, obstacles=[center, (0, 0)], count=3)
+    _, inverse, _ = make_laea_transform(*vent)
+    lon, lat = inverse.transform(*center)
+    fig.text(.304, .208, "Detail centre", fontsize=9, weight="bold", color=MUTED)
+    fig.text(.304, .184, f"{degree(lat, 'N', 'S', 3)}, {degree(lon, 'E', 'W', 3)}",
+             fontsize=9, color=MUTED)
+    fig.text(.304, .147, "Magenta + marks the centre\nof the boxed detail.", fontsize=8.5, color=MUTED)
+    fig.text(.304, .107, "Blue-grey + marks a named place.", fontsize=8.5, color=MUTED)
