@@ -1,6 +1,6 @@
 # Sakurajima Satsuma (P14) · principal input observations
 
-All 57 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
+All 57 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. GSHHG supplies the coastline and inland water at the map’s scale. [NOAA ETOPO](https://doi.org/10.25921/fd45-gt74) · [Copernicus GLO-90](https://registry.opendata.aws/copernicus-dem/) · [GSHHG](https://doi.org/10.5281/zenodo.7007502)
 
 [Accepted input CSV](../../../data/eruptions/Sakurajima_Satsuma_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Sakurajima_Satsuma.csv) · [Audit provenance](../../../data/audits/Sakurajima-Satsuma/provenance.json) · [Source ledger](../../../data/audits/Sakurajima-Satsuma/selection.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 

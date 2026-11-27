@@ -25,6 +25,25 @@
     120.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
+  "basemap_relief": {
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
+    "doi": "https://doi.org/10.25921/fd45-gt74",
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
+  },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 26,
   "details": [
     {
@@ -99,12 +118,12 @@
     }
   ],
   "files_sha256": {
-    "overview.png": "26de3d5b4d8e10ec8e072643ac3782896320017bca9b612b86c963f228f12d4a",
-    "detail-01.png": "90e42de03984d51fdf63c18fe1eddc6a0f9e94c9945f710ca92f8327fc6fd116",
-    "detail-02.png": "7f7dcb06dc91b97485cdbf92fdd6ca4484ccb72b97dfe1f4d01d55bbb15a3a44",
-    "detail-03.png": "e1f4bbd8c374fddb76d6e968cd4d51eb8077a112e3f2be6ba74e46a760d8fd3c",
-    "detail-04.png": "c4f02226e9218ca520f7f58cf8b1c3dc6d996afdbc572a6db05d697276203dd5",
+    "overview.png": "cecde6be6625a967576c5da34f6c1eb02dfd5462ce37413cfe9bd45b0bd44511",
+    "detail-01.png": "d1ff85cd35440a4f39f34ec1411faf96194ee5c28e408ff2aaf5e31c8cba230f",
+    "detail-02.png": "5b5d2c340b31ce29f024452bb504c568c6c247878e066d23bcd5c4934f3981d6",
+    "detail-03.png": "c09467bfff07820a7ad49e7b41a178c5dc579a17e51618904e9f058471890340",
+    "detail-04.png": "484db2b3004c46389d06bca4bb9a07a072c6d3a4482a4b07b75a15e99f2e3d38",
     "sites.csv": "3430851b455dca3e6260387d737c30f60aa69b822ba608334118a43f9eff4680",
-    "README.md": "afc46b4b2bfc0e346698dada269cecf7376139c6a94c2b5b33ddf7af7b95b3c1"
+    "README.md": "ee2ae1f57586ba31085a45e419d2a32aa43524e64efee7bd2379cdaccdf82eea"
   }
 }

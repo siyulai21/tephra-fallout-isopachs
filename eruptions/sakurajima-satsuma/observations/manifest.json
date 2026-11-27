@@ -24,6 +24,25 @@
     95.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
+  "basemap_relief": {
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
+    "doi": "https://doi.org/10.25921/fd45-gt74",
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
+  },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 0,
   "details": [
     {
@@ -157,14 +176,14 @@
   "audit": "data/audits/Sakurajima-Satsuma/provenance.json",
   "audit_sha256": "4de54347ec793fc2de6232a60e7b10b8cb1094d19bc5699398ab1b490dde9871",
   "files_sha256": {
-    "overview.png": "75f403c06eed3f8b225d1d0334c67c65e5693b23efa246fecbf77940327f8e74",
-    "detail-01.png": "fd1e113020c9d9b75d404701d12cb8de89ab5a2b2b4e442f7c38d41dea558fa1",
-    "detail-02.png": "6e7146a3d063c08bdf830c22d96138352975e6d62ea22687d4547ecb9d48951c",
-    "detail-03.png": "85a952692c97f6107786139d43a73d23935b435a5f77ed4fb26d26ff560c3540",
-    "detail-04.png": "5f025638f268e0411275185dc189f687cec653f85eae61889f52e852524ded86",
-    "detail-05.png": "a9b07ae8fcb4360bda97f7eb3b5abb3ceefb5922d639288ec1cd9206a931be84",
-    "detail-06.png": "b94e6f6cad8be71f7b115fac3f34b7c5b5c256397a6dc49092d12416fe786b8c",
+    "overview.png": "20f81831618c430b93bcac8afe5fbcdd59835dfcadb7a9f7db66a0a9ff1e87f5",
+    "detail-01.png": "1478ce7d079aa0726775774347396c94ec5d1126c3d3630fc33ce861b3cf23de",
+    "detail-02.png": "a85eacdb26159ada5e35f464ac76af75462a2783701b50c634416c8d0a6373af",
+    "detail-03.png": "a4af59cf0df09a87ebeffd0b3a21d595268c83769ce53ea00118a4f0fd53aef7",
+    "detail-04.png": "4ce364993a302a69f3ad671461295b41313af88e18b73644557ffc40cd61973b",
+    "detail-05.png": "3fd88b782abd8fa603719f2e1bea8883b5f70f40bb8fb2a14462383acaf8de5a",
+    "detail-06.png": "36554c557bcad2f8fb1fef3cfa840fd330c33080458659731c576b2ee7d8257d",
     "sites.csv": "095f27db6b935c61c874fae8f6aa2ed3ab91c5e399fb825cb4281a97678081bd",
-    "README.md": "15797c18bcd579c81b506e72d3a4e36466c5aa126d7d924fac05cf4a63666cc6"
+    "README.md": "ff390cdbed54a3e7a71e482d36bf21cac9661d8574e2645ec26e94125da27510"
   }
 }

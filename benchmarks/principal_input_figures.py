@@ -21,7 +21,10 @@ import numpy as np
 
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
-from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places
+from benchmarks.observation_relief import (
+    COPERNICUS, COPERNICUS_CREDIT, DOI, SOURCE, relief_provenance, verify_assets,
+)
+from benchmarks.principal_input_geography import PLACES, base, graticule, locator, places, shoreline_provenance
 from benchmarks.principal_input_sources import provenance_reader
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +39,7 @@ NEAR_VENT = {
     "mazama": ("Crater Lake area", (-27., -202., 186., 125.)),
     "b-tm": ("Changbaishan–Tianchi area", (-47., -21., 71., 62.)),
     "ilopango-tbj": ("Lake Ilopango area", (-109., -48., 99., 80.)),
+    "pinatubo-1991-layer-c": ("Mount Pinatubo area", (-42., -48., 52., 45.)),
 }
 STYLES = {
     "Measured": ("o", ""),
@@ -328,7 +332,7 @@ def draw_index_boxes(ax, boxes, obstacles, *, regional):
         lettered = box.label.isalpha()
         if regional or lettered:
             ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, facecolor=box.color,
-                                   edgecolor="none", alpha=.12, zorder=3.3))
+                                   edgecolor="none", alpha=.08, zorder=3.3))
         ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
                                edgecolor="white", linewidth=2.7 if lettered else 2.4))
         ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
@@ -427,7 +431,10 @@ def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=
         legend_position = (.084, .014) if overview else (.52, .018)
         fig.legend(handles=handles, loc="lower left", bbox_to_anchor=legend_position, ncols=len(handles),
                    frameon=False, fontsize=9, labelcolor=INK, handletextpad=.27)
-        fig.savefig(path, dpi=160, facecolor="white")
+        fig.text(.975, .022 if overview else .069, f"Relief · {SOURCE}   |   Shores · GSHHG",
+                 ha="right", fontsize=8, color=MUTED)
+        fig.savefig(path, dpi=160, facecolor="white",
+                    metadata={"Copyright": COPERNICUS_CREDIT, "Elevation": SOURCE})
     finally:
         plt.close(fig)
 
@@ -470,6 +477,8 @@ def packet(record):
         "overview_bounds_km": bounds.tolist(),
         "colour_limits_cm": [low, high],
         "basemap_places_sha256": digest(PLACES),
+        "basemap_relief": relief_provenance(),
+        "basemap_shoreline": shoreline_provenance(),
         "observations_without_evidence_id": sum(not row["evidence_id"] for row in rows),
         "details": [{"file": f"detail-{number:02}.png", "bounds_km": list(panel.bounds),
                      "input_rows": [rows[i]["input_row"] for i in panel.indices]}
@@ -517,7 +526,9 @@ def case_page(record, manifest, directory):
     lines = [f"# {title} · principal input observations", "",
              f'All {manifest["n_rows"]} accepted rows have a symbol at their registered coordinates on the overview '
              "and a labelled reading on one numbered detail plate. " + box_description +
-             "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.", "",
+             "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. "
+             "Land shading shows elevation and slope. GSHHG supplies the coastline and inland water at the map’s scale. "
+             f"[NOAA ETOPO]({DOI}) · [Copernicus GLO-90]({COPERNICUS}) · [GSHHG](https://doi.org/10.5281/zenodo.7007502)", "",
              " · ".join(source_links), "",
              "The table shows the evidence ID and source citation alongside the reported or interpreted reading. "
              "A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. "
@@ -613,6 +624,7 @@ def main():
     parser.add_argument("case", nargs="*", help="Registered eruption slugs; defaults to all")
     parser.add_argument("--verify", action="store_true", help="Check input, panel coverage and published file hashes")
     args = parser.parse_args()
+    verify_assets()
     records = {rec["slug"]: rec for rec in datasets()}
     if unknown := set(args.case) - records.keys():
         parser.error(f"Unknown dataset: {', '.join(sorted(unknown))}")

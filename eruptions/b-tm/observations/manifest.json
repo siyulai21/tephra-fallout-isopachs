@@ -25,6 +25,25 @@
     1500.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
+  "basemap_relief": {
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
+    "doi": "https://doi.org/10.25921/fd45-gt74",
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
+  },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 0,
   "details": [
     {
@@ -358,23 +377,23 @@
   "audit": "data/audits/B-Tm/two-phase/provenance.json",
   "audit_sha256": "ff7ab438cf22c85ff6714d525e7e50499fc12b84f3e12369d7904ab861c09fe2",
   "files_sha256": {
-    "overview.png": "7cc7cc6202df0f7d2f08ddcb1fe4b59f69383108fbc901fb00b459063b3b75f3",
-    "detail-01.png": "a6791d0d54df639e79fcf0a046496aa0ff44415e0d1351a0380b15f2e2dbb761",
-    "detail-02.png": "aa84f3dbaca0f70ea3cefeb7f6598c0d0910633247065e31d7d73d811e5d3cfd",
-    "detail-03.png": "5cef18562aeb9049e678e2d15ce2040fe2fdfc2b832df4b19a7e3ac3df47aee5",
-    "detail-04.png": "7cbff266397da225dd5025ebae3bb33bc4d7f913c92ba7765ad2b50b1e23e476",
-    "detail-05.png": "02bf1a0547673963f77e147e77aa4ea924b650b80592d29233fc6ada61245dbf",
-    "detail-06.png": "40f1658ac1bd5c1b18e64432bb43acba3dcd655fc7611c9d73aa65e20ad7fb51",
-    "detail-07.png": "d6f6233105feb2918748bd6bad17bb01649731b61b06e321de6395980679ab52",
-    "detail-08.png": "d4d713c3ff16c14f8f904026524f5bdcdcf521876e2e7476987f2c2d8810aa8a",
-    "detail-09.png": "6a80b982eb11ee425577372461c66980c3f2b82a03cfd3d685c1b35e11a5f243",
-    "detail-10.png": "1d8fc440dc66c50f24b489fc1c23446aee99737f21a47f079aca2c10a02b11fa",
-    "detail-11.png": "859e9379611a1cdcf6e4619e76eb84cdedefae955abd39c0187bb3027af92a6e",
-    "detail-12.png": "c06eb71a7f6c0812bff2774023fb05a31cb197b80af5f78ac75571832f52ec6e",
-    "detail-13.png": "552f4eca45026d392daec1e9a225faa27ba541e866db1bef7e4a93e516e1ab73",
-    "detail-14.png": "6d13d9b1ab72851b169d8dd828950fa78beda84f036052afaa1e07f2b4888b19",
-    "near-vent.png": "17910ac691a065fd10fc0baf12efead460802fcb7c5cb410bf40fa0346ec1066",
+    "overview.png": "6c577917646f1e446b46815faf14c72bc1f8460a6d41de27034ed8a6279ffeca",
+    "detail-01.png": "d4d830d296fee6e4f1e51a20a70b326f9fae5ee260efbb2475adadc1770ed297",
+    "detail-02.png": "64d0b187ff735c0dd1e66fa19586ff19a939faf2a1ce9694f66787243116a007",
+    "detail-03.png": "621d36a183848e02eba1847c48de5321f0dbf521bbbedad6d5085a8f885c8e34",
+    "detail-04.png": "d8a3179b5f21cdd9c47c835839a7e75aa72b23afe657eb3361dda5fb5218b134",
+    "detail-05.png": "91daa9c30640788da7e1013ba35a749f07cf9e5fc1a7cdfcbe702dad00653377",
+    "detail-06.png": "cc5326951b2aa85a2bd202f826f67c27539d9ca0e51d5b7c2a86ea92a9aa1fe5",
+    "detail-07.png": "2981b8d5371375fd4419672467123deb782ffb0b748cfd9fd333212282817083",
+    "detail-08.png": "7119930ea4edbf9ba0dbde262569242d0207e79df915d09ff6e9815caeefd271",
+    "detail-09.png": "794bb327534cc90b072fc9dcf1fd1ca732652a621fbcdacb11e20c42596126bc",
+    "detail-10.png": "2c4e4809f6504e84c7d4c2d54ac7495fa2f855d95b9660c14bd8cc8278b616fe",
+    "detail-11.png": "7920420292caa5afb3e28fe6398632ad16df98ac921df56c2dacf5b98a57734a",
+    "detail-12.png": "02b117335b97396a9e9c991dabbb9d80a62ae678a02c668da6b490944522ac04",
+    "detail-13.png": "2402dd3f045f0dcaf5d0a339597e957966154a3713795b81a0b711fe5aabeb7a",
+    "detail-14.png": "b5c4c40d2203ca52510bcf1dcf32333090db336085df357d5fec8f09e6497304",
+    "near-vent.png": "a397d3173afeaa26623fed24135aaf5f00e08c4b6b65182056bc9989a7f2b223",
     "sites.csv": "07c0d8ff461965780d4b95bc550f905eb6baad7b40262d69dbd14dfd14fe0a75",
-    "README.md": "760834267f18f2f23a88c80d9cec50f1a46145d5236bb7cdae9eefd26f3815b9"
+    "README.md": "c4cb4fbc0e98c87e9c477f3fa8265d633ea577986fc3f94fa3107443c97b969f"
   }
 }

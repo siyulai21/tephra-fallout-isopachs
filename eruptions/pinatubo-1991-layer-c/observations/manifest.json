@@ -25,6 +25,25 @@
     43.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
+  "basemap_relief": {
+    "source": "NOAA ETOPO 2022 / Copernicus GLO-90",
+    "doi": "https://doi.org/10.25921/fd45-gt74",
+    "copernicus": "https://registry.opendata.aws/copernicus-dem/",
+    "style": "hypsometric tint and northwest hillshade",
+    "assets_sha256": "e39c409ed1b488e8410d3a79bedc55a8c6773cf54ddf6f7841062d13e9e5a774"
+  },
+  "basemap_shoreline": {
+    "source": "GSHHG 2.3.7",
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "pack_index": "src/empirical_isopach/assets/shorelines/index.json",
+    "pack_index_sha256": "a7986c880f23e84072c766cb94181c5bfd280a03c91996951c185f8494710eac",
+    "map_samples_long_side": 960,
+    "locator_samples_long_side": 440,
+    "km_per_sample_max_by_tier": {
+      "full": 0.3,
+      "high": 1.5
+    }
+  },
   "observations_without_evidence_id": 0,
   "details": [
     {
@@ -494,6 +513,34 @@
       ]
     }
   ],
+  "regional_index": {
+    "label": "A",
+    "title": "Mount Pinatubo area",
+    "file": "near-vent.png",
+    "bounds_km": [
+      -42.0,
+      -48.0,
+      52.0,
+      45.0
+    ],
+    "detail_numbers": [
+      4,
+      5,
+      6,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "observations": 190
+  },
   "row_sources": "data/audits/Pinatubo-1991/reaudit/localities.csv",
   "row_sources_sha256": "d3dc623544a82bc23d614d0f7cf41f05eef0863e60c0b5781270170a908472c8",
   "reported_input": "data/eruptions/Pinatubo_1991_layer_C_reviewed.csv",
@@ -501,29 +548,30 @@
   "audit": "data/audits/Pinatubo-1991/reaudit/provenance.json",
   "audit_sha256": "1bb5783b5dbf3d02db1230daf33a175c07ce022a56d1b2f8a36e6932d770891f",
   "files_sha256": {
-    "overview.png": "5db5c36dc95bcd4162a909fe45d373194eca14f5489266ea330d5b53db2d243d",
-    "detail-01.png": "8a716c3320511bb86ddd01591ff48502b3f7fb85da1b1a70059e7db973f07140",
-    "detail-02.png": "8fb9deaa2e38641c0b383e73759ea9079ec4d6337c5afe4a325630d1c3dcaa4d",
-    "detail-03.png": "dddff4580f2494172546b566d3678abeb5ec0c8b6442f558cfab99c2f92962b8",
-    "detail-04.png": "ee8b65fd9a28d7a193106b1f0917c39c1d97fbc049cf190006bbd88948cd34e4",
-    "detail-05.png": "7d032be7b1a8dd300dcd8ef0a1cc2fae2161bad5d6d1a46990f85d9d97bc7738",
-    "detail-06.png": "7e7bd23907f3b471e8afab5f38a8b6d1b28cf4e517f3e9bbc496a1eaa2b0a649",
-    "detail-07.png": "80fb14d84af41ea6cc6191718345d1128f8047245d8fb6f8608bf76d229420e6",
-    "detail-08.png": "fe89173775d76bc16d61e9f64441b6b04de0b360b0869c63d9a5b14b18addc30",
-    "detail-09.png": "c896bb69fb84e201517e7495d56caed84d959f933d4dfa904a3db465447e6702",
-    "detail-10.png": "4608ca3ec185cbb6e0731d716ca2fed122658e6fea0fd1db2bfec129d9444fe5",
-    "detail-11.png": "968614bebc8eac8a99393988ddc92a4a08b6bffedb430e6f0512bf68c7d986ab",
-    "detail-12.png": "cad6dba61075f3258f243e345e6111d48e21eea379bef3f93ca96e611773fae2",
-    "detail-13.png": "0de1cd31574838552b4cd7427d88c652dc9be5e7fd8c86bfe45d1a26b62a8213",
-    "detail-14.png": "b4bdae65a2984b335bd90b41220daecd5ce03e7b200f5f8fc8cb9d6ce746b65b",
-    "detail-15.png": "01ec7e68fe3c008379043a4b2688be7535da9d4dc09dfe03e074cfd536261917",
-    "detail-16.png": "7cc34de4fe34c11ba6538a0b0d77e622c2608c365f751c4c805a04655c146df4",
-    "detail-17.png": "b5dd91e58fc9330eb3c88f1026fe74ff580fc45736ee83ef17435785420e7541",
-    "detail-18.png": "0c4cdc3e36f39bd680d4c6a2a345117c6e4257f77a7e6c1245a5495728d4d47c",
-    "detail-19.png": "4b61178f8e1f022423427e10e8eeb1006baf5c954b0170dd17edaf8c8e090ba2",
-    "detail-20.png": "9a634a76fc1160cb728b49824673ae8663d0fac3f57af9789de59ad531059f4c",
-    "detail-21.png": "9273629d6533c40ac8f221aa03834627cdebef3b22d3ddb8d5016d08ad95de40",
+    "overview.png": "c466509611f3d72885d271f2c0c41898716d322f6a2134e0137846f8ab976312",
+    "detail-01.png": "b96856e426725b8bf6b0ca6e758421710565ed2d98fafcac62e43899e1d28746",
+    "detail-02.png": "e2b932f65e98f356e7741d5f2dc642d76fbce6af8ae2301b4694f4a0483263b2",
+    "detail-03.png": "bd377880e9a96c9c08565e1961a486e2abc0eef202fed7c4f1037c8e6819cf02",
+    "detail-04.png": "b40cd6eabf686a57a1a182287ed053ac0a1df880fb4728be3f1777e1d3553ee0",
+    "detail-05.png": "8b3f641451b671aa6142f24798b7b5432d794bb2f5da151ee8ae4d084eaabd28",
+    "detail-06.png": "0f2462d7ce9fdfd232c96b6c98fa6853a30a4e1f92fe2f818f0cf60748b69bdf",
+    "detail-07.png": "f3c485987f2df8563e6e440eef9c87383f5c62cbe500e6cf5b74fe5af04c159c",
+    "detail-08.png": "689c07a5eb99fe2e9ff79d7c8ac6a3f358fafe07f5fa0d7aa30c680af67c8b15",
+    "detail-09.png": "1fec9047d42416e1af495d01908c38529b367360e8dcfd9ae86e627cb4939943",
+    "detail-10.png": "188845dcd5bfb0a65a1b20a6e5a990f513c230eec6a1a61a019a577717161939",
+    "detail-11.png": "34c325b81739baf59188251b46cc34841c35040f623a3e9e1b2d8564b9080ab3",
+    "detail-12.png": "c8bdb915be31d3294ec2c62717c00df72b8ed252f5f39a3545806c7180733709",
+    "detail-13.png": "1691dd1cc8730069c3b813113f08c81617d2258d60d1499854324037dc69be67",
+    "detail-14.png": "5cbe6573c4da205412d0e455cee2f242d2a325a16b64b6ff2d36a60cf94d18e2",
+    "detail-15.png": "a246c92d8cac562639089015b4b0bcad78e30eecef32c256ba0a09ef8b1fc03a",
+    "detail-16.png": "dfedae4e8c6d6e6dc14e8f32d0779427f056d90725c3f1774a0ad86f7920023f",
+    "detail-17.png": "b50dbd2fff0cf41d1538c3fd5690f3d51613091fef1dd1b95711c9e261a11a70",
+    "detail-18.png": "9b07d032a1e164e5a6b5259599cd2827f915d8f0b26bab64202f445f3135a00d",
+    "detail-19.png": "df0f1ba7251dd646f03131c096af2103fd9cd98a17e7cf969d4c1693e6f208b7",
+    "detail-20.png": "557da75aaae5b3bd40e61fab199b66400f6a393bf2d53d03edc16e1771b72ca6",
+    "detail-21.png": "021d92a046269cf5e3b76615bb93123261888a171fe590b4a01fa528bfee7d3a",
+    "near-vent.png": "91be7c4522b1849a97cbf0cc471ac76f7771462e4ea86ff6d5709814f82301c5",
     "sites.csv": "0df9f9a4e0413b2028df96517d20e4fba853278498774192a11dbb087351cfe5",
-    "README.md": "1d031d44adc3889b4ed0f49b6c8366161e3a0f72aa8cac1c6a38850eb21ad048"
+    "README.md": "ee78697a76eb85158b73782ca3fac0d0179dedd7bf46dfc463fdb90ef9fe2de2"
   }
 }

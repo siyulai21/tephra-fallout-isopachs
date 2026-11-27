@@ -2,32 +2,64 @@
 import csv
 from functools import lru_cache
 import gzip
+from hashlib import sha256
 from pathlib import Path
 
-from matplotlib.colors import ListedColormap
 from matplotlib.patches import Rectangle
 from matplotlib.ticker import MaxNLocator
 from matplotlib.transforms import Bbox
 import numpy as np
 
+from benchmarks.observation_relief import terrain_rgb
 from src.Laea import make_laea_transform
-from src.empirical_isopach.visualization.deposit_maps import geography_mask, regular_axes
-from src.empirical_isopach.visualization.maps import coastlines
+from src.empirical_isopach.visualization.deposit_maps import regular_axes
+from src.empirical_isopach.visualization.shorelines import ASSETS as SHORELINE_ASSETS
+from src.empirical_isopach.visualization.shorelines import TIERS, index, local_mask
 
-PLACES = Path(__file__).resolve().parents[1] / "src/empirical_isopach/assets/ne_10m_places.csv.gz"
-GROUND = ListedColormap(["white", "#e5eff3", "#fbfaf4"])
+ROOT = Path(__file__).resolve().parents[1]
+PLACES = ROOT / "src/empirical_isopach/assets/ne_10m_places.csv.gz"
 MUTED = "#436473"
 ACCENT = "#912c55"
+MAP_RESOLUTION = 960
+LOCATOR_RESOLUTION = 440
+SHORELINE_LIMITS = {"f": .3, "h": 1.5}
 
 
-def base(ax, bounds, vent, resolution=420):
+def shoreline_tier(bounds, resolution):
+    spacing = max(bounds[2:] - bounds[:2]) / resolution
+    return next((tier for tier, limit in SHORELINE_LIMITS.items() if spacing <= limit), "i")
+
+
+def shoreline_provenance():
+    pack_index = SHORELINE_ASSETS / "index.json"
+    return {
+        "source": index()["version"],
+        "archive_sha256": index()["source_sha256"],
+        "pack_index": pack_index.relative_to(ROOT).as_posix(),
+        "pack_index_sha256": sha256(pack_index.read_bytes()).hexdigest(),
+        "map_samples_long_side": MAP_RESOLUTION,
+        "locator_samples_long_side": LOCATOR_RESOLUTION,
+        "km_per_sample_max_by_tier": {TIERS[tier]: limit for tier, limit in SHORELINE_LIMITS.items()},
+    }
+
+
+def base(ax, bounds, vent, resolution=MAP_RESOLUTION):
     ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal")
-    x, y = regular_axes(np.asarray(bounds), resolution)
-    ax.pcolormesh(x, y, geography_mask(x, y, vent), shading="nearest",
-                  cmap=GROUND, vmin=-1, vmax=1, zorder=0)
+    bounds = np.asarray(bounds)
+    x, y = regular_axes(bounds, resolution)
+    _, inverse, _ = make_laea_transform(*vent)
+    lon, lat = inverse.transform(*np.meshgrid(x, y))
+    tier = shoreline_tier(bounds, resolution)
+    mask = local_mask(x, y, vent, tier)
+    rgb = terrain_rgb(lon, lat, mask, x, y)
+    dx, dy = (x[1] - x[0]) / 2, (y[1] - y[0]) / 2
+    ax.imshow(rgb, extent=(x[0]-dx, x[-1]+dx, y[0]-dy, y[-1]+dy),
+              origin="lower", interpolation="nearest", zorder=0)
     for spine in ax.spines.values():
         spine.set_color("#a3b5bb")
-    coastlines(ax, vent, bounds)
+    if (mask == 0).any() and (mask == 1).any():
+        ax.contour(x, y, np.ma.masked_less(mask, 0), levels=[.5], colors="#596f73",
+                   linewidths=.40, alpha=.82, zorder=1.5)
 
 
 def degree(value, positive, negative, precision):
@@ -114,7 +146,7 @@ def places(ax, bounds, vent, *, obstacles=(), count=3):
             return
 
 
-def locator(fig, bounds, vent):
+def locator_extent(bounds, vent):
     points, _, _, _ = projected_places(vent)
     low, high = np.reshape(bounds, (2, 2))
     center = (low + high) / 2
@@ -122,9 +154,15 @@ def locator(fig, bounds, vent):
     nearest = nearest[np.isfinite(nearest)]
     # Include nearby geography even on a completely offshore detail.
     half = max(67., 1.07 * (high - low).max(), 1.46 * nearest.min())
-    extent = np.r_[center - [half * 1.40, half], center + [half * 1.40, half]]
+    return np.r_[center - [half * 1.40, half], center + [half * 1.40, half]]
+
+
+def locator(fig, bounds, vent):
+    low, high = np.reshape(bounds, (2, 2))
+    center = (low + high) / 2
+    extent = locator_extent(bounds, vent)
     ax = fig.add_axes([.070, .088, .218, .190])
-    base(ax, extent, vent, resolution=220)
+    base(ax, extent, vent, resolution=LOCATOR_RESOLUTION)
     ax.set(xticks=[], yticks=[])
     ax.set_title("Regional locator", loc="left", fontsize=9, color=MUTED, pad=5)
     ax.add_patch(Rectangle(low, *(high - low), fill=False, edgecolor=ACCENT,
