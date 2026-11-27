@@ -117,11 +117,11 @@ def summarize(output, published=False):
     output.mkdir(parents=True, exist_ok=True)
     rows = []
     if published:
-        records = {r["slug"]: r for r in datasets()}
-        accepted = {slug:r["path"] for slug,r in records.items()}
         from .principal_volumes import principal_home
-        from .publication import published_methods
-        sources = [(r["slug"], principal_home(r) / "report.json") for r in datasets()
+        from .publication import published_methods, released_datasets
+        records = {r["slug"]: r for r in released_datasets()}
+        accepted = {slug:r["path"] for slug,r in records.items()}
+        sources = [(r["slug"], principal_home(r) / "report.json") for r in records.values()
                    if set(active_methods()).intersection(published_methods(r))]
     else:
         sources = [(p.parent.name, p) for p in output.glob("*/report.json")]
@@ -151,7 +151,7 @@ def summarize(output, published=False):
         "| Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Fitted-point 95% coverage |",
         "|---|---|---:|---:|---:|"]
     if published:
-        lines[2] += (" The table includes eruptions with both regional fits on their current input. "
+        lines[2] += (" The table uses the most recent fitted input for each pair. "
                      "See the [eruption catalogue](../../eruptions/README.md) for coverage across families.")
     for row in table.itertuples():
         link = f"../../{principal_home(records[row.slug])}/README.md" if published else f"{row.slug}/README.md"
@@ -163,7 +163,7 @@ def summarize(output, published=False):
               "volume integration warning. [Regional volumes, thickness bands and held-out scores](comparison.csv)", "",
               "![Regional median-map volumes and geographic prediction scores](comparison.png)"]
     if published:
-        lines += ["", "At B-Tm, three interpreted upper bounds expand the hull. The spline’s arithmetic mean "
+        lines += ["", "In the 71-locality B-Tm study, three interpreted upper bounds expand the hull. The spline’s arithmetic mean "
                   "is dominated by a poorly constrained upper tail near Lake Suigetsu. The case study compares "
                   "the median map with 20,000 complete-surface draws and reports the integration diagnostics. "
                   "[Spline sensitivity and regional footprint](../../eruptions/b-tm/results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail)",

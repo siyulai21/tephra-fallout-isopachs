@@ -1,0 +1,170 @@
+{
+  "audit_date": "2026-11-26",
+  "target": "Local bulk primary airfall of the late-946 CE Millennium Eruption, both phases, including post-ME-labelled falls of Sun et al. 2017 under the adopted revised chronology.",
+  "previous_commit": "d115f2a699870c826752fd26b0b4d86ff42130f8",
+  "previous_release": {
+    "global_geometry": "source-fans",
+    "file": "eruptions/B-Tm_cryptotephra_minimum_fit.csv",
+    "audit": "audits/B-Tm/cryptotephra-principal.json",
+    "audit_case": "principal",
+    "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+    "published_methods": [
+      "stacked",
+      "spline",
+      "directional",
+      "nested-isopachs"
+    ],
+    "reported_file": "eruptions/B-Tm_cryptotephra.csv",
+    "results_directory": "eruptions/b-tm/results/minimum-fit-2026-11-25",
+    "release_receipt": "release.json",
+    "revision": "d115f2a699870c826752fd26b0b4d86ff42130f8",
+    "sha256": "c7698d6b6ecbe7d0fe18b5ccc4a6cb180f78bcb61f168dce3bda8e1a51ba928a"
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/B-Tm_two_phase.csv",
+      "sha256": "567ac205bf15ec077a022339831f65cd6e8ee82242bc0d51a5c5a29b00fd9bae",
+      "n_measurements": 75,
+      "n_lower_limits": 34,
+      "n_upper_limits": 13,
+      "n_intervals": 28,
+      "definition": "Complete sections, same-exposure sums, preserved component minima, two-sided locality intervals and conditional archive upper bounds. The source-to-fit translation fits every lower-only observation at its stated value and preserves upper and finite interval censoring."
+    }
+  },
+  "fitting_table": {
+    "file": "data/eruptions/B-Tm_two_phase_minimum_fit.csv",
+    "sha256": "ae2ea833991bb36d030b8110667cc4ff2c2febec8c83b55e1e2b5af93e4ffacf",
+    "reported_minima_fit_as_points": 34
+  },
+  "principal_limits": [
+    {
+      "evidence_id": "longgang",
+      "interpreted_upper_cm": 0.06,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_concentration_depth_yield",
+      "unconditional_upper_cm": null
+    },
+    {
+      "evidence_id": "quanyang",
+      "interpreted_upper_cm": 0.64,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_mass_budget",
+      "unconditional_upper_cm": null
+    },
+    {
+      "evidence_id": "old-084",
+      "interpreted_upper_cm": 0.45,
+      "lower_endpoint": "Strictly positive occurrence without a numerical lower thickness",
+      "original_reported_limit_cm": null,
+      "handling": "One upper-censored local observation term in each family. Never additionally weight this detection as a second archive reading.",
+      "source_observation": "conditional_concentration_depth_yield",
+      "unconditional_upper_cm": null
+    },
+    {
+      "evidence_id": "naka-27",
+      "interpreted_upper_cm": 1.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-29",
+      "interpreted_upper_cm": 3.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-30",
+      "interpreted_upper_cm": 2.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-32",
+      "interpreted_upper_cm": 3.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-33",
+      "interpreted_upper_cm": 2.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-39",
+      "interpreted_upper_cm": 4.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "naka-9",
+      "interpreted_upper_cm": 1.0,
+      "source_observation": "patch to measured locality maximum",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "One upper-censored locality under the documented multicore retention assumption."
+    },
+    {
+      "evidence_id": "old-054",
+      "interpreted_upper_cm": 2.0,
+      "source_observation": "Maximum 2 cm toward the margin. The central section contains only cryptotephra.",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "Use 2 cm as a conditional ceiling on representative local fallout if a sampled margin retained the primary fall without net thinning. The 730 m station locates the mire, and the exact marginal pit has no unique ID in the thickness report. The earlier compiler latitude was about 39 km too far south."
+    },
+    {
+      "evidence_id": "old-070",
+      "interpreted_upper_cm": 1.0,
+      "source_observation": "Sharp, discontinuous 1 cm ash pockets near the dispersion margin.",
+      "original_reported_limit_cm": null,
+      "unconditional_upper_cm": null,
+      "handling": "Treat 1 cm as a conditional ceiling on local background thickness if a retained pocket was at least as thick as the local original blanket. Loss from every pocket would invalidate the ceiling. Use omission or weaker retention in sensitivity."
+    }
+  ],
+  "evidence_counts": {
+    "field_ledger": 272,
+    "yang_source_rows": 76,
+    "costa_source_rows": 83,
+    "nakanishi_survey_localities": 42,
+    "tmu_specimens": 39,
+    "figure_selections": 158
+  },
+  "evidence_files": {
+    "column-contacts.csv": "38a9454eeb40cd165ce10da3faa6262f9ed96e26588feae148e193b4edf406d7",
+    "costa-crosswalk.csv": "52ae1c88ea61c88bdafaf3e8c8421df36c7c114913ce416f152a027b8e677289",
+    "figure-readings.csv": "a9ad2d0bfc5f084e503170ccaa6e47f125e2ac6ce9095c33c02cec0868e29154",
+    "nakanishi-survey.csv": "25b5d9c887a45ca660ae158b652986c21ea42af36c5fbe3cbef28c6b9f31f994",
+    "peat-profiles.csv": "b228717414d8679a0806faa139f9951e1e59843eedf05bf7d9c726cbac6d2d3e",
+    "position-checks.csv": "ea94aca86db1099f0491d717c6559f6ad13cf880683235f70191a7f54a91079a",
+    "sites.csv": "2bc2827695594092f32e4e2151f6e74b0130556f4e550dd7e51d8b44a4126904",
+    "sun-dates.csv": "3961c68488f243eea879f1fc6c60cac13365fd2db869a6c2f1a63ee1beadefa5",
+    "sun-units.csv": "b645446b3c2807c9093efdf0acb99b63eea849346fad26f12df20a5578430c8a",
+    "tmu-specimens.csv": "67fdc0a660dad7351a1d9ba2872b055113987a320d9a90b9719e9d240e6f2899",
+    "unlocated-thicknesses.csv": "e01f3751157355916b7f2e57c5b6c81c189fb2e04d611954113f9b20b124e917",
+    "yang-crosswalk.csv": "f8b66324c4aa1f043eb2cac8cf81568be77b78600caebca3078c185c10178688",
+    "sources.json": "10a817cc4d07d65fd767090de7cc1e56488f4e7af33b153202ad925aedafd158",
+    "archive-evidence.json": "0b8fa4a91f2049c842d3a8b3b6e52f0ea3c818738e3b2fc104d4841bbf3d3fcb",
+    "sensitivity.json": "ff3b657830e3b93011e6146b2012ea03a3ddf455fccd05c168ae51784fd562c1",
+    "figures/registration.json": "e872d901bc74c2150fda4313b0563f8c0cf5b36e5d7da9a2f7d2e14f690f2420"
+  },
+  "model_release": {
+    "published_methods": [],
+    "status": "Data and audit only. Preceding model results retain their generating input."
+  }
+}

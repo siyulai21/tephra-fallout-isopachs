@@ -1,6 +1,6 @@
 # GP and cubic spline inside the observation hull
 
-Each pair uses the same accepted sites, geographic holdouts and integration area. The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps. The table includes eruptions with both regional fits on their current input. See the [eruption catalogue](../../eruptions/README.md) for coverage across families.
+Each pair uses the same accepted sites, geographic holdouts and integration area. The volume integrates each model’s median thickness. The table download includes the integrals of the pointwise Q25 and Q75 maps. The table uses the most recent fitted input for each pair. See the [eruption catalogue](../../eruptions/README.md) for coverage across families.
 
 | Eruption | Regional method | Median-map volume (km³) | Held-out score ↓ | Fitted-point 95% coverage |
 |---|---|---:|---:|---:|
@@ -27,7 +27,7 @@ Lower negative log predictive scores indicate better predictions in withheld reg
 
 ![Regional median-map volumes and geographic prediction scores](comparison.png)
 
-At B-Tm, three interpreted upper bounds expand the hull. The spline’s arithmetic mean is dominated by a poorly constrained upper tail near Lake Suigetsu. The case study compares the median map with 20,000 complete-surface draws and reports the integration diagnostics. [Spline sensitivity and regional footprint](../../eruptions/b-tm/results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail)
+In the 71-locality B-Tm study, three interpreted upper bounds expand the hull. The spline’s arithmetic mean is dominated by a poorly constrained upper tail near Lake Suigetsu. The case study compares the median map with 20,000 complete-surface draws and reports the integration diagnostics. [Spline sensitivity and regional footprint](../../eruptions/b-tm/results/cryptotephra/README.md#regional-footprint-and-the-splines-upper-tail)
 
 The earlier lower-censored benchmark retains two trials with insufficient training support. [Earlier simulation results](synthetic/README.md) · [Known-deposit benchmark under the current fitting rule](../reported-minima/regional-benchmark/README.md) · [Matched regional protocol](../../docs/methods/regional-comparison.md)
 

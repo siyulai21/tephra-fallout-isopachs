@@ -1,6 +1,10 @@
-# B-Tm source and cryptotephra audit
+# B-Tm source audit
 
-The principal dataset contains **64 measured combined-fallout thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The interpreted sites retain blank thickness cells. Each contributes one upper-censored observation to the GP, cubic spline, directional ensemble and spherical mixture. The original 68 quantitative records keep their identities, coordinates, units and values. [Principal data](../../eruptions/B-Tm_cryptotephra.csv) · [Four-method results](../../../eruptions/b-tm/README.md) · [Prior source review](thickness-only.md)
+The current edition combines the primary airborne deposits of both phases of the 946 CE Millennium Eruption, including the airfall that Sun et al. assigned to later events. The second field audit accepts **150 quantitative localities** and gives the decisions for 272 evidence records. [Second field audit](two-phase/README.md) · [Reported measurements and bounds](../../eruptions/B-Tm_two_phase.csv) · [Fitting table](../../eruptions/B-Tm_two_phase_minimum_fit.csv)
+
+## Preceding 71-locality cryptotephra edition
+
+The preceding dataset contains **64 measured combined-fallout thicknesses, three reported lower bounds, one reported upper bound and three interpreted upper bounds**. The interpreted sites retain blank thickness cells. Each contributes one upper-censored observation to the GP, cubic spline, directional ensemble and spherical mixture. The original 68 quantitative records keep their identities, coordinates, units and values. [Principal data](../../eruptions/B-Tm_cryptotephra.csv) · [Four-method results](../../../eruptions/b-tm/README.md) · [Prior source review](thickness-only.md)
 
 | Site | What was observed | Condition used to constrain original fallout | Upper limit used |
 |---|---|---|---:|

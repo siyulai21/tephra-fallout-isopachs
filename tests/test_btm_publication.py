@@ -6,11 +6,16 @@ import pytest
 from benchmarks.btm_cryptotephra import NEW, OLD
 from benchmarks.publication import BTM_THICKNESS_ONLY
 from benchmarks.verify_btm_audit import verify_inputs, verify_results
+from benchmarks.verify_btm_two_phase import verify as verify_two_phase
 from src.empirical_isopach.core.geometry import survey_bounds
 from src.empirical_isopach.core.observations import read_observations
 from src.empirical_isopach.core.validation import spatial_folds, training_mask
 from src.empirical_isopach.models.cubic_spline.model import SplineCandidate, TrendRegularizedSpline
 from src.empirical_isopach.validation import automatic_buffer
+
+
+def test_two_phase_source_and_fitting_edition():
+    verify_two_phase()
 
 
 def test_reviewed_btm_inputs_and_fallout_results(monkeypatch):

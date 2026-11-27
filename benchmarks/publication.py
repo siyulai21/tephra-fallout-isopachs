@@ -39,6 +39,7 @@ def result_home(record):
 def reported_edition(record):
     """Input and results for the most recent edition using geological censoring."""
     from src.empirical_isopach.core.catalog import data_directory, dataset_record
+    record = released_edition(record)
     source = record.get("reported_file")
     return dataset_record(data_directory() / source) if source else record
 
@@ -48,6 +49,23 @@ def published_methods(record):
     from src.empirical_isopach.models.registry import active_methods
     from src.empirical_isopach.visualization.deposit import FAMILIES
     return tuple(record.get("published_methods", (*active_methods(), *FAMILIES)))
+
+
+def released_edition(record):
+    """Return the last result edition while a new principal input awaits fitting."""
+    from src.empirical_isopach.core.catalog import data_directory, dataset_record
+    if record.get("published_methods") != []:
+        return record
+    for previous in reversed(record.get("previous_inputs", [])):
+        if previous.get("release_receipt"):
+            return dataset_record(data_directory() / previous["file"])
+    return record
+
+
+def released_datasets():
+    """Use each published fit with the input that generated it."""
+    from src.empirical_isopach.core.catalog import datasets
+    return [released_edition(record) for record in datasets()]
 
 
 def matched_edition(record):

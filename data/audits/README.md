@@ -9,7 +9,7 @@ When a survey appears to publish its site data only on a map, document the searc
 - [Sakurajima Satsuma (P14)](Sakurajima-Satsuma/README.md) traces 57 accepted observations to field descriptions, native workbooks and a marine core, with measurement coverage by distance and bearing.
 - [Ilopango total TBJ airfall](Ilopango-TBJ/field-logs/README.md) reconciles the two Steen-McIntyre field reports, the modern unit workbook and the mapped fallout records at 168 fitted localities.
 - [Ilopango TBJ Unit G, earlier edition](Ilopango-TBJ/reaudit/README.md) reconciles 116 accepted localities with the original workbook, field survey maps, lake and marine cores, and excavated sections.
-- [B-Tm](B-Tm/README.md) derives three site-specific cryptotephra limits and tests alternative archive responses. Its earlier review covers 84 previously fitted records, 83 Costa Table S1 entries and additional primary field sites.
+- [B-Tm](B-Tm/README.md) combines two phases of 946 CE fallout in a 150-locality principal dataset. The field audit traces the Sun and Miyamoto sections, both compiler tables, peatland and marine archives, and earlier exclusions. The earlier 71-locality release includes the three calibrated cryptotephra bounds.
 - [Minoan](Minoan/README.md): the complete published table, combined-fallout arithmetic, incomplete-core bounds and conflicting-row sensitivities.
 - [YTT](YTT/README.md): all 88 reviewed source records, the principal 46-record selection, separate sensitivity inputs and [selection history](YTT/history/README.md).
 - [Aso-4](Aso-4/README.md): Table S2 lineage, two cruise-coordinate corrections, source-qualified bounds, unresolved primary-source conflicts and marine transport limitations.

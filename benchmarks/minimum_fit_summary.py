@@ -6,8 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from benchmarks.publication import result_home, published_methods
-from src.empirical_isopach.core.catalog import datasets
+from benchmarks.publication import published_methods, released_datasets, result_home
 
 
 def summarize(output):
@@ -22,7 +21,7 @@ def summarize(output):
     names = {"mazama":"Mazama", "ilopango-tbj":"Ilopango TBJ", "minoan":"Minoan",
              "pinatubo-1991-layer-c":"Pinatubo Layer C", "sakurajima-satsuma":"Sakurajima–Satsuma",
              "aso-4":"Aso-4", "b-tm":"B-Tm"}
-    records = {r["slug"]: r for r in datasets() if r.get("reported_file")}
+    records = {r["slug"]: r for r in released_datasets() if r.get("reported_file") and published_methods(r)}
     cases = [slug for slug in names if slug in records] + sorted(set(records)-set(names))
     rows = []
     fig, axes = plt.subplots(int(np.ceil((len(cases)+1)/2)), 2, figsize=(11.2, 2.35*np.ceil((len(cases)+1)/2)+.9),

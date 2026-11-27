@@ -98,11 +98,11 @@
       "name": "B-Tm",
       "slug": "b-tm",
       "global_geometry": "source-fans",
-      "file": "eruptions/B-Tm_cryptotephra_minimum_fit.csv",
-      "audit": "audits/B-Tm/cryptotephra-principal.json",
+      "file": "eruptions/B-Tm_two_phase_minimum_fit.csv",
+      "audit": "audits/B-Tm/two-phase/provenance.json",
       "audit_case": "principal",
-      "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
-      "published_methods": ["stacked", "spline", "directional", "nested-isopachs"],
+      "archive_evidence": "audits/B-Tm/two-phase/archive-evidence.json",
+      "published_methods": [],
       "previous_inputs": [
         {
           "file": "eruptions/B-Tm_reviewed.csv",
@@ -120,11 +120,28 @@
           "revision": "bf5e9accf61fe791926da219c4c7698c29d3045f",
           "sha256": "639871c9bc4e57109f8d0573e233dfb3113fa7c5be9de40d0c14a704e5d1bba0",
           "matched_results": "eruptions/b-tm/results"
+        },
+        {
+          "global_geometry": "source-fans",
+          "file": "eruptions/B-Tm_cryptotephra_minimum_fit.csv",
+          "audit": "audits/B-Tm/cryptotephra-principal.json",
+          "audit_case": "principal",
+          "archive_evidence": "audits/B-Tm/cryptotephra-probes.json",
+          "published_methods": [
+            "stacked",
+            "spline",
+            "directional",
+            "nested-isopachs"
+          ],
+          "reported_file": "eruptions/B-Tm_cryptotephra.csv",
+          "results_directory": "eruptions/b-tm/results/minimum-fit-2026-11-25",
+          "release_receipt": "release.json",
+          "revision": "d115f2a699870c826752fd26b0b4d86ff42130f8",
+          "sha256": "c7698d6b6ecbe7d0fe18b5ccc4a6cb180f78bcb61f168dce3bda8e1a51ba928a"
         }
       ],
-      "reported_file": "eruptions/B-Tm_cryptotephra.csv",
-      "results_directory": "eruptions/b-tm/results/minimum-fit-2026-11-25",
-      "release_receipt": "release.json"
+      "reported_file": "eruptions/B-Tm_two_phase.csv",
+      "results_directory": "eruptions/b-tm/results/two-phase-2026-11-26"
     },
     {
       "name": "YTT",

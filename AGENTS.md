@@ -45,6 +45,7 @@ python -m benchmarks.verify_spherical_bearings
 python -m benchmarks.verify_visuals
 python -m benchmarks.verify_btm_cryptotephra
 python -m benchmarks.verify_btm_audit
+python -m benchmarks.verify_btm_two_phase
 python -m benchmarks.verify_bearing_continuation
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional

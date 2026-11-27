@@ -9,14 +9,15 @@ import pandas as pd
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.global_reporting import global_dataset
 from .spherical_bearing_summary import build_validation
-from .publication import published_methods, result_home
+from .publication import published_methods, released_datasets, result_home
 
 
 def summarize(output, regional_root=Path('eruptions'), published=False, trials=None):
     output, regional_root = Path(output), Path(regional_root)
     rows, cases, validation_rows = [], [], []
     case_dirs = {}
-    for record in sorted(datasets(), key=lambda row: row["slug"]):
+    records = released_datasets() if published else datasets()
+    for record in sorted(records, key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
         available = published_methods(record)
         if published and 'spherical-mixture' not in available:
