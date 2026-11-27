@@ -1,5 +1,7 @@
 # Tambora fallout reconstruction
 
+[Principal input maps and numbered detail plates](observations/README.md)
+
 The accepted dataset contains 26 exact measurements. The regional fits share an observation hull of 2,980,287 km². [Accepted thickness CSV](../../data/eruptions/Tambora_tephra.csv) · [Input provenance](../../data/eruptions/README.md)
 
 ## Volumes and geographic prediction

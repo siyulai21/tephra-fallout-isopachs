@@ -1,6 +1,16 @@
-# B-Tm
+# 946 CE Millennium Eruption (B-Tm)
 
-The four reconstructions use the same 71 accepted fallout localities. Field reports give 64 measured thicknesses, 3 lower limits, 4 upper limits and 0 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 2 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/B-Tm/README.md) · [Reported table](../../data/eruptions/B-Tm_cryptotephra.csv) · [Fitting table](../../data/eruptions/B-Tm_cryptotephra_minimum_fit.csv)
+[Principal input maps and numbered detail plates](observations/README.md)
+
+The current principal dataset contains **150 localities** for total fallout from both phases. It includes the widespread upper fallout that Sun et al. (2017) originally assigned to later eruptions. The source classifications are 75 measurements, 34 lower-only bounds, 28 intervals and 13 upper bounds. The fitting input uses every reported minimum as a point, and preserves paired interval endpoints and upper censoring. [Second field audit](../../data/audits/B-Tm/two-phase/README.md) · [Reported observations](../../data/eruptions/B-Tm_two_phase.csv) · [Fitting input](../../data/eruptions/B-Tm_two_phase_minimum_fit.csv)
+
+The revised field record includes two rim minima of 1,500 and 1,200 cm, separate Tianwen exposures of about 150 cm and 385–475 cm, and a southern section bounded at 80–90 cm. Pan’s 70 m southern-summit exposure is documented with its field photographs and its sector location. The audit records the separate 70 m northern-rim report, six additional peatland profiles and newly traced marine, coastal and archaeological sections. [Numbered source figures](../../data/audits/B-Tm/two-phase/figures/README.md) · [Site decisions](../../data/audits/B-Tm/two-phase/sites.csv) · [Thicknesses with unresolved station positions](../../data/audits/B-Tm/two-phase/unlocated-thicknesses.csv)
+
+## Published reconstructions of the preceding 71-locality edition
+
+The 150-locality input is registered for future calculations. All maps, volumes and scores below were fitted to the 71-locality input published on 25 November 2026, SHA-256 `c7698d6b6ecbe7d0fe18b5ccc4a6cb180f78bcb61f168dce3bda8e1a51ba928a`. [Immutable case release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d115f2a699870c826752fd26b0b4d86ff42130f8/eruptions/b-tm)
+
+The four reconstructions use the same 71 accepted fallout localities. Field reports give 64 measured thicknesses, 3 lower limits, 4 upper limits and 0 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 2 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [71-locality source audit](../../data/audits/B-Tm/README.md#preceding-71-locality-cryptotephra-edition) · [Reported table](../../data/eruptions/B-Tm_cryptotephra.csv) · [Fitting table](../../data/eruptions/B-Tm_cryptotephra_minimum_fit.csv)
 
 The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 

@@ -32,13 +32,12 @@ def verify_publication_identity(path, expected):
     if current == expected:
         return True
     name = path.as_posix()
-    input_revision = Path('archive/2026-11-25-aso-4-u1429/directional-study-sources.json')
-    revision = json.loads(input_revision.read_text()) if input_revision.is_file() else {}
-    if name in revision:
-        record = revision[name]
-        assert record['original_sha256'] == expected == digest(Path(record['archived_source']))
-        assert record['current_sha256'] == current
-        return True
+    for manifest in sorted(Path("archive").glob("*/directional-study-sources.json")):
+        revisions = json.loads(manifest.read_text())
+        record = revisions.get(name)
+        if record and record["current_sha256"] == current:
+            assert record["original_sha256"] == expected == digest(Path(record["archived_source"]))
+            return True
     allowed = {
         'benchmarks/principal_volumes.py', 'data/datasets.json',
         'src/empirical_isopach/visualization/deposit_field.py',

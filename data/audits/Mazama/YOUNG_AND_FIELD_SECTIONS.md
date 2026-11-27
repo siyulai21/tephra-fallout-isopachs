@@ -1,5 +1,7 @@
 # Young’s field sections and distal Mazama ash
 
+The current field register distinguishes the 12 sites marked by the contributor and includes 106 quantitative Young Appendix sections. The map plates and counts below document the preceding interpretation. [Current numbered map, six crops and section decisions](young-marker-review/README.md)
+
 [Numbered Young map](young1990-maps.png) · [Appendix p. 321 close-ups](young1990-detail-321.png) · [Appendix p. 323 close-ups](young1990-detail-323.png) · [Appendix p. 324 close-ups](young1990-detail-324.png)
 
 Young used two independent numbering systems. Table 1.1 lists 25 distant ash localities. Appendix 1 reports work at 138 numbered sections in Oregon, with separate entries for each eruption unit and several entries for most sections. An identical number in the two systems can refer to different places. The thesis is available through its [public catalogue record](https://ethos.bl.uk/OrderDetails.do?uin=uk.bl.ethos.315541). The [source manifest](../../sources/mazama/source-manifest.csv) identifies the 363-page copy examined by checksum.

@@ -58,6 +58,7 @@ For the Pinatubo Layer C and total TBJ airfall editions, replay the geographic s
 | `python -m benchmarks.sakurajima_satsuma` | Satsuma source cells, numerical literature readings, original bounds and eight-sector coverage |
 | `python -m benchmarks.verify_azimuth_continuation` | Principal uncertain-direction fields, complete-deposit volumes, exact-site coverage and inspected-site sensitivities |
 | `python -m benchmarks.verify_btm_cryptotephra` | Current B-Tm profile integrals, upper-limit identities, four fitted families, matched holdouts and archive-response sensitivity volumes |
+| `python -m benchmarks.verify_btm_two_phase` | The second B-Tm field audit, its 150 accepted sites, field coordinates, source and fitting semantics, conditional bounds, and figure receipts |
 | `python -m benchmarks.verify_btm_audit` | Archived 68-site B-Tm fits, folds, four source sensitivities and thinning experiments |
 | `python -m benchmarks.verify_bearing_continuation` | Archived 68-site measured-fan and inspected-site tests, sector volumes and the independent spherical update |
 | `python -m benchmarks.verify_directional` | The 13 directional policies for each registered eruption, plus the original study’s independent replications and known-volume trials |

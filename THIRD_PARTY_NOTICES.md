@@ -4,7 +4,9 @@ Current maps bundle the [Natural Earth 1:10-million coastline](https://github.co
 
 The primary isopachs also colour land and lakes using polygons from the same 1:10-million release. [Pinned land and lake sources, hashes and display simplification](src/empirical_isopach/assets/land-source.json)
 
-Natural Earth data are public domain. see [the terms of use](https://www.naturalearthdata.com/about/terms-of-use/). The scale is 1:10 million, not ten-metre accuracy. Shorelines supply geographic context only and never enter fitting or volume calculation. This attribution does not change ownership or licensing of the original code, measurements or historical figures.
+The principal input figures use Natural Earth Populated Places Simple for place-name labels. [Pinned version, retained fields and hashes](src/empirical_isopach/assets/places-source.json)
+
+Natural Earth data are public domain. See [the terms of use](https://www.naturalearthdata.com/about/terms-of-use/). The scale is 1:10 million, not ten-metre accuracy. Shorelines supply geographic context only and never enter fitting or volume calculation. This attribution does not change ownership or licensing of the original code, measurements or historical figures.
 
 
 Minoan source workbook: Karstens et al. (2023), [doi:10.1038/s41467-023-38176-3](https://doi.org/10.1038/s41467-023-38176-3), CC BY 4.0. Core-catalogue cross-check: Kutterolf et al. (2021), [doi:10.1594/PANGAEA.937486](https://doi.org/10.1594/PANGAEA.937486), CC BY 4.0. Full attribution and derived-data changes are documented in [the source record](data/sources/minoan/README.md) and [audit](data/audits/Minoan/README.md).

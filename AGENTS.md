@@ -11,6 +11,7 @@ For data intake, method changes, validation, new fits and replots, fit every low
 
 - Use a figure for a site value or position only after documenting a search for the original tables and field records. Digitize only the missing field. Preserve the source pixels, registration, stable IDs and selection decisions, and publish a numbered full map and linked close-ups for every candidate. Isopachs and empty map areas supply no site observations. [Map digitization audit](docs/methods/map-digitization.md)
 - `data/datasets.json` identifies the accepted CSV, audit and reviewed spherical-mixture geometry. Aso-4 uses its reviewed input. B-Tm uses source-focused spherical fans. Preserve original units, row identities, hashes, bounds and reasons for inclusion or exclusion. Never invent evidence, observation errors, pseudo-data or zero deposits.
+- On every new or revised principal input, regenerate the overview, boxed detail plates and site index before publishing the audit. Inspect all scales and link the figures from the case home. [Principal input figure step](docs/NEW_ERUPTION.md#from-upload-to-published-case)
 - For new eruptions and re-audits, reconcile the compiler’s full locality list and apply its primary-fall classifications to principal inclusion. Review unusual thicknesses against the field evidence and distinguish site-specific readings from regional or multicore summaries. [Auditing compilations and field records](docs/NEW_ERUPTION.md#auditing-compilations-and-field-records)
 - When changing the mapped eruption phases, rebuild the site bounds against the new target. Reconcile the original thickness table with the numbered field logs and distinguish preserved component sums from complete deposits. [Phase totals and historical facies](docs/NEW_ERUPTION.md#auditing-compilations-and-field-records)
 - Before registering a new input or revising an old one, inventory actual sites with missing, trace or proxy thicknesses, including earlier exclusions. Read the primary site descriptions. Investigate sites that could constrain a fan edge, gap or distal reach first. Derive and include defensible site-specific bounds once in the principal data for all five families. Omit a site from that fit only after documenting why the available evidence cannot bound original local fallout, or why the relevant isopachs depend little on that site. Preserve its occurrence and any component constraints. Test influential interpretations against omission and weaker transfer. [Site decision protocol](docs/methods/sites-without-measured-thickness.md) · [Audit worksheet](templates/SITE_EVIDENCE.md)
@@ -45,6 +46,7 @@ python -m benchmarks.verify_spherical_bearings
 python -m benchmarks.verify_visuals
 python -m benchmarks.verify_btm_cryptotephra
 python -m benchmarks.verify_btm_audit
+python -m benchmarks.verify_btm_two_phase
 python -m benchmarks.verify_bearing_continuation
 python -m benchmarks.verify_aso_evidence
 python -m benchmarks.verify_directional
