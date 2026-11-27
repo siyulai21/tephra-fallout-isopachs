@@ -73,8 +73,8 @@ def test_regional_training_responds_to_both_endpoints(model):
 def test_registered_mazama_is_new_input_and_legacy_rows_stay_available():
     data, meta = audited_data(resolve_dataset("Mazama"))
     assert (len(data.xy), meta["n_measurements"], meta["n_intervals"],
-            meta["n_lower_limits"], meta["n_upper_limits"]) == (300,175,29,0,96)
-    assert meta["n_reported_measurements"] == 46 and data.reported_minimum.sum() == 129
+            meta["n_lower_limits"], meta["n_upper_limits"]) == (301,176,29,0,96)
+    assert meta["n_reported_measurements"] == 47 and data.reported_minimum.sum() == 129
     previous, old = audited_data(resolve_dataset("Mazama").with_name("Mazama_reviewed.csv"))
     assert len(previous.xy) == 271 and old["input_sha256"] != meta["input_sha256"]
     assert old["input_sha256"] == "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29"

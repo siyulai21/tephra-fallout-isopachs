@@ -1,6 +1,6 @@
 {
-  "input": "data/eruptions/Mazama_primary_ranges_minimum_fit.csv",
-  "input_sha256": "1cd60d207a3ddbb7393775683664a92be06fada73479dabaa55351e0ec3f9bb1",
+  "input": "data/eruptions/Mazama_bolan_lake_minimum_fit.csv",
+  "input_sha256": "682cecf9ed4a237663d95e0285f602a2fa8ce78425450d67c7ac97091f2628f5",
   "projection": "+proj=laea +lat_0=42.95 +lon_0=-122.1 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
   "vent_lonlat": [
     -122.1,
@@ -8,11 +8,11 @@
   ],
   "reported_counts": {
     "Lower limit": 129,
-    "Measured": 46,
+    "Measured": 47,
     "Range": 29,
     "Upper limit": 96
   },
-  "n_rows": 300,
+  "n_rows": 301,
   "pseudo_rows_omitted": [],
   "overview_bounds_km": [
     -398.04453655910254,
@@ -30,9 +30,21 @@
     {
       "file": "detail-01.png",
       "bounds_km": [
+        -130.76626789299138,
+        -120.125977725109,
+        -94.21429172487734,
+        -83.57400155699496
+      ],
+      "input_rows": [
+        302
+      ]
+    },
+    {
+      "file": "detail-02.png",
+      "bounds_km": [
         23.50452824913012,
         -170.13983330492238,
-        51.60599469803176,
+        42.332874763970835,
         -133.58785713680834
       ],
       "input_rows": [
@@ -40,89 +52,38 @@
       ]
     },
     {
-      "file": "detail-02.png",
+      "file": "detail-03.png",
       "bounds_km": [
-        -1.4598640513390797,
-        -46.438741762969634,
-        51.60599469803176,
-        -1.186811477169596
+        -10.811336897087351,
+        -46.08323625952902,
+        42.332874763970835,
+        8.145927834464658
       ],
       "input_rows": [
-        7,
         77,
         156,
         157,
         158,
         163,
         164,
-        165,
-        166,
-        167,
-        171,
-        172,
-        177,
         185,
         186,
         187,
         188,
+        203,
+        204,
+        205,
+        206,
         214
-      ]
-    },
-    {
-      "file": "detail-03.png",
-      "bounds_km": [
-        51.60599469803176,
-        -190.59551231072837,
-        175.62259955658445,
-        -1.186811477169596
-      ],
-      "input_rows": [
-        102,
-        103,
-        168,
-        169,
-        170,
-        173,
-        174,
-        175,
-        213,
-        262,
-        263,
-        264
       ]
     },
     {
       "file": "detail-04.png",
       "bounds_km": [
-        205.8847796767068,
-        -656.5279774774293,
-        864.6075934441338,
-        -1.186811477169596
-      ],
-      "input_rows": [
-        2,
-        3,
-        4,
-        5,
-        6,
-        76,
-        88,
-        89,
-        105,
-        226,
-        258,
-        259,
-        260,
-        261
-      ]
-    },
-    {
-      "file": "detail-05.png",
-      "bounds_km": [
-        -15.189271935993036,
-        -1.186811477169596,
-        11.741133723260653,
-        42.32248661951372
+        -12.946193344542486,
+        16.908704729604484,
+        9.498055131810105,
+        44.361141658109624
       ],
       "input_rows": [
         189,
@@ -131,87 +92,51 @@
         194,
         195,
         196,
-        203,
-        204,
-        205,
-        206,
         209,
         210,
         211
       ]
     },
     {
-      "file": "detail-06.png",
+      "file": "detail-05.png",
       "bounds_km": [
-        25.608292029258443,
-        -1.186811477169596,
-        65.23068331269035,
-        25.552420584545374
+        17.019658589750343,
+        9.570266472192404,
+        42.332874763970835,
+        44.361141658109624
       ],
       "input_rows": [
-        125,
+        114,
+        117,
+        118,
         126,
         127,
         128,
         129,
-        142,
-        143,
-        144,
-        162,
-        176,
-        199,
-        200
-      ]
-    },
-    {
-      "file": "detail-07.png",
-      "bounds_km": [
-        74.70202338444709,
-        5.391812034217285,
-        106.1538840586305,
-        25.552420584545374
-      ],
-      "input_rows": [
-        104
-      ]
-    },
-    {
-      "file": "detail-08.png",
-      "bounds_km": [
-        15.451458812407507,
-        25.552420584545374,
-        69.16995350805061,
-        42.32248661951372
-      ],
-      "input_rows": [
-        8,
-        114,
-        117,
-        118,
-        130,
-        131,
         145,
-        148,
         149,
-        150,
-        151,
-        160,
-        161,
         197,
         198,
         208,
+        215,
+        216,
+        217,
         218,
-        224,
-        225
+        219,
+        220,
+        221,
+        222,
+        223,
+        224
       ]
     },
     {
-      "file": "detail-09.png",
+      "file": "detail-06.png",
       "bounds_km": [
-        -6.47279096600532,
-        42.32248661951372,
-        32.158609076824604,
-        81.46215376654223
+        -7.70809260363194,
+        44.361141658109624,
+        42.332874763970835,
+        81.34665795632435
       ],
       "input_rows": [
         91,
@@ -221,6 +146,7 @@
         116,
         119,
         120,
+        121,
         122,
         123,
         124,
@@ -228,7 +154,10 @@
         134,
         135,
         138,
+        139,
         140,
+        141,
+        146,
         147,
         190,
         191,
@@ -237,104 +166,18 @@
       ]
     },
     {
-      "file": "detail-10.png",
+      "file": "detail-07.png",
       "bounds_km": [
-        32.158609076824604,
-        42.32248661951372,
-        44.84139634310431,
-        75.69157993480519
-      ],
-      "input_rows": [
-        121,
-        136,
-        137,
-        139,
-        141,
-        146,
-        215,
-        216,
-        217,
-        219,
-        220,
-        221,
-        222,
-        223
-      ]
-    },
-    {
-      "file": "detail-11.png",
-      "bounds_km": [
-        44.84139634310431,
-        42.32248661951372,
-        88.35391135410698,
-        84.20928470369955
-      ],
-      "input_rows": [
-        9,
-        132,
-        152,
-        153,
-        154,
-        155,
-        159,
-        178,
-        179,
-        202,
-        207
-      ]
-    },
-    {
-      "file": "detail-12.png",
-      "bounds_km": [
-        14.14477107082702,
-        84.20928470369955,
-        75.87968651881941,
-        123.12826267452448
-      ],
-      "input_rows": [
-        12,
-        13,
-        111,
-        180,
-        181,
-        182,
-        183,
-        184,
-        201,
-        230,
-        231
-      ]
-    },
-    {
-      "file": "detail-13.png",
-      "bounds_km": [
-        144.8076725234671,
-        112.60648121601682,
-        148.85398739125776,
-        116.48923653050528
-      ],
-      "input_rows": [
-        78,
-        79,
-        80
-      ]
-    },
-    {
-      "file": "detail-14.png",
-      "bounds_km": [
-        -167.3750019189937,
-        123.12826267452448,
-        353.8727279774865,
-        277.5865660531575
+        -136.63533553179747,
+        125.0,
+        42.332874763970835,
+        220.1894506557036
       ],
       "input_rows": [
         15,
         16,
-        17,
         18,
-        19,
         20,
-        21,
         94,
         107,
         228,
@@ -344,46 +187,142 @@
       ]
     },
     {
-      "file": "detail-15.png",
+      "file": "detail-08.png",
       "bounds_km": [
-        570.8196674322088,
-        136.96016795366097,
-        580.4228242673433,
-        161.47500904401952
+        42.332874763970835,
+        -189.32706280696192,
+        174.354150052818,
+        -18.15782774620526
       ],
       "input_rows": [
+        102,
+        103,
+        165,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        213,
+        262,
+        263,
+        264
+      ]
+    },
+    {
+      "file": "detail-09.png",
+      "bounds_km": [
+        42.332874763970835,
+        -18.15782774620526,
+        68.63244953066238,
+        26.162467766883232
+      ],
+      "input_rows": [
+        7,
+        125,
+        142,
+        143,
+        144,
+        162,
+        166,
+        174,
+        175,
+        176,
+        177,
+        199,
+        200
+      ]
+    },
+    {
+      "file": "detail-10.png",
+      "bounds_km": [
+        76.02376353161247,
+        5.391812034217285,
+        106.1538840586305,
+        26.162467766883232
+      ],
+      "input_rows": [
+        104
+      ]
+    },
+    {
+      "file": "detail-11.png",
+      "bounds_km": [
+        42.332874763970835,
+        26.162467766883232,
+        70.26361610495464,
+        56.9803625324608
+      ],
+      "input_rows": [
+        8,
+        130,
+        131,
+        132,
+        136,
+        137,
+        148,
+        150,
+        151,
+        152,
+        154,
+        155,
+        159,
+        160,
+        161,
+        225
+      ]
+    },
+    {
+      "file": "detail-12.png",
+      "bounds_km": [
+        111.88280772260242,
+        138.26340250195068,
+        111.88690772260242,
+        138.26750250195067
+      ],
+      "input_rows": [
+        17
+      ]
+    },
+    {
+      "file": "detail-13.png",
+      "bounds_km": [
+        200.05636841386467,
+        -685.0696089488441,
+        461.77079761085963,
+        277.5865660531575
+      ],
+      "input_rows": [
+        2,
+        5,
+        6,
+        19,
+        21,
+        105,
+        226,
+        258,
+        259,
+        260,
+        261
+      ]
+    },
+    {
+      "file": "detail-14.png",
+      "bounds_km": [
+        505.8104031703566,
+        -311.73935905466783,
+        991.2024780182377,
+        277.5865660531575
+      ],
+      "input_rows": [
+        3,
+        4,
+        10,
         11,
         14,
-        254,
-        255,
-        256
-      ]
-    },
-    {
-      "file": "detail-16.png",
-      "bounds_km": [
-        911.0874300958793,
-        150.49364482221873,
-        912.4681530404025,
-        153.4825297282799
-      ],
-      "input_rows": [
-        10,
-        275,
-        276,
-        277,
-        278
-      ]
-    },
-    {
-      "file": "detail-17.png",
-      "bounds_km": [
-        886.3727175956722,
-        220.39297169168404,
-        939.0585704830494,
-        246.5156842825786
-      ],
-      "input_rows": [
+        76,
         81,
         82,
         83,
@@ -391,11 +330,20 @@
         85,
         86,
         87,
-        90
+        88,
+        89,
+        90,
+        254,
+        255,
+        256,
+        275,
+        276,
+        277,
+        278
       ]
     },
     {
-      "file": "detail-18.png",
+      "file": "detail-15.png",
       "bounds_km": [
         -210.0376810723445,
         310.63074298832515,
@@ -408,7 +356,7 @@
       ]
     },
     {
-      "file": "detail-19.png",
+      "file": "detail-16.png",
       "bounds_km": [
         -239.35929932351138,
         586.6020691030247,
@@ -431,7 +379,7 @@
       ]
     },
     {
-      "file": "detail-20.png",
+      "file": "detail-17.png",
       "bounds_km": [
         -76.17046885780402,
         352.33668774070446,
@@ -454,7 +402,7 @@
       ]
     },
     {
-      "file": "detail-21.png",
+      "file": "detail-18.png",
       "bounds_km": [
         9.041284900666044,
         430.23654198118516,
@@ -469,7 +417,7 @@
       ]
     },
     {
-      "file": "detail-22.png",
+      "file": "detail-19.png",
       "bounds_km": [
         16.70400383738678,
         638.9814696379367,
@@ -489,7 +437,7 @@
       ]
     },
     {
-      "file": "detail-23.png",
+      "file": "detail-20.png",
       "bounds_km": [
         1.2515257121436099,
         885.0900949186613,
@@ -501,7 +449,7 @@
       ]
     },
     {
-      "file": "detail-24.png",
+      "file": "detail-21.png",
       "bounds_km": [
         42.42238980054863,
         283.52730039095394,
@@ -524,7 +472,7 @@
       ]
     },
     {
-      "file": "detail-25.png",
+      "file": "detail-22.png",
       "bounds_km": [
         42.49996102580559,
         1114.5627841465018,
@@ -537,7 +485,7 @@
       ]
     },
     {
-      "file": "detail-26.png",
+      "file": "detail-23.png",
       "bounds_km": [
         158.6761241529474,
         277.5865660531575,
@@ -572,7 +520,7 @@
       ]
     },
     {
-      "file": "detail-27.png",
+      "file": "detail-24.png",
       "bounds_km": [
         447.1587988940921,
         286.73877750790206,
@@ -594,7 +542,7 @@
       ]
     },
     {
-      "file": "detail-28.png",
+      "file": "detail-25.png",
       "bounds_km": [
         160.62341433913684,
         788.5032144026973,
@@ -621,7 +569,7 @@
       ]
     },
     {
-      "file": "detail-29.png",
+      "file": "detail-26.png",
       "bounds_km": [
         831.177041646026,
         791.1017203115806,
@@ -638,7 +586,7 @@
       ]
     },
     {
-      "file": "detail-30.png",
+      "file": "detail-27.png",
       "bounds_km": [
         158.6761241529474,
         983.7578981216025,
@@ -656,6 +604,48 @@
         293,
         296
       ]
+    },
+    {
+      "file": "detail-28.png",
+      "bounds_km": [
+        16.1798309997577,
+        81.34665795632435,
+        42.332874763970835,
+        121.15540708263691
+      ],
+      "input_rows": [
+        12,
+        111,
+        180,
+        181,
+        182,
+        183,
+        184,
+        230
+      ]
+    },
+    {
+      "file": "detail-29.png",
+      "bounds_km": [
+        42.332874763970835,
+        58.78720934858224,
+        160.41998909000358,
+        125.0
+      ],
+      "input_rows": [
+        9,
+        13,
+        78,
+        79,
+        80,
+        153,
+        178,
+        179,
+        201,
+        202,
+        207,
+        231
+      ]
     }
   ],
   "regional_index": {
@@ -669,59 +659,67 @@
       125.0
     ],
     "detail_numbers": [
-      1,
       2,
       3,
+      4,
       5,
       6,
-      7,
       8,
       9,
       10,
       11,
-      12,
-      13
+      28,
+      29
     ],
-    "observations": 135
+    "observations": 135,
+    "split_details": [
+      {
+        "original_detail": 7,
+        "regional_detail": 28
+      },
+      {
+        "original_detail": 12,
+        "regional_detail": 29
+      }
+    ]
   },
-  "reported_input": "data/eruptions/Mazama_primary_ranges.csv",
-  "reported_input_sha256": "18701d6d5ec08be3d90666af15bf4ede7d9bf4a67980f4c8b84ca48522215e7a",
-  "audit": "data/audits/Mazama/principal-ranges/provenance.json",
-  "audit_sha256": "e416555eb6d14f2b2753f937e95ae98cf0796154497b6c341f67ba8465e7ef97",
+  "reported_input": "data/eruptions/Mazama_bolan_lake.csv",
+  "reported_input_sha256": "288e95634241b6358acac3f5cff631f496a5aa7cb961277c71af3e7d16b38155",
+  "audit": "data/audits/Mazama/principal-ranges/bolan-lake-provenance.json",
+  "audit_sha256": "056640dea0184520ecebecd1c1a289cc6977d11fed6ae6413e1ff5dec5542439",
   "files_sha256": {
-    "overview.png": "9b9b0edac67720357d339a1f00c584799b874893fd441b64bc6214d5c2c97989",
-    "detail-01.png": "fc83d8fd319173a6f9d6d0a9e6325b382942d4dae99a522899c5415dc284598f",
-    "detail-02.png": "96f333b71399a8eed0b0d54a6207e2619d65be99da0aa66de45f9f05ffdd29fd",
-    "detail-03.png": "ae87234ca4392dfcbd9c4b820dae9d734da9c23f1d1fe10d724b237f60990cec",
-    "detail-04.png": "9be05718c4c5c455eecb421592bcc30ec95d172e0bff00a8f174635f12f61e5a",
-    "detail-05.png": "b7cba85399797c3bc5df0e78a4b9e7568bc3ab66f68328b7f78c4dd3a30a9e8b",
-    "detail-06.png": "f064122791c77caf7b501dee8626560074cad4d0157a5197a5ed5ecf206ca64d",
-    "detail-07.png": "8daa86f4ffcf90e8f02a549cccde19061ff770d8a80081ff5b23150a96912476",
-    "detail-08.png": "bc26824d2384786ece317dd6fb04730fc13ad58e152ca7e98ab7ba230e91e34f",
-    "detail-09.png": "21eff7ecf68b05c8dc3a3b1764341634562d8d40eae4fb72863a84d0412cb0ac",
-    "detail-10.png": "11f8e5748b81c54cd35b227c0c25fc7025063b4a3113808991a9b637451ebb62",
-    "detail-11.png": "c373644cd6249cfbe38f086f213ac0d68c1dbe6771d4eab62bc25cdd6207b9ea",
-    "detail-12.png": "36d8a2d0f6a33f0528b79310beaad30c10b545729157722082488a53bf924b6c",
-    "detail-13.png": "366109b67a660e8597812d63a75b26381cd67923b8b8f6471fb219cfec39d954",
-    "detail-14.png": "8291800a8c0e5bd3294b5413d3873e17870a2630e84a4c7731b48d184aebb717",
-    "detail-15.png": "4c350890e6efff543461a6295c73f7f11aa94fda102a964896fe831999ecaf59",
-    "detail-16.png": "ba11abf0f7b648148e4119d99f09a9abbc52e2b862852edc4af93facfd921945",
-    "detail-17.png": "51f4617279b13d0f1eb4bd077a9ed99aeff7d1bd68d4da7829628b1fde952c3f",
-    "detail-18.png": "9f190862266c5dba4d0f50c9048e18ede6db8326f83877062e9b0c2477e9e61f",
-    "detail-19.png": "ef7059e0c21a5b9d92d974f11a1441f2c56be78d2d5b7a2dbe0749401b54328a",
-    "detail-20.png": "6c11500f5732b410e601f933f9c0091df0c38484f6d40407c14e02da5e5127ee",
-    "detail-21.png": "d904e6ef2190f2ed23c7aff0912abf35297a57d7e62d44242e54c63ce1942896",
-    "detail-22.png": "f210418d20987745f9d8a8eda26d6f708a10a157b5982af05cbf4afe31eea32f",
-    "detail-23.png": "175d3634d8e4c43fb54edf63e60e37913f701214c86cae4edfb5a8f62125d408",
-    "detail-24.png": "3fcb6ac6c6f8379c4b06382214cfacf8fb85fd3a419d1fadfa28f6139b2b1466",
-    "detail-25.png": "92537c9cd31c19d3023a35d3d0098b36af4a5a7c3bdf89be590f9dfa1417e1e3",
-    "detail-26.png": "d822b13eaddd91ef3bba93628efa12d586d727f69194713b9b8b62da2c467954",
-    "detail-27.png": "17c41f5260857a2daf804f7f5ab266bfaab13c46c695bc4abad2a329e0f1b470",
-    "detail-28.png": "eff960e0e78ccd179ede818ef294b12d3782d3fa9a87b05662addefefa33fcad",
-    "detail-29.png": "6a791793359fee5088409c7ec86f3febb2ddf2f5103e582b8999611ec4df459c",
-    "detail-30.png": "bca0002437a3df1a5b24731233ffc51a63eefe4993fdb4ebe40333fa4ad76ef8",
-    "near-vent.png": "94b32ab94bf83d949c0e7ba888d6ea21b12b5f4d73cb2cb63bcab5924e6d4350",
-    "sites.csv": "126ae680268a75302c77ca0fafe75b63206ec746700d9dfc9abc841a2ea86f90",
-    "README.md": "c2ef3fa7e2d392a402abe9b4d6e7931cb24af5dd9194e9d059b26bd3a37425bd"
+    "overview.png": "cef91be75eae8c8655ea57f409fc275f3d733a312e3479a8acc22e65846bbf73",
+    "detail-01.png": "b874d158ec7999da074c971c1dc11f05f816fdb206f0487e5ae4eadda55f249d",
+    "detail-02.png": "8f725f1f82afbe365eea36a14b63d3ce1aecda4276f875d5e01f1472f3649f35",
+    "detail-03.png": "70dfff6cc949da906c6d0a1387198984ffe6b529b8d248ef8347368594e5a5ba",
+    "detail-04.png": "50d664651d8c9b3b50dc7f03e8eb878a33f3da9aa24f8a1a83c05ba3a99d1800",
+    "detail-05.png": "298a8ece04211a4dc3e112f3fc2fca568f4579a5cb50749c1115c4c9a0d36aaa",
+    "detail-06.png": "7c9dfdc2f62219a88e76f321092916acc0b16a98434eb08b2eeebd9e95165d5f",
+    "detail-07.png": "5133decff92ad43a5e7ce03d58dba2bf470ee9f6846ebd05215f602fee649246",
+    "detail-08.png": "638a2a5bcda7dcac243106f420ae57bc8d9a799c0f25abfd4086848d9bb94a67",
+    "detail-09.png": "ba555bb22200e50c50103f8003062fcaca0885cd7f90ee911d187b01774e6aa2",
+    "detail-10.png": "46709edeb7326258d7e2036dd5a9835a4e797871c2db5de05f5760c1f69779c3",
+    "detail-11.png": "49dc255092ea4cfcd35fe1da589f888802dbe4055029f919ce883478e62d7109",
+    "detail-12.png": "5cec1f15945e90bea1b574d5772efc9e1faec9d6bb3b91a4a4307653954318a3",
+    "detail-13.png": "6b5c4cdaf5f782d0f70c6309c091e70e81ff1e142f085d4d5d67ea2c6d87fc66",
+    "detail-14.png": "90737f99aca518c8fa924e808851e5ddadda2a0dcb1e07b15c1ad167578dc9f2",
+    "detail-15.png": "c83a85a368a6ec05ed8d633b340548d7f404a30af756a28d63060f1f2673e0fd",
+    "detail-16.png": "f1cb2a5a4caf0aa21c7a431bbc47b49e97b87c9cdf504ccc45e3aa9e9b34f953",
+    "detail-17.png": "8b3f4f3881b5a4ccd8c5ecfa19d3dafc5b9470c17a6a4271ac6aa7394134103d",
+    "detail-18.png": "3020a38b16ae3c716725f14ecab94d131ca7da2d00619e34bc5093a7d517d50d",
+    "detail-19.png": "3b9f054fe392ef2dd3899a9ae03ab0e01ac5c713187b610f5815d4697bbf5939",
+    "detail-20.png": "2b45fac9d4ec84a99061a134eaba788e525853d219f93bd84bc47f93ca735f0b",
+    "detail-21.png": "949935414df8d7cefa3ad4c671724b55e5ef4b69357c4f61f659c4629ec57997",
+    "detail-22.png": "60c9955ce023d7535a8cb1a5ebec086afebed12d903148ab9f477db992fdfaff",
+    "detail-23.png": "df41eedffab5e792e0eb48624549bd74d844459c9e9de4c80c05fa92b5280f3b",
+    "detail-24.png": "1b3ef30fa1226203af0cd1fd1bdc42706ae666ac3fc0758c85a50b2eca5cd46d",
+    "detail-25.png": "fde89c09f542e1c5463163a29a04ade82b5cef68f7dec704283b2aa3ade62c4b",
+    "detail-26.png": "323403db6d655551b8940794331e1b76417044a9610a4fbd076b094b3a5b7db6",
+    "detail-27.png": "b4523c46aafdf9ac663fb10299a026e4732183c7cb8ed292c21a6da9292dc42b",
+    "detail-28.png": "25d0f927ac931523fdff8594a11fb07fc164f66172c6f452fbe8d7901f1a1495",
+    "detail-29.png": "b2469e4745ea367db0c683f855dbf83f0fda638c359cb2bb2e8625f9c586f93d",
+    "near-vent.png": "a365ae6230d98eb41bcabcb5be68cff25c290f0939165b5c1f47e051bfe6a40b",
+    "sites.csv": "3cd0d9aea74722dfc818520b0bbb01bea875deaa29dd659983a139c1f730e1d2",
+    "README.md": "f5966aa47f71527a6fb2c0ffcf21377adf19f0823d7d569217a38a0966901944"
   }
 }
