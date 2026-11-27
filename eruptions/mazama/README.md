@@ -2,7 +2,13 @@
 
 [Principal input maps and numbered detail plates](observations/README.md)
 
-The five reconstructions use the same 300 accepted fallout localities. Field reports give 46 measured thicknesses, 129 lower limits, 96 upper limits and 29 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 121 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Mazama/principal-ranges/README.md) · [Reported table](../../data/eruptions/Mazama_primary_ranges.csv) · [Fitting table](../../data/eruptions/Mazama_primary_ranges_minimum_fit.csv)
+The principal dataset contains **304 fallout localities**, including the **5 mm** bed at Bolan Lake. Young’s corrected section positions add **358 cm** at 95, **75 cm** at 134 and **2,000+ cm** at 150. Sections 97 and 116 retain their own readings at the reviewed positions. The source table has 47 measurements, 132 geological lower limits, 96 upper limits and 29 ranges. [Marked sections and field tables](../../data/audits/Mazama/young-marker-review/README.md) · [Bolan Lake audit](../../data/audits/Mazama/principal-ranges/README.md#bolan-lake-addition) · [Reported table](../../data/eruptions/Mazama_young_centroids.csv) · [Fitting table](../../data/eruptions/Mazama_young_centroids_minimum_fit.csv)
+
+## Published reconstructions of the 300-locality edition
+
+The maps, volumes and validation below were fitted to the preceding 300-locality edition, whose fitting table has SHA-256 `1cd60d207a3ddbb7393775683664a92be06fada73479dabaa55351e0ec3f9bb1`. [Immutable case revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/0869f7d7b3cb505944f6f104aea42ac068868938/eruptions/mazama)
+
+The five reconstructions use the same 300 accepted fallout localities. Field reports give 46 measured thicknesses, 129 lower limits, 96 upper limits and 29 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 121 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit for the 300-locality edition](../../data/audits/Mazama/principal-ranges/README.md#preceding-300-locality-edition) · [Reported table](../../data/eruptions/Mazama_primary_ranges.csv) · [Fitting table](../../data/eruptions/Mazama_primary_ranges_minimum_fit.csv)
 
 The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 

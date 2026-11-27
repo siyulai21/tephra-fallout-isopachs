@@ -1,6 +1,8 @@
 # Mazama field evidence
 
-All five models use **300 distinct localities** from the climactic airborne deposit, including co-ignimbrite ash. The audit retains 46 point thicknesses, 29 two-sided ranges, 129 lower limits and 96 upper limits. The locality register explains which of the 872 evidence records contributed a likelihood and why. [Locality register](LOCALITIES.md) · [Model input](../../eruptions/Mazama_primary_ranges.csv) · [Five-method comparison](../../../eruptions/mazama/README.md)
+The registered dataset has **304 localities**. Young’s overprinted map symbols now resolve sections 95, 134 and 150 as separate thick pumice observations. It also includes the **5 mm** ash bed in the central Bolan Lake core. [Young’s reviewed centroids and section decisions](young-marker-review/README.md) · [Bolan Lake field evidence](principal-ranges/README.md#bolan-lake-addition)
+
+All five published models use **300 distinct localities** from the climactic airborne deposit, including co-ignimbrite ash. The audit retains 46 point thicknesses, 29 two-sided ranges, 129 lower limits and 96 upper limits. The locality register explains which of the 872 evidence records contributed a likelihood and why. [Locality register](LOCALITIES.md) · [Model input](../../eruptions/Mazama_primary_ranges.csv) · [Five-method comparison](../../../eruptions/mazama/README.md)
 
 The 293 original Buckland supplement entries retain their workbook row identities. The current audit reviews all 71 primary-coded entries and traces the source readings behind the two-sided intervals. The starting project table supplied 45 candidate field matches and seven contour-construction points. The original source descriptions and earlier decisions remain traceable by evidence ID. [Current field decisions](principal-ranges/README.md) · [Source readings and figures](principal-ranges/source-notes.md) · [Original source manifest](../../sources/mazama/README.md)
 

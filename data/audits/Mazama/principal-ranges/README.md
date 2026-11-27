@@ -1,6 +1,16 @@
 # Mazama principal observations and thickness intervals
 
-The accepted input contains **300 localities**. It adds 29 localities to the preceding 271-location audit. Each row supplies one observation to every family. Coordinates are WGS84 longitude and latitude and thicknesses are centimetres. [Principal CSV](../../../eruptions/Mazama_primary_ranges.csv) · [All 872 locality and evidence decisions](locality-decisions.csv) · [Source readings and figures](source-notes.md) · [Input and source hashes](provenance.json)
+The current 304-locality release resolves Young’s overprinted sections and retains the Bolan Lake measurement. [Current field audit and tables](../young-marker-review/README.md)
+
+## Bolan Lake addition
+
+The Bolan Lake edition contains **301 localities**, including the **5 mm (0.5 cm)** bed at Bolan Lake in the Siskiyou Mountains of Oregon. Briles et al. describe the site at 42°01′30″ N, 123°27′30″ W (42.025000° N, 123.458333° W). They report the ash at 4.86 m depth in an 8.97 m sediment core collected from the lake centre. Their chronology assigns the bed 7627 cal yr BP using the published eruption age. Above the ash, a wood sample at 4.63 m dates to 7152–7313 cal yr BP. Below it, wood at 5.70 m dates to 8763–9092 cal yr BP. The paper supplies no site-specific glass analysis or correction for focusing, compaction or redistribution. The discrete bed supplies one measured thickness, with those qualifications. The 2008 reanalysis uses the same 4.86 m horizon and its revised age model, so it provides a cross-check of the core record. [Briles et al. (2005), pp. 45, 47–48](https://doi.org/10.1016/j.yqres.2005.03.001) · [Briles et al. (2008), Table 2](https://doi.org/10.1016/j.palaeo.2008.05.007)
+
+The source table has 47 measurements, 29 intervals, 129 lower limits and 96 upper limits. The archived observation maps show this edition. The five published model results correspond to the preceding 300-locality edition. [Reported table](../../../eruptions/Mazama_bolan_lake.csv) · [Fitting table](../../../eruptions/Mazama_bolan_lake_minimum_fit.csv) · [Source and input identities](bolan-lake-provenance.json) · [301-site observation maps](https://github.com/siyulai21/tephra-fallout-isopachs/tree/580afd31154844b33a211f2a9ccb22b4c74d7c2f/eruptions/mazama/observations)
+
+## Preceding 300-locality edition
+
+The preceding input contains **300 localities**. It adds 29 localities to the preceding 271-location audit. Each row supplies one observation to every family. Coordinates are WGS84 longitude and latitude and thicknesses are centimetres. [Principal CSV](../../../eruptions/Mazama_primary_ranges.csv) · [All 872 locality and evidence decisions](locality-decisions.csv) · [Source readings and figures](source-notes.md) · [Input and source hashes](provenance.json)
 
 | Principal observation | Localities | Model input |
 |---|---:|---|
