@@ -28,6 +28,14 @@ ROOT = Path(__file__).resolve().parents[1]
 PANEL_ROWS = 24
 INK, MUTED, ACCENT = "#192e39", "#4d6570", "#912c55"
 CMAP = "viridis_r"
+REGION_COLOR = "#155963"
+BOX_COLORS = ("#854315", "#72488c", "#126067", "#8b3650", "#385790", "#52611c")
+# These frames separate the near-vent clusters from their surrounding survey.
+# Recheck the hierarchy if an audit moves points or changes the panel partition.
+NEAR_VENT = {
+    "mazama": ("Crater Lake area", (-27., -202., 186., 125.)),
+    "b-tm": ("Changbaishan–Tianchi area", (-47., -21., 71., 62.)),
+}
 STYLES = {
     "Measured": ("o", ""),
     "Lower limit": ("^", "≥"),
@@ -44,6 +52,31 @@ TABLE_COLUMNS = (
 class Panel:
     bounds: tuple[float, float, float, float]
     indices: np.ndarray
+
+
+@dataclass(frozen=True)
+class IndexBox:
+    label: str
+    bounds: tuple[float, float, float, float]
+    color: str = ACCENT
+
+
+def regional_view(slug, xy, panels):
+    """Place every visible observation in one of the regional map's child boxes."""
+    if slug not in NEAR_VENT:
+        return None
+    title, bounds = NEAR_VENT[slug]
+    children = [i for i, panel in enumerate(panels, 1)
+                if (np.array(panel.bounds[:2]) >= bounds[:2]).all()
+                and (np.array(panel.bounds[2:]) <= bounds[2:]).all()]
+    if not children:
+        raise ValueError(f"No detail bounds fit inside the regional index for {slug}.")
+    visible = ((xy >= bounds[:2]) & (xy <= bounds[2:])).all(axis=1)
+    covered = np.concatenate([panels[i-1].indices for i in children])
+    if not np.array_equal(np.sort(covered), np.flatnonzero(visible)):
+        raise ValueError(f"Review the regional index frame for {slug} against the new panel layout.")
+    return {"label": "A", "title": title, "file": "near-vent.png", "bounds_km": list(bounds),
+            "detail_numbers": children, "observations": int(visible.sum())}
 
 
 def digest(path):
@@ -139,23 +172,24 @@ def axis_map(ax, bounds, vent, *, detail):
     else:
         ax.grid(color="#c8d8db", alpha=.65, linewidth=.55)
 
-def draw_points(ax, xy, rows, norm, *, overview):
+def draw_points(ax, xy, rows, norm, *, overview, regional_colors=None):
     points, groups = np.unique(xy, axis=0, return_inverse=True)
     shared = np.bincount(groups)[groups] > 1
-    size = 21 if overview else 44
+    size = 31 if regional_colors else 21 if overview else 44
+    edges = np.array([regional_colors[r["panel"]] if regional_colors else INK for r in rows])
     for kind, (marker, _) in STYLES.items():
         mask = np.array([r["reported_kind"] == kind for r in rows]) & ~shared
         if mask.any():
             values = [float(rows[i]["reported_value_cm"]) for i in np.flatnonzero(mask)]
             ax.scatter(*xy[mask].T, c=values, norm=norm, cmap=CMAP, marker=marker,
-                       s=size, edgecolor=INK, linewidth=.62, zorder=5)
+                       s=size, edgecolor=edges[mask], linewidth=1.04 if regional_colors else .62, zorder=5)
     if shared.any():
         ax.scatter(*points[np.unique(groups[shared])].T, marker="D", s=size + 5,
                    facecolor="white", edgecolor=INK, linewidth=.8, zorder=5)
     ax.scatter(0, 0, marker="*", s=143, facecolor="none", edgecolor=ACCENT, linewidth=1.25, zorder=6)
 
 
-def label_positions(ax, anchors, labels, obstacles, *, panel_labels=False):
+def label_positions(ax, anchors, labels, obstacles, *, colors=None, preferred_boxes=None):
     """Place labels in display space so marker and label spacing is scale independent."""
     transform = ax.transData
     ax.figure.canvas.draw()
@@ -168,28 +202,79 @@ def label_positions(ax, anchors, labels, obstacles, *, panel_labels=False):
     directions = np.c_[np.cos(angles), np.sin(angles)]
     offsets = np.vstack([radius * directions for radius in (13, 20, 28, 38, 52, 70, 92, 120)]) * scale
     used = []
-    for point, label in zip(points, labels, strict=True):
+    box_limits = None
+    if preferred_boxes is not None:
+        box_limits = [transform.transform(np.reshape(bounds, (2, 2)))
+                      for bounds in preferred_boxes]
+    for i, (point, label) in enumerate(zip(points, labels, strict=True)):
         extent = np.array([len(label) * 2.8 + 3.8, 7.0]) * scale
-        for center in point + offsets:
+        color = colors[i] if colors is not None else INK
+
+        def clear(center):
             lo, hi = center - extent, center + extent
-            if np.any(lo < lower) or np.any(hi > upper):
-                continue
-            if np.any(np.all(np.abs(obstacles - center) < extent + 3.5 * scale, axis=1)):
-                continue
-            if any(np.all(lo < previous_hi) and np.all(previous_lo < hi)
-                   for previous_lo, previous_hi in used):
-                continue
-            used.append((lo, hi))
-            break
-        else:
-            raise ValueError(f"Could not place map label {label}. Reduce the number of labels per detail.")
+            return (np.all(lo >= lower) and np.all(hi <= upper)
+                    and not np.any(np.all(np.abs(obstacles - center) < extent + 3.5 * scale, axis=1))
+                    and not any(np.all(lo < old_hi) and np.all(old_lo < hi) for old_lo, old_hi in used))
+
+        candidates = point + offsets
+        inner = None
+        anchor = point
+        if box_limits is not None:
+            left, right = box_limits[i]
+            inner_low, inner_high = left + extent + scale, right - extent - scale
+            if np.all(inner_low <= inner_high):
+                inner = next((p for p in (
+                    inner_low + (inner_high - inner_low) * fraction
+                    for fraction in ((x, y) for y in np.linspace(1., 0., 5)
+                                     for x in (0., .25, .5, .75, 1.)))
+                    if clear(p)), None)
+            # Try immediately next to every edge before reaching out into the map.
+            x = np.linspace(left[0], right[0], 7)
+            y = np.linspace(left[1], right[1], 7)
+            gap = extent + 1.2 * scale
+            near_edges = np.vstack((np.c_[x, np.full(7, left[1] - gap[1])],
+                                    np.c_[x, np.full(7, right[1] + gap[1])],
+                                    np.c_[np.full(7, left[0] - gap[0]), y],
+                                    np.c_[np.full(7, right[0] + gap[0]), y]))
+            candidates = np.vstack((near_edges, candidates))
+            distances = np.linalg.norm(candidates - np.clip(candidates, left, right), axis=1)
+            candidates = candidates[np.argsort(distances, kind="stable")]
+            # A badge outside its own box should stay outside every other box.
+            candidates = [p for p in candidates if not any(
+                np.all(p + extent > lo) and np.all(p - extent < hi)
+                for j, (lo, hi) in enumerate(box_limits) if j != i)]
+        center = inner if inner is not None else next((p for p in candidates if clear(p)), None)
+        if center is None:
+            raise ValueError(f"Could not place map label {label}. Review the map extent.")
+        used.append((center - extent, center + extent))
         endpoint = transform.inverted().transform(center)
-        start = transform.inverted().transform(point)
-        color = ACCENT if panel_labels else INK
-        ax.plot(*np.stack((start, endpoint)).T, color=color, linewidth=.55, alpha=.75, zorder=6)
+        if inner is None:
+            if box_limits is not None:
+                anchor = np.clip(center, *box_limits[i])
+            start = transform.inverted().transform(anchor)
+            ax.plot(*np.stack((start, endpoint)).T, color=color, linewidth=.55, alpha=.75, zorder=6)
         ax.text(*endpoint, label, ha="center", va="center", color=color, fontsize=8,
                 fontweight="bold", zorder=7, bbox=dict(boxstyle="round,pad=.18",
                 facecolor="white", edgecolor=color, linewidth=.55))
+
+
+def draw_index_boxes(ax, boxes, obstacles, *, regional):
+    corners = []
+    for box in boxes:
+        x0, y0, x1, y1 = box.bounds
+        lettered = box.label.isalpha()
+        if regional or lettered:
+            ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, facecolor=box.color,
+                                   edgecolor="none", alpha=.12, zorder=3.3))
+        ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
+                               edgecolor="white", linewidth=2.7 if lettered else 2.4))
+        ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
+                               edgecolor=box.color, linewidth=1.8 if lettered else 1.1 if regional else .95,
+                               linestyle="-" if regional or lettered else (0, (4, 2))))
+        corners.append((x0, y1))
+    label_positions(ax, corners, [box.label for box in boxes], obstacles,
+                    colors=[box.color for box in boxes],
+                    preferred_boxes=[box.bounds for box in boxes] if regional else None)
 
 
 def reading(row):
@@ -229,26 +314,27 @@ def table(fig, rows):
              fontsize=8.5, color=MUTED)
 
 def figure(path, title, subtitle, bounds, vent, xy, rows, norm, kinds, *, boxes=None,
-           coincident=False):
+           coincident=False, regional=False):
     overview = boxes is not None
-    fig = plt.figure(figsize=(11.6, 8) if overview else (15, 9.5), facecolor="white", dpi=160)
+    size = (10.7, 11.2) if regional and bounds[3]-bounds[1] > bounds[2]-bounds[0] else (11.6, 8)
+    fig = plt.figure(figsize=size if overview else (15, 9.5), facecolor="white", dpi=160)
     try:
         fig.text(.073, .946, title, fontsize=21, weight="bold", color=INK)
         fig.text(.074, .902, subtitle, fontsize=11, color=MUTED)
-        ax = fig.add_axes([.095, .232, .81, .622] if overview else [.073, .323, .423, .544])
-        axis_map(ax, bounds, vent, detail=not overview)
-        draw_points(ax, xy, rows, norm, overview=overview)
+        frame = [.095, .232, .81, .622] if overview else [.073, .323, .423, .544]
+        if regional:
+            frame = [.097, .217, .807, .651]
+        ax = fig.add_axes(frame)
+        axis_map(ax, bounds, vent, detail=regional or not overview)
+        regional_colors = {box.label: box.color for box in boxes} if regional else None
+        draw_points(ax, xy, rows, norm, overview=overview, regional_colors=regional_colors)
         if overview:
-            corners = []
-            for panel in boxes:
-                x0, y0, x1, y1 = panel.bounds
-                ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
-                                       edgecolor="white", linewidth=2.4))
-                ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, zorder=4,
-                                       edgecolor=ACCENT, linewidth=.95, linestyle=(0, (4, 2))))
-                corners.append((x0, y1))
-            label_positions(ax, corners, [f"{i:02}" for i in range(1, len(boxes) + 1)],
-                            np.vstack((xy, [0, 0])), panel_labels=True)
+            obstacles = np.vstack((xy, [0, 0]))
+            draw_index_boxes(ax, boxes, obstacles, regional=regional)
+            if regional:
+                places(ax, bounds, vent, obstacles=obstacles)
+                fig.text(.096, .162, "Marker outlines match the numbered detail boxes.",
+                         fontsize=9, color=MUTED)
         else:
             _, first = np.unique([r["map_key"] for r in rows], return_index=True)
             label_positions(ax, xy[first], [str(rows[i]["map_key"]) for i in first],
@@ -326,6 +412,9 @@ def packet(record):
                      "input_rows": [rows[i]["input_row"] for i in panel.indices]}
                     for number, panel in enumerate(panels, 1)],
     }
+    region = regional_view(record["slug"], xy, panels)
+    if region:
+        manifest["regional_index"] = region
     if ledger:
         manifest["row_sources"] = ledger.relative_to(ROOT).as_posix()
         manifest["row_sources_sha256"] = digest(ledger)
@@ -354,9 +443,15 @@ def case_page(record, manifest, directory):
         source_links.append(f"[Audit citation keys]({os.path.relpath(bibliography, directory)})")
     source_links += ["[Site index with coordinates and full input precision](sites.csv)",
                      "[Input hashes and panel bounds](manifest.json)"]
+    region = manifest.get("regional_index")
+    if region:
+        source_links.insert(0, "[Go to the near-vent map](#near-vent-detail-index)")
+    box_description = ("Box A on the overview marks the area shown in the near-vent detail index. "
+                       "Other numbered boxes lead directly to detail plates. "
+                       if region else "The dashed boxes show the detail extents. ")
     lines = [f"# {title} · principal input observations", "",
              f'All {manifest["n_rows"]} accepted rows have a symbol at their registered coordinates on the overview '
-             "and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. "
+             "and a labelled reading on one numbered detail plate. " + box_description +
              "A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.", "",
              " · ".join(source_links), "",
              "The table shows the evidence ID and source citation alongside the reported or interpreted reading. "
@@ -365,18 +460,29 @@ def case_page(record, manifest, directory):
              "in the fit. Upper limits and ranges retain their respective events. Marker colour represents "
              "the displayed thickness or limit, using the lower endpoint for ranges. Where rows share "
              "coordinates, a single diamond uses the first CSV row as its map key and the adjacent table lists each row.", "",
-             "![Overview of accepted observation locations and numbered detail boxes](overview.png)", "",
-             "| Detail plate | Input rows | Easting × northing span |", "|---|---:|---:|"]
+             "![Overview of accepted observation locations and numbered detail boxes](overview.png)", ""]
+    if region:
+        links = ", ".join(f'[{n:02}](detail-{n:02}.png)' for n in region["detail_numbers"])
+        lines += ["## Near-vent detail index", "",
+                  f'**Box A · {region["title"]}** contains {region["observations"]} accepted observations. '
+                  f'Match a numbered box to the links below for its site locations and readings. {links}', "",
+                  f'![Enlarged box A with numbered boundaries for the near-vent detail plates]({region["file"]})', "",
+                  "## All detail plates", ""]
+    lines += ["| Detail plate | Input rows | Easting × northing span |", "|---|---:|---:|"]
     for number, detail in enumerate(manifest["details"], 1):
         x0, y0, x1, y1 = detail["bounds_km"]
-        lines.append(f'| [{number:02}]({detail["file"]}) | {len(detail["input_rows"])} | '
+        group = " · A" if region and number in region["detail_numbers"] else ""
+        lines.append(f'| [{number:02}]({detail["file"]}){group} | {len(detail["input_rows"])} | '
                      f'{x1 - x0:.3g} × {y1 - y0:.3g} km |')
     return "\n".join(lines) + "\n"
 
 
 def run_case(record, directory, *, verify):
     xy, rows, panels, manifest, index = packet(record)
+    region = manifest.get("regional_index")
     images = ["overview.png", *(detail["file"] for detail in manifest["details"])]
+    if region:
+        images.append(region["file"])
     if verify:
         expected = json.loads((directory / "manifest.json").read_text())
         # PROJ roundoff can differ across platforms. Compare coordinates before checking
@@ -396,10 +502,25 @@ def run_case(record, directory, *, verify):
         norm = LogNorm(*manifest["colour_limits_cm"])
         kinds = manifest["reported_counts"]
         coincident = len(np.unique(xy, axis=0)) != len(xy)
-        figure(directory / "overview.png", title,
-               f'{len(rows)} accepted observations  |  dashed boxes mark numbered detail plates',
-               manifest["overview_bounds_km"], vent, xy, rows, norm, kinds, boxes=panels,
+        numbers = set(region["detail_numbers"]) if region else set()
+        boxes = [IndexBox(f"{n:02}", panel.bounds) for n, panel in enumerate(panels, 1)
+                 if n not in numbers]
+        subtitle = f"{len(rows)} accepted observations  |  dashed boxes mark numbered detail plates"
+        if region:
+            boxes.append(IndexBox(region["label"], region["bounds_km"], REGION_COLOR))
+            subtitle = f"{len(rows)} accepted observations  |  box A marks the near-vent detail index"
+        figure(directory / "overview.png", title, subtitle,
+               manifest["overview_bounds_km"], vent, xy, rows, norm, kinds, boxes=boxes,
                coincident=coincident)
+        if region:
+            children = region["detail_numbers"]
+            subset = np.sort(np.concatenate([panels[n-1].indices for n in children]))
+            detail_boxes = [IndexBox(f"{n:02}", panels[n-1].bounds, BOX_COLORS[j % len(BOX_COLORS)])
+                            for j, n in enumerate(children)]
+            figure(directory / region["file"], f'{title} · A · {region["title"]}',
+                   f'{len(subset)} accepted observations  |  numbers match the detail plates below this map',
+                   region["bounds_km"], vent, xy[subset], [rows[i] for i in subset], norm, kinds,
+                   boxes=detail_boxes, coincident=coincident, regional=True)
         for number, (panel, detail) in enumerate(zip(panels, manifest["details"], strict=True), 1):
             group = [rows[i] for i in panel.indices]
             figure(directory / detail["file"], title,
@@ -412,8 +533,9 @@ def run_case(record, directory, *, verify):
         if (directory / "README.md").read_text(encoding="utf-8") != case_page(record, manifest, directory) or expected != manifest:
             raise ValueError(f"Published observation figures are stale for {record['slug']}.")
     else:
-        for old in set(directory.glob("detail-*.png")) - {directory / name for name in images}:
-            old.unlink()
+        old_maps = set(directory.glob("detail-*.png")) | {directory / "near-vent.png"}
+        for old in old_maps - {directory / name for name in images}:
+            old.unlink(missing_ok=True)
         (directory / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(record["slug"], len(rows), "observations,", len(panels), "detail plates", flush=True)
 
