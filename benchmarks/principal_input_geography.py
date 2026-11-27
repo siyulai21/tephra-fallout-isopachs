@@ -4,18 +4,17 @@ from functools import lru_cache
 import gzip
 from pathlib import Path
 
-from matplotlib.colors import ListedColormap
 from matplotlib.patches import Rectangle
 from matplotlib.ticker import MaxNLocator
 from matplotlib.transforms import Bbox
 import numpy as np
 
+from benchmarks.observation_relief import terrain_rgb
 from src.Laea import make_laea_transform
 from src.empirical_isopach.visualization.deposit_maps import geography_mask, regular_axes
 from src.empirical_isopach.visualization.maps import coastlines
 
 PLACES = Path(__file__).resolve().parents[1] / "src/empirical_isopach/assets/ne_10m_places.csv.gz"
-GROUND = ListedColormap(["white", "#e5eff3", "#fbfaf4"])
 MUTED = "#436473"
 ACCENT = "#912c55"
 
@@ -23,8 +22,12 @@ ACCENT = "#912c55"
 def base(ax, bounds, vent, resolution=420):
     ax.set(xlim=(bounds[0], bounds[2]), ylim=(bounds[1], bounds[3]), aspect="equal")
     x, y = regular_axes(np.asarray(bounds), resolution)
-    ax.pcolormesh(x, y, geography_mask(x, y, vent), shading="nearest",
-                  cmap=GROUND, vmin=-1, vmax=1, zorder=0)
+    _, inverse, _ = make_laea_transform(*vent)
+    lon, lat = inverse.transform(*np.meshgrid(x, y))
+    rgb = terrain_rgb(lon, lat, geography_mask(x, y, vent), x, y)
+    dx, dy = (x[1] - x[0]) / 2, (y[1] - y[0]) / 2
+    ax.imshow(rgb, extent=(x[0]-dx, x[-1]+dx, y[0]-dy, y[-1]+dy),
+              origin="lower", interpolation="nearest", zorder=0)
     for spine in ax.spines.values():
         spine.set_color("#a3b5bb")
     coastlines(ax, vent, bounds)

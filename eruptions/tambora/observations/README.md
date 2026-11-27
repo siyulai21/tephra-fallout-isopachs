@@ -1,6 +1,6 @@
 # Tambora · principal input observations
 
-All 26 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
+All 26 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. Water and coastlines use Natural Earth. [Elevation source](https://doi.org/10.25921/fd45-gt74)
 
 [Accepted input CSV](../../../data/eruptions/Tambora_tephra.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 

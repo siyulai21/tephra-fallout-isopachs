@@ -1,6 +1,6 @@
 # B-Tm · principal input observations
 
-All 150 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. Box A on the overview marks the area shown in the near-vent detail index. Other numbered boxes lead directly to detail plates. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
+All 150 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. Box A on the overview marks the area shown in the near-vent detail index. Other numbered boxes lead directly to detail plates. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. Land shading shows elevation and slope. Water and coastlines use Natural Earth. [Elevation source](https://doi.org/10.25921/fd45-gt74)
 
 [Go to the near-vent map](#near-vent-detail-index) · [Accepted input CSV](../../../data/eruptions/B-Tm_two_phase_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/B-Tm_two_phase.csv) · [Audit provenance](../../../data/audits/B-Tm/two-phase/provenance.json) · [Source ledger](../../../data/audits/B-Tm/two-phase/sites.csv) · [Audit citation keys](../../../data/audits/B-Tm/two-phase/sources.json) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 
