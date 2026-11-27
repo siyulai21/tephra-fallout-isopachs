@@ -1,0 +1,60 @@
+{
+  "audit_date": "2026-11-27",
+  "preceding_edition": {
+    "revision": "4e53210521f39135d133921a8b58ab9c3fc476c7",
+    "reported": {
+      "file": "data/eruptions/Aso-4_reviewed_u1429.csv",
+      "sha256": "d4bd4aa50bba7b8d08056cd9879f4ffe89d0299a4091fc8e28179af7ec0ba2d0"
+    },
+    "fitting": {
+      "file": "data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv",
+      "sha256": "a46542ca6fc1edaee44596732eb5d04c1dcb268df5d531d5cec12851dae1a544"
+    },
+    "audit": {
+      "file": "data/audits/Aso-4/u1429/provenance.json",
+      "sha256": "aa5b317a2e8cbb6766c83e09db872fa14fc5b0dd9c5303038d62cec267e2445c"
+    }
+  },
+  "cases": {
+    "principal": {
+      "file": "data/eruptions/Aso-4_ulleung.csv",
+      "sha256": "9f48f4ea0f7ebb3f774e2c42baa6e48fa3d5a9d137cb2accbd090459da0505e2",
+      "fitting_file": "data/eruptions/Aso-4_ulleung_minimum_fit.csv",
+      "fitting_sha256": "b93d648b41b50b57e2e8d71f08e7739cd4bfe4d48dbc0bf0cf916b626b5829ea",
+      "n_measurements": 88,
+      "n_lower_limits": 3,
+      "n_upper_limits": 1,
+      "n_intervals": 0,
+      "definition": "Local Aso-4 fallout thickness in cm. Four point estimates use the logged depth spans of Aso-4 layers in Ulleung Basin cores. Three geological minima enter the fitting input at their thresholds and the upper limit stays one-sided."
+    }
+  },
+  "core_ledger": {
+    "file": "data/audits/Aso-4/ulleung/cores.csv",
+    "sha256": "5e2be74f1e42ec9f43db53e40f63e4270d356f100aa9b39ad5afbb4ce0a9e21f"
+  },
+  "primary_source": {
+    "citation": "Chun, J.-H., Ikehara, K. and Han, S.-J. (2004). Evidence in Ulleung Basin Sediment Cores for a Termination II (Penultimate Deglaciation) Eruption of the Aso-3 Tephra. The Quaternary Research 43, 99–112.",
+    "doi": "https://doi.org/10.4116/jaqua.43.99",
+    "pdf": "https://www.jstage.jst.go.jp/article/jaqua1957/43/2/43_2_99/_pdf/-char/en",
+    "downloaded_pdf_sha256": "836e11f993ac330b7e5ee2ad4464fa052bc724b0fc92a4a2697f1ffe771df210",
+    "fields": "Table 1, printed p. 102, gives station coordinates, water depths and paired stratigraphic depths below the core top. The Fig. 2 legend distinguishes tephra (TP) from mud facies. Fig. 4c photographs the named layer in 95PC-6. Fig. 5a shows a shard, and Table 2 and Figs. 6–7 concern selected samples. The chemistry depths are separate from the paired depths."
+  },
+  "interpretation": "The authors log a named tephra layer at each core. Table 1 reports its stratigraphic position as a pair of depths rather than a separate thickness field. The paired depths, lithofacies log and distinct assay depths support interpreting each difference as a recovered layer span. Only 95PC-6 has an Aso-4 core photograph in the 2004 paper. The other three have no described pair of sharp contacts. Ash fraction and primary uncompacted thickness remain unresolved in all four. The separate Aso-3 column is excluded. Table 1 marks Aso-3 at 96EBP-7 as na (not acquired). Longitude 131°12.3′ N is printed in that row. Fig. 1 places the station east of Greenwich. Coordinates are converted from decimal arcminutes with 0.1 arcminute source precision and no datum shift.",
+  "selection": "Four interpreted layer spans enter as point thicknesses with a basis and evidence qualifier on each input row. No station ID match was found in the preceding accepted or excluded records. The ledger gives nearest earlier accepted and S2 presence-only coordinates using WGS84 geodesics. Six prior pseudo rows remain outside the fit.",
+  "preservation": "The source attributes Aso ash to airborne co-ignimbrite dispersal. Three sites are near a submarine channel and the fourth is on the flat basin floor. Currents, bioturbation, sediment focusing and compaction can change local marine thickness. The paper gives no numerical restoration or site-specific diagnosis of secondary emplacement of these four Aso-4 beds.",
+  "latest_fitted_input": "data/eruptions/Aso-4_reviewed_minimum_fit.csv",
+  "latest_fitted_sha256": "70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624",
+  "published_methods": [],
+  "related_records": [
+    {
+      "citation": "Chun (2022), Fig. 2c",
+      "url": "https://doi.org/10.14770/jgsk.2022.58.4.527",
+      "use": "The author reproduces the 2004 photograph. It documents the same 95PC-6 layer."
+    },
+    {
+      "citation": "Chun et al. (1998), J. Geol. Soc. Korea 34, 192–210",
+      "url": "https://sciwatch.kiost.ac.kr/handle/2020.kiost/6357",
+      "use": "The institutional record identifies the earlier survey and supplies no full text. No contact readings or replicate measurements are taken from this record."
+    }
+  ]
+}

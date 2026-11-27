@@ -1,6 +1,6 @@
 {
-  "input": "data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv",
-  "input_sha256": "a46542ca6fc1edaee44596732eb5d04c1dcb268df5d531d5cec12851dae1a544",
+  "input": "data/eruptions/Aso-4_ulleung_minimum_fit.csv",
+  "input_sha256": "b93d648b41b50b57e2e8d71f08e7739cd4bfe4d48dbc0bf0cf916b626b5829ea",
   "projection": "+proj=laea +lat_0=32.884444 +lon_0=131.103889 +x_0=0 +y_0=0 +datum=WGS84 +units=km +no_defs +type=crs",
   "vent_lonlat": [
     131.103889,
@@ -8,10 +8,10 @@
   ],
   "reported_counts": {
     "Lower limit": 3,
-    "Measured": 84,
+    "Measured": 88,
     "Upper limit": 1
   },
-  "n_rows": 88,
+  "n_rows": 92,
   "pseudo_rows_omitted": [
     89,
     90,
@@ -27,7 +27,7 @@
     2058.3468534639806
   ],
   "colour_limits_cm": [
-    0.7,
+    0.6,
     75.0
   ],
   "basemap_places_sha256": "1903389459d15d43e302b10f4c34398df35a944cfc437ce29852106f6a9d83a6",
@@ -60,7 +60,11 @@
         86,
         87,
         88,
-        95
+        95,
+        96,
+        97,
+        98,
+        99
       ]
     },
     {
@@ -212,21 +216,21 @@
   ],
   "row_sources": "data/audits/Aso-4/record-review.csv",
   "row_sources_sha256": "3be4218155ad378a0b4861dfd8a35b311d6db0f4a131972aa7771b6e67b7db1a",
-  "reported_input": "data/eruptions/Aso-4_reviewed_u1429.csv",
-  "reported_input_sha256": "d4bd4aa50bba7b8d08056cd9879f4ffe89d0299a4091fc8e28179af7ec0ba2d0",
-  "audit": "data/audits/Aso-4/u1429/provenance.json",
-  "audit_sha256": "aa5b317a2e8cbb6766c83e09db872fa14fc5b0dd9c5303038d62cec267e2445c",
+  "reported_input": "data/eruptions/Aso-4_ulleung.csv",
+  "reported_input_sha256": "9f48f4ea0f7ebb3f774e2c42baa6e48fa3d5a9d137cb2accbd090459da0505e2",
+  "audit": "data/audits/Aso-4/ulleung/provenance.json",
+  "audit_sha256": "22e6b340d2c7b08bff29cf0233ed7827e92aa458af8731fb26cbeb45185b2b90",
   "files_sha256": {
-    "overview.png": "f609d70e92aa5f269e2e14472b9b312b76c43e55d35c282e1724b6c8e7754c0d",
-    "detail-01.png": "58875b9b3556cd2368ddcd459284722ebec6e259361ffa60b0a679f36b68f57d",
-    "detail-02.png": "0a9002179abbc01a6873db2902a9fd1f31ec2d1eab3fc1cb0ef46d09b4ceb4bf",
-    "detail-03.png": "af0a722a4c452257e3495f1934e243081f7454151ea3d2faeb6cca060429f40e",
-    "detail-04.png": "ad9444397f34114f2a123f31cbb0b777031c0257c84744700cb12db523dbf1c6",
-    "detail-05.png": "49b625aeb868d734313b5aecd1a73e2410dea5e0d55a648100c237f8201b572c",
-    "detail-06.png": "4807faa1327939903d9cd5e89b8a8065333575e61e3273a0a30d30658e7399ee",
-    "detail-07.png": "f935057567b2ed5650d32e3db96440c6ec8040f0520e218300713d2414b99db3",
-    "detail-08.png": "859e8439312fdd7b23a51c7d483cd3251d34f5c17d2e2002e7409d931ed1c57b",
-    "sites.csv": "cbc932ce11ad945285871b237a90d07cab937df5e216a33f6cfd74dee9c107ba",
-    "README.md": "b18d1629fb75aef78be8a5fee4a8734fc064b873baca1cb0db2acdeca1318825"
+    "overview.png": "c9cd8ae04ce7a2cfb1fdfe2ada91a30f9a765579efdd015dc67a50655ce36feb",
+    "detail-01.png": "60ea92f2090401f64e4a5454eaab4e0908c62991a9a7ba5f4de1e80ff8645c5a",
+    "detail-02.png": "a7a42127707fa17ca78a83e98af6b021b4c44ff2152e2e869d249b664c23c3d6",
+    "detail-03.png": "fcb0977b23930dda4e7ba129512a1f29f341278a2b2dc56dd03e7f96ddee8924",
+    "detail-04.png": "492749aba31584c056869fa014b6d23f4da52456d87a650a581774bfd45c3c82",
+    "detail-05.png": "39055c82ae2bb08e5f4f212889781fe91df86098c6ec5cf27096d3643ae343eb",
+    "detail-06.png": "8bf2ee1e059cc1548f6e85325e0e3a090242737daeb9e3a672248a252be6539c",
+    "detail-07.png": "15e057dcf90c34005bc14fd40608ea4a65feb684e989099ef16970c3c0e74cae",
+    "detail-08.png": "eac9243b747947c4ff854e018ccb94a0fabfb70e724328085ab80fe613ddc042",
+    "sites.csv": "76e3583386b91a163e83598cb4c96f646c12456cf2efb979caa275e36910ea97",
+    "README.md": "ada8fda3de1b516031b022a33fe42e17d3b089118613d82dceaa3b512efaf9d5"
   }
 }

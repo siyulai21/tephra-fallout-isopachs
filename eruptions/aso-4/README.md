@@ -4,7 +4,7 @@
 
 ## Principal thickness dataset
 
-The principal input contains **88 localities**, including 84 measured thicknesses, 3 reported lower limits and 1 upper limit. The new observation is **27 cm** of Aso-4 ash at IODP Hole U1429B in the East China Sea, about 243 km southwest of the vent. The fitting table encodes the recovered thickness as a measured point. The core log and tephra correlation identify the bed, with marine redistribution and compaction remaining sources of geological uncertainty. [Reported table](../../data/eruptions/Aso-4_reviewed_u1429.csv) · [Fitting table](../../data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv) · [U1429 source audit](../../data/audits/Aso-4/u1429/README.md)
+The principal input contains **92 localities**. It includes 88 measured or depth-derived thicknesses, three reported minima fitted at their thresholds and one upper limit. Four Ulleung Basin cores record Aso-4 at 441–515 km north of the vent. Their tabulated layer spans give 0.8, 0.6, 3.0 and 3.0 cm. The field audit records the core-specific evidence for each interpretation. The preceding addition was the 27 cm bed at IODP Hole U1429B in the East China Sea. [Reported table](../../data/eruptions/Aso-4_ulleung.csv) · [Fitting table](../../data/eruptions/Aso-4_ulleung_minimum_fit.csv) · [Ulleung Basin audit](../../data/audits/Aso-4/ulleung/README.md) · [U1429 audit](../../data/audits/Aso-4/u1429/README.md)
 
 ## Published fits on the preceding input
 

@@ -2,7 +2,11 @@
 
 [Principal input maps and numbered detail plates](observations/README.md)
 
-The five reconstructions use the same 168 accepted fallout localities. Field reports give 65 measured thicknesses, 84 lower limits, 5 upper limits and 14 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 41 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Ilopango-TBJ/field-logs/README.md) · [Reported table](../../data/eruptions/Ilopango_TBJ_total_airfall.csv) · [Fitting table](../../data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv)
+The principal input contains **168 localities** with 65 measured thicknesses, 84 reported minima, five upper limits and 14 thickness ranges. Petapilla 2 now uses McNeil’s field position for the pond, 5.19 km northwest of the workbook position, for the same 0.35 cm TBJ bed. The fitting table uses each lower-only minimum as a point and preserves the upper limits and ranges. [Petapilla field audit](../../data/audits/Ilopango-TBJ/petapilla/README.md) · [Reported table](../../data/eruptions/Ilopango_TBJ_petapilla.csv) · [Fitting table](../../data/eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv)
+
+## Published fits on the preceding coordinates
+
+The five reconstructions and the site predictions below use the previous 168-site table with Petapilla at the workbook position. Forty-one of the 84 reported minima lie beyond 25 km. [Input used for these fits](../../data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv) · [Field logs and all-phase assignments](../../data/audits/Ilopango-TBJ/field-logs/README.md)
 
 The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)
 

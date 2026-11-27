@@ -2,7 +2,7 @@
 
 [Eruption and current results](../../../eruptions/aso-4/README.md) · [Experiments and interpretation](../../../comparisons/aso-4-audit/README.md) · [Machine-readable provenance](provenance.json)
 
-The principal input adds a **27 cm** core measurement in the East China Sea. [IODP U1429 audit](u1429/README.md)
+The current input includes four Ulleung Basin Aso-4 layers and the 27 cm IODP U1429B bed in the East China Sea. [Ulleung Basin core audit](ulleung/README.md) · [U1429 audit](u1429/README.md)
 
 The 8 November audit established a **source-qualified reference scenario**, with two corrected cruise coordinates and four reported bounds. It is not a claim that every thickness is pristine atmospheric fallout. The [original CSV](../../eruptions/Aso-4_tephra.csv) remains unchanged; the [reviewed CSV](../../eruptions/Aso-4_reviewed.csv) preserves its order and row identities. All six legacy pseudo rows remain excluded from fitting.
 

@@ -6,9 +6,9 @@ These are the CSVs read by the named dataset profiles in [datasets.json](../data
 
 | Eruption | Accepted CSV | Source decisions |
 |---|---|---|
-| Aso-4 | [Fitting CSV](Aso-4_reviewed_u1429_minimum_fit.csv) · [Reported values](Aso-4_reviewed_u1429.csv) | [U1429 measurement](../audits/Aso-4/u1429/README.md) · [Earlier cruise coordinates and bounds](../audits/Aso-4/README.md) |
+| Aso-4 | [Fitting CSV](Aso-4_ulleung_minimum_fit.csv) · [Reported values](Aso-4_ulleung.csv) | [Four Ulleung Basin cores](../audits/Aso-4/ulleung/README.md) · [U1429 measurement](../audits/Aso-4/u1429/README.md) · [Earlier cruise coordinates and bounds](../audits/Aso-4/README.md) |
 | B-Tm | [Fitting CSV](B-Tm_two_phase_minimum_fit.csv) · [Reported values](B-Tm_two_phase.csv) | [Two-phase field audit, 150 localities](../audits/B-Tm/two-phase/README.md) |
-| Ilopango TBJ, all-phase airfall | [Fitting CSV](Ilopango_TBJ_total_airfall_minimum_fit.csv) · [Reported values](Ilopango_TBJ_total_airfall.csv) | [Field logs, phase sums, bounds and map readings](../audits/Ilopango-TBJ/field-logs/README.md) · [116-site Unit G edition](Ilopango_TBJ_Unit_G_reviewed.csv) |
+| Ilopango TBJ, all-phase airfall | [Fitting CSV](Ilopango_TBJ_petapilla_minimum_fit.csv) · [Reported values](Ilopango_TBJ_petapilla.csv) | [Petapilla field coordinates](../audits/Ilopango-TBJ/petapilla/README.md) · [Field logs, phase totals and bounds](../audits/Ilopango-TBJ/field-logs/README.md) · [116-site Unit G edition](Ilopango_TBJ_Unit_G_reviewed.csv) |
 | Sakurajima Satsuma (P14) | [Fitting CSV](Sakurajima_Satsuma_minimum_fit.csv) · [Reported values](Sakurajima_Satsuma.csv) | [Field and excavation thicknesses, core measurements, bounds and exclusions](../audits/Sakurajima-Satsuma/README.md) |
 | Mazama | [Fitting CSV](Mazama_young_centroids_minimum_fit.csv) · [Reported values](Mazama_young_centroids.csv) | [Climactic fallout, source conflicts, phase separation and conditional bounds](../audits/Mazama/README.md) |
 | Minoan | [Fitting CSV](Minoan_tephra_minimum_fit.csv) · [Reported values](Minoan_tephra.csv) | [Combined fallout and incomplete-core bounds](../audits/Minoan/README.md) |

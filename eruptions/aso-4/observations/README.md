@@ -1,8 +1,8 @@
 # Aso-4 · principal input observations
 
-All 88 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
+All 92 accepted rows have a symbol at their registered coordinates on the overview and a labelled reading on one numbered detail plate. The dashed boxes show the detail extents. A star marks the vent. Positions use a vent-centred equal-area grid in kilometres. The basemap uses Natural Earth land and coastlines.
 
-[Accepted input CSV](../../../data/eruptions/Aso-4_reviewed_u1429_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Aso-4_reviewed_u1429.csv) · [Audit provenance](../../../data/audits/Aso-4/u1429/provenance.json) · [Source ledger](../../../data/audits/Aso-4/record-review.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
+[Accepted input CSV](../../../data/eruptions/Aso-4_ulleung_minimum_fit.csv) · [Reported CSV](../../../data/eruptions/Aso-4_ulleung.csv) · [Audit provenance](../../../data/audits/Aso-4/ulleung/provenance.json) · [Source ledger](../../../data/audits/Aso-4/record-review.csv) · [Site index with coordinates and full input precision](sites.csv) · [Input hashes and panel bounds](manifest.json)
 
 The table shows the evidence ID and source citation alongside the reported or interpreted reading. A dash marks an unavailable evidence ID. Complete citations and unrounded values are in the site index. A reported lower limit appears as ≥ on these evidence figures and as a point at that value in the fit. Upper limits and ranges retain their respective events. Marker colour represents the displayed thickness or limit, using the lower endpoint for ranges. Where rows share coordinates, a single diamond uses the first CSV row as its map key and the adjacent table lists each row.
 
@@ -10,7 +10,7 @@ The table shows the evidence ID and source citation alongside the reported or in
 
 | Detail plate | Input rows | Easting × northing span |
 |---|---:|---:|
-| [01](detail-01.png) | 19 | 607 × 814 km |
+| [01](detail-01.png) | 23 | 607 × 814 km |
 | [02](detail-02.png) | 1 | 55.1 × 55.1 km |
 | [03](detail-03.png) | 10 | 237 × 847 km |
 | [04](detail-04.png) | 13 | 148 × 241 km |
