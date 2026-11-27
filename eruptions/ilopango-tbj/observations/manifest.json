@@ -30,31 +30,18 @@
     {
       "file": "detail-01.png",
       "bounds_km": [
-        -358.7628520388264,
-        -229.95745106495696,
-        -13.763764019625162,
-        -0.24205143197646536
+        -352.0836911974434,
+        -223.27829022357395,
+        -50.19695255741325,
+        -67.57725916382074
       ],
       "input_rows": [
-        7,
-        8,
-        24,
-        52,
         66,
         67,
         68,
         69,
         88,
-        89,
-        109,
-        110,
-        111,
-        113,
-        114,
-        154,
-        155,
-        160,
-        161
+        89
       ]
     },
     {
@@ -403,8 +390,65 @@
       "input_rows": [
         91
       ]
+    },
+    {
+      "file": "detail-20.png",
+      "bounds_km": [
+        -79.75556280737004,
+        -26.523704838693543,
+        -14.214668783247586,
+        -0.24205143197646536
+      ],
+      "input_rows": [
+        7,
+        8,
+        24,
+        52,
+        109,
+        110,
+        111,
+        113,
+        114,
+        154,
+        155,
+        160,
+        161
+      ]
     }
   ],
+  "regional_index": {
+    "label": "A",
+    "title": "Lake Ilopango area",
+    "file": "near-vent.png",
+    "bounds_km": [
+      -109.0,
+      -48.0,
+      99.0,
+      80.0
+    ],
+    "detail_numbers": [
+      2,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      15,
+      16,
+      17,
+      20
+    ],
+    "observations": 146,
+    "split_details": [
+      {
+        "original_detail": 1,
+        "regional_detail": 20
+      }
+    ]
+  },
   "row_sources": "data/audits/Ilopango-TBJ/field-logs/localities.csv",
   "row_sources_sha256": "840b95b84b74fc0a9ff1ebcb47176982a58a307cbe27fe8d250ac0bbc23a5d56",
   "reported_input": "data/eruptions/Ilopango_TBJ_total_airfall.csv",
@@ -412,27 +456,29 @@
   "audit": "data/audits/Ilopango-TBJ/field-logs/provenance.json",
   "audit_sha256": "d65023b502de9947b4c49cdd52b55d5bf2cff49d51846f1329654f62d5f17952",
   "files_sha256": {
-    "overview.png": "9accbad610c2546ae46b4e38fb0d00fdd027561c7944389a89eaa810e9421df3",
-    "detail-01.png": "8dd3dec486c8a00cbf8e4adef608cc1d20e7922f448b2a6c8ea52cbc82422678",
-    "detail-02.png": "302b09083f25e6a4bb5880cd93d4f62c0c3c4c29e1cc353bc5f4ddcdedaa49f5",
-    "detail-03.png": "58dadc25ce6b579f357ee6c93c7854b3d953708a68551101060b89ff6a744b1c",
-    "detail-04.png": "5fa6c342434535f383643add1cdddd2ce5a80600a471aac100a5a2d3a4c171f6",
-    "detail-05.png": "d7273cd7705c26fdeef68b818b41a5e26c345965e9645fc4aaa577fc0e099d51",
-    "detail-06.png": "8be1bfa4ff187f1f8b1d89dc486b81211175aaf7b32aac221308918097f85942",
-    "detail-07.png": "f5bc079795e9e671362c1b4d40dc9d1c83f749fd841e0f4b2b425d4817a40eb6",
-    "detail-08.png": "31b3813b9fd9e023748bfe97f35bad5b1de1234bbeedfce9946d3fdead087e0a",
-    "detail-09.png": "1c6f68be5de6189f29f185521e9b721a56bb8fbc1dc4273c68444ab9f3c96cc5",
-    "detail-10.png": "07ce12601466d938262544c0934b0b5e02575fb470d7f7ecad336535650baf60",
-    "detail-11.png": "56de526d8cfa3062bbdd1047fcb19000679e91b8e911f1136c221f8c2a56f709",
-    "detail-12.png": "22468b5685935b755c0a61c1d5f7c915fe65b7d150aaab0695c2530a6995a856",
-    "detail-13.png": "be16250a7f563dbfee4438a7d9b985d7381cf2b6406f9013821d9654bcafc40e",
-    "detail-14.png": "dd902953d93f79c1deb7a477a23f534ada976787cceaad181646bd6ab05c4be4",
-    "detail-15.png": "969bedf01ab114b8b4ab876a6c93fe18e1698e93675f813fdc95549cfbd61248",
-    "detail-16.png": "b5bdedc3b8b9288c485e6038cc1ba4a557418a2c2aef69a2e02883994711cc22",
-    "detail-17.png": "9be9ea16183b96c1451833d55cab2e2440e6ce3b1388f54fadd058408e33acff",
-    "detail-18.png": "3e88e333036490b7767b1eae7497ed0e4a221d79157dca1f50daf53f10061f98",
-    "detail-19.png": "b77f1a15bc0ddb7d026559ee9c0f681add6f64ecbd73d9a5c6caf3f0249a6d1b",
-    "sites.csv": "c0e80900cb8ed4f4e94101ae0536cb0ba41def4fcc84aa2c1697851b5081829a",
-    "README.md": "20e35cd70a7b27ae5f8dd1a2d55a0fab8c338d75a2e33cdd5a0317d37cb22ff7"
+    "overview.png": "97dc085be23d4eaa07f9926c30f9991ccb9b87f2a416fd044879f1dd46e61962",
+    "detail-01.png": "d204474fea6eecdfb38388e3362c74e8843dfcddbd47e8bfeafe7dba689639b8",
+    "detail-02.png": "21c6fc4248c091d82f12e05da3033ce293fd2a8760ce6bafe1f373041784d0cb",
+    "detail-03.png": "e450c445b39bd41c46e5b83c1c3c6d15f81c96b2e76feb13836b26f96d99fe2b",
+    "detail-04.png": "9d00d910f637a74eb4754550210ac58e423a569b39715c0a2047829aaebee80a",
+    "detail-05.png": "34245b960870e5c682cdb44fc182f41ef26acf69ae9527fce66535314744f4c0",
+    "detail-06.png": "e5598b562b6e4d853439c373fdb9f2cc86bf580018794d4c090976c6246d1203",
+    "detail-07.png": "583b50e56788fe1182bd8bbbbc685d5bcf99e225ac3a2eac2f099ac61182a83f",
+    "detail-08.png": "2c96af8ff1b32553cabb013883d36c36b94d3a2ff81ef2d1c00a0223c0823201",
+    "detail-09.png": "e6fb47a3275da7db37a7486b98cadfc763295b1bab92af9210b2835bf5b136b3",
+    "detail-10.png": "d05d263b31038b2326e2cb0d0ce85ae9085e1d3bd0bfc6611db98cd044b73855",
+    "detail-11.png": "8910ca88d22ca9bd2ec89a47fc6fb0e9e525e5773a4e94cb80cdfa853147e2bb",
+    "detail-12.png": "fa11e46336475c70773c2c0750e3d3646b53dda50f0e374e23b8e8c1ff6a2cfd",
+    "detail-13.png": "2e87f239f410c8eaa018c6b0ce9118bf45637849123eac2e3a8f5beaae1befb6",
+    "detail-14.png": "e5064ff459304a0f528582a7a5d4973af5533b71aff12659e509052e79a91f3e",
+    "detail-15.png": "32aa39f80b371a601c72c596d287cbd2ead5a247382877dbc332bea269f593e3",
+    "detail-16.png": "ec6ac225e3a7648878e69e0ce61ac41aed30a8551f46d19240e46c76237870da",
+    "detail-17.png": "03a7abe2d200e45b02b782813e3f880cd167bfc0aa87e69e4f5e6e45f1fb0cae",
+    "detail-18.png": "9c23ed39d949e9557fb01cdcc8ea63ab42d278e4f1fba6a246a405933960960f",
+    "detail-19.png": "35a15dbe2a77085cb3c7512558429381034ce8318167c843f5e8687933a79b6c",
+    "detail-20.png": "1b7b041515ed7d014f284fde56d91748a2dacf45948fd76fb0fd9e4d873c7d7a",
+    "near-vent.png": "27c66b918f1754a6385135ac4bc79558ee90830523d9de7da3640ff4e368f1e0",
+    "sites.csv": "5450d52f07e4af4a1b3d3964020eb29194115b420f96a7bd5142f9b40ca1537b",
+    "README.md": "25ade6ddfadc2c7d77c98bb265496dcc53fc3dea0c6d12fa2ae381842c90c760"
   }
 }

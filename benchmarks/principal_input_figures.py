@@ -35,6 +35,7 @@ BOX_COLORS = ("#854315", "#72488c", "#126067", "#8b3650", "#385790", "#52611c")
 NEAR_VENT = {
     "mazama": ("Crater Lake area", (-27., -202., 186., 125.)),
     "b-tm": ("Changbaishan–Tianchi area", (-47., -21., 71., 62.)),
+    "ilopango-tbj": ("Lake Ilopango area", (-109., -48., 99., 80.)),
 }
 STYLES = {
     "Measured": ("o", ""),
@@ -59,6 +60,50 @@ class IndexBox:
     label: str
     bounds: tuple[float, float, float, float]
     color: str = ACCENT
+
+
+def align_detail_panels(slug, xy, panels):
+    """Separate rows that span a regional frame while retaining existing plate numbers."""
+    if slug not in NEAR_VENT:
+        return panels, []
+    _, frame = NEAR_VENT[slug]
+    revised = list(panels)
+    splits = []
+
+    def framed(indices, limit):
+        bounds = padded_bounds(xy[indices], .115)
+        bounds[:2] = np.maximum(bounds[:2], limit[:2])
+        bounds[2:] = np.minimum(bounds[2:], limit[2:])
+        return Panel(tuple(map(float, bounds)), indices)
+
+    for i, panel in enumerate(panels):
+        points = xy[panel.indices]
+        inside = ((points >= frame[:2]) & (points <= frame[2:])).all(axis=1)
+        if not inside.any() or inside.all():
+            continue
+        # Cut off south, north, west and east in turn. Once assigned,
+        # a point outside two edges belongs to the first exterior piece.
+        remaining = np.ones(len(points), dtype=bool)
+        limits = np.array(panel.bounds)
+        exterior = []
+        for axis, upper in ((1, False), (1, True), (0, False), (0, True)):
+            edge = frame[axis + 2] if upper else frame[axis]
+            beyond = points[:, axis] > edge if upper else points[:, axis] < edge
+            selected = remaining & beyond
+            if selected.any():
+                outer = limits.copy()
+                outer[axis if upper else axis + 2] = edge
+                exterior.append(framed(panel.indices[selected], outer))
+            remaining &= ~beyond
+            if upper:
+                limits[axis + 2] = min(limits[axis + 2], edge)
+            else:
+                limits[axis] = max(limits[axis], edge)
+        revised[i] = exterior[0]
+        revised.extend(exterior[1:])
+        revised.append(framed(panel.indices[inside], limits))
+        splits.append({"original_detail": i + 1, "regional_detail": len(revised)})
+    return revised, splits
 
 
 def regional_view(slug, xy, panels):
@@ -258,6 +303,24 @@ def label_positions(ax, anchors, labels, obstacles, *, colors=None, preferred_bo
                 facecolor="white", edgecolor=color, linewidth=.55))
 
 
+def regional_boxes(panels, numbers):
+    boxes = []
+    for j, number in enumerate(numbers):
+        bounds = panels[number - 1].bounds
+        low, high = np.reshape(bounds, (2, 2))
+        touching_colors = set()
+        for box in boxes:
+            other_low, other_high = np.reshape(box.bounds, (2, 2))
+            # At regional scale even a gap of a kilometre can look like a shared edge.
+            if (np.maximum(low, other_low) <= np.minimum(high, other_high) + 1.).all():
+                touching_colors.add(box.color)
+        preferred = j % len(BOX_COLORS)
+        palette = BOX_COLORS[preferred:] + BOX_COLORS[:preferred]
+        color = next((color for color in palette if color not in touching_colors), palette[0])
+        boxes.append(IndexBox(f"{number:02}", bounds, color))
+    return boxes
+
+
 def draw_index_boxes(ax, boxes, obstacles, *, regional):
     corners = []
     for box in boxes:
@@ -379,7 +442,7 @@ def colour_ticks(norm):
 def packet(record):
     xy, rows, meta, ledger = audited_rows(record)
     bounds = padded_bounds(np.vstack((xy, [0, 0])), .09)
-    panels = detail_panels(xy, bounds)
+    panels, splits = align_detail_panels(record["slug"], xy, detail_panels(xy, bounds))
     assigned = np.zeros(len(xy), dtype=int)
     for number, panel in enumerate(panels, 1):
         for i, key in panel_keys(panel, xy, rows):
@@ -414,6 +477,8 @@ def packet(record):
     }
     region = regional_view(record["slug"], xy, panels)
     if region:
+        if splits:
+            region["split_details"] = splits
         manifest["regional_index"] = region
     if ledger:
         manifest["row_sources"] = ledger.relative_to(ROOT).as_posix()
@@ -466,8 +531,12 @@ def case_page(record, manifest, directory):
         lines += ["## Near-vent detail index", "",
                   f'**Box A · {region["title"]}** contains {region["observations"]} accepted observations. '
                   f'Match a numbered box to the links below for its site locations and readings. {links}', "",
-                  f'![Enlarged box A with numbered boundaries for the near-vent detail plates]({region["file"]})', "",
-                  "## All detail plates", ""]
+                  f'![Enlarged box A with numbered boundaries for the near-vent detail plates]({region["file"]})', ""]
+        for split in region.get("split_details", []):
+            prior, local = split["original_detail"], split["regional_detail"]
+            lines += [f'Sites previously grouped in [Detail {prior:02}](detail-{prior:02}.png) '
+                      f'now have a separate [Detail {local:02}](detail-{local:02}.png) inside Box A.', ""]
+        lines += ["## All detail plates", ""]
     lines += ["| Detail plate | Input rows | Easting × northing span |", "|---|---:|---:|"]
     for number, detail in enumerate(manifest["details"], 1):
         x0, y0, x1, y1 = detail["bounds_km"]
@@ -515,8 +584,7 @@ def run_case(record, directory, *, verify):
         if region:
             children = region["detail_numbers"]
             subset = np.sort(np.concatenate([panels[n-1].indices for n in children]))
-            detail_boxes = [IndexBox(f"{n:02}", panels[n-1].bounds, BOX_COLORS[j % len(BOX_COLORS)])
-                            for j, n in enumerate(children)]
+            detail_boxes = regional_boxes(panels, children)
             figure(directory / region["file"], f'{title} · A · {region["title"]}',
                    f'{len(subset)} accepted observations  |  numbers match the detail plates below this map',
                    region["bounds_km"], vent, xy[subset], [rows[i] for i in subset], norm, kinds,
