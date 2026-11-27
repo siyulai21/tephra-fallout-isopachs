@@ -20,7 +20,7 @@ where = ["."]
 include = ["src*"]
 
 [tool.setuptools.package-data]
-"src.empirical_isopach" = ["assets/*.geojson.gz", "assets/*.json", "assets/shorelines/*"]
+"src.empirical_isopach" = ["assets/*.geojson.gz", "assets/*.csv.gz", "assets/*.json", "assets/shorelines/*"]
 
 [tool.setuptools.data-files]
 "share/tephra-fallout-isopachs" = ["data/datasets.json", "data/README.md"]

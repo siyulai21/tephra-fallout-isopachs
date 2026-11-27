@@ -1,5 +1,7 @@
 # 946 CE Millennium Eruption (B-Tm)
 
+[Principal input maps and numbered detail plates](observations/README.md)
+
 The current principal dataset contains **150 localities** for total fallout from both phases. It includes the widespread upper fallout that Sun et al. (2017) originally assigned to later eruptions. The source classifications are 75 measurements, 34 lower-only bounds, 28 intervals and 13 upper bounds. The fitting input uses every reported minimum as a point, and preserves paired interval endpoints and upper censoring. [Second field audit](../../data/audits/B-Tm/two-phase/README.md) · [Reported observations](../../data/eruptions/B-Tm_two_phase.csv) · [Fitting input](../../data/eruptions/B-Tm_two_phase_minimum_fit.csv)
 
 The revised field record includes two rim minima of 1,500 and 1,200 cm, separate Tianwen exposures of about 150 cm and 385–475 cm, and a southern section bounded at 80–90 cm. Pan’s 70 m southern-summit exposure is documented with its field photographs and its sector location. The audit records the separate 70 m northern-rim report, six additional peatland profiles and newly traced marine, coastal and archaeological sections. [Numbered source figures](../../data/audits/B-Tm/two-phase/figures/README.md) · [Site decisions](../../data/audits/B-Tm/two-phase/sites.csv) · [Thicknesses with unresolved station positions](../../data/audits/B-Tm/two-phase/unlocated-thicknesses.csv)

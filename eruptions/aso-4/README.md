@@ -1,5 +1,7 @@
 # Aso-4
 
+[Principal input maps and numbered detail plates](observations/README.md)
+
 The five reconstructions use the same 87 accepted fallout localities. Field reports give 83 measured thicknesses, 3 lower limits, 1 upper limits and 0 two-sided ranges. Each lower limit enters the fit as a point at its reported value, including the 3 beyond 25 km. Upper limits and ranges retain their respective one-sided and two-sided probabilities. [Source audit](../../data/audits/Aso-4/README.md) · [Reported table](../../data/eruptions/Aso-4_reviewed.csv) · [Fitting table](../../data/eruptions/Aso-4_reviewed_minimum_fit.csv)
 
 The site table pairs each source classification with its fitting value, geographic fold, mapped thickness and held-out score. It includes the predictive median or cumulative probability at the site value where the method saves it. A fitted minimum can underestimate total fallout at an incomplete section. [Reported and fitted sites](results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv) · [Changes by method and coverage by source type](results/minimum-fit-2026-11-25/minimum-fit-comparison.csv) · [Fitting convention](../../docs/methods/reported-minimum-fitting.md)

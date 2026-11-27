@@ -1,5 +1,7 @@
 # Younger Toba Tuff (YTT) fallout reconstruction
 
+[Principal input maps and numbered detail plates](observations/README.md)
+
 The accepted dataset contains 46 exact measurements. The regional fits share an observation hull of 17,719,965 km². [Accepted thickness CSV](../../data/eruptions/YTT_tephra.csv) · [Row-level source audit](../../data/audits/YTT/README.md)
 
 The northern sector has no accepted locality and accounts for **44%** of the nested median-map volume. The long northern 1 cm contour and the 1,994 km³ integral therefore depend heavily on geographic continuation. [Evidence by sector](results/nested-isopachs/footprints/sector-volumes.csv)
