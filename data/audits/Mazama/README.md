@@ -1,6 +1,6 @@
 # Mazama field evidence
 
-The registered dataset includes **301 localities** after adding **5 mm of Mazama tephra** in the central Bolan Lake core. [Current dataset and Bolan Lake decision](principal-ranges/README.md#bolan-lake-addition)
+The registered dataset has **304 localities**. Young’s overprinted map symbols now resolve sections 95, 134 and 150 as separate thick pumice observations. It also includes the **5 mm** ash bed in the central Bolan Lake core. [Young’s reviewed centroids and section decisions](young-marker-review/README.md) · [Bolan Lake field evidence](principal-ranges/README.md#bolan-lake-addition)
 
 All five published models use **300 distinct localities** from the climactic airborne deposit, including co-ignimbrite ash. The audit retains 46 point thicknesses, 29 two-sided ranges, 129 lower limits and 96 upper limits. The locality register explains which of the 872 evidence records contributed a likelihood and why. [Locality register](LOCALITIES.md) · [Model input](../../eruptions/Mazama_primary_ranges.csv) · [Five-method comparison](../../../eruptions/mazama/README.md)
 

@@ -1,4 +1,5 @@
 """Regression checks on synthetic thickness data and the frozen Mazama input."""
+import csv
 from dataclasses import replace
 
 import numpy as np
@@ -73,11 +74,27 @@ def test_regional_training_responds_to_both_endpoints(model):
 def test_registered_mazama_is_new_input_and_legacy_rows_stay_available():
     data, meta = audited_data(resolve_dataset("Mazama"))
     assert (len(data.xy), meta["n_measurements"], meta["n_intervals"],
-            meta["n_lower_limits"], meta["n_upper_limits"]) == (301,176,29,0,96)
-    assert meta["n_reported_measurements"] == 47 and data.reported_minimum.sum() == 129
+            meta["n_lower_limits"], meta["n_upper_limits"]) == (304,179,29,0,96)
+    assert meta["n_reported_measurements"] == 47 and data.reported_minimum.sum() == 132
     previous, old = audited_data(resolve_dataset("Mazama").with_name("Mazama_reviewed.csv"))
     assert len(previous.xy) == 271 and old["input_sha256"] != meta["input_sha256"]
     assert old["input_sha256"] == "1554141b67af566055595624bb7295c40c6da4500f95bc78c912e9d8b07a1b29"
+
+
+def test_young_overprinted_sections_keep_their_own_coordinates_and_readings():
+    path = resolve_dataset("Mazama")
+    with path.open(newline="") as stream:
+        rows = {r["EvidenceID"]: r for r in csv.DictReader(stream)}
+    for site, thickness, lon, lat in [
+        (95, 358, -121.692090, 43.145777), (97, 425, -121.792281, 43.232371),
+        (116, 1200, -122.100973, 42.979377), (134, 75, -122.070585, 43.461211),
+        (150, 2000, -122.095544, 42.981157),
+    ]:
+        row = rows[f"Y1990-A{site:03}"]
+        assert row["Kind"] == "measurement"
+        assert float(row["Thickness"]) == float(row["Reported_lower_limit_cm"]) == thickness
+        np.testing.assert_allclose([float(row["Lon"]), float(row["Lat"])], [lon, lat], rtol=0, atol=1e-6)
+    assert all(f"Y1990-A{site:03}" not in rows for site in (100, 110, 111, 112, 141, 142, 143, 154))
 
 
 @pytest.mark.parametrize("kind,point,limit,lo,hi", [

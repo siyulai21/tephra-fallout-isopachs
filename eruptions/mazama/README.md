@@ -2,7 +2,7 @@
 
 [Principal input maps and numbered detail plates](observations/README.md)
 
-The principal input now has **301 fallout localities**. Bolan Lake contributes a measured **0.5 cm** ash bed from the central sediment core in the Siskiyou Mountains. The source inventory includes 47 measurements, 129 lower limits, 96 upper limits and 29 ranges. [Bolan Lake audit](../../data/audits/Mazama/principal-ranges/README.md#bolan-lake-addition) · [Reported table](../../data/eruptions/Mazama_bolan_lake.csv) · [Fitting table](../../data/eruptions/Mazama_bolan_lake_minimum_fit.csv)
+The principal dataset contains **304 fallout localities**, including the **5 mm** bed at Bolan Lake. Young’s corrected section positions add **358 cm** at 95, **75 cm** at 134 and **2,000+ cm** at 150. Sections 97 and 116 retain their own readings at the reviewed positions. The source table has 47 measurements, 132 geological lower limits, 96 upper limits and 29 ranges. [Marked sections and field tables](../../data/audits/Mazama/young-marker-review/README.md) · [Bolan Lake audit](../../data/audits/Mazama/principal-ranges/README.md#bolan-lake-addition) · [Reported table](../../data/eruptions/Mazama_young_centroids.csv) · [Fitting table](../../data/eruptions/Mazama_young_centroids_minimum_fit.csv)
 
 ## Published reconstructions of the 300-locality edition
 
