@@ -77,6 +77,14 @@ def deposit_page(old, family, name, receipt, report):
                       "[Fit, structural sensitivities and convergence](multiscale/report.json) · [All contour decisions](multiscale/support.json.gz) · "
                       "[Measured sites](multiscale/measured-sites.csv.gz) · [Held-out predictions](multiscale/heldout.csv.gz) · [Archive locations](multiscale/archive-probes.json) · [Thickness exceedance at three scales](exceedance.png)"])
         return "\n".join(first)+"\n"
+    if family == "wrapped-angular-covariance":
+        v = report["validation"]["geographic"]
+        first.extend(["[Proximal, intermediate and full-deposit map](three-scales.png)", "", f"The equal-block geographic negative log score is {v['negative_log_score']:.3f}. "
+                      f"The central 95% preserved-bed interval contains {v['coverage95_exact']:.1%} of held-out point records.", "",
+                      "[Regional and source fit, fixed sensitivities and numerical checks](report.json) · "
+                      "[Held-out sites](heldout.csv.gz) · [Site fits](measured-sites.csv.gz) · "
+                      "[Contour support and deletion decisions](support.json.gz) · [Archive predictions](archive-probes.json)"])
+        return "\n".join(first)+"\n"
     if "footprints/report.json" in receipt["sources_sha256"]:
         v = report["validation"]
         first.extend([f"The fitted model predicts the four buffered geographic groups with an equal-group negative log score of {v['negative_log_score']:.3f}. "
@@ -209,6 +217,9 @@ def render_deposit(folder, family, data, meta, name, *, output=None, sampled=Non
         probability_plate(dest,field,model,data,meta,name,receipt)
     receipt["figure_sha256"]=digest(dest/"deposit.png")
     write_json(dest/"deposit.json",receipt)
+    if family == "wrapped-angular-covariance" and dest != folder:
+        from ..models.wrapped_angular.maps import three_scales
+        three_scales(dest, data, meta, name, receipt)
     if not write_page:
         return receipt
     page=folder/"README.md"
@@ -259,9 +270,45 @@ def align_near_views(home, data, meta, *, source_home=None, redraw=False):
         if sources!=receipt["sources_sha256"]:
             raise ValueError("Near-vent window belongs to a different fitted posterior")
         folder=home/family
-        rows=np.genfromtxt(folder/"thickness-area.csv",names=True,delimiter=",",dtype=None,encoding="utf-8",ndmin=1)
-        receipt.update(map_observation_policy(data, meta))
-        receipt.pop("figure_sha256")
-        plate(folder/"deposit.png",receipt["eruption"],family,field,data,meta,model,np.array(receipt["levels_cm"]),rows,receipt,half)
-        receipt["figure_sha256"]=digest(folder/"deposit.png")
-        write_json(folder/"deposit.json",receipt)
+        if family == "wrapped-angular-covariance" and (folder / "artifacts.json").is_file():
+            reframe_wrapped_release(folder, field, data, meta, model, receipt, half)
+        else:
+            redraw_near_plate(folder, folder, family, field, data, meta, model, receipt, half)
+
+
+def redraw_near_plate(source, output, family, field, data, meta, model, receipt, half):
+    rows = np.genfromtxt(source / "thickness-area.csv", names=True, delimiter=",", dtype=None,
+                         encoding="utf-8", ndmin=1)
+    receipt.update(map_observation_policy(data, meta))
+    receipt.pop("figure_sha256")
+    plate(output / "deposit.png", receipt["eruption"], family, field, data, meta, model,
+          np.array(receipt["levels_cm"]), rows, receipt, half)
+    receipt["figure_sha256"] = digest(output / "deposit.png")
+    write_json(output / "deposit.json", receipt)
+    if family == "wrapped-angular-covariance":
+        from ..models.wrapped_angular.maps import three_scales
+        three_scales(output, data, meta, receipt["eruption"], receipt)
+
+
+def reframe_wrapped_release(folder, field, data, meta, model, receipt, half):
+    from os import replace
+    from shutil import copyfile
+    from tempfile import TemporaryDirectory
+    from ..models.wrapped_angular.report import publication_lock, verified_release
+
+    with publication_lock(folder):
+        manifest = read_json(folder / "artifacts.json")
+        if (not verified_release(folder, manifest["identity"])
+                or read_json(folder / "deposit.json") != receipt):
+            raise ValueError("Cannot reframe a changed wrapped angular release")
+        with TemporaryDirectory(dir=folder) as tmp:
+            stage = Path(tmp)
+            copyfile(folder / "median-grid.npz", stage / "median-grid.npz")
+            redraw_near_plate(folder, stage, "wrapped-angular-covariance", field, data, meta,
+                              model, receipt, half)
+            changed = ("deposit.png", "deposit.json", "three-scales.png")
+            for name in changed:
+                manifest["artifacts_sha256"][name] = digest(stage / name)
+            write_json(stage / "artifacts.json", manifest)
+            for name in (*changed, "artifacts.json"):
+                replace(stage / name, folder / name)

@@ -23,7 +23,8 @@ def field_quantiles(view, xy):
     from ..models.nested.report import MapView as NestedView
 
     from ..models.directional.multiscale.posterior import DirectionalField
-    if isinstance(view, (DirectionalView,DirectionalField)):
+    from ..models.wrapped_angular.packet import MapView as WrappedView
+    if isinstance(view, (DirectionalView,DirectionalField,WrappedView)):
         return view.values(xy, PROBABILITIES)
     values = np.full((3, len(xy)), np.nan)
     inside = np.flatnonzero(view.domain.rho(xy) < view.domain.rho_max)

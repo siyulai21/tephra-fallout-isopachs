@@ -17,6 +17,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | [Multiscale directional ensemble](results/minimum-fit-2026-11-25/directional/README.md) | whole Earth | **5.66** | 4.38–7.73 | 0.889 | 97.8% |
 | [Spherical mixture](results/minimum-fit-2026-11-25/spherical-mixture/README.md) | whole Earth | **6.04** | 5.04–7.28 | 0.901 † | 96.6% |
 | [Bayesian nested footprints](results/minimum-fit-2026-11-25/nested-isopachs/README.md) | whole Earth | **5.42** | 5.08–6.02 | 1.350 | 83.1% |
+| [Wrapped angular covariance](results/minimum-fit-2026-11-25/wrapped-angular-covariance/README.md) | whole Earth | **5.42** | 4.32–6.94 | 0.970 | 95.5% |
 
 Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
 
@@ -30,11 +31,15 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 
 ![Pinatubo 1991 (Layer C) · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/nested-isopachs/deposit.png)
 
+![Pinatubo 1991 (Layer C) · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/minimum-fit-2026-11-25/wrapped-angular-covariance/deposit.png)
+
 ## Inside the observation hull
 
 ![Pinatubo 1991 (Layer C) · GP ensemble and cubic spline on a common scale and the full observation hull](results/minimum-fit-2026-11-25/isopachs.png)
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/minimum-fit-2026-11-25/README.md)
+
+[Wrapped angular covariance at three scales](results/minimum-fit-2026-11-25/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
 
 ## Nested geometry and field agreement
 

@@ -20,6 +20,7 @@ def test_public_families_and_historical_imports(capsys):
     assert registry.active_methods() == ("stacked", "spline")
     main(["methods"])
     output = capsys.readouterr().out
+    assert "wrapped-angular-covariance" in output
     assert "GP ensemble" in output and "Trend-regularized cubic spline" in output
     with pytest.raises(ValueError, match="Unknown empirical method"):
         registry.method_spec("unregistered")
@@ -41,7 +42,9 @@ def test_retired_fit_command_does_not_dispatch_a_new_analysis(tmp_path, module):
 def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, monkeypatch):
     from src.empirical_isopach import cli, global_reporting
     from src.empirical_isopach.models.directional import reporting as directional
+    from src.empirical_isopach.models.wrapped_angular import report as wrapped
     calls, destinations = [], {}
+    monkeypatch.setattr(wrapped, "wrapped_dataset", lambda *a, **kw: calls.append("wrapped"))
     def spherical_run(path, output, **kwargs):
         destinations["spherical"] = output
         calls.append(("global", kwargs.get("resume", False)))
@@ -63,7 +66,7 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     monkeypatch.setattr(cli, "add_comparison_to_run", lambda output: calls.append(("maps and table", output)))
     (tmp_path/"a").mkdir()
     cli.main(["compare", "YTT", "--output", str(tmp_path/"a")])
-    assert calls == ["regional", ("global", False), "directional", "nested", "geographic reach", "sensitivities", "overview", ("maps and table", tmp_path/"a")]
+    assert calls == ["regional", ("global", False), "directional", "nested", "geographic reach", "wrapped", "sensitivities", "overview", ("maps and table", tmp_path/"a")]
     assert destinations == {"spherical": tmp_path/"a/spherical-mixture", "directional": tmp_path/"a/directional"}
     assert not (tmp_path/"a/global").exists()
     calls.clear()
@@ -75,6 +78,9 @@ def test_cli_runs_global_companion_and_allows_explicit_regional_scope(tmp_path, 
     calls.clear()
     assert cli.main(["global", "YTT", "--geometry", "directional", "--output", str(tmp_path/"d")]) is None
     assert calls == ["directional"]
+    calls.clear()
+    cli.main(["global", "YTT", "--geometry", "wrapped-angular-covariance", "--output", str(tmp_path/"wrapped"), "--resume"])
+    assert calls == ["wrapped"]
 
 
 @pytest.mark.parametrize("geometry,expected", [

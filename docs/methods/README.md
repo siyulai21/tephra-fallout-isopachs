@@ -1,8 +1,8 @@
-# How the five models fit fallout
+# How the models fit fallout
 
-An eruption has one accepted table of measured thicknesses and documented bounds. Each of the five models fits that evidence independently. A case page puts their isopachs, bulk volumes and geographic prediction scores side by side. [Eruption catalogue](../../eruptions/README.md) · [Matched comparisons](../../comparisons/README.md)
+An eruption has one accepted table of measured thicknesses and documented bounds. Each model fits that evidence independently. A case page puts their isopachs, bulk volumes and geographic prediction scores side by side. [Eruption catalogue](../../eruptions/README.md) · [Matched comparisons](../../comparisons/README.md)
 
-Each global family now limits extrapolation according to the sampled directions and retains its earlier field as a sensitivity. [Current continuation rules](finite-spread.md) · [Nine-eruption tests](../../comparisons/global-extent/README.md)
+The directional, spherical-mixture and nested families publish their earlier continuation fields as sensitivities. [Current continuation rules](finite-spread.md) · [Nine-eruption tests](../../comparisons/global-extent/README.md)
 
 ## Observations and bounds
 
@@ -33,3 +33,7 @@ The nested model infers changing direction, elongation and reach through positiv
 ## Interpreting the maps
 
 The support audit tests where measurements bracket each contour and records holes, rejected bands and partially supported volumes. Each global extrapolation depends on assumptions about unsampled areas. A marine transport and preservation model is documented as a proposed extension. [Support protocol](supported-isopachs.md) · [Marine observation proposal](marine-observations.md)
+
+## Wrapped angular covariance
+
+The regional field learns how thinning changes with distance and bearing. Independently mapped source areas keep exceptional rim sections local. The whole-Earth volume includes the distal tail. [Equations, inference and use](wrapped-angular-covariance.md) · [Nine-eruption validation](../../comparisons/wrapped-angular-covariance/evidence.md)

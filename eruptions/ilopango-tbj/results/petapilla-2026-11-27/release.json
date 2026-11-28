@@ -1,0 +1,48 @@
+{
+  "protocol": "wrapped-angular-release-v1",
+  "input_sha256": "1d3b95d5ac6fcb1551754c25519674ec4aa4eded572b03fbacda22d688f56356",
+  "reported_source_sha256": "80a7c222d031ada7a60b933e9974a05864f8a869280fae06ce22ee7631d27bfe",
+  "observation_policy": "lower-only-at-reported-minimum-v1",
+  "observations": 168,
+  "published_methods": [
+    "wrapped-angular-covariance"
+  ],
+  "reported_site_types": {
+    "measurement": 65,
+    "lower_limit": 84,
+    "interval": 14,
+    "upper_limit": 5
+  },
+  "fitted_site_types": {
+    "measurement": 149,
+    "interval": 14,
+    "upper_limit": 5
+  },
+  "matched_geographic_folds": 4,
+  "methods": [
+    {
+      "method": "wrapped-angular-covariance",
+      "domain": "whole Earth",
+      "median_map_volume_km3": 37.527128797261234,
+      "thickness_q25_volume_km3": 21.419814327910537,
+      "thickness_q75_volume_km3": 67.51009929000887,
+      "map_integration_passed": true,
+      "thickness_band_integration_passed": true,
+      "posterior_checks_passed": true,
+      "heldout_log_score": 1.7116785526781912,
+      "heldout_coverage95": 0.9253759398496241,
+      "heldout_checks_passed": true,
+      "input_sha256": "1d3b95d5ac6fcb1551754c25519674ec4aa4eded572b03fbacda22d688f56356"
+    }
+  ],
+  "files": {
+    "data/eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv": "1d3b95d5ac6fcb1551754c25519674ec4aa4eded572b03fbacda22d688f56356",
+    "data/eruptions/Ilopango_TBJ_petapilla.csv": "80a7c222d031ada7a60b933e9974a05864f8a869280fae06ce22ee7631d27bfe",
+    "data/audits/Ilopango-TBJ/petapilla/provenance.json": "b62f851847fc2481d49ed98ab4fceef89e4eb58ed647301ff9204450eca87bc5",
+    "eruptions/ilopango-tbj/results/petapilla-2026-11-27/wrapped-angular-covariance/artifacts.json": "f14e9a3453d86aada104b9ff22ee832991e61f68358f9793115dd80657ecd6de",
+    "eruptions/ilopango-tbj/results/petapilla-2026-11-27/accepted_observations.csv": "f8819bbdbea8347adb040f7391f13e3756fb7b0f2dff3de27add8016b955ce1c",
+    "eruptions/ilopango-tbj/results/petapilla-2026-11-27/principal-volumes.csv": "15b67a7d8fd85745bf2e644eede098fd619677fc4430bf3dba359e16db225cb7",
+    "eruptions/ilopango-tbj/results/petapilla-2026-11-27/reported-and-fitted-sites.csv": "fbe8e9c67a74fe70953dc0707bb2aef2a532f4caff3b65c4c261c054a650b57c",
+    "eruptions/ilopango-tbj/results/petapilla-2026-11-27/minimum-fit-comparison.csv": "2f7f15921079db41a661c6c29ecc13099c3be651054880b0bffcdb4ea73a694e"
+  }
+}

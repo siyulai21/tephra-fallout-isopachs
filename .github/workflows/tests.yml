@@ -44,6 +44,8 @@ jobs:
           python -m benchmarks.mazama_primary_ranges
           git diff --exit-code -- data/eruptions/Mazama_primary_ranges.csv data/audits/Mazama/principal-ranges data/audits/Mazama/LOCALITIES.md
           git diff --exit-code -- data/eruptions/Mazama_reviewed.csv data/audits/Mazama/model-selection.csv data/audits/Mazama/site-evidence-decisions.csv data/audits/Mazama/provenance.json
+      - name: Replay wrapped angular inputs, folds, map integrals and paired predictions
+        run: python -m benchmarks.wrapped_angular.verify
       - name: Check repository navigation
         run: python scripts/check_repository_navigation.py
       - name: Check installed command and bundled data outside the checkout

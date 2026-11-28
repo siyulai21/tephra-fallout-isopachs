@@ -89,8 +89,9 @@ def verify_comparison_tables(root):
     regional = pd.read_csv(summaries/"regional/comparison.csv").set_index(["slug", "method"])
     spherical = pd.read_csv(summaries/"spherical-mixture/comparison.csv").set_index("slug")
     sources = read(summaries/"spherical-mixture/report.json")["cases"]
-    registered = {r["slug"]: r for r in released_datasets()}
-    spherical_slugs = {s for s,r in registered.items() if "spherical-mixture" in published_methods(r)}
+    registered = {r["slug"]: r for r in released_datasets("stacked")}
+    sphere_editions = {r["slug"]: r for r in released_datasets("spherical-mixture")}
+    spherical_slugs = set(sphere_editions)
     assert spherical.index.is_unique and set(spherical.index) == spherical_slugs
     assert len(sources) == len(spherical_slugs) and {s["slug"] for s in sources} == spherical_slugs
     expected_rows = {(slug,k) for slug,r in registered.items()
@@ -112,10 +113,10 @@ def verify_comparison_tables(root):
         assert row.volume_converged == vol["converged"]
     for source in sources:
         slug = source["slug"]
-        rec = registered[slug]
+        rec = sphere_editions[slug]
         home = root/result_home(rec)
         assert source["input_sha256"] == digest(rec["path"])
-        regional_sha = digest(home/"report.json") if any((slug,k) in expected_rows for k in ("stacked","spline")) else None
+        regional_sha = digest(home/"report.json") if "stacked" in published_methods(rec) else None
         assert source["regional_report_sha256"] == regional_sha
         assert source["global_report_sha256"] == digest(home/"spherical-mixture/report.json")
         sphere = read(home/"spherical-mixture/report.json")

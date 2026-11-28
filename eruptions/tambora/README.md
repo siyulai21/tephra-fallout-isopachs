@@ -15,6 +15,7 @@ Each estimate integrates the median thickness on its map. The conditional range 
 | [Multiscale directional ensemble](results/directional/README.md) | whole Earth | **135** | 90.9–224 | 1.437 | 100.0% |
 | [Spherical mixture](results/spherical-mixture/README.md) | whole Earth | **117** | 82.3–176 | 1.590 | 100.0% |
 | [Bayesian nested footprints](results/nested-isopachs/README.md) | whole Earth | **131** | 87.5–215 | 1.520 | 96.2% |
+| [Wrapped angular covariance](results/wrapped-angular-covariance/README.md) | whole Earth | **119** | 88.2–164 | 1.362 | 95.8% |
 
 Lower scores indicate better geographic prediction. Coverage counts exact withheld measurements. A dagger marks a fit, integration or validation warning.
 
@@ -28,11 +29,15 @@ Each full map follows the thickest power-of-two contour enclosing at least 95% o
 
 ![Tambora · Bayesian nested footprints. Full deposit, near-vent detail and thickness versus square root of area.](results/nested-isopachs/deposit.png)
 
+![Tambora · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/wrapped-angular-covariance/deposit.png)
+
 ## Inside the observation hull
 
 ![Tambora · GP ensemble and cubic spline on a common scale and the full observation hull](results/isopachs.png)
 
 The GP and spline integrate over the dashed hull. Gaps inside it can still be poorly constrained. [Regional fits and numerical checks](results/README.md)
+
+[Wrapped angular covariance at three scales](results/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
 
 The current global fits use the same audited rows. [What changed in the maps, volumes and validation](../../comparisons/global-extent/README.md) · [Continuation rules](../../docs/methods/finite-spread.md)
 

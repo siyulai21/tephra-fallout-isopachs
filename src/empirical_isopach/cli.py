@@ -35,6 +35,8 @@ def compare(argv=None):
         directional_dataset(path, args.output/"directional", name=args.name, archives=args.archives)
         whole_area_dataset(path, args.output/"nested-whole-area", name=args.name, archives=args.archives)
         nested_dataset(path, args.output/"nested-isopachs", name=args.name, archives=args.archives)
+        from .models.wrapped_angular.report import wrapped_dataset
+        wrapped_dataset(path, args.output/"wrapped-angular-covariance", name=args.name, archives=args.archives)
         review_continuations(path, args.output)
         from .core.audit import audited_data
         from .visualization.deposit import align_near_views
@@ -58,10 +60,13 @@ def global_analysis(argv=None):
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--name")
     parser.add_argument("--resume", action="store_true", help="Resume only checksum-verified matching posterior caches")
-    parser.add_argument("--geometry", choices=("directional", "nested-isopachs", "nested-reach", "nested-whole-area", "displaced", "source-fans", "source-envelope"), help="Select a complete-deposit method or a spherical mixture geometry")
+    parser.add_argument("--geometry", choices=("directional", "wrapped-angular-covariance", "nested-isopachs", "nested-reach", "nested-whole-area", "displaced", "source-fans", "source-envelope"), help="Select a complete-deposit method or a spherical mixture geometry")
     parser.add_argument("--archives", type=Path, help="Audited archive inventory for conditional global predictions")
     args = parser.parse_args(argv)
     path = model_input(resolve_dataset(args.csv), args.output)
+    if args.geometry == "wrapped-angular-covariance":
+        from .models.wrapped_angular.report import wrapped_dataset
+        return wrapped_dataset(path, args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "nested-whole-area":
         return whole_area_dataset(path, args.output, name=args.name, resume=args.resume, archives=args.archives)
     if args.geometry == "nested-reach":
@@ -89,7 +94,7 @@ def main(argv=None):
         # Preserve the module's original CSV-first regional comparison command.
         return compare(argv)
     parser = argparse.ArgumentParser(description=__doc__,
-        epilog="Run tephra-isopachs compare observations.csv --output results/new-run to fit all five families.")
+        epilog="Run tephra-isopachs compare observations.csv --output results/new-run to fit all active families.")
     subparsers = parser.add_subparsers(dest="command")
     subparsers.add_parser("compare", help="Compare every active method; no preferred family")
     subparsers.add_parser("global", help="Global fallout posterior with explicit assumption sensitivity")
@@ -100,6 +105,7 @@ def main(argv=None):
             print(f"{key}: {spec.label}\n  {spec.description}")
         print("spherical-mixture (global command): Mass-normalized spherical mixture\n  Whole-Earth posterior fallout volume with bearing-dependent continuation, fixed prior sensitivities and matched geographic holdouts.")
         print("directional: Whole-Earth continuation from locally supported isopachs\n  Uncertain fan direction across six structures. The principal bulk volume integrates the pointwise median isopachs.")
+        print("wrapped-angular-covariance: Wrapped angular covariance\n  Whole-Earth cumulative thinning with a separate source-local process and coherent deposit draws.")
         print("nested-isopachs: Bayesian nested dispersal footprints\n  Positive angular area growth with changing dispersal directions; joint thickness and geographic posterior. Use nested-whole-area and nested-reach for the original whole-area and corridor sensitivities.")
     else:
         parser.print_help()

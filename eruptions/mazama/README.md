@@ -4,6 +4,24 @@
 
 The principal dataset contains **304 fallout localities**, including the **5 mm** bed at Bolan Lake. Young’s corrected section positions add **358 cm** at 95, **75 cm** at 134 and **2,000+ cm** at 150. Sections 97 and 116 retain their own readings at the reviewed positions. The source table has 47 measurements, 132 geological lower limits, 96 upper limits and 29 ranges. [Marked sections and field tables](../../data/audits/Mazama/young-marker-review/README.md) · [Bolan Lake audit](../../data/audits/Mazama/principal-ranges/README.md#bolan-lake-addition) · [Reported table](../../data/eruptions/Mazama_young_centroids.csv) · [Fitting table](../../data/eruptions/Mazama_young_centroids_minimum_fit.csv)
 
+[Wrapped angular covariance at three scales](results/young-centroids-2026-11-26/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
+
+## Volumes and geographic prediction
+
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
+
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| [Wrapped angular covariance](results/young-centroids-2026-11-26/wrapped-angular-covariance/README.md) | whole Earth | **102** | 75.8–144 | 1.212 | 93.1% |
+
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
+
+## Full deposits and near-vent detail
+
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
+
+![Mazama · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/young-centroids-2026-11-26/wrapped-angular-covariance/deposit.png)
+
 ## Published reconstructions of the 300-locality edition
 
 The maps, volumes and validation below were fitted to the preceding 300-locality edition, whose fitting table has SHA-256 `1cd60d207a3ddbb7393775683664a92be06fada73479dabaa55351e0ec3f9bb1`. [Immutable case revision](https://github.com/siyulai21/tephra-fallout-isopachs/tree/0869f7d7b3cb505944f6f104aea42ac068868938/eruptions/mazama)

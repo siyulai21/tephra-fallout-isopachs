@@ -145,13 +145,15 @@ def verify_case(record):
     preview=record["slug"]=="pinatubo-1991"
     region=home/"regional" if preview else home
     data,meta=audited_data(record["path"],allow_intervals=True)
-    frames=[verify_global(home/key,key,data,meta) for key in FAMILIES]
+    # This is the frozen three-global-family map protocol. Current editions are replayed below.
+    archived = ("directional", "spherical-mixture", "nested-isopachs")
+    frames=[verify_global(home/key,key,data,meta) for key in archived]
     # The two archived fits and the current nested fit may use different PROJ builds.
     for near_bounds in frames[1:]:
         np.testing.assert_allclose(near_bounds,frames[0],rtol=0.,atol=1e-9)
     if not preview:
         charts = []
-        for key in FAMILIES:
+        for key in archived:
             with np.load(home/key/"median-grid.npz",allow_pickle=False) as packet:
                 charts.append(PolarField(packet["radii_km"],packet["log10_cm"],float(packet["axis"])))
         np.testing.assert_allclose(frames[0][2],near_frame(charts,data))

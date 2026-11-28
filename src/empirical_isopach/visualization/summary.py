@@ -6,11 +6,11 @@ from matplotlib.ticker import LogLocator, NullFormatter, StrMethodFormatter
 from src.empirical_isopach.visualization.style import STYLE
 
 COLORS = {"GP ensemble":"#197C83", "Cubic spline":"#B7682A",
-          "Directional":"#6657A1", "Spherical mixture":"#346DA4", "Nested corridor":"#933F66", "Nested footprints":"#933F66"}
+          "Directional":"#6657A1", "Spherical mixture":"#346DA4", "Nested corridor":"#933F66", "Nested footprints":"#933F66", "Wrapped angular covariance":"#2F7042"}
 
 
 def saved_case_overview(output, name=None):
-    """Assemble the common overview only after all four reports are written."""
+    """Assemble the common overview from the available peer reports."""
     import json
     output = Path(output)
     # Old standalone archives can still reproduce their own historical overview.
@@ -91,6 +91,9 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
         families = [("Directional", "directional"), ("Spherical mixture", "spherical-mixture")]
         if nested is not None:
             families.append(("Nested footprints" if nested.get("protocol") in ("nested-dispersal-footprints-v2","nested-area-growth-v3","nested-continuous-area-growth-v4") else "Nested corridor", "nested-isopachs"))
+        wrapped = folder/"wrapped-angular-covariance/report.json"
+        if wrapped.is_file():
+            families.append(("Wrapped angular covariance", "wrapped-angular-covariance"))
         for i, (label, family) in enumerate(families):
             receipt = folder/family/"deposit.json"
             if receipt.is_file():
@@ -109,6 +112,12 @@ def case_overview(output, name, regional, directional, spherical, nested=None, *
             ax.xaxis.set_major_formatter(StrMethodFormatter("{x:,.3g}"))
             ax.xaxis.set_minor_formatter(NullFormatter())
         records = metrics(regional, directional, spherical, nested,home=folder)
+        if wrapped.is_file():
+            wrapped_fit = json.loads(wrapped.read_text())
+            if wrapped_fit["input_sha256"] != regional["input"]["input_sha256"]:
+                raise ValueError("Wrapped angular and regional inputs differ")
+            v = wrapped_fit["validation"]["geographic"]
+            records.append(("Wrapped angular covariance",v["negative_log_score"],v["coverage95_exact"],v["all_folds_passed"]))
         for i, (label, score, coverage, passed) in enumerate(records):
             if coverage is not None:
                 axs[1, 1].barh(i, coverage*100, color=COLORS[label], height=.48, alpha=.85)

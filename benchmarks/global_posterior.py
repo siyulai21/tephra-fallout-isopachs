@@ -16,7 +16,7 @@ def summarize(output, regional_root=Path('eruptions'), published=False, trials=N
     output, regional_root = Path(output), Path(regional_root)
     rows, cases, validation_rows = [], [], []
     case_dirs = {}
-    records = released_datasets() if published else datasets()
+    records = released_datasets("spherical-mixture") if published else datasets()
     for record in sorted(records, key=lambda row: row["slug"]):
         slug, name = record['slug'], record['name']
         available = published_methods(record)

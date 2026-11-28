@@ -6,6 +6,24 @@ The current principal dataset contains **150 localities** for total fallout from
 
 The revised field record includes two rim minima of 1,500 and 1,200 cm, separate Tianwen exposures of about 150 cm and 385–475 cm, and a southern section bounded at 80–90 cm. Pan’s 70 m southern-summit exposure is documented with its field photographs and its sector location. The audit records the separate 70 m northern-rim report, six additional peatland profiles and newly traced marine, coastal and archaeological sections. [Numbered source figures](../../data/audits/B-Tm/two-phase/figures/README.md) · [Site decisions](../../data/audits/B-Tm/two-phase/sites.csv) · [Thicknesses with unresolved station positions](../../data/audits/B-Tm/two-phase/unlocated-thicknesses.csv)
 
+[Wrapped angular covariance at three scales](results/two-phase-2026-11-26/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
+
+## Volumes and geographic prediction
+
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
+
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| [Wrapped angular covariance](results/two-phase-2026-11-26/wrapped-angular-covariance/README.md) | whole Earth | **31** | 20.9–44.4 | 1.407 | 95.8% |
+
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
+
+## Full deposits and near-vent detail
+
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
+
+![B-Tm · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/two-phase-2026-11-26/wrapped-angular-covariance/deposit.png)
+
 ## Published reconstructions of the preceding 71-locality edition
 
 The 150-locality input is registered for future calculations. All maps, volumes and scores below were fitted to the 71-locality input published on 25 November 2026, SHA-256 `c7698d6b6ecbe7d0fe18b5ccc4a6cb180f78bcb61f168dce3bda8e1a51ba928a`. [Immutable case release](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d115f2a699870c826752fd26b0b4d86ff42130f8/eruptions/b-tm)

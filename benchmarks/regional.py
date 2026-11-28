@@ -119,7 +119,7 @@ def summarize(output, published=False):
     if published:
         from .principal_volumes import principal_home
         from .publication import published_methods, released_datasets
-        records = {r["slug"]: r for r in released_datasets()}
+        records = {r["slug"]: r for r in released_datasets("stacked")}
         accepted = {slug:r["path"] for slug,r in records.items()}
         sources = [(r["slug"], principal_home(r) / "report.json") for r in records.values()
                    if set(active_methods()).intersection(published_methods(r))]

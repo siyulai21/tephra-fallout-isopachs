@@ -16,3 +16,5 @@ The [mass-normalized spherical mixture](mass_mixture/README.md) is a global comp
 The [directional ensemble](directional/README.md) fits uncertain fan directions, thinning and spatially correlated local departures. Read `directional/deposit.json` for the whole-Earth median-map integral and `directional/multiscale/report.json` for complete-field volume uncertainty and geographic tests. The 13-policy single-structure study remains available for sensitivity tests. [Principal protocol](../../../docs/methods/directional-multiscale.md) · [Directional validation](../../../comparisons/directional/README.md)
 
 [Bayesian nested isopachs](nested/README.md) jointly fit geographic contour ranks and an area–thickness curve. Each draw has a closed-form whole-Earth volume. Each case includes a geographic quadrature check, thickness-slice budgets and training-only distal sensitivities. [Nested method](../../../docs/methods/nested-isopachs.md)
+
+Wrapped angular covariance fits cumulative regional thinning and a conditional source-area excess. Its runner writes correlated Earth-wide draws, map integrals and geographic deletions. [Implementation map](wrapped_angular/README.md)

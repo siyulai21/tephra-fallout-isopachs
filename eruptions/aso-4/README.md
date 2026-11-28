@@ -6,6 +6,24 @@
 
 The principal input contains **92 localities**. It includes 88 measured or depth-derived thicknesses, three reported minima fitted at their thresholds and one upper limit. Four Ulleung Basin cores record Aso-4 at 441–515 km north of the vent. Their tabulated layer spans give 0.8, 0.6, 3.0 and 3.0 cm. The field audit records the core-specific evidence for each interpretation. The preceding addition was the 27 cm bed at IODP Hole U1429B in the East China Sea. [Reported table](../../data/eruptions/Aso-4_ulleung.csv) · [Fitting table](../../data/eruptions/Aso-4_ulleung_minimum_fit.csv) · [Ulleung Basin audit](../../data/audits/Aso-4/ulleung/README.md) · [U1429 audit](../../data/audits/Aso-4/u1429/README.md)
 
+[Wrapped angular covariance at three scales](results/ulleung-2026-11-27/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
+
+## Volumes and geographic prediction
+
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
+
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| [Wrapped angular covariance](results/ulleung-2026-11-27/wrapped-angular-covariance/README.md) | whole Earth | **557** | 338–978 | 1.219 | 96.6% |
+
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
+
+## Full deposits and near-vent detail
+
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
+
+![Aso-4 · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/ulleung-2026-11-27/wrapped-angular-covariance/deposit.png)
+
 ## Published fits on the preceding input
 
 The maps, volumes and validation below use the preceding **87-locality** input with 83 measured thicknesses, 3 lower limits fitted at their reported minima and 1 upper limit. Its fitting CSV has SHA-256 `70359023574c18aec962366991cc913800e51252a0f16b9559c420ecd4b9a624`. [Preceding published case](https://github.com/siyulai21/tephra-fallout-isopachs/tree/d115f2a699870c826752fd26b0b4d86ff42130f8/eruptions/aso-4) · [Fitting CSV for the maps](../../data/eruptions/Aso-4_reviewed_minimum_fit.csv)

@@ -10,7 +10,8 @@
     "spline",
     "directional",
     "spherical-mixture",
-    "nested-isopachs"
+    "nested-isopachs",
+    "wrapped-angular-covariance"
   ],
   "reported_site_types": {
     "upper_limit": 39,
@@ -95,6 +96,20 @@
       "heldout_coverage95": 0.8314606741573034,
       "heldout_checks_passed": true,
       "input_sha256": "f2726bad82f67bfc76cb74c83e6fa2499b36d9a25cfcc04e7cb9626a1d292aed"
+    },
+    {
+      "method": "wrapped-angular-covariance",
+      "domain": "whole Earth",
+      "median_map_volume_km3": 5.420267765070547,
+      "thickness_q25_volume_km3": 4.323494506354664,
+      "thickness_q75_volume_km3": 6.9415104944824995,
+      "map_integration_passed": true,
+      "thickness_band_integration_passed": true,
+      "posterior_checks_passed": true,
+      "heldout_log_score": 0.9701790219968347,
+      "heldout_coverage95": 0.9548777382349836,
+      "heldout_checks_passed": true,
+      "input_sha256": "f2726bad82f67bfc76cb74c83e6fa2499b36d9a25cfcc04e7cb9626a1d292aed"
     }
   ],
   "unavailable_legacy_controls": [
@@ -153,7 +168,7 @@
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/heldout_predictions.csv": "3309bcc4cde6ce9ff89fc9e53ec2583560ebab3dfbbf284ab27dd5be56bb8414",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/isopachs.png": "29593d22ed054ec447b6c03f8985a750b5ce51552f4c91047eb8a71d07091a9b",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/map-display.json": "25ad775a14034c7c2a9d96863f22586920544e3cc6722529401e941d0825746c",
-    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/minimum-fit-comparison.csv": "6a0eb30bc9afd9103efd369152aae93a925a6c5ee1531d1c45cb3ad4958462df",
+    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/minimum-fit-comparison.csv": "e1e55ec59814002ebca3068ab999781b13ec9a1d3b26d05a37b3d7a21940d64b",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/deposit.json": "738d54b87f618708b9984296baaa254632e9b002f81125dccd3233a1228e079d",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/deposit.png": "2bdba821536531dfe8711a74341597cb25de154d1f026d3a0da7d128b8dcd14a",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/footprints/archive-probes.json": "6cc0785d88af8decd2f2aadfb9c4fa877165a48ed1647c939b889de6116bf818",
@@ -214,9 +229,9 @@
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/work/footprint-fits/refinement/fold-0.npz": "cb754cc326676a9f2b38b2adce26168554363291c991fcd2bfe5bd911e08df35",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/work/footprint-fits/refinement/full.json": "0764b6c670ad16985e2c3d5bea34c49277c0e78f11a23fd6dd759822c9240664",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/work/footprint-fits/refinement/full.npz": "ec9e27a41eaac4f3e76509c54dc48cf7f311c647671dabd900573ce984badc38",
-    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/principal-volumes.csv": "fa9bfe2ed0d04ebf0cab3d55edd599e8923c13a6a9ba71181f608e2b41686b22",
+    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/principal-volumes.csv": "7e1149a161bf9b6de30aa0713eccaba9e79d2c2aa3a0df30b88be261e617d42f",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/report.json": "ab29074fd8411e80239756f2bb4eb9d80458572a83af9e0175f7e0c608c98751",
-    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv": "46e8f76a950d6f586d6c0a4267256cefb63082d69d76033a5588196885fa9bec",
+    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/reported-and-fitted-sites.csv": "6930171755c59bb5519bf69396b4807dc2a17729b1dc7b57b6a42aed2ff8970e",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/archive-evidence/spherical-archive-checks.json": "586b55c62a7898bac29e43a343bc21f846c01a8d68e453d97df60fa5df65cbbc",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/archive-evidence/spherical-archive-weights.npz": "1df848c99304d59e3b8ed84fe9aff74792a70cbf328dedd7ceaf3735aa9cab44",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/artifacts.json": "2dc2560447cdb1e38a052b158a176739a5873ee7e26b746e4a1b87a91b5723d8",
@@ -252,6 +267,7 @@
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/volume_draws.csv.gz": "26c4dec8499cd9d49e73bc75458b5ae2a96a0a04287decaebe6e17c5f753e518",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/workflow-provenance.json": "445a8b93f95e3fba259add009f15bd9c515ca450a2827bfb9dd1023a508a78dc",
     "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/spherical-mixture/world.png": "de5d59b0437b335c70023e2014057fb37afdfc7c2d5c6346bad15582fc722583",
-    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/thickness-bands.json": "abe39eeea039e452c34ec8e7e98059082b6b6d14b9dfe7c57d330a6754f0ec14"
+    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/thickness-bands.json": "abe39eeea039e452c34ec8e7e98059082b6b6d14b9dfe7c57d330a6754f0ec14",
+    "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/wrapped-angular-covariance/artifacts.json": "ecdaab8733c6c7ff850f344ff5c3f053fb52d457fef20da1ec6b61887e8e55e7"
   }
 }

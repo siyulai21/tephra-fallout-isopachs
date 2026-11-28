@@ -1,0 +1,48 @@
+{
+  "protocol": "wrapped-angular-release-v1",
+  "input_sha256": "56c32a5cd1e8324822a28c388d7bdb219a3ccaf4cc24b71436cc3c37fe657586",
+  "reported_source_sha256": "be0fdd468e66412761c7c30e2c9262573b6b7295d9612742fc3a7f592d89fde3",
+  "observation_policy": "lower-only-at-reported-minimum-v1",
+  "observations": 304,
+  "published_methods": [
+    "wrapped-angular-covariance"
+  ],
+  "reported_site_types": {
+    "measurement": 47,
+    "upper_limit": 96,
+    "interval": 29,
+    "lower_limit": 132
+  },
+  "fitted_site_types": {
+    "measurement": 179,
+    "upper_limit": 96,
+    "interval": 29
+  },
+  "matched_geographic_folds": 4,
+  "methods": [
+    {
+      "method": "wrapped-angular-covariance",
+      "domain": "whole Earth",
+      "median_map_volume_km3": 102.41297749586376,
+      "thickness_q25_volume_km3": 75.81508386421505,
+      "thickness_q75_volume_km3": 144.0896742369459,
+      "map_integration_passed": true,
+      "thickness_band_integration_passed": true,
+      "posterior_checks_passed": true,
+      "heldout_log_score": 1.2115715121252812,
+      "heldout_coverage95": 0.9305012902246509,
+      "heldout_checks_passed": true,
+      "input_sha256": "56c32a5cd1e8324822a28c388d7bdb219a3ccaf4cc24b71436cc3c37fe657586"
+    }
+  ],
+  "files": {
+    "data/eruptions/Mazama_young_centroids_minimum_fit.csv": "56c32a5cd1e8324822a28c388d7bdb219a3ccaf4cc24b71436cc3c37fe657586",
+    "data/eruptions/Mazama_young_centroids.csv": "be0fdd468e66412761c7c30e2c9262573b6b7295d9612742fc3a7f592d89fde3",
+    "data/audits/Mazama/young-marker-review/provenance.json": "0978f393f3bdafec4aafaee0bd498b70280f64d5bcfe1bdd1d900f6d61d284da",
+    "eruptions/mazama/results/young-centroids-2026-11-26/wrapped-angular-covariance/artifacts.json": "f316f31a8c2b4cb09229c7b818ead2cc8fb1c04e146d69a40a0a7e2a23ecbd21",
+    "eruptions/mazama/results/young-centroids-2026-11-26/accepted_observations.csv": "84657fdcc0d7d4c4665cea02ec3598346d3f706ce06b10ef2fbca99fd6779291",
+    "eruptions/mazama/results/young-centroids-2026-11-26/principal-volumes.csv": "804087c03e20444f710afd71581bb3fff6a70222a59b05ef20a2ea2176770d5d",
+    "eruptions/mazama/results/young-centroids-2026-11-26/reported-and-fitted-sites.csv": "2c2897b546e21e662987e32e093bbb1a6df2205afe72fb7616b1d452fdb484e0",
+    "eruptions/mazama/results/young-centroids-2026-11-26/minimum-fit-comparison.csv": "e84d8c883dfbb36e4fe0aab8238142507de3a410c6c6b1b3c4992d080ce1e0d2"
+  }
+}

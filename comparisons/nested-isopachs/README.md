@@ -4,10 +4,6 @@ Positive angular area growth allows the dispersal direction and eccentricity to 
 
 | Eruption | Localities | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
 |---|---:|---:|---:|---:|---:|
-| [Aso-4](../../eruptions/aso-4/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 87 | **2,201** | 1,099–5,647 | 1.372 | 93.0% |
-| [B-Tm](../../eruptions/b-tm/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 71 | **34.3** | 27.7–43.4 | 1.362 | 94.0% |
-| [Ilopango TBJ (total primary airfall)](../../eruptions/ilopango-tbj/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 168 | **47.1** | 31.7–76.9 | 1.788 | 89.9% |
-| [Mazama](../../eruptions/mazama/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 300 | **144** | 124–172 | 1.380 | 85.1% |
 | [Minoan](../../eruptions/minoan/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 101 | **60.9** | 34.6–116 | 1.675 | 90.1% |
 | [Pinatubo 1991 (Layer C)](../../eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 235 | **5.42** | 5.08–6.02 | 1.350 | 83.1% |
 | [Sakurajima Satsuma (P14)](../../eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25/nested-isopachs/README.md) | 57 | **7.41** | 4.99–13.5 | 0.963 | 100.0% |

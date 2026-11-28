@@ -47,8 +47,8 @@ def reported_edition(record):
 def published_methods(record):
     """Families reviewed for this input. An undeclared partial release is an error."""
     from src.empirical_isopach.models.registry import active_methods
-    from src.empirical_isopach.visualization.deposit import FAMILIES
-    return tuple(record.get("published_methods", (*active_methods(), *FAMILIES)))
+    # Records predating explicit publication lists were released with the original three global families.
+    return tuple(record.get("published_methods", (*active_methods(), "directional", "spherical-mixture", "nested-isopachs")))
 
 
 def released_edition(record):
@@ -62,10 +62,26 @@ def released_edition(record):
     return record
 
 
-def released_datasets():
-    """Use each published fit with the input that generated it."""
-    from src.empirical_isopach.core.catalog import datasets
-    return [released_edition(record) for record in datasets()]
+def released_datasets(family=None):
+    """For a family-specific catalogue, retain its last published edition and input identity."""
+    from src.empirical_isopach.core.catalog import datasets, data_directory, dataset_record
+    if family is None:
+        return [released_edition(record) for record in datasets()]
+    records=[]
+    for current in datasets():
+        if family in published_methods(current):
+            records.append(current)
+            continue
+        for earlier in reversed(current.get("previous_inputs", [])):
+            if earlier.get("release_receipt") or earlier.get("matched_results"):
+                edition=dataset_record(data_directory()/earlier["file"])
+                # A historical lower-censored fit cannot substitute for the current reported-minimum policy.
+                if current.get("reported_file") and not edition.get("reported_file"):
+                    continue
+                if family in published_methods(edition):
+                    records.append(edition)
+                    break
+    return records
 
 
 def matched_edition(record):
@@ -179,7 +195,7 @@ def signed_file(name, expected, current):
 
 def historical_volume_rows(home):
     """Replay the whole-draw intervals used by the dated source-sensitivity studies."""
-    from src.empirical_isopach.visualization.deposit import FAMILIES, read_json, volume_interval
+    from src.empirical_isopach.visualization.deposit import read_json, volume_interval
     from src.empirical_isopach.visualization.summary import metrics, principal_report
     home = Path(home)
     regional = read_json(home/"report.json")
@@ -193,7 +209,7 @@ def historical_volume_rows(home):
         hist = [v["median_surface_km3"] for v in vol["refinement"]]
         ok = len(hist)>=3 and all(abs(a/b-1)<vol["tolerance"] for a,b in zip(hist[-3:-1],hist[-2:]))
         values.append((key,vol["median_surface_km3"],(q["0.025"],q["0.975"]),ok,record["joint_volume"]["expected_grid_converged"]))
-    for key,source in zip(FAMILIES,(directional,spherical,nested),strict=True):
+    for key,source in zip(("directional","spherical-mixture","nested-isopachs"),(directional,spherical,nested),strict=True):
         r = read_json(home/key/"deposit.json")
         ext = home/key/"extent/report.json"
         q,ok = volume_interval(key,source,read_json(ext) if ext.is_file() else None)

@@ -15,6 +15,7 @@ The figure uses the same inputs as the table. Lower scores indicate better predi
 | How much does allowing a fan to turn change contour reach, volume and prediction across gaps? | [Directional ensemble, paired control and related studies](directional/README.md) |
 | How sensitive is whole-deposit volume to spherical fan geometry and priors? | [Spherical maps, prior sensitivity and known-volume tests](spherical-mixture/README.md) |
 | How do nested isopachs compare with the two other global volume estimates, and how much ash lies beyond the sampled range? | [Bulk volume, site scores, prior sensitivities and known-deposit tests](nested-isopachs/README.md) |
+| Which geographic changes follow from a wrapped angular covariance, and how well does its distal tail predict withheld beds? | [Nine eruptions, four global models and three classical thinning families](wrapped-angular-covariance/README.md) |
 | Where do measurements support a contour or a partial volume? | [Local footprints and geographic deletions](support/README.md) |
 
 The B-Tm worked comparison shows how the contours change when the three interpreted bounds are included, weakened or omitted. Earlier model-development experiments identify their own inputs. [B-Tm before and after](../eruptions/b-tm/results/cryptotephra/README.md) · [All eruption reports](../eruptions/README.md)

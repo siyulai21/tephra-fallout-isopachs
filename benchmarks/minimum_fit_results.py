@@ -10,11 +10,11 @@ from benchmarks.minimum_fit_inputs import verify as verify_input
 from benchmarks.publication import published_methods, released_datasets, reported_edition, result_home
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.fitting import map_observation_policy
-from src.empirical_isopach.visualization.deposit_field import PolarField, digest
+from src.empirical_isopach.visualization.deposit_field import FAMILIES, PolarField, digest
 from src.empirical_isopach.visualization.principal import volume_rows
 
 REGIONAL = ("stacked", "spline")
-GLOBAL = ("directional", "spherical-mixture", "nested-isopachs")
+GLOBAL = tuple(FAMILIES)
 
 
 def read(path):
@@ -69,6 +69,14 @@ def predictions(home, family, data):
         cdf_at_value = np.full(len(held), np.nan)
         above_min = held[family + "_median"] >= data.log_value
         covered = (held[family + "_lower"] <= data.log_value) & (data.log_value <= held[family + "_upper"])
+    elif family == "wrapped-angular-covariance":
+        held = pd.read_csv(home / family / "heldout.csv.gz")
+        held = held[held.design == "geographic"].set_index("row_id").loc[data.row_ids]
+        np.testing.assert_array_equal(held.kind == "point", ~data.censored)
+        scores = held.log_score
+        median_cm = held.bed_median_cm.to_numpy()
+        cdf_at_value = held.cdf.to_numpy()
+        above_min, covered = held.cdf <= .5, held.cdf.between(.025, .975)
     else:
         packet = {"directional": "multiscale", "spherical-mixture": "extent",
                   "nested-isopachs": "footprints"}[family]

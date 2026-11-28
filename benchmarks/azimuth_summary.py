@@ -85,7 +85,7 @@ def current_control_summary(output, records):
 def case_table(cases=None, published_root=Path("eruptions")):
     """Read the paired controls and both holdout designs from the same fitted report."""
     records = []
-    for rec in (released_datasets() if cases is None else datasets()):
+    for rec in (released_datasets("directional") if cases is None else datasets()):
         if cases is None and "directional" not in published_methods(rec):
             continue
         slug = rec["slug"]
@@ -144,7 +144,7 @@ def summarize(cases, synthetic, output):
         "| Eruption | Accepted observations | Median-thickness map (km³) | Fixed-direction control (km³) | Conditional 95% interval (km³) |",
         "|---|---:|---:|---:|---:|"]
     for a in table.itertuples():
-        current = result_home(next(r for r in released_datasets() if r["slug"] == a.slug))
+        current = result_home(next(r for r in released_datasets("directional") if r["slug"] == a.slug))
         path = current/"directional/deposit.json"
         mapped = json.loads(path.read_text())
         rows.append(f"| [{a.eruption}](../../{current}/directional/README.md) | {a.accepted} | **{mapped['median_map_volume_km3']:,.3g}** | {a.fixed_map_km3:,.1f} | {a.joint_lower95:,.1f}–{a.joint_upper95:,.1f} |")
