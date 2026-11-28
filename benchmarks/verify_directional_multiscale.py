@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from .directional_scale_maps import ARCHIVE
-from .publication import result_home
+from .publication import result_home, study_input
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import datasets
 from src.empirical_isopach.models.directional.ensemble.members import splits
@@ -186,9 +186,8 @@ def verify_case(record, pair, *, home=None, study=STUDY, previous=ARCHIVE,
 def main():
     from src.empirical_isopach.models.directional.multiscale import engine_sha256
 
-    from .publication import reported_edition
-    records = [reported_edition(record) for record in datasets()]
     provenance = read_json(STUDY / "provenance.json")
+    records = [study_input(r, provenance["cases"][r["slug"]]["input_sha256"]) for r in datasets()]
     original_reader = Path("archive/2026-11-25-lower-limit-policy/observations.py")
     assert digest(original_reader) == "37dc55a1ca9af46998c21dbfe7d7b4f2f23304a9ec37b39ac7ab6956eb1b1424"
     assert provenance["protocol"] == SCHEMA

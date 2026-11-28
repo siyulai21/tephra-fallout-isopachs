@@ -1,4 +1,4 @@
-"""Create a case release from five completed fits and their matched geographic checks."""
+"""Create a case release from the published families and their matched geographic checks."""
 import argparse
 from collections import Counter
 import json
@@ -21,7 +21,32 @@ def link(target, directory):
     return Path(os.path.relpath(target, directory)).as_posix()
 
 
+def publish_wrapped(record):
+    from src.empirical_isopach.models.wrapped_angular.packet import FAMILY
+
+    home = result_home(record)
+    data, meta = audited_data(record["path"])
+    source = reported_edition(record)
+    assess(record, write=True)
+    sites = pd.read_csv(home / "reported-and-fitted-sites.csv")
+    files = [record["path"], source["path"], data_directory() / record["audit"],
+             home / FAMILY / "artifacts.json", home / "accepted_observations.csv",
+             home / "principal-volumes.csv", home / "reported-and-fitted-sites.csv",
+             home / "minimum-fit-comparison.csv"]
+    receipt = dict(protocol="wrapped-angular-release-v1", input_sha256=meta["input_sha256"],
+                   reported_source_sha256=meta["reported_source_sha256"], observation_policy=POLICY,
+                   observations=len(data.xy), published_methods=[FAMILY],
+                   reported_site_types=dict(Counter(sites.reported_kind)),
+                   fitted_site_types=dict(Counter(sites.fit_kind)),
+                   matched_geographic_folds=int(sites.geographic_fold.nunique()),
+                   methods=volume_rows(home, input_sha256=meta["input_sha256"]),
+                   files={link(f, Path.cwd()): digest(f) for f in files})
+    (home / "release.json").write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n")
+
+
 def publish(record):
+    if published_methods(record) == ("wrapped-angular-covariance",):
+        return publish_wrapped(record)
     slug = record["slug"]
     previous = reported_edition(record)
     _, meta = audited_data(record["path"])
@@ -43,6 +68,8 @@ def publish(record):
         reports.extend(home / family / f for f in ("deposit.json", "deposit.png", "median-grid.npz"))
     reports += [home / "directional/ensemble/report.json", home / "directional/single-structure/report.json",
                 record["path"], previous["path"], data_directory() / record["audit"]]
+    if "wrapped-angular-covariance" in published_methods(record):
+        reports.append(home / "wrapped-angular-covariance/artifacts.json")
     computation = home / "spherical-mixture/workflow-provenance.json"
     if computation.is_file():
         reports.append(computation)
@@ -80,6 +107,8 @@ def publish_current(record):
     for family in ('directional','spherical-mixture','nested-isopachs'):
         if family not in published_methods(record):continue
         files.extend(p for p in (home/family).rglob('*') if p.is_file() and p.suffix in ('.json','.npz','.gz','.csv','.png'))
+    if 'wrapped-angular-covariance' in published_methods(record):
+        files.append(home/'wrapped-angular-covariance/artifacts.json')
     sphere=home/'spherical-mixture/report.json'
     missing=[name for name in ('sampling/attempts.csv','directional/ensemble/report.json','directional/single-structure/report.json')
              if not (home/name).is_file()]
@@ -169,6 +198,16 @@ def verify_release(record):
     assert release["methods"] == volume_rows(home, input_sha256=meta["input_sha256"])
     for filename, expected in release["files"].items():
         assert digest(Path(filename)) == expected, filename
+    if 'wrapped-angular-covariance' in published_methods(record):
+        from src.empirical_isopach.models.wrapped_angular.report import engine_sha256, verified_release
+        wrapped = home / "wrapped-angular-covariance"
+        identity = json.loads((wrapped / "artifacts.json").read_text())["identity"]
+        assert identity["input_sha256"] == meta["input_sha256"] and identity["engine_sha256"] == engine_sha256()
+        assert verified_release(wrapped, identity)
+    if release.get("protocol") == "wrapped-angular-release-v1":
+        assert tuple(release["published_methods"]) == published_methods(record) == ("wrapped-angular-covariance",)
+        assess(record)
+        return
     if 'spherical-mixture' in published_methods(record):
         sphere = json.loads((home / "spherical-mixture/report.json").read_text())
         assert len(sphere["fits"]) == release["spherical_prior_fits"] == 8

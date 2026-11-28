@@ -129,7 +129,7 @@ def build_validation(trials, output, case_dirs, link_prefix=""):
 def summarize(trials, output, cases=Path("eruptions")):
     """Replay the paired validation files separately in a research output directory."""
     from .publication import published_methods, released_datasets, result_home
-    case_dirs = {r["slug"]: cases / result_home(r).relative_to("eruptions") / "spherical-mixture" for r in released_datasets()
+    case_dirs = {r["slug"]: cases / result_home(r).relative_to("eruptions") / "spherical-mixture" for r in released_datasets("spherical-mixture")
                  if "spherical-mixture" in published_methods(r)}
     _, scores, maps, trials_text = build_validation(trials, output, case_dirs)
     (output / "README.md").write_text(f"# Spherical bearing validation\n\n{scores}\n\n{maps}\n{trials_text}")

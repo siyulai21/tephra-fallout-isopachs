@@ -1,0 +1,432 @@
+{
+  "protocol": "wrapped-angular-cumulative-thinning-v1",
+  "family": "wrapped-angular-covariance",
+  "engine_sha256": "1107cb4239c1cda825a0913fff08f6575666a0594dca1e836a7654b551ac8fbb",
+  "dataset": "Tambora",
+  "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+  "vent_lonlat": [
+    118.0,
+    -8.25
+  ],
+  "source_area": {
+    "area_km2": 38.24525228794515,
+    "centroid_km": [
+      -0.7024390921355977,
+      0.4377951779728428
+    ],
+    "covariance_km2": [
+      [
+        3.2883562560465682,
+        -0.0835327880213948
+      ],
+      [
+        -0.0835327880213948,
+        2.8443981658974407
+      ]
+    ],
+    "traced_vertices": 936,
+    "closing_gaps_km": [
+      0.0
+    ],
+    "event": "Tambora 1815AD eruption",
+    "reference": "Sigurdsson and Carey (1989)*; Self et al. (1984)*; Kandlbauer and Sparks (2014)",
+    "scope": "Second moments of enclosed area. Straight joins across open ends of the mapped rim.",
+    "source": "Takarada 2019, GSJ Open-File Report 685",
+    "source_sha256": "3e34e556838b49fd1f055a96b0a3bdca35097cba0f1063da552103cc4c8433ec",
+    "slug": "tambora",
+    "vent_lonlat": [
+      118.0,
+      -8.25
+    ],
+    "input_sha256": "76a07a260bdc4b6430b5c0034075a3be91f7c7f762f6d1f46d985fc9ae7883cf",
+    "interpretation": "Potential source region. A mapped collapse boundary does not locate every eruptive vent.",
+    "parent_geometry_sha256": "2fbb44a70952fd8b7ff0686e2ab7f50642fa0e97fb5e1054eb344e968b6d4bc4"
+  },
+  "observations": {
+    "sites": 26,
+    "measured": 26,
+    "at_reported_minimum": 0,
+    "upper": 0,
+    "interval": 0
+  },
+  "fit": {
+    "proposed": 75264,
+    "refined": 8060,
+    "retained": 7942,
+    "screen_mass_retained": 0.9999900047388615,
+    "max_ep_residual": 0.0,
+    "corrections": [
+      {
+        "seed": 176989,
+        "power": 0,
+        "relative_ess": 1.0,
+        "log_evidence_correction": 0.0,
+        "largest_weight": 0.03907332315687601
+      }
+    ],
+    "covariance": "wrapped",
+    "source_rows": [],
+    "exterior_rows": [
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      23,
+      13,
+      12,
+      11,
+      7,
+      10,
+      8,
+      9,
+      5,
+      2,
+      3,
+      6,
+      4,
+      22,
+      24,
+      21,
+      25,
+      27,
+      26
+    ],
+    "source_proposals_per_region": 16384,
+    "conditional_source_draws": 25,
+    "minimum_source_ess": 16383.99999999999,
+    "median_source_ess": 16383.99999999999
+  },
+  "regional_numerics": {
+    "screen_retained": 0.9999900047388615,
+    "max_ep_residual": 0.0,
+    "min_relative_ess": 1.0,
+    "log_evidence_scramble_range": 0.0,
+    "passed": true
+  },
+  "prior_sensitivity": {
+    "covariance": "three-harmonic",
+    "check": {
+      "screen_retained": 0.9999900044109818,
+      "max_ep_residual": 0.0,
+      "min_relative_ess": 1.0,
+      "log_evidence_scramble_range": 0.0,
+      "passed": true
+    },
+    "rows": [
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      23,
+      13,
+      12,
+      11,
+      7,
+      10,
+      8,
+      9,
+      5,
+      2,
+      3,
+      6,
+      4,
+      22,
+      24,
+      21,
+      25,
+      27,
+      26
+    ],
+    "primary_median_cm": [
+      0.08805327903986618,
+      0.33734260529211685,
+      4.636486570007207,
+      6.017529044029023,
+      5.400281750795109,
+      6.981992714235039,
+      9.712840141800186,
+      0.08301189053500084,
+      12.501471337747649,
+      16.63517866209514,
+      29.327085456545127,
+      6.74914000211263,
+      32.50268191410416,
+      34.617239538921,
+      34.07694674918088,
+      46.13135954641177,
+      76.77685008632659,
+      60.46488979619764,
+      25.342455370467473,
+      39.125782160510646,
+      2.7321933095043653,
+      22.084483323283393,
+      3.4837067831706015,
+      11.361858489692167,
+      0.027282417356987353,
+      0.05973395060789607
+    ],
+    "bed_log_score": [
+      -0.5107384704922571,
+      -0.5205610910798346,
+      -0.40961393845599847,
+      -0.4243346391625211,
+      -0.42923661259974155,
+      -0.49914631843561974,
+      -0.9477836456602171,
+      -0.567597430743191,
+      -0.4102718434924473,
+      -0.6564766481188933,
+      -0.5337080279021702,
+      -0.6815891403132066,
+      -0.5295181877236934,
+      -0.6383435080682283,
+      -1.2231721350804716,
+      -0.48430628875005155,
+      -0.5924505334254051,
+      -0.5485609259499888,
+      -0.5047672666374581,
+      -1.704158965508813,
+      -0.473810677638407,
+      -0.4393146230838867,
+      -0.4752590249179236,
+      -0.8536241007279539,
+      -1.0191265651244117,
+      -0.6751089062421687
+    ]
+  },
+  "validation": {
+    "geographic": {
+      "folds": [
+        {
+          "fold": 0,
+          "sites": 6,
+          "negative_log_score": 1.1755250005220346,
+          "coverage50_exact": 0.5,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900040286122,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 1,
+          "sites": 7,
+          "negative_log_score": 1.249966761865392,
+          "coverage50_exact": 0.8571428571428571,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900055023873,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 2,
+          "sites": 6,
+          "negative_log_score": 1.5372839110871588,
+          "coverage50_exact": 0.6666666666666666,
+          "coverage95_exact": 0.8333333333333334,
+          "checks": {
+            "screen_retained": 0.9999900070379396,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 3,
+          "sites": 7,
+          "negative_log_score": 1.4858063898271503,
+          "coverage50_exact": 0.5714285714285714,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900051617311,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        }
+      ],
+      "negative_log_score": 1.3621455158254339,
+      "coverage50_exact": 0.6488095238095237,
+      "coverage95_exact": 0.9583333333333334,
+      "all_folds_passed": true
+    },
+    "quadrants": {
+      "folds": [
+        {
+          "fold": 0,
+          "sites": 6,
+          "negative_log_score": 1.6430023306364527,
+          "coverage50_exact": 0.6666666666666666,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.99999000489596,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 1,
+          "sites": 4,
+          "negative_log_score": 1.6225231029506926,
+          "coverage50_exact": 0.5,
+          "coverage95_exact": 0.75,
+          "checks": {
+            "screen_retained": 0.9999900049228865,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 2,
+          "sites": 5,
+          "negative_log_score": 1.0963610717861465,
+          "coverage50_exact": 0.2,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900001301371,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        },
+        {
+          "fold": 3,
+          "sites": 11,
+          "negative_log_score": 1.3997376943749618,
+          "coverage50_exact": 0.8181818181818182,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900028455494,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        }
+      ],
+      "negative_log_score": 1.4404060499370634,
+      "coverage50_exact": 0.5462121212121211,
+      "coverage95_exact": 0.9375,
+      "all_folds_passed": true
+    },
+    "distal": {
+      "folds": [
+        {
+          "fold": 0,
+          "sites": 7,
+          "negative_log_score": 1.3234399328995754,
+          "coverage50_exact": 0.8571428571428571,
+          "coverage95_exact": 1.0,
+          "checks": {
+            "screen_retained": 0.9999900046863788,
+            "max_ep_residual": 0.0,
+            "min_relative_ess": 1.0,
+            "log_evidence_scramble_range": 0.0,
+            "passed": true
+          }
+        }
+      ],
+      "negative_log_score": 1.3234399328995754,
+      "coverage50_exact": 0.8571428571428571,
+      "coverage95_exact": 1.0,
+      "all_folds_passed": true
+    }
+  },
+  "independent_draw_integration": "Positive annular Earth quadrature plus independent angular integration of the local Gaussian excess",
+  "conditional_interval95_km3": [
+    86.00565357332167,
+    241.78934675075752
+  ],
+  "joint_volume_refinement": [
+    {
+      "regional_draws_per_population": 256,
+      "quantiles_km3": [
+        93.8151473604335,
+        130.83406611290633,
+        221.355721175677
+      ],
+      "population_quantiles_km3": [
+        [
+          93.19838995862571,
+          129.08418028306488,
+          233.91063217207088
+        ],
+        [
+          96.10102960290911,
+          132.30027951263727,
+          206.52711108982743
+        ]
+      ],
+      "split_relative_difference": [
+        0.030939989180335543,
+        0.024581512484653536,
+        0.12370821470889727
+      ],
+      "sample_refinement": null,
+      "maximum_field_quadrature_relative_difference": 5.365349275976428e-10,
+      "maximum_source_refinement_km3": 5.684341886080802e-14
+    },
+    {
+      "regional_draws_per_population": 1024,
+      "quantiles_km3": [
+        86.00565357332167,
+        132.1105156415307,
+        241.78934675075752
+      ],
+      "population_quantiles_km3": [
+        [
+          83.66191957092157,
+          131.3183373028922,
+          247.75949415136202
+        ],
+        [
+          88.0864097243076,
+          132.9259387134901,
+          234.76240654894022
+        ]
+      ],
+      "split_relative_difference": [
+        0.051444178022716364,
+        0.01216861052120924,
+        0.05375376449409709
+      ],
+      "sample_refinement": [
+        0.08324342077839642,
+        0.009756247486207625,
+        0.0923112602039482
+      ],
+      "maximum_field_quadrature_relative_difference": 2.6396631547243032e-09,
+      "maximum_source_refinement_km3": 1.4699352846037073e-13
+    }
+  ],
+  "draw_checks_passed": true,
+  "artifacts_sha256": {
+    "posterior.npz": "d7ed82dc69d3ab0e6f6c4e30faa34e2ee051c948c6a2dc887251e90e4c647399",
+    "measured-sites.csv.gz": "fda7c855ab5521f15e3c1d6330062d6320671278e2448a607c1c19d8ccc3a95d",
+    "heldout.csv.gz": "e844e0d1d88b930f8495f603c73b16c52c0d2db4712f4115b7862b76fe8c79e6",
+    "support.json.gz": "d9ee2c744291d14e0068bb434da7a0ac077699146f47a496bdde5e5ef977901e",
+    "archive-probes.json": "7ce2350f9c6a836fa27463d193bd635ee4386510099a4c2df7faf7bbfab625cd",
+    "earth-integrals.json": "9275dd9b401d795704325b117aa117f23d656b1cb5cb5420e7e8166e0544dea5",
+    "partitions.json": "85bcf142e33cb3000320e0e174fc32a648f481067d1be5f5296716e8fa6364f8"
+  }
+}

@@ -163,3 +163,5 @@ The JSON records input/source hashes, package versions, all fold memberships, re
 ## Which parts are actually supported?
 
 Read the [local support and complete-contour audit](support/README.md) before extrapolating these hull volumes. It screens unsampled gaps, tests closure under geographic deletion, and separates interpolation from proximal/distal assumptions.
+
+[Wrapped angular covariance on this input](wrapped-angular-covariance/README.md)

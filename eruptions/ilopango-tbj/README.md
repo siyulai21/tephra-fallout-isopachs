@@ -4,6 +4,24 @@
 
 The principal input contains **168 localities** with 65 measured thicknesses, 84 reported minima, five upper limits and 14 thickness ranges. Petapilla 2 now uses McNeil’s field position for the pond, 5.19 km northwest of the workbook position, for the same 0.35 cm TBJ bed. The fitting table uses each lower-only minimum as a point and preserves the upper limits and ranges. [Petapilla field audit](../../data/audits/Ilopango-TBJ/petapilla/README.md) · [Reported table](../../data/eruptions/Ilopango_TBJ_petapilla.csv) · [Fitting table](../../data/eruptions/Ilopango_TBJ_petapilla_minimum_fit.csv)
 
+[Wrapped angular covariance at three scales](results/petapilla-2026-11-27/wrapped-angular-covariance/three-scales.png) · [Geological review and matched validation](../../comparisons/wrapped-angular-covariance/evidence.md)
+
+## Volumes and geographic prediction
+
+Each estimate integrates the median thickness on its map. The conditional range integrates the pointwise 25th and 75th percentiles of thickness over the same area. The 50% probability refers to thickness at each location. A single probability for total volume does not follow from these endpoints.
+
+| Method | Integration area | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |
+|---|---|---:|---:|---:|---:|
+| [Wrapped angular covariance](results/petapilla-2026-11-27/wrapped-angular-covariance/README.md) | whole Earth | **37.5** | 21.4–67.5 | 1.712 | 92.5% |
+
+Lower scores indicate better geographic prediction. Coverage counts held-out measurements and reported minima fitted as points. A dagger marks a fit, integration or validation warning.
+
+## Full deposits and near-vent detail
+
+Each full map follows the thickest power-of-two contour enclosing at least 95% of the fitted locations, with a 1 cm minimum. The title gives the actual count, including when that minimum prevents 95% coverage. Global volumes include the thinner tail. The innermost line is the thickest doubling level enclosing an accepted location. The near-vent window expands from the proximal sites until eligible contours are visible. The curve sums all patches at each displayed thickness.
+
+![Ilopango TBJ (total primary airfall) · Wrapped angular covariance. Full deposit, near-vent detail and thickness versus square root of area.](results/petapilla-2026-11-27/wrapped-angular-covariance/deposit.png)
+
 ## Published fits on the preceding coordinates
 
 The five reconstructions and the site predictions below use the previous 168-site table with Petapilla at the workbook position. Forty-one of the 84 reported minima lie beyond 25 km. [Input used for these fits](../../data/eruptions/Ilopango_TBJ_total_airfall_minimum_fit.csv) · [Field logs and all-phase assignments](../../data/audits/Ilopango-TBJ/field-logs/README.md)

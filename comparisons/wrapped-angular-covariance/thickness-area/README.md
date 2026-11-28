@@ -1,0 +1,17 @@
+# Empirical continuation of supported thickness–area curves
+
+The second volume approach retains the mapped deposit inside the outermost supported contour and fits classical thinning laws to the available contour areas. With $x=\sqrt{A}$, the added mass is $10^{-5}\int_{x_*}^{\sqrt{A_{Earth}}}2xT(x)\,dx$ in km³ for thickness in cm and area in km². Each curve passes through the retained anchor. Disconnected patches contribute their full area. The experiment also reports the behavior of extending the same curve to infinity, the integration grid sensitivity and the eligibility of the retained levels. [Volume calculations](classical-volumes.csv) · [Supported levels by eruption](eruptions-levels.csv)
+
+The primary geographic screen requires point observations bracketing a rank and 90% of its contour support inside the survey hull. Alternative screens test near-site support, radial support and 99% enclosure. Some fits have no eligible band. For the outer-distance validation, only the training survey determines both the contour ranks and the tail law. When training lacks support the direct forecast carries forward.
+
+| Family | Fits examined |
+|---|---|
+| Exponential | Every admissible number of regression segments, shared observed knots and a segment for every adjacent pair. Ordered outward validation selects the count for the two selected-segment variants. |
+| Power law | Slope and intercept fitted in log thickness versus log area distance. Finite-Earth volume and infinite-domain divergence are recorded separately. |
+| Weibull | Scale and shape fitted on the original tephra Weibull thickness profile, including limiting profiles and a sensitivity restricted to the outward-thinning branch. |
+
+Across 298 held-out distal observations, the direct wrapped field scored **1.6249**. The selected segmented exponential scored **1.6369**, the selected shared-knot fit **1.6337**, the adjacent-pair exponential **1.6200**, the power law **1.6592** and Weibull **1.6279**. Only two training eruptions met the primary screen and 88 held-site predictions changed. The slight score advantage for adjacent pairs came with greater median error at the 34 affected point records. The public principal estimate therefore remains the direct whole-Earth field integral. [Held-site scores](classical-distal-scores.csv) · [Individual forecasts](classical-held-beds.csv.gz)
+
+Tail choice can dominate uncertainty. At Mazama, conditional coherent-draw intervals for the selected exponential, power law and Weibull were 66.6–144.8, 359–2,507 and 63.1–1,131 km³ respectively. These are model sensitivities. Independent published contour sets include Ruapehu, Mount St. Helens, Minoan and other eruptions. Family rankings change across them. For the 1996 Ruapehu outer ranks the median multiplicative errors were 13.49 for the selected regression exponential, 1.25 for the power law and 1.06 for Weibull. [Published outer-contour tests](classical-published-holdouts.csv) · [Coherent-draw intervals](classical-draw-intervals.csv) · [Family selection](classical-family-selection.csv) · [Comparison figure](classical-thinning.pdf)
+
+The frozen area packets identify the field and survey, with two independently scrambled integrations for every eruption and synthetic network. The benchmark replays the mapped volumes and three-family sensitivities from these packets. [Commands and conventions](../../../benchmarks/wrapped_angular/README.md)

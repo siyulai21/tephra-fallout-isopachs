@@ -11,7 +11,7 @@ from .pinatubo import GEOD, INPUT, ROOT
 from .refresh_figures import recorded_observations, regional_models
 from src.Laea import make_laea_transform
 from src.empirical_isopach.core.distributions import predictive_distribution
-from src.empirical_isopach.visualization.deposit_field import FAMILIES, open_field
+from src.empirical_isopach.visualization.deposit_field import open_field
 from .publication import historical_volume_rows as volume_rows
 
 
@@ -46,7 +46,8 @@ def previous_fields(output):
     models, _, _ = regional_models(data, regional)
     for name, model in models.items():
         lookup[name + "_median_cm"] = np.exp(predictive_distribution(model, xy).quantile(.5))
-    for family in FAMILIES:
+    # These three reconstructions belong to the original field audit.
+    for family in ("directional", "spherical-mixture", "nested-isopachs"):
         field, _, _ = open_field(home / family, family, data.canonical(), meta)
         lookup[family + "_median_cm"] = 10 ** field.central(xy)
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -36,6 +36,7 @@ Observation colours use the measured thickness or reported limit, starting below
 | `<global family>/deposit.png`, `deposit.json`, `median-grid.npz`, `thickness-area.csv` | Full and near-vent maps, quartile integrals, convergence, contour membership by row and cumulative areas |
 | `directional/multiscale/`, `spherical-mixture/` | Current directional and spherical posteriors, with full diagnostics and conditional uncertainty |
 | `directional/extent/`, `spherical-mixture/extent/` | Earlier directional finite-spread control and current spherical continuation. The spherical packet includes eight fixed priors |
+| `wrapped-angular-covariance/` | Joint regional and near-source posterior, maps at three scales, held-out beds, contour support, archive probes and whole-Earth quadrature refinements |
 | `nested-isopachs/footprints/` | Dispersal-footprint posteriors, geographic holdouts, sector contributions, support and prior sensitivities |
 
 Earlier corridor and whole-area fits, source-sensitivity trials and sampler diagnostics retain the estimands used in their original experiments. Use the principal table for current map-based estimates. [Method definitions](methods/README.md) · [Validation studies](../comparisons/README.md)

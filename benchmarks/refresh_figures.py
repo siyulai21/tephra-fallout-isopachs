@@ -204,7 +204,8 @@ def refresh_case(record, output, scopes=("regional", "directional", "spherical",
         if "regional" not in scopes:
             regional_maps(target,name,data,meta,region,models,regional)
         for family in FAMILIES:
-            render_deposit(home/family,family,data,meta,name,output=target/family)
+            if (home/family/"deposit.json").is_file():
+                render_deposit(home/family,family,data,meta,name,output=target/family)
     nested = principal_report(home)
     case_overview(target, name, regional, directional, spherical, nested,map_home=home)
     (target/"figure-replay.json").write_text(json.dumps(checks, indent=2)+"\n")

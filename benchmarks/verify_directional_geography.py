@@ -111,7 +111,7 @@ def main():
     )
     assert provenance["states_per_partition"] == count
     cases = pd.read_csv(a.study / "paired-results.csv").set_index("slug")
-    editions = datasets() if a.release else released_datasets()
+    editions = datasets() if a.release else released_datasets("directional")
     assert set(cases.index) == {r["slug"] for r in editions}
     jobs = [
         (

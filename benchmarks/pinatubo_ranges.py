@@ -15,7 +15,7 @@ from src.empirical_isopach.core.distributions import predictive_distribution
 from src.empirical_isopach.models.nested.reach import ReachDraws
 from src.empirical_isopach.models.nested.report import MapView
 from src.empirical_isopach.models.nested.study import digest
-from src.empirical_isopach.visualization.deposit_field import FAMILIES, open_field
+from src.empirical_isopach.visualization.deposit_field import open_field
 
 
 def replay(home, output, paired_output=None):
@@ -69,7 +69,8 @@ def replay(home, output, paired_output=None):
                 save_principal(key, np.exp(predictive_distribution(model, query).quantile(.5)))
             else:
                 predictions[name+"_"+key+"_cm"] = np.exp(predictive_distribution(model, xy).quantile(.5))
-    for family in FAMILIES:
+    # These three reconstructions belong to the original field audit.
+    for family in ("directional", "spherical-mixture", "nested-isopachs"):
         field, _, _ = open_field(home/family, family, data.canonical(), meta)
         save_principal(family, 10**field.central(query))
     folder = home/"source-checks/marine-intervals"

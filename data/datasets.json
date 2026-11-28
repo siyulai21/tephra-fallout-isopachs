@@ -87,12 +87,23 @@
       ],
       "reported_file": "eruptions/Mazama_young_centroids.csv",
       "results_directory": "eruptions/mazama/results/young-centroids-2026-11-26",
-      "published_methods": []
+      "published_methods": [
+        "wrapped-angular-covariance"
+      ],
+      "release_receipt": "release.json"
     },
     {
       "name": "Tambora",
       "slug": "tambora",
-      "file": "eruptions/Tambora_tephra.csv"
+      "file": "eruptions/Tambora_tephra.csv",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "spherical-mixture",
+        "nested-isopachs",
+        "wrapped-angular-covariance"
+      ]
     },
     {
       "name": "Aso-4",
@@ -101,7 +112,9 @@
       "file": "eruptions/Aso-4_ulleung_minimum_fit.csv",
       "audit": "audits/Aso-4/ulleung/provenance.json",
       "audit_case": "principal",
-      "published_methods": [],
+      "published_methods": [
+        "wrapped-angular-covariance"
+      ],
       "previous_inputs": [
         {
           "global_review_status": "questioned",
@@ -135,7 +148,8 @@
         }
       ],
       "reported_file": "eruptions/Aso-4_ulleung.csv",
-      "results_directory": "eruptions/aso-4/results/ulleung-2026-11-27"
+      "results_directory": "eruptions/aso-4/results/ulleung-2026-11-27",
+      "release_receipt": "release.json"
     },
     {
       "name": "B-Tm",
@@ -145,7 +159,9 @@
       "audit": "audits/B-Tm/two-phase/provenance.json",
       "audit_case": "principal",
       "archive_evidence": "audits/B-Tm/two-phase/archive-evidence.json",
-      "published_methods": [],
+      "published_methods": [
+        "wrapped-angular-covariance"
+      ],
       "previous_inputs": [
         {
           "file": "eruptions/B-Tm_reviewed.csv",
@@ -184,14 +200,23 @@
         }
       ],
       "reported_file": "eruptions/B-Tm_two_phase.csv",
-      "results_directory": "eruptions/b-tm/results/two-phase-2026-11-26"
+      "results_directory": "eruptions/b-tm/results/two-phase-2026-11-26",
+      "release_receipt": "release.json"
     },
     {
       "name": "YTT",
       "slug": "ytt",
       "file": "eruptions/YTT_tephra.csv",
       "audit": "audits/YTT/provenance.json",
-      "audit_case": "principal"
+      "audit_case": "principal",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "spherical-mixture",
+        "nested-isopachs",
+        "wrapped-angular-covariance"
+      ]
     },
     {
       "name": "Minoan",
@@ -211,7 +236,15 @@
       ],
       "reported_file": "eruptions/Minoan_tephra.csv",
       "results_directory": "eruptions/minoan/results/minimum-fit-2026-11-25",
-      "release_receipt": "release.json"
+      "release_receipt": "release.json",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "spherical-mixture",
+        "nested-isopachs",
+        "wrapped-angular-covariance"
+      ]
     },
     {
       "name": "Ilopango TBJ (total primary airfall)",
@@ -264,7 +297,10 @@
       "archive_evidence": "audits/Ilopango-TBJ/field-logs/archive-probes.json",
       "reported_file": "eruptions/Ilopango_TBJ_petapilla.csv",
       "results_directory": "eruptions/ilopango-tbj/results/petapilla-2026-11-27",
-      "published_methods": []
+      "published_methods": [
+        "wrapped-angular-covariance"
+      ],
+      "release_receipt": "release.json"
     },
     {
       "name": "Sakurajima Satsuma (P14)",
@@ -286,7 +322,15 @@
       ],
       "reported_file": "eruptions/Sakurajima_Satsuma.csv",
       "results_directory": "eruptions/sakurajima-satsuma/results/minimum-fit-2026-11-25",
-      "release_receipt": "release.json"
+      "release_receipt": "release.json",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "spherical-mixture",
+        "nested-isopachs",
+        "wrapped-angular-covariance"
+      ]
     },
     {
       "name": "Pinatubo 1991 (Layer C)",
@@ -323,7 +367,15 @@
       ],
       "reported_file": "eruptions/Pinatubo_1991_layer_C_reviewed.csv",
       "results_directory": "eruptions/pinatubo-1991-layer-c/results/minimum-fit-2026-11-25",
-      "release_receipt": "release.json"
+      "release_receipt": "release.json",
+      "published_methods": [
+        "stacked",
+        "spline",
+        "directional",
+        "spherical-mixture",
+        "nested-isopachs",
+        "wrapped-angular-covariance"
+      ]
     }
   ]
 }

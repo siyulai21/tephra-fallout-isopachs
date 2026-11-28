@@ -31,13 +31,13 @@ def catalogue_rows():
 
 
 LABELS = {"stacked":"GP ensemble","spline":"Cubic spline","directional":"Directional",
-          "spherical-mixture":"Spherical mixture","nested-isopachs":"Nested footprints"}
+          "spherical-mixture":"Spherical mixture","nested-isopachs":"Nested footprints","wrapped-angular-covariance":"Wrapped angular covariance"}
 
 
 def volume_plot(rows,path):
     names = list(dict.fromkeys(r["eruption"] for r in rows))
     fig,ax = plt.subplots(figsize=(9,5.6),layout="constrained")
-    for offset,family in zip((-.24,0.,.24),FAMILIES,strict=True):
+    for offset,family in zip(np.linspace(-.30,.30,len(FAMILIES)),FAMILIES,strict=True):
         block = [r for r in rows if r["method"]==family]
         y = [names.index(r["eruption"])+offset for r in block]
         color = COLORS[LABELS[family]]
@@ -55,6 +55,7 @@ def volume_plot(rows,path):
 
 def family_page(family, rows, records):
     introductions = {
+        "wrapped-angular-covariance":("Wrapped angular covariance","[Nine-eruption maps, paired validations, known volumes and distal thinning experiments](evidence.md)", ""),
         "directional":("Directional ensemble","The ensemble fits direction, thinning and spatial departures across distances. [Three-scale maps and matched tests](geographic-regularity/README.md) · [Original multiscale study](multiscale/README.md) ·",
                        "[Paired continuations and validation](../global-extent/README.md) · [Training and fixed-direction controls](fixed-ensemble/README.md)"),
         "spherical-mixture":("Spherical mixture","A mass-normalized mixture reconstructs the deposit on Earth. Eight fixed prior fits test sensitivity to unsampled directions.",
@@ -62,7 +63,7 @@ def family_page(family, rows, records):
         "nested-isopachs":("Bayesian nested dispersal footprints","Positive angular area growth allows the dispersal direction and eccentricity to change across nested contours. The fit estimates geography and the thickness–area law jointly.",
                           "[Three-scale review and matched validation](adaptive-growth/README.md) · [Preceding geographic experiments](geography/README.md) · [Original whole-area sensitivity](whole-area-study.md)")}
     title,intro,links = introductions[family]
-    lines = [f"# {title}", "", intro+" "+links,"",
+    lines = [f"# {title}", "", (intro+" "+links).rstrip(),"",
              "| Eruption | Localities | Median map (km³) | Q25–Q75 thickness maps (km³) | Held-out score ↓ | 95% predictive coverage |",
              "|---|---:|---:|---:|---:|---:|"]
     for row in rows:
@@ -99,7 +100,7 @@ def refresh_catalogue(output):
         (dest/family).mkdir(exist_ok=True)
         (dest/family/"README.md").write_text(family_page(family,rows,records))
     from .azimuth_summary import current_control_summary
-    current_control_summary(dest/"directional/fixed-ensemble",records.values())
+    current_control_summary(dest/"directional/fixed-ensemble",released_datasets("directional"))
     volume_plot(rows,dest/"nested-isopachs/volumes.png")
     listing = Path("eruptions/README.md")
     body = listing.read_text()
@@ -108,7 +109,7 @@ def refresh_catalogue(output):
         current_hash = digest(current["path"])
         values = {r["method"]: number(r["median_map_volume_km3"]) for r in rows
                   if r["slug"] == slug and r["input_sha256"] == current_hash}
-        pattern = r"(\| \[[^\n]*?\]\("+re.escape(slug)+r"/README\.md\) \|) [^|]* \| [^|]* \| [^|]* \|"
+        pattern = r"(\| \[[^\n]*?\]\("+re.escape(slug)+r"/README\.md\) \|)" + r" [^|]* \|"*len(FAMILIES)
         body,n = re.subn(pattern,lambda m:m[1]+" "+" | ".join(values.get(f,"—") for f in FAMILIES)+" |",body)
         if n!=1:
             raise ValueError(slug)

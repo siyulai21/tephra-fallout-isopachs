@@ -13,7 +13,7 @@ from benchmarks.mazama import sha, write_csv
 from benchmarks.footprint_study import controls
 from src.empirical_isopach.core.audit import audited_data
 from src.empirical_isopach.core.catalog import dataset_record, resolve_dataset
-from src.empirical_isopach.visualization.deposit import FAMILIES, checked_field, read_json, write_json
+from src.empirical_isopach.visualization.deposit import checked_field, read_json, write_json
 from src.empirical_isopach.visualization.deposit_field import parent_view
 from src.empirical_isopach.visualization.deposit_integrals import within_cells
 
@@ -30,7 +30,7 @@ def paired_estimates(home, scratch):
     with (PAIRED / 'paired-results.csv').open(newline='') as stream:
         rows = list(csv.DictReader(stream))
     matches = {row['method']: row for row in rows if row['slug'] == 'mazama'}
-    if set(matches) != set(FAMILIES):
+    if set(matches) != {"directional", "spherical-mixture", "nested-isopachs"}:
         raise ValueError('Expected three paired global fits for Mazama')
     for family, row in matches.items():
         folder = controls("mazama",record)[0] if family=="nested-isopachs" else home/family

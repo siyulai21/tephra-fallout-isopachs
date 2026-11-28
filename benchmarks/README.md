@@ -8,6 +8,8 @@ For a new case, run the active families with the [intake workflow](../docs/NEW_E
 
 ## Current evaluations
 
+Replay the wrapped angular covariance posterior, held-out site forecasts, and map integrals for all nine eruptions with `python -m benchmarks.wrapped_angular.verify`. Separate benchmarks test known deposits and the three classical thickness–area laws. [Commands and input identities](wrapped_angular/README.md) · [Paired maps and geographic scores](../comparisons/wrapped-angular-covariance/evidence.md)
+
 The area-growth nested study reviews every registered eruption at three spatial scales, fits matched geographic and quadrant omissions, and tests known deposits and actual withheld campaigns. Use `nested_continuous`, `nested_growth_challenges`, `nested_growth_release`, `nested_growth_review` and `nested_growth_study` in the [reproduction sequence](../comparisons/nested-isopachs/adaptive-growth/README.md#reproduce). Replay the resulting fields, observations, attempts and maps with `python -m benchmarks.verify_nested_growth`.
 
 The directional study compares proximal, intermediate and whole-deposit contours across all registered cases. It includes actual geographic deletions, bounded sites, known-volume surfaces and omitted surveys. Replay the principal v6 fields and mixture distributions with `python -m benchmarks.verify_directional_geography`; `python -m benchmarks.verify_directional_multiscale` independently replays the historical v5 study. [Current results](../comparisons/directional/geographic-regularity/README.md) · [Equations and reproduction commands](../docs/methods/directional-multiscale.md)

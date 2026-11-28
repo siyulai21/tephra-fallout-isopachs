@@ -45,7 +45,11 @@ def volume_rows(home, reports=None, *, regional_home=None, input_sha256=None):
         receipt = read_json(folder/"deposit.json")
         if receipt["family"] != key:
             raise ValueError(f"Wrong deposit family at {folder}")
-        path = next((folder/k for k in receipt["sources_sha256"] if k in ("multiscale/report.json","footprints/report.json","extent/report.json")),folder/"extent/report.json")
+        validation_reports = ("multiscale/report.json", "footprints/report.json", "extent/report.json")
+        if key == "wrapped-angular-covariance":
+            validation_reports = ("report.json",)
+        path = next((folder / k for k in validation_reports if k in receipt["sources_sha256"]),
+                    folder / "extent/report.json")
         if path.is_file():
             valid = read_json(path)["validation"]
             v = valid.get("geographic",valid)
@@ -82,10 +86,12 @@ def case_section(home, prefix="", *, reports=None, regional_subdir="", name=None
         from ..reporting import report_label
         reg = reports[0] if reports else read_json(region/"report.json")
         names.update({key:report_label(reg,key) for key in reg["methods"] if key not in REGIONAL})
+    has_minima = bool(regional and reg["input"].get("n_minima_fitted_as_measurements"))
     for row in rows:
         key = row["method"]
         if key in FAMILIES:
             receipt = read_json(Path(home)/key/"deposit.json")
+            has_minima |= bool(receipt.get("observation_policy", {}).get("reported_minima_shown_as_points"))
             names[key] = display_name(key,receipt["sources_sha256"])
             name = name or receipt["eruption"]
     if name is None:
@@ -105,7 +111,7 @@ def case_section(home, prefix="", *, reports=None, regional_subdir="", name=None
                      f"| {'—' if s is None else f'{s:.3f}'}{'' if row['heldout_checks_passed'] else ' †'} "
                      f"| {'—' if c is None else f'{c:.1%}'} |")
     coverage = ("Coverage counts held-out measurements and reported minima fitted as points."
-                if regional and reg["input"].get("n_minima_fitted_as_measurements")
+                if has_minima
                 else "Coverage counts exact withheld measurements.")
     lines += ["","Lower scores indicate better geographic prediction. "+coverage+" A dagger marks a fit, integration or validation warning.", "",
               "## Full deposits and near-vent detail", "",

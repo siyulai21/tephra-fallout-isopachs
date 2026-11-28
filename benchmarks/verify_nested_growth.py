@@ -146,7 +146,7 @@ def main(release=None):
                 assert member.isfile() and not Path(member.name).is_absolute() and '..' not in Path(member.name).parts
                 assert sha256(packed.extractfile(member).read()).hexdigest()==record['files'][member.name]
     verify_validation_archives(archive)
-    for record in (datasets() if release else released_datasets()):
+    for record in (datasets() if release else released_datasets("nested-isopachs")):
         home=release/record['slug'] if release else result_home(record)/'nested-isopachs'
         verify_case(record,home)
     if release is None:
@@ -160,7 +160,7 @@ def verify_study(archive):
     for name,expected in read(folder/'study-files.json').items():
         assert digest(folder/name)==expected, name
     inspected=read(folder/'visual-inspection.json')
-    records={r['slug']:r for r in released_datasets()}
+    records={r['slug']:r for r in released_datasets("nested-isopachs")}
     assert set(inspected)==set(records)
     paired=pd.read_csv(folder/'paired-results.csv')
     assert len(paired)==2*len(records)

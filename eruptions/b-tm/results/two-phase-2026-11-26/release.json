@@ -1,0 +1,48 @@
+{
+  "protocol": "wrapped-angular-release-v1",
+  "input_sha256": "ae2ea833991bb36d030b8110667cc4ff2c2febec8c83b55e1e2b5af93e4ffacf",
+  "reported_source_sha256": "567ac205bf15ec077a022339831f65cd6e8ee82242bc0d51a5c5a29b00fd9bae",
+  "observation_policy": "lower-only-at-reported-minimum-v1",
+  "observations": 150,
+  "published_methods": [
+    "wrapped-angular-covariance"
+  ],
+  "reported_site_types": {
+    "upper_limit": 13,
+    "lower_limit": 34,
+    "measurement": 75,
+    "interval": 28
+  },
+  "fitted_site_types": {
+    "upper_limit": 13,
+    "measurement": 109,
+    "interval": 28
+  },
+  "matched_geographic_folds": 4,
+  "methods": [
+    {
+      "method": "wrapped-angular-covariance",
+      "domain": "whole Earth",
+      "median_map_volume_km3": 31.00457024503996,
+      "thickness_q25_volume_km3": 20.946574489766476,
+      "thickness_q75_volume_km3": 44.42013058836992,
+      "map_integration_passed": true,
+      "thickness_band_integration_passed": true,
+      "posterior_checks_passed": true,
+      "heldout_log_score": 1.4072723600512793,
+      "heldout_coverage95": 0.9576284186535764,
+      "heldout_checks_passed": true,
+      "input_sha256": "ae2ea833991bb36d030b8110667cc4ff2c2febec8c83b55e1e2b5af93e4ffacf"
+    }
+  ],
+  "files": {
+    "data/eruptions/B-Tm_two_phase_minimum_fit.csv": "ae2ea833991bb36d030b8110667cc4ff2c2febec8c83b55e1e2b5af93e4ffacf",
+    "data/eruptions/B-Tm_two_phase.csv": "567ac205bf15ec077a022339831f65cd6e8ee82242bc0d51a5c5a29b00fd9bae",
+    "data/audits/B-Tm/two-phase/provenance.json": "ff7ab438cf22c85ff6714d525e7e50499fc12b84f3e12369d7904ab861c09fe2",
+    "eruptions/b-tm/results/two-phase-2026-11-26/wrapped-angular-covariance/artifacts.json": "9ca1905f30de769707c7520bea1a6a13a53432fbca94e9ad5f9aa679c97348d8",
+    "eruptions/b-tm/results/two-phase-2026-11-26/accepted_observations.csv": "a05f06007db5e4a4702357615a55f9ba9efe4e82e5a70b40f3c6ca385dcfa5e6",
+    "eruptions/b-tm/results/two-phase-2026-11-26/principal-volumes.csv": "0275e930975db75b1041eac74f5010e5f019ff7d577e9e9173cd227b7430e8ce",
+    "eruptions/b-tm/results/two-phase-2026-11-26/reported-and-fitted-sites.csv": "fac7273ffa3a7709781550e6f2cd733ab9bb8ae2c5bda8fdd53433bed8e852cd",
+    "eruptions/b-tm/results/two-phase-2026-11-26/minimum-fit-comparison.csv": "b6aa3de76e2b560290e065a78ab0debbdb52e9dc6e9e306320c154e4406a5d87"
+  }
+}
