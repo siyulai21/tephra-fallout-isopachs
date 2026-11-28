@@ -1,4 +1,4 @@
-"""Verify the current Mazama publication against its source audit and matched geographic deletions."""
+"""Verify the 300-locality Mazama publication against its audit and matched geographic deletions."""
 import argparse
 import csv
 import json
@@ -9,14 +9,13 @@ import numpy as np
 import pandas as pd
 
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import dataset_record, data_directory, resolve_dataset
+from src.empirical_isopach.core.catalog import dataset_record, data_directory
 from src.empirical_isopach.visualization.deposit import digest, read_json
 from src.empirical_isopach.visualization.principal import volume_rows
 
 
 def check(home):
-    from .publication import reported_edition
-    path = reported_edition(dataset_record(resolve_dataset("Mazama")))["path"]
+    path = data_directory() / "eruptions/Mazama_primary_ranges.csv"
     record = dataset_record(path)
     data, meta = audited_data(path)
     identity = meta["input_sha256"]

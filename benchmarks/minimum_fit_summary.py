@@ -21,7 +21,8 @@ def summarize(output):
     names = {"mazama":"Mazama", "ilopango-tbj":"Ilopango TBJ", "minoan":"Minoan",
              "pinatubo-1991-layer-c":"Pinatubo Layer C", "sakurajima-satsuma":"Sakurajima–Satsuma",
              "aso-4":"Aso-4", "b-tm":"B-Tm"}
-    records = {r["slug"]: r for r in released_datasets() if r.get("reported_file") and published_methods(r)}
+    # This five-family policy experiment compares the two treatments on the same sites.
+    records = {r["slug"]: r for r in released_datasets("stacked") if r.get("reported_file")}
     cases = [slug for slug in names if slug in records] + sorted(set(records)-set(names))
     rows = []
     fig, axes = plt.subplots(int(np.ceil((len(cases)+1)/2)), 2, figsize=(11.2, 2.35*np.ceil((len(cases)+1)/2)+.9),
