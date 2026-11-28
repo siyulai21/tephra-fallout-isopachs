@@ -36,6 +36,19 @@ def result_home(record):
     return Path(record.get("results_directory") or record.get("matched_results") or f"eruptions/{record['slug']}/results")
 
 
+def study_input(record, expected_sha256):
+    """Find the registered observation file used by a fixed, signed study."""
+    from src.empirical_isopach.core.catalog import data_directory, dataset_record
+
+    for edition in (record, *reversed(record.get("previous_inputs", []))):
+        for key in ("file", "reported_file"):
+            if edition.get(key):
+                path = data_directory() / edition[key]
+                if sha256(path.read_bytes()).hexdigest() == expected_sha256:
+                    return dataset_record(path)
+    raise ValueError(f"No registered input for {record['slug']} matches {expected_sha256}")
+
+
 def reported_edition(record):
     """Input and results for the most recent edition using geological censoring."""
     from src.empirical_isopach.core.catalog import data_directory, dataset_record

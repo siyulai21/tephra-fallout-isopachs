@@ -9,14 +9,16 @@ import numpy as np
 import pandas as pd
 
 from src.empirical_isopach.core.audit import audited_data
-from src.empirical_isopach.core.catalog import dataset_record, data_directory
+from benchmarks.publication import study_input
+from src.empirical_isopach.core.catalog import dataset_record, data_directory, resolve_dataset
 from src.empirical_isopach.visualization.deposit import digest, read_json
 from src.empirical_isopach.visualization.principal import volume_rows
 
 
 def check(home):
-    path = data_directory() / "eruptions/Mazama_primary_ranges.csv"
-    record = dataset_record(path)
+    expected = read_json(home / "report.json")["input"]["input_sha256"]
+    record = study_input(dataset_record(resolve_dataset("Mazama")), expected)
+    path = record["path"]
     data, meta = audited_data(path)
     identity = meta["input_sha256"]
     with path.open(newline="") as stream:
